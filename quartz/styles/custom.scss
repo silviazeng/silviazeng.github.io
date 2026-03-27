@@ -4,6 +4,45 @@ body {
   background: #0f0f0f !important;
 }
 
+// ─── Remove left sidebar column ─────────────────────────────────────────────
+.sidebar.left {
+  display: none !important;
+}
+
+// Collapse left grid column to 0; right sidebar stays for article pages
+.page > #quartz-body {
+  grid-template-columns: 0 auto 320px !important;
+}
+
+// Explicitly place .center in column 2 — prevents auto-placement into 0px column 1
+#quartz-body > .center {
+  grid-column: 2 !important;
+}
+
+// Homepage: right sidebar also hidden, collapse that column too
+.page:has(.home-container) > #quartz-body {
+  grid-template-columns: 0 auto 0 !important;
+}
+
+// ─── Page header ─────────────────────────────────────────────────────────────
+.page-header {
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+}
+
+// ─── Page title in content area (homepage only) ──────────────────────────────
+.popover-hint > .page-title {
+  font-size: 1.4rem !important;
+  margin: 24px 0 20px !important;
+  border-bottom: none !important;
+
+  a {
+    color: #4faa72 !important;
+    text-decoration: none !important;
+  }
+}
+
 
 h1.article-title {
   font-size: 22px !important;
