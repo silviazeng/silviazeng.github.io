@@ -19,9 +19,13 @@ body {
   grid-column: 2 !important;
 }
 
-// Homepage: right sidebar also hidden, collapse that column too
+// Homepage: right sidebar hidden, full-width layout
 .page:has(.home-container) > #quartz-body {
   grid-template-columns: 0 auto 0 !important;
+}
+
+.page:has(.home-container) .sidebar.right {
+  display: none !important;
 }
 
 // ─── Page header ─────────────────────────────────────────────────────────────
@@ -87,10 +91,6 @@ article p {
   color: #888780 !important;
 }
 
-// ─── Homepage: hide right sidebar ─────────────────────────────────────────────
-.page:has(.home-container) .sidebar.right {
-  display: none !important;
-}
 
 // ─── Home container ────────────────────────────────────────────────────────────
 .home-container {
@@ -579,6 +579,7 @@ article p {
   }
 
   .hf-sm {
+    flex: none;
     height: 130px;
   }
 

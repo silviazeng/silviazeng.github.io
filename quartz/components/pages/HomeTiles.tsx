@@ -61,19 +61,22 @@ const HomeTiles: QuartzComponent = ({ fileData }: QuartzComponentProps) => {
 
         {/* Right: Graph + Tags + Recent */}
         <div class="home-sidebar">
-          <div class="home-section-label">Knowledge Graph</div>
-          <div class="home-graph-box">
-            <div class="home-graph-nodes">
-              <span class="gnode gnode-purple" style="top:20%;left:18%">History</span>
-              <span class="gnode gnode-purple" style="top:35%;left:58%">Machiavelli</span>
-              <span class="gnode gnode-green" style="top:55%;left:32%">Travel</span>
-              <span class="gnode gnode-green" style="top:22%;left:65%">AI</span>
-              <span class="gnode gnode-green" style="top:70%;left:62%">Career</span>
+          <div class="graph">
+            <h3>Graph View</h3>
+            <div class="graph-outer">
+              <div class="graph-container" data-cfg='{"drag":true,"zoom":true,"depth":1,"scale":1.1,"repelForce":0.5,"centerForce":0.3,"linkDistance":30,"fontSize":0.6,"opacityScale":1,"showTags":true,"removeTags":[],"focusOnHover":false,"enableRadial":false}'></div>
+              <button class="global-graph-icon" aria-label="Global Graph">
+                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xmlSpace="preserve">
+                  <path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17s-3.542,0.634-4.898,1.688l-7.669-7.669C16.785,10.424,17,9.74,17,9c0-2.206-1.794-4-4-4S9,6.794,9,9s1.794,4,4,4c0.74,0,1.424-0.215,2.019-0.567l7.669,7.669C21.634,21.458,21,23.154,21,25s0.634,3.542,1.688,4.897L10.024,42.562C8.958,41.595,7.549,41,6,41c-3.309,0-6,2.691-6,6s2.691,6,6,6s6-2.691,6-6c0-1.035-0.263-2.009-0.726-2.86l12.829-12.829c1.106,0.86,2.44,1.436,3.898,1.619v10.16c-2.833,0.478-5,2.942-5,5.91c0,3.309,2.691,6,6,6s6-2.691,6-6c0-2.967-2.167-5.431-5-5.91v-10.16c1.458-0.183,2.792-0.759,3.898-1.619l7.669,7.669C41.215,39.576,41,40.26,41,41c0,2.206,1.794,4,4,4s4-1.794,4-4s-1.794-4-4-4c-0.74,0-1.424,0.215-2.019,0.567l-7.669-7.669C36.366,28.542,37,26.846,37,25s-0.634-3.542-1.688-4.897l9.665-9.665C46.042,11.405,47.451,12,49,12c3.309,0,6-2.691,6-6S52.309,0,49,0z"/>
+                </svg>
+              </button>
             </div>
-            <a href="/posts" class="home-graph-link">All posts<br />→</a>
+            <div class="global-graph-outer">
+              <div class="global-graph-container" data-cfg='{"drag":true,"zoom":true,"depth":-1,"scale":0.9,"repelForce":0.5,"centerForce":0.2,"linkDistance":30,"fontSize":0.6,"opacityScale":1,"showTags":true,"removeTags":[],"focusOnHover":true,"enableRadial":true}'></div>
+            </div>
           </div>
 
-          <div class="home-section-label" style="margin-top:10px">Browse by Tag</div>
+          <div class="home-section-label">Browse by Tag</div>
           <div class="home-tagcloud">
             <a href="/tags/history" class="htag">History <span>1</span></a>
             <a href="/tags/power" class="htag">Power <span>1</span></a>

@@ -214,32 +214,24 @@ const seasons = {
 };
 
 // ─────────────────────────────────────────
-// PHOTO CACHE (Wikipedia API)
+// PHOTO LOADING (local files)
+// Images go in: /static/medici-images/<wiki-name>.jpg
+// e.g. Richard_Madden.jpg, Dustin_Hoffman.jpg
 // ─────────────────────────────────────────
-const photoCache = {};
-
 function fetchActorPhoto(wikiTitle, imgEl, wrapEl) {
-  if (photoCache[wikiTitle]) {
-    applyPhoto(photoCache[wikiTitle], imgEl, wrapEl);
-    return;
-  }
-  fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(wikiTitle)}`)
-    .then(r => r.json())
-    .then(data => {
-      const src = data.thumbnail?.source;
-      photoCache[wikiTitle] = src || null;
-      applyPhoto(src, imgEl, wrapEl);
-    })
-    .catch(() => { wrapEl.classList.remove('loading'); });
+  if (!wikiTitle) { wrapEl.classList.remove('loading'); return; }
+  const src = `/static/medici-images/${wikiTitle}.jpg`;
+  const test = new Image();
+  test.onload = () => applyPhoto(src, imgEl, wrapEl);
+  test.onerror = () => { wrapEl.classList.remove('loading'); };
+  test.src = src;
 }
 
 function applyPhoto(src, imgEl, wrapEl) {
   wrapEl.classList.remove('loading');
-  if (src) {
-    imgEl.src = src;
-    imgEl.style.display = 'block';
-    wrapEl.querySelector('.initials').style.display = 'none';
-  }
+  imgEl.src = src;
+  imgEl.style.display = 'block';
+  wrapEl.querySelector('.initials').style.display = 'none';
 }
 
 // ─────────────────────────────────────────
