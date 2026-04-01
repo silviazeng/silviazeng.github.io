@@ -64,11 +64,11 @@ const HomeTiles: QuartzComponent = ({ fileData }: QuartzComponentProps) => {
           <div class="home-section-label">Knowledge Graph</div>
           <div class="home-graph-box">
             <div class="home-graph-nodes">
-              <span class="gnode gnode-green" style="top:30%;left:28%">Parenting</span>
-              <span class="gnode gnode-green" style="top:20%;left:65%">Cognition</span>
-              <span class="gnode gnode-purple" style="top:55%;left:42%">Your Garden</span>
-              <span class="gnode gnode-green" style="top:75%;left:20%">Travel</span>
-              <span class="gnode gnode-green" style="top:75%;left:68%">Brain</span>
+              <span class="gnode gnode-purple" style="top:20%;left:18%">History</span>
+              <span class="gnode gnode-purple" style="top:35%;left:58%">Machiavelli</span>
+              <span class="gnode gnode-green" style="top:55%;left:32%">Travel</span>
+              <span class="gnode gnode-green" style="top:22%;left:65%">AI</span>
+              <span class="gnode gnode-green" style="top:70%;left:62%">Career</span>
             </div>
             <a href="/graph" class="home-graph-link">View full graph<br />→</a>
           </div>
