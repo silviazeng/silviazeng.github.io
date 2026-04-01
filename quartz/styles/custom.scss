@@ -561,7 +561,8 @@ article p {
 }
 
 @media (max-width: 800px) {
-  .page > #quartz-body {
+  .page > #quartz-body,
+  .page:has(.home-container) > #quartz-body {
     grid-template-columns: auto !important;
   }
 
