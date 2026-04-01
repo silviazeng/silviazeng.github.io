@@ -75,13 +75,17 @@ const HomeTiles: QuartzComponent = ({ fileData }: QuartzComponentProps) => {
 
           <div class="home-section-label" style="margin-top:10px">Browse by Tag</div>
           <div class="home-tagcloud">
-            <a href="/tags/cognitive-science" class="htag">Cognitive Science <span>12</span></a>
-            <a href="/tags/parenting" class="htag">Parenting <span>8</span></a>
-            <a href="/tags/human-brain" class="htag">Human Brain <span>7</span></a>
-            <a href="/tags/travel" class="htag">Travel <span>5</span></a>
-            <a href="/tags/photography" class="htag">Photography <span>4</span></a>
-            <a href="/tags/reading" class="htag">Reading <span>9</span></a>
-            <a href="/tags/observations" class="htag">Daily Observations <span>6</span></a>
+            <a href="/tags/history" class="htag">History <span>1</span></a>
+            <a href="/tags/power" class="htag">Power <span>1</span></a>
+            <a href="/tags/machiavelli" class="htag">Machiavelli <span>1</span></a>
+            <a href="/tags/the-prince" class="htag">The Prince <span>1</span></a>
+            <a href="/tags/renaissance-history" class="htag">Renaissance History <span>1</span></a>
+            <a href="/tags/ai" class="htag">AI <span>1</span></a>
+            <a href="/tags/learning" class="htag">Learning <span>1</span></a>
+            <a href="/tags/travel" class="htag">Travel <span>1</span></a>
+            <a href="/tags/life" class="htag">Life <span>1</span></a>
+            <a href="/tags/career" class="htag">Career <span>1</span></a>
+            <a href="/tags/work" class="htag">Work <span>1</span></a>
           </div>
 
           <div class="home-section-label" style="margin-top:10px">Recent Updates</div>
