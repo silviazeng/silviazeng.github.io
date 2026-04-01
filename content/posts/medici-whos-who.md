@@ -9,7 +9,7 @@ tags:
   - renaissance-history
 ---
 
-I started reading Machiavelli. One thing led to another — now I'm three episodes into Medici and can't tell the Lorenzos apart.
-Turns out fifteenth-century Florence had a lot of men with the same three names, the same ruthless ambitions, and the same taste for elegant betrayal.
+I started reading Machiavelli. One thing led to another — now I'm three episodes into Medici: Masters of Florence and have no idea who just stabbed whom.
 
+Turns out fifteenth-century Florence had a lot of men with the same three names, the same ruthless ambitions, and the same taste for elegant betrayal. This is the guide I wish I had on episode one.
 <iframe src="/static/medici-guide.html" width="100%" height="800px" style="border:none;border-radius:8px;"></iframe>

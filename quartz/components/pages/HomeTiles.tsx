@@ -70,7 +70,7 @@ const HomeTiles: QuartzComponent = ({ fileData }: QuartzComponentProps) => {
               <span class="gnode gnode-green" style="top:22%;left:65%">AI</span>
               <span class="gnode gnode-green" style="top:70%;left:62%">Career</span>
             </div>
-            <a href="/graph" class="home-graph-link">View full graph<br />→</a>
+            <a href="/posts" class="home-graph-link">All posts<br />→</a>
           </div>
 
           <div class="home-section-label" style="margin-top:10px">Browse by Tag</div>

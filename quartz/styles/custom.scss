@@ -568,4 +568,23 @@ article p {
   #quartz-body > .center {
     grid-column: 1 !important;
   }
+
+  .home-sidebar {
+    height: auto !important;
+  }
+
+  .hf-row {
+    flex-direction: column;
+  }
+
+  .hf-sm {
+    height: 130px;
+  }
+
+  .hf-title {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
 }
