@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Medici: Who's Who</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #1a1208; font-family: Georgia, 'Times New Roman', serif; color: #f0e6c8; }
+
+  /* ── Header ── */
+  .header {
+    background: linear-gradient(180deg, #2a1000, #1a0800);
+    border-bottom: 2px solid #8B6914;
+    padding: 18px 16px 12px; text-align: center;
+  }
+  .header-eyebrow { font-size: 10px; letter-spacing: 4px; color: #c8a84a; text-transform: uppercase; margin-bottom: 5px; }
+  .header h1 { font-size: 22px; font-weight: normal; color: #f5e0a0; margin-bottom: 3px; }
+  .header p { font-size: 11px; color: #a09060; }
+
+  /* ── Tip bar ── */
+  .tip-bar {
+    background: #2a1a00; border-bottom: 1px solid #5a3a10;
+    padding: 8px 14px; display: flex; align-items: center; cursor: pointer; user-select: none;
+  }
+  .tip-text { font-size: 11px; color: #c8a84a; flex: 1; line-height: 1.5; }
+  .tip-nav { font-size: 10px; color: #7a6a40; margin-left: 8px; white-space: nowrap; }
+
+  /* ── Top-level tabs (Season / Tree) ── */
+  .main-tabs { display: flex; background: #0e0904; border-bottom: 2px solid #3a2a10; }
+  .main-tab {
+    flex: 1; padding: 10px 4px; border: none; cursor: pointer;
+    font-family: Georgia, serif; font-size: 12px; transition: all 0.2s;
+    border-bottom: 2px solid transparent; margin-bottom: -2px; color: #8a7a50; background: transparent;
+  }
+  .main-tab.active { background: #2a1800; color: #f5d070; border-bottom-color: #c8a84a; }
+
+  /* ── Season subtitle ── */
+  .season-subtitle { padding: 8px 14px; background: #1a1006; border-bottom: 1px solid #2a1a08; font-size: 11px; color: #9a8a60; font-style: italic; }
+
+  /* ── Character cards ── */
+  .content { padding: 12px 10px 8px; }
+  .faction { margin-bottom: 16px; }
+  .faction-header { padding: 5px 10px; margin-bottom: 8px; border-radius: 0 6px 6px 0; border-left: 3px solid; }
+  .faction-title { font-size: 12px; font-weight: bold; color: #f0d890; }
+
+  .char-card { border: 1px solid #3a2a10; border-radius: 8px; padding: 10px 12px; cursor: pointer; margin-bottom: 6px; transition: background 0.2s; background: #1e1608; }
+  .char-card.open { background: #2a1e0c; }
+  .char-row { display: flex; align-items: center; gap: 10px; }
+
+  .photo-wrap {
+    width: 52px; height: 52px; border-radius: 50%; overflow: hidden;
+    flex-shrink: 0; border: 2px solid; background: #2a1a08;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .photo-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
+  .photo-wrap .initials { font-size: 20px; font-weight: bold; color: #f5e8c0; }
+  /* placeholder shimmer */
+  .photo-wrap.loading::after {
+    content: ''; position: absolute; inset: 0; border-radius: 50%;
+    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.06) 50%, transparent 100%);
+    animation: shimmer 1.4s infinite;
+  }
+  @keyframes shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+
+  .char-info { flex: 1; min-width: 0; }
+  .char-name { font-size: 13px; font-weight: bold; color: #f0d890; margin-bottom: 1px; }
+  .char-name-small { font-size: 10px; color: #9a8a60; }
+  .char-role { font-size: 10px; color: #c8a84a; margin-top: 2px; }
+  .arrow { font-size: 18px; color: #6a5a30; transition: transform 0.2s; flex-shrink: 0; }
+  .arrow.open { transform: rotate(90deg); }
+
+  .char-detail { display: none; margin-top: 10px; padding-top: 10px; }
+  .char-detail.open { display: block; }
+  .char-desc { background: #120e06; border-radius: 6px; padding: 8px 10px; font-size: 11px; color: #b8a880; line-height: 1.7; margin-bottom: 7px; }
+  .meta-line { font-size: 11px; margin-top: 3px; }
+  .meta-label { color: #8a7a50; }
+  .meta-actor { color: #e8d090; font-style: italic; }
+  .meta-rel { color: #c8b870; }
+
+  /* ── Family tree panel ── */
+  #tree-panel { display: none; padding: 12px 10px 24px; }
+  #tree-panel.active { display: block; }
+
+  .tree-legend { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-bottom: 14px; font-size: 10px; color: #9a8a60; }
+  .legend-item { display: flex; align-items: center; gap: 5px; }
+  .legend-line { width: 22px; height: 2px; }
+
+  .tree-scroll { overflow-x: auto; padding-bottom: 8px; -webkit-overflow-scrolling: touch; }
+  svg.family-tree { display: block; }
+
+  /* tree node boxes */
+  .tnode rect { rx: 6; ry: 6; }
+  .tnode text { font-family: Georgia, serif; }
+  .tnode .n-name { font-size: 11px; font-weight: bold; fill: #f0d890; }
+  .tnode .n-actor { font-size: 9px; fill: #9a8a60; font-style: italic; }
+  .tnode .n-role { font-size: 9px; fill: #c8a84a; }
+  .tnode image { clip-path: circle(18px at 18px 18px); }
+
+  /* ── Ancestry timeline ── */
+  .timeline { margin: 0 0 4px; }
+  .timeline-title { font-size: 11px; color: #c8a84a; margin-bottom: 8px; font-weight: bold; }
+  .tl-row { display: flex; align-items: center; gap: 6px; margin-bottom: 5px; }
+  .tl-dot { width: 7px; height: 7px; border-radius: 50%; background: #c8a84a; flex-shrink: 0; }
+  .tl-name { font-size: 12px; color: #f0d890; }
+  .tl-actor { font-size: 10px; color: #8a7a50; font-style: italic; margin-left: 4px; }
+  .tl-note { font-size: 10px; color: #6a5a30; margin-left: auto; text-align: right; flex-shrink: 0; }
+
+  .panel-hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-eyebrow">MEDICI · Masters of Florence</div>
+  <h1>Who the Hell Is Who</h1>
+  <p>Too Many Italians · A Survival Guide for the Face-Blind</p>
+</div>
+
+<div class="tip-bar" onclick="nextTip()">
+  <span class="tip-text" id="tipText"></span>
+  <span class="tip-nav" id="tipNav"></span>
+</div>
+
+<div class="main-tabs">
+  <button class="main-tab active" id="tab-s1" onclick="switchTab('s1')">S1 · Cosimo's Rise</button>
+  <button class="main-tab" id="tab-s2" onclick="switchTab('s2')">S2 · Lorenzo il Magnifico</button>
+  <button class="main-tab" id="tab-tree" onclick="switchTab('tree')">🌳 Family Tree</button>
+</div>
+
+<div id="season-subtitle" class="season-subtitle"></div>
+<div class="content" id="char-content"></div>
+
+<!-- FAMILY TREE PANEL -->
+<div id="tree-panel">
+  <div class="timeline">
+    <div class="timeline-title">📜 The Medici Dynasty — Main Line</div>
+    <div class="tl-row"><div class="tl-dot"></div><span class="tl-name">Giovanni de' Medici</span><span class="tl-actor">Dustin Hoffman</span><span class="tl-note">S1 · Founder, murdered</span></div>
+    <div class="tl-row" style="padding-left:14px"><div class="tl-dot"></div><span class="tl-name">Cosimo de' Medici</span><span class="tl-actor">Richard Madden</span><span class="tl-note">S1 · Pater Patriae</span></div>
+    <div class="tl-row" style="padding-left:28px"><div class="tl-dot"></div><span class="tl-name">Piero de' Medici (the Gouty)</span><span class="tl-actor">Julian Sands</span><span class="tl-note">S2 bridge · chronically ill</span></div>
+    <div class="tl-row" style="padding-left:42px"><div class="tl-dot"></div><span class="tl-name">Lorenzo il Magnifico</span><span class="tl-actor">Daniel Sharman</span><span class="tl-note">S2–S3 · Renaissance peak</span></div>
+  </div>
+
+  <div style="margin: 14px 0 10px; font-size: 11px; color: #c8a84a; font-weight: bold;">🔗 Relationship Map</div>
+  <div class="tree-legend">
+    <div class="legend-item"><div class="legend-line" style="background:#c8a84a"></div><span>Parent → Child</span></div>
+    <div class="legend-item"><div class="legend-line" style="background:#e07070; height:1px; border-top: 2px dashed #e07070; background:none;"></div><span>Marriage</span></div>
+    <div class="legend-item"><div class="legend-line" style="background:#6a8aaa; height:1px; border-top: 2px dotted #6a8aaa; background:none;"></div><span>Rival faction</span></div>
+  </div>
+
+  <div class="tree-scroll">
+    <svg id="treeSvg" xmlns="http://www.w3.org/2000/svg" style="display:block"></svg>
+  </div>
+
+  <div style="margin-top:16px; padding: 10px 12px; background:#1a1006; border:1px solid #3a2a10; border-radius:8px; font-size:11px; color:#9a8a60; line-height:1.7;">
+    <strong style="color:#c8a84a">⚠️ Same actress, two roles:</strong> Alessandra Mastronardi plays <em>Bianca</em> (Cosimo's lover, S1) and <em>Lucrezia Donati</em> (Lorenzo's lover, S2). Don't be confused — they're different characters, same face.<br><br>
+    <strong style="color:#c8a84a">⚠️ Two different Lorenzos:</strong> S1's Lorenzo (Stuart Martin) is Cosimo's brother. S2's Lorenzo il Magnifico (Daniel Sharman) is Cosimo's grandson — different generation, different actor.
+  </div>
+</div>
+
+<script>
+// ─────────────────────────────────────────
+// DATA
+// ─────────────────────────────────────────
+const tips = [
+  "⚠️ SAME ACTRESS: Alessandra Mastronardi plays Bianca (S1, Cosimo's lover) AND Lucrezia Donati (S2, Lorenzo's lover)",
+  "⚠️ TWO LORENZOS: S1's Lorenzo (Stuart Martin) = Cosimo's brother · S2's Lorenzo (Daniel Sharman) = Cosimo's grandson",
+  "💡 Sean Bean (Ned Stark in GoT) plays Jacopo de' Pazzi — the most recognisable face in Season 2",
+  "💡 Richard Madden (Robb Stark in GoT) plays Cosimo — yes, GoT father and son are both in this show",
+];
+
+const seasons = {
+  s1: {
+    subtitle: "1429 — Giovanni's mysterious death · Cosimo inherits the empire",
+    factions: [
+      { name: "🏛  The Medici", color: "#8B1A1A", members: [
+        { name:"Cosimo de' Medici", actor:"Richard Madden", wiki:"Richard_Madden", role:"Protagonist · eldest son", desc:"Thrust into power when his father dies unexpectedly. Dual timeline: adult Cosimo investigates the death; young Cosimo travels to Rome. Dark hair, brooding intensity.", rel:"Son of Giovanni · brother of Lorenzo (S1)", c:"#8B1A1A" },
+        { name:"Giovanni de' Medici", actor:"Dustin Hoffman", wiki:"Dustin_Hoffman", role:"Family patriarch · banker", desc:"White hair and beard, commanding presence. Dies in Episode 1 under suspicious circumstances — solving his murder is the season's spine.", rel:"Father of Cosimo", c:"#5a3d1a" },
+        { name:"Lorenzo de' Medici (brother)", actor:"Stuart Martin", wiki:"Stuart_Martin_(actor)", role:"Cosimo's younger brother", desc:"⚠️ NOT the same Lorenzo as Season 2! Impulsive and hot-headed. Golden-brown hair, high cheekbones. An entirely different character from S2's Lorenzo il Magnifico.", rel:"Cosimo's brother (S1 only)", c:"#6b3a1f" },
+        { name:"Contessina de' Bardi", actor:"Annabel Scholey", wiki:"Annabel_Scholey", role:"Cosimo's wife", desc:"A political marriage who becomes a genuine partner. Blonde, sharp, emotionally grounding for Cosimo.", rel:"Cosimo's wife", c:"#7a4f3a" },
+      ]},
+      { name: "⚔️  The Albizzi (Rivals)", color: "#1a3a5c", members: [
+        { name:"Rinaldo degli Albizzi", actor:"Lex Shrapnel", wiki:"Lex_Shrapnel", role:"Primary antagonist", desc:"The voice of old Florentine nobility. Short beard, cold and calculating. His goal: drive the Medici out of Florence.", rel:"Medici's chief political enemy", c:"#1a3a5c" },
+        { name:"Bernardo Guadagni", actor:"Brian Cox", wiki:"Brian_Cox_(actor)", role:"Gonfaloniere of Justice", desc:"White-haired elder statesman, Florence's nominal leader — but manipulated by the Albizzi. Has his own conscience and dignity.", rel:"Civic official caught between factions", c:"#2d4a6e" },
+      ]},
+      { name: "✨  Key Supporting", color: "#5a4a1a", members: [
+        { name:"Bianca", actor:"Alessandra Mastronardi", wiki:"Alessandra_Mastronardi", role:"Cosimo's first love", desc:"⚠️ Same actress plays a DIFFERENT character in S2! Young Cosimo meets her in Rome — a model for Donatello. Dark hair, vivid. Their separation shapes Cosimo for life.", rel:"Cosimo's lost love (S1)", c:"#7a5a1a" },
+        { name:"Marco Bello", actor:"Guido Caprino", wiki:"Guido_Caprino", role:"Cosimo's loyal steward", desc:"Dark curly hair, olive complexion. Cosimo's right hand in both business and politics — unfailingly loyal.", rel:"Medici family steward", c:"#4a3a2a" },
+        { name:"Donatello", actor:"Paul Rhys", wiki:"Paul_Rhys", role:"Sculptor · Cosimo's friend", desc:"The real Renaissance master. Unkempt beard, casual dress, eccentric energy. Cosimo's closest artistic confidant.", rel:"Cosimo's friend and protégé", c:"#3a4a2a" },
+      ]},
+    ]
+  },
+  s2: {
+    subtitle: "1478 — The Pazzi Conspiracy · Lorenzo il Magnifico's golden age",
+    factions: [
+      { name: "🏛  The Medici", color: "#8B1A1A", members: [
+        { name:"Lorenzo il Magnifico", actor:"Daniel Sharman", wiki:"Daniel_Sharman", role:"Protagonist · Lorenzo the Magnificent", desc:"⚠️ New actor, new generation! Cosimo's grandson. Sharp amber eyes, commanding presence. Renaissance ruler, poet, and patron of the arts — the most important Medici.", rel:"Son of Piero · brother of Giuliano", c:"#8B1A1A" },
+        { name:"Giuliano de' Medici", actor:"Bradley James", wiki:"Bradley_James_(actor)", role:"Lorenzo's younger brother", desc:"Blond, handsome, romantic and warm-hearted. Historically, he was stabbed to death during the Pazzi Conspiracy — in a cathedral, during Mass.", rel:"Lorenzo's brother", c:"#6b3a1f" },
+        { name:"Clarice Orsini", actor:"Synnøve Karlsen", wiki:"Synnøve_Karlsen", role:"Lorenzo's wife", desc:"Roman noblewoman, married for political alliance. Composed and dignified — a foil to Lorenzo's passionate mistress.", rel:"Lorenzo's wife", c:"#7a4f3a" },
+        { name:"Piero de' Medici", actor:"Julian Sands", wiki:"Julian_Sands", role:"Lorenzo's father", desc:"Cosimo's son, plagued by gout his entire life. Appears mostly in flashback this season — a frail bridge between two eras.", rel:"Lorenzo's father", c:"#5a3d1a" },
+      ]},
+      { name: "⚔️  The Pazzi (Rivals)", color: "#1a3a5c", members: [
+        { name:"Jacopo de' Pazzi", actor:"Sean Bean", wiki:"Sean_Bean", role:"Pazzi family patriarch", desc:"That's Ned Stark from Game of Thrones! White-haired, weathered, consumed by aristocratic grievance. Broad nose, deep-set eyes — very recognisable.", rel:"Medici's primary rival", c:"#1a3a5c" },
+        { name:"Francesco de' Pazzi", actor:"Tom Bateman", wiki:"Tom_Bateman", role:"The conspirator", desc:"Young, volatile, fanatical. The man who actually carries out the assassination attempt in the cathedral. Dark hair, unstable gaze.", rel:"Jacopo's nephew", c:"#2d4a6e" },
+      ]},
+      { name: "✨  Key Supporting", color: "#5a4a1a", members: [
+        { name:"Lucrezia Donati", actor:"Alessandra Mastronardi", wiki:"Alessandra_Mastronardi", role:"Lorenzo's mistress", desc:"⚠️ Same actress as S1's Bianca! Different character, different name. Dark-haired and passionate — her affair with Lorenzo is a central emotional thread.", rel:"Lorenzo's lover", c:"#7a5a1a" },
+        { name:"Pope Sixtus IV", actor:"Raoul Bova", wiki:"Raoul_Bova", role:"The puppet master", desc:"The Pazzi Conspiracy's secret sponsor. Dressed in papal white — Italian star Raoul Bova brings cold menace to the role.", rel:"Pazzi's powerful backer", c:"#4a3a2a" },
+        { name:"Sandro Botticelli", actor:"Sebastian De Souza", wiki:"Sebastian_De_Souza", role:"Painter", desc:"The real artist behind The Birth of Venus. Young and handsome here, a fixture of Lorenzo's artistic circle. Gets more screen time in S3.", rel:"Medici-patronised painter", c:"#3a4a2a" },
+      ]},
+    ]
+  }
+};
+
+// ─────────────────────────────────────────
+// PHOTO CACHE (Wikipedia API)
+// ─────────────────────────────────────────
+const photoCache = {};
+
+function fetchActorPhoto(wikiTitle, imgEl, wrapEl) {
+  if (photoCache[wikiTitle]) {
+    applyPhoto(photoCache[wikiTitle], imgEl, wrapEl);
+    return;
+  }
+  fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(wikiTitle)}`)
+    .then(r => r.json())
+    .then(data => {
+      const src = data.thumbnail?.source;
+      photoCache[wikiTitle] = src || null;
+      applyPhoto(src, imgEl, wrapEl);
+    })
+    .catch(() => { wrapEl.classList.remove('loading'); });
+}
+
+function applyPhoto(src, imgEl, wrapEl) {
+  wrapEl.classList.remove('loading');
+  if (src) {
+    imgEl.src = src;
+    imgEl.style.display = 'block';
+    wrapEl.querySelector('.initials').style.display = 'none';
+  }
+}
+
+// ─────────────────────────────────────────
+// TIPS
+// ─────────────────────────────────────────
+let tipIdx = 0;
+function nextTip() {
+  tipIdx = (tipIdx + 1) % tips.length;
+  renderTip();
+}
+function renderTip() {
+  document.getElementById('tipText').textContent = tips[tipIdx];
+  document.getElementById('tipNav').textContent = `tap to cycle ${tipIdx+1}/${tips.length}`;
+}
+
+// ─────────────────────────────────────────
+// TABS
+// ─────────────────────────────────────────
+let currentTab = 's1';
+function switchTab(t) {
+  currentTab = t;
+  document.querySelectorAll('.main-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + t).classList.add('active');
+
+  const isTree = t === 'tree';
+  document.getElementById('season-subtitle').style.display = isTree ? 'none' : '';
+  document.getElementById('char-content').style.display = isTree ? 'none' : '';
+  document.getElementById('tree-panel').style.display = isTree ? 'block' : 'none';
+
+  if (!isTree) renderContent(t);
+}
+
+// ─────────────────────────────────────────
+// CHARACTER CARDS
+// ─────────────────────────────────────────
+function toggleCard(id) {
+  const card = document.getElementById(id);
+  const detail = document.getElementById(id + '-d');
+  const arrow = document.getElementById(id + '-a');
+  card.classList.toggle('open');
+  detail.classList.toggle('open');
+  arrow.classList.toggle('open');
+}
+
+function renderContent(s) {
+  const season = seasons[s];
+  document.getElementById('season-subtitle').textContent = season.subtitle;
+  let html = '';
+
+  season.factions.forEach((faction, fi) => {
+    html += `<div class="faction">
+      <div class="faction-header" style="background:${faction.color}22;border-left-color:${faction.color}">
+        <span class="faction-title">${faction.name}</span>
+      </div>`;
+
+    faction.members.forEach((char, ci) => {
+      const id = `c${fi}-${ci}`;
+      html += `
+        <div class="char-card" id="${id}" onclick="toggleCard('${id}')">
+          <div class="char-row">
+            <div class="photo-wrap loading" id="wrap-${id}" style="border-color:${char.c}80;box-shadow:0 2px 10px ${char.c}40">
+              <span class="initials">${char.name[0]}</span>
+              <img src="" alt="${char.actor}" style="display:none" id="img-${id}" />
+            </div>
+            <div class="char-info">
+              <div class="char-name">${char.name}</div>
+              <div class="char-name-small">${char.actor}</div>
+              <div class="char-role">${char.role}</div>
+            </div>
+            <div class="arrow" id="${id}-a">›</div>
+          </div>
+          <div class="char-detail" id="${id}-d" style="border-top:1px solid ${char.c}30">
+            <div class="char-desc">${char.desc}</div>
+            <div class="meta-line"><span class="meta-label">Actor: </span><span class="meta-actor">${char.actor}</span></div>
+            <div class="meta-line"><span class="meta-label">Relation: </span><span class="meta-rel">${char.rel}</span></div>
+          </div>
+        </div>`;
+    });
+
+    html += '</div>';
+  });
+
+  document.getElementById('char-content').innerHTML = html;
+
+  // Fetch photos after render
+  season.factions.forEach((faction, fi) => {
+    faction.members.forEach((char, ci) => {
+      const id = `c${fi}-${ci}`;
+      const imgEl = document.getElementById('img-' + id);
+      const wrapEl = document.getElementById('wrap-' + id);
+      if (char.wiki) fetchActorPhoto(char.wiki, imgEl, wrapEl);
+    });
+  });
+}
+
+// ─────────────────────────────────────────
+// FAMILY TREE (SVG) — fixed layout
+// ─────────────────────────────────────────
+function buildTree() {
+  // Use a wider canvas so 3 columns don't overlap; scrollable horizontally
+  const NW = 130, NH = 58, RX = 6, GAP = 16;
+  const COLS = 3;
+  const W = COLS * NW + (COLS + 1) * GAP;  // = 3*130 + 4*16 = 454
+  const H = 760;
+
+  // Column x positions (left edge of node)
+  const L = GAP;                       // left  col x
+  const C = GAP*2 + NW;                // centre col x
+  const R = GAP*3 + NW*2;             // right  col x
+
+  // Row y positions
+  const Y = [10, 100, 190, 290, 390, 480, 570];
+  //         0    1    2    3    4    5    6
+
+  // cx/cy = centre of a node given (x,y)
+  const cx = x => x + NW/2;
+  const cy = y => y + NH/2;
+  const bot = y => y + NH;
+  const top = y => y;
+
+  // Nodes: [x, y, name, actor, color, label]
+  const nodes = [
+    // Row 0 — Giovanni (centre)
+    [C, Y[0], "Giovanni de' Medici",   "Dustin Hoffman",  "#6b3a1a", "Patriarch · S1"],
+    // Row 1 — Cosimo (centre)
+    [C, Y[1], "Cosimo de' Medici",     "Richard Madden",  "#8B1A1A", "Pater Patriae · S1"],
+    // Row 1 — siblings / spouse flanking Cosimo
+    [L, Y[1], "Lorenzo (brother, S1)", "Stuart Martin",   "#7a4a1a", "Cosimo's brother · S1"],
+    [R, Y[1], "Contessina de' Bardi",  "Annabel Scholey", "#7a4f3a", "Cosimo's wife · S1"],
+    // Row 2 — Bianca (left), Piero (centre)
+    [L, Y[2], "Bianca",               "A. Mastronardi",  "#7a5a1a", "Cosimo's lover · S1"],
+    [C, Y[2], "Piero de' Medici",      "Julian Sands",    "#5a3d1a", "Bridge · S2"],
+    // Row 3 — Lorenzo il Magnifico (centre) + siblings/spouse
+    [L, Y[3], "Giuliano de' Medici",   "Bradley James",   "#6b3a1f", "Lorenzo's brother · S2"],
+    [C, Y[3], "Lorenzo il Magnifico",  "Daniel Sharman",  "#8B1A1A", "The Magnificent · S2–3"],
+    [R, Y[3], "Clarice Orsini",        "Synnøve Karlsen", "#7a4f3a", "Lorenzo's wife · S2"],
+    // Row 4 — Jacopo Pazzi (left), Lucrezia (right)
+    [L, Y[4], "Jacopo de' Pazzi",      "Sean Bean",       "#1a3a5c", "Pazzi patriarch · S2"],
+    [R, Y[4], "Lucrezia Donati",       "A. Mastronardi",  "#7a5a1a", "Lorenzo's lover · S2"],
+    // Row 5 — Francesco Pazzi (left)
+    [L, Y[5], "Francesco de' Pazzi",   "Tom Bateman",     "#2d4a6e", "The assassin · S2"],
+  ];
+
+  // Lines: [x1,y1, x2,y2, stroke, dash]
+  const lines = [
+    // Giovanni → Cosimo (parent)
+    [cx(C),bot(Y[0]), cx(C),top(Y[1]), '#c8a84a',''],
+    // Cosimo → Piero (parent)
+    [cx(C),bot(Y[1]), cx(C),top(Y[2]), '#c8a84a',''],
+    // Piero → Lorenzo Mag (parent)
+    [cx(C),bot(Y[2]), cx(C),top(Y[3]), '#c8a84a',''],
+    // Cosimo — Lorenzo S1 (sibling, dashed gold)
+    [cx(L)+NW/2, cy(Y[1]), cx(C)-NW/2, cy(Y[1]), '#c8a84a','5,3'],
+    // Cosimo — Contessina (marriage, red dashed)
+    [cx(C)+NW/2, cy(Y[1]), cx(R)-NW/2, cy(Y[1]), '#e07070','5,3'],
+    // Cosimo — Bianca (lover, amber dotted): diagonal
+    [cx(C), Y[1]+NH*0.75, cx(L), top(Y[2]), '#b8822a','3,4'],
+    // Lorenzo Mag — Giuliano (sibling)
+    [cx(L)+NW/2, cy(Y[3]), cx(C)-NW/2, cy(Y[3]), '#c8a84a','5,3'],
+    // Lorenzo Mag — Clarice (marriage)
+    [cx(C)+NW/2, cy(Y[3]), cx(R)-NW/2, cy(Y[3]), '#e07070','5,3'],
+    // Lorenzo Mag — Lucrezia (lover): diagonal
+    [cx(C)+NW/2, Y[3]+NH*0.7, cx(R), top(Y[4]), '#b8822a','3,4'],
+    // Jacopo → Francesco (parent)
+    [cx(L),bot(Y[4]), cx(L),top(Y[5]), '#1a3a5c',''],
+    // Pazzi vs Medici (enemy): Jacopo to Lorenzo Mag
+    [cx(L)+NW/2, cy(Y[4]), cx(C)-NW/2, cy(Y[3])+NH*0.4, '#6a8aaa','5,4'],
+  ];
+
+  let svg = `<svg width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg" style="display:block">
+  <rect width="${W}" height="${H}" fill="#0e0a04" rx="8"/>
+  `;
+
+  // Lines first (behind nodes)
+  lines.forEach(([x1,y1,x2,y2,color,dash]) => {
+    svg += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="1.5" ${dash?`stroke-dasharray="${dash}"`:''}  opacity="0.75"/>`;
+  });
+
+  // Nodes
+  nodes.forEach(([x, y, name, actor, color, label]) => {
+    // truncate long names
+    const displayName = name.length > 22 ? name.slice(0,21)+'…' : name;
+    svg += `
+    <g>
+      <rect x="${x}" y="${y}" width="${NW}" height="${NH}" rx="${RX}" fill="${color}28" stroke="${color}" stroke-width="1.3"/>
+      <text x="${x+NW/2}" y="${y+15}" text-anchor="middle" font-family="Georgia,serif" font-size="10" font-weight="bold" fill="#f0d890">${displayName}</text>
+      <text x="${x+NW/2}" y="${y+27}" text-anchor="middle" font-family="Georgia,serif" font-size="9" fill="#a09060" font-style="italic">${actor}</text>
+      <text x="${x+NW/2}" y="${y+40}" text-anchor="middle" font-family="Georgia,serif" font-size="8.5" fill="#c8a84a">${label}</text>
+    </g>`;
+  });
+
+  // Legend at bottom
+  const LY = H - 55;
+  svg += `
+  <rect x="8" y="${LY}" width="${W-16}" height="46" rx="5" fill="#1a1006" stroke="#3a2a10" stroke-width="1"/>
+  <text x="16" y="${LY+13}" font-family="Georgia,serif" font-size="9" font-weight="bold" fill="#c8a84a">Legend</text>
+  <line x1="16" y1="${LY+24}" x2="36" y2="${LY+24}" stroke="#c8a84a" stroke-width="1.5"/>
+  <text x="40" y="${LY+28}" font-family="Georgia,serif" font-size="9" fill="#9a8a60">Parent → Child</text>
+  <line x1="120" y1="${LY+24}" x2="140" y2="${LY+24}" stroke="#c8a84a" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="144" y="${LY+28}" font-family="Georgia,serif" font-size="9" fill="#9a8a60">Siblings</text>
+  <line x1="190" y1="${LY+24}" x2="210" y2="${LY+24}" stroke="#e07070" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="214" y="${LY+28}" font-family="Georgia,serif" font-size="9" fill="#9a8a60">Marriage</text>
+  <line x1="270" y1="${LY+24}" x2="290" y2="${LY+24}" stroke="#b8822a" stroke-width="1.5" stroke-dasharray="3,4"/>
+  <text x="294" y="${LY+28}" font-family="Georgia,serif" font-size="9" fill="#9a8a60">Lover</text>
+  <line x1="330" y1="${LY+24}" x2="350" y2="${LY+24}" stroke="#6a8aaa" stroke-width="1.5" stroke-dasharray="5,4"/>
+  <text x="354" y="${LY+28}" font-family="Georgia,serif" font-size="9" fill="#9a8a60">Enemy</text>
+  </svg>`;
+
+  document.getElementById('treeSvg').outerHTML = svg;
+}
+
+// ─────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────
+renderTip();
+renderContent('s1');
+buildTree();
+</script>
+</body>
+</html>
