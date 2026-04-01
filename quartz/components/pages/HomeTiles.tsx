@@ -21,7 +21,7 @@ const HomeTiles: QuartzComponent = ({ fileData }: QuartzComponentProps) => {
         <div class="home-featured">
           <div class="home-section-label">Featured</div>
 
-          <a href="/posts/testing1" class="hf-card hf-large hf-purple">
+          <a href="/posts/medici-whos-who" class="hf-card hf-large hf-purple">
             <div class="hf-content">
               <div class="hf-tag">history · renaissance-history</div>
               <div class="hf-title">Who the Hell Is Who in Medici: Masters of Florence</div>
@@ -86,7 +86,7 @@ const HomeTiles: QuartzComponent = ({ fileData }: QuartzComponentProps) => {
 
           <div class="home-section-label" style="margin-top:10px">Recent Updates</div>
           <div class="home-recent">
-            <a href="/posts/testing1" class="hrecent-item">
+            <a href="/posts/medici-whos-who" class="hrecent-item">
               <div class="hrecent-title">Who the Hell Is Who in Medici: Masters of Florence</div>
               <div class="hrecent-meta">Mar 31 · history</div>
             </a>
@@ -126,7 +126,7 @@ const HomeTiles: QuartzComponent = ({ fileData }: QuartzComponentProps) => {
             <div class="home-moc-accent home-moc-accent-amber"></div>
             <div class="home-moc-title">Life &amp; Parenting</div>
             <ul>
-              <li><a href="/posts/testing1">Who the Hell Is Who in Medici: Masters of Florence</a></li>
+              <li><a href="/posts/medici-whos-who">Who the Hell Is Who in Medici: Masters of Florence</a></li>
               <li><a href="/posts/testing3">Testing 3</a></li>
               <li class="moc-more">+ more</li>
             </ul>
