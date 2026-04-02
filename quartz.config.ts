@@ -14,7 +14,7 @@ const config: QuartzConfig = {
     enablePopovers: true,
     analytics: {
       provider: "goatcounter",
-      websitePrefix: "https://silviazeng.goatcounter.com",
+      websiteId: "silviazeng",
     },
     locale: "en-US",
     baseUrl: "silviazeng.github.io",
