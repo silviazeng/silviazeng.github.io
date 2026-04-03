@@ -198,28 +198,20 @@ article p {
 .hf-sm     { height: 150px; flex: 1; }
 .hf-wide   { height: 90px; }
 
-// Tile 1: cognition/parenting — deep space, violet glow + dot constellation
+// Tile 1: Medici — Renaissance fresco background with dark overlay
 .hf-purple {
   background: #0a0810;
+  background-image: url('/static/medici-tile.jpg');
+  background-size: cover;
+  background-position: center center;
 
   &::before {
     content: '';
     position: absolute;
     inset: 0;
     background:
-      radial-gradient(ellipse 90% 70% at 80% 10%, rgba(110, 70, 220, 0.32) 0%, transparent 65%),
-      radial-gradient(ellipse 50% 50% at 15% 85%, rgba(70, 40, 150, 0.15) 0%, transparent 60%);
-    z-index: 0;
-  }
-
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
-    background-size: 26px 26px;
-    mask-image: radial-gradient(ellipse 75% 55% at 75% 18%, black 0%, transparent 65%);
-    -webkit-mask-image: radial-gradient(ellipse 75% 55% at 75% 18%, black 0%, transparent 65%);
+      linear-gradient(to top, rgba(5, 3, 12, 0.95) 0%, rgba(5, 3, 12, 0.75) 40%, rgba(5, 3, 12, 0.20) 100%),
+      radial-gradient(ellipse 90% 70% at 80% 10%, rgba(80, 40, 160, 0.30) 0%, transparent 65%);
     z-index: 0;
   }
 }
@@ -323,7 +315,7 @@ article p {
 }
 
 .hf-title {
-  font-size: 13px;
+  font-size: 17.5px;
   font-weight: 500;
   color: #e8e6de !important;
   line-height: 1.45;

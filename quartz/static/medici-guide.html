@@ -154,7 +154,7 @@
   </div>
 
   <div style="margin-top:16px; padding: 10px 12px; background:#1a1006; border:1px solid #3a2a10; border-radius:8px; font-size:11px; color:#9a8a60; line-height:1.7;">
-    <strong style="color:#c8a84a">⚠️ Same actress, two roles:</strong> Alessandra Mastronardi plays <em>Bianca</em> (Cosimo's lover, S1) and <em>Lucrezia Donati</em> (Lorenzo's lover, S2). Don't be confused — they're different characters, same face.<br><br>
+    <strong style="color:#c8a84a">⚠️ Same actress, two roles:</strong> Alessandra Mastronardi appears in S1 and returns in S2 as <em>Lucrezia Donati</em> (Lorenzo's lover) — a completely different character. Same face, different person.<br><br>
     <strong style="color:#c8a84a">⚠️ Two different Lorenzos:</strong> S1's Lorenzo (Stuart Martin) is Cosimo's brother. S2's Lorenzo il Magnifico (Daniel Sharman) is Cosimo's grandson — different generation, different actor.
   </div>
 </div>
@@ -164,7 +164,7 @@
 // DATA
 // ─────────────────────────────────────────
 const tips = [
-  "⚠️ SAME ACTRESS: Alessandra Mastronardi plays Bianca (S1, Cosimo's lover) AND Lucrezia Donati (S2, Lorenzo's lover)",
+  "⚠️ SAME ACTRESS: Alessandra Mastronardi appears in S1, then returns in S2 as Lucrezia Donati (Lorenzo's lover) — a completely different character",
   "⚠️ TWO LORENZOS: S1's Lorenzo (Stuart Martin) = Cosimo's brother · S2's Lorenzo (Daniel Sharman) = Cosimo's grandson",
   "💡 Sean Bean (Ned Stark in GoT) plays Jacopo de' Pazzi — the most recognisable face in Season 2",
   "💡 Richard Madden (Robb Stark in GoT) plays Cosimo — yes, GoT father and son are both in this show",
@@ -175,19 +175,19 @@ const seasons = {
     subtitle: "1429 — Giovanni's mysterious death · Cosimo inherits the empire",
     factions: [
       { name: "🏛  The Medici", color: "#8B1A1A", members: [
-        { name:"Cosimo de' Medici", actor:"Richard Madden", wiki:"Richard_Madden", role:"Protagonist · eldest son", desc:"Thrust into power when his father dies unexpectedly. Dual timeline: adult Cosimo investigates the death; young Cosimo travels to Rome. Dark hair, brooding intensity.", rel:"Son of Giovanni · brother of Lorenzo (S1)", c:"#8B1A1A" },
-        { name:"Giovanni de' Medici", actor:"Dustin Hoffman", wiki:"Dustin_Hoffman", role:"Family patriarch · banker", desc:"White hair and beard, commanding presence. Dies in Episode 1 under suspicious circumstances — solving his murder is the season's spine.", rel:"Father of Cosimo", c:"#5a3d1a" },
-        { name:"Lorenzo de' Medici (brother)", actor:"Stuart Martin", wiki:"Stuart_Martin_(actor)", role:"Cosimo's younger brother", desc:"⚠️ NOT the same Lorenzo as Season 2! Impulsive and hot-headed. Golden-brown hair, high cheekbones. An entirely different character from S2's Lorenzo il Magnifico.", rel:"Cosimo's brother (S1 only)", c:"#6b3a1f" },
-        { name:"Contessina de' Bardi", actor:"Annabel Scholey", wiki:"Annabel_Scholey", role:"Cosimo's wife", desc:"A political marriage who becomes a genuine partner. Blonde, sharp, emotionally grounding for Cosimo.", rel:"Cosimo's wife", c:"#7a4f3a" },
+        { name:"Cosimo de' Medici (1389–1464)", actor:"Richard Madden", wiki:"Richard_Madden", role:"Protagonist · eldest son", desc:"Used his father's banking fortune to become Florence's de facto ruler without ever holding major formal office — earning the posthumous title Pater Patriae (Father of the Fatherland). Exiled by the Albizzi in 1433, he returned within a year and dominated Florentine politics for thirty years, reshaping the city through wealth, patronage, and diplomacy.", rel:"Son of Giovanni · brother of Lorenzo (S1)", c:"#8B1A1A" },
+        { name:"Giovanni de' Medici (1360–1429)", actor:"Dustin Hoffman", wiki:"Dustin_Hoffman", role:"Family patriarch · banker", desc:"The true architect of Medici power. Transformed a modest banking operation into one of Europe's largest financial empires by securing the papacy as a client — making the Medici the Vatican's exclusive bankers and generating the dynastic wealth that funded everything that followed. Deliberately avoided overt political ambition, building economic dominance first so his sons could leverage it later.", rel:"Father of Cosimo", c:"#5a3d1a" },
+        { name:"Lorenzo de' Medici (1394–1440)", actor:"Stuart Martin", wiki:"Stuart_Martin_(actor)", role:"Cosimo's younger brother", desc:"⚠️ NOT the same Lorenzo as Season 2! Cosimo's brother and business partner, he managed key branches of the Medici bank including the Venice office. Less politically prominent than Cosimo, he founded a cadet branch of the family whose descendants would later rival the main line.", rel:"Cosimo's brother (S1 only)", c:"#6b3a1f" },
+        { name:"Contessina de' Bardi (c. 1390–1473)", actor:"Annabel Scholey", wiki:"Annabel_Scholey", role:"Cosimo's wife", desc:"The marriage that legitimised the Medici's social ascent. The de' Bardi had been medieval Florence's dominant banking dynasty — once richer than most European kings — before their catastrophic collapse when Edward III of England defaulted on massive loans in 1345. Their name still carried enormous prestige; by marrying Contessina in 1415, Cosimo gained the social standing that money alone couldn't buy. An indispensable partner who held the family together during Cosimo's exile.", rel:"Cosimo's wife", c:"#7a4f3a" },
       ]},
       { name: "⚔️  The Albizzi (Rivals)", color: "#1a3a5c", members: [
-        { name:"Rinaldo degli Albizzi", actor:"Lex Shrapnel", wiki:"Lex_Shrapnel", role:"Primary antagonist", desc:"The voice of old Florentine nobility. Short beard, cold and calculating. His goal: drive the Medici out of Florence.", rel:"Medici's chief political enemy", c:"#1a3a5c" },
-        { name:"Bernardo Guadagni", actor:"Brian Cox", wiki:"Brian_Cox_(actor)", role:"Gonfaloniere of Justice", desc:"White-haired elder statesman, Florence's nominal leader — but manipulated by the Albizzi. Has his own conscience and dignity.", rel:"Civic official caught between factions", c:"#2d4a6e" },
+        { name:"Rinaldo degli Albizzi (1370–1442)", actor:"Lex Shrapnel", wiki:"Lex_Shrapnel", role:"Primary antagonist", desc:"The last champion of Florence's old oligarchic order. Led the faction of noble families who saw the Medici's growing power as a threat to the traditional republican structure. Engineered Cosimo's exile in 1433 — but when Cosimo returned and took power in 1434, Rinaldo was himself exiled and died in Ancona in 1442 without ever returning to Florence.", rel:"Medici's chief political enemy", c:"#1a3a5c" },
+        { name:"Bernardo Guadagni (1367–1434)", actor:"Brian Cox", wiki:"Brian_Cox_(actor)", role:"Gonfaloniere of Justice", desc:"Florence's highest civic official in 1433, who presided over Cosimo's arrest and exile — reportedly after being bribed by the Albizzi. The gamble backfired: when Cosimo returned to power within a year, Guadagni's political legacy was permanently tarnished. He died in Pisa in 1434.", rel:"Civic official caught between factions", c:"#2d4a6e" },
       ]},
       { name: "✨  Key Supporting", color: "#5a4a1a", members: [
-        { name:"Bianca", actor:"Alessandra Mastronardi", wiki:"Alessandra_Mastronardi", role:"Cosimo's first love", desc:"⚠️ Same actress plays a DIFFERENT character in S2! Young Cosimo meets her in Rome — a model for Donatello. Dark hair, vivid. Their separation shapes Cosimo for life.", rel:"Cosimo's lost love (S1)", c:"#7a5a1a" },
-        { name:"Marco Bello", actor:"Guido Caprino", wiki:"Guido_Caprino", role:"Cosimo's loyal steward", desc:"Dark curly hair, olive complexion. Cosimo's right hand in both business and politics — unfailingly loyal.", rel:"Medici family steward", c:"#4a3a2a" },
-        { name:"Donatello", actor:"Paul Rhys", wiki:"Paul_Rhys", role:"Sculptor · Cosimo's friend", desc:"The real Renaissance master. Unkempt beard, casual dress, eccentric energy. Cosimo's closest artistic confidant.", rel:"Cosimo's friend and protégé", c:"#3a4a2a" },
+        { name:"Pope Eugenius IV (1383–1447)", actor:"David Bamber", wiki:null, role:"The pope they helped to power", desc:"Elected in 1431, Eugenius IV spent most of his pontificate outside Rome — including nearly a decade in Florence (1434–1443) sheltered and financed by the Medici. He and Cosimo enjoyed a close working relationship: the Medici bank funded his ecclesiastical politics; Eugenius in turn legitimised Medici power and consecrated Brunelleschi's famous dome in 1436.", rel:"Medici's most powerful patron", c:"#4a3a6a" },
+        { name:"Marco Bello", actor:"Guido Caprino", wiki:"Guido_Caprino", role:"Cosimo's loyal steward", desc:"Fictional composite character. Represents the class of indispensable fixers on whom powerful Renaissance families quietly depended — handling diplomatic missions, political dirty work, and anything else that needed to stay off the record.", rel:"Medici family steward", c:"#4a3a2a" },
+        { name:"Donatello (c. 1386–1466)", actor:"Paul Rhys", wiki:"Paul_Rhys", role:"Sculptor · Cosimo's friend", desc:"The sculptor who launched the Renaissance. His bronze David (c. 1440s) was the first freestanding nude male sculpture since antiquity; his equestrian statue Gattamelata pioneered a form that defined European public art for centuries. Cosimo was his principal patron and close friend, and Donatello's workshop operated under effective Medici protection throughout his career.", rel:"Cosimo's friend and protégé", c:"#3a4a2a" },
       ]},
     ]
   },
@@ -195,19 +195,19 @@ const seasons = {
     subtitle: "1478 — The Pazzi Conspiracy · Lorenzo il Magnifico's golden age",
     factions: [
       { name: "🏛  The Medici", color: "#8B1A1A", members: [
-        { name:"Lorenzo il Magnifico", actor:"Daniel Sharman", wiki:"Daniel_Sharman", role:"Protagonist · Lorenzo the Magnificent", desc:"⚠️ New actor, new generation! Cosimo's grandson. Sharp amber eyes, commanding presence. Renaissance ruler, poet, and patron of the arts — the most important Medici.", rel:"Son of Piero · brother of Giuliano", c:"#8B1A1A" },
-        { name:"Giuliano de' Medici", actor:"Bradley James", wiki:"Bradley_James_(actor)", role:"Lorenzo's younger brother", desc:"Blond, handsome, romantic and warm-hearted. Historically, he was stabbed to death during the Pazzi Conspiracy — in a cathedral, during Mass.", rel:"Lorenzo's brother", c:"#6b3a1f" },
-        { name:"Clarice Orsini", actor:"Synnøve Karlsen", wiki:"Synnøve_Karlsen", role:"Lorenzo's wife", desc:"Roman noblewoman, married for political alliance. Composed and dignified — a foil to Lorenzo's passionate mistress.", rel:"Lorenzo's wife", c:"#7a4f3a" },
-        { name:"Piero de' Medici", actor:"Julian Sands", wiki:"Julian_Sands", role:"Lorenzo's father", desc:"Cosimo's son, plagued by gout his entire life. Appears mostly in flashback this season — a frail bridge between two eras.", rel:"Lorenzo's father", c:"#5a3d1a" },
+        { name:"Lorenzo il Magnifico (1449–1492)", actor:"Daniel Sharman", wiki:"Daniel_Sharman", role:"Protagonist · Lorenzo the Magnificent", desc:"⚠️ New actor, new generation — Cosimo's grandson. The defining figure of the Italian Renaissance: poet, philosopher, diplomat, and the most important arts patron of his age. Survived the Pazzi Conspiracy (1478), which only hardened his grip on power. Under his rule, Florence produced Botticelli, Leonardo da Vinci, and a teenage Michelangelo — all in the same decade.", rel:"Son of Piero · brother of Giuliano", c:"#8B1A1A" },
+        { name:"Giuliano de' Medici (1453–1478)", actor:"Bradley James", wiki:"Bradley_James_(actor)", role:"Lorenzo's younger brother", desc:"Murdered inside Florence's cathedral during High Mass on April 26, 1478 — stabbed 19 times by Francesco de' Pazzi in the most audacious political assassination of the Renaissance. His brother Lorenzo survived the same attack with a sword wound, making Giuliano's death the moment that hardened Lorenzo's rule into something closer to autocracy.", rel:"Lorenzo's brother", c:"#6b3a1f" },
+        { name:"Clarice Orsini (c. 1453–1488)", actor:"Synnøve Karlsen", wiki:"Synnøve_Karlsen", role:"Lorenzo's wife", desc:"Her marriage to Lorenzo in 1469 was pure geopolitical calculus: the Orsini were one of Rome's most powerful noble clans, and the alliance gave the Medici a critical foothold in papal politics. She died young at 35. Their marriage produced ten children, including the future Pope Leo X.", rel:"Lorenzo's wife", c:"#7a4f3a" },
+        { name:"Piero de' Medici (1416–1469)", actor:"Julian Sands", wiki:"Julian_Sands", role:"Lorenzo's father · the Gouty", desc:"Cosimo's son and reluctant successor, chronically disabled by gout severe enough to prevent him from walking most days. Despite ruling Florence for only five years (1464–1469), he held the Medici position through diplomatic skill and careful management of the bank. His reign was a bridge, not a climax.", rel:"Lorenzo's father", c:"#5a3d1a" },
       ]},
       { name: "⚔️  The Pazzi (Rivals)", color: "#1a3a5c", members: [
-        { name:"Jacopo de' Pazzi", actor:"Sean Bean", wiki:"Sean_Bean", role:"Pazzi family patriarch", desc:"That's Ned Stark from Game of Thrones! White-haired, weathered, consumed by aristocratic grievance. Broad nose, deep-set eyes — very recognisable.", rel:"Medici's primary rival", c:"#1a3a5c" },
-        { name:"Francesco de' Pazzi", actor:"Tom Bateman", wiki:"Tom_Bateman", role:"The conspirator", desc:"Young, volatile, fanatical. The man who actually carries out the assassination attempt in the cathedral. Dark hair, unstable gaze.", rel:"Jacopo's nephew", c:"#2d4a6e" },
+        { name:"Jacopo de' Pazzi (1423–1478)", actor:"Sean Bean", wiki:"Sean_Bean", role:"Pazzi family patriarch", desc:"Patriarch of the Pazzi family — Florence's second-most powerful banking dynasty and the Medici's most dangerous rivals. He gambled everything on the 1478 conspiracy, backed by Pope Sixtus IV. When it failed, the consequences were brutal: Jacopo was captured, stripped, publicly humiliated, and hanged from the Palazzo della Signoria alongside his co-conspirators.", rel:"Medici's primary rival", c:"#1a3a5c" },
+        { name:"Francesco de' Pazzi (1444–1478)", actor:"Tom Bateman", wiki:"Tom_Bateman", role:"The conspirator", desc:"The man who pulled the trigger. Francesco personally stabbed Giuliano de' Medici 19 times inside Florence's cathedral during High Mass — so frenzied that he accidentally stabbed himself in the thigh in the process. That same evening, Lorenzo escaped, and Francesco was captured, hanged, and his body thrown into the street.", rel:"Jacopo's nephew", c:"#2d4a6e" },
       ]},
       { name: "✨  Key Supporting", color: "#5a4a1a", members: [
-        { name:"Lucrezia Donati", actor:"Alessandra Mastronardi", wiki:"Alessandra_Mastronardi", role:"Lorenzo's mistress", desc:"⚠️ Same actress as S1's Bianca! Different character, different name. Dark-haired and passionate — her affair with Lorenzo is a central emotional thread.", rel:"Lorenzo's lover", c:"#7a5a1a" },
-        { name:"Pope Sixtus IV", actor:"Raoul Bova", wiki:"Raoul_Bova", role:"The puppet master", desc:"The Pazzi Conspiracy's secret sponsor. Dressed in papal white — Italian star Raoul Bova brings cold menace to the role.", rel:"Pazzi's powerful backer", c:"#4a3a2a" },
-        { name:"Sandro Botticelli", actor:"Sebastian De Souza", wiki:"Sebastian_De_Souza", role:"Painter", desc:"The real artist behind The Birth of Venus. Young and handsome here, a fixture of Lorenzo's artistic circle. Gets more screen time in S3.", rel:"Medici-patronised painter", c:"#3a4a2a" },
+        { name:"Lucrezia Donati (1447–1501)", actor:"Alessandra Mastronardi", wiki:"Alessandra_Mastronardi", role:"Lorenzo's mistress", desc:"⚠️ Same actress as S1 — different character, different name. Lorenzo's documented long-term mistress and the subject of his early love poetry. Despite her parallel marriage to nobleman Niccolò Ardinghelli, the relationship was an open secret entirely compatible with Renaissance aristocratic norms. She outlived Lorenzo by nearly a decade.", rel:"Lorenzo's lover", c:"#7a5a1a" },
+        { name:"Pope Sixtus IV (1414–1484)", actor:"Raoul Bova", wiki:"Raoul_Bova", role:"The conspiracy's architect", desc:"Covertly bankrolled the Pazzi plot to replace the Medici — whose political independence he found intolerable — with the more manageable Pazzi family. When the conspiracy failed, he excommunicated Lorenzo and placed all of Florence under interdict. He also commissioned the Sistine Chapel, which bears his name.", rel:"Pazzi's powerful backer", c:"#4a3a2a" },
+        { name:"Sandro Botticelli (1445–1510)", actor:"Sebastian De Souza", wiki:"Sebastian_De_Souza", role:"Painter", desc:"The painter who made the Renaissance visible. The Birth of Venus and Primavera — both commissioned under Medici patronage — distilled Lorenzo's Neoplatonist philosophy into images that have defined Western art ever since. Botticelli spent most of his career within the Medici orbit; Lorenzo's death in 1492 effectively ended his most creative period.", rel:"Medici-patronised painter", c:"#3a4a2a" },
       ]},
     ]
   }
@@ -361,8 +361,7 @@ function buildTree() {
     // Row 1 — siblings / spouse flanking Cosimo
     [L, Y[1], "Lorenzo (brother, S1)", "Stuart Martin",   "#7a4a1a", "Cosimo's brother · S1"],
     [R, Y[1], "Contessina de' Bardi",  "Annabel Scholey", "#7a4f3a", "Cosimo's wife · S1"],
-    // Row 2 — Bianca (left), Piero (centre)
-    [L, Y[2], "Bianca",               "A. Mastronardi",  "#7a5a1a", "Cosimo's lover · S1"],
+    // Row 2 — Piero (centre)
     [C, Y[2], "Piero de' Medici",      "Julian Sands",    "#5a3d1a", "Bridge · S2"],
     // Row 3 — Lorenzo il Magnifico (centre) + siblings/spouse
     [L, Y[3], "Giuliano de' Medici",   "Bradley James",   "#6b3a1f", "Lorenzo's brother · S2"],
@@ -387,8 +386,6 @@ function buildTree() {
     [cx(L)+NW/2, cy(Y[1]), cx(C)-NW/2, cy(Y[1]), '#c8a84a','5,3'],
     // Cosimo — Contessina (marriage, red dashed)
     [cx(C)+NW/2, cy(Y[1]), cx(R)-NW/2, cy(Y[1]), '#e07070','5,3'],
-    // Cosimo — Bianca (lover, amber dotted): diagonal
-    [cx(C), Y[1]+NH*0.75, cx(L), top(Y[2]), '#b8822a','3,4'],
     // Lorenzo Mag — Giuliano (sibling)
     [cx(L)+NW/2, cy(Y[3]), cx(C)-NW/2, cy(Y[3]), '#c8a84a','5,3'],
     // Lorenzo Mag — Clarice (marriage)

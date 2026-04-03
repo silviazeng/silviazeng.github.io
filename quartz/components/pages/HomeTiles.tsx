@@ -1,6 +1,13 @@
 import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "../types"
+import { QuartzPluginData } from "../plugins/vfile"
 
-const HomeTiles: QuartzComponent = ({ fileData }: QuartzComponentProps) => {
+function postTags(slug: string, allFiles: QuartzPluginData[], n = 3): string {
+  const file = allFiles.find((f) => f.slug === slug)
+  const tags: string[] = (file?.frontmatter?.tags as string[]) ?? []
+  return tags.slice(0, n).join(" · ")
+}
+
+const HomeTiles: QuartzComponent = ({ fileData, allFiles }: QuartzComponentProps) => {
   if (fileData.slug !== "index") return null
 
   return (
@@ -23,7 +30,7 @@ const HomeTiles: QuartzComponent = ({ fileData }: QuartzComponentProps) => {
 
           <a href="/posts/medici-whos-who" class="hf-card hf-large hf-purple">
             <div class="hf-content">
-              <div class="hf-tag">history · renaissance-history</div>
+              <div class="hf-tag">{postTags("posts/medici-whos-who", allFiles)}</div>
               <div class="hf-title">Who the Hell Is Who in Medici: Masters of Florence</div>
               <div class="hf-desc">Mar 31, 2026</div>
             </div>
@@ -32,14 +39,14 @@ const HomeTiles: QuartzComponent = ({ fileData }: QuartzComponentProps) => {
           <div class="hf-row">
             <a href="/posts/testing2" class="hf-card hf-sm hf-teal">
               <div class="hf-content">
-                <div class="hf-tag">AI · learning</div>
+                <div class="hf-tag">{postTags("posts/testing2", allFiles)}</div>
                 <div class="hf-title">Testing 2</div>
                 <div class="hf-desc">Mar 20, 2026</div>
               </div>
             </a>
             <a href="/posts/testing3" class="hf-card hf-sm hf-dark">
               <div class="hf-content">
-                <div class="hf-tag">travel · life</div>
+                <div class="hf-tag">{postTags("posts/testing3", allFiles)}</div>
                 <div class="hf-title">Testing 3</div>
                 <div class="hf-desc">Feb 10, 2026</div>
               </div>
@@ -49,7 +56,7 @@ const HomeTiles: QuartzComponent = ({ fileData }: QuartzComponentProps) => {
           <a href="/posts/testing4" class="hf-card hf-wide hf-coral">
             <div class="hf-content hf-wide-content">
               <div>
-                <div class="hf-tag">career · work</div>
+                <div class="hf-tag">{postTags("posts/testing4", allFiles)}</div>
                 <div class="hf-title">Testing 4</div>
               </div>
               <div class="hf-meta">Mar 10, 2026</div>
