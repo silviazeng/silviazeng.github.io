@@ -52,6 +52,7 @@ h1.article-title {
   font-size: 22px !important;
   font-weight: 500 !important;
   border-bottom: none !important;
+  color: #f0ede4 !important;
 }
 
 .content-meta {
@@ -62,6 +63,10 @@ h1.article-title {
 article p {
   color: #b8b6ac !important;
   line-height: 1.8 !important;
+
+  strong {
+    color: #6ecf9a !important;
+  }
 }
 
 .tag-link {
@@ -216,28 +221,20 @@ article p {
   }
 }
 
-// Tile 2: AI/learning — dark teal with corner glow + grid
+// Tile 2: Medici uncertainty — renaissance painting background with dark overlay
 .hf-teal {
   background: #060f0c;
+  background-image: url('/static/medici-uncertainty-tile.jpg');
+  background-size: cover;
+  background-position: center center;
 
   &::before {
     content: '';
     position: absolute;
     inset: 0;
     background:
-      radial-gradient(ellipse 65% 65% at 88% 12%, rgba(30, 190, 105, 0.26) 0%, transparent 55%),
-      radial-gradient(ellipse 40% 55% at 8% 75%, rgba(20, 120, 70, 0.12) 0%, transparent 55%);
-    z-index: 0;
-  }
-
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(40, 200, 110, 0.055) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(40, 200, 110, 0.055) 1px, transparent 1px);
-    background-size: 20px 20px;
+      linear-gradient(to top, rgba(4, 10, 7, 0.95) 0%, rgba(4, 10, 7, 0.75) 40%, rgba(4, 10, 7, 0.25) 100%),
+      radial-gradient(ellipse 90% 70% at 80% 10%, rgba(20, 120, 70, 0.25) 0%, transparent 65%);
     z-index: 0;
   }
 }
