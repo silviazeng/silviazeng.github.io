@@ -4,7 +4,7 @@ import { classNames } from "../util/lang"
 import { i18n } from "../i18n"
 
 const BranchIcon = () => (
-  <svg class="page-title-branch" width="18" height="22" viewBox="0 0 18 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <svg class="page-title-branch" width="26" height="32" viewBox="0 0 18 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     {/* trunk */}
     <line x1="9" y1="22" x2="9" y2="13" stroke="#3d8b5c" stroke-width="1.5" stroke-linecap="round"/>
     {/* main left branch */}
@@ -48,15 +48,20 @@ const PageTitle: QuartzComponent = ({ fileData, cfg, displayClass }: QuartzCompo
 
 PageTitle.css = `
 .page-title {
-  font-size: 1.75rem;
+  font-size: 2.4rem;
   margin: 0;
-  font-family: var(--titleFont);
+  font-family: 'Spectral', serif;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0.02em;
 }
 
 .page-title a {
   display: flex;
-  align-items: center;
-  gap: 8px;
+  align-items: baseline;
+  gap: 10px;
+  color: var(--color-accent);
+  text-decoration: none;
 }
 
 .page-title-branch {
