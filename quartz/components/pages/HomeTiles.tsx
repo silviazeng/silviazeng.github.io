@@ -43,15 +43,7 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles }: QuartzComponentProps
 
           <a href="/posts/medici-answer-to-building-for-uncertainty" class="hf-card hf-large hf-teal">
             <div class="hf-illus">
-              <svg viewBox="0 0 120 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="none">
-                <line x1="60" y1="95" x2="60" y2="58" stroke="#3d7a4a" stroke-width="1.8" stroke-linecap="round"/>
-                <line x1="60" y1="62" x2="32" y2="38" stroke="#3d7a4a" stroke-width="1.5" stroke-linecap="round"/>
-                <line x1="60" y1="62" x2="88" y2="38" stroke="#3d7a4a" stroke-width="1.5" stroke-linecap="round"/>
-                <line x1="32" y1="38" x2="16" y2="18" stroke="#2a4a30" stroke-width="1.2" stroke-linecap="round"/>
-                <line x1="32" y1="38" x2="46" y2="16" stroke="#2a4a30" stroke-width="1.2" stroke-linecap="round"/>
-                <line x1="88" y1="38" x2="74" y2="16" stroke="#2a4a30" stroke-width="1.2" stroke-linecap="round"/>
-                <line x1="88" y1="38" x2="104" y2="18" stroke="#2a4a30" stroke-width="1.2" stroke-linecap="round"/>
-              </svg>
+              <img src="/static/medici-answer-illus.png" alt="" aria-hidden="true" style="width:100%;height:100%;object-fit:cover;opacity:0.9;" />
             </div>
             <div class="hf-content">
               <div class="hf-tag">{postTags("posts/medici-answer-to-building-for-uncertainty", allFiles)}</div>

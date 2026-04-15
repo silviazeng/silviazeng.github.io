@@ -684,7 +684,11 @@ article p {
 
   .hf-sm {
     flex: none;
-    height: 130px;
+  }
+
+  .hf-sm .hf-illus {
+    height: 60px;
+    flex-shrink: 0;
   }
 
   .hf-title {
