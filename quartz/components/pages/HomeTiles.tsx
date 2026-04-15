@@ -28,10 +28,10 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles }: QuartzComponentProps
       {/* Hero */}
       <div class="home-hero">
         <p>Hi, I'm <strong>Silvia</strong>.</p>
-        <p>Ever Branching grows in three directions:</p>
-        <p>AI &amp; Tech — I'm teaching myself →</p>
-        <p>Work &amp; Career — looking back and forward →</p>
-        <p>Life &amp; Parenting — raising a kid who teaches me more about cognition than anything →</p>
+        <p><em>Ever branching, on shifting grounds.</em></p>
+        <p><a href="/AI-Tech" class="home-tag-link">AI &amp; Tech</a> — teaching myself, one confusion at a time</p>
+        <p><a href="/Work-Career" class="home-tag-link">Work &amp; Career</a> — looking back and forward</p>
+        <p><a href="/Living-Reading" class="home-tag-link">Living &amp; Reading</a> — the unquantifiable stuff</p>
         <p>this is my running log of all of the above.</p>
       </div>
 
@@ -41,20 +41,20 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles }: QuartzComponentProps
         <div class="home-featured">
           <div class="home-section-label">Featured</div>
 
-          <a href="/posts/medici-whos-who" class="hf-card hf-large hf-purple">
+          <a href="/posts/medici-answer-to-building-for-uncertainty" class="hf-card hf-large hf-teal">
             <div class="hf-content">
-              <div class="hf-tag">{postTags("posts/medici-whos-who", allFiles)}</div>
-              <div class="hf-title">Who the Hell Is Who in Medici: Masters of Florence</div>
-              <div class="hf-desc">Mar 31, 2026</div>
+              <div class="hf-tag">{postTags("posts/medici-answer-to-building-for-uncertainty", allFiles)}</div>
+              <div class="hf-title">Medici's Answer to Building for Uncertainty</div>
+              <div class="hf-desc">Apr 6, 2026</div>
             </div>
           </a>
 
           <div class="hf-row">
-            <a href="/posts/medici-answer-to-building-for-uncertainty" class="hf-card hf-sm hf-teal">
+            <a href="/posts/medici-whos-who" class="hf-card hf-sm hf-purple">
               <div class="hf-content">
-                <div class="hf-tag">{postTags("posts/medici-answer-to-building-for-uncertainty", allFiles)}</div>
-                <div class="hf-title">Medici's Answer to Building for Uncertainty</div>
-                <div class="hf-desc">Apr 6, 2026</div>
+                <div class="hf-tag">{postTags("posts/medici-whos-who", allFiles)}</div>
+                <div class="hf-title">Who the Hell Is Who in Medici: Masters of Florence</div>
+                <div class="hf-desc">Mar 31, 2026</div>
               </div>
             </a>
             <a href="/posts/testing3" class="hf-card hf-sm hf-dark">
@@ -124,7 +124,7 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles }: QuartzComponentProps
       </div>
 
       {/* MOC */}
-      <div class="home-moc">
+      <div id="moc" class="home-moc">
         <div class="home-section-label">Map of Content</div>
         <div class="home-moc-grid">
           <div class="home-moc-card">
@@ -132,7 +132,7 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles }: QuartzComponentProps
             <div class="home-moc-title">AI &amp; Tech</div>
             <ul>
               <li><a href="/posts/medici-answer-to-building-for-uncertainty">Medici's Answer to Building for Uncertainty</a></li>
-              <li class="moc-more">+ more</li>
+              <li class="moc-more"><a href="/AI-Tech">+ more</a></li>
             </ul>
           </div>
           <div class="home-moc-card">
@@ -140,16 +140,16 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles }: QuartzComponentProps
             <div class="home-moc-title">Work &amp; Career</div>
             <ul>
               <li><a href="/posts/testing4">Testing 4</a></li>
-              <li class="moc-more">+ more</li>
+              <li class="moc-more"><a href="/Work-Career">+ more</a></li>
             </ul>
           </div>
           <div class="home-moc-card">
             <div class="home-moc-accent home-moc-accent-amber"></div>
-            <div class="home-moc-title">Life &amp; Parenting</div>
+            <div class="home-moc-title">Living &amp; Reading</div>
             <ul>
               <li><a href="/posts/medici-whos-who">Who the Hell Is Who in Medici: Masters of Florence</a></li>
               <li><a href="/posts/testing3">Testing 3</a></li>
-              <li class="moc-more">+ more</li>
+              <li class="moc-more"><a href="/Living-Reading">+ more</a></li>
             </ul>
           </div>
         </div>
