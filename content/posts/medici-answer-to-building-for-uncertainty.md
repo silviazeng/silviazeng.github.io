@@ -17,9 +17,9 @@ It happened again a few years later. COVID turned out to be a tailwind for our s
 
 Then came the Silicon Valley layoffs. Hundreds of thousands of people, all at once. That's when it stopped feeling personal.
 
-I spent a lot of those years trying to make sense of what kept happening. The theory I landed on first was cycles. Economic cycles, industry cycles, the rhythm of forces too large to fight. **If you understood where you were in the cycle, you could at least stop being surprised.** Accept it, work with it, stop fighting what you can't control. It helped. It made me calmer.
+I spent a lot of those years trying to make sense of what kept happening. The theory I landed on first was cycles. Economic cycles, industry cycles, the rhythm of forces too large to fight. If you understood where you were in the cycle, you could at least stop being surprised. Accept it, work with it, stop fighting what you can't control. It helped. It made me calmer.
 
-But it was Tim Parks's introduction to his translation of *The Prince* that showed me cycle theory was only half the answer. Reading it, I came across a description of Florence in the early fifteenth century. Governments changed every two months. No policy survived long enough to matter. **The instability was so chronic that whoever could offer continuity effectively controlled** the city. 
+But it was Tim Parks's introduction to his translation of *The Prince* that showed me cycle theory was only half the answer. Reading it, I came across a description of Florence in the early fifteenth century. Governments changed every two months. No policy survived long enough to matter. The instability was so chronic that **whoever could offer continuity effectively controlled** the city. 
 
 That was the Medici.
 
