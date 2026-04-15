@@ -42,6 +42,17 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles }: QuartzComponentProps
           <div class="home-section-label">Featured</div>
 
           <a href="/posts/medici-answer-to-building-for-uncertainty" class="hf-card hf-large hf-teal">
+            <div class="hf-illus">
+              <svg viewBox="0 0 120 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="none">
+                <line x1="60" y1="95" x2="60" y2="58" stroke="#3d7a4a" stroke-width="1.8" stroke-linecap="round"/>
+                <line x1="60" y1="62" x2="32" y2="38" stroke="#3d7a4a" stroke-width="1.5" stroke-linecap="round"/>
+                <line x1="60" y1="62" x2="88" y2="38" stroke="#3d7a4a" stroke-width="1.5" stroke-linecap="round"/>
+                <line x1="32" y1="38" x2="16" y2="18" stroke="#2a4a30" stroke-width="1.2" stroke-linecap="round"/>
+                <line x1="32" y1="38" x2="46" y2="16" stroke="#2a4a30" stroke-width="1.2" stroke-linecap="round"/>
+                <line x1="88" y1="38" x2="74" y2="16" stroke="#2a4a30" stroke-width="1.2" stroke-linecap="round"/>
+                <line x1="88" y1="38" x2="104" y2="18" stroke="#2a4a30" stroke-width="1.2" stroke-linecap="round"/>
+              </svg>
+            </div>
             <div class="hf-content">
               <div class="hf-tag">{postTags("posts/medici-answer-to-building-for-uncertainty", allFiles)}</div>
               <div class="hf-title">Medici's Answer to Building for Uncertainty</div>
@@ -51,6 +62,22 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles }: QuartzComponentProps
 
           <div class="hf-row">
             <a href="/posts/medici-whos-who" class="hf-card hf-sm hf-purple">
+              <div class="hf-illus">
+                <svg viewBox="0 0 100 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="none">
+                  <circle cx="22" cy="28" r="11" stroke="#3d7a4a" stroke-width="1.2"/>
+                  <line x1="14" y1="28" x2="30" y2="28" stroke="#2a4a30" stroke-width="0.9"/>
+                  <line x1="22" y1="20" x2="22" y2="36" stroke="#2a4a30" stroke-width="0.9"/>
+                  <circle cx="62" cy="18" r="13" stroke="#3d7a4a" stroke-width="1.2"/>
+                  <line x1="53" y1="18" x2="71" y2="18" stroke="#2a4a30" stroke-width="0.9"/>
+                  <line x1="62" y1="9" x2="62" y2="27" stroke="#2a4a30" stroke-width="0.9"/>
+                  <circle cx="86" cy="46" r="10" stroke="#3d7a4a" stroke-width="1.2"/>
+                  <line x1="79" y1="46" x2="93" y2="46" stroke="#2a4a30" stroke-width="0.9"/>
+                  <line x1="86" y1="39" x2="86" y2="53" stroke="#2a4a30" stroke-width="0.9"/>
+                  <circle cx="42" cy="60" r="9" stroke="#3d7a4a" stroke-width="1"/>
+                  <line x1="36" y1="60" x2="48" y2="60" stroke="#2a4a30" stroke-width="0.8"/>
+                  <line x1="42" y1="54" x2="42" y2="66" stroke="#2a4a30" stroke-width="0.8"/>
+                </svg>
+              </div>
               <div class="hf-content">
                 <div class="hf-tag">{postTags("posts/medici-whos-who", allFiles)}</div>
                 <div class="hf-title">Who the Hell Is Who in Medici: Masters of Florence</div>
@@ -58,6 +85,22 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles }: QuartzComponentProps
               </div>
             </a>
             <a href="/posts/testing3" class="hf-card hf-sm hf-dark">
+              <div class="hf-illus">
+                <svg viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="none">
+                  <circle cx="45" cy="45" r="32" stroke="#3d7a4a" stroke-width="1.5"/>
+                  <line x1="45" y1="16" x2="45" y2="23" stroke="#3d7a4a" stroke-width="1.2"/>
+                  <line x1="45" y1="67" x2="45" y2="74" stroke="#3d7a4a" stroke-width="1.2"/>
+                  <line x1="16" y1="45" x2="23" y2="45" stroke="#3d7a4a" stroke-width="1.2"/>
+                  <line x1="67" y1="45" x2="74" y2="45" stroke="#3d7a4a" stroke-width="1.2"/>
+                  <line x1="45" y1="45" x2="45" y2="26" stroke="#3d7a4a" stroke-width="1.5" stroke-linecap="round"/>
+                  <line x1="45" y1="45" x2="61" y2="45" stroke="#3d7a4a" stroke-width="1.2" stroke-linecap="round"/>
+                  <circle cx="45" cy="45" r="2" fill="#3d7a4a"/>
+                  <line x1="27" y1="22" x2="31" y2="28" stroke="#2a4a30" stroke-width="0.9"/>
+                  <line x1="63" y1="22" x2="59" y2="28" stroke="#2a4a30" stroke-width="0.9"/>
+                  <line x1="27" y1="68" x2="31" y2="62" stroke="#2a4a30" stroke-width="0.9"/>
+                  <line x1="63" y1="68" x2="59" y2="62" stroke="#2a4a30" stroke-width="0.9"/>
+                </svg>
+              </div>
               <div class="hf-content">
                 <div class="hf-tag">{postTags("posts/testing3", allFiles)}</div>
                 <div class="hf-title">Testing 3</div>
@@ -67,6 +110,16 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles }: QuartzComponentProps
           </div>
 
           <a href="/posts/testing4" class="hf-card hf-wide hf-coral">
+            <div class="hf-illus">
+              <svg viewBox="0 0 100 72" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="none">
+                <rect x="18" y="8" width="64" height="56" stroke="#3d7a4a" stroke-width="1.5"/>
+                <line x1="30" y1="8" x2="30" y2="64" stroke="#2a4a30" stroke-width="1"/>
+                <line x1="36" y1="22" x2="74" y2="22" stroke="#2a4a30" stroke-width="0.8"/>
+                <line x1="36" y1="32" x2="74" y2="32" stroke="#2a4a30" stroke-width="0.8"/>
+                <line x1="36" y1="42" x2="74" y2="42" stroke="#2a4a30" stroke-width="0.8"/>
+                <line x1="36" y1="52" x2="74" y2="52" stroke="#2a4a30" stroke-width="0.8"/>
+              </svg>
+            </div>
             <div class="hf-content hf-wide-content">
               <div>
                 <div class="hf-tag">{postTags("posts/testing4", allFiles)}</div>
@@ -76,26 +129,10 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles }: QuartzComponentProps
             </div>
           </a>
 
-          <div class="home-section-label" style="margin-top:16px">Recent Updates</div>
-          <div class="home-recent">
-            <a href="/posts/medici-answer-to-building-for-uncertainty" class="hrecent-item">
-              <div class="hrecent-title">Medici's Answer to Building for Uncertainty</div>
-              <div class="hrecent-meta">Apr 6 · AI · career</div>
-            </a>
-            <a href="/posts/medici-whos-who" class="hrecent-item">
-              <div class="hrecent-title">Who the Hell Is Who in Medici: Masters of Florence</div>
-              <div class="hrecent-meta">Mar 31 · history</div>
-            </a>
-            <a href="/posts/testing3" class="hrecent-item">
-              <div class="hrecent-title">Testing 3</div>
-              <div class="hrecent-meta">Feb 10 · travel</div>
-            </a>
-          </div>
-
           <a href="/posts" class="home-see-all">See all articles<br /><span>→</span></a>
         </div>
 
-        {/* Right: Graph + Browse by Tag */}
+        {/* Right: Graph + Browse by Tag + Recent Updates */}
         <div class="home-sidebar">
           <div class="graph">
             <h3>Graph View</h3>
@@ -119,6 +156,22 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles }: QuartzComponentProps
                 {tag.replace(/-/g, " ")} <span>{count}</span>
               </a>
             ))}
+          </div>
+
+          <div class="home-section-label" style="margin-top:16px">Recent Updates</div>
+          <div class="home-recent">
+            <a href="/posts/medici-answer-to-building-for-uncertainty" class="hrecent-item">
+              <div class="hrecent-title">Medici's Answer to Building for Uncertainty</div>
+              <div class="hrecent-meta">Apr 6 · AI · career</div>
+            </a>
+            <a href="/posts/medici-whos-who" class="hrecent-item">
+              <div class="hrecent-title">Who the Hell Is Who in Medici: Masters of Florence</div>
+              <div class="hrecent-meta">Mar 31 · history</div>
+            </a>
+            <a href="/posts/testing3" class="hrecent-item">
+              <div class="hrecent-title">Testing 3</div>
+              <div class="hrecent-meta">Feb 10 · travel</div>
+            </a>
           </div>
         </div>
       </div>

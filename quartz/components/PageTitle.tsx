@@ -39,7 +39,9 @@ const PageTitle: QuartzComponent = ({ fileData, cfg, displayClass }: QuartzCompo
   return (
     <h2 class={classNames(displayClass, "page-title")}>
       <a href={baseDir}>
-        <BranchIcon />
+        <div class="page-title-icon-box">
+          <BranchIcon />
+        </div>
         {title}
       </a>
     </h2>
@@ -48,25 +50,35 @@ const PageTitle: QuartzComponent = ({ fileData, cfg, displayClass }: QuartzCompo
 
 PageTitle.css = `
 .page-title {
-  font-size: 2.4rem;
+  font-size: 22px;
   margin: 0;
-  font-family: 'Spectral', serif;
-  font-style: italic;
-  font-weight: 400;
-  letter-spacing: 0.02em;
+  font-family: Georgia, serif;
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  line-height: 1;
 }
 
 .page-title a {
   display: flex;
-  align-items: baseline;
-  gap: 10px;
-  color: var(--color-accent);
+  align-items: center;
+  gap: 14px;
+  color: #3d7a4a;
   text-decoration: none;
+}
+
+.page-title-icon-box {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
 .page-title-branch {
   flex-shrink: 0;
-  margin-bottom: 2px;
 }
 `
 
