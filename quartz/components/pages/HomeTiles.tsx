@@ -129,28 +129,32 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles }: QuartzComponentProps
         <div class="home-moc-grid">
           <div class="home-moc-card">
             <div class="home-moc-accent home-moc-accent-purple"></div>
-            <div class="home-moc-title">AI &amp; Tech</div>
-            <ul>
-              <li><a href="/posts/medici-answer-to-building-for-uncertainty">Medici's Answer to Building for Uncertainty</a></li>
-              <li class="moc-more"><a href="/AI-Tech">+ more</a></li>
-            </ul>
+            <div class="home-moc-title"><a href="/AI-Tech">AI &amp; Tech</a></div>
+            <p class="home-moc-desc">I'm more interested in why it works than whether it works.</p>
+            <div class="home-moc-tags">
+            </div>
           </div>
           <div class="home-moc-card">
             <div class="home-moc-accent home-moc-accent-teal"></div>
-            <div class="home-moc-title">Work &amp; Career</div>
-            <ul>
-              <li><a href="/posts/testing4">Testing 4</a></li>
-              <li class="moc-more"><a href="/Work-Career">+ more</a></li>
-            </ul>
+            <div class="home-moc-title"><a href="/Work-Career">Work &amp; Career</a></div>
+            <p class="home-moc-desc">From finance to tech and beyond, looking back for patterns, forward for direction.</p>
+            <div class="home-moc-tags">
+              <a href="/tags/work" class="htag">work</a>
+              <a href="/tags/power" class="htag">power</a>
+              <a href="/tags/uncertainty" class="htag">uncertainty</a>
+            </div>
           </div>
           <div class="home-moc-card">
             <div class="home-moc-accent home-moc-accent-amber"></div>
-            <div class="home-moc-title">Living &amp; Reading</div>
-            <ul>
-              <li><a href="/posts/medici-whos-who">Who the Hell Is Who in Medici: Masters of Florence</a></li>
-              <li><a href="/posts/testing3">Testing 3</a></li>
-              <li class="moc-more"><a href="/Living-Reading">+ more</a></li>
-            </ul>
+            <div class="home-moc-title"><a href="/Living-Reading">Living &amp; Reading</a></div>
+            <p class="home-moc-desc">The unquantifiable stuff.</p>
+            <div class="home-moc-tags">
+              <a href="/tags/travel" class="htag">travel</a>
+              <a href="/tags/history" class="htag">history</a>
+              <a href="/tags/machiavelli" class="htag">machiavelli</a>
+              <a href="/tags/renaissance-history" class="htag">renaissance history</a>
+              <a href="/tags/the-prince" class="htag">the prince</a>
+            </div>
           </div>
         </div>
       </div>
