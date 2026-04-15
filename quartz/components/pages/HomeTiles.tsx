@@ -84,7 +84,7 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles }: QuartzComponentProps
                 <div class="hf-desc">Mar 31, 2026</div>
               </div>
             </a>
-            <a href="/posts/testing3" class="hf-card hf-sm hf-dark">
+            <a href="/posts/what-i-learned-about-career-in-ml" class="hf-card hf-sm hf-dark">
               <div class="hf-illus">
                 <svg viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="none">
                   <circle cx="45" cy="45" r="32" stroke="#3d7a4a" stroke-width="1.5"/>
@@ -102,9 +102,9 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles }: QuartzComponentProps
                 </svg>
               </div>
               <div class="hf-content">
-                <div class="hf-tag">{postTags("posts/testing3", allFiles)}</div>
-                <div class="hf-title">Testing 3</div>
-                <div class="hf-desc">Feb 10, 2026</div>
+                <div class="hf-tag">{postTags("posts/what-i-learned-about-career-in-ml", allFiles)}</div>
+                <div class="hf-title">What I Learned about Career in my 3 months ML Deep-dive</div>
+                <div class="hf-desc">Nov 19, 2021</div>
               </div>
             </a>
           </div>
@@ -168,9 +168,9 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles }: QuartzComponentProps
               <div class="hrecent-title">Who the Hell Is Who in Medici: Masters of Florence</div>
               <div class="hrecent-meta">Mar 31 · history</div>
             </a>
-            <a href="/posts/testing3" class="hrecent-item">
-              <div class="hrecent-title">Testing 3</div>
-              <div class="hrecent-meta">Feb 10 · travel</div>
+            <a href="/posts/what-i-learned-about-career-in-ml" class="hrecent-item">
+              <div class="hrecent-title">What I Learned about Career in my 3 months ML Deep-dive</div>
+              <div class="hrecent-meta">Nov 19, 2021 · career · AI</div>
             </a>
           </div>
         </div>
