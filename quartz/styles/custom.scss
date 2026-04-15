@@ -126,7 +126,7 @@ article blockquote {
 h1.article-title {
   font-family: Georgia, serif !important;
   font-style: normal !important;
-  font-size: 20px !important;
+  font-size: 30px !important;
   font-weight: bold !important;
   letter-spacing: 0.04em !important;
   border-bottom: none !important;
@@ -273,6 +273,7 @@ article p {
   grid-template-columns: 1fr 340px;
   gap: 32px;
   align-items: start;
+  max-width: 90%;
 }
 
 // ─── Featured articles ─────────────────────────────────────────────────────────
@@ -308,9 +309,9 @@ article p {
 }
 
 // Art panel heights — determines illustration area only; text area below adds to total
-.hf-large .hf-illus { height: auto; aspect-ratio: 2 / 1; }
-.hf-sm    .hf-illus { height: 120px; }
-.hf-wide  .hf-illus { height: 70px; }
+.hf-large .hf-illus { height: auto; aspect-ratio: 3 / 1; }
+.hf-sm    .hf-illus { height: 90px; }
+.hf-wide  .hf-illus { height: 56px; }
 
 .hf-sm { flex: 1; }
 
@@ -345,6 +346,18 @@ article p {
   background: #141814;
 }
 
+.hf-large .hf-content {
+  padding: 20px 22px 22px;
+}
+
+.hf-large .hf-title {
+  font-size: 22px;
+}
+
+.hf-large .hf-desc {
+  font-size: 15px;
+}
+
 .hf-wide-content {
   flex-direction: row;
   align-items: center;
@@ -367,17 +380,17 @@ article p {
 .hf-title {
   font-family: Georgia, serif;
   font-style: normal;
-  font-size: 14px;
+  font-size: 17px;
   font-weight: bold;
   letter-spacing: 0.03em;
   color: var(--color-text-bright) !important;
-  line-height: 1.45;
-  margin-bottom: 5px;
+  line-height: 1.4;
+  margin-bottom: 6px;
   text-decoration: none !important;
 }
 
 .hf-desc {
-  font-size: 12px;
+  font-size: 13px;
   color: var(--color-text-dim) !important;
   line-height: 1.5;
 }
@@ -696,7 +709,7 @@ article p {
     padding: 6px 14px;
   }
 
-  .hf-large .hf-illus { height: auto; aspect-ratio: 2 / 1; }
+  .hf-large .hf-illus { height: auto; aspect-ratio: 3 / 1; }
   .hf-wide   { height: 80px; }
 
   .home-moc-grid {
