@@ -110,6 +110,18 @@ article a {
   &:hover { color: var(--color-accent-light) !important; }
 }
 
+.breadcrumb-container {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  margin-top: 0 !important;
+  margin-bottom: 10px !important;
+}
+
+.breadcrumb-element p {
+  color: var(--color-text-muted) !important;
+}
+
 // Blockquote — no side stripe (impeccable ban), just indent + tint
 article blockquote {
   border-left: none !important;
@@ -163,19 +175,20 @@ article p {
 .tag-link {
   display: inline-flex !important;
   align-items: center !important;
-  min-height: 36px !important;
   background: var(--color-surface) !important;
-  border: 1px solid var(--color-border) !important;
+  border: 1px solid var(--color-accent-light) !important;
   border-radius: 2px !important;
   font-size: 12px !important;
   color: var(--color-accent-light) !important;
-  padding: 4px 12px !important;
+  padding: 3px 10px !important;
   font-family: 'Inter', sans-serif !important;
+  line-height: 1.4 !important;
 }
 
 .tag-link:hover {
-  color: var(--color-text-bright) !important;
-  border-color: var(--color-border-hover) !important;
+  color: #fff !important;
+  background: var(--color-accent-light) !important;
+  border-color: var(--color-accent-light) !important;
 }
 
 .graph-outer {
@@ -343,6 +356,7 @@ article p {
 .hf-content {
   display: flex;
   flex-direction: column;
+  flex: 1;
   padding: 12px 14px 14px;
   border-top: 0.5px solid #1e2a20;
   background: #141814;

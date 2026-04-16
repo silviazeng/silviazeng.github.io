@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Evolutionary Roadmap of Deep Learning Recommendation Models</title>
+<style>
+  :root {
+    --bg:           #161616;
+    --bg-card:      #1a1b1e;
+    --border:       #2e2e2e;
+    --text-primary: #e0e0e0;
+    --text-muted:   #a0a0a0;
+    --accent-green: #4d7a5c;
+    --col-base-bg:  #1e251f; --col-base-bd: #4d7a5c; --col-base-tx: #9dcfb0;
+    --col-attn-bg:  #1a202a; --col-attn-bd: #4a7aaa; --col-attn-tx: #90bfe0;
+    --col-wide-bg:  #252015; --col-wide-bd: #a07a28; --col-wide-tx: #f0c96a;
+    --col-fm-bg:    #251815; --col-fm-bd: #a05840; --col-fm-tx: #f0a888;
+    --col-seq-bg:   #1f1a28; --col-seq-bd: #8060aa; --col-seq-tx: #c8a0ee;
+    --col-other-bg: #222222; --col-other-bd: #666666; --col-other-tx: #cccccc;
+    --arrow:        #666666;
+    --arrow-dash:   #444444;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    padding: 3rem 1rem;
+    min-height: 100vh;
+  }
+  h1 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 0.5rem;
+    color: var(--accent-green);
+    letter-spacing: -0.02em;
+  }
+  .subtitle {
+    font-size: 0.85rem;
+    text-align: center;
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+  }
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px 24px;
+    margin-bottom: 2rem;
+    font-size: 0.75rem;
+  }
+  .legend-item { display: flex; align-items: center; gap: 6px; color: var(--text-muted); }
+  .legend-dot { width: 12px; height: 12px; border-radius: 2px; border: 1px solid; }
+  .graph {
+    position: relative;
+    width: 100%;
+    max-width: 950px;
+    margin: 0 auto;
+  }
+  svg.arrows { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+  .row { display: flex; justify-content: center; gap: 15px; margin-bottom: 25px; position: relative; }
+  .node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-radius: 4px;
+    border: 1px solid;
+    padding: 12px 18px;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    text-decoration: none;
+    min-width: 120px;
+    background: var(--bg-card);
+  }
+  .node:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+    filter: brightness(1.2);
+  }
+  .node .name { font-size: 0.85rem; font-weight: 700; }
+  .node .year { font-size: 0.65rem; font-weight: 400; margin-top: 4px; opacity: 0.6; }
+  .c-base  { border-color: var(--col-base-bd); color: var(--col-base-tx); background: var(--col-base-bg); }
+  .c-attn  { border-color: var(--col-attn-bd); color: var(--col-attn-tx); background: var(--col-attn-bg); }
+  .c-wide  { border-color: var(--col-wide-bd); color: var(--col-wide-tx); background: var(--col-wide-bg); }
+  .c-fm    { border-color: var(--col-fm-bd); color: var(--col-fm-tx); background: var(--col-fm-bg); }
+  .c-seq   { border-color: var(--col-seq-bd); color: var(--col-seq-tx); background: var(--col-seq-bg); }
+  .c-other { border-color: var(--col-other-bd); color: var(--col-other-tx); background: var(--col-other-bg); }
+  .tooltip {
+    display: none;
+    position: fixed;
+    background: #252525;
+    border: 1px solid var(--accent-green);
+    border-radius: 4px;
+    padding: 15px;
+    max-width: 300px;
+    font-size: 0.8rem;
+    color: #eee;
+    z-index: 1000;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    pointer-events: none;
+    line-height: 1.6;
+  }
+  .tooltip.visible { display: block; }
+  .tooltip strong { color: var(--accent-green); display: block; margin-bottom: 5px; font-size: 0.9rem; }
+  .edge-label { font-size: 0.6rem; fill: var(--text-muted); font-weight: 500; }
+</style>
+</head>
+<body>
+<h1>The Evolutionary Roadmap of Deep Learning RecSys</h1>
+<p class="subtitle">Standing in 2026: From Collaborative Filtering to Contextual Intelligence</p>
+<div class="legend">
+  <div class="legend-item"><span class="legend-dot c-base"></span> Foundation DNN</div>
+  <div class="legend-item"><span class="legend-dot c-attn"></span> Attention-based</div>
+  <div class="legend-item"><span class="legend-dot c-wide"></span> Wide &amp; Deep Family</div>
+  <div class="legend-item"><span class="legend-dot c-fm"></span> Factorization Family</div>
+  <div class="legend-item"><span class="legend-dot c-seq"></span> Sequential Modeling</div>
+  <div class="legend-item"><span class="legend-dot c-other"></span> Others</div>
+</div>
+<div class="graph" id="graph">
+  <svg class="arrows" id="arrows">
+    <defs>
+      <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0 0 L10 5 L0 10 Z" fill="#666666" />
+      </marker>
+    </defs>
+  </svg>
+  <div class="row">
+    <a class="node c-other" id="n-autorec" data-key="autorec"><span class="name">AutoRec</span><span class="year">2015</span></a>
+    <a class="node c-other" id="n-neuralcf" data-key="neuralcf"><span class="name">NeuralCF</span><span class="year">2017</span></a>
+    <a class="node c-other" id="n-deepcrossing" data-key="deepcrossing"><span class="name">Deep Crossing</span><span class="year">2016</span></a>
+    <a class="node c-other" id="n-pnn" data-key="pnn"><span class="name">PNN</span><span class="year">2016</span></a>
+  </div>
+  <div class="row" style="margin: 40px 0;">
+    <a class="node c-base" id="n-dnn" data-key="dnn" style="min-width: 250px; border-width: 2px;">
+      <span class="name" style="font-size:1rem">DNN / Multi-layer Perceptron</span><span class="year">Architecture Backbone</span>
+    </a>
+    <a class="node c-other" id="n-drn" data-key="drn" style="margin-left: 20px;"><span class="name">DRN</span><span class="year">2018</span></a>
+  </div>
+  <div class="row">
+    <a class="node c-attn" id="n-din" data-key="din"><span class="name">DIN</span><span class="year">2018</span></a>
+    <a class="node c-wide" id="n-widedeep" data-key="widedeep"><span class="name">Wide &amp; Deep</span><span class="year">2016</span></a>
+    <a class="node c-fm" id="n-fnn" data-key="fnn"><span class="name">FNN</span><span class="year">2016</span></a>
+  </div>
+  <div class="row">
+    <a class="node c-seq" id="n-dien" data-key="dien"><span class="name">DIEN</span><span class="year">2019</span></a>
+    <div class="node c-wide" id="n-wide-mod" style="opacity:0.5; border-style:dashed;"><span class="name">Wide Refinement</span></div>
+    <div class="node c-fm" id="n-deep-mod" style="opacity:0.5; border-style:dashed;"><span class="name">Deep Refinement</span></div>
+  </div>
+  <div class="row">
+    <a class="node c-wide" id="n-deepcross" data-key="deepcross"><span class="name">DCN</span><span class="year">2017</span></a>
+    <a class="node c-wide" id="n-deepfm" data-key="deepfm"><span class="name">DeepFM</span><span class="year">2017</span></a>
+    <a class="node c-fm" id="n-afm" data-key="afm"><span class="name">AFM</span><span class="year">2017</span></a>
+    <a class="node c-fm" id="n-nfm" data-key="nfm"><span class="name">NFM</span><span class="year">2017</span></a>
+  </div>
+  <div class="row">
+    <a class="node c-fm" id="n-fm" data-key="fm"><span class="name">FM</span><span class="year">2010</span></a>
+  </div>
+</div>
+<div class="tooltip" id="tooltip"></div>
+<script>
+const DATA = {
+  autorec: { name: "AutoRec", desc: "Collaborative filtering framework based on autoencoders for rating prediction." },
+  neuralcf: { name: "NeuralCF", desc: "Replaced inner products with neural networks to learn non-linear user-item interactions." },
+  deepcrossing: { name: "Deep Crossing", desc: "A classic DNN structure using ResNet for feature fusion, proposed by Microsoft." },
+  pnn: { name: "PNN (Product-based Neural Network)", desc: "Introduced a Product layer to capture explicit feature interactions." },
+  dnn: { name: "DNN Backbone", desc: "The foundational component for high-order feature extraction in modern RecSys." },
+  din: { name: "DIN (Deep Interest Network)", desc: "Introduced local activation (attention) to model historical user behavior." },
+  widedeep: { name: "Wide & Deep", desc: "Memorization (LR) meets Generalization (DNN), a milestone by Google." },
+  fnn: { name: "FNN (Factorization-supported NN)", desc: "Utilizes FM weights for embedding initialization before DNN layers." },
+  drn: { name: "DRN", desc: "Deep Reinforcement Learning applied to dynamic recommendation environments." },
+  dien: { name: "DIEN", desc: "Deep Interest Evolution Network; models temporal interest shifts via AUGRU." },
+  deepcross: { name: "DCN (Deep & Cross)", desc: "Uses Cross Networks to handle high-order interactions without manual engineering." },
+  deepfm: { name: "DeepFM", desc: "Integrates FM and DNN to capture both low- and high-order feature interactions." },
+  afm: { name: "AFM", desc: "Attentional Factorization Machines; learns the importance of each feature interaction." },
+  nfm: { name: "NFM", desc: "Neural Factorization Machines; introduces Bi-Interaction layers for interaction modeling." },
+  fm: { name: "Factorization Machines", desc: "The common foundation for modeling categorical feature interactions via latent vectors." }
+};
+const EDGES = [
+  ["n-dnn","n-autorec","AE-based"], ["n-dnn","n-neuralcf","MLP interaction"],
+  ["n-dnn","n-deepcrossing","ResNet-style"], ["n-deepcrossing","n-pnn","Feature Interaction"],
+  ["n-dnn","n-din","Attention Unit"], ["n-dnn","n-widedeep","Dual-path Path"],
+  ["n-dnn","n-drn","RL Integration"], ["n-fnn","n-dnn","Pre-trained Emb"],
+  ["n-din","n-dien","Sequential modeling"], ["n-widedeep","n-wide-mod",""], ["n-widedeep","n-deep-mod",""],
+  ["n-wide-mod","n-deepcross","Cross-layer"], ["n-wide-mod","n-deepfm","FM integration"],
+  ["n-deep-mod","n-afm","Attention-FM"], ["n-deep-mod","n-nfm","Bi-interaction"],
+  ["n-fm","n-fnn","","dashed"], ["n-fm","n-deepfm","","dashed"], ["n-fm","n-afm","","dashed"], ["n-fm","n-nfm","","dashed"]
+];
+function draw() {
+  const svg = document.getElementById("arrows");
+  const graph = document.getElementById("graph");
+  const gRect = graph.getBoundingClientRect();
+  svg.innerHTML = svg.querySelector("defs").outerHTML;
+  EDGES.forEach(([fId, tId, label, style]) => {
+    const fEl = document.getElementById(fId), tEl = document.getElementById(tId);
+    if (!fEl || !tEl) return;
+    const fR = fEl.getBoundingClientRect(), tR = tEl.getBoundingClientRect();
+    const x1 = fR.left + fR.width / 2 - gRect.left, x2 = tR.left + tR.width / 2 - gRect.left;
+    const isUp = tR.top < fR.top;
+    const y1 = isUp ? fR.top - gRect.top : fR.bottom - gRect.top;
+    const y2 = isUp ? tR.bottom - gRect.top : tR.top - gRect.top;
+    const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    line.setAttribute("x1", x1); line.setAttribute("y1", y1);
+    line.setAttribute("x2", x2); line.setAttribute("y2", y2);
+    line.setAttribute("stroke", style === "dashed" ? "var(--arrow-dash)" : "var(--arrow)");
+    line.setAttribute("stroke-width", "1.2");
+    line.setAttribute("marker-end", "url(#ah)");
+    if (style === "dashed") line.setAttribute("stroke-dasharray", "4 3");
+    svg.appendChild(line);
+    if (label) {
+      const txt = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      txt.setAttribute("x", (x1 + x2) / 2); txt.setAttribute("y", (y1 + y2) / 2 - 5);
+      txt.setAttribute("class", "edge-label"); txt.setAttribute("text-anchor", "middle");
+      txt.textContent = label; svg.appendChild(txt);
+    }
+  });
+}
+const tt = document.getElementById("tooltip");
+document.querySelectorAll(".node[data-key]").forEach((el) => {
+  el.onmouseenter = () => {
+    const d = DATA[el.dataset.key];
+    tt.innerHTML = `<strong>${d.name}</strong>${d.desc}`;
+    tt.classList.add("visible");
+  };
+  el.onmousemove = (e) => {
+    tt.style.left = `${e.clientX + 15}px`;
+    tt.style.top = `${e.clientY + 15}px`;
+  };
+  el.onmouseleave = () => tt.classList.remove("visible");
+});
+window.onload = draw;
+window.onresize = draw;
+</script>
+</body>
+</html>

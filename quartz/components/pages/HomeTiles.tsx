@@ -23,8 +23,54 @@ function tagCounts(allFiles: QuartzPluginData[]): { tag: string; count: number }
     .sort((a, b) => b.count - a.count || a.tag.localeCompare(b.tag))
 }
 
+function mocTagsFromLinkedPages(
+  mocSlug: string,
+  allFiles: QuartzPluginData[],
+  excluded: string[] = [],
+  include?: (tag: string) => boolean,
+  n = 5,
+  requiredTag?: string,
+): string[] {
+  const page = allFiles.find((f) => f.slug === mocSlug)
+  if (!page?.links) return []
+
+  const excludedSet = new Set(excluded.map((t) => t.toLowerCase()))
+  const counts: Record<string, number> = {}
+
+  const normalizeSlug = (value: string): string =>
+    value.replace(/^\.\//, "").replace(/^\//, "").replace(/\.html$/, "").replace(/\/$/, "")
+
+  for (const link of page.links) {
+    const normalizedLink = normalizeSlug(link)
+    const linkedPage = allFiles.find((f) => normalizeSlug(f.slug ?? "") === normalizedLink)
+    if (!linkedPage) continue
+    const tags: string[] = (linkedPage.frontmatter?.tags as string[]) ?? []
+    const lowerTags = tags.map((t) => t.toLowerCase())
+
+    // Keep only linked posts that have the required tag.
+    if (requiredTag && !lowerTags.includes(requiredTag.toLowerCase())) continue
+
+    for (const tag of tags) {
+      if (excludedSet.has(tag.toLowerCase())) continue
+      if (include && !include(tag)) continue
+      counts[tag] = (counts[tag] ?? 0) + 1
+    }
+  }
+
+  return Object.entries(counts)
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .slice(0, n)
+    .map(([tag]) => tag)
+}
+
 const HomeTiles: QuartzComponent = ({ fileData, allFiles, cfg }: QuartzComponentProps) => {
   if (fileData.slug !== "index") return null
+  const isTechTag = (tag: string): boolean =>
+    /(recommend|recsys|machine|deep|learning|model|neural|llm|agent|data|system|interpret|loss|landscape|train|singular|theory)/i.test(
+      tag,
+    )
+  const isCareerTag = (tag: string): boolean =>
+    /(career|work|power|uncertainty|strategy|learning)/i.test(tag)
 
   return (
     <div class="home-container">
@@ -56,71 +102,65 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles, cfg }: QuartzComponent
           </a>
 
           <div class="hf-row">
-            <a href="/posts/medici-whos-who" class="hf-card hf-sm hf-purple">
+            <a href="/posts/Singular-Learning-Theory-(MOC-under-construction)" class="hf-card hf-sm hf-teal" style="flex: 2">
               <div class="hf-illus">
                 <svg viewBox="0 0 100 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="none">
-                  <circle cx="22" cy="28" r="11" stroke="#3d7a4a" stroke-width="1.2"/>
-                  <line x1="14" y1="28" x2="30" y2="28" stroke="#2a4a30" stroke-width="0.9"/>
-                  <line x1="22" y1="20" x2="22" y2="36" stroke="#2a4a30" stroke-width="0.9"/>
-                  <circle cx="62" cy="18" r="13" stroke="#3d7a4a" stroke-width="1.2"/>
-                  <line x1="53" y1="18" x2="71" y2="18" stroke="#2a4a30" stroke-width="0.9"/>
-                  <line x1="62" y1="9" x2="62" y2="27" stroke="#2a4a30" stroke-width="0.9"/>
-                  <circle cx="86" cy="46" r="10" stroke="#3d7a4a" stroke-width="1.2"/>
-                  <line x1="79" y1="46" x2="93" y2="46" stroke="#2a4a30" stroke-width="0.9"/>
-                  <line x1="86" y1="39" x2="86" y2="53" stroke="#2a4a30" stroke-width="0.9"/>
-                  <circle cx="42" cy="60" r="9" stroke="#3d7a4a" stroke-width="1"/>
-                  <line x1="36" y1="60" x2="48" y2="60" stroke="#2a4a30" stroke-width="0.8"/>
-                  <line x1="42" y1="54" x2="42" y2="66" stroke="#2a4a30" stroke-width="0.8"/>
+                  <path d="M10 60 Q25 20 40 40 Q55 58 70 30 Q82 10 90 20" stroke="#3d7a4a" stroke-width="1.5" stroke-linecap="round"/>
+                  <path d="M10 68 Q28 38 45 52 Q60 64 75 44 Q85 30 90 35" stroke="#2a4a30" stroke-width="0.9" stroke-linecap="round"/>
+                  <circle cx="40" cy="40" r="2.5" fill="#3d7a4a"/>
+                  <circle cx="70" cy="30" r="2.5" fill="#3d7a4a"/>
+                  <line x1="40" y1="40" x2="40" y2="64" stroke="#2a4a30" stroke-width="0.7" stroke-dasharray="2 2"/>
+                  <line x1="70" y1="30" x2="70" y2="64" stroke="#2a4a30" stroke-width="0.7" stroke-dasharray="2 2"/>
+                  <line x1="10" y1="64" x2="90" y2="64" stroke="#2a4a30" stroke-width="0.8"/>
+                  <line x1="10" y1="12" x2="10" y2="64" stroke="#2a4a30" stroke-width="0.8"/>
                 </svg>
               </div>
               <div class="hf-content">
-                <div class="hf-tag">{postTags("posts/medici-whos-who", allFiles)}</div>
-                <div class="hf-title">Who the Hell Is Who in Medici: Masters of Florence</div>
-                <div class="hf-desc">Mar 31, 2026</div>
+                <div class="hf-tag">{postTags("posts/Singular-Learning-Theory-(MOC-under-construction)", allFiles)}</div>
+                <div class="hf-title">Singular Learning Theory</div>
+                <div class="hf-desc">Apr 15, 2026 · MOC under construction</div>
               </div>
             </a>
-            <a href="/posts/what-i-learned-about-career-in-ml" class="hf-card hf-sm hf-dark">
+            <a href="/posts/the-evolutionary-roadmap-of-deep-learning-recsys" class="hf-card hf-sm hf-dark" style="flex: 3">
               <div class="hf-illus">
-                <svg viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="none">
-                  <circle cx="45" cy="45" r="32" stroke="#3d7a4a" stroke-width="1.5"/>
-                  <line x1="45" y1="16" x2="45" y2="23" stroke="#3d7a4a" stroke-width="1.2"/>
-                  <line x1="45" y1="67" x2="45" y2="74" stroke="#3d7a4a" stroke-width="1.2"/>
-                  <line x1="16" y1="45" x2="23" y2="45" stroke="#3d7a4a" stroke-width="1.2"/>
-                  <line x1="67" y1="45" x2="74" y2="45" stroke="#3d7a4a" stroke-width="1.2"/>
-                  <line x1="45" y1="45" x2="45" y2="26" stroke="#3d7a4a" stroke-width="1.5" stroke-linecap="round"/>
-                  <line x1="45" y1="45" x2="61" y2="45" stroke="#3d7a4a" stroke-width="1.2" stroke-linecap="round"/>
-                  <circle cx="45" cy="45" r="2" fill="#3d7a4a"/>
-                  <line x1="27" y1="22" x2="31" y2="28" stroke="#2a4a30" stroke-width="0.9"/>
-                  <line x1="63" y1="22" x2="59" y2="28" stroke="#2a4a30" stroke-width="0.9"/>
-                  <line x1="27" y1="68" x2="31" y2="62" stroke="#2a4a30" stroke-width="0.9"/>
-                  <line x1="63" y1="68" x2="59" y2="62" stroke="#2a4a30" stroke-width="0.9"/>
+                <svg viewBox="0 0 100 72" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="none">
+                  <rect x="18" y="8" width="64" height="56" stroke="#3d7a4a" stroke-width="1.5"/>
+                  <line x1="30" y1="8" x2="30" y2="64" stroke="#2a4a30" stroke-width="1"/>
+                  <line x1="36" y1="22" x2="74" y2="22" stroke="#2a4a30" stroke-width="0.8"/>
+                  <line x1="36" y1="32" x2="74" y2="32" stroke="#2a4a30" stroke-width="0.8"/>
+                  <line x1="36" y1="42" x2="74" y2="42" stroke="#2a4a30" stroke-width="0.8"/>
+                  <line x1="36" y1="52" x2="74" y2="52" stroke="#2a4a30" stroke-width="0.8"/>
                 </svg>
               </div>
               <div class="hf-content">
-                <div class="hf-tag">{postTags("posts/what-i-learned-about-career-in-ml", allFiles)}</div>
-                <div class="hf-title">What I Learned about Career in my 3 months ML Deep-dive</div>
-                <div class="hf-desc">Nov 19, 2021</div>
+                <div class="hf-tag">{postTags("posts/the-evolutionary-roadmap-of-deep-learning-recsys", allFiles)}</div>
+                <div class="hf-title">The Evolutionary Roadmap of Deep Learning RecSys</div>
+                <div class="hf-desc">Feb 4, 2022</div>
               </div>
             </a>
           </div>
 
-          <a href="/posts/the-training-problem-of-my-mental-model" class="hf-card hf-wide hf-coral">
+          <a href="/posts/what-i-learned-about-career-in-ml" class="hf-card hf-wide hf-coral">
             <div class="hf-illus">
-              <svg viewBox="0 0 100 72" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="none">
-                <rect x="18" y="8" width="64" height="56" stroke="#3d7a4a" stroke-width="1.5"/>
-                <line x1="30" y1="8" x2="30" y2="64" stroke="#2a4a30" stroke-width="1"/>
-                <line x1="36" y1="22" x2="74" y2="22" stroke="#2a4a30" stroke-width="0.8"/>
-                <line x1="36" y1="32" x2="74" y2="32" stroke="#2a4a30" stroke-width="0.8"/>
-                <line x1="36" y1="42" x2="74" y2="42" stroke="#2a4a30" stroke-width="0.8"/>
-                <line x1="36" y1="52" x2="74" y2="52" stroke="#2a4a30" stroke-width="0.8"/>
+              <svg viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="none">
+                <circle cx="45" cy="45" r="32" stroke="#3d7a4a" stroke-width="1.5"/>
+                <line x1="45" y1="16" x2="45" y2="23" stroke="#3d7a4a" stroke-width="1.2"/>
+                <line x1="45" y1="67" x2="45" y2="74" stroke="#3d7a4a" stroke-width="1.2"/>
+                <line x1="16" y1="45" x2="23" y2="45" stroke="#3d7a4a" stroke-width="1.2"/>
+                <line x1="67" y1="45" x2="74" y2="45" stroke="#3d7a4a" stroke-width="1.2"/>
+                <line x1="45" y1="45" x2="45" y2="26" stroke="#3d7a4a" stroke-width="1.5" stroke-linecap="round"/>
+                <line x1="45" y1="45" x2="61" y2="45" stroke="#3d7a4a" stroke-width="1.2" stroke-linecap="round"/>
+                <circle cx="45" cy="45" r="2" fill="#3d7a4a"/>
+                <line x1="27" y1="22" x2="31" y2="28" stroke="#2a4a30" stroke-width="0.9"/>
+                <line x1="63" y1="22" x2="59" y2="28" stroke="#2a4a30" stroke-width="0.9"/>
+                <line x1="27" y1="68" x2="31" y2="62" stroke="#2a4a30" stroke-width="0.9"/>
+                <line x1="63" y1="68" x2="59" y2="62" stroke="#2a4a30" stroke-width="0.9"/>
               </svg>
             </div>
-            <div class="hf-content hf-wide-content">
-              <div>
-                <div class="hf-tag">{postTags("posts/the-training-problem-of-my-mental-model", allFiles)}</div>
-                <div class="hf-title">The Training Problem of My Mental Model</div>
-              </div>
-              <div class="hf-meta">Mar 10, 2026</div>
+            <div class="hf-content">
+              <div class="hf-tag">{postTags("posts/what-i-learned-about-career-in-ml", allFiles)}</div>
+              <div class="hf-title">What I Learned about Career in my 3 months ML Deep-dive</div>
+              <div class="hf-desc">Nov 19, 2021</div>
             </div>
           </a>
 
@@ -188,6 +228,9 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles, cfg }: QuartzComponent
             <div class="home-moc-title"><a href="/AI-Tech">AI &amp; Tech</a></div>
             <p class="home-moc-desc">I'm more interested in why it works than whether it works.</p>
             <div class="home-moc-tags">
+              {mocTagsFromLinkedPages("AI-Tech", allFiles, ["AI"], isTechTag).map((tag) => (
+                <a href={`/tags/${tag}`} class="htag">{tag.replace(/-/g, " ")}</a>
+              ))}
             </div>
           </div>
           <div class="home-moc-card">
@@ -195,9 +238,9 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles, cfg }: QuartzComponent
             <div class="home-moc-title"><a href="/Work-Career">Work &amp; Career</a></div>
             <p class="home-moc-desc">From finance to tech and beyond, looking back for patterns, forward for direction.</p>
             <div class="home-moc-tags">
-              <a href="/tags/work" class="htag">work</a>
-              <a href="/tags/power" class="htag">power</a>
-              <a href="/tags/uncertainty" class="htag">uncertainty</a>
+              {mocTagsFromLinkedPages("Work-Career", allFiles, ["career"], isCareerTag, 5, "career").map((tag) => (
+                <a href={`/tags/${tag}`} class="htag">{tag.replace(/-/g, " ")}</a>
+              ))}
             </div>
           </div>
           <div class="home-moc-card">
@@ -205,7 +248,6 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles, cfg }: QuartzComponent
             <div class="home-moc-title"><a href="/Living-Reading">Living &amp; Reading</a></div>
             <p class="home-moc-desc">The unquantifiable stuff.</p>
             <div class="home-moc-tags">
-              <a href="/tags/travel" class="htag">travel</a>
               <a href="/tags/history" class="htag">history</a>
               <a href="/tags/machiavelli" class="htag">machiavelli</a>
               <a href="/tags/renaissance-history" class="htag">renaissance history</a>

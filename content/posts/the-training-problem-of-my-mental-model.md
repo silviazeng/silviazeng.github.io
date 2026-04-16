@@ -5,12 +5,16 @@ tags:
   - career
   - AI
   - learning
+  - reading
+---
+*Note in 2026:  [[Singular Learning Theory (MOC under construction)|Sumio Watanabe’s SLT]] provides a more nuanced way of looking at the balance between expressivity (more parameters) and simplicity (fewer parameters).*
+
 ---
 [_Range: Why Generalists Triumph in a Specialized World_](https://www.amazon.com/Range-Generalists-Triumph-Specialized-World/dp/0735214484) made me think about the generalist vs. specialist question again — but more specifically, about how we build the mental models we use to navigate the world. The better question, I realized, is not which path to choose, but how to find analogies that actually work. Which led me to the best externalization of how human brains process information I know: statistical modeling.
 
 Just like a human can be poor at providing a solution to a problem, a model can be poor at predicting. In the technical world, it's called overfitting or underfitting. The disadvantage that a specialist has is an overfitting problem — but simply being a jack of all trades won't inoculate you against overfitting, neither will it prevent you from the opposite problem of underfitting.
 
----
+
 
 ## Overfitting
 
@@ -20,7 +24,7 @@ The first few months into my MBA, a question came to my mind: "why can people in
 
 Just like a model trained only on Scottish Folds will mistakenly classify a Sphynx as definitely-not-a-cat, I didn't realize it was overfitting until my first full-time job at a startup. My colleagues weren't unreliable — they were just normal people, trained in different domains with different standards, different priorities in work and life. It's absolutely unnecessary, and almost always impossible, for every teammate to be 100% aligned on every single aspect to make something work.
 
----
+
 
 ## Underfitting
 
@@ -28,7 +32,7 @@ Underfitting occurs when a model cannot adequately fit the data — which harms 
 
 This hit me a few months into the same startup job. After noticing my overfitting problem, I overcorrected: I started expanding my "training set" to include all colleagues in startups, and assumed that any person with previous work experience qualified as a good teammate. I stopped discerning. It turned out some of my samples were mislabeled, and there's a limit to how many workarounds you can build before things break.
 
----
+
 
 ## Finding the Sweet Spot
 

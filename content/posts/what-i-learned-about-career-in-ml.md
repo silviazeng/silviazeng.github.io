@@ -6,7 +6,7 @@ tags:
   - AI
   - uncertainty
 ---
-_— To people still struggling to figure out their futures like I am_
+— To people still struggling to figure out their futures like I am_
 
 *nerd alert: this article contains terms that may bore or confuse some readers
 
