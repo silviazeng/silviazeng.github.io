@@ -180,7 +180,8 @@ article p {
   border-radius: 2px !important;
   font-size: 12px !important;
   color: var(--color-accent-light) !important;
-  padding: 3px 10px !important;
+  padding: 2px 8px !important;
+  margin: 0 !important;
   font-family: 'Inter', sans-serif !important;
   line-height: 1.4 !important;
 }
@@ -702,7 +703,8 @@ article p {
     flex: none;
   }
 
-  .hf-sm .hf-illus {
+  .hf-sm .hf-illus,
+  .hf-wide .hf-illus {
     height: 60px;
     flex-shrink: 0;
   }
@@ -735,7 +737,7 @@ article p {
   }
 
   .hf-large .hf-illus { height: auto; aspect-ratio: 3 / 1; }
-  .hf-wide   { height: 80px; }
+  .hf-wide   { height: auto; }
 
   .home-moc-grid {
     gap: 8px;

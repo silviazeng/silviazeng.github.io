@@ -7,7 +7,7 @@ import { resolveRelative } from "../../util/path"
 function postTags(slug: string, allFiles: QuartzPluginData[], n = 3): string {
   const file = allFiles.find((f) => f.slug === slug)
   const tags: string[] = (file?.frontmatter?.tags as string[]) ?? []
-  return tags.slice(0, n).join(" · ")
+  return tags.slice(0, n).map((t) => t.replace(/-/g, " ")).join(" · ")
 }
 
 function tagCounts(allFiles: QuartzPluginData[]): { tag: string; count: number }[] {
@@ -209,7 +209,7 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles, cfg }: QuartzComponent
                     <div class="hrecent-title">{title}</div>
                     <div class="hrecent-meta">
                       {page.dates && <DateCmp date={getDate(cfg, page)!} locale={cfg.locale} />}
-                      {tags.length > 0 && <> · {tags.slice(0, 3).join(" · ")}</>}
+                      {tags.length > 0 && <> · {tags.slice(0, 3).map((t) => t.replace(/-/g, " ")).join(" · ")}</>}
                     </div>
                   </a>
                 )
