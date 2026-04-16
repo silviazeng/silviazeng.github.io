@@ -1,5 +1,8 @@
 import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "../types"
 import { QuartzPluginData } from "../plugins/vfile"
+import { byDateAndAlphabetical } from "../PageList"
+import { Date as DateCmp, getDate } from "../Date"
+import { resolveRelative } from "../../util/path"
 
 function postTags(slug: string, allFiles: QuartzPluginData[], n = 3): string {
   const file = allFiles.find((f) => f.slug === slug)
@@ -20,7 +23,7 @@ function tagCounts(allFiles: QuartzPluginData[]): { tag: string; count: number }
     .sort((a, b) => b.count - a.count || a.tag.localeCompare(b.tag))
 }
 
-const HomeTiles: QuartzComponent = ({ fileData, allFiles }: QuartzComponentProps) => {
+const HomeTiles: QuartzComponent = ({ fileData, allFiles, cfg }: QuartzComponentProps) => {
   if (fileData.slug !== "index") return null
 
   return (
@@ -29,8 +32,8 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles }: QuartzComponentProps
       <div class="home-hero">
         <p>Hi, I'm <strong>Silvia</strong>.</p>
         <p><em>Ever branching, on shifting grounds.</em></p>
-        <p><a href="/AI-Tech" class="home-tag-link">AI &amp; Tech</a> — teaching myself, one confusion at a time</p>
-        <p><a href="/Work-Career" class="home-tag-link">Work &amp; Career</a> — looking back and forward</p>
+        <p><a href="/AI-Tech" class="home-tag-link">AI &amp; Tech</a> — I'm more interested in why it works than whether it works</p>
+        <p><a href="/Work-Career" class="home-tag-link">Work &amp; Career</a> — looking back for patterns, forward for direction</p>
         <p><a href="/Living-Reading" class="home-tag-link">Living &amp; Reading</a> — the unquantifiable stuff</p>
         <p>this is my running log of all of the above.</p>
       </div>
@@ -101,7 +104,7 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles }: QuartzComponentProps
             </a>
           </div>
 
-          <a href="/posts/testing4" class="hf-card hf-wide hf-coral">
+          <a href="/posts/the-training-problem-of-my-mental-model" class="hf-card hf-wide hf-coral">
             <div class="hf-illus">
               <svg viewBox="0 0 100 72" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="none">
                 <rect x="18" y="8" width="64" height="56" stroke="#3d7a4a" stroke-width="1.5"/>
@@ -114,8 +117,8 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles }: QuartzComponentProps
             </div>
             <div class="hf-content hf-wide-content">
               <div>
-                <div class="hf-tag">{postTags("posts/testing4", allFiles)}</div>
-                <div class="hf-title">Testing 4</div>
+                <div class="hf-tag">{postTags("posts/the-training-problem-of-my-mental-model", allFiles)}</div>
+                <div class="hf-title">The Training Problem of My Mental Model</div>
               </div>
               <div class="hf-meta">Mar 10, 2026</div>
             </div>
@@ -152,18 +155,26 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles }: QuartzComponentProps
 
           <div class="home-section-label" style="margin-top:16px">Recent Updates</div>
           <div class="home-recent">
-            <a href="/posts/medici-answer-to-building-for-uncertainty" class="hrecent-item">
-              <div class="hrecent-title">Medici's Answer to Building for Uncertainty</div>
-              <div class="hrecent-meta">Apr 6 · AI · career</div>
-            </a>
-            <a href="/posts/medici-whos-who" class="hrecent-item">
-              <div class="hrecent-title">Who the Hell Is Who in Medici: Masters of Florence</div>
-              <div class="hrecent-meta">Mar 31 · history</div>
-            </a>
-            <a href="/posts/what-i-learned-about-career-in-ml" class="hrecent-item">
-              <div class="hrecent-title">What I Learned about Career in my 3 months ML Deep-dive</div>
-              <div class="hrecent-meta">Nov 19, 2021 · career · AI</div>
-            </a>
+            {(() => {
+              const recent = allFiles
+                .filter((f) => (f.slug ?? "").startsWith("posts/"))
+                .sort(byDateAndAlphabetical(cfg))
+                .slice(0, 5)
+
+              return recent.map((page) => {
+                const title = page.frontmatter?.title ?? ""
+                const tags: string[] = (page.frontmatter?.tags as string[]) ?? []
+                return (
+                  <a href={resolveRelative(fileData.slug!, page.slug!)} class="hrecent-item">
+                    <div class="hrecent-title">{title}</div>
+                    <div class="hrecent-meta">
+                      {page.dates && <DateCmp date={getDate(cfg, page)!} locale={cfg.locale} />}
+                      {tags.length > 0 && <> · {tags.slice(0, 3).join(" · ")}</>}
+                    </div>
+                  </a>
+                )
+              })
+            })()}
           </div>
         </div>
       </div>

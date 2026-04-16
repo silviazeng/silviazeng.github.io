@@ -135,10 +135,12 @@ h1.article-title {
 
 h1, h3, h4, h5, h6 {
   font-family: 'Inter', sans-serif !important;
+  color: var(--color-text-bright) !important;
 }
 
 h2:not(.page-title) {
   font-family: 'Inter', sans-serif !important;
+  color: var(--color-text-bright) !important;
 }
 
 .content-meta {
