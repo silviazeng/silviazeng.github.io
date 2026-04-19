@@ -1,5 +1,5 @@
 ---
-title: Singular Learning Theory (MOC under construction)
+title: Singular Learning Theory (on the workbench)
 tags:
   - AI
   - theory

@@ -36,7 +36,7 @@ const PageTitle: QuartzComponent = ({ fileData, displayClass }: QuartzComponentP
 
 PageTitle.css = `
 .tg-chrome {
-  font-family: 'JetBrains Mono', 'IBM Plex Mono', ui-monospace, monospace;
+  font-family: var(--codeFont);
   margin: 0 0 32px;
   color: var(--darkgray);
 }
@@ -52,7 +52,7 @@ PageTitle.css = `
 }
 
 .tg-logo {
-  font-family: 'JetBrains Mono', 'IBM Plex Mono', ui-monospace, monospace;
+  font-family: var(--codeFont);
   font-size: 15px;
   font-weight: 500;
   color: var(--dark) !important;
@@ -91,7 +91,7 @@ PageTitle.css = `
 .tg-link {
   color: var(--darkgray) !important;
   text-decoration: none !important;
-  font-family: 'JetBrains Mono', 'IBM Plex Mono', ui-monospace, monospace;
+  font-family: var(--codeFont);
   transition: color 0.15s ease;
 }
 

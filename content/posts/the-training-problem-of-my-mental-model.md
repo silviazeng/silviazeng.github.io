@@ -7,7 +7,7 @@ tags:
   - learning
   - reading
 ---
-*Note in 2026:  [[Singular Learning Theory (MOC under construction)|Sumio Watanabe’s SLT]] provides a more nuanced way of looking at the balance between expressivity (more parameters) and simplicity (fewer parameters).*
+*Note in 2026:  [[singular-learning-theory|Sumio Watanabe’s SLT]] provides a more nuanced way of looking at the balance between expressivity (more parameters) and simplicity (fewer parameters).*
 
 ---
 [_Range: Why Generalists Triumph in a Specialized World_](https://www.amazon.com/Range-Generalists-Triumph-Specialized-World/dp/0735214484) made me think about the generalist vs. specialist question again — but more specifically, about how we build the mental models we use to navigate the world. The better question, I realized, is not which path to choose, but how to find analogies that actually work. Which led me to the best externalization of how human brains process information I know: statistical modeling.

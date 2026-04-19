@@ -29,9 +29,10 @@
 
   --color-focus-ring:   rgba(122, 184, 122, 0.6);
 
-  --font-mono:    'JetBrains Mono', 'IBM Plex Mono', 'Fira Code', ui-monospace, SFMono-Regular, Menlo, monospace;
-  --font-display: 'Playfair Display', 'Source Serif 4', Georgia, serif;
-  --font-prose:   'Source Serif 4', 'Playfair Display', Georgia, serif;
+  // Single source of truth: map to Quartz-generated font vars (quartz.config.ts).
+  --font-mono:    var(--codeFont);       // JetBrains Mono — UI & code
+  --font-display: var(--headerFont);     // Playfair Display — display
+  --font-prose:   var(--bodyFont);       // Source Serif 4 — italic body & quotes
 }
 
 body {
@@ -71,13 +72,15 @@ article a {
 }
 
 // ─── Article typography ──────────────────────────────────────────────────────
+// Article title matches the homepage post-tile title (JetBrains Mono),
+// scaled up for the article page context. Same font, larger size.
 h1.article-title {
-  font-family: var(--font-display) !important;
+  font-family: var(--font-mono) !important;
   font-style: normal !important;
-  font-size: 34px !important;
+  font-size: 24px !important;
   font-weight: 500 !important;
-  letter-spacing: -0.015em !important;
-  line-height: 1.1 !important;
+  letter-spacing: 0 !important;
+  line-height: 1.3 !important;
   border-bottom: none !important;
   color: var(--color-text-head) !important;
   margin-top: 4px !important;
@@ -248,7 +251,20 @@ footer {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 340px;
   gap: 48px;
-  align-items: start;
+  align-items: stretch;
+}
+
+.tg-left {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+// Pillars are the last section — pin to bottom of the left column so its
+// bottom edge aligns with the rail's Elsewhere panel at scroll-end.
+.tg-left > .tg-section:last-child {
+  margin-top: auto;
+  margin-bottom: 0;
 }
 
 // ─── Prompt primitives ───────────────────────────────────────────────────────
@@ -287,11 +303,13 @@ footer {
 .tg-h1 {
   font-family: var(--font-display) !important;
   font-size: 42px;
-  font-weight: 500 !important;
+  font-weight: 400 !important;
   line-height: 1.1;
   letter-spacing: -0.015em;
   margin: 0 0 20px;
   color: var(--color-text-head) !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 
   em {
     font-style: italic;
@@ -449,12 +467,28 @@ footer {
 }
 
 // ─── Right rail ──────────────────────────────────────────────────────────────
+// Rail is a flex column stretched to match the left column height.
+// Top group (graph/tags/workbench) is sticky during scroll;
+// Elsewhere is pinned to the rail's bottom so it aligns with the
+// bottom of the pillar row on the left at scroll-end.
 .tg-rail {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.tg-rail-inner {
+  position: sticky;
+  top: 24px;
   display: flex;
   flex-direction: column;
   gap: 24px;
-  position: sticky;
-  top: 24px;
+  margin-bottom: 24px;
+}
+
+.tg-rail > .tg-panel-tail {
+  margin-top: auto;
 }
 
 .tg-panel {
@@ -491,9 +525,53 @@ footer {
   .graph-outer {
     height: 100%;
     border: none !important;
+    position: relative;
   }
   .graph-container { height: 100%; }
   canvas, svg { width: 100%; height: 100%; }
+}
+
+// Node count moved into the graph area (top-right)
+.tg-graph-count {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  font-size: 11px;
+  color: var(--color-accent);
+  font-family: var(--font-mono);
+  pointer-events: none;
+  z-index: 2;
+}
+
+// Expand-to-global-graph button moved into the panel header (top-right).
+// Quiet icon-only button with clear accent color.
+.tg-panel-head > .tg-graph-expand {
+  background: transparent;
+  border: none;
+  color: var(--color-accent) !important;
+  opacity: 1;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: static;
+  margin: 0;
+  transition: color 0.15s ease, transform 0.15s ease;
+
+  svg { width: 13px; height: 13px; fill: currentColor; display: block; }
+
+  &:hover {
+    color: var(--color-accent-light) !important;
+    transform: scale(1.12);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
 }
 
 .tg-tagcloud {
@@ -609,9 +687,10 @@ button:focus-visible {
     grid-template-columns: 1fr;
     gap: 32px;
   }
-  .tg-rail {
-    position: static;
-  }
+  .tg-left > .tg-section:last-child { margin-top: 0; }
+  .tg-rail { align-self: auto; }
+  .tg-rail-inner { position: static; }
+  .tg-rail > .tg-panel-tail { margin-top: 0; }
 }
 
 @media (max-width: 720px) {

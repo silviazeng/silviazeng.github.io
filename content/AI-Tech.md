@@ -10,7 +10,7 @@ I'm more interested in why it works than whether it works.*
 ---
 
 ## Singular Learning Theory
- ![[Singular Learning Theory (MOC under construction)#^31c4c9]]
+ ![[singular-learning-theory#^31c4c9]]
 ## Mechanistic Interpretability
 *(coming soon)*
 
