@@ -5,6 +5,7 @@ tags:
   - career
   - AI
   - uncertainty
+  - machine-learning
 ---
 — To people still struggling to figure out their futures like I am_
 
