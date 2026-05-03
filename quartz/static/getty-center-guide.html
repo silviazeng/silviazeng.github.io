@@ -543,6 +543,39 @@ footer strong { color: rgba(240,200,120,.6); }
 /* hide detail from card view; only show in modal */
 .artwork-card .detail-section { display: none; }
 
+
+/* ===== SOUTH PAVILION FLOOR MAP ===== */
+.sfmap-tabs-row { display:flex; gap:.6rem; margin:1.2rem 0 .8rem; }
+.sfmap-tab {
+  background:var(--bg2); border:1.5px solid var(--line); border-radius:4px;
+  padding:.45rem .9rem; cursor:pointer;
+  font-family:'Noto Serif SC',serif; font-size:.7rem; color:var(--muted);
+  text-align:center; transition:all .2s; line-height:1.4;
+}
+.sfmap-tab small { display:block; font-size:.52rem; opacity:.72; font-family:'Noto Sans SC',sans-serif; }
+.sfmap-tab.sfmap-active { background:var(--south); border-color:var(--south); color:#fff; }
+.sfmap-stage { margin:.5rem 0 1.5rem; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+.sfmap-stage.sfmap-hidden { display:none; }
+.sfmap-wrap { position:relative; min-width:560px; }
+.sfplan-svg { width:100%; height:auto; display:block; }
+.smap-pin {
+  position:absolute; transform:translate(-50%,-50%); cursor:pointer;
+  display:flex; flex-direction:column; align-items:center; gap:3px; z-index:3;
+  transition:transform .15s;
+}
+.smap-pin:hover { transform:translate(-50%,-56%); }
+.spin-img {
+  width:66px; height:66px; object-fit:cover; border-radius:3px;
+  border:2.5px solid rgba(122,30,20,.75); box-shadow:0 1px 5px rgba(0,0,0,.2);
+  display:block; background:#e8dece; transition:border-color .2s,box-shadow .2s;
+}
+.smap-pin:hover .spin-img { border-color:var(--gold); box-shadow:0 3px 10px rgba(160,120,48,.4); }
+.spin-label {
+  background:rgba(255,253,248,.93); border-radius:2px; padding:2px 5px;
+  text-align:center; box-shadow:0 1px 3px rgba(0,0,0,.12);
+}
+.spin-num { display:block; font-family:'Noto Sans SC',sans-serif; font-size:.41rem; font-weight:700; color:var(--south); letter-spacing:.05em; line-height:1.4; }
+.spin-name { display:block; font-family:'Noto Serif SC',serif; font-size:.45rem; color:var(--ink2); line-height:1.2; white-space:nowrap; }
 </style>
 </head>
 <body>
@@ -1051,20 +1084,124 @@ footer strong { color: rgba(240,200,120,.6); }
     </div>
   </div>
   <p class="pav-intro">许多观众来盖蒂只为看名画，却意外发现南馆才是最令他们震撼的地方。<strong>二楼</strong>陈列18世纪法国、英国、西班牙绘画（布歇、庚斯博罗、戈雅）；<strong>一楼</strong>则复原了多个完整的17–18世纪欧洲贵族房间，<strong>家具、墙板、地板、吊灯全是真品</strong>，仿佛凡尔赛时光倒流。</p>
-  <div class="floor-row">
-    <span class="floor-chip" style="color:var(--south)">📍 一楼 · 法国宫廷复原房间</span>
-    <span class="floor-chip" style="color:var(--south)">📍 一楼 · 塞夫勒皇家瓷器</span>
-    <span class="floor-chip" style="color:var(--south)">📍 二楼 · 布歇 · 庚斯博罗 · 戈雅</span>
+  <!-- ===== SOUTH FLOOR MAP ===== -->
+  <div class="sfmap-tabs-row">
+    <button class="sfmap-tab sfmap-active" data-floor="sfmap-s2f">二楼 · 2F<small>18世纪绘画</small></button>
+    <button class="sfmap-tab" data-floor="sfmap-s1f">一楼 · 1F<small>宫廷装饰艺术</small></button>
   </div>
-  <div class="artwork-grid">
 
+  <div class="sfmap-stage" id="sfmap-s2f">
+    <div class="sfmap-wrap">
+      <svg class="sfplan-svg" viewBox="0 0 730 200" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="720" height="190" fill="#f5ede0" stroke="#c8b4a0" stroke-width="2" rx="6"/>
+        <rect x="18" y="18" width="208" height="164" fill="#fce9d8" stroke="#7a1e14" stroke-width="1.5" rx="3"/>
+        <text x="122" y="37" text-anchor="middle" font-size="9" fill="#7a1e14" font-family="sans-serif" font-weight="700">法国绘画</text>
+        <rect x="261" y="18" width="208" height="164" fill="#fce9d8" stroke="#7a1e14" stroke-width="1.5" rx="3"/>
+        <text x="365" y="37" text-anchor="middle" font-size="9" fill="#7a1e14" font-family="sans-serif" font-weight="700">英国绘画</text>
+        <rect x="504" y="18" width="208" height="164" fill="#fce9d8" stroke="#7a1e14" stroke-width="1.5" rx="3"/>
+        <text x="608" y="37" text-anchor="middle" font-size="9" fill="#7a1e14" font-family="sans-serif" font-weight="700">西班牙绘画</text>
+        <rect x="226" y="18" width="35" height="164" fill="#ede4d4"/>
+        <rect x="469" y="18" width="35" height="164" fill="#ede4d4"/>
+        <text x="365" y="196" text-anchor="middle" font-size="7.5" fill="#b0a090" font-family="sans-serif">↑ 二楼楼梯 / 电梯</text>
+      </svg>
 
-    <div class="floor-header">
-      <span class="floor-label">二楼 · 2F</span>
-      <span class="floor-title">18世纪欧洲绘画</span>
+      <div class="smap-pin" style="left:16.7%;top:50.0%" onclick="window._sOpenCard(15)">
+        <img class="spin-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Fran%C3%A7ois_Boucher_-_The_Fountain_of_Love_-_71.PA.37_-_J._Paul_Getty_Museum.jpg/960px-Fran%C3%A7ois_Boucher_-_The_Fountain_of_Love_-_71.PA.37_-_J._Paul_Getty_Museum.jpg" alt="布歇《爱之泉》" loading="lazy">
+        <div class="spin-label"><span class="spin-num">15</span><span class="spin-name">爱之泉</span></div>
+      </div>
+      <div class="smap-pin" style="left:50.0%;top:50.0%" onclick="window._sOpenCard(16)">
+        <img class="spin-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Thomas_Gainsborough_-_Portrait_of_James_Christie.jpg/960px-Thomas_Gainsborough_-_Portrait_of_James_Christie.jpg" alt="庚斯博罗《克里斯蒂》" loading="lazy">
+        <div class="spin-label"><span class="spin-num">16</span><span class="spin-name">庚斯博罗</span></div>
+      </div>
+      <div class="smap-pin" style="left:83.3%;top:50.0%" onclick="window._sOpenCard(17)">
+        <img class="spin-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Portrait_of_the_Marquesa_de_Santiago_by_Francisco_de_Goya%2C_1804%2C_Getty_Center.JPG/960px-Portrait_of_the_Marquesa_de_Santiago_by_Francisco_de_Goya%2C_1804%2C_Getty_Center.JPG" alt="戈雅《侯爵夫人》" loading="lazy">
+        <div class="spin-label"><span class="spin-num">17</span><span class="spin-name">戈雅</span></div>
+      </div>
     </div>
+  </div>
 
-    <div class="artwork-card">
+  <div class="sfmap-stage sfmap-hidden" id="sfmap-s1f">
+    <div class="sfmap-wrap">
+      <svg class="sfplan-svg" viewBox="0 0 730 340" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="720" height="330" fill="#f5ede0" stroke="#c8b4a0" stroke-width="2" rx="6"/>
+        <!-- corridor -->
+        <rect x="10" y="140" width="710" height="55" fill="#ede4d4"/>
+        <text x="365" y="171" text-anchor="middle" font-size="8.5" fill="#a09080" font-family="sans-serif">— 走廊 CORRIDOR —</text>
+        <!-- Wing A top: S101-S106 (non-featured, 6×62px) -->
+        <rect x="15" y="20" width="372" height="110" fill="#e8dece" stroke="#c8b4a0" stroke-width="1" rx="2"/>
+        <line x1="77" y1="20" x2="77" y2="130" stroke="#c8b4a0" stroke-width="0.7"/>
+        <line x1="139" y1="20" x2="139" y2="130" stroke="#c8b4a0" stroke-width="0.7"/>
+        <line x1="201" y1="20" x2="201" y2="130" stroke="#c8b4a0" stroke-width="0.7"/>
+        <line x1="263" y1="20" x2="263" y2="130" stroke="#c8b4a0" stroke-width="0.7"/>
+        <line x1="325" y1="20" x2="325" y2="130" stroke="#c8b4a0" stroke-width="0.7"/>
+        <text x="46" y="78" text-anchor="middle" font-size="7.5" fill="#b8a890" font-family="sans-serif">S101</text>
+        <text x="108" y="78" text-anchor="middle" font-size="7.5" fill="#b8a890" font-family="sans-serif">S102</text>
+        <text x="170" y="78" text-anchor="middle" font-size="7.5" fill="#b8a890" font-family="sans-serif">S103</text>
+        <text x="232" y="78" text-anchor="middle" font-size="7.5" fill="#b8a890" font-family="sans-serif">S104</text>
+        <text x="294" y="78" text-anchor="middle" font-size="7.5" fill="#b8a890" font-family="sans-serif">S105</text>
+        <text x="356" y="78" text-anchor="middle" font-size="7.5" fill="#b8a890" font-family="sans-serif">S106</text>
+        <!-- S107 featured -->
+        <rect x="395" y="20" width="155" height="110" fill="#fce9d8" stroke="#7a1e14" stroke-width="2" rx="3"/>
+        <text x="472" y="37" text-anchor="middle" font-size="8.5" fill="#7a1e14" font-family="sans-serif" font-weight="700">S107</text>
+        <!-- S108 featured -->
+        <rect x="560" y="20" width="155" height="110" fill="#fce9d8" stroke="#7a1e14" stroke-width="2" rx="3"/>
+        <text x="637" y="37" text-anchor="middle" font-size="8.5" fill="#7a1e14" font-family="sans-serif" font-weight="700">S108</text>
+        <!-- Wing B bottom: S109(55) S110(106) S111(106) S112-S113(116) S114(106) S115(55) S116(106) -->
+        <!-- S109 non-feat -->
+        <rect x="15" y="205" width="55" height="115" fill="#e8dece" stroke="#c8b4a0" stroke-width="1" rx="2"/>
+        <text x="42" y="264" text-anchor="middle" font-size="7" fill="#b8a890" font-family="sans-serif">S109</text>
+        <!-- S110 featured -->
+        <rect x="78" y="205" width="106" height="115" fill="#fce9d8" stroke="#7a1e14" stroke-width="2" rx="3"/>
+        <text x="131" y="222" text-anchor="middle" font-size="8.5" fill="#7a1e14" font-family="sans-serif" font-weight="700">S110</text>
+        <!-- S111 featured -->
+        <rect x="192" y="205" width="106" height="115" fill="#fce9d8" stroke="#7a1e14" stroke-width="2" rx="3"/>
+        <text x="245" y="222" text-anchor="middle" font-size="8.5" fill="#7a1e14" font-family="sans-serif" font-weight="700">S111</text>
+        <!-- S112-S113 non-feat -->
+        <rect x="306" y="205" width="118" height="115" fill="#e8dece" stroke="#c8b4a0" stroke-width="1" rx="2"/>
+        <line x1="365" y1="205" x2="365" y2="320" stroke="#c8b4a0" stroke-width="0.7"/>
+        <text x="335" y="264" text-anchor="middle" font-size="7" fill="#b8a890" font-family="sans-serif">S112</text>
+        <text x="395" y="264" text-anchor="middle" font-size="7" fill="#b8a890" font-family="sans-serif">S113</text>
+        <!-- S114 featured -->
+        <rect x="432" y="205" width="106" height="115" fill="#fce9d8" stroke="#7a1e14" stroke-width="2" rx="3"/>
+        <text x="485" y="222" text-anchor="middle" font-size="8.5" fill="#7a1e14" font-family="sans-serif" font-weight="700">S114</text>
+        <!-- S115 non-feat -->
+        <rect x="546" y="205" width="55" height="115" fill="#e8dece" stroke="#c8b4a0" stroke-width="1" rx="2"/>
+        <text x="573" y="264" text-anchor="middle" font-size="7" fill="#b8a890" font-family="sans-serif">S115</text>
+        <!-- S116 featured -->
+        <rect x="609" y="205" width="106" height="115" fill="#fce9d8" stroke="#7a1e14" stroke-width="2" rx="3"/>
+        <text x="662" y="222" text-anchor="middle" font-size="8.5" fill="#7a1e14" font-family="sans-serif" font-weight="700">S116</text>
+        <text x="365" y="336" text-anchor="middle" font-size="7.5" fill="#b0a090" font-family="sans-serif">↑ 一楼入口</text>
+      </svg>
+
+      <div class="smap-pin" style="left:87.3%;top:22.1%" onclick="window._sOpenCard(18)">
+        <img class="spin-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Getty_Museum_Attributed_to_Andr%C3%A9-Charles_Boulle_1642_-_1732.jpg/960px-Getty_Museum_Attributed_to_Andr%C3%A9-Charles_Boulle_1642_-_1732.jpg" alt="摄政王镶板房" loading="lazy">
+        <div class="spin-label"><span class="spin-num">18 · S108</span><span class="spin-name">摄政王室</span></div>
+      </div>
+      <div class="smap-pin" style="left:64.7%;top:22.1%" onclick="window._sOpenCard(19)">
+        <img class="spin-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Paneled_Room_%28salon_de_compagnie%29%2C_by_Claude_Nicolas_Ledoux_%28Getty_107VRX%29.jpg/960px-Paneled_Room_%28salon_de_compagnie%29%2C_by_Claude_Nicolas_Ledoux_%28Getty_107VRX%29.jpg" alt="洛可可镶板房" loading="lazy">
+        <div class="spin-label"><span class="spin-num">19 · S107</span><span class="spin-name">洛可可厅</span></div>
+      </div>
+      <div class="smap-pin" style="left:17.9%;top:77.2%" onclick="window._sOpenCard(20)">
+        <img class="spin-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Lidded_Pot-pourri_Vase_%28vase_or_pot-pourri_vaisseau_%C3%A0_m%C3%A2t%2C_deuxi%C3%A8me_grandeur%29%2C_by_Charles-Nicolas_Dodin_%28Getty_103SFE%29.jpg/960px-Lidded_Pot-pourri_Vase_%28vase_or_pot-pourri_vaisseau_%C3%A0_m%C3%A2t%2C_deuxi%C3%A8me_grandeur%29%2C_by_Charles-Nicolas_Dodin_%28Getty_103SFE%29.jpg" alt="塞夫勒皇家瓷器" loading="lazy">
+        <div class="spin-label"><span class="spin-num">20 · S110</span><span class="spin-name">塞夫勒瓷</span></div>
+      </div>
+      <div class="smap-pin" style="left:33.6%;top:77.2%" onclick="window._sOpenCard(21)">
+        <img class="spin-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/The_Toilette_of_Psyche_from_The_Story_of_Psyche_tapestry_series%2C_by_Fran%C3%A7ois_Boucher_%28Getty_103SC9%29.jpg/960px-The_Toilette_of_Psyche_from_The_Story_of_Psyche_tapestry_series%2C_by_Fran%C3%A7ois_Boucher_%28Getty_103SC9%29.jpg" alt="布歇皇家挂毯" loading="lazy">
+        <div class="spin-label"><span class="spin-num">21 · S111</span><span class="spin-name">布歇挂毯</span></div>
+      </div>
+      <div class="smap-pin" style="left:66.4%;top:77.2%" onclick="window._sOpenCard(23)">
+        <img class="spin-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Bust_of_Juliette_R%C3%A9camier_%281777_-_1849%29%2C_by_Joseph_Chinard_%28Getty_103RRS%29.jpg/960px-Bust_of_Juliette_R%C3%A9camier_%281777_-_1849%29%2C_by_Joseph_Chinard_%28Getty_103RRS%29.jpg" alt="雷卡米埃胸像" loading="lazy">
+        <div class="spin-label"><span class="spin-num">23 · S114</span><span class="spin-name">赤陶雕塑</span></div>
+      </div>
+      <div class="smap-pin" style="left:90.7%;top:77.2%" onclick="window._sOpenCard(22)">
+        <img class="spin-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/A_Boudoir_%28Louis_XVI._Period%29.jpg/960px-A_Boudoir_%28Louis_XVI._Period%29.jpg" alt="新古典主义镶板房" loading="lazy">
+        <div class="spin-label"><span class="spin-num">22 · S116</span><span class="spin-name">新古典厅</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="south-card-pool" style="display:none" aria-hidden="true">
+    <div class="artwork-card" data-snum="15">
       <div class="artwork-img landscape">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Fran%C3%A7ois_Boucher_-_The_Fountain_of_Love_-_71.PA.37_-_J._Paul_Getty_Museum.jpg/960px-Fran%C3%A7ois_Boucher_-_The_Fountain_of_Love_-_71.PA.37_-_J._Paul_Getty_Museum.jpg" alt="布歇《爱之泉》约1748年" loading="lazy">
         <span class="img-credit">弗朗索瓦·布歇 · Public Domain · Getty Museum</span>
@@ -1084,8 +1221,7 @@ footer strong { color: rgba(240,200,120,.6); }
 <p><strong>《爱之泉》主题</strong>：这一主题在洛可可绘画中反复出现——爱泉旁的约会、少男少女的眉目传情，充斥着一种刻意营造的甜蜜轻盈。法国大革命后这种"为美而美"的风格迅速被认为是道德腐败的象征，在19世纪长期遭受批评，直到20世纪才重获正名。</p></div>
       </div>
     </div>
-
-    <div class="artwork-card">
+    <div class="artwork-card" data-snum="16">
       <div class="artwork-img portrait">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Thomas_Gainsborough_-_Portrait_of_James_Christie.jpg/960px-Thomas_Gainsborough_-_Portrait_of_James_Christie.jpg" alt="庚斯博罗《詹姆斯·克里斯蒂肖像》1778年" loading="lazy">
         <span class="img-credit">托马斯·庚斯博罗 · Public Domain</span>
@@ -1105,8 +1241,7 @@ footer strong { color: rgba(240,200,120,.6); }
 <p><strong>南馆的叙事价值</strong>：将这幅画与南馆的法国洛可可藏品并置，形成18世纪欧洲南北品味的对照：法国宫廷品味的华丽炫目，对照英国中产阶级的务实自信——相隔不过几步路，却是两个截然不同的精神世界。</p></div>
       </div>
     </div>
-
-    <div class="artwork-card">
+    <div class="artwork-card" data-snum="17">
       <div class="artwork-img portrait">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Portrait_of_the_Marquesa_de_Santiago_by_Francisco_de_Goya%2C_1804%2C_Getty_Center.JPG/960px-Portrait_of_the_Marquesa_de_Santiago_by_Francisco_de_Goya%2C_1804%2C_Getty_Center.JPG" alt="戈雅《圣地亚哥侯爵夫人肖像》1804年" loading="lazy">
         <span class="img-credit">弗朗西斯科·戈雅 · Public Domain · Getty Center</span>
@@ -1126,15 +1261,8 @@ footer strong { color: rgba(240,200,120,.6); }
 <p><strong>南馆的地理意义</strong>：这幅画与同楼的法国洛可可绘画形成18世纪欧洲南北品味的对照：法国宫廷的甜蜜幻想（布歇），对照伊比利亚半岛的严峻现实主义（戈雅）——相隔不过几步路，却是两个截然不同的精神世界。</p></div>
       </div>
     </div>
-
-
-    <div class="floor-header">
-      <span class="floor-label">一楼 · 1F</span>
-      <span class="floor-title">法国装饰艺术 · 宫廷复原房间</span>
-    </div>
-
-    <div class="artwork-card">
-      <img class="artwork-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Getty_Museum_Attributed_to_Andr%C3%A9-Charles_Boulle_1642_-_1732.jpg/960px-Getty_Museum_Attributed_to_Andr%C3%A9-Charles_Boulle_1642_-_1732.jpg" alt="Boulle Cabinet" loading="lazy">
+    <div class="artwork-card" data-snum="18">
+      <div class="artwork-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Getty_Museum_Attributed_to_Andr%C3%A9-Charles_Boulle_1642_-_1732.jpg/960px-Getty_Museum_Attributed_to_Andr%C3%A9-Charles_Boulle_1642_-_1732.jpg" alt="Boulle Cabinet" loading="lazy"></div>
       <div class="card-body">
         <span class="room-tag">南馆 一楼 · S108</span>
         <span class="artwork-num">18</span>
@@ -1150,9 +1278,8 @@ footer strong { color: rgba(240,200,120,.6); }
 <p>这套内饰在法国本地流散于大革命后，辗转在英国贵族手中保存至20世纪。盖蒂从伦敦拍卖行购入时，一同购入了完整的原始木工结构、壁炉设备和天花板装饰，是极少数以整体方式保存下来的路易时代宫廷室内之一。</p></div>
       </div>
     </div>
-
-    <div class="artwork-card">
-      <img class="artwork-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Paneled_Room_%28salon_de_compagnie%29%2C_by_Claude_Nicolas_Ledoux_%28Getty_107VRX%29.jpg/960px-Paneled_Room_%28salon_de_compagnie%29%2C_by_Claude_Nicolas_Ledoux_%28Getty_107VRX%29.jpg" alt="Ledoux Paneled Room" loading="lazy">
+    <div class="artwork-card" data-snum="19">
+      <div class="artwork-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Paneled_Room_%28salon_de_compagnie%29%2C_by_Claude_Nicolas_Ledoux_%28Getty_107VRX%29.jpg/960px-Paneled_Room_%28salon_de_compagnie%29%2C_by_Claude_Nicolas_Ledoux_%28Getty_107VRX%29.jpg" alt="Ledoux Paneled Room" loading="lazy"></div>
       <div class="card-body">
         <span class="room-tag">南馆 一楼 · S107</span>
         <span class="artwork-num">19</span>
@@ -1168,9 +1295,8 @@ footer strong { color: rgba(240,200,120,.6); }
 <p>盖蒂的这套护墙板经历了跨越大西洋的旅行——从法国贵族宅邸拆卸、编号记录、装船运输、在美国重新拼装——每个连接处都精确吻合，这本身就是18世纪木工工艺精确度的最好证明。</p></div>
       </div>
     </div>
-
-    <div class="artwork-card">
-      <img class="artwork-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Lidded_Pot-pourri_Vase_%28vase_or_pot-pourri_vaisseau_%C3%A0_m%C3%A2t%2C_deuxi%C3%A8me_grandeur%29%2C_by_Charles-Nicolas_Dodin_%28Getty_103SFE%29.jpg/960px-Lidded_Pot-pourri_Vase_%28vase_or_pot-pourri_vaisseau_%C3%A0_m%C3%A2t%2C_deuxi%C3%A8me_grandeur%29%2C_by_Charles-Nicolas_Dodin_%28Getty_103SFE%29.jpg" alt="Sèvres Porcelain Vase" loading="lazy">
+    <div class="artwork-card" data-snum="20">
+      <div class="artwork-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Lidded_Pot-pourri_Vase_%28vase_or_pot-pourri_vaisseau_%C3%A0_m%C3%A2t%2C_deuxi%C3%A8me_grandeur%29%2C_by_Charles-Nicolas_Dodin_%28Getty_103SFE%29.jpg/960px-Lidded_Pot-pourri_Vase_%28vase_or_pot-pourri_vaisseau_%C3%A0_m%C3%A2t%2C_deuxi%C3%A8me_grandeur%29%2C_by_Charles-Nicolas_Dodin_%28Getty_103SFE%29.jpg" alt="Sèvres Porcelain Vase" loading="lazy"></div>
       <div class="card-body">
         <span class="room-tag">南馆 一楼 · S110</span>
         <span class="artwork-num">20</span>
@@ -1186,9 +1312,8 @@ footer strong { color: rgba(240,200,120,.6); }
 <p>法国大革命后宫廷需求骤降，大量库存流散欧洲。盖蒂藏品部分来自英国贵族历史遗存，部分购于战后拍卖市场，是法国本土以外保存最系统的塞夫勒皇家瓷器集合之一。展室内还陈列相关的家具和内饰原件，呈现瓷器在宫廷室内中的原始语境。</p></div>
       </div>
     </div>
-
-    <div class="artwork-card">
-      <img class="artwork-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/The_Toilette_of_Psyche_from_The_Story_of_Psyche_tapestry_series%2C_by_Fran%C3%A7ois_Boucher_%28Getty_103SC9%29.jpg/960px-The_Toilette_of_Psyche_from_The_Story_of_Psyche_tapestry_series%2C_by_Fran%C3%A7ois_Boucher_%28Getty_103SC9%29.jpg" alt="Boucher Tapestry" loading="lazy">
+    <div class="artwork-card" data-snum="21">
+      <div class="artwork-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/The_Toilette_of_Psyche_from_The_Story_of_Psyche_tapestry_series%2C_by_Fran%C3%A7ois_Boucher_%28Getty_103SC9%29.jpg/960px-The_Toilette_of_Psyche_from_The_Story_of_Psyche_tapestry_series%2C_by_Fran%C3%A7ois_Boucher_%28Getty_103SC9%29.jpg" alt="Boucher Tapestry" loading="lazy"></div>
       <div class="card-body">
         <span class="room-tag">南馆 一楼 · S102 / S111</span>
         <span class="artwork-num">21</span>
@@ -1204,9 +1329,8 @@ footer strong { color: rgba(240,200,120,.6); }
 <p>挂毯的展陈通常沿房间四壁连续悬挂，与护墙板和家具构成"总体艺术"（ensemble）。盖蒂南馆的展室保留了这一完整的室内语境，让观者体验挂毯在其原始功能中的视觉冲击——而不只是孤立的博物馆展品。</p></div>
       </div>
     </div>
-
-    <div class="artwork-card">
-      <img class="artwork-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/A_Boudoir_%28Louis_XVI._Period%29.jpg/960px-A_Boudoir_%28Louis_XVI._Period%29.jpg" alt="Neoclassical Boudoir" loading="lazy">
+    <div class="artwork-card" data-snum="22">
+      <div class="artwork-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/A_Boudoir_%28Louis_XVI._Period%29.jpg/960px-A_Boudoir_%28Louis_XVI._Period%29.jpg" alt="Neoclassical Boudoir" loading="lazy"></div>
       <div class="card-body">
         <span class="room-tag">南馆 一楼 · S116</span>
         <span class="artwork-num">22</span>
@@ -1222,9 +1346,8 @@ footer strong { color: rgba(240,200,120,.6); }
 <p>1789年法国大革命爆发，宫廷委托骤停，大量制作中的家具和护墙板就此散佚。南馆这套展室保存了革命前夕最后几年的宫廷装饰原件，是"旧制度"（Ancien Régime）最后辉煌的实物见证。</p></div>
       </div>
     </div>
-
-    <div class="artwork-card">
-      <img class="artwork-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Bust_of_Juliette_R%C3%A9camier_%281777_-_1849%29%2C_by_Joseph_Chinard_%28Getty_103RRS%29.jpg/960px-Bust_of_Juliette_R%C3%A9camier_%281777_-_1849%29%2C_by_Joseph_Chinard_%28Getty_103RRS%29.jpg" alt="Chinard Bust of Récamier" loading="lazy">
+    <div class="artwork-card" data-snum="23">
+      <div class="artwork-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Bust_of_Juliette_R%C3%A9camier_%281777_-_1849%29%2C_by_Joseph_Chinard_%28Getty_103RRS%29.jpg/960px-Bust_of_Juliette_R%C3%A9camier_%281777_-_1849%29%2C_by_Joseph_Chinard_%28Getty_103RRS%29.jpg" alt="Chinard Bust of Récamier" loading="lazy"></div>
       <div class="card-body">
         <span class="room-tag">南馆 一楼 · S114</span>
         <span class="artwork-num">23</span>
@@ -1241,6 +1364,8 @@ footer strong { color: rgba(240,200,120,.6); }
       </div>
     </div>
   </div>
+
+
 
   <div class="price-row">
     <div class="price-stat"><span class="price-val">$5,390万</span><span class="price-lbl">鸢尾花 · 1987年拍卖</span></div>
@@ -1366,6 +1491,21 @@ footer strong { color: rgba(240,200,120,.6); }
   closeBtn.addEventListener('click', closeModal);
   overlay.addEventListener('click', function(e) { if (e.target === overlay) closeModal(); });
   document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+
+  // South Pavilion floor map
+  window._sOpenCard = function(n) {
+    var c = document.querySelector('#south-card-pool [data-snum="' + n + '"]');
+    if (c) openModal(c);
+  };
+  document.querySelectorAll('.sfmap-tab').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var target = btn.dataset.floor;
+      document.querySelectorAll('.sfmap-tab').forEach(function(b) { b.classList.remove('sfmap-active'); });
+      document.querySelectorAll('.sfmap-stage').forEach(function(s) { s.classList.add('sfmap-hidden'); });
+      btn.classList.add('sfmap-active');
+      document.getElementById(target).classList.remove('sfmap-hidden');
+    });
+  });
 })();
 </script>
 
