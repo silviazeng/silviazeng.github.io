@@ -454,6 +454,65 @@ footer strong { color: rgba(240,200,120,.6); }
   .pav-header { flex-direction: column; gap: 0.8rem; }
   .card-body { padding: 1.2rem 1.4rem 1.6rem; }
 }
+
+/* ===== MODAL ===== */
+.artwork-card { cursor: pointer; }
+.modal-overlay {
+  display: none; position: fixed; inset: 0; z-index: 9000;
+  background: rgba(20,15,8,.82);
+  backdrop-filter: blur(6px);
+  padding: 3rem 1.5rem 4rem;
+  overflow-y: auto;
+}
+.modal-overlay.open { display: flex; align-items: flex-start; justify-content: center; }
+.modal-box {
+  background: var(--bg);
+  max-width: 780px; width: 100%;
+  border-radius: 8px; overflow: hidden;
+  position: relative; margin: auto 0;
+  animation: fadeUp .26s ease;
+}
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(18px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+.modal-close-btn {
+  position: absolute; top: 1rem; right: 1rem; z-index: 2;
+  background: rgba(28,23,16,.55); color: #fff;
+  border: none; cursor: pointer;
+  width: 38px; height: 38px; border-radius: 50%;
+  font-size: 1rem;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .15s;
+}
+.modal-close-btn:hover { background: rgba(28,23,16,.85); }
+.modal-hero-img {
+  width: 100%; max-height: 460px;
+  display: block; object-fit: contain;
+  background: #e8dcc8;
+}
+.modal-body-wrap { padding: 2rem 2.5rem 2.8rem; }
+.modal-body-wrap .divider { margin: 1rem 0 1.2rem; }
+.detail-section {
+  margin-top: 1.6rem;
+  padding-top: 1.6rem;
+  border-top: 2px solid var(--line);
+}
+.detail-section h4 {
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 0.7rem; letter-spacing: 0.22em;
+  color: var(--gold); text-transform: uppercase;
+  font-weight: 500; margin-bottom: 1rem;
+}
+.detail-section p {
+  font-size: 0.95rem; color: var(--ink2);
+  line-height: 2.08; margin-bottom: 1rem;
+}
+.detail-section p:last-child { margin-bottom: 0; }
+.detail-section p strong { color: var(--ink); font-weight: 700; }
+/* hide detail from card view; only show in modal */
+.artwork-card .detail-section { display: none; }
+
 </style>
 </head>
 <body>
@@ -562,6 +621,14 @@ footer strong { color: rgba(240,200,120,.6); }
   <a class="pav-tab end" href="#visit">参观信息</a>
 </nav>
 
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-box" id="modalBox">
+    <button class="modal-close-btn" id="modalClose" aria-label="关闭">✕</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
 <!-- ======= 西馆 ======= -->
 <section class="pavilion" id="west">
   <div class="pav-header" style="background:var(--west-lt); border-left:6px solid var(--west);">
@@ -595,6 +662,10 @@ footer strong { color: rgba(240,200,120,.6); }
           <p>1987年，澳大利亚商人 Alan Bond 在苏富比以 <strong>5,390万美元</strong> 拍下此画，创当时世界拍卖纪录。然而他无力付清全款，画作随后流转，1990年由盖蒂以未披露价格完成私下收购正式入藏。</p>
           <cite>— 1987年拍卖价：$53,900,000</cite>
         </div>
+      <div class="detail-section"><h4>深度解读</h4>
+<p>梵高在圣雷米创作《鸢尾花》时，刻意选择了俯视的视角——没有天空，没有背景，整个画面被花朵和叶片填满，压迫感与生命力同时扑面而来。植物学家指出，他对鸢尾花的描绘相当精确：左下角那朵孤独的白花在现实中的确是鸢尾花的白化变种，并非梵高的随意创作。</p>
+<p>画作的流传史充满戏剧性。1987年拍卖后，买家 Alan Bond 通过苏富比提供的无息贷款付款，实质上是以画作本身作为抵押——这一安排引发轩然大波，拍卖行被指责人为哄抬市场。此后几年间 Bond 财务危机爆发，画作辗转数次私下转手，直至1990年盖蒂出资购入，具体价格至今未予公开。</p>
+<p>目前《鸢尾花》常设展于西馆二楼 Gallery W204，与同系列的《玫瑰》（现藏纽约大都会博物馆）属同一时期作品。盖蒂每年为这幅画投入相当可观的照明与湿度控制预算，以防止颜料层在洛杉矶干燥气候下开裂。</p></div>
       </div>
     </div>
 
@@ -615,6 +686,10 @@ footer strong { color: rgba(240,200,120,.6); }
           <li><strong>雷诺阿《散步》(La Promenade, 1870)</strong>——光影透过树叶碎落在情侣身上，是雷诺阿充满生命感的早期杰作。</li>
           <li><strong>塞尚《静物与苹果》(1893–94)</strong>——后印象派代表作，几颗苹果的摆置暗示他对几何结构的全新思考，现代主义的起点。</li>
         </ul>
+      <div class="detail-section"><h4>深度解读</h4>
+<p><strong>莫奈《鲁昂大教堂》系列</strong>：1892至1894年间，莫奈在鲁昂共待了三个冬春，面对同一门面画下三十余幅。盖蒂这幅捕捉的是清晨光线——石材呈现玫瑰金与米白的混合，薄雾尚未完全散去。他曾说："我想捕捉的不是大教堂，而是笼罩在它周围的空气。"</p>
+<p><strong>雷诺阿《散步》</strong>（La Promenade, 1870）：完成时雷诺阿29岁，正处于印象主义风格形成的关键期。夫妇俩穿行于树林间，光线穿透叶隙洒落，雷诺阿用细碎的笔触再现了这种自然散射光。次年普法战争爆发，这种充满活力与乐观的画风在战后反而愈发珍贵。</p>
+<p><strong>塞尚《静物与苹果》</strong>（1893–94）：几颗苹果毫无装饰地摆在桌上，却是西方艺术史上最具颠覆性的画作之一。塞尚破坏了传统透视法则——桌沿的两端不在同一水平面，盘子从两个角度同时被看见。毕加索和布拉克正是从塞尚这里获得了立体主义的灵感。</p></div>
       </div>
     </div>
 
@@ -631,6 +706,10 @@ footer strong { color: rgba(240,200,120,.6); }
         <span class="price-tag paid">💰 2012年拍卖 $6,510万</span>
         <div class="divider"></div>
         <p class="artwork-desc">马奈原计划以四季为题画一个系列，却只完成了这一幅"春"。画中让娜身着浅绿色春装、撑着白色阳伞，侧身望向画外，表情轻盈而疏离。她不再是神话人物，而是活生生的19世纪巴黎现代女性。2012年以 <span class="price-inline">6,510万美元</span> 刷新马奈个人拍卖纪录后由盖蒂购入。</p>
+      <div class="detail-section"><h4>深度解读</h4>
+<p>马奈原本计划以同一模特完成"四季"系列，春夏秋冬各一幅。但"春"完成后不久，他的健康急剧恶化——1881年正是他开始出现运动失调症状的一年，两年后他去世，其余三季永远停留在计划中。《让娜（春）》因此成为这个未竟系列唯一留存于世的作品，具有双重的艺术与历史价值。</p>
+<p>画中模特让娜·德马赛（Jeanne Demarsy）是当时巴黎剧院界颇有名气的女演员。马奈用宽松的笔触处理她的服装，与脸部细腻刻画形成对比，暗示时代对"女性形象"的矛盾期待——她既是优雅的巴黎女性，又是行走于公共空间的独立个体。</p>
+<p>2012年苏富比纽约秋拍，《让娜（春）》以6,510万美元落槌，超越此前马奈拍卖纪录近一倍。盖蒂方面确认购入，但具体交割条款未予公开。此画现陈列于西馆二楼，与《鸢尾花》同楼不同厅。</p></div>
       </div>
     </div>
 
@@ -647,6 +726,10 @@ footer strong { color: rgba(240,200,120,.6); }
         <span class="price-tag key">🏛 全球最完整摄影史藏品之一</span>
         <div class="divider"></div>
         <p class="artwork-desc">从摄影术诞生到当代，覆盖近200年，因对光线敏感全年轮换展出。亮点包括最早期的达盖尔银版（Daguerreotype）影像——每张独一无二，拿在手中随角度变换会时而正像时而负像；以及英国维多利亚时代大师 Julia Margaret Cameron 的人像，她用刻意柔焦让摄影散发出油画般的诗意，代表作《约翰·赫歇尔爵士》(1867年) 是人像摄影的不朽之作。</p>
+      <div class="detail-section"><h4>深度解读</h4>
+<p>盖蒂摄影中心的收藏横跨摄影史全部阶段。最早期的达盖尔银版照片（Daguerreotype, 1839年后）每张都是独一无二的正像，没有底片，无法复制——你看到的就是世上仅存的那一张。馆内所藏达盖尔银版包括1840年代的欧洲城市风貌与人像，因银层已部分氧化，画面呈现出一种无法人工模仿的古铜光泽。</p>
+<p>朱莉娅·玛格丽特·卡梅伦（Julia Margaret Cameron, 1815–1879）是盖蒂摄影藏品另一大亮点。她50岁才开始摄影，用改装的湿版玻璃相机和极长的曝光时间，故意制造柔焦效果，让照片散发出油画的氛围。她的被摄者包括达尔文、丁尼生和赫歇尔——皆为维多利亚时代的科学与文化名流。</p>
+<p>因展品对光线高度敏感，摄影中心全年保持轮换展出——每次到访所见均不同。如需了解当前展出内容，可在参观前查阅 getty.edu 官网的"当前展览"页面。</p></div>
       </div>
     </div>
 
@@ -682,6 +765,10 @@ footer strong { color: rgba(240,200,120,.6); }
         <span class="price-tag paid">💰 2013年购入 £1,650万</span>
         <div class="divider"></div>
         <p class="artwork-desc">这幅画有段传奇故事：2007年在英国一场小型拍卖会上现身，起估价仅 <span class="price-inline">1,000–1,500英镑</span>，最终以220万英镑成交；经鉴定为伦勃朗真迹后，2013年盖蒂以 <span class="price-inline">1,650万英镑</span> 购入，英国政府一度冻结出口许可。画中伦勃朗22岁，身着士兵服装仰头大笑，是他近百幅自画像中最罕见、最活泼的一幅。</p>
+      <div class="detail-section"><h4>深度解读</h4>
+<p>2007年那场拍卖发生在英国达勒姆郡一家名不见经传的小拍卖行，经手人最初认为这不过是17世纪的仿作。起拍价1,000英镑，最终以220万英镑成交，当时并无人确定是真迹。随后荷兰伦勃朗研究项目（RRP）对画作进行了详尽科学检测——颜料成分、画布织法、底稿笔触——最终于2011年确认真迹。</p>
+<p>这幅画作于铜板而非布面，尺幅仅22×17厘米，比一张A4纸还小。伦勃朗年轻时曾多次以铜板为基底创作小型画，便于携带展示以吸引委托订单。画中他身着士兵戏服、张口大笑，在近百幅自画像中极为罕见——那些更为人知的自画像大多面容凝重，透着内省与孤独。</p>
+<p>盖蒂2013年购入后，英国文化遗产部随即发出出口禁令，给英国各机构六个月时间筹款留存。但最终无机构能凑齐1,650万英镑，画作正式出口至美国，目前与《劫夺欧罗巴》同陈列于东馆二楼 Gallery E205。</p></div>
       </div>
     </div>
 
@@ -698,6 +785,10 @@ footer strong { color: rgba(240,200,120,.6); }
         <span class="price-tag key">🏛 伦勃朗26岁之作</span>
         <div class="divider"></div>
         <p class="artwork-desc">取材希腊神话：宙斯化身白牛，将公主欧罗巴劫走渡海。伦勃朗以强烈的明暗对比（chiaroscuro）制造戏剧张力——欧罗巴惊恐中抓住随从，白牛腾跃力量感十足，远处马车夫束手无策。与《大笑的伦勃朗》同室并置，两幅都是他26岁前后所作，反差极大，令人叹服。</p>
+      <div class="detail-section"><h4>深度解读</h4>
+<p>希腊神话中，宙斯爱上腓尼基公主欧罗巴，化身白牛混入牛群，待她骑上背后一跃入海，将她带往克里特岛。"欧罗巴"（Europa）这个名字后来成为整个欧洲大陆的名称。这一题材在17世纪极为流行，提香、鲁本斯和伦勃朗都画过——三人版本风格迥异，是研究巴洛克美学演变的绝佳案例。</p>
+<p>伦勃朗此作完成于1632年，彼时他26岁，甫抵阿姆斯特丹不久，正急于建立声誉。他选择捕捉最戏剧性的瞬间：白牛已跃入海中，欧罗巴回头惊呼，侍女们在岸边束手无策。强烈的光影对比（chiaroscuro）直接继承自卡拉瓦乔，但动态感和心理张力更为复杂。</p>
+<p>与《大笑的伦勃朗》并置于同一展厅是馆方刻意为之——一幅是私密的22厘米小作，一幅是充满史诗感的62×77厘米大作；一幅轻松诙谐，一幅紧张激烈。两件作品都完成于伦勃朗20多岁，这种并置清晰呈现了年轻伦勃朗惊人的风格跨度。</p></div>
       </div>
     </div>
 
@@ -714,6 +805,10 @@ footer strong { color: rgba(240,200,120,.6); }
         <span class="price-tag key">🏛 卡拉瓦乔风格代表</span>
         <div class="divider"></div>
         <p class="artwork-desc">描绘神话中宙斯化为黄金雨降落给被囚少女的瞬间。真蒂莱斯基是卡拉瓦乔的精神继承者，画中白色床单皱褶的阴影与女性肤色的光亮形成强烈对比，绸缎质感细腻得几乎可以触摸，是研究早期巴洛克风格的重要标本。</p>
+      <div class="detail-section"><h4>深度解读</h4>
+<p>奥拉奇奥·真蒂莱斯基（Orazio Gentileschi, 1563–1639）是卡拉瓦乔最重要的追随者之一，但他的风格比卡拉瓦乔本人更为优雅细腻。这幅《达娜厄》描绘宙斯化为黄金雨降临被父亲囚禁于高塔中的公主——黄金象征权贵与诱惑，对17世纪的观者而言有明确的道德寓意。</p>
+<p>画面技术层面的精华在于白色床单的处理：织物皱褶投下的阴影层层递进，布料的重量感与质感几乎可以触摸。这种对白色织物的极致刻画是真蒂莱斯基的标志性技法，在他女儿阿尔泰米西亚（Artemisia Gentileschi）的作品中得到了进一步发展。</p>
+<p>值得一提的是，伦勃朗也画过同题材的《达娜厄》（1636年，现藏圣彼得堡艾尔米塔什博物馆）。两幅风格对比鲜明：真蒂莱斯基版本更端庄、更注重装饰性；伦勃朗版本则更直接、更具肉身感。盖蒂同时拥有这两位画家的顶级作品，为比较研究提供了难得条件。</p></div>
       </div>
     </div>
 
@@ -749,6 +844,10 @@ footer strong { color: rgba(240,200,120,.6); }
         <span class="price-tag paid">💰 1989年购入 $3,520万（当时文艺复兴绘画拍卖纪录）</span>
         <div class="divider"></div>
         <p class="artwork-desc">画中人是一位年约16岁的佛罗伦萨少年，面容苍白，目光冷峻地正视观者，身着银色盔甲，手持斧枪。蓬托莫是意大利矫饰主义代表人物，那种刻意夸张的优雅与说不清道不明的疏离感，是16世纪宫廷肖像画的最高水准。盖蒂1989年以 <span class="price-inline">3,520万美元</span> 购入，三倍刷新了此前古画拍卖纪录。</p>
+      <div class="detail-section"><h4>深度解读</h4>
+<p>画中人物身份至今争议未决。主流假说有两个：其一认为他是科西莫一世·德·美第奇（Cosimo I de' Medici），未来的佛罗伦萨公爵；其二则认为是名叫弗朗切斯科·瓜尔迪（Francesco Guardi）的年轻侍卫。近年X光与红外线反射检查发现画面曾有重大修改——早期草稿中人物手持的是长矛而非斧枪，帽子形状也与最终版本不同，暗示委托方可能在创作中途更换了人物。</p>
+<p>蓬托莫（Jacopo Pontormo, 1494–1557）是"矫饰主义"（Mannerism）的代表人物。这一风格刻意背离文艺复兴的和谐与平衡，转而追求扭曲的优雅、莫名的张力和心理上的不稳定感。画中少年那种刻意漠然的目光和略显夸张的身姿，正是矫饰主义典型的"bella maniera"——美丽但疏离的风格。</p>
+<p>盖蒂1989年斥资3,520万美元购入，相当于今天约8,500万美元。这笔交易创下彼时文艺复兴绘画的拍卖纪录，也使盖蒂一夜之间成为意大利矫饰主义绘画最重要的海外收藏机构之一。</p></div>
       </div>
     </div>
 
@@ -765,6 +864,10 @@ footer strong { color: rgba(240,200,120,.6); }
         <span class="price-tag key">🏛 透纳晚期代表作</span>
         <div class="divider"></div>
         <p class="artwork-desc">透纳64岁时的晚期杰作。画面以淡金色烟霭笼罩古罗马论坛遗址，古代废墟与19世纪平凡的市集生活并置于同一画面，时间的流逝被光线溶解为无声的哲思。透纳"溶化一切于光中"的美学在此达到极致——你几乎分不清哪里是建筑，哪里是天空，哪里是幻觉。</p>
+      <div class="detail-section"><h4>深度解读</h4>
+<p>透纳一生三次赴罗马（1819、1828、1840年）。这幅《现代罗马》完成于最后一次罗马之旅的十年后，是基于记忆与想象的再创作，而非现场写生。画面中所谓的"凡西诺广场"（Campo Vaccino）是当时罗马论坛遗址的俗称——字面意思是"牛场"，因这片古迹荒废已久，实际上被用作放牛的牧场。</p>
+<p>透纳晚期风格以"溶解"著称：建筑轮廓模糊，色彩相互渗透，光线成为结构本身。英国批评家约翰·罗斯金（John Ruskin）是透纳最有力的支持者，但也有批评者嘲笑他的晚期作品是"肥皂泡和白垩水"。据说在皇家艺术学院展览开幕前，他会在开幕当天用颜料直接在画上加最后几笔，让周围作品相形失色。</p>
+<p>2010年，《现代罗马》在苏富比伦敦拍卖，以2,969万英镑创下透纳个人拍卖纪录。盖蒂随后购入，使这幅画成为馆内英国绘画收藏的旗舰作品。</p></div>
       </div>
     </div>
 
@@ -781,6 +884,10 @@ footer strong { color: rgba(240,200,120,.6); }
         <span class="price-tag key">🏛 全美最重要的手稿收藏之一</span>
         <div class="divider"></div>
         <p class="artwork-desc">羊皮纸页面以金箔打底，青金石研磨的蓝、朱砂的红历经600年依旧饱满，是任何现代颜料无法复制的。代表作包括 Lorenzo Monaco《耶稣升天》首字母装饰页（1431年），以及多部15世纪法国贵族委托的时祷书（Book of Hours）——那是中世纪最私密、也最奢华的艺术委托形式，每一页边框都充满奇异生物与金色卷草纹，令人叹为观止。</p>
+      <div class="detail-section"><h4>深度解读</h4>
+<p>盖蒂馆藏彩饰手稿以《路德维希藏本》（Ludwig Collection）为核心，1983年由慕尼黑商人彼得·路德维希出售给盖蒂，共计144件，是20世纪最重要的私人手稿收藏交易之一。这批手稿横跨9至16世纪，地域覆盖法国、意大利、德意志、英格兰与波斯。</p>
+<p>手稿制作工艺极为繁复：先将小牛皮或羊皮鞣制打磨成超薄的书写面（vellum），再由抄写员誊抄文字，留出装饰空间后交给细密画师绘制图像。颜料来自天然矿物——蓝色取自青金石（lapis lazuli，当时比黄金更贵），红色来自朱砂，金色则是真正的金箔研磨后调和入胶液手工涂敷。</p>
+<p>低光展厅的设计是必要之举：紫外线和强可见光是手稿的天敌，持续照射会使颜料褪色、皮革脆化。盖蒂规定每件手稿每年在灯光下展出不超过数百小时，其余时间存放于恒温恒湿的无光库房。</p></div>
       </div>
     </div>
 
@@ -813,6 +920,10 @@ footer strong { color: rgba(240,200,120,.6); }
         <span class="price-tag key">🏛 全套真品宫廷陈设</span>
         <div class="divider"></div>
         <p class="artwork-desc">南馆将完整的法国贵族室内原件——地板、护墙板、壁炉、吊灯——从法国拆运至此照原样复原。你可以隔着低栏望进一个路易十五时代的沙龙：镶嵌花卉贴皮（marquetry）的洛可可写字台、精雕兽腿描金的扶手椅、萨克森迈森（Meissen）瓷器摆件，以及雕花镀金落地钟。整套陈设在当年已是天文数字，而木器上的贴皮历经三百年依旧光洁如初。</p>
+      <div class="detail-section"><h4>深度解读</h4>
+<p>盖蒂南馆一楼最著名的是"瓦朗热维尔房间"（Varengeville Room）——一套完整的路易十五时代书房，原属法国贵族罗昂家族的巴黎公馆，约建于1735年。J·保罗·盖蒂本人在1938年以个人名义购入这整套室内装潢，包括护墙板、壁炉镶嵌大理石、天花板线脚，全部拆卸编号后运往美国。</p>
+<p>房间内的家具均由当时最顶级的御用木工大师制作：Gilles Joubert 和 Bernard van Risenburgh（BVRB）两人几乎垄断了路易十五年间的宫廷家具市场。盖蒂藏有三件 BVRB 署名的书桌，每件的胡桃木贴皮都在桌面正中绽放出精确对称的花纹，是手工拼木工艺（marquetry）的顶点之作。</p>
+<p>参观这间展室时建议放慢脚步：低矮的橡木地板踏上去声音沉闷，壁炉上方的镜面玻璃折射出整个房间……这种真实的时间跨越感，是任何博物馆的重建复制品所无法给予的。</p></div>
       </div>
     </div>
 
@@ -825,6 +936,10 @@ footer strong { color: rgba(240,200,120,.6); }
         <span class="price-tag key">🏛 法国以外最重要收藏之一</span>
         <div class="divider"></div>
         <p class="artwork-desc">塞夫勒是路易十五设立的御用窑口，其"国王蓝"（bleu royal）与"蔷薇粉"（rose Pompadour）是18世纪陶瓷技术与审美的双重顶峰。盖蒂馆藏的花瓶、茶组、早餐盘上，精细的花卉细密画与大量镀金装饰，每件都是法国宫廷生活的实物缩影。盖蒂的塞夫勒藏品被誉为法国本土以外最重要的之一。</p>
+      <div class="detail-section"><h4>深度解读</h4>
+<p>塞夫勒窑厂（Manufacture royale de Sèvres）1756年由路易十五迁至凡尔赛宫附近的塞夫勒村。推动这一迁移的是国王的宠妃蓬巴杜侯爵夫人——她不仅是窑厂的财务赞助人，更是最大的个人买主，每年在凡尔赛宫举办私人瓷器销售，直接向贵族推销新品。"蔷薇粉"（rose Pompadour）这一颜色因此以她命名。</p>
+<p>盖蒂藏有一套路易十五时代的晚餐瓷器服务，每件盘子的盘心绘有不同的花卉图案，边缘以"国王蓝"打底，覆盖浅浮雕的金色卷草纹。这种软质瓷（soft-paste porcelain）比中国或德国迈森的硬质瓷更柔和，釉面有一种独特的蜡质光泽，是塞夫勒区别于其他欧洲窑口的重要特征。</p>
+<p>18世纪末法国大革命爆发，宫廷瓷器需求骤降，大量库存流散欧洲各地。盖蒂的塞夫勒收藏部分来自英国贵族家庭的历史藏品，部分购于战后流散的欧洲拍卖市场，是法国本土以外保存最系统的塞夫勒皇家瓷器集合之一。</p></div>
       </div>
     </div>
 
@@ -859,6 +974,10 @@ footer strong { color: rgba(240,200,120,.6); }
         <span class="price-tag key">🌿 活体艺术作品</span>
         <div class="divider"></div>
         <p class="artwork-desc">概念艺术家 Robert Irwin 将整个山坡改造为一件"永不完成的作品"。沿Z字形坡道下行，依次经过树荫小径和阶梯水景，最终抵达圆形下沉花园——500余株杜鹃花围绕中央水池组成螺旋迷宫，三组球形灌木随季节变换颜色。欧文说："这座花园是在回应，不是在表达。" 每次来都有不同的花在开。盖蒂有32名全职园丁日常维护。</p>
+      <div class="detail-section"><h4>深度解读</h4>
+<p>罗伯特·欧文（Robert Irwin, 1928–2023）是美国"光与空间"（Light and Space）运动的代表人物。在接受盖蒂委托时，他明确拒绝了一个"完成的"设计——他坚持认为花园应该是一个持续进行中的过程，而非一件可以交付的艺术品。他与盖蒂签订的合同里有一条罕见的条款：欧文保留"园艺顾问"身份，直至去世前仍定期到访并提出调整建议。</p>
+<p>中央花园的植物选择极为讲究。螺旋迷宫中的500余株杜鹃花按颜色精确排列，从外圈到内圈呈现从深紫到浅粉的渐变。欧文特别要求在花园入口处保留一棵原生橡树（这棵树在施工时差点被砍掉），理由是："这棵树比任何设计都要美，应该成为花园的老师。"</p>
+<p>步道从主入口沿坡面蜿蜒而下，高差约9米。欧文刻意在步道上设置了视觉"遮断"——转过某个弯道前完全看不到下方的圆形花园，那一刻的"突然到达"是他精心设计的感知体验。许多观众反映，这是盖蒂之行最令人难忘的瞬间。</p></div>
       </div>
     </div>
 
@@ -871,6 +990,10 @@ footer strong { color: rgba(240,200,120,.6); }
         <span class="price-tag key">🗿 好莱坞传奇制片人遗赠</span>
         <div class="divider"></div>
         <p class="artwork-desc">已故好莱坞传奇制片人 Ray Stark 及妻子 Fran 的私人雕塑收藏，身后全部捐给盖蒂。28座雕塑散落在轨道车站广场、露台和花园之间，包括亨利·摩尔（Henry Moore）的有机抽象人体雕塑，以及胡安·米罗充满童趣的彩色形体。它们不在玻璃柜后，而是暴露在自然的光风雨露之中，与建筑和山景浑然一体。轨道车抵达时就能看到入口处的第一座——这是很多人与盖蒂的第一次相遇。</p>
+      <div class="detail-section"><h4>深度解读</h4>
+<p>雷·斯塔克（Ray Stark, 1915–2004）是好莱坞历史上最成功的独立制片人之一，代表作品包括《滑稽女郎》（Funny Girl, 1968）。他和妻子弗兰从1960年代起系统收藏现当代雕塑，以选择品位而非名声闻名业界——他们总是在艺术家成名之前购入。2004年斯塔克去世，28件雕塑全部按遗嘱捐赠给盖蒂。</p>
+<p>亨利·摩尔（Henry Moore, 1898–1986）贡献了其中几件最具代表性的作品。他的雕塑以有机抽象的人体形态为核心，善用穿孔（holes）和凸起的张力表达生命力。摩尔认为雕塑必须在户外自然光下才能完整表达——室内的固定光源会"杀死"作品。盖蒂园区的户外陈设正符合这一理念。</p>
+<p>胡安·米罗（Joan Miró, 1893–1983）的作品则截然相反：色彩鲜艳，造型如儿童涂鸦，充满超现实主义的幽默感。他的雕塑在盖蒂严肃的石灰华建筑和沉郁的油画氛围中提供了一种意外的轻盈。从轨道车站台拾级而上，第一眼看到的往往就是他的作品——这是很多人与盖蒂艺术的第一次相遇。</p></div>
       </div>
     </div>
 
@@ -895,6 +1018,57 @@ footer strong { color: rgba(240,200,120,.6); }
   <p>整理 · <strong>Getty Center 展馆观展指南</strong> · 1200 Getty Center Dr, Los Angeles · 免费入场 需预约</p>
   <p style="margin-top:.4rem">展品信息以 <strong>getty.edu</strong> 官网为准 · 部分画作可能轮换或借展至其他机构 · 图片来源 Wikimedia Commons 公域</p>
 </footer>
+
+
+<script>
+(function () {
+  var overlay = document.getElementById('modalOverlay');
+  var box     = document.getElementById('modalBox');
+  var content = document.getElementById('modalContent');
+  var closeBtn= document.getElementById('modalClose');
+
+  function openModal(card) {
+    var imgEl    = card.querySelector('.artwork-img img');
+    var imgSrc   = imgEl ? imgEl.src : '';
+    var imgAlt   = imgEl ? imgEl.alt : '';
+    var roomTag  = card.querySelector('.room-tag')   ? card.querySelector('.room-tag').outerHTML   : '';
+    var num      = card.querySelector('.artwork-num')? card.querySelector('.artwork-num').outerHTML: '';
+    var title    = card.querySelector('.artwork-title')? card.querySelector('.artwork-title').outerHTML: '';
+    var meta     = card.querySelector('.artwork-meta') ? card.querySelector('.artwork-meta').outerHTML : '';
+    var priceTag = card.querySelector('.price-tag')  ? card.querySelector('.price-tag').outerHTML  : '';
+    var desc     = card.querySelector('.artwork-desc') ? card.querySelector('.artwork-desc').outerHTML : '';
+    var pq       = card.querySelector('.pullquote')  ? card.querySelector('.pullquote').outerHTML  : '';
+    var sl       = card.querySelector('.sub-list')   ? card.querySelector('.sub-list').outerHTML   : '';
+    var detail   = card.querySelector('.detail-section') ? card.querySelector('.detail-section').outerHTML : '';
+
+    var imgHtml = imgSrc ? '<img class="modal-hero-img" src="'+imgSrc+'" alt="'+imgAlt+'">' : '';
+    content.innerHTML = imgHtml +
+      '<div class="modal-body-wrap">' +
+        roomTag + num + title + meta + priceTag +
+        '<div class="divider"></div>' +
+        desc + pq + sl + detail +
+      '</div>';
+
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    box.scrollTop = 0;
+    content.scrollTop = 0;
+  }
+
+  function closeModal() {
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('.artwork-card').forEach(function(card) {
+    card.addEventListener('click', function() { openModal(card); });
+  });
+
+  closeBtn.addEventListener('click', closeModal);
+  overlay.addEventListener('click', function(e) { if (e.target === overlay) closeModal(); });
+  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+})();
+</script>
 
 </body>
 </html>
