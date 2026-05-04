@@ -544,6 +544,78 @@ footer strong { color: rgba(240,200,120,.6); }
 .artwork-card .detail-section { display: none; }
 
 
+
+/* ===== CAROUSELS ===== */
+.c-section { margin-bottom: 2.2rem; }
+.c-head {
+  display: flex; align-items: baseline; gap: .5rem;
+  margin-bottom: .55rem; padding: 0 .2rem;
+}
+.c-floor-label {
+  font-size: .6rem; font-weight: 700;
+  color: var(--muted); letter-spacing: .07em; text-transform: uppercase;
+  flex-shrink: 0;
+}
+.c-floor-title { font-size: .6rem; color: var(--muted); }
+.c-wrap { display: flex; align-items: center; gap: .3rem; }
+.c-track {
+  flex: 1; display: flex; gap: .5rem;
+  overflow-x: auto; scroll-behavior: smooth;
+  scrollbar-width: none; -ms-overflow-style: none;
+  padding: .15rem .05rem .5rem;
+}
+.c-track::-webkit-scrollbar { display: none; }
+.c-thumb {
+  flex-shrink: 0; width: 8rem;
+  border-radius: 7px; overflow: hidden;
+  cursor: pointer;
+  border: 1.5px solid var(--line);
+  background: var(--bg);
+  transition: border-color .18s, transform .18s, box-shadow .18s;
+}
+.c-thumb:hover, .c-thumb:focus {
+  border-color: var(--ink);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(28,23,16,.13);
+  outline: none;
+}
+.c-img { overflow: hidden; background: #111; height: 7rem; }
+.c-img img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  transition: transform .3s;
+}
+.c-thumb:hover .c-img img, .c-thumb:focus .c-img img { transform: scale(1.05); }
+.c-info {
+  padding: .35rem .4rem .45rem;
+  display: flex; align-items: flex-start; gap: .28rem;
+}
+.c-num {
+  font-size: .48rem; font-weight: 700; color: var(--muted);
+  line-height: 1; padding-top: .08rem; flex-shrink: 0;
+}
+.c-title-wrap { min-width: 0; }
+.c-title {
+  font-size: .58rem; color: var(--ink); line-height: 1.35;
+  display: -webkit-box; -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical; overflow: hidden;
+}
+.c-tag {
+  display: block; font-size: .48rem; color: var(--muted);
+  margin-top: .12rem; white-space: nowrap;
+  overflow: hidden; text-overflow: ellipsis;
+}
+.c-btn {
+  flex-shrink: 0; width: 1.7rem; height: 1.7rem;
+  border-radius: 50%; border: 1.5px solid var(--line);
+  background: var(--bg); color: var(--ink);
+  font-size: 1.05rem; line-height: 1; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .15s, border-color .15s, color .15s;
+  align-self: center;
+}
+.c-btn:hover { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+#card-pool { display: none; }
+
 </style>
 </head>
 <body>
@@ -674,14 +746,309 @@ footer strong { color: rgba(240,200,120,.6); }
     <span class="floor-chip" style="color:var(--west)">📍 二楼 Gallery W204 · 印象派</span>
     <span class="floor-chip" style="color:var(--west)">📍 一楼 · 恩索尔 · 素描 · 摄影中心</span>
   </div>
-  <div class="artwork-grid">
-
-
-    <div class="floor-header">
-      <span class="floor-label">二楼 · 2F</span>
-      <span class="floor-title">印象派与后印象派绘画</span>
+  <div class="c-section">
+    <div class="c-head">
+      <span class="c-floor-label">二楼 · 2F</span>
+      <span class="c-floor-title">印象派与后印象派绘画</span>
     </div>
-    <div class="artwork-card">
+    <div class="c-wrap">
+      <button class="c-btn" onclick="cNav('ct1',-1)" aria-label="上一张">&#8249;</button>
+      <div class="c-track" id="ct1">
+      <div class="c-thumb" role="button" tabindex="0" data-card="card-01">
+        <div class="c-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Irises-Vincent_van_Gogh.jpg/960px-Irises-Vincent_van_Gogh.jpg" alt="梵高《鸢尾花》1889年" loading="lazy"></div>
+        <div class="c-info"><span class="c-num">01</span><div class="c-title-wrap"><span class="c-title">鸢尾花</span><span class="c-tag">后印象派</span></div></div>
+      </div>
+      <div class="c-thumb" role="button" tabindex="0" data-card="card-02">
+        <div class="c-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Monet_Rouen_Cathedral_painting_%2839819981983%29.jpg/960px-Monet_Rouen_Cathedral_painting_%2839819981983%29.jpg" alt="莫奈《鲁昂大教堂·晨光》1894年" loading="lazy"></div>
+        <div class="c-info"><span class="c-num">02</span><div class="c-title-wrap"><span class="c-title">鲁昂大教堂·晨光</span><span class="c-tag">印象派</span></div></div>
+      </div>
+      <div class="c-thumb" role="button" tabindex="0" data-card="card-03">
+        <div class="c-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/La_Promenade%2C_by_Pierre-Auguste_Renoir%2C_edited.jpg/960px-La_Promenade%2C_by_Pierre-Auguste_Renoir%2C_edited.jpg" alt="雷诺阿《散步》1870年" loading="lazy"></div>
+        <div class="c-info"><span class="c-num">03</span><div class="c-title-wrap"><span class="c-title">散步</span><span class="c-tag">印象派</span></div></div>
+      </div>
+      <div class="c-thumb" role="button" tabindex="0" data-card="card-04">
+        <div class="c-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Paul_C%C3%A9zanne_-_Still_Life_with_Apples.jpg/960px-Paul_C%C3%A9zanne_-_Still_Life_with_Apples.jpg" alt="塞尚《静物与苹果》1893年" loading="lazy"></div>
+        <div class="c-info"><span class="c-num">04</span><div class="c-title-wrap"><span class="c-title">静物与苹果</span><span class="c-tag">后印象派</span></div></div>
+      </div>
+      <div class="c-thumb" role="button" tabindex="0" data-card="card-05">
+        <div class="c-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/%C3%89douard_Manet_-_Jeanne_%28Spring%29.jpg/960px-%C3%89douard_Manet_-_Jeanne_%28Spring%29.jpg" alt="马奈《让娜·春》1881年" loading="lazy"></div>
+        <div class="c-info"><span class="c-num">05</span><div class="c-title-wrap"><span class="c-title">让娜（春）</span><span class="c-tag">印象派先驱</span></div></div>
+      </div>
+      </div>
+      <button class="c-btn" onclick="cNav('ct1',1)" aria-label="下一张">&#8250;</button>
+    </div>
+  </div>
+  <div class="c-section">
+    <div class="c-head">
+      <span class="c-floor-label">一楼 · 1F</span>
+      <span class="c-floor-title">现代绘画 · 素描 · 摄影</span>
+    </div>
+    <div class="c-wrap">
+      <button class="c-btn" onclick="cNav('ct2',-1)" aria-label="上一张">&#8249;</button>
+      <div class="c-track" id="ct2">
+      <div class="c-thumb" role="button" tabindex="0" data-card="card-06">
+        <div class="c-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Christ%27s_Entry_Into_Brussels_in_1889.jpg/960px-Christ%27s_Entry_Into_Brussels_in_1889.jpg" alt="恩索尔《基督进入布鲁塞尔》1888年" loading="lazy"></div>
+        <div class="c-info"><span class="c-num">06</span><div class="c-title-wrap"><span class="c-title">基督进入布鲁塞尔</span><span class="c-tag">象征主义</span></div></div>
+      </div>
+      <div class="c-thumb" role="button" tabindex="0" data-card="card-07">
+        <div class="c-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Boulevard_du_Temple_by_Daguerre.jpg/960px-Boulevard_du_Temple_by_Daguerre.jpg" alt="达盖尔摄，约1838年" loading="lazy"></div>
+        <div class="c-info"><span class="c-num">07</span><div class="c-title-wrap"><span class="c-title">摄影收藏</span><span class="c-tag">摄影艺术</span></div></div>
+      </div>
+      </div>
+      <button class="c-btn" onclick="cNav('ct2',1)" aria-label="下一张">&#8250;</button>
+    </div>
+  </div>
+
+</section>
+
+<!-- ======= 东馆 ======= -->
+<section class="pavilion" id="east" style="background:var(--bg2)">
+  <div class="pav-header" style="background:var(--east-lt); border-left:6px solid var(--east);">
+    <div class="pav-badge" style="background:var(--east)">东</div>
+    <div>
+      <div class="pav-name" style="color:var(--east)">East Pavilion · 东馆</div>
+      <h2 class="pav-heading">荷兰黄金时代 <em>&amp;</em> 巴洛克</h2>
+    </div>
+  </div>
+  <p class="pav-intro">东馆二楼是伦勃朗的主场。盖蒂拥有<strong>全美最重要的早期伦勃朗画作收藏</strong>，Gallery E205 中三幅杰作并列展出，是许多艺术爱好者专程前来的主要理由。同楼另有范戴克豪华贵族肖像，共同构成北欧巴洛克的完整图谱。</p>
+  <div class="floor-row">
+    <span class="floor-chip" style="color:var(--east)">📍 二楼 Gallery E205 · 伦勃朗三联</span>
+    <span class="floor-chip" style="color:var(--east)">📍 二楼 · 伦勃朗 · 范戴克 · 巴洛克</span>
+  </div>
+  <div class="c-section">
+    <div class="c-head">
+      <span class="c-floor-label">二楼 · 2F</span>
+      <span class="c-floor-title">荷兰黄金时代 · 法兰德斯 · 巴洛克</span>
+    </div>
+    <div class="c-wrap">
+      <button class="c-btn" onclick="cNav('ct3',-1)" aria-label="上一张">&#8249;</button>
+      <div class="c-track" id="ct3">
+      <div class="c-thumb" role="button" tabindex="0" data-card="card-08">
+        <div class="c-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Rembrandt_laughing.jpg/960px-Rembrandt_laughing.jpg" alt="伦勃朗《大笑的伦勃朗》约1628年" loading="lazy"></div>
+        <div class="c-info"><span class="c-num">08</span><div class="c-title-wrap"><span class="c-title">大笑的伦勃朗</span><span class="c-tag">荷兰黄金时代</span></div></div>
+      </div>
+      <div class="c-thumb" role="button" tabindex="0" data-card="card-09">
+        <div class="c-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Rembrandt_Abduction_of_Europa.jpg/960px-Rembrandt_Abduction_of_Europa.jpg" alt="伦勃朗《劫夺欧罗巴》1632年" loading="lazy"></div>
+        <div class="c-info"><span class="c-num">09</span><div class="c-title-wrap"><span class="c-title">劫夺欧罗巴</span><span class="c-tag">荷兰黄金时代</span></div></div>
+      </div>
+      <div class="c-thumb" role="button" tabindex="0" data-card="card-10">
+        <div class="c-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Orazio_gentileschi%2C_danae%2C_1621-22%2C_01.JPG/960px-Orazio_gentileschi%2C_danae%2C_1621-22%2C_01.JPG" alt="真蒂莱斯基《达娜厄》约1621年" loading="lazy"></div>
+        <div class="c-info"><span class="c-num">10</span><div class="c-title-wrap"><span class="c-title">达娜厄</span><span class="c-tag">卡拉瓦乔主义</span></div></div>
+      </div>
+      <div class="c-thumb" role="button" tabindex="0" data-card="card-11">
+        <div class="c-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Portrait_of_Agostino_Pallavicini_by_Anthony_van_Dyck%2C_Getty_Center.JPG/960px-Portrait_of_Agostino_Pallavicini_by_Anthony_van_Dyck%2C_Getty_Center.JPG" alt="范戴克《帕拉维奇尼肖像》1621年" loading="lazy"></div>
+        <div class="c-info"><span class="c-num">11</span><div class="c-title-wrap"><span class="c-title">帕拉维奇尼肖像</span><span class="c-tag">巴洛克</span></div></div>
+      </div>
+      </div>
+      <button class="c-btn" onclick="cNav('ct3',1)" aria-label="下一张">&#8250;</button>
+    </div>
+  </div>
+
+</section>
+
+<!-- ======= 北馆 ======= -->
+<section class="pavilion" id="north">
+  <div class="pav-header" style="background:var(--north-lt); border-left:6px solid var(--north);">
+    <div class="pav-badge" style="background:var(--north)">北</div>
+    <div>
+      <div class="pav-name" style="color:var(--north)">North Pavilion · 北馆</div>
+      <h2 class="pav-heading">文艺复兴 <em>&amp;</em> 彩饰手稿</h2>
+    </div>
+  </div>
+  <p class="pav-intro">北馆二楼五个展室（N201–N205）跨越400年欧洲绘画史：从13世纪锡耶纳金底圣像（西蒙·马蒂尼），到北意大利文艺复兴（曼泰尼亚）、尼德兰油画（范德韦登工作室）、矫饰主义（蓬托莫）、威尼斯诸家（洛托），再到英国浪漫主义（透纳）。一楼则是整个盖蒂最容易被忽视、却藏有最多惊喜的区域：彩饰手稿、奥格斯堡珍藏柜、中世纪彩色玻璃与圣器、威尼斯丝线玻璃——六个展室串联起跨越八百年的欧洲工艺史。</p>
+  <div class="floor-row">
+    <span class="floor-chip" style="color:var(--north)">📍 二楼 · 文艺复兴绘画</span>
+    <span class="floor-chip" style="color:var(--north)">📍 一楼 · 手稿 · 彩色玻璃 · 珍藏柜 · 玻璃陶瓷</span>
+  </div>
+  <div class="c-section">
+    <div class="c-head">
+      <span class="c-floor-label">二楼 · 2F</span>
+      <span class="c-floor-title">意大利 · 北欧绘画 · 文艺复兴全景（N201–N205）</span>
+    </div>
+    <div class="c-wrap">
+      <button class="c-btn" onclick="cNav('ct4',-1)" aria-label="上一张">&#8249;</button>
+      <div class="c-track" id="ct4">
+      <div class="c-thumb" role="button" tabindex="0" data-card="card-12">
+        <div class="c-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Simone_Martini_-_St._Luke_-_82.PB.72_-_J._Paul_Getty_Museum.jpg/960px-Simone_Martini_-_St._Luke_-_82.PB.72_-_J._Paul_Getty_Museum.jpg" alt="西蒙·马蒂尼《圣路加》约1330年" loading="lazy"></div>
+        <div class="c-info"><span class="c-num">12</span><div class="c-title-wrap"><span class="c-title">圣路加</span><span class="c-tag">锡耶纳哥特式</span></div></div>
+      </div>
+      <div class="c-thumb" role="button" tabindex="0" data-card="card-13">
+        <div class="c-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Andrea_Mantegna_-_Adoration_of_the_Magi_-_85.PA.417_-_J._Paul_Getty_Museum.jpg/960px-Andrea_Mantegna_-_Adoration_of_the_Magi_-_85.PA.417_-_J._Paul_Getty_Museum.jpg" alt="曼泰尼亚《东方三博士朝圣》约1495年" loading="lazy"></div>
+        <div class="c-info"><span class="c-num">13</span><div class="c-title-wrap"><span class="c-title">东方三博士朝圣</span><span class="c-tag">北意大利文艺复兴</span></div></div>
+      </div>
+      <div class="c-thumb" role="button" tabindex="0" data-card="card-14">
+        <div class="c-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Workshop_of_Rogier_van_der_Weyden_-_The_Dream_of_Pope_Sergius_-_72.PB.20_-_J._Paul_Getty_Museum.jpg/960px-Workshop_of_Rogier_van_der_Weyden_-_The_Dream_of_Pope_Sergius_-_72.PB.20_-_J._Paul_Getty_Museum.jpg" alt="范德韦登工作室《教皇塞尔吉乌斯之梦》约1432年" loading="lazy"></div>
+        <div class="c-info"><span class="c-num">14</span><div class="c-title-wrap"><span class="c-title">北欧绘画</span><span class="c-tag">弗拉芒原始主义</span></div></div>
+      </div>
+      <div class="c-thumb" role="button" tabindex="0" data-card="card-15">
+        <div class="c-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Pontormo%2C_alabardiere%2C_forse_francesco_guardi%2C_1528-30.JPG/960px-Pontormo%2C_alabardiere%2C_forse_francesco_guardi%2C_1528-30.JPG" alt="蓬托莫《持斧枪者肖像》约1528年" loading="lazy"></div>
+        <div class="c-info"><span class="c-num">15</span><div class="c-title-wrap"><span class="c-title">持斧枪者肖像</span><span class="c-tag">矫饰主义</span></div></div>
+      </div>
+      <div class="c-thumb" role="button" tabindex="0" data-card="card-16">
+        <div class="c-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Lorenzo_Lotto_-_Venus_and_Cupid_%28c._1520%27s%29.jpg/960px-Lorenzo_Lotto_-_Venus_and_Cupid_%28c._1520%27s%29.jpg" alt="洛伦佐·洛托《维纳斯与丘比特》约1520年" loading="lazy"></div>
+        <div class="c-info"><span class="c-num">16</span><div class="c-title-wrap"><span class="c-title">维纳斯与丘比特</span><span class="c-tag">威尼斯文艺复兴</span></div></div>
+      </div>
+      <div class="c-thumb" role="button" tabindex="0" data-card="card-17">
+        <div class="c-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Joseph_Mallord_William_Turner_-_Modern_Rome%3B_Campo_Vacino.JPG/960px-Joseph_Mallord_William_Turner_-_Modern_Rome%3B_Campo_Vacino.JPG" alt="透纳《现代罗马》1839年" loading="lazy"></div>
+        <div class="c-info"><span class="c-num">17</span><div class="c-title-wrap"><span class="c-title">现代罗马—凡西诺广场</span><span class="c-tag">浪漫主义</span></div></div>
+      </div>
+      </div>
+      <button class="c-btn" onclick="cNav('ct4',1)" aria-label="下一张">&#8250;</button>
+    </div>
+  </div>
+  <div class="c-section">
+    <div class="c-head">
+      <span class="c-floor-label">一楼 · 1F</span>
+      <span class="c-floor-title">彩饰手稿 · 中世纪装饰艺术 · 玻璃与陶瓷</span>
+    </div>
+    <div class="c-wrap">
+      <button class="c-btn" onclick="cNav('ct5',-1)" aria-label="上一张">&#8249;</button>
+      <div class="c-track" id="ct5">
+      <div class="c-thumb" role="button" tabindex="0" data-card="card-18">
+        <div class="c-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Personnages_de_la_sc%C3%A8ne_de_Janvier_%28Fr%C3%A8res_Limbourg_%3F%29_-_Tr%C3%A8s_Riches_Heures_du_duc_de_Berry_%28f.1%29.jpg/960px-Personnages_de_la_sc%C3%A8ne_de_Janvier_%28Fr%C3%A8res_Limbourg_%3F%29_-_Tr%C3%A8s_Riches_Heures_du_duc_de_Berry_%28f.1%29.jpg" alt="贝里公爵时祷书·一月页" loading="lazy"></div>
+        <div class="c-info"><span class="c-num">18</span><div class="c-title-wrap"><span class="c-title">彩饰手稿</span><span class="c-tag">中世纪艺术</span></div></div>
+      </div>
+      <div class="c-thumb" role="button" tabindex="0" data-card="card-19">
+        <div class="c-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Getty%2C_cabinet.JPG/960px-Getty%2C_cabinet.JPG" alt="奥格斯堡珍藏柜约1630年" loading="lazy"></div>
+        <div class="c-info"><span class="c-num">19</span><div class="c-title-wrap"><span class="c-title">奥格斯堡珍藏柜</span><span class="c-tag">文艺复兴 / 矫饰主义</span></div></div>
+      </div>
+      <div class="c-thumb" role="button" tabindex="0" data-card="card-20">
+        <div class="c-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Getty_Center_-_Stained_glass_window_-_Housing_the_stranger_%281560-1570%29.JPG/960px-Getty_Center_-_Stained_glass_window_-_Housing_the_stranger_%281560-1570%29.JPG" alt="彩色玻璃窗约1560年" loading="lazy"></div>
+        <div class="c-info"><span class="c-num">20</span><div class="c-title-wrap"><span class="c-title">神圣艺术</span><span class="c-tag">罗马式 / 哥特式</span></div></div>
+      </div>
+      <div class="c-thumb" role="button" tabindex="0" data-card="card-21">
+        <div class="c-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Getty_Center_-_Filigrana_Beaker.JPG/960px-Getty_Center_-_Filigrana_Beaker.JPG" alt="威尼斯丝线玻璃杯约15世纪" loading="lazy"></div>
+        <div class="c-info"><span class="c-num">21</span><div class="c-title-wrap"><span class="c-title">欧洲玻璃与陶瓷</span><span class="c-tag">文艺复兴工艺</span></div></div>
+      </div>
+      </div>
+      <button class="c-btn" onclick="cNav('ct5',1)" aria-label="下一张">&#8250;</button>
+    </div>
+  </div>
+
+</section>
+
+<!-- ======= 南馆 ======= -->
+<section class="pavilion" id="south" style="background:var(--bg2)">
+  <div class="pav-header" style="background:var(--south-lt); border-left:6px solid var(--south);">
+    <div class="pav-badge" style="background:var(--south)">南</div>
+    <div>
+      <div class="pav-name" style="color:var(--south)">South Pavilion · 南馆</div>
+      <h2 class="pav-heading">装饰艺术 <em>&amp;</em> 法国宫廷</h2>
+    </div>
+  </div>
+  <p class="pav-intro">许多观众来盖蒂只为看名画，却意外发现南馆才是最令他们震撼的地方。<strong>二楼</strong>陈列18世纪法国、英国、西班牙绘画（布歇、庚斯博罗、戈雅）；<strong>一楼</strong>则复原了多个完整的17–18世纪欧洲贵族房间，<strong>家具、墙板、地板、吊灯全是真品</strong>，仿佛凡尔赛时光倒流。</p>
+  <div class="floor-row">
+    <span class="floor-chip" style="color:var(--south)">📍 二楼 · 布歇 · 庚斯博罗 · 戈雅</span>
+    <span class="floor-chip" style="color:var(--south)">📍 一楼 · 法国宫廷复原房间</span>
+    <span class="floor-chip" style="color:var(--south)">📍 一楼 · 塞夫勒皇家瓷器</span>
+  </div>
+  <div class="c-section">
+    <div class="c-head">
+      <span class="c-floor-label">二楼 · 2F</span>
+      <span class="c-floor-title">18世纪欧洲绘画</span>
+    </div>
+    <div class="c-wrap">
+      <button class="c-btn" onclick="cNav('ct6',-1)" aria-label="上一张">&#8249;</button>
+      <div class="c-track" id="ct6">
+      <div class="c-thumb" role="button" tabindex="0" data-card="card-22">
+        <div class="c-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Fran%C3%A7ois_Boucher_-_The_Fountain_of_Love_-_71.PA.37_-_J._Paul_Getty_Museum.jpg/960px-Fran%C3%A7ois_Boucher_-_The_Fountain_of_Love_-_71.PA.37_-_J._Paul_Getty_Museum.jpg" alt="布歇《爱之泉》约1748年" loading="lazy"></div>
+        <div class="c-info"><span class="c-num">22</span><div class="c-title-wrap"><span class="c-title">爱之泉</span><span class="c-tag">洛可可</span></div></div>
+      </div>
+      <div class="c-thumb" role="button" tabindex="0" data-card="card-23">
+        <div class="c-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Thomas_Gainsborough_-_Portrait_of_James_Christie.jpg/960px-Thomas_Gainsborough_-_Portrait_of_James_Christie.jpg" alt="庚斯博罗《詹姆斯·克里斯蒂肖像》1778年" loading="lazy"></div>
+        <div class="c-info"><span class="c-num">23</span><div class="c-title-wrap"><span class="c-title">詹姆斯·克里斯蒂肖像</span><span class="c-tag">浪漫主义前期</span></div></div>
+      </div>
+      <div class="c-thumb" role="button" tabindex="0" data-card="card-24">
+        <div class="c-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Portrait_of_the_Marquesa_de_Santiago_by_Francisco_de_Goya%2C_1804%2C_Getty_Center.JPG/960px-Portrait_of_the_Marquesa_de_Santiago_by_Francisco_de_Goya%2C_1804%2C_Getty_Center.JPG" alt="戈雅《圣地亚哥侯爵夫人肖像》1804年" loading="lazy"></div>
+        <div class="c-info"><span class="c-num">24</span><div class="c-title-wrap"><span class="c-title">圣地亚哥侯爵夫人肖像</span><span class="c-tag">新古典主义</span></div></div>
+      </div>
+      </div>
+      <button class="c-btn" onclick="cNav('ct6',1)" aria-label="下一张">&#8250;</button>
+    </div>
+  </div>
+  <div class="c-section">
+    <div class="c-head">
+      <span class="c-floor-label">一楼 · 1F</span>
+      <span class="c-floor-title">法国装饰艺术 · 宫廷复原房间</span>
+    </div>
+    <div class="c-wrap">
+      <button class="c-btn" onclick="cNav('ct7',-1)" aria-label="上一张">&#8249;</button>
+      <div class="c-track" id="ct7">
+      <div class="c-thumb" role="button" tabindex="0" data-card="card-25">
+        <div class="c-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Getty_Museum_Attributed_to_Andr%C3%A9-Charles_Boulle_1642_-_1732.jpg/960px-Getty_Museum_Attributed_to_Andr%C3%A9-Charles_Boulle_1642_-_1732.jpg" alt="Boulle Cabinet" loading="lazy"></div>
+        <div class="c-info"><span class="c-num">25</span><div class="c-title-wrap"><span class="c-title">摄政王镶板房</span><span class="c-tag">路易十四 / 摄政王风格</span></div></div>
+      </div>
+      <div class="c-thumb" role="button" tabindex="0" data-card="card-26">
+        <div class="c-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Paneled_Room_%28salon_de_compagnie%29%2C_by_Claude_Nicolas_Ledoux_%28Getty_107VRX%29.jpg/960px-Paneled_Room_%28salon_de_compagnie%29%2C_by_Claude_Nicolas_Ledoux_%28Getty_107VRX%29.jpg" alt="Ledoux Paneled Room" loading="lazy"></div>
+        <div class="c-info"><span class="c-num">26</span><div class="c-title-wrap"><span class="c-title">洛可可镶板房</span><span class="c-tag">洛可可</span></div></div>
+      </div>
+      <div class="c-thumb" role="button" tabindex="0" data-card="card-27">
+        <div class="c-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Lidded_Pot-pourri_Vase_%28vase_or_pot-pourri_vaisseau_%C3%A0_m%C3%A2t%2C_deuxi%C3%A8me_grandeur%29%2C_by_Charles-Nicolas_Dodin_%28Getty_103SFE%29.jpg/960px-Lidded_Pot-pourri_Vase_%28vase_or_pot-pourri_vaisseau_%C3%A0_m%C3%A2t%2C_deuxi%C3%A8me_grandeur%29%2C_by_Charles-Nicolas_Dodin_%28Getty_103SFE%29.jpg" alt="Sèvres Porcelain Vase" loading="lazy"></div>
+        <div class="c-info"><span class="c-num">27</span><div class="c-title-wrap"><span class="c-title">塞夫勒皇家瓷器</span><span class="c-tag">洛可可装饰艺术</span></div></div>
+      </div>
+      <div class="c-thumb" role="button" tabindex="0" data-card="card-28">
+        <div class="c-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/The_Toilette_of_Psyche_from_The_Story_of_Psyche_tapestry_series%2C_by_Fran%C3%A7ois_Boucher_%28Getty_103SC9%29.jpg/960px-The_Toilette_of_Psyche_from_The_Story_of_Psyche_tapestry_series%2C_by_Fran%C3%A7ois_Boucher_%28Getty_103SC9%29.jpg" alt="Boucher Tapestry" loading="lazy"></div>
+        <div class="c-info"><span class="c-num">28</span><div class="c-title-wrap"><span class="c-title">布歇皇家挂毯</span><span class="c-tag">洛可可</span></div></div>
+      </div>
+      <div class="c-thumb" role="button" tabindex="0" data-card="card-29">
+        <div class="c-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/A_Boudoir_%28Louis_XVI._Period%29.jpg/960px-A_Boudoir_%28Louis_XVI._Period%29.jpg" alt="Neoclassical Boudoir" loading="lazy"></div>
+        <div class="c-info"><span class="c-num">29</span><div class="c-title-wrap"><span class="c-title">新古典主义镶板房</span><span class="c-tag">新古典主义</span></div></div>
+      </div>
+      <div class="c-thumb" role="button" tabindex="0" data-card="card-30">
+        <div class="c-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Bust_of_Juliette_R%C3%A9camier_%281777_-_1849%29%2C_by_Joseph_Chinard_%28Getty_103RRS%29.jpg/960px-Bust_of_Juliette_R%C3%A9camier_%281777_-_1849%29%2C_by_Joseph_Chinard_%28Getty_103RRS%29.jpg" alt="Chinard Bust of Récamier" loading="lazy"></div>
+        <div class="c-info"><span class="c-num">30</span><div class="c-title-wrap"><span class="c-title">雷卡米埃肖像胸像</span><span class="c-tag">新古典主义雕塑</span></div></div>
+      </div>
+      </div>
+      <button class="c-btn" onclick="cNav('ct7',1)" aria-label="下一张">&#8250;</button>
+    </div>
+  </div>
+
+
+
+
+  <div class="price-row">
+    <div class="price-stat"><span class="price-val">$5,390万</span><span class="price-lbl">鸢尾花 · 1987年拍卖</span></div>
+    <div class="price-stat"><span class="price-val">$6,510万</span><span class="price-lbl">让娜（春）· 2012年拍卖</span></div>
+    <div class="price-stat"><span class="price-val">$3,520万</span><span class="price-lbl">持斧枪者肖像 · 购入价</span></div>
+    <div class="price-stat"><span class="price-val">£1,650万</span><span class="price-lbl">大笑的伦勃朗 · 购入价</span></div>
+  </div>
+</section>
+
+<!-- ======= 户外 ======= -->
+<section class="pavilion" id="outdoor">
+  <div class="pav-header" style="background:var(--outdoor-lt); border-left:6px solid var(--outdoor);">
+    <div class="pav-badge" style="background:var(--outdoor)">外</div>
+    <div>
+      <div class="pav-name" style="color:var(--outdoor)">Outdoor · 户外</div>
+      <h2 class="pav-heading">中央花园 <em>&amp;</em> 雕塑园</h2>
+    </div>
+  </div>
+  <p class="pav-intro">盖蒂的户外空间本身就是不可错过的艺术体验。Robert Irwin 设计的中央花园是一件随季节永远变化的活体艺术品，而散落园区各处的28座现当代雕塑则在建筑与山景之间构成开放的室外美术馆。</p>
+  <div class="c-section">
+    <div class="c-head">
+      <span class="c-floor-label"></span>
+      <span class="c-floor-title"></span>
+    </div>
+    <div class="c-wrap">
+      <button class="c-btn" onclick="cNav('ct8',-1)" aria-label="上一张">&#8249;</button>
+      <div class="c-track" id="ct8">
+      <div class="c-thumb" role="button" tabindex="0" data-card="card-31">
+        <div class="c-img"><img src="" alt="" loading="lazy"></div>
+        <div class="c-info"><span class="c-num">31</span><div class="c-title-wrap"><span class="c-title">中央花园</span><span class="c-tag">观念艺术</span></div></div>
+      </div>
+      <div class="c-thumb" role="button" tabindex="0" data-card="card-32">
+        <div class="c-img"><img src="" alt="" loading="lazy"></div>
+        <div class="c-info"><span class="c-num">32</span><div class="c-title-wrap"><span class="c-title">Fran &amp; Ray Stark 雕塑园</span><span class="c-tag">现当代雕塑</span></div></div>
+      </div>
+      </div>
+      <button class="c-btn" onclick="cNav('ct8',1)" aria-label="下一张">&#8250;</button>
+    </div>
+  </div>
+
+</section>
+
+<div id="card-pool">
+<div class="artwork-card" id="card-01">
       <div class="artwork-img landscape">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Irises-Vincent_van_Gogh.jpg/960px-Irises-Vincent_van_Gogh.jpg" alt="梵高《鸢尾花》1889年" loading="lazy">
         <span class="img-credit">Public Domain · Wikimedia Commons</span>
@@ -705,8 +1072,7 @@ footer strong { color: rgba(240,200,120,.6); }
 <p>目前《鸢尾花》常设展于西馆二楼 Gallery W204，与同系列的《玫瑰》（现藏纽约大都会博物馆）属同一时期作品。盖蒂每年为这幅画投入相当可观的照明与湿度控制预算，以防止颜料层在洛杉矶干燥气候下开裂。</p></div>
       </div>
     </div>
-
-    <div class="artwork-card">
+<div class="artwork-card" id="card-02">
       <div class="artwork-img portrait">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Monet_Rouen_Cathedral_painting_%2839819981983%29.jpg/960px-Monet_Rouen_Cathedral_painting_%2839819981983%29.jpg" alt="莫奈《鲁昂大教堂·晨光》1894年" loading="lazy">
         <span class="img-credit">莫奈《鲁昂大教堂·晨光》· Public Domain</span>
@@ -726,8 +1092,7 @@ footer strong { color: rgba(240,200,120,.6); }
 <p>该系列中有二十余幅分散于全球各大博物馆（波士顿、奥赛、芝加哥等），盖蒂版本是少数留在美国西海岸的一幅，也是收藏最完整的清晨系列之一。</p></div>
       </div>
     </div>
-
-    <div class="artwork-card">
+<div class="artwork-card" id="card-03">
       <div class="artwork-img portrait">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/La_Promenade%2C_by_Pierre-Auguste_Renoir%2C_edited.jpg/960px-La_Promenade%2C_by_Pierre-Auguste_Renoir%2C_edited.jpg" alt="雷诺阿《散步》1870年" loading="lazy">
         <span class="img-credit">雷诺阿《散步》· Public Domain</span>
@@ -747,8 +1112,7 @@ footer strong { color: rgba(240,200,120,.6); }
 <p>雷诺阿与莫奈曾于1869年在"蛙塘"（La Grenouillère）并肩写生，互相影响，共同奠定了印象主义的技术基础。《散步》完成于次年，是那段黄金合作期的直接产物。</p></div>
       </div>
     </div>
-
-    <div class="artwork-card">
+<div class="artwork-card" id="card-04">
       <div class="artwork-img landscape">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Paul_C%C3%A9zanne_-_Still_Life_with_Apples.jpg/960px-Paul_C%C3%A9zanne_-_Still_Life_with_Apples.jpg" alt="塞尚《静物与苹果》1893年" loading="lazy">
         <span class="img-credit">塞尚《静物与苹果》· Public Domain · Getty</span>
@@ -768,8 +1132,7 @@ footer strong { color: rgba(240,200,120,.6); }
 <p>该作现藏于盖蒂西馆二楼，与莫奈、雷诺阿同处一厅，形成了一个从印象派到后印象派过渡的完整叙事——从捕捉瞬间光影（莫奈、雷诺阿）到探索永恒形式（塞尚），正是现代主义的诞生路径。</p></div>
       </div>
     </div>
-
-    <div class="artwork-card">
+<div class="artwork-card" id="card-05">
       <div class="artwork-img portrait">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/%C3%89douard_Manet_-_Jeanne_%28Spring%29.jpg/960px-%C3%89douard_Manet_-_Jeanne_%28Spring%29.jpg" alt="马奈《让娜·春》1881年" loading="lazy">
         <span class="img-credit">Public Domain · Google Art Project</span>
@@ -789,14 +1152,7 @@ footer strong { color: rgba(240,200,120,.6); }
 <p>2012年苏富比纽约秋拍，《让娜（春）》以6,510万美元落槌，超越此前马奈拍卖纪录近一倍。盖蒂方面确认购入，但具体交割条款未予公开。此画现陈列于西馆二楼，与《鸢尾花》同楼不同厅。</p></div>
       </div>
     </div>
-
-
-    <div class="floor-header">
-      <span class="floor-label">一楼 · 1F</span>
-      <span class="floor-title">现代绘画 · 素描 · 摄影</span>
-    </div>
-
-    <div class="artwork-card">
+<div class="artwork-card" id="card-06">
       <div class="artwork-img wide">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Christ%27s_Entry_Into_Brussels_in_1889.jpg/960px-Christ%27s_Entry_Into_Brussels_in_1889.jpg" alt="恩索尔《基督进入布鲁塞尔》1888年" loading="lazy">
         <span class="img-credit">詹姆斯·恩索尔 · Public Domain</span>
@@ -816,8 +1172,7 @@ footer strong { color: rgba(240,200,120,.6); }
 <p><strong>先驱地位</strong>：这幅画比德国表现主义兴起（1905年前后）早了近二十年，却已呈现出强烈的表现主义笔触与社会批判意识。后来的诺尔德、科柯施卡均深受其影响，恩索尔因此被视为表现主义的精神先驱。</p></div>
       </div>
     </div>
-
-    <div class="artwork-card">
+<div class="artwork-card" id="card-07">
       <div class="artwork-img landscape">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Boulevard_du_Temple_by_Daguerre.jpg/960px-Boulevard_du_Temple_by_Daguerre.jpg" alt="达盖尔摄，约1838年" loading="lazy">
         <span class="img-credit">达盖尔摄，约1838年 · 公域</span>
@@ -837,32 +1192,7 @@ footer strong { color: rgba(240,200,120,.6); }
 <p>因展品对光线高度敏感，摄影中心全年保持轮换展出——每次到访所见均不同。如需了解当前展出内容，可在参观前查阅 getty.edu 官网的"当前展览"页面。</p></div>
       </div>
     </div>
-
-  </div>
-</section>
-
-<!-- ======= 东馆 ======= -->
-<section class="pavilion" id="east" style="background:var(--bg2)">
-  <div class="pav-header" style="background:var(--east-lt); border-left:6px solid var(--east);">
-    <div class="pav-badge" style="background:var(--east)">东</div>
-    <div>
-      <div class="pav-name" style="color:var(--east)">East Pavilion · 东馆</div>
-      <h2 class="pav-heading">荷兰黄金时代 <em>&amp;</em> 巴洛克</h2>
-    </div>
-  </div>
-  <p class="pav-intro">东馆二楼是伦勃朗的主场。盖蒂拥有<strong>全美最重要的早期伦勃朗画作收藏</strong>，Gallery E205 中三幅杰作并列展出，是许多艺术爱好者专程前来的主要理由。同楼另有范戴克豪华贵族肖像，共同构成北欧巴洛克的完整图谱。</p>
-  <div class="floor-row">
-    <span class="floor-chip" style="color:var(--east)">📍 二楼 Gallery E205 · 伦勃朗三联</span>
-    <span class="floor-chip" style="color:var(--east)">📍 二楼 · 伦勃朗 · 范戴克 · 巴洛克</span>
-  </div>
-  <div class="artwork-grid">
-
-
-    <div class="floor-header">
-      <span class="floor-label">二楼 · 2F</span>
-      <span class="floor-title">荷兰黄金时代 · 法兰德斯 · 巴洛克</span>
-    </div>
-    <div class="artwork-card">
+<div class="artwork-card" id="card-08">
       <div class="artwork-img portrait">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Rembrandt_laughing.jpg/960px-Rembrandt_laughing.jpg" alt="伦勃朗《大笑的伦勃朗》约1628年" loading="lazy">
         <span class="img-credit">Public Domain · Wikimedia Commons</span>
@@ -882,8 +1212,7 @@ footer strong { color: rgba(240,200,120,.6); }
 <p>盖蒂2013年购入后，英国文化遗产部随即发出出口禁令，给英国各机构六个月时间筹款留存。但最终无机构能凑齐1,650万英镑，画作正式出口至美国，目前与《劫夺欧罗巴》同陈列于东馆二楼 Gallery E205。</p></div>
       </div>
     </div>
-
-    <div class="artwork-card">
+<div class="artwork-card" id="card-09">
       <div class="artwork-img landscape">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Rembrandt_Abduction_of_Europa.jpg/960px-Rembrandt_Abduction_of_Europa.jpg" alt="伦勃朗《劫夺欧罗巴》1632年" loading="lazy">
         <span class="img-credit">Public Domain · Wikimedia Commons</span>
@@ -903,8 +1232,7 @@ footer strong { color: rgba(240,200,120,.6); }
 <p>与《大笑的伦勃朗》并置于同一展厅是馆方刻意为之——一幅是私密的22厘米小作，一幅是充满史诗感的62×77厘米大作；一幅轻松诙谐，一幅紧张激烈。两件作品都完成于伦勃朗20多岁，这种并置清晰呈现了年轻伦勃朗惊人的风格跨度。</p></div>
       </div>
     </div>
-
-    <div class="artwork-card">
+<div class="artwork-card" id="card-10">
       <div class="artwork-img portrait">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Orazio_gentileschi%2C_danae%2C_1621-22%2C_01.JPG/960px-Orazio_gentileschi%2C_danae%2C_1621-22%2C_01.JPG" alt="真蒂莱斯基《达娜厄》约1621年" loading="lazy">
         <span class="img-credit">Public Domain · Wikimedia Commons</span>
@@ -924,9 +1252,7 @@ footer strong { color: rgba(240,200,120,.6); }
 <p>值得一提的是，伦勃朗也画过同题材的《达娜厄》（1636年，现藏圣彼得堡艾尔米塔什博物馆）。两幅风格对比鲜明：真蒂莱斯基版本更端庄、更注重装饰性；伦勃朗版本则更直接、更具肉身感。盖蒂同时拥有这两位画家的顶级作品，为比较研究提供了难得条件。</p></div>
       </div>
     </div>
-
-
-    <div class="artwork-card">
+<div class="artwork-card" id="card-11">
       <div class="artwork-img portrait">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Portrait_of_Agostino_Pallavicini_by_Anthony_van_Dyck%2C_Getty_Center.JPG/960px-Portrait_of_Agostino_Pallavicini_by_Anthony_van_Dyck%2C_Getty_Center.JPG" alt="范戴克《帕拉维奇尼肖像》1621年" loading="lazy">
         <span class="img-credit">安东尼·范戴克 · Public Domain · Getty Center</span>
@@ -946,33 +1272,7 @@ footer strong { color: rgba(240,200,120,.6); }
 <p>这幅画在盖蒂的意义不只在于艺术价值，也在于它与同楼的伦勃朗三联形成了有趣的对话：两位同时代的北欧巴洛克大师，一位以光影戏剧见长（伦勃朗），一位以华丽质感著称（范戴克）。</p></div>
       </div>
     </div>
-
-  </div>
-</section>
-
-<!-- ======= 北馆 ======= -->
-<section class="pavilion" id="north">
-  <div class="pav-header" style="background:var(--north-lt); border-left:6px solid var(--north);">
-    <div class="pav-badge" style="background:var(--north)">北</div>
-    <div>
-      <div class="pav-name" style="color:var(--north)">North Pavilion · 北馆</div>
-      <h2 class="pav-heading">文艺复兴 <em>&amp;</em> 彩饰手稿</h2>
-    </div>
-  </div>
-  <p class="pav-intro">北馆二楼五个展室（N201–N205）跨越400年欧洲绘画史：从13世纪锡耶纳金底圣像（西蒙·马蒂尼），到北意大利文艺复兴（曼泰尼亚）、尼德兰油画（范德韦登工作室）、矫饰主义（蓬托莫）、威尼斯诸家（洛托），再到英国浪漫主义（透纳）。一楼则是整个盖蒂最容易被忽视、却藏有最多惊喜的区域：彩饰手稿、奥格斯堡珍藏柜、中世纪彩色玻璃与圣器、威尼斯丝线玻璃——六个展室串联起跨越八百年的欧洲工艺史。</p>
-  <div class="floor-row">
-    <span class="floor-chip" style="color:var(--north)">📍 二楼 · 文艺复兴绘画</span>
-    <span class="floor-chip" style="color:var(--north)">📍 一楼 · 手稿 · 彩色玻璃 · 珍藏柜 · 玻璃陶瓷</span>
-  </div>
-  <div class="artwork-grid">
-
-
-    <div class="floor-header">
-      <span class="floor-label">二楼 · 2F</span>
-      <span class="floor-title">意大利 · 北欧绘画 · 文艺复兴全景（N201–N205）</span>
-    </div>
-
-    <div class="artwork-card">
+<div class="artwork-card" id="card-12">
       <div class="artwork-img portrait">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Simone_Martini_-_St._Luke_-_82.PB.72_-_J._Paul_Getty_Museum.jpg/960px-Simone_Martini_-_St._Luke_-_82.PB.72_-_J._Paul_Getty_Museum.jpg" alt="西蒙·马蒂尼《圣路加》约1330年" loading="lazy">
         <span class="img-credit">Simone Martini · St. Luke · Getty Center 82.PB.72 · Public Domain</span>
@@ -992,8 +1292,7 @@ footer strong { color: rgba(240,200,120,.6); }
 <p>N201展室中还陈列同时期画家如保罗·威尼西亚诺（Paolo Veneziano）的作品，呈现从拜占庭向哥特式过渡的多元路径。这些作品多以蛋彩绘于木板，再覆以真金箔打底——制作工艺与北馆一楼的彩饰手稿一脉相承。</p></div>
       </div>
     </div>
-
-    <div class="artwork-card">
+<div class="artwork-card" id="card-13">
       <div class="artwork-img wide">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Andrea_Mantegna_-_Adoration_of_the_Magi_-_85.PA.417_-_J._Paul_Getty_Museum.jpg/960px-Andrea_Mantegna_-_Adoration_of_the_Magi_-_85.PA.417_-_J._Paul_Getty_Museum.jpg" alt="曼泰尼亚《东方三博士朝圣》约1495年" loading="lazy">
         <span class="img-credit">Mantegna · Adoration of the Magi · Getty Center 85.PA.417 · Public Domain</span>
@@ -1013,8 +1312,7 @@ footer strong { color: rgba(240,200,120,.6); }
 <p>蛋彩画在亚麻布上（distemper on linen）是罕见工艺：颜料以动物胶（而非蛋黄）为媒介，画面呈现出一种哑光的、几乎纺织品般的质感，与同时代威尼斯画家逐渐普及的油彩画布形成强烈对比。这两种媒介的竞争，正是N202到N205展室叙事线索的暗线之一。</p></div>
       </div>
     </div>
-
-    <div class="artwork-card">
+<div class="artwork-card" id="card-14">
       <div class="artwork-img wide">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Workshop_of_Rogier_van_der_Weyden_-_The_Dream_of_Pope_Sergius_-_72.PB.20_-_J._Paul_Getty_Museum.jpg/960px-Workshop_of_Rogier_van_der_Weyden_-_The_Dream_of_Pope_Sergius_-_72.PB.20_-_J._Paul_Getty_Museum.jpg" alt="范德韦登工作室《教皇塞尔吉乌斯之梦》约1432年" loading="lazy">
         <span class="img-credit">Workshop of Rogier van der Weyden · Getty Center 72.PB.20 · Public Domain</span>
@@ -1034,8 +1332,7 @@ footer strong { color: rgba(240,200,120,.6); }
 <p>N203展室将弗拉芒、荷兰和德意志画家并置，呈现"北欧文艺复兴"的多元面貌——这与南欧文艺复兴以古典主义为轴的叙事形成对话：北方没有古代希腊罗马遗迹，他们的文艺复兴是以城市商业繁荣、市民文化和宗教改革为驱动力的。</p></div>
       </div>
     </div>
-
-    <div class="artwork-card">
+<div class="artwork-card" id="card-15">
       <div class="artwork-img portrait">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Pontormo%2C_alabardiere%2C_forse_francesco_guardi%2C_1528-30.JPG/960px-Pontormo%2C_alabardiere%2C_forse_francesco_guardi%2C_1528-30.JPG" alt="蓬托莫《持斧枪者肖像》约1528年" loading="lazy">
         <span class="img-credit">Public Domain · Google Art Project</span>
@@ -1055,8 +1352,7 @@ footer strong { color: rgba(240,200,120,.6); }
 <p>盖蒂1989年斥资3,520万美元购入，相当于今天约8,500万美元。这笔交易创下彼时文艺复兴绘画的拍卖纪录，也使盖蒂一夜之间成为意大利矫饰主义绘画最重要的海外收藏机构之一。</p></div>
       </div>
     </div>
-
-    <div class="artwork-card">
+<div class="artwork-card" id="card-16">
       <div class="artwork-img wide">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Lorenzo_Lotto_-_Venus_and_Cupid_%28c._1520%27s%29.jpg/960px-Lorenzo_Lotto_-_Venus_and_Cupid_%28c._1520%27s%29.jpg" alt="洛伦佐·洛托《维纳斯与丘比特》约1520年" loading="lazy">
         <span class="img-credit">Lorenzo Lotto · Venus and Cupid · Getty Center 81.PB.2 · Public Domain</span>
@@ -1076,9 +1372,7 @@ footer strong { color: rgba(240,200,120,.6); }
 <p>与N204的蓬托莫并置是N205叙事的关键：同为1520年代，同为意大利中部到北部的艺术家，却代表了两种截然不同的选择——蓬托莫的矫饰主义以心理疏离和形式实验为特征，洛托则延续威尼斯式的感官丰沛和叙事亲切。这种"选择题"正是16世纪意大利绘画最迷人的地方。</p></div>
       </div>
     </div>
-
-
-    <div class="artwork-card">
+<div class="artwork-card" id="card-17">
       <div class="artwork-img wide">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Joseph_Mallord_William_Turner_-_Modern_Rome%3B_Campo_Vacino.JPG/960px-Joseph_Mallord_William_Turner_-_Modern_Rome%3B_Campo_Vacino.JPG" alt="透纳《现代罗马》1839年" loading="lazy">
         <span class="img-credit">Public Domain · Google Art Project</span>
@@ -1098,13 +1392,7 @@ footer strong { color: rgba(240,200,120,.6); }
 <p>2010年，《现代罗马》在苏富比伦敦拍卖，以2,969万英镑创下透纳个人拍卖纪录。盖蒂随后购入，使这幅画成为馆内英国绘画收藏的旗舰作品。</p></div>
       </div>
     </div>
-
-
-    <div class="floor-header">
-      <span class="floor-label">一楼 · 1F</span>
-      <span class="floor-title">彩饰手稿 · 中世纪装饰艺术 · 玻璃与陶瓷</span>
-    </div>
-    <div class="artwork-card">
+<div class="artwork-card" id="card-18">
       <div class="artwork-img portrait">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Personnages_de_la_sc%C3%A8ne_de_Janvier_%28Fr%C3%A8res_Limbourg_%3F%29_-_Tr%C3%A8s_Riches_Heures_du_duc_de_Berry_%28f.1%29.jpg/960px-Personnages_de_la_sc%C3%A8ne_de_Janvier_%28Fr%C3%A8res_Limbourg_%3F%29_-_Tr%C3%A8s_Riches_Heures_du_duc_de_Berry_%28f.1%29.jpg" alt="贝里公爵时祷书·一月页" loading="lazy">
         <span class="img-credit">贝里公爵《豪华时祷书》一月页 · 公域</span>
@@ -1124,8 +1412,7 @@ footer strong { color: rgba(240,200,120,.6); }
 <p>低光展厅的设计是必要之举：紫外线和强可见光是手稿的天敌，持续照射会使颜料褪色、皮革脆化。盖蒂规定每件手稿每年在灯光下展出不超过数百小时，其余时间存放于恒温恒湿的无光库房。</p></div>
       </div>
     </div>
-
-    <div class="artwork-card">
+<div class="artwork-card" id="card-19">
       <div class="artwork-img portrait">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Getty%2C_cabinet.JPG/960px-Getty%2C_cabinet.JPG" alt="奥格斯堡珍藏柜约1630年" loading="lazy">
         <span class="img-credit">German Kunstschrank · Getty Center · Public Domain</span>
@@ -1145,8 +1432,7 @@ footer strong { color: rgba(240,200,120,.6); }
 <p>这件藏品所在的N102展室以"北欧收藏文化"为主题，展示16–17世纪荷兰、德意志、弗拉芒贵族和商人如何通过组建收藏来表达身份认同——收藏的对象、陈列的方式、柜子本身的工艺，都是权力与学识的视觉宣言。</p></div>
       </div>
     </div>
-
-    <div class="artwork-card">
+<div class="artwork-card" id="card-20">
       <div class="artwork-img portrait">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Getty_Center_-_Stained_glass_window_-_Housing_the_stranger_%281560-1570%29.JPG/960px-Getty_Center_-_Stained_glass_window_-_Housing_the_stranger_%281560-1570%29.JPG" alt="彩色玻璃窗约1560年" loading="lazy">
         <span class="img-credit">Stained Glass Panel · Getty Center · Public Domain</span>
@@ -1166,8 +1452,7 @@ footer strong { color: rgba(240,200,120,.6); }
 <p>展室刻意模仿中世纪大教堂宝库（treasury）的幽暗氛围，光线调低以保护文物，也让观者感受彩色玻璃在低光环境中的特殊光学质感——这与楼上明亮的绘画展厅形成极端反差，是北馆一楼参观体验中最令人意外的一刻。</p></div>
       </div>
     </div>
-
-    <div class="artwork-card">
+<div class="artwork-card" id="card-21">
       <div class="artwork-img portrait">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Getty_Center_-_Filigrana_Beaker.JPG/960px-Getty_Center_-_Filigrana_Beaker.JPG" alt="威尼斯丝线玻璃杯约15世纪" loading="lazy">
         <span class="img-credit">Venetian Filigrana Beaker · Getty Center · Public Domain</span>
@@ -1187,35 +1472,7 @@ footer strong { color: rgba(240,200,120,.6); }
 <p>展室中还陈列来自中东的伊斯兰玻璃器（8–14世纪）：带库法体铭文的碗、朝圣烧瓶、鎏金描绘几何纹样的杯，它们与旁边的威尼斯制品并置，让技术传播的脉络一目了然。</p></div>
       </div>
     </div>
-
-
-  </div>
-</section>
-
-<!-- ======= 南馆 ======= -->
-<section class="pavilion" id="south" style="background:var(--bg2)">
-  <div class="pav-header" style="background:var(--south-lt); border-left:6px solid var(--south);">
-    <div class="pav-badge" style="background:var(--south)">南</div>
-    <div>
-      <div class="pav-name" style="color:var(--south)">South Pavilion · 南馆</div>
-      <h2 class="pav-heading">装饰艺术 <em>&amp;</em> 法国宫廷</h2>
-    </div>
-  </div>
-  <p class="pav-intro">许多观众来盖蒂只为看名画，却意外发现南馆才是最令他们震撼的地方。<strong>二楼</strong>陈列18世纪法国、英国、西班牙绘画（布歇、庚斯博罗、戈雅）；<strong>一楼</strong>则复原了多个完整的17–18世纪欧洲贵族房间，<strong>家具、墙板、地板、吊灯全是真品</strong>，仿佛凡尔赛时光倒流。</p>
-  <div class="floor-row">
-    <span class="floor-chip" style="color:var(--south)">📍 二楼 · 布歇 · 庚斯博罗 · 戈雅</span>
-    <span class="floor-chip" style="color:var(--south)">📍 一楼 · 法国宫廷复原房间</span>
-    <span class="floor-chip" style="color:var(--south)">📍 一楼 · 塞夫勒皇家瓷器</span>
-  </div>
-  <div class="artwork-grid">
-
-
-    <div class="floor-header">
-      <span class="floor-label">二楼 · 2F</span>
-      <span class="floor-title">18世纪欧洲绘画</span>
-    </div>
-
-    <div class="artwork-card">
+<div class="artwork-card" id="card-22">
       <div class="artwork-img landscape">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Fran%C3%A7ois_Boucher_-_The_Fountain_of_Love_-_71.PA.37_-_J._Paul_Getty_Museum.jpg/960px-Fran%C3%A7ois_Boucher_-_The_Fountain_of_Love_-_71.PA.37_-_J._Paul_Getty_Museum.jpg" alt="布歇《爱之泉》约1748年" loading="lazy">
         <span class="img-credit">弗朗索瓦·布歇 · Public Domain · Getty Museum</span>
@@ -1235,8 +1492,7 @@ footer strong { color: rgba(240,200,120,.6); }
 <p><strong>《爱之泉》主题</strong>：这一主题在洛可可绘画中反复出现——爱泉旁的约会、少男少女的眉目传情，充斥着一种刻意营造的甜蜜轻盈。法国大革命后这种"为美而美"的风格迅速被认为是道德腐败的象征，在19世纪长期遭受批评，直到20世纪才重获正名。</p></div>
       </div>
     </div>
-
-    <div class="artwork-card">
+<div class="artwork-card" id="card-23">
       <div class="artwork-img portrait">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Thomas_Gainsborough_-_Portrait_of_James_Christie.jpg/960px-Thomas_Gainsborough_-_Portrait_of_James_Christie.jpg" alt="庚斯博罗《詹姆斯·克里斯蒂肖像》1778年" loading="lazy">
         <span class="img-credit">托马斯·庚斯博罗 · Public Domain</span>
@@ -1256,8 +1512,7 @@ footer strong { color: rgba(240,200,120,.6); }
 <p><strong>南馆的叙事价值</strong>：将这幅画与南馆的法国洛可可藏品并置，形成18世纪欧洲南北品味的对照：法国宫廷品味的华丽炫目，对照英国中产阶级的务实自信——相隔不过几步路，却是两个截然不同的精神世界。</p></div>
       </div>
     </div>
-
-    <div class="artwork-card">
+<div class="artwork-card" id="card-24">
       <div class="artwork-img portrait">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Portrait_of_the_Marquesa_de_Santiago_by_Francisco_de_Goya%2C_1804%2C_Getty_Center.JPG/960px-Portrait_of_the_Marquesa_de_Santiago_by_Francisco_de_Goya%2C_1804%2C_Getty_Center.JPG" alt="戈雅《圣地亚哥侯爵夫人肖像》1804年" loading="lazy">
         <span class="img-credit">弗朗西斯科·戈雅 · Public Domain · Getty Center</span>
@@ -1277,14 +1532,7 @@ footer strong { color: rgba(240,200,120,.6); }
 <p><strong>南馆的地理意义</strong>：这幅画与同楼的法国洛可可绘画形成18世纪欧洲南北品味的对照：法国宫廷的甜蜜幻想（布歇），对照伊比利亚半岛的严峻现实主义（戈雅）——相隔不过几步路，却是两个截然不同的精神世界。</p></div>
       </div>
     </div>
-
-
-    <div class="floor-header">
-      <span class="floor-label">一楼 · 1F</span>
-      <span class="floor-title">法国装饰艺术 · 宫廷复原房间</span>
-    </div>
-
-    <div class="artwork-card">
+<div class="artwork-card" id="card-25">
       <div class="artwork-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Getty_Museum_Attributed_to_Andr%C3%A9-Charles_Boulle_1642_-_1732.jpg/960px-Getty_Museum_Attributed_to_Andr%C3%A9-Charles_Boulle_1642_-_1732.jpg" alt="Boulle Cabinet" loading="lazy"></div>
       <div class="card-body">
         <span class="room-tag">南馆 一楼 · S108</span>
@@ -1301,8 +1549,7 @@ footer strong { color: rgba(240,200,120,.6); }
 <p>这套内饰在法国本地流散于大革命后，辗转在英国贵族手中保存至20世纪。盖蒂从伦敦拍卖行购入时，一同购入了完整的原始木工结构、壁炉设备和天花板装饰，是极少数以整体方式保存下来的路易时代宫廷室内之一。</p></div>
       </div>
     </div>
-
-    <div class="artwork-card">
+<div class="artwork-card" id="card-26">
       <div class="artwork-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Paneled_Room_%28salon_de_compagnie%29%2C_by_Claude_Nicolas_Ledoux_%28Getty_107VRX%29.jpg/960px-Paneled_Room_%28salon_de_compagnie%29%2C_by_Claude_Nicolas_Ledoux_%28Getty_107VRX%29.jpg" alt="Ledoux Paneled Room" loading="lazy"></div>
       <div class="card-body">
         <span class="room-tag">南馆 一楼 · S107</span>
@@ -1319,8 +1566,7 @@ footer strong { color: rgba(240,200,120,.6); }
 <p>盖蒂的这套护墙板经历了跨越大西洋的旅行——从法国贵族宅邸拆卸、编号记录、装船运输、在美国重新拼装——每个连接处都精确吻合，这本身就是18世纪木工工艺精确度的最好证明。</p></div>
       </div>
     </div>
-
-    <div class="artwork-card">
+<div class="artwork-card" id="card-27">
       <div class="artwork-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Lidded_Pot-pourri_Vase_%28vase_or_pot-pourri_vaisseau_%C3%A0_m%C3%A2t%2C_deuxi%C3%A8me_grandeur%29%2C_by_Charles-Nicolas_Dodin_%28Getty_103SFE%29.jpg/960px-Lidded_Pot-pourri_Vase_%28vase_or_pot-pourri_vaisseau_%C3%A0_m%C3%A2t%2C_deuxi%C3%A8me_grandeur%29%2C_by_Charles-Nicolas_Dodin_%28Getty_103SFE%29.jpg" alt="Sèvres Porcelain Vase" loading="lazy"></div>
       <div class="card-body">
         <span class="room-tag">南馆 一楼 · S110</span>
@@ -1337,8 +1583,7 @@ footer strong { color: rgba(240,200,120,.6); }
 <p>法国大革命后宫廷需求骤降，大量库存流散欧洲。盖蒂藏品部分来自英国贵族历史遗存，部分购于战后拍卖市场，是法国本土以外保存最系统的塞夫勒皇家瓷器集合之一。展室内还陈列相关的家具和内饰原件，呈现瓷器在宫廷室内中的原始语境。</p></div>
       </div>
     </div>
-
-    <div class="artwork-card">
+<div class="artwork-card" id="card-28">
       <div class="artwork-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/The_Toilette_of_Psyche_from_The_Story_of_Psyche_tapestry_series%2C_by_Fran%C3%A7ois_Boucher_%28Getty_103SC9%29.jpg/960px-The_Toilette_of_Psyche_from_The_Story_of_Psyche_tapestry_series%2C_by_Fran%C3%A7ois_Boucher_%28Getty_103SC9%29.jpg" alt="Boucher Tapestry" loading="lazy"></div>
       <div class="card-body">
         <span class="room-tag">南馆 一楼 · S102 / S111</span>
@@ -1355,8 +1600,7 @@ footer strong { color: rgba(240,200,120,.6); }
 <p>挂毯的展陈通常沿房间四壁连续悬挂，与护墙板和家具构成"总体艺术"（ensemble）。盖蒂南馆的展室保留了这一完整的室内语境，让观者体验挂毯在其原始功能中的视觉冲击——而不只是孤立的博物馆展品。</p></div>
       </div>
     </div>
-
-    <div class="artwork-card">
+<div class="artwork-card" id="card-29">
       <div class="artwork-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/A_Boudoir_%28Louis_XVI._Period%29.jpg/960px-A_Boudoir_%28Louis_XVI._Period%29.jpg" alt="Neoclassical Boudoir" loading="lazy"></div>
       <div class="card-body">
         <span class="room-tag">南馆 一楼 · S116</span>
@@ -1373,8 +1617,7 @@ footer strong { color: rgba(240,200,120,.6); }
 <p>1789年法国大革命爆发，宫廷委托骤停，大量制作中的家具和护墙板就此散佚。南馆这套展室保存了革命前夕最后几年的宫廷装饰原件，是"旧制度"（Ancien Régime）最后辉煌的实物见证。</p></div>
       </div>
     </div>
-
-    <div class="artwork-card">
+<div class="artwork-card" id="card-30">
       <div class="artwork-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Bust_of_Juliette_R%C3%A9camier_%281777_-_1849%29%2C_by_Joseph_Chinard_%28Getty_103RRS%29.jpg/960px-Bust_of_Juliette_R%C3%A9camier_%281777_-_1849%29%2C_by_Joseph_Chinard_%28Getty_103RRS%29.jpg" alt="Chinard Bust of Récamier" loading="lazy"></div>
       <div class="card-body">
         <span class="room-tag">南馆 一楼 · S114</span>
@@ -1391,31 +1634,7 @@ footer strong { color: rgba(240,200,120,.6); }
 <p>S114展室陈列了一批18世纪法国赤陶和大理石雕塑，涵盖神话题材的装饰性小像、贵族肖像胸像，以及克洛狄翁（Clodion）风格的浴女人体。赤陶的温暖质感与同楼的镶嵌木器形成有趣的材质对话。</p></div>
       </div>
     </div>
-  </div>
-
-
-
-  <div class="price-row">
-    <div class="price-stat"><span class="price-val">$5,390万</span><span class="price-lbl">鸢尾花 · 1987年拍卖</span></div>
-    <div class="price-stat"><span class="price-val">$6,510万</span><span class="price-lbl">让娜（春）· 2012年拍卖</span></div>
-    <div class="price-stat"><span class="price-val">$3,520万</span><span class="price-lbl">持斧枪者肖像 · 购入价</span></div>
-    <div class="price-stat"><span class="price-val">£1,650万</span><span class="price-lbl">大笑的伦勃朗 · 购入价</span></div>
-  </div>
-</section>
-
-<!-- ======= 户外 ======= -->
-<section class="pavilion" id="outdoor">
-  <div class="pav-header" style="background:var(--outdoor-lt); border-left:6px solid var(--outdoor);">
-    <div class="pav-badge" style="background:var(--outdoor)">外</div>
-    <div>
-      <div class="pav-name" style="color:var(--outdoor)">Outdoor · 户外</div>
-      <h2 class="pav-heading">中央花园 <em>&amp;</em> 雕塑园</h2>
-    </div>
-  </div>
-  <p class="pav-intro">盖蒂的户外空间本身就是不可错过的艺术体验。Robert Irwin 设计的中央花园是一件随季节永远变化的活体艺术品，而散落园区各处的28座现当代雕塑则在建筑与山景之间构成开放的室外美术馆。</p>
-  <div class="artwork-grid">
-
-    <div class="artwork-card">
+<div class="artwork-card" id="card-31">
       <div class="card-body">
         <span class="room-tag">中央花园 · 展馆之间</span>
         <span class="artwork-num">31</span>
@@ -1431,8 +1650,7 @@ footer strong { color: rgba(240,200,120,.6); }
 <p>步道从主入口沿坡面蜿蜒而下，高差约9米。欧文刻意在步道上设置了视觉"遮断"——转过某个弯道前完全看不到下方的圆形花园，那一刻的"突然到达"是他精心设计的感知体验。许多观众反映，这是盖蒂之行最令人难忘的瞬间。</p></div>
       </div>
     </div>
-
-    <div class="artwork-card">
+<div class="artwork-card" id="card-32">
       <div class="card-body">
         <span class="room-tag">全园区 · 轨道车站 / 露台</span>
         <span class="artwork-num">32</span>
@@ -1448,9 +1666,7 @@ footer strong { color: rgba(240,200,120,.6); }
 <p>胡安·米罗（Joan Miró, 1893–1983）的作品则截然相反：色彩鲜艳，造型如儿童涂鸦，充满超现实主义的幽默感。他的雕塑在盖蒂严肃的石灰华建筑和沉郁的油画氛围中提供了一种意外的轻盈。从轨道车站台拾级而上，第一眼看到的往往就是他的作品——这是很多人与盖蒂艺术的第一次相遇。</p></div>
       </div>
     </div>
-
-  </div>
-</section>
+</div>
 
 <!-- VISIT -->
 <div class="visit-section" id="visit">
@@ -1473,53 +1689,61 @@ footer strong { color: rgba(240,200,120,.6); }
 
 
 <script>
+/* carousel navigation */
+function cNav(id, dir) {
+  var t = document.getElementById(id);
+  if (!t) return;
+  var th = t.querySelector('.c-thumb');
+  t.scrollBy({ left: dir * ((th ? th.offsetWidth + 8 : 140) * 3), behavior: 'smooth' });
+}
+
+/* modal */
 (function () {
   var overlay = document.getElementById('modalOverlay');
   var box     = document.getElementById('modalBox');
   var content = document.getElementById('modalContent');
   var closeBtn= document.getElementById('modalClose');
 
-  function openModal(card) {
-    var imgEl    = card.querySelector('.artwork-img img');
-    var imgSrc   = imgEl ? imgEl.src : '';
-    var imgAlt   = imgEl ? imgEl.alt : '';
-    var roomTag  = card.querySelector('.room-tag')   ? card.querySelector('.room-tag').outerHTML   : '';
-    var num      = card.querySelector('.artwork-num')? card.querySelector('.artwork-num').outerHTML: '';
-    var title    = card.querySelector('.artwork-title')? card.querySelector('.artwork-title').outerHTML: '';
-    var meta     = card.querySelector('.artwork-meta') ? card.querySelector('.artwork-meta').outerHTML : '';
-    var priceTag = card.querySelector('.price-tag')  ? card.querySelector('.price-tag').outerHTML  : '';
-    var desc     = card.querySelector('.artwork-desc') ? card.querySelector('.artwork-desc').outerHTML : '';
-    var pq       = card.querySelector('.pullquote')  ? card.querySelector('.pullquote').outerHTML  : '';
-    var sl       = card.querySelector('.sub-list')   ? card.querySelector('.sub-list').outerHTML   : '';
-    var detail   = card.querySelector('.detail-section') ? card.querySelector('.detail-section').outerHTML : '';
-
+  window.openModal = function(card) {
+    if (!card) return;
+    var imgEl   = card.querySelector('.artwork-img img');
+    var imgSrc  = imgEl ? imgEl.src : '';
+    var imgAlt  = imgEl ? imgEl.alt : '';
+    function oe(sel) { var el = card.querySelector(sel); return el ? el.outerHTML : ''; }
     var imgHtml = imgSrc ? '<img class="modal-hero-img" src="'+imgSrc+'" alt="'+imgAlt+'">' : '';
     content.innerHTML = imgHtml +
       '<div class="modal-body-wrap">' +
-        roomTag + num + title + meta + priceTag +
+        oe('.room-tag') + oe('.artwork-num') + oe('.artwork-title') +
+        oe('.artwork-meta') + oe('.price-tag') +
         '<div class="divider"></div>' +
-        desc + pq + sl + detail +
+        oe('.artwork-desc') + oe('.pullquote') + oe('.sub-list') +
+        oe('.detail-section') +
       '</div>';
-
     overlay.classList.add('open');
     document.body.style.overflow = 'hidden';
-    box.scrollTop = 0;
-    content.scrollTop = 0;
-  }
+    box.scrollTop = 0; content.scrollTop = 0;
+  };
 
   function closeModal() {
     overlay.classList.remove('open');
     document.body.style.overflow = '';
   }
 
-  document.querySelectorAll('.artwork-card').forEach(function(card) {
-    card.addEventListener('click', function() { openModal(card); });
+  /* carousel thumbs */
+  document.addEventListener('click', function(e) {
+    var th = e.target.closest('.c-thumb');
+    if (th) { var c = document.getElementById(th.dataset.card); if (c) openModal(c); }
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      var th = e.target.closest('.c-thumb');
+      if (th) { e.preventDefault(); var c = document.getElementById(th.dataset.card); if (c) openModal(c); }
+    }
+    if (e.key === 'Escape') closeModal();
   });
 
   closeBtn.addEventListener('click', closeModal);
   overlay.addEventListener('click', function(e) { if (e.target === overlay) closeModal(); });
-  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
-
 })();
 </script>
 
