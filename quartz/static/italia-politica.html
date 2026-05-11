@@ -1,0 +1,1561 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Italia Antiqua et Nova — 1300 to 1600</title>
+<style>
+  :root {
+    --paper: #e8d5a8;
+    --paper-light: #f1e1b4;
+    --paper-dark: #c9b07e;
+    --paper-deep: #b8975e;
+    --sea: #d8c89a;
+    --sea-line: #9a8050;
+    --neighbor: #c4ad7a;
+    --frame: #5a3210;
+    --frame-mid: #7a4a1c;
+    --frame-gold: #a87830;
+    --gold-light: #c89a4a;
+    --ink: #2a1606;
+    --ink-2: #4a2810;
+    --ink-3: #7a4e22;
+    --ink-soft: #9a704a;
+    --burgundy: #6b2018;
+  }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background:
+      radial-gradient(ellipse at 30% 10%, #f0deb0 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 90%, #c8b07c 0%, transparent 60%),
+      var(--paper);
+    color: var(--ink);
+    font-family: "Georgia", "Iowan Old Style", "Times New Roman", serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 14px 12px 22px;
+    box-sizing: border-box;
+  }
+
+  /* Outer ornamental frame around the map — recreates the "carved border" feel */
+  .map-card {
+    position: relative;
+    background: var(--paper);
+    padding: 22px;
+    box-shadow:
+      /* outer dark line */
+      inset 0 0 0 1px var(--frame),
+      /* inner dark band */
+      inset 0 0 0 4px var(--frame-mid),
+      inset 0 0 0 5px var(--frame),
+      /* gold band */
+      inset 0 0 0 8px var(--gold-light),
+      inset 0 0 0 9px var(--frame-gold),
+      /* paper inset */
+      inset 0 0 0 12px var(--paper-light),
+      inset 0 0 0 13px var(--frame),
+      /* outer paper ring before the SVG */
+      inset 0 0 0 16px var(--paper-dark),
+      inset 0 0 0 17px var(--frame),
+      0 2px 0 rgba(0,0,0,0.04),
+      0 8px 32px rgba(90,50,16,0.18);
+  }
+  .map-card::before, .map-card::after {
+    content: "";
+    position: absolute;
+    inset: 4px;
+    pointer-events: none;
+    background:
+      repeating-linear-gradient(0deg, transparent 0 8px, rgba(90,50,16,0.04) 8px 9px),
+      repeating-linear-gradient(90deg, transparent 0 8px, rgba(90,50,16,0.04) 8px 9px);
+    mix-blend-mode: multiply;
+  }
+  .map-card::after {
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 50%, transparent 60%, rgba(90,50,16,0.18) 100%);
+  }
+
+  /* Corner medallions — small painted portrait placeholders */
+  .corner-medallion {
+    position: absolute;
+    width: 30px; height: 30px;
+    background:
+      radial-gradient(circle at 35% 35%, #d8a85c 0%, #8a5818 60%, #4a2810 100%);
+    border: 2px solid var(--frame);
+    border-radius: 50%;
+    box-shadow:
+      inset 0 0 0 2px var(--gold-light),
+      inset 2px 2px 4px rgba(255,220,160,0.3),
+      inset -2px -2px 4px rgba(0,0,0,0.4),
+      0 0 0 1.5px var(--frame-gold);
+    z-index: 3;
+  }
+  .corner-medallion::after {
+    content: "";
+    position: absolute;
+    inset: 7px;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 40% 40%, #c89878 30%, #6b3a1a 90%);
+    opacity: 0.85;
+  }
+  .corner-medallion.tl { top: 1px; left: 1px; }
+  .corner-medallion.tr { top: 1px; right: 1px; }
+  .corner-medallion.bl { bottom: 1px; left: 1px; }
+  .corner-medallion.br { bottom: 1px; right: 1px; }
+
+  .map-card svg.map {
+    display: block;
+    width: 100%;
+    height: auto;
+    background: var(--sea);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* === Title cartouche over the top of the map === */
+  .title-floating {
+    position: absolute;
+    top: 6px;
+    right: 28px;
+    z-index: 4;
+    text-align: center;
+    pointer-events: none;
+  }
+  .title-cartouche {
+    display: inline-block;
+    position: relative;
+    padding: 6px 38px 5px;
+    background: linear-gradient(180deg, #f5e5b8, #e3cf90);
+    border: 1px solid var(--frame);
+    box-shadow:
+      inset 0 0 0 2px var(--paper-light),
+      inset 0 0 0 3px var(--frame-gold),
+      inset 0 0 0 4px var(--paper-light),
+      0 1px 0 rgba(0,0,0,0.1);
+  }
+  .title-cartouche::before, .title-cartouche::after {
+    content: "";
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 18px;
+    background: linear-gradient(180deg, #c89a4a, #8a5818);
+    border: 1px solid var(--frame);
+  }
+  .title-cartouche::before {
+    left: -10px;
+    clip-path: polygon(60% 0, 100% 0, 100% 100%, 60% 100%, 0 70%, 0 30%);
+  }
+  .title-cartouche::after {
+    right: -10px;
+    clip-path: polygon(0 0, 40% 0, 100% 30%, 100% 70%, 40% 100%, 0 100%);
+  }
+  .title-cartouche h1 {
+    margin: 0;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    font-size: clamp(11px, 2.2vw, 14px);
+    color: var(--frame);
+    text-transform: uppercase;
+    font-variant: small-caps;
+  }
+  .title-cartouche .sub {
+    margin-top: 1px;
+    font-style: italic;
+    letter-spacing: 0.18em;
+    font-size: clamp(7px, 1.2vw, 8.5px);
+    color: var(--ink-3);
+    text-transform: uppercase;
+  }
+
+  .controls {
+    margin-top: 18px;
+    padding: 12px 16px 12px;
+    background: var(--paper);
+    box-shadow:
+      inset 0 0 0 1px var(--frame),
+      inset 0 0 0 3px var(--paper-light),
+      inset 0 0 0 4px var(--frame-gold),
+      inset 0 0 0 6px var(--paper-light),
+      inset 0 0 0 7px var(--frame);
+    border-radius: 1px;
+  }
+  .year-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 4px 8px 0;
+  }
+  .year-num {
+    font-weight: 700;
+    font-size: clamp(28px, 7vw, 40px);
+    color: var(--frame);
+    letter-spacing: 0.04em;
+    line-height: 1;
+    font-variant: small-caps;
+    text-shadow: 1px 1px 0 rgba(255,255,255,0.5);
+  }
+  .year-num .roman {
+    display: block;
+    font-size: clamp(9px, 2vw, 12px);
+    letter-spacing: 0.18em;
+    color: var(--ink-3);
+    font-style: italic;
+    font-weight: 400;
+    margin-top: 2px;
+  }
+  .event {
+    font-style: italic;
+    font-size: clamp(10px, 2.2vw, 12.5px);
+    color: var(--ink-2);
+    text-align: right;
+    flex: 1;
+    line-height: 1.45;
+    padding-left: 14px;
+    border-left: 1px solid rgba(90,50,16,0.3);
+    max-width: 60%;
+  }
+  .slider-row {
+    margin-top: 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 8px;
+  }
+  .slider-row .endcap {
+    font-size: 10.5px;
+    color: var(--ink-3);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.1em;
+    font-style: italic;
+    font-variant: small-caps;
+  }
+  input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    flex: 1;
+    height: 22px;
+    background: transparent;
+    cursor: pointer;
+  }
+  input[type="range"]::-webkit-slider-runnable-track {
+    height: 6px;
+    background: linear-gradient(to right, var(--gold-light), var(--frame-mid), var(--frame));
+    border-radius: 1px;
+    border-top: 1px solid rgba(0,0,0,0.25);
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+  }
+  input[type="range"]::-moz-range-track {
+    height: 6px;
+    background: linear-gradient(to right, var(--gold-light), var(--frame));
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 30% 30%, #f0d488, #b88040 50%, #5a3210 100%);
+    border: 1.5px solid var(--frame);
+    margin-top: -8px;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.5),
+      0 1px 4px rgba(0,0,0,0.45);
+  }
+  input[type="range"]::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #f0d488, #b88040 50%, #5a3210 100%);
+    border: 1.5px solid var(--frame);
+  }
+  .snapshots {
+    margin-top: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+  }
+  .snap-btn {
+    font-family: Georgia, serif;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    padding: 5px 12px;
+    background: var(--paper-light);
+    color: var(--ink-2);
+    border: 1px solid var(--frame-mid);
+    border-radius: 1px;
+    cursor: pointer;
+    font-variant: small-caps;
+    transition: background 0.15s, color 0.15s;
+    box-shadow:
+      inset 0 0 0 1px var(--paper),
+      inset 0 1px 0 rgba(255,255,255,0.4);
+  }
+  .snap-btn:hover {
+    background: var(--paper-dark);
+    color: var(--frame);
+  }
+  .snap-btn.active {
+    background: var(--frame);
+    color: var(--paper-light);
+    border-color: var(--frame);
+    box-shadow:
+      inset 0 0 0 1px var(--gold-light),
+      inset 0 1px 0 rgba(0,0,0,0.2);
+  }
+  .legend {
+    margin-top: 14px;
+    padding: 10px 14px;
+    background: var(--paper-light);
+    border: 1px solid var(--frame-mid);
+    box-shadow: inset 0 0 0 2px var(--paper), inset 0 0 0 3px rgba(168,120,48,0.4);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 16px;
+    font-size: 11px;
+    color: var(--ink);
+  }
+  .legend .item {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-style: italic;
+    font-variant: small-caps;
+    letter-spacing: 0.06em;
+  }
+  .legend .swatch {
+    width: 16px; height: 11px;
+    border: 1px solid rgba(42,22,6,0.5);
+    flex-shrink: 0;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.18);
+  }
+
+  .tooltip {
+    position: absolute;
+    pointer-events: none;
+    background: linear-gradient(180deg, #f5e5b8, #e3cf90);
+    color: var(--ink);
+    border: 1px solid var(--frame);
+    box-shadow:
+      inset 0 0 0 2px var(--paper-light),
+      inset 0 0 0 3px var(--frame-gold),
+      inset 0 0 0 4px var(--paper-light),
+      0 6px 18px rgba(42,22,6,0.4);
+    padding: 10px 14px;
+    font-size: 12px;
+    line-height: 1.45;
+    max-width: 240px;
+    border-radius: 1px;
+    opacity: 0;
+    transition: opacity 120ms;
+    z-index: 5;
+  }
+  .tooltip .tt-zone {
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    font-variant: small-caps;
+    font-size: 12px;
+    color: var(--frame);
+    margin-bottom: 4px;
+    padding-bottom: 4px;
+    border-bottom: 1px dashed rgba(90,50,16,0.4);
+  }
+  .tooltip .tt-entity {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-style: italic;
+    margin: 4px 0;
+    color: var(--ink-2);
+  }
+  .tooltip .tt-swatch {
+    width: 12px; height: 9px;
+    border: 1px solid rgba(0,0,0,0.4);
+    flex-shrink: 0;
+  }
+  .tooltip .tt-note {
+    color: var(--ink);
+    font-size: 11px;
+    font-style: italic;
+    line-height: 1.4;
+  }
+
+  /* Sepia wash overlay — softens any fill seams as a "hand-painted manuscript" feature */
+  .seam-wash {
+    fill: none;
+    stroke: #8a5a28;
+    stroke-width: 6;
+    stroke-opacity: 0.18;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    pointer-events: none;
+    filter: blur(1.4px);
+  }
+  .zone {
+    transition: fill 280ms ease, opacity 280ms ease;
+    cursor: crosshair;
+    fill-opacity: 0.78;
+  }
+  .zone.hover { filter: brightness(1.06) saturate(1.15); }
+
+  .border-line {
+    fill: none;
+    stroke: #2a1406;
+    stroke-width: 1.2;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    transition: stroke-opacity 280ms ease;
+    pointer-events: none;
+  }
+  .neighbor {
+    fill: var(--neighbor);
+    fill-opacity: 0.45;
+    stroke: var(--ink-3);
+    stroke-width: 0.4;
+    pointer-events: none;
+  }
+  .coast {
+    fill: none;
+    stroke: #2a1406;
+    stroke-width: 1.4;
+    stroke-linejoin: round;
+    pointer-events: none;
+  }
+  .coast-shadow {
+    fill: none;
+    stroke: #5a3210;
+    stroke-width: 4;
+    stroke-linejoin: round;
+    pointer-events: none;
+    opacity: 0.15;
+  }
+  .neighbor-label {
+    font-size: 10.5px;
+    letter-spacing: 0.34em;
+    fill: var(--ink-soft);
+    font-variant: small-caps;
+    font-weight: 700;
+    font-style: italic;
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  /* Entity labels — large, centered in cluster, hand-drawn antique feel.
+     `fill` is intentionally omitted here so each label can set its own
+     darker-of-territory-colour ink via inline style without specificity fights. */
+  .entity-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    font-variant: small-caps;
+    paint-order: stroke fill;
+    stroke: rgba(241,225,180,0.92);
+    stroke-width: 3.2;
+    stroke-linejoin: round;
+    text-anchor: middle;
+    pointer-events: none;
+    transition: opacity 220ms ease;
+    font-style: italic;
+  }
+  .entity-label.small {
+    font-size: 9px;
+    letter-spacing: 0.12em;
+  }
+  .entity-label.tiny {
+    font-size: 7.5px;
+    letter-spacing: 0.10em;
+  }
+
+  /* Polity glyph rendered above each label */
+  .polity-glyph {
+    font-size: 9px;
+    fill: #5a3210;
+    text-anchor: middle;
+    paint-order: stroke fill;
+    stroke: rgba(241,225,180,0.85);
+    stroke-width: 1.8;
+    stroke-linejoin: round;
+    pointer-events: none;
+    opacity: 0.85;
+  }
+  .legend-glyph {
+    display: inline-block;
+    margin: 0 4px 0 2px;
+    color: #5a3210;
+    font-size: 13px;
+    line-height: 1;
+  }
+  .legend-polity {
+    font-style: italic;
+    color: #6a4520;
+    font-size: 11px;
+    margin-left: 2px;
+    opacity: 0.85;
+  }
+  .polity-legend {
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px dashed rgba(90,50,16,0.3);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    align-items: center;
+  }
+  .polity-legend .pl-label {
+    font-style: italic;
+    color: #5a3210;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    margin-right: 4px;
+  }
+  .polity-legend .pl-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    color: #2a1406;
+    letter-spacing: 0.04em;
+  }
+  .polity-legend .pl-item svg {
+    border-radius: 1px;
+  }
+  .tooltip .tt-polity {
+    font-style: italic;
+    color: #6a4520;
+    margin-left: 4px;
+    font-size: 10.5px;
+  }
+
+  .city-label {
+    font-size: 7.5px;
+    fill: #6e5a44;
+    paint-order: stroke fill;
+    stroke: rgba(241,225,180,0.9);
+    stroke-width: 1.6;
+    stroke-linejoin: round;
+    text-anchor: start;
+    pointer-events: none;
+    font-style: italic;
+    opacity: 0.85;
+  }
+  .city-mark { pointer-events: none; }
+
+  .sea-text {
+    font-size: 16px;
+    letter-spacing: 0.42em;
+    fill: var(--ink-3);
+    font-variant: small-caps;
+    font-style: italic;
+    font-weight: 400;
+    opacity: 0.45;
+    pointer-events: none;
+  }
+  .sea-text.sm { font-size: 10px; letter-spacing: 0.32em; opacity: 0.4; }
+
+  .footer-note {
+    margin-top: 12px;
+    font-size: 10.5px;
+    color: var(--ink-3);
+    text-align: center;
+    font-style: italic;
+    letter-spacing: 0.06em;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="map-card">
+    <span class="corner-medallion tl"></span>
+    <span class="corner-medallion tr"></span>
+    <span class="corner-medallion bl"></span>
+    <span class="corner-medallion br"></span>
+
+    <div class="title-floating">
+      <div class="title-cartouche">
+        <h1>Italia · Antiqua et Nova</h1>
+        <div class="sub">Political Control of the Italian Peninsula · 1300 – 1600</div>
+      </div>
+    </div>
+
+    <svg class="map" viewBox="0 0 520 600" preserveAspectRatio="xMidYMid meet" id="map">
+      <defs>
+        <pattern id="seaHatch" patternUnits="userSpaceOnUse" width="20" height="20">
+          <rect width="20" height="20" fill="#d8c89a"/>
+          <path d="M0,5 Q5,3 10,5 T20,5" fill="none" stroke="#9a8050" stroke-width="0.45" opacity="0.5"/>
+          <path d="M0,12 Q5,10 10,12 T20,12" fill="none" stroke="#9a8050" stroke-width="0.45" opacity="0.4"/>
+          <path d="M0,18 Q5,16 10,18 T20,18" fill="none" stroke="#9a8050" stroke-width="0.45" opacity="0.35"/>
+        </pattern>
+        <filter id="grain" x="0" y="0" width="100%" height="100%">
+          <feTurbulence type="fractalNoise" baseFrequency="1.8" numOctaves="2" seed="3"/>
+          <feColorMatrix values="0 0 0 0 0.35  0 0 0 0 0.22  0 0 0 0 0.08  0 0 0 0.12 0"/>
+          <feComposite in2="SourceGraphic" operator="in"/>
+        </filter>
+        <pattern id="reliefHatch" patternUnits="userSpaceOnUse" width="7" height="7">
+          <rect width="7" height="7" fill="transparent"/>
+          <path d="M0,5 L2.5,1 L5,5 L7,1" stroke="#5a3210" stroke-width="0.35" fill="none" opacity="0.4"/>
+        </pattern>
+        <pattern id="paperStipple" patternUnits="userSpaceOnUse" width="40" height="40">
+          <rect width="40" height="40" fill="transparent"/>
+          <circle cx="3" cy="7" r="0.6" fill="#e8d5a8" opacity="0.7"/>
+          <circle cx="15" cy="3" r="0.5" fill="#f1e1b4" opacity="0.6"/>
+          <circle cx="28" cy="11" r="0.7" fill="#e8d5a8" opacity="0.5"/>
+          <circle cx="36" cy="22" r="0.5" fill="#f1e1b4" opacity="0.7"/>
+          <circle cx="8" cy="24" r="0.6" fill="#e8d5a8" opacity="0.6"/>
+          <circle cx="22" cy="31" r="0.5" fill="#f1e1b4" opacity="0.5"/>
+          <circle cx="33" cy="36" r="0.6" fill="#e8d5a8" opacity="0.6"/>
+          <circle cx="5" cy="38" r="0.4" fill="#f1e1b4" opacity="0.5"/>
+          <circle cx="18" cy="17" r="0.4" fill="#e8d5a8" opacity="0.4"/>
+        </pattern>
+
+        <!-- Ink-wash filter: feathers zone fills so adjacent color blocks bleed into each other -->
+        <filter id="inkWash" x="-2%" y="-2%" width="104%" height="104%">
+          <feGaussianBlur stdDeviation="1.1"/>
+        </filter>
+
+        <!-- Polity overlay patterns -->
+        <pattern id="polR" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)">
+          <rect width="6" height="6" fill="transparent"/>
+          <line x1="0" y1="0" x2="0" y2="6" stroke="#3a1f0a" stroke-width="0.45" opacity="0.55"/>
+        </pattern>
+        <pattern id="polD" patternUnits="userSpaceOnUse" width="8" height="8">
+          <rect width="8" height="8" fill="transparent"/>
+          <circle cx="2" cy="2" r="0.55" fill="#3a1f0a" opacity="0.5"/>
+          <circle cx="6" cy="6" r="0.55" fill="#3a1f0a" opacity="0.5"/>
+        </pattern>
+        <pattern id="polK" patternUnits="userSpaceOnUse" width="10" height="10">
+          <rect width="10" height="10" fill="transparent"/>
+          <path d="M0,5 L10,5 M5,0 L5,10" stroke="#3a1f0a" stroke-width="0.35" opacity="0.32"/>
+        </pattern>
+        <pattern id="polP" patternUnits="userSpaceOnUse" width="9" height="9">
+          <rect width="9" height="9" fill="transparent"/>
+          <path d="M4.5,2 L4.5,7 M2,4.5 L7,4.5" stroke="#3a1f0a" stroke-width="0.4" opacity="0.5"/>
+        </pattern>
+        <pattern id="polC" patternUnits="userSpaceOnUse" width="10" height="10">
+          <rect width="10" height="10" fill="transparent"/>
+          <rect x="4" y="4" width="2" height="2" fill="#3a1f0a" opacity="0.45"/>
+        </pattern>
+        <clipPath id="italyClip">
+          <path id="italyClipPath" d=""/>
+        </clipPath>
+
+        <symbol id="seaMonster" viewBox="-20 -10 40 20">
+          <path d="M-18,2 Q-14,-4 -10,-1 Q-6,3 -2,-1 Q2,-5 6,-1 Q10,3 14,-2 Q16,-4 18,-2 L17,1 Q14,2 12,0 Q9,3 5,1 Q1,4 -3,1 Q-7,4 -11,1 Q-14,3 -17,2 Z"
+                fill="#5a3210" opacity="0.55"/>
+          <circle cx="-15" cy="-1" r="0.6" fill="#2a1406"/>
+        </symbol>
+        <symbol id="galleon" viewBox="-12 -10 24 14">
+          <path d="M-10,2 L10,2 L8,4 L-8,4 Z" fill="#5a3210" opacity="0.7"/>
+          <line x1="-3" y1="2" x2="-3" y2="-9" stroke="#2a1406" stroke-width="0.6"/>
+          <line x1="3" y1="2" x2="3" y2="-9" stroke="#2a1406" stroke-width="0.6"/>
+          <path d="M-3,-8 L-7,-3 L-3,-3 Z M-3,-3 L-7,1 L-3,1 Z" fill="#f1e1b4" stroke="#2a1406" stroke-width="0.4" opacity="0.85"/>
+          <path d="M3,-8 L7,-3 L3,-3 Z M3,-3 L7,1 L3,1 Z" fill="#f1e1b4" stroke="#2a1406" stroke-width="0.4" opacity="0.85"/>
+        </symbol>
+        <symbol id="scrollLeft" viewBox="0 0 12 28">
+          <path d="M12,0 Q4,4 4,14 Q4,24 12,28 L12,24 Q8,22 8,14 Q8,6 12,4 Z" fill="#a87830" opacity="0.9"/>
+          <circle cx="6" cy="14" r="2" fill="#5a3210"/>
+        </symbol>
+        <symbol id="scrollRight" viewBox="0 0 12 28">
+          <path d="M0,0 Q8,4 8,14 Q8,24 0,28 L0,24 Q4,22 4,14 Q4,6 0,4 Z" fill="#a87830" opacity="0.9"/>
+          <circle cx="6" cy="14" r="2" fill="#5a3210"/>
+        </symbol>
+      </defs>
+
+      <!-- Sea base -->
+      <rect x="0" y="0" width="520" height="600" fill="url(#seaHatch)"/>
+      <rect x="0" y="0" width="520" height="600" filter="url(#grain)"/>
+
+      <!-- Sea labels -->
+      <g id="seaLabels">
+        <text class="sea-text" x="380" y="220" transform="rotate(-12 380 220)">Mare Adriaticum</text>
+        <text class="sea-text" x="120" y="380">Mare Tyrrhenum</text>
+        <text class="sea-text sm" x="100" y="540">Mare Mediterraneum</text>
+      </g>
+
+      <!-- Sea decorations -->
+      <g id="seaDecor" opacity="0.85">
+        <use href="#galleon" x="100" y="290" width="22" height="15"/>
+        <use href="#galleon" x="380" y="180" width="20" height="14"/>
+        <use href="#galleon" x="200" y="500" width="24" height="16"/>
+        <use href="#seaMonster" x="60" y="430" width="36" height="15"/>
+        <use href="#seaMonster" x="430" y="410" width="34" height="15"/>
+      </g>
+
+      <!-- Coastline shadow (creates the brown halo around Italy in old maps) -->
+      <path id="coastShadow" class="coast-shadow"/>
+
+      <!-- Neighbors -->
+      <g id="neighbors"></g>
+      <g id="neighborLabels"></g>
+
+      <!-- Italy clipped layer -->
+      <g clip-path="url(#italyClip)">
+        <rect x="0" y="0" width="520" height="600" fill="#e8d5a8"/>
+        <!-- Zones — crisp edges; pattern overlays carry the polity texture -->
+        <g id="zones"></g>
+        <!-- Polity-type pattern overlay (no filter, crisp) -->
+        <g id="polityOverlay"></g>
+        <rect x="0" y="0" width="520" height="600" fill="url(#reliefHatch)" opacity="0.45"/>
+        <rect x="0" y="0" width="520" height="600" fill="url(#paperStipple)" opacity="0.6"/>
+        <g id="borders"></g>
+      </g>
+
+      <!-- Coastline outline -->
+      <path id="coastOutline" class="coast"/>
+
+      <!-- Cities -->
+      <g id="cities"></g>
+
+      <!-- Entity labels (drawn per-snapshot at cluster centroids) -->
+      <g id="entityLabels"></g>
+
+      <!-- Compass rose (lower-left, ornate 16-point) -->
+      <g transform="translate(76,500)">
+        <circle r="30" fill="rgba(241,225,180,0.55)" stroke="#5a3210" stroke-width="0.6"/>
+        <circle r="30" fill="none" stroke="#a87830" stroke-width="0.4" stroke-dasharray="2 2"/>
+        <circle r="22" fill="none" stroke="#7a4a1c" stroke-width="0.3"/>
+        <!-- 8 long points + 8 short points -->
+        <g>
+          <polygon points="0,-28 -2.5,-3 0,0 2.5,-3" fill="#6b2018"/>
+          <polygon points="0,28  -2.5,3 0,0 2.5,3" fill="#2a1406"/>
+          <polygon points="-28,0 -2.5,-3 0,0 -2.5,3" fill="#2a1406"/>
+          <polygon points="28,0  2.5,-3 0,0 2.5,3" fill="#2a1406"/>
+          <polygon points="-19.8,-19.8 -2,-3.5 0,0 -3.5,-2" fill="#5a3210"/>
+          <polygon points="19.8,-19.8 2,-3.5 0,0 3.5,-2" fill="#5a3210"/>
+          <polygon points="-19.8,19.8 -2,3.5 0,0 -3.5,2" fill="#5a3210"/>
+          <polygon points="19.8,19.8 2,3.5 0,0 3.5,2" fill="#5a3210"/>
+          <!-- short rays -->
+          <g stroke="#7a4a1c" stroke-width="0.6" fill="none" opacity="0.6">
+            <line x1="0" y1="0" x2="11" y2="-26"/><line x1="0" y1="0" x2="-11" y2="-26"/>
+            <line x1="0" y1="0" x2="11" y2="26"/><line x1="0" y1="0" x2="-11" y2="26"/>
+            <line x1="0" y1="0" x2="26" y2="-11"/><line x1="0" y1="0" x2="-26" y2="-11"/>
+            <line x1="0" y1="0" x2="26" y2="11"/><line x1="0" y1="0" x2="-26" y2="11"/>
+          </g>
+        </g>
+        <circle r="3.4" fill="#a87830" stroke="#5a3210" stroke-width="0.6"/>
+        <circle r="1.4" fill="#2a1406"/>
+        <text y="-34" text-anchor="middle" font-family="Georgia" font-size="9" font-weight="700" fill="#5a3210" letter-spacing="0.18em" font-style="italic">N</text>
+        <text y="40"  text-anchor="middle" font-family="Georgia" font-size="9" font-weight="700" fill="#5a3210" letter-spacing="0.18em" font-style="italic">S</text>
+        <text x="-36" y="2" text-anchor="middle" font-family="Georgia" font-size="9" font-weight="700" fill="#5a3210" letter-spacing="0.18em" font-style="italic">W</text>
+        <text x="36"  y="2" text-anchor="middle" font-family="Georgia" font-size="9" font-weight="700" fill="#5a3210" letter-spacing="0.18em" font-style="italic">E</text>
+      </g>
+
+      <!-- Scale cartouche (bottom-right) -->
+      <g transform="translate(348,548)">
+        <use href="#scrollLeft" x="-10" y="-14" width="12" height="28"/>
+        <use href="#scrollRight" x="160" y="-14" width="12" height="28"/>
+        <rect x="2" y="-14" width="158" height="28" fill="rgba(241,225,180,0.92)" stroke="#5a3210" stroke-width="0.6"/>
+        <rect x="5" y="-11" width="152" height="22" fill="none" stroke="#a87830" stroke-width="0.5"/>
+        <text x="81" y="-3" text-anchor="middle" font-family="Georgia" font-size="9" font-weight="700" fill="#5a3210" letter-spacing="0.2em" font-variant="small-caps" font-style="italic">Scala Miliarium</text>
+        <g transform="translate(20,4)">
+          <rect x="0"   y="0" width="20" height="4" fill="#2a1406"/>
+          <rect x="20"  y="0" width="20" height="4" fill="#f1e1b4" stroke="#2a1406" stroke-width="0.4"/>
+          <rect x="40"  y="0" width="20" height="4" fill="#2a1406"/>
+          <rect x="60"  y="0" width="20" height="4" fill="#f1e1b4" stroke="#2a1406" stroke-width="0.4"/>
+          <rect x="80"  y="0" width="20" height="4" fill="#2a1406"/>
+          <rect x="100" y="0" width="20" height="4" fill="#f1e1b4" stroke="#2a1406" stroke-width="0.4"/>
+          <text x="0"   y="11" font-size="6.5" fill="#2a1406" font-style="italic">0</text>
+          <text x="58"  y="11" font-size="6.5" fill="#2a1406" font-style="italic">100</text>
+          <text x="116" y="11" font-size="6.5" fill="#2a1406" font-style="italic">200</text>
+        </g>
+      </g>
+
+      <!-- Year cartouche (top-left of map, like reference) -->
+      <g id="yearCartouche" transform="translate(85,38)">
+        <use href="#scrollLeft"  x="-72" y="-15" width="12" height="30"/>
+        <use href="#scrollRight" x="60"  y="-15" width="12" height="30"/>
+        <rect x="-60" y="-15" width="120" height="30" fill="rgba(241,225,180,0.97)" stroke="#5a3210" stroke-width="0.7"/>
+        <rect x="-57" y="-12" width="114" height="24" fill="none" stroke="#a87830" stroke-width="0.5"/>
+        <line x1="0" y1="-13" x2="0" y2="13" stroke="#5a3210" stroke-width="0.4"/>
+        <text id="yearRoman" x="-30" y="5" text-anchor="middle" font-family="Georgia" font-size="12" font-weight="700" fill="#5a3210" letter-spacing="0.18em" font-variant="small-caps">MCCC</text>
+        <text id="yearArabic" x="30"  y="5" text-anchor="middle" font-family="Georgia" font-size="13" font-weight="700" fill="#2a1406" letter-spacing="0.08em">1300</text>
+      </g>
+    </svg>
+
+    <div class="tooltip" id="tooltip" role="status" aria-live="polite"></div>
+  </div>
+
+  <div class="controls">
+    <div class="year-row">
+      <div class="year-num" id="yearNum">1300<span class="roman" id="yearRomanLg">MCCC</span></div>
+      <div class="event" id="eventText">Late medieval communes; Aragon holds Sicily after the Vespers (1282).</div>
+    </div>
+    <div class="slider-row">
+      <span class="endcap">1300</span>
+      <input type="range" id="slider" min="1300" max="1600" step="1" value="1300" />
+      <span class="endcap">1600</span>
+    </div>
+    <div class="snapshots" id="snapshots"></div>
+    <div class="legend" id="legend"></div>
+  </div>
+
+  <div class="footer-note">A simplified historical reconstruction. Drag the slider or tap a year. Hover any region for details.</div>
+</div>
+
+<script>
+/* === Geographic data (same as before, English neighbors) === */
+const ITALY_OUTLINE = { type:"Polygon", coordinates:[[
+  [7.50,43.78],[8.10,44.40],[8.45,44.40],[9.00,44.07],[9.85,44.07],
+  [10.05,43.95],[10.05,43.50],[10.50,42.90],[11.10,42.40],
+  [11.80,42.10],[12.20,41.78],[12.60,41.45],[13.10,41.25],
+  [13.70,41.20],[14.05,40.78],[14.20,40.45],[14.60,40.30],
+  [14.95,40.20],[15.30,40.00],[15.60,39.90],[15.65,39.40],
+  [16.00,39.05],[15.95,38.40],[16.10,37.95],[15.65,37.92],
+  [16.50,38.95],[17.10,39.45],[17.20,40.50],
+  [17.95,40.45],[18.50,40.15],[18.50,40.05],
+  [18.05,40.05],[17.90,40.50],[17.20,40.85],
+  [16.85,41.20],[16.20,41.65],[16.00,41.95],
+  [15.10,41.95],[14.90,42.10],[14.10,42.40],
+  [13.85,42.85],[13.55,43.55],[13.30,43.80],
+  [13.20,44.10],[12.50,44.30],[12.30,44.55],
+  [12.45,44.95],[13.10,45.45],[13.55,45.78],[13.60,45.75],
+  [13.40,46.20],[12.40,46.65],[12.20,46.85],
+  [11.05,46.85],[10.45,46.85],[10.05,46.55],
+  [9.25,46.50],[8.95,46.05],[8.55,46.25],
+  [8.45,46.45],[8.15,46.20],[7.85,45.92],
+  [7.05,45.85],[6.65,45.10],[6.85,44.55],
+  [7.45,44.10],[7.50,43.78]
+]]};
+const SICILY = { type:"Polygon", coordinates:[[
+  [12.45,37.80],[13.10,38.20],[13.75,38.18],[14.30,38.05],
+  [15.10,38.25],[15.30,38.05],[15.60,38.20],[15.10,37.50],
+  [15.30,37.10],[15.10,36.65],[14.50,36.65],[13.50,37.10],
+  [12.65,37.55],[12.45,37.80]
+]]};
+const SARDINIA = { type:"Polygon", coordinates:[[
+  [8.20,41.25],[8.55,41.10],[9.20,41.20],[9.55,41.05],
+  [9.65,40.55],[9.80,40.05],[9.70,39.45],[9.55,39.10],
+  [9.05,39.05],[8.45,39.10],[8.40,39.85],[8.30,40.60],
+  [8.20,41.25]
+]]};
+
+const NEIGHBORS = [
+  { name: "FRANCE", coords: [[[2.5,48.5],[8.0,48.5],[8.0,46.5],[7.0,45.5],[6.5,44.5],[7.0,43.5],[3.0,43.0],[2.5,46.0],[2.5,48.5]]], label:[5.0,46.6] },
+  { name: "SWITZERLAND", coords: [[[6.5,47.6],[10.5,47.6],[10.5,46.7],[8.0,45.9],[6.5,46.0],[6.5,47.6]]], label:[8.4,47.2] },
+  { name: "AUSTRIA", coords: [[[10.5,48.3],[16.5,48.3],[16.5,47.0],[13.5,46.5],[12.0,46.7],[10.5,46.8],[10.5,48.3]]], label:[13.5,47.7] },
+  { name: "SLOVENIA", coords: [[[13.6,46.7],[16.5,46.9],[16.5,45.8],[14.0,45.6],[13.5,45.8],[13.6,46.7]]], label:[15.0,46.2] },
+  { name: "CROATIA", coords: [[[13.5,45.6],[19.5,45.9],[19.5,42.5],[18.0,42.5],[17.0,43.0],[15.0,44.0],[13.5,45.0],[13.5,45.6]]], label:[17.5,44.6] },
+  { name: "GREECE", coords: [[[18.6,40.0],[21.0,40.5],[21.0,38.5],[19.0,38.5],[18.6,40.0]]], label:[19.8,39.4] },
+  { name: "AFRICA", coords: [[[9.5,37.5],[12.0,37.0],[12.0,35.5],[9.0,35.5],[9.5,37.5]]], label:[10.5,36.4] },
+  { name: "SPAIN", coords: [[[2.0,43.5],[3.0,43.5],[3.0,42.0],[2.0,42.0],[2.0,43.5]]], label:[2.5,42.8] }
+];
+
+const ZONES = [
+  { id:"savoy",    name:"Savoy",            label:[7.7,44.9],
+    coords:[[[6.4,46.0],[8.4,46.0],[8.4,45.5],[8.85,45.0],[8.85,44.55],[8.45,44.55],[8.10,44.4],[7.5,43.6],[6.5,44.6],[6.4,46.0]]] },
+  { id:"milan",    name:"Milan",            label:[10.0,45.55],
+    coords:[[[8.4,46.0],[8.4,46.45],[8.45,46.45],[8.55,46.25],[8.95,46.05],[9.25,46.50],[10.05,46.55],[10.45,46.85],[10.7,46.05],[10.7,45.0],[10.45,44.8],[9.4,44.8],[8.85,44.55],[8.85,45.0],[8.4,45.5],[8.4,46.0]]] },
+  { id:"venice",   name:"Venice",           label:[12.2,45.7],
+    coords:[[[10.7,46.85],[13.7,46.2],[13.6,45.75],[12.45,44.95],[10.7,45.0],[10.7,46.05],[10.7,46.85]]] },
+  { id:"genoa",    name:"Genoa",            label:[8.4,44.0],
+    coords:[[[7.50,43.78],[8.10,44.40],[8.45,44.55],[8.85,44.55],[9.20,44.45],[9.85,44.30],[10.05,44.07],[10.05,43.50],[9.0,43.7],[7.50,43.78]]] },
+  { id:"wEmilia",  name:"West Emilia",      label:[10.2,44.45],
+    coords:[[[8.45,44.55],[8.85,44.55],[9.20,44.45],[9.85,44.30],[10.05,44.07],[11.2,44.2],[11.2,44.8],[10.45,44.80],[9.40,44.80],[8.85,44.40],[8.45,44.55]]] },
+  { id:"bologna",  name:"Bologna",          label:[11.45,44.55],
+    coords:[[[11.2,44.8],[12.0,44.8],[12.0,44.0],[11.2,44.2],[11.2,44.8]]] },
+  { id:"romagna",  name:"Romagna",          label:[12.3,44.3],
+    coords:[[[12.0,44.8],[12.45,44.95],[12.30,44.55],[12.50,44.30],[13.20,44.10],[13.10,43.55],[12.0,43.6],[12.0,44.0],[12.0,44.8]]] },
+  { id:"lucca",    name:"Lucca",            label:[10.45,43.85],
+    coords:[[[10.05,44.07],[10.6,44.07],[10.6,43.5],[10.05,43.5],[10.05,44.07]]] },
+  { id:"florence", name:"Florence",         label:[11.20,43.85],
+    coords:[[[10.6,44.07],[12.0,44.0],[12.0,43.6],[11.6,43.5],[10.6,43.5],[10.6,44.07]]] },
+  { id:"siena",    name:"Siena",            label:[11.30,43.0],
+    coords:[[[10.6,43.5],[11.6,43.5],[12.0,43.6],[12.2,42.7],[12.0,42.4],[11.10,42.40],[10.50,42.90],[10.6,43.5]]] },
+  { id:"papal",    name:"Papal States",     label:[12.85,42.70],
+    coords:[[[12.0,43.6],[13.10,43.55],[13.85,42.85],[14.10,42.40],[13.70,41.20],[13.10,41.25],[12.60,41.45],[12.20,41.78],[11.80,42.10],[12.0,42.4],[12.2,42.7],[12.0,43.6]]] },
+  { id:"abruzzo",  name:"Abruzzo",          label:[14.05,42.0],
+    coords:[[[13.70,41.20],[14.10,42.40],[14.90,42.10],[15.10,41.95],[15.10,41.20],[14.20,40.95],[13.70,41.20]]] },
+  { id:"campania", name:"Campania",         label:[14.7,40.8],
+    coords:[[[13.70,41.20],[14.20,40.95],[15.10,41.20],[15.30,40.55],[14.95,40.20],[14.60,40.30],[14.20,40.45],[14.05,40.78],[13.70,41.20]]] },
+  { id:"apulia",   name:"Apulia",           label:[16.85,41.2],
+    coords:[[[15.10,41.95],[16.00,41.95],[16.20,41.65],[16.85,41.20],[17.20,40.85],[17.90,40.50],[18.50,40.15],[18.50,40.05],[18.05,40.05],[17.90,40.50],[17.20,40.50],[16.40,40.40],[15.30,40.55],[15.10,41.20],[15.10,41.95]]] },
+  { id:"south",    name:"Calabria & Lucania", label:[16.3,39.4],
+    coords:[[[15.30,40.55],[16.40,40.40],[17.20,40.50],[17.10,39.45],[16.50,38.95],[15.65,37.92],[16.10,37.95],[15.95,38.40],[16.00,39.05],[15.65,39.40],[15.60,39.90],[15.30,40.00],[15.30,40.55]]] },
+  { id:"este",     name:"Ferrara",          label:[11.55,44.95],
+    coords:[[[10.7,45.0],[12.45,44.95],[12.0,44.8],[11.2,44.8],[10.7,44.8],[10.7,45.0]]] },
+  { id:"sicily",   name:"Sicily",           label:[14.05,37.55], coords: SICILY.coordinates },
+  { id:"sardinia", name:"Sardinia",         label:[9.05,40.15],  coords: SARDINIA.coordinates },
+  { id:"trentino", name:"Trent",            label:[11.0,46.45],
+    coords:[[[10.45,46.85],[12.20,46.85],[12.40,46.65],[13.40,46.20],[10.7,46.85],[10.7,46.05],[10.45,46.85]]] }
+];
+
+const BORDERS = [
+  { a:"savoy",   b:"milan",    coords:[[8.4,46.0],[8.4,45.5],[8.85,45.0],[8.85,44.55]] },
+  { a:"savoy",   b:"genoa",    coords:[[8.85,44.55],[8.45,44.55],[8.10,44.40],[7.5,43.78]] },
+  { a:"milan",   b:"venice",   coords:[[10.7,46.05],[10.7,45.0]] },
+  { a:"milan",   b:"wEmilia",  coords:[[8.85,44.55],[9.40,44.80],[10.45,44.80]] },
+  { a:"milan",   b:"este",     coords:[[10.7,45.0],[10.7,44.8]] },
+  { a:"milan",   b:"trentino", coords:[[10.45,46.85],[10.7,46.05]] },
+  { a:"venice",  b:"trentino", coords:[[10.7,46.85],[12.40,46.65],[13.40,46.20]] },
+  { a:"venice",  b:"este",     coords:[[10.7,45.0],[12.45,44.95]] },
+  { a:"romagna", b:"este",     coords:[[12.0,44.8],[12.45,44.95]] },
+  { a:"genoa",   b:"wEmilia",  coords:[[8.45,44.55],[8.85,44.55],[9.20,44.45],[9.85,44.30],[10.05,44.07]] },
+  { a:"genoa",   b:"lucca",    coords:[[10.05,44.07],[10.05,43.5]] },
+  { a:"wEmilia", b:"lucca",    coords:[[10.05,44.07],[10.6,44.07]] },
+  { a:"wEmilia", b:"bologna",  coords:[[11.2,44.2],[11.2,44.8]] },
+  { a:"wEmilia", b:"florence", coords:[[10.6,44.07],[11.2,44.2]] },
+  { a:"wEmilia", b:"este",     coords:[[10.7,44.8],[11.2,44.8]] },
+  { a:"bologna", b:"florence", coords:[[11.2,44.2],[12.0,44.0]] },
+  { a:"bologna", b:"romagna",  coords:[[12.0,44.0],[12.0,44.8]] },
+  { a:"bologna", b:"este",     coords:[[11.2,44.8],[12.0,44.8]] },
+  { a:"romagna", b:"florence", coords:[[12.0,44.0],[12.0,43.6]] },
+  { a:"romagna", b:"papal",    coords:[[12.0,43.6],[13.10,43.55]] },
+  { a:"lucca",   b:"florence", coords:[[10.6,44.07],[10.6,43.5]] },
+  { a:"lucca",   b:"siena",    coords:[[10.6,43.5],[10.05,43.5]] },
+  { a:"florence",b:"siena",    coords:[[10.6,43.5],[11.6,43.5],[12.0,43.6]] },
+  { a:"siena",   b:"papal",    coords:[[12.0,43.6],[12.2,42.7],[12.0,42.4],[11.10,42.40]] },
+  { a:"papal",   b:"abruzzo",  coords:[[13.70,41.20],[14.10,42.40]] },
+  { a:"papal",   b:"campania", coords:[[13.10,41.25],[13.70,41.20]] },
+  { a:"abruzzo", b:"campania", coords:[[13.70,41.20],[14.20,40.95]] },
+  { a:"abruzzo", b:"apulia",   coords:[[14.20,40.95],[15.10,41.20],[15.10,41.95]] },
+  { a:"campania",b:"apulia",   coords:[[15.10,41.20],[15.30,40.55]] },
+  { a:"campania",b:"south",    coords:[[15.30,40.55],[14.95,40.20]] },
+  { a:"apulia",  b:"south",    coords:[[15.30,40.55],[16.40,40.40],[17.20,40.50]] }
+];
+
+/* === Entities — antique-toned washes === */
+/* polity — D=Duchy, R=Republic, K=Kingdom, P=Papal, C=Commune/Other */
+const ENTITIES = {
+  savoy:    { name: "Savoy",     full: "Duchy of Savoy",          polity: "D", color: "#a8b088" },
+  genoa:    { name: "Genoa",     full: "Republic of Genoa",       polity: "R", color: "#bf7a68" },
+  milan:    { name: "Milan",     full: "Duchy of Milan",          polity: "D", color: "#bb9870" },
+  venice:   { name: "Venice",    full: "Republic of Venice",      polity: "R", color: "#8c9eb8" },
+  florence: { name: "Florence",  full: "Republic of Florence",    polity: "R", color: "#c8866e" },
+  tuscany:  { name: "Tuscany",   full: "Grand Duchy of Tuscany",  polity: "D", color: "#bb7060" },
+  este:     { name: "Ferrara",   full: "Duchy of Ferrara",        polity: "D", color: "#7d8a4a" },
+  papal:    { name: "Papal",     full: "Papal States",            polity: "P", color: "#a892b0" },
+  naples:   { name: "Naples",    full: "Kingdom of Naples",       polity: "K", color: "#90a89a" },
+  aragon:   { name: "Aragon",    full: "Crown of Aragon",         polity: "K", color: "#d4a058" },
+  spain:    { name: "Spain",     full: "Habsburg Spain",          polity: "K", color: "#d8b878" },
+  // Spanish-ruled Italian dominions from 1527 onward — distinct kingdoms/duchies
+  // under the Spanish Habsburg crown. Same gold colour as `spain` so they read
+  // as one bloc visually, but each keeps its own name + polity so its label
+  // ("MILAN", "NAPLES", "SICILY", "SARDINIA") still appears on its territory.
+  // The `parent: "spain"` field collapses them into a single legend entry.
+  spainMilan:    { name: "Milan",    full: "Duchy of Milan (Habsburg)",      polity: "D", color: "#d8b878", parent: "spain" },
+  spainNaples:   { name: "Naples",   full: "Kingdom of Naples (Spanish)",    polity: "K", color: "#d8b878", parent: "spain" },
+  spainSicily:   { name: "Sicily",   full: "Kingdom of Sicily (Spanish)",    polity: "K", color: "#d8b878", parent: "spain" },
+  spainSardinia: { name: "Sardinia", full: "Kingdom of Sardinia (Spanish)",  polity: "K", color: "#d8b878", parent: "spain" },
+  lucca:    { name: "Lucca",     full: "Republic of Lucca",       polity: "R", color: "#b8c098" },
+  siena:    { name: "Siena",     full: "Republic of Siena",       polity: "R", color: "#9e5a3c" },
+  commune:  { name: "Communes",  full: "Communes & City-States",  polity: "C", color: "#c0b094" },
+  various:  { name: "Various",   full: "Various local powers",    polity: "C", color: "#c8baa0" }
+};
+
+/* Polity glyphs — small antique heraldic marks */
+const POLITY = {
+  K: { glyph: "\u265B", title: "Kingdom" },     // ♛ crown
+  D: { glyph: "\u269C", title: "Duchy" },       // ⚜ fleur-de-lis
+  R: { glyph: "\u2696", title: "Republic" },    // ⚖ scales
+  P: { glyph: "\u271F", title: "Papal" },       // ✟ latin cross
+  C: { glyph: "\u25CB", title: "Commune" }      // ○ ring
+};
+
+const SNAPSHOTS = [
+  { year:1300, roman:"MCCC",
+    event:"Late medieval communes; Aragon holds Sicily after the Vespers (1282).",
+    map:{ savoy:"savoy",milan:"milan",venice:"venice",genoa:"genoa",wEmilia:"commune",bologna:"commune",romagna:"papal",lucca:"lucca",florence:"florence",siena:"siena",papal:"papal",abruzzo:"naples",campania:"naples",apulia:"naples",south:"naples",este:"este",sicily:"aragon",sardinia:"various",trentino:"commune" } },
+  { year:1380, roman:"MCCCLXXX",
+    event:"Visconti Milan expands; Genoa weakens; Florence ascendant in Tuscany.",
+    map:{ savoy:"savoy",milan:"milan",venice:"venice",genoa:"genoa",wEmilia:"milan",bologna:"commune",romagna:"papal",lucca:"lucca",florence:"florence",siena:"siena",papal:"papal",abruzzo:"naples",campania:"naples",apulia:"naples",south:"naples",este:"este",sicily:"aragon",sardinia:"aragon",trentino:"commune" } },
+  { year:1454, roman:"MCDLIV",
+    event:"Peace of Lodi: balance among Milan, Venice, Florence, Papacy and Naples.",
+    map:{ savoy:"savoy",milan:"milan",venice:"venice",genoa:"milan",wEmilia:"milan",bologna:"commune",romagna:"papal",lucca:"lucca",florence:"florence",siena:"siena",papal:"papal",abruzzo:"naples",campania:"naples",apulia:"naples",south:"naples",este:"este",sicily:"aragon",sardinia:"aragon",trentino:"venice" } },
+  { year:1494, roman:"MCDXCIV",
+    event:"Charles VIII of France invades — opening of the Italian Wars.",
+    map:{ savoy:"savoy",milan:"milan",venice:"venice",genoa:"milan",wEmilia:"milan",bologna:"commune",romagna:"papal",lucca:"lucca",florence:"florence",siena:"siena",papal:"papal",abruzzo:"naples",campania:"naples",apulia:"naples",south:"naples",este:"este",sicily:"aragon",sardinia:"aragon",trentino:"venice" } },
+  { year:1527, roman:"MDXXVII",
+    event:"Sack of Rome by Imperial troops; Habsburg ascendancy begins.",
+    map:{ savoy:"savoy",milan:"spainMilan",venice:"venice",genoa:"genoa",wEmilia:"este",bologna:"papal",romagna:"papal",lucca:"lucca",florence:"florence",siena:"siena",papal:"papal",abruzzo:"spainNaples",campania:"spainNaples",apulia:"spainNaples",south:"spainNaples",este:"este",sicily:"spainSicily",sardinia:"spainSardinia",trentino:"venice" } },
+  { year:1559, roman:"MDLIX",
+    event:"Peace of Cateau-Cambrésis: Spanish hegemony confirmed; Siena annexed.",
+    map:{ savoy:"savoy",milan:"spainMilan",venice:"venice",genoa:"genoa",wEmilia:"este",bologna:"papal",romagna:"papal",lucca:"lucca",florence:"tuscany",siena:"tuscany",papal:"papal",abruzzo:"spainNaples",campania:"spainNaples",apulia:"spainNaples",south:"spainNaples",este:"este",sicily:"spainSicily",sardinia:"spainSardinia",trentino:"venice" } },
+  { year:1600, roman:"MDC",
+    event:"Late Cinquecento equilibrium under Spanish dominance.",
+    map:{ savoy:"savoy",milan:"spainMilan",venice:"venice",genoa:"genoa",wEmilia:"este",bologna:"papal",romagna:"papal",lucca:"lucca",florence:"tuscany",siena:"tuscany",papal:"papal",abruzzo:"spainNaples",campania:"spainNaples",apulia:"spainNaples",south:"spainNaples",este:"este",sicily:"spainSicily",sardinia:"spainSardinia",trentino:"venice" } }
+];
+
+const ZONE_NOTES = {
+  savoy:    { _: "House of Savoy straddles the Alps; capital moves Chambéry→Turin in 1563." },
+  genoa:    { _: "A maritime republic; subject to Milan 1421–1528." },
+  milan:    { _: "Visconti (to 1447), Ambrosian Republic, then Sforza; Spanish from 1535." },
+  venice:   { _: "The Most Serene Republic; absorbs eastern Lombardy from 1428." },
+  florence: { _: "Republic until the Medici principate (1531); Grand Duchy of Tuscany declared 1569." },
+  siena:    { 1559: "Annexed into the Grand Duchy of Tuscany after the siege of 1554–55." },
+  lucca:    { _: "A small but tenacious republic — independent until 1799." },
+  papal:    { _: "Direct papal rule strengthens after the Borgia and Julius II reconquests." },
+  bologna:  { 1300:"Independent commune.", 1380:"Independent commune.", 1454:"Bentivoglio signoria under nominal papal suzerainty.", 1494:"Bentivoglio signoria.", 1527:"Annexed by Pope Julius II in 1506.", 1559:"Papal city, governed by a legate.", 1600:"Papal city, governed by a legate." },
+  romagna:  { _: "Nominally papal but a patchwork of vicariates (Malatesta, Manfredi, Ordelaffi)." },
+  abruzzo:  { _: "Part of the Kingdom of Naples; Spanish viceroyalty after 1503." },
+  campania: { _: "Heart of the Kingdom of Naples; Spanish viceroyalty from 1503." },
+  apulia:   { _: "Coastal towns frequently raided by Ottoman fleets in the Cinquecento." },
+  south:    { _: "Lucania (Basilicata) and Calabria — Kingdom of Naples / Spanish viceroyalty." },
+  este:     { _: "Este duchy of Ferrara & Modena; Ferrara devolves to the Papacy in 1598." },
+  sicily:   { 1300:"Aragonese since the Sicilian Vespers (1282); not an independent kingdom." },
+  sardinia: { 1300:"Three-way split: Pisan Cagliari, Genoese Sassari, Giudicato of Arborea.", _:"Aragonese (later Spanish) crown of Sardinia." },
+  trentino: { _: "Prince-Bishopric of Trent (Imperial); under Venetian influence in the Quattrocento." }
+};
+
+const CITIES = [
+  { name:"Rome",     lon:12.50, lat:41.90 },
+  { name:"Florence", lon:11.25, lat:43.78 },
+  { name:"Venice",   lon:12.34, lat:45.44 },
+  { name:"Milan",    lon:9.19,  lat:45.46 },
+  { name:"Naples",   lon:14.27, lat:40.85 },
+  { name:"Genoa",    lon:8.95,  lat:44.41 },
+  { name:"Palermo",  lon:13.36, lat:38.12 },
+  { name:"Bologna",  lon:11.34, lat:44.49 },
+  { name:"Ferrara",  lon:11.62, lat:44.84 }
+];
+
+/* ============================================================
+   RENDERING
+   ============================================================ */
+(function() {
+  const VB_W = 520, VB_H = 600;
+
+  function buildProjection(features, padX, padY, w, h) {
+    let lonMin = Infinity, lonMax = -Infinity, latMin = Infinity, latMax = -Infinity;
+    for (const f of features) {
+      const polys = (f.type === "MultiPolygon") ? f.coordinates : [f.coordinates];
+      for (const poly of polys) for (const ring of poly) for (const [lon, lat] of ring) {
+        if (lon < lonMin) lonMin = lon; if (lon > lonMax) lonMax = lon;
+        if (lat < latMin) latMin = lat; if (lat > latMax) latMax = lat;
+      }
+    }
+    const midLat = (latMin + latMax) / 2;
+    const cosLat = Math.cos(midLat * Math.PI / 180);
+    const xMin = lonMin * cosLat, xMax = lonMax * cosLat;
+    const yMin = latMin, yMax = latMax;
+    const availW = w - 2*padX, availH = h - 2*padY;
+    const sx = availW / (xMax - xMin);
+    const sy = availH / (yMax - yMin);
+    const s = Math.min(sx, sy);
+    const offX = padX + (availW - s*(xMax - xMin))/2;
+    const offY = padY + (availH - s*(yMax - yMin))/2;
+    return function project([lon, lat]) {
+      return [offX + (lon * cosLat - xMin) * s, offY + (yMax - lat) * s];
+    };
+  }
+
+  const zoneFeatures = ZONES.map(z => ({ type: "Polygon", coordinates: z.coords, id: z.id }));
+  const projection = buildProjection(zoneFeatures, 28, 70, VB_W, VB_H);
+
+  function ringToPath(ring) {
+    return ring.map(([lon,lat], i) => {
+      const [x,y] = projection([lon,lat]);
+      return (i===0?"M":"L") + x.toFixed(2) + "," + y.toFixed(2);
+    }).join("") + "Z";
+  }
+  function polyToPath(coords) { return coords.map(ringToPath).join(" "); }
+  function lineToPath(coords) {
+    return coords.map((p,i) => {
+      const [x,y] = projection(p);
+      return (i===0?"M":"L") + x.toFixed(2) + "," + y.toFixed(2);
+    }).join("");
+  }
+
+  // Darken a hex colour by multiplying each RGB channel by `factor` (0..1).
+  // factor=0.45 → ~55% darker; used for entity labels so each name reads as
+  // a "deeper ink" of the same hue as its territory.
+  function darkenColor(hex, factor) {
+    const m = /^#?([0-9a-f]{6})$/i.exec(hex);
+    if (!m) return "#2a1406"; // fallback to default ink
+    const n = parseInt(m[1], 16);
+    const r = Math.round(((n >> 16) & 0xff) * factor);
+    const g = Math.round(((n >>  8) & 0xff) * factor);
+    const b = Math.round(( n        & 0xff) * factor);
+    const h = (v) => v.toString(16).padStart(2, "0");
+    return "#" + h(r) + h(g) + h(b);
+  }
+
+  // Polygon area (shoelace) — used to weight centroids
+  function polyArea(ring, project) {
+    let a = 0;
+    const n = ring.length;
+    const pts = ring.map(p => project(p));
+    for (let i = 0; i < n; i++) {
+      const [x1,y1] = pts[i];
+      const [x2,y2] = pts[(i+1)%n];
+      a += x1*y2 - x2*y1;
+    }
+    return Math.abs(a) / 2;
+  }
+  // Centroid of a single ring (in projected coords)
+  function ringCentroid(ring, project) {
+    let cx=0, cy=0, A=0;
+    const pts = ring.map(p => project(p));
+    const n = pts.length;
+    for (let i=0; i<n; i++) {
+      const [x1,y1] = pts[i];
+      const [x2,y2] = pts[(i+1)%n];
+      const cross = x1*y2 - x2*y1;
+      cx += (x1+x2)*cross;
+      cy += (y1+y2)*cross;
+      A += cross;
+    }
+    A /= 2;
+    if (Math.abs(A) < 1e-6) {
+      // Fallback: average of points
+      let sx=0, sy=0;
+      for (const p of pts) { sx += p[0]; sy += p[1]; }
+      return [sx/pts.length, sy/pts.length, 0];
+    }
+    return [cx/(6*A), cy/(6*A), Math.abs(A)];
+  }
+
+  // Compute the projected centroid + total area of a zone (sum of its rings)
+  const zoneInfo = {};
+  for (const z of ZONES) {
+    let totalA = 0, sx=0, sy=0;
+    for (const ring of z.coords) {
+      const [cx,cy,A] = ringCentroid(ring, projection);
+      sx += cx*A; sy += cy*A; totalA += A;
+    }
+    zoneInfo[z.id] = { cx: totalA>0 ? sx/totalA : 0, cy: totalA>0 ? sy/totalA : 0, area: totalA };
+  }
+
+  const italyClipD =
+    polyToPath([ITALY_OUTLINE.coordinates[0]]) + " " +
+    polyToPath([SICILY.coordinates[0]]) + " " +
+    polyToPath([SARDINIA.coordinates[0]]);
+  document.getElementById("italyClipPath").setAttribute("d", italyClipD);
+  document.getElementById("coastOutline").setAttribute("d", italyClipD);
+  document.getElementById("coastShadow").setAttribute("d", italyClipD);
+
+  const NS = "http://www.w3.org/2000/svg";
+
+  // Neighbors
+  const gNeighbors = document.getElementById("neighbors");
+  const gNeighborLabels = document.getElementById("neighborLabels");
+  for (const n of NEIGHBORS) {
+    const p = document.createElementNS(NS, "path");
+    p.setAttribute("d", polyToPath(n.coords));
+    p.setAttribute("class", "neighbor");
+    gNeighbors.appendChild(p);
+    const [lx, ly] = projection(n.label);
+    const t = document.createElementNS(NS, "text");
+    t.setAttribute("x", lx); t.setAttribute("y", ly);
+    t.setAttribute("class", "neighbor-label"); t.setAttribute("text-anchor","middle");
+    t.textContent = n.name;
+    gNeighborLabels.appendChild(t);
+  }
+
+  // Zones
+  const gZones = document.getElementById("zones");
+  const gPolity = document.getElementById("polityOverlay");
+  const zonePaths = {};
+  const polityPaths = {};
+  for (const z of ZONES) {
+    const d = polyToPath(z.coords);
+    const p = document.createElementNS(NS, "path");
+    p.setAttribute("d", d);
+    p.setAttribute("class", "zone");
+    p.setAttribute("data-zone", z.id);
+    p.setAttribute("fill-opacity", "0.78");
+    gZones.appendChild(p);
+    zonePaths[z.id] = p;
+
+    const op = document.createElementNS(NS, "path");
+    op.setAttribute("d", d);
+    op.setAttribute("stroke", "none");
+    op.setAttribute("pointer-events", "none");
+    gPolity.appendChild(op);
+    polityPaths[z.id] = op;
+  }
+
+  // Borders
+  const gBorders = document.getElementById("borders");
+  const borderEls = [];
+  for (const b of BORDERS) {
+    const p = document.createElementNS(NS, "path");
+    p.setAttribute("d", lineToPath(b.coords));
+    p.setAttribute("class", "border-line");
+    p.setAttribute("data-a", b.a); p.setAttribute("data-b", b.b);
+    gBorders.appendChild(p);
+    borderEls.push(p);
+  }
+
+  // Cities — track positions for label collision avoidance
+  const cityPositions = [];
+  const gCities = document.getElementById("cities");
+  for (const c of CITIES) {
+    const [x, y] = projection([c.lon, c.lat]);
+    cityPositions.push({ name: c.name, x, y });
+    const g = document.createElementNS(NS, "g");
+    g.setAttribute("class", "city-mark");
+    g.setAttribute("transform", `translate(${x.toFixed(2)},${y.toFixed(2)})`);
+    g.innerHTML = `
+      <circle r="2.4" fill="#f1e1b4" stroke="#2a1406" stroke-width="0.7"/>
+      <circle r="0.9" fill="#6e5a44"/>
+    `;
+    gCities.appendChild(g);
+    const t = document.createElementNS(NS, "text");
+    t.setAttribute("x", x + 4); t.setAttribute("y", y + 2.6);
+    t.setAttribute("class", "city-label");
+    t.textContent = c.name;
+    // City label box: roughly name.length * 4 wide, 7 tall, anchored at start
+    cityPositions.push({
+      name: c.name + "-label",
+      x: x + 4 + c.name.length * 2,
+      y: y + 2.6 - 3,
+      w: c.name.length * 4 + 2, h: 7
+    });
+    gCities.appendChild(t);
+  }
+
+  /* ============================================================
+     ENTITY-CLUSTER LABEL ENGINE
+     For each snapshot, group zones by entity into geographic clusters
+     (using zone adjacency from BORDERS), then place ONE label
+     per cluster at the area-weighted centroid.
+     ============================================================ */
+
+  // Build adjacency map from BORDERS
+  const adjacency = {};
+  for (const z of ZONES) adjacency[z.id] = new Set();
+  for (const b of BORDERS) {
+    adjacency[b.a].add(b.b);
+    adjacency[b.b].add(b.a);
+  }
+
+  function clustersForSnapshot(snap) {
+    // Group zones by entity, then split into connected components
+    const byEntity = {};
+    for (const z of ZONES) {
+      const e = snap.map[z.id]; if (!e) continue;
+      (byEntity[e] = byEntity[e] || []).push(z.id);
+    }
+    const clusters = []; // { entity, zones: [ids], cx, cy, area }
+    for (const eid of Object.keys(byEntity)) {
+      const pool = new Set(byEntity[eid]);
+      while (pool.size) {
+        // BFS
+        const start = pool.values().next().value;
+        pool.delete(start);
+        const group = [start];
+        const queue = [start];
+        while (queue.length) {
+          const cur = queue.shift();
+          for (const nb of adjacency[cur]) {
+            if (pool.has(nb) && snap.map[nb] === eid) {
+              pool.delete(nb);
+              group.push(nb);
+              queue.push(nb);
+            }
+          }
+        }
+        // Centroid weighted by area
+        let A=0, sx=0, sy=0;
+        for (const zid of group) {
+          const info = zoneInfo[zid];
+          sx += info.cx * info.area;
+          sy += info.cy * info.area;
+          A += info.area;
+        }
+        clusters.push({ entity: eid, zones: group, cx: A>0?sx/A:0, cy: A>0?sy/A:0, area: A });
+      }
+    }
+    return clusters;
+  }
+
+  /* ============================================================
+     STATE
+     ============================================================ */
+  function nearestSnapshot(year) {
+    let best = SNAPSHOTS[0], bestD = Infinity;
+    for (const s of SNAPSHOTS) {
+      const d = Math.abs(s.year - year);
+      if (d < bestD) { bestD = d; best = s; }
+    }
+    return best;
+  }
+  function entityFor(zoneId, snap) { return snap.map[zoneId]; }
+  function noteFor(zoneId, snap) {
+    const notes = ZONE_NOTES[zoneId];
+    if (!notes) return null;
+    if (notes[snap.year]) return notes[snap.year];
+    return notes._ || null;
+  }
+
+  let currentSnap = SNAPSHOTS[0];
+
+  function applySnapshot(snap) {
+    currentSnap = snap;
+    // Zone fills
+    for (const z of ZONES) {
+      const eid = entityFor(z.id, snap);
+      const ent = ENTITIES[eid] || ENTITIES.commune;
+      zonePaths[z.id].setAttribute("fill", ent.color);
+      if (ent.polity) {
+        polityPaths[z.id].setAttribute("fill", `url(#pol${ent.polity})`);
+      } else {
+        polityPaths[z.id].setAttribute("fill", "none");
+      }
+    }
+    // Borders fade where same entity
+    for (const p of borderEls) {
+      const a = p.getAttribute("data-a"), b = p.getAttribute("data-b");
+      const ea = entityFor(a, snap), eb = entityFor(b, snap);
+      p.setAttribute("stroke-opacity", (ea === eb && ea != null) ? 0 : 0.85);
+    }
+
+    // === Entity-cluster labels ===
+    // Hard-coded preferred anchor per entity (lon,lat). Auto-fallback to centroid.
+    const ENTITY_ANCHORS = {
+      savoy:    [7.4, 45.2],
+      genoa:    [8.7, 44.0],
+      milan:    [9.9, 45.9],
+      venice:   [12.6, 46.1],
+      florence: [11.4, 43.7],
+      tuscany:  [11.4, 43.4],
+      este:     [10.75, 44.9],
+      papal:    [12.7, 42.5],
+      naples:   [16.5, 40.6],
+      aragon:   [14.2, 37.4],
+      spain:    [16.4, 40.6],
+      spainMilan:    [9.9, 45.9],
+      spainNaples:   [16.4, 40.6],
+      spainSicily:   [14.05, 37.55],
+      spainSardinia: [9.05, 40.15],
+      lucca:    [10.4, 43.95],
+      siena:    [11.3, 42.9],
+      commune:  [10.7, 44.55],
+      various:  [9.0, 40.0]
+    };
+    const clusters = clustersForSnapshot(snap);
+    const gLabels = document.getElementById("entityLabels");
+    gLabels.innerHTML = "";
+    const biggestPerEntity = {};
+    for (const c of clusters) {
+      const cur = biggestPerEntity[c.entity];
+      if (!cur || c.area > cur.area) biggestPerEntity[c.entity] = c;
+    }
+    const placed = []; // {x,y,w,h} — top-left origin rects
+    // Seed with city dot + label boxes (convert from centered to top-left)
+    for (const cp of cityPositions) {
+      if (cp.w) placed.push({ x: cp.x - cp.w/2, y: cp.y - cp.h/2, w: cp.w, h: cp.h });
+      else placed.push({ x: cp.x - 4, y: cp.y - 4, w: 8, h: 8 });
+    }
+    // Also measure rendered city labels (text-anchor=start) more precisely
+    document.querySelectorAll('#cities text.city-label').forEach(tn => {
+      const bb = tn.getBBox();
+      placed.push({ x: bb.x, y: bb.y, w: bb.width, h: bb.height });
+    });
+    const labels = Object.values(biggestPerEntity).sort((a,b)=>b.area-a.area);
+
+    // Use REAL rendered bbox via getBBox(). Build text node, measure, then position.
+    const PAD_X = 2, PAD_Y = 2;
+    const rectsOverlap = (a, b) =>
+      a.x < b.x + b.w + PAD_X && a.x + a.w + PAD_X > b.x &&
+      a.y < b.y + b.h + PAD_Y && a.y + a.h + PAD_Y > b.y;
+
+    for (const c of labels) {
+      const ent = ENTITIES[c.entity]; if (!ent) continue;
+      if (c.area < 40) continue;
+
+      const tier = c.area < 600 ? "tiny" : (c.area < 1500 ? "small" : "full");
+      const cls = tier === "full" ? "entity-label" : `entity-label ${tier}`;
+
+      // Always use the short, single-word name. Polity glyph rendered as a separate <text>.
+      const tryTexts = [ent.name];
+
+      const anchor = ENTITY_ANCHORS[c.entity];
+      const candidates = [];
+      if (anchor) candidates.push(projection(anchor));
+      candidates.push([c.cx, c.cy]);
+      for (const r of [12, 22, 32, 44]) {
+        for (const ang of [-90, 90, 0, 180, -45, 45, -135, 135]) {
+          const rad = ang * Math.PI / 180;
+          candidates.push([c.cx + Math.cos(rad)*r, c.cy + Math.sin(rad)*r]);
+        }
+      }
+
+      // Create temp text node for measurement
+      const t = document.createElementNS(NS, "text");
+      t.setAttribute("class", cls);
+      // Each label uses a darker version of its territory's fill colour as ink —
+      // factor 0.55 keeps the hue clearly recognisable (not just "dark") while
+      // staying readable against the lighter territory fill.
+      // setProperty with "important" guarantees the inline style wins over any
+      // inherited or stylesheet rule the page might pick up after future edits.
+      const labelInk = darkenColor(ent.color, 0.55);
+      t.setAttribute("fill", labelInk);
+      t.style.setProperty("fill", labelInk, "important");
+      t.setAttribute("x", -9999); t.setAttribute("y", -9999);
+      gLabels.appendChild(t);
+
+      let chosen = null;
+      let chosenText = null;
+      let chosenBBox = null;
+
+      outer:
+      for (const txt of tryTexts) {
+        t.textContent = txt;
+        const bb = t.getBBox(); // {x,y,width,height} of rendered glyphs at -9999
+        const w = bb.width, h = bb.height;
+        // Anchor offset: text is anchor=middle, dominant-baseline=middle (assumed) — verify by reading bbox vs (-9999,-9999)
+        // bb.x is the left edge of glyphs; we want center at our (x,y).
+        // Use the offset between bb center and (-9999,-9999) to translate.
+        const offX = (bb.x + bb.width/2) - (-9999);
+        const offY = (bb.y + bb.height/2) - (-9999);
+
+        for (const [tx,ty] of candidates) {
+          if (tx < 30 || tx > VB_W-30 || ty < 56 || ty > VB_H-30) continue;
+          // Final glyph rect if we set x=tx,y=ty
+          const rect = {
+            x: tx + (bb.x - (-9999)) - offX*0 + (bb.x + 9999),
+            y: ty + (bb.y + 9999),
+            w, h
+          };
+          // Simpler: rect centered on (tx,ty) shifted by (offX,offY) accounting
+          rect.x = tx - w/2; rect.y = ty - h/2;
+          if (placed.every(p => !rectsOverlap(rect, p))) {
+            chosen = [tx, ty];
+            chosenText = txt;
+            chosenBBox = { x: rect.x, y: rect.y, w, h };
+            break outer;
+          }
+        }
+      }
+
+      if (!chosen) { gLabels.removeChild(t); continue; }
+
+      const [x, y] = chosen;
+      t.setAttribute("x", x);
+      t.setAttribute("y", y);
+      t.textContent = chosenText;
+      placed.push(chosenBBox);
+
+
+
+      // Leader line if anchor is far from cluster centroid
+      const dist = Math.hypot(x - c.cx, y - c.cy);
+      if (dist > 30) {
+        const ll = document.createElementNS(NS, "line");
+        ll.setAttribute("x1", c.cx); ll.setAttribute("y1", c.cy);
+        ll.setAttribute("x2", x); ll.setAttribute("y2", y);
+        ll.setAttribute("stroke", "#5a3210");
+        ll.setAttribute("stroke-width", "0.5");
+        ll.setAttribute("stroke-dasharray", "1.5 1.5");
+        ll.setAttribute("opacity", "0.6");
+        gLabels.insertBefore(ll, t);
+      }
+    }
+
+    // Year + event UI
+    document.getElementById("yearNum").firstChild.nodeValue = snap.year;
+    document.getElementById("yearRomanLg").textContent = snap.roman;
+    document.getElementById("yearRoman").textContent = snap.roman;
+    document.getElementById("yearArabic").textContent = snap.year;
+    document.getElementById("eventText").textContent = snap.event;
+
+    document.querySelectorAll(".snap-btn").forEach(btn => {
+      btn.classList.toggle("active", parseInt(btn.dataset.year, 10) === snap.year);
+    });
+
+    // Legend
+    const used = new Set();
+    for (const z of ZONES) used.add(entityFor(z.id, snap));
+    // Resolve sub-entities (e.g. spainMilan, spainNaples, …) to their parent
+    // entity for legend display, so Habsburg Spain shows as a single entry.
+    const legendIds = new Set();
+    for (const eid of used) {
+      const ent = ENTITIES[eid]; if (!ent) continue;
+      legendIds.add(ent.parent || eid);
+    }
+    const legend = document.getElementById("legend");
+    legend.innerHTML = "";
+    const order = ["savoy","genoa","milan","venice","florence","tuscany","este","papal","naples","aragon","spain","lucca","siena","commune","various"];
+    for (const eid of order) {
+      if (!legendIds.has(eid)) continue;
+      const ent = ENTITIES[eid]; if (!ent) continue;
+      const item = document.createElement("span");
+      item.className = "item";
+      const polTxt = POLITY[ent.polity]?.title || "";
+      item.innerHTML = `<span class="swatch" style="background:${ent.color}"></span><span>${ent.full}</span><span class="legend-polity">· ${polTxt}</span>`;
+      legend.appendChild(item);
+    }
+
+    // Polity-type legend row
+    const usedPol = new Set();
+    for (const eid of used) { const e = ENTITIES[eid]; if (e?.polity) usedPol.add(e.polity); }
+    const polRow = document.createElement("div");
+    polRow.className = "polity-legend";
+    polRow.innerHTML = `<span class="pl-label">Forms of governance:</span>`;
+    const POL_ORDER = ["K","D","R","P","C"];
+    for (const pk of POL_ORDER) {
+      if (!usedPol.has(pk)) continue;
+      const title = POLITY[pk]?.title || "";
+      const patSvg = `<svg width="22" height="14"><rect width="22" height="14" fill="#cfb78a" stroke="rgba(42,22,6,0.5)"/><rect width="22" height="14" fill="url(#pol${pk})"/></svg>`;
+      const item = document.createElement("span");
+      item.className = "pl-item";
+      item.innerHTML = `${patSvg}<span>${title}</span>`;
+      polRow.appendChild(item);
+    }
+    legend.appendChild(polRow);
+  }
+
+  // Snapshot buttons
+  const snapBox = document.getElementById("snapshots");
+  for (const s of SNAPSHOTS) {
+    const b = document.createElement("button");
+    b.className = "snap-btn"; b.dataset.year = s.year;
+    b.textContent = s.year;
+    b.addEventListener("click", () => {
+      document.getElementById("slider").value = s.year;
+      applySnapshot(s);
+    });
+    snapBox.appendChild(b);
+  }
+
+  document.getElementById("slider").addEventListener("input", (e) => {
+    applySnapshot(nearestSnapshot(parseInt(e.target.value, 10)));
+  });
+
+  // Tooltip
+  const tooltip = document.getElementById("tooltip");
+  const card = document.querySelector(".map-card");
+  function showTip(zoneId, evt) {
+    const z = ZONES.find(x => x.id === zoneId); if (!z) return;
+    const eid = entityFor(zoneId, currentSnap);
+    const ent = ENTITIES[eid] || ENTITIES.commune;
+    const note = noteFor(zoneId, currentSnap);
+    tooltip.innerHTML = `
+      <div class="tt-zone">${z.name}</div>
+      <div class="tt-entity"><span class="tt-swatch" style="background:${ent.color}"></span>${ent.full} <span class="tt-polity">· ${POLITY[ent.polity]?.title || ""}</span></div>
+      ${note ? `<div class="tt-note">${note}</div>` : ""}
+    `;
+    tooltip.style.opacity = 1;
+    moveTip(evt);
+  }
+  function moveTip(evt) {
+    const rect = card.getBoundingClientRect();
+    let x = evt.clientX - rect.left + 14;
+    let y = evt.clientY - rect.top + 14;
+    const tw = tooltip.offsetWidth, th = tooltip.offsetHeight;
+    if (x + tw > rect.width - 8) x = evt.clientX - rect.left - tw - 14;
+    if (y + th > rect.height - 8) y = evt.clientY - rect.top - th - 14;
+    tooltip.style.left = x + "px";
+    tooltip.style.top = y + "px";
+  }
+  function hideTip() { tooltip.style.opacity = 0; }
+
+  for (const z of ZONES) {
+    const p = zonePaths[z.id];
+    p.addEventListener("mouseenter", (e) => { p.classList.add("hover"); showTip(z.id, e); });
+    p.addEventListener("mousemove",  (e) => moveTip(e));
+    p.addEventListener("mouseleave", () => { p.classList.remove("hover"); hideTip(); });
+    p.addEventListener("click", (e) => { showTip(z.id, e); setTimeout(hideTip, 2400); });
+  }
+
+  applySnapshot(SNAPSHOTS[0]);
+})();
+</script>
+</body>
+</html>
