@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>盖蒂中心 · 北馆楼层导览图</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,700;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #2a2218;
+  --ink2: #4a3d2e;
+  --muted: #8a7560;
+  --bg: #f9f5ea;
+  --bg2: #f1ead8;
+  --line: #d8cdb4;
+  --north: #2a5c30;
+  --north-lt: #e3ebdc;
+  --gold: #b8923a;
+  --gold-lt: #f5ecd2;
+}
+html { font-size: 20px; }
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 500; }
+.page-header {
+  padding: 3rem 5vw 2rem;
+  border-bottom: 2px solid var(--line);
+  background: var(--bg2);
+}
+.back-link {
+  display: inline-block;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  margin-bottom: 1.5rem;
+  transition: color .15s;
+}
+.back-link:hover { color: var(--north); }
+.page-eyebrow {
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  color: var(--north);
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+  font-weight: 700;
+}
+.page-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.6rem;
+  font-weight: 500;
+  margin: 0 0 .6rem 0;
+  color: var(--ink);
+  line-height: 1.1;
+}
+.page-title em { color: var(--north); }
+.page-desc {
+  color: var(--ink2);
+  font-size: 0.8rem;
+  max-width: 700px;
+  margin: 0;
+}
+.legend-bar {
+  display: flex;
+  gap: 1.2rem;
+  margin-top: 1.6rem;
+  flex-wrap: wrap;
+  font-size: 0.68rem;
+  color: var(--muted);
+}
+.legend-bar span { display: flex; align-items: center; gap: 0.4rem; }
+.legend-bar .lg-room {
+  display: inline-block; width: 16px; height: 12px;
+  background: var(--north-lt); border: 1.5px solid var(--north);
+  border-radius: 2px;
+}
+.legend-bar .lg-pin {
+  display: inline-block; width: 14px; height: 14px;
+  background: var(--gold-lt); border: 2px solid #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,.3);
+  border-radius: 50%;
+}
+
+.floor-section {
+  padding: 3rem 5vw 3.5rem;
+  border-bottom: 1px solid var(--line);
+}
+.floor-section.alt { background: var(--bg2); }
+.floor-head { margin-bottom: 1.4rem; }
+.floor-label {
+  display: inline-block;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  color: var(--north);
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+.floor-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.7rem;
+  font-weight: 500;
+  margin: 0;
+  color: var(--ink);
+}
+.floor-desc {
+  color: var(--muted);
+  font-size: 0.74rem;
+  margin: 0.3rem 0 0 0;
+}
+
+.floor-plan {
+  position: relative;
+  width: 100%;
+  max-width: 760px;
+  margin: 1rem auto 0;
+  background: var(--bg2);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 1rem;
+}
+.floor-section.alt .floor-plan { background: var(--bg); }
+.floor-canvas {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 8 / 5;
+}
+.floor-canvas svg { width: 100%; height: 100%; display: block; }
+.floor-canvas.f1 { aspect-ratio: 6 / 5; }
+
+.art-pin {
+  position: absolute;
+  width: 14%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,.35);
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  padding: 0;
+  background: #fff;
+  transition: transform .18s, box-shadow .18s;
+  z-index: 2;
+}
+.art-pin:hover {
+  transform: translate(-50%, -50%) scale(1.18);
+  box-shadow: 0 4px 14px rgba(0,0,0,.45);
+  z-index: 3;
+}
+.art-pin img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.art-pin .pin-num {
+  position: absolute;
+  top: -6px; right: -6px;
+  width: 22px; height: 22px;
+  background: var(--north);
+  color: #fff;
+  border-radius: 50%;
+  font-size: 0.55rem;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  border: 2px solid #fff;
+}
+
+.floor-foot {
+  display: flex; justify-content: center; align-items: center; gap: 0.5rem;
+  margin-top: 1rem;
+  font-size: 0.62rem;
+  color: var(--muted);
+  letter-spacing: 0.12em;
+}
+.floor-foot::before, .floor-foot::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+  max-width: 60px;
+}
+
+/* MODAL */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(20, 15, 8, 0.78);
+  z-index: 1000;
+  display: none;
+  align-items: flex-start;
+  justify-content: center;
+  overflow-y: auto;
+  padding: 2rem 1rem;
+  backdrop-filter: blur(4px);
+}
+.modal-overlay.open { display: flex; }
+.modal-content {
+  background: var(--bg);
+  max-width: 640px;
+  width: 100%;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,.5);
+}
+.modal-close {
+  position: absolute;
+  top: 12px; right: 14px;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.92);
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  color: var(--ink);
+  z-index: 10;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,.2);
+}
+.modal-img { width: 100%; max-height: 360px; overflow: hidden; background: #1a1a1a; }
+.modal-img img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.modal-body { padding: 1.4rem 1.6rem 2rem; }
+.modal-room {
+  display: inline-block;
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  color: var(--north);
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+  text-transform: uppercase;
+}
+.modal-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.55rem;
+  font-weight: 500;
+  margin: 0 0 .5rem 0;
+  line-height: 1.2;
+}
+.modal-meta {
+  color: var(--muted);
+  font-size: 0.72rem;
+  margin-bottom: 0.9rem;
+  font-style: italic;
+}
+.modal-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.1rem; }
+.tag {
+  display: inline-block;
+  padding: 0.18rem 0.7rem;
+  border-radius: 3px;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+.tag.movement { background: var(--north-lt); color: var(--north); }
+.tag.price { background: var(--gold-lt); color: #846720; }
+.modal-desc {
+  color: var(--ink2);
+  font-size: 0.82rem;
+  line-height: 1.7;
+  margin-bottom: 1.1rem;
+}
+.modal-detail {
+  border-top: 1px solid var(--line);
+  padding-top: 1rem;
+}
+.modal-detail h4 {
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin: 0 0 0.7rem 0;
+}
+.modal-detail p {
+  font-size: 0.76rem;
+  line-height: 1.7;
+  color: var(--ink2);
+  margin: 0 0 0.7rem 0;
+}
+
+@media (max-width: 640px) {
+  html { font-size: 17px; }
+  .page-header { padding: 2rem 5vw 1.5rem; }
+  .page-title { font-size: 2rem; }
+  .floor-section { padding: 2rem 4vw 2.5rem; }
+  .art-pin { width: 16%; border-width: 2px; }
+  .art-pin .pin-num { width: 18px; height: 18px; font-size: 0.5rem; }
+  .modal-body { padding: 1.1rem 1.2rem 1.6rem; }
+  .modal-title { font-size: 1.3rem; }
+}
+
+#card-pool { display: none; }
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <a href="getty-center-guide.html" class="back-link">← 返回完整指南</a>
+  <div class="page-eyebrow">North Pavilion · 北馆楼层导览图</div>
+  <h1 class="page-title">点击展品圆点 · 查看 <em>详细介绍</em></h1>
+  <p class="page-desc">北馆共两层，二楼为意大利与北欧文艺复兴绘画全景，一楼为彩饰手稿、中世纪装饰艺术与玻璃陶瓷。共10件代表性藏品。</p>
+  <div class="legend-bar">
+    <span><span class="lg-room"></span> 展厅</span>
+    <span><span class="lg-pin"></span> 点击查看展品</span>
+  </div>
+</header>
+
+<!-- ===== 二楼 ===== -->
+<section class="floor-section">
+  <div class="floor-head">
+    <span class="floor-label">二楼 · 2F</span>
+    <h2 class="floor-name">文艺复兴绘画全景 · <em>N201–N205</em></h2>
+    <p class="floor-desc">从13世纪锡耶纳金底圣像，到尼德兰油画、矫饰主义与威尼斯诸家——一条400年欧洲绘画的纵深线。</p>
+  </div>
+  <div class="floor-plan">
+    <div class="floor-canvas">
+      <svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
+        <!-- background -->
+        <rect width="800" height="500" fill="#f7f1e1" rx="8"/>
+        <!-- N201 -->
+        <rect x="30" y="60" width="220" height="180" rx="6" fill="#e3ebdc" stroke="#2a5c30" stroke-width="2"/>
+        <text x="48" y="86" fill="#2a5c30" font-size="16" font-weight="700" font-family="sans-serif">N201</text>
+        <text x="48" y="105" fill="#5a6e58" font-size="11" font-family="sans-serif">锡耶纳哥特式</text>
+        <!-- N202 -->
+        <rect x="270" y="60" width="220" height="180" rx="6" fill="#e3ebdc" stroke="#2a5c30" stroke-width="2"/>
+        <text x="288" y="86" fill="#2a5c30" font-size="16" font-weight="700" font-family="sans-serif">N202</text>
+        <text x="288" y="105" fill="#5a6e58" font-size="11" font-family="sans-serif">北意大利文艺复兴</text>
+        <!-- N203 -->
+        <rect x="510" y="60" width="220" height="180" rx="6" fill="#e3ebdc" stroke="#2a5c30" stroke-width="2"/>
+        <text x="528" y="86" fill="#2a5c30" font-size="16" font-weight="700" font-family="sans-serif">N203</text>
+        <text x="528" y="105" fill="#5a6e58" font-size="11" font-family="sans-serif">北欧绘画</text>
+        <!-- N204 -->
+        <rect x="270" y="280" width="220" height="180" rx="6" fill="#e3ebdc" stroke="#2a5c30" stroke-width="2"/>
+        <text x="288" y="306" fill="#2a5c30" font-size="16" font-weight="700" font-family="sans-serif">N204</text>
+        <text x="288" y="325" fill="#5a6e58" font-size="11" font-family="sans-serif">矫饰主义</text>
+        <!-- N205 -->
+        <rect x="510" y="280" width="220" height="180" rx="6" fill="#e3ebdc" stroke="#2a5c30" stroke-width="2"/>
+        <text x="528" y="306" fill="#2a5c30" font-size="16" font-weight="700" font-family="sans-serif">N205</text>
+        <text x="528" y="325" fill="#5a6e58" font-size="11" font-family="sans-serif">威尼斯文艺复兴</text>
+        <!-- corridor / entrance arrow -->
+        <line x1="30" y1="260" x2="730" y2="260" stroke="#c8b890" stroke-width="1" stroke-dasharray="4,4"/>
+        <text x="380" y="490" fill="#8a7560" font-size="10" font-family="sans-serif" text-anchor="middle" letter-spacing="2">↑  从中央楼梯进入  ↑</text>
+      </svg>
+      <!-- Pins -->
+      <button class="art-pin" data-card="card-15" style="left:17.5%;top:32%" title="圣路加">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Simone_Martini_-_St._Luke_-_82.PB.72_-_J._Paul_Getty_Museum.jpg/320px-Simone_Martini_-_St._Luke_-_82.PB.72_-_J._Paul_Getty_Museum.jpg" alt="圣路加">
+        <span class="pin-num">12</span>
+      </button>
+      <button class="art-pin" data-card="card-16" style="left:47.5%;top:32%" title="东方三博士朝圣">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Andrea_Mantegna_-_Adoration_of_the_Magi_-_85.PA.417_-_J._Paul_Getty_Museum.jpg/320px-Andrea_Mantegna_-_Adoration_of_the_Magi_-_85.PA.417_-_J._Paul_Getty_Museum.jpg" alt="东方三博士朝圣">
+        <span class="pin-num">13</span>
+      </button>
+      <button class="art-pin" data-card="card-20" style="left:62.5%;top:32%" title="现代罗马—凡西诺广场（横跨N202/N203）">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Joseph_Mallord_William_Turner_-_Modern_Rome%3B_Campo_Vacino.JPG/320px-Joseph_Mallord_William_Turner_-_Modern_Rome%3B_Campo_Vacino.JPG" alt="现代罗马">
+        <span class="pin-num">17</span>
+      </button>
+      <button class="art-pin" data-card="card-17" style="left:77.5%;top:32%" title="教皇之梦">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Workshop_of_Rogier_van_der_Weyden_-_The_Dream_of_Pope_Sergius_-_72.PB.20_-_J._Paul_Getty_Museum.jpg/320px-Workshop_of_Rogier_van_der_Weyden_-_The_Dream_of_Pope_Sergius_-_72.PB.20_-_J._Paul_Getty_Museum.jpg" alt="北欧绘画">
+        <span class="pin-num">14</span>
+      </button>
+      <button class="art-pin" data-card="card-18" style="left:47.5%;top:75%" title="持斧枪者肖像">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Pontormo%2C_alabardiere%2C_forse_francesco_guardi%2C_1528-30.JPG/320px-Pontormo%2C_alabardiere%2C_forse_francesco_guardi%2C_1528-30.JPG" alt="持斧枪者肖像">
+        <span class="pin-num">15</span>
+      </button>
+      <button class="art-pin" data-card="card-19" style="left:77.5%;top:75%" title="维纳斯与丘比特">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Lorenzo_Lotto_-_Venus_and_Cupid_%28c._1520%27s%29.jpg/320px-Lorenzo_Lotto_-_Venus_and_Cupid_%28c._1520%27s%29.jpg" alt="维纳斯与丘比特">
+        <span class="pin-num">16</span>
+      </button>
+    </div>
+    <div class="floor-foot">N · NORTH PAVILION · 2F</div>
+  </div>
+</section>
+
+<!-- ===== 一楼 ===== -->
+<section class="floor-section alt">
+  <div class="floor-head">
+    <span class="floor-label">一楼 · 1F</span>
+    <h2 class="floor-name">彩饰手稿 · 中世纪装饰艺术 · <em>N101–N104</em></h2>
+    <p class="floor-desc">低光展厅珍藏彩饰手稿、中世纪彩色玻璃、奥格斯堡珍藏柜与威尼斯丝线玻璃。</p>
+  </div>
+  <div class="floor-plan">
+    <div class="floor-canvas f1">
+      <svg viewBox="0 0 600 500" xmlns="http://www.w3.org/2000/svg">
+        <rect width="600" height="500" fill="#f7f1e1" rx="8"/>
+        <!-- N101 -->
+        <rect x="30" y="60" width="270" height="180" rx="6" fill="#e3ebdc" stroke="#2a5c30" stroke-width="2"/>
+        <text x="48" y="86" fill="#2a5c30" font-size="16" font-weight="700" font-family="sans-serif">N101</text>
+        <text x="48" y="105" fill="#5a6e58" font-size="11" font-family="sans-serif">彩饰手稿 · 低光展厅</text>
+        <!-- N102 -->
+        <rect x="300" y="60" width="270" height="180" rx="6" fill="#e3ebdc" stroke="#2a5c30" stroke-width="2"/>
+        <text x="318" y="86" fill="#2a5c30" font-size="16" font-weight="700" font-family="sans-serif">N102</text>
+        <text x="318" y="105" fill="#5a6e58" font-size="11" font-family="sans-serif">奥格斯堡珍藏柜</text>
+        <!-- N103 -->
+        <rect x="30" y="260" width="270" height="180" rx="6" fill="#e3ebdc" stroke="#2a5c30" stroke-width="2"/>
+        <text x="48" y="286" fill="#2a5c30" font-size="16" font-weight="700" font-family="sans-serif">N103</text>
+        <text x="48" y="305" fill="#5a6e58" font-size="11" font-family="sans-serif">中世纪彩色玻璃</text>
+        <!-- N104 -->
+        <rect x="300" y="260" width="270" height="180" rx="6" fill="#e3ebdc" stroke="#2a5c30" stroke-width="2"/>
+        <text x="318" y="286" fill="#2a5c30" font-size="16" font-weight="700" font-family="sans-serif">N104</text>
+        <text x="318" y="305" fill="#5a6e58" font-size="11" font-family="sans-serif">欧洲玻璃与陶瓷</text>
+        <!-- entry -->
+        <line x1="30" y1="250" x2="570" y2="250" stroke="#c8b890" stroke-width="1" stroke-dasharray="4,4"/>
+        <text x="300" y="490" fill="#8a7560" font-size="10" font-family="sans-serif" text-anchor="middle" letter-spacing="2">↑  从中央楼梯进入  ↑</text>
+      </svg>
+      <button class="art-pin" data-card="card-21" style="left:27.5%;top:32%" title="彩饰手稿">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Personnages_de_la_sc%C3%A8ne_de_Janvier_%28Fr%C3%A8res_Limbourg_%3F%29_-_Tr%C3%A8s_Riches_Heures_du_duc_de_Berry_%28f.1%29.jpg/320px-Personnages_de_la_sc%C3%A8ne_de_Janvier_%28Fr%C3%A8res_Limbourg_%3F%29_-_Tr%C3%A8s_Riches_Heures_du_duc_de_Berry_%28f.1%29.jpg" alt="彩饰手稿">
+        <span class="pin-num">18</span>
+      </button>
+      <button class="art-pin" data-card="card-22" style="left:72.5%;top:32%" title="奥格斯堡珍藏柜">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Getty%2C_cabinet.JPG/320px-Getty%2C_cabinet.JPG" alt="奥格斯堡珍藏柜">
+        <span class="pin-num">19</span>
+      </button>
+      <button class="art-pin" data-card="card-23" style="left:27.5%;top:72%" title="中世纪彩色玻璃">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Getty_Center_-_Stained_glass_window_-_Housing_the_stranger_%281560-1570%29.JPG/320px-Getty_Center_-_Stained_glass_window_-_Housing_the_stranger_%281560-1570%29.JPG" alt="中世纪彩色玻璃">
+        <span class="pin-num">20</span>
+      </button>
+      <button class="art-pin" data-card="card-24" style="left:72.5%;top:72%" title="欧洲玻璃与陶瓷">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Getty_Center_-_Filigrana_Beaker.JPG/320px-Getty_Center_-_Filigrana_Beaker.JPG" alt="欧洲玻璃与陶瓷">
+        <span class="pin-num">21</span>
+      </button>
+    </div>
+    <div class="floor-foot">N · NORTH PAVILION · 1F</div>
+  </div>
+</section>
+
+<!-- ===== MODAL ===== -->
+<div id="modal" class="modal-overlay" onclick="closeModal(event)">
+  <div class="modal-content" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal()" aria-label="关闭">×</button>
+    <div id="modal-inner"></div>
+  </div>
+</div>
+
+<!-- ===== CARD POOL (data only) ===== -->
+<div id="card-pool">
+
+<div class="artwork-card" id="card-15">
+  <div class="art-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Simone_Martini_-_St._Luke_-_82.PB.72_-_J._Paul_Getty_Museum.jpg/960px-Simone_Martini_-_St._Luke_-_82.PB.72_-_J._Paul_Getty_Museum.jpg" alt="圣路加"></div>
+  <div class="room-tag">北馆 二楼 · N201</div>
+  <div class="art-title">圣路加 · <em>St. Luke</em></div>
+  <div class="art-meta">西蒙·马蒂尼（Simone Martini）· 约1330年 · 蛋彩 · 金底木板</div>
+  <div class="tags"><span class="tag movement">锡耶纳哥特式</span><span class="tag price">🏛 盖蒂馆藏最早期意大利绘画之一</span></div>
+  <div class="art-desc">北馆最古老的展室收藏的是"前文艺复兴"时代意大利画家的作品，而西蒙·马蒂尼的《圣路加》是其中最精彩的一件。圣路加手执笔墨、低首凝视羊皮纸，周身环绕金色锦纹底板与哥特式建筑小龛——这是14世纪锡耶纳画派的典型语汇：用黄金构筑神圣，用优雅线条描绘人性。</div>
+  <div class="detail"><h4>深度解读</h4>
+  <p>14世纪意大利绘画的两大中心在锡耶纳（Siena）与佛罗伦萨（Florence）之间展开了一场旷日持久的艺术竞争。佛罗伦萨以乔托（Giotto）为代表，追求人体体量感和空间纵深；锡耶纳以杜乔（Duccio）和西蒙·马蒂尼为代表，延续拜占庭金底传统，以甜美的曲线和精细的装饰为特色。</p>
+  <p>西蒙·马蒂尼（约1284–1344）晚年在法国南部教皇驻跸地阿维尼翁（Avignon）工作，他将锡耶纳风格传入法国宫廷，影响了整个国际哥特式（International Gothic）风潮。他还是诗人彼特拉克（Petrarch）的密友，曾为其著名的情人劳拉绘制肖像——那幅画今已失佚，但彼特拉克在诗中多次赞扬过它。</p>
+  <p>N201展室中还陈列同时期画家如保罗·威尼西亚诺（Paolo Veneziano）的作品，呈现从拜占庭向哥特式过渡的多元路径。这些作品多以蛋彩绘于木板，再覆以真金箔打底——制作工艺与北馆一楼的彩饰手稿一脉相承。</p></div>
+</div>
+
+<div class="artwork-card" id="card-16">
+  <div class="art-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Andrea_Mantegna_-_Adoration_of_the_Magi_-_85.PA.417_-_J._Paul_Getty_Museum.jpg/960px-Andrea_Mantegna_-_Adoration_of_the_Magi_-_85.PA.417_-_J._Paul_Getty_Museum.jpg" alt="东方三博士朝圣"></div>
+  <div class="room-tag">北馆 二楼 · N202</div>
+  <div class="art-title">东方三博士朝圣 · <em>Adoration of the Magi</em></div>
+  <div class="art-meta">安德烈亚·曼泰尼亚（Andrea Mantegna）· 约1495–1505年 · 蛋彩 · 亚麻布</div>
+  <div class="tags"><span class="tag movement">北意大利文艺复兴</span><span class="tag price">💰 1985年以850万美元购入</span></div>
+  <div class="art-desc">整件作品绘于亚麻布（而非通常的木板），这是曼泰尼亚晚期实验的特殊技法。画面将三博士从东方长途跋涉、向圣婴献礼的圣经场景，塑造成一部层叠繁复的视觉史诗：浓密人群、异域服饰与精细织物纹样填满画面。盖蒂1985年斥资850万美元购入，是馆内北意大利文艺复兴绘画的旗舰。</div>
+  <div class="detail"><h4>深度解读</h4>
+  <p>曼泰尼亚（Andrea Mantegna, 1431–1506）是帕多瓦（Padua）画派的奠基人，也是意大利文艺复兴最重要的北方代表之一。他对古罗马雕刻的痴迷深刻影响了其绘画风格——人物仿佛凿于大理石，而非笔绘于画布，这种雕塑感的线条与体积，是北意大利文艺复兴区别于威尼斯或佛罗伦萨的鲜明标志。</p>
+  <p>这幅《东方三博士朝圣》完成于曼泰尼亚生命最后十年，当时他担任曼托瓦（Mantua）冈萨加宫廷画家已逾四十年。晚期作品以对东方异族形象的细密描绘著称——这与当时欧洲通过威尼斯商业网络获取的大量"东方"器物和知识密切相关：香料、丝绸、陶瓷构成了画中人物的异域背景。</p>
+  <p>蛋彩画在亚麻布上（distemper on linen）是罕见工艺：颜料以动物胶（而非蛋黄）为媒介，画面呈现出一种哑光的、几乎纺织品般的质感，与同时代威尼斯画家逐渐普及的油彩画布形成强烈对比。这两种媒介的竞争，正是N202到N205展室叙事线索的暗线之一。</p></div>
+</div>
+
+<div class="artwork-card" id="card-17">
+  <div class="art-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Workshop_of_Rogier_van_der_Weyden_-_The_Dream_of_Pope_Sergius_-_72.PB.20_-_J._Paul_Getty_Museum.jpg/960px-Workshop_of_Rogier_van_der_Weyden_-_The_Dream_of_Pope_Sergius_-_72.PB.20_-_J._Paul_Getty_Museum.jpg" alt="教皇之梦"></div>
+  <div class="room-tag">北馆 二楼 · N203</div>
+  <div class="art-title">北欧绘画 · 教皇之梦 · <em>The Dream of Pope Sergius</em></div>
+  <div class="art-meta">罗赫尔·范德韦登工作室 · 约1432–1435年 · 油彩 · 木板</div>
+  <div class="tags"><span class="tag movement">弗拉芒原始主义</span><span class="tag price">🏛 15世纪尼德兰油画精品</span></div>
+  <div class="art-desc">场景描绘教皇塞尔吉乌斯梦见圣胡贝特斯（St. Hubert）显灵的圣徒传说，但真正的主角是画面本身对"光与空间"的极致刻画。来自范德韦登工作室的这幅作品，展示了15世纪尼德兰画家独有的能力：室内光线如何折射，玻璃窗的半透明感，石材地面的冷光反射——这些在意大利画家还在用蛋彩的年代，尼德兰人已用油彩实现了真实视觉的完整再现。</div>
+  <div class="detail"><h4>深度解读</h4>
+  <p>罗赫尔·范德韦登（Rogier van der Weyden, 约1400–1464）是15世纪北欧最重要的画家，其工作室位于布鲁塞尔，承接来自整个欧洲贵族和宗教机构的委托。这幅《教皇之梦》是工作室制作，而非范德韦登本人亲笔——这反映了中世纪末期工坊（workshop）的典型运作模式：大师设计图稿，弟子执笔完成，产品以大师之名销售。</p>
+  <p>"弗拉芒原始主义"（Flemish Primitives）是19世纪史学家对此前被忽视的15世纪尼德兰绘画的重新命名。这批画家——包括扬·凡·艾克、罗赫尔·范德韦登、汉斯·梅姆林——共同发展出的油画技法改变了欧洲绘画史。</p>
+  <p>N203展室将弗拉芒、荷兰和德意志画家并置，呈现"北欧文艺复兴"的多元面貌——北方没有古代希腊罗马遗迹，他们的文艺复兴是以城市商业繁荣、市民文化和宗教改革为驱动力的。</p></div>
+</div>
+
+<div class="artwork-card" id="card-18">
+  <div class="art-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Pontormo%2C_alabardiere%2C_forse_francesco_guardi%2C_1528-30.JPG/960px-Pontormo%2C_alabardiere%2C_forse_francesco_guardi%2C_1528-30.JPG" alt="持斧枪者肖像"></div>
+  <div class="room-tag">北馆 二楼 · N204</div>
+  <div class="art-title">持斧枪者肖像 · <em>Portrait of a Halberdier</em></div>
+  <div class="art-meta">蓬托莫（Jacopo Pontormo）· 约1528–1530年 · 油画</div>
+  <div class="tags"><span class="tag movement">矫饰主义</span><span class="tag price">💰 1989年购入 $3,520万（当时文艺复兴绘画拍卖纪录）</span></div>
+  <div class="art-desc">画中人是一位年约16岁的佛罗伦萨少年，面容苍白，目光冷峻地正视观者，身着银色盔甲，手持斧枪。蓬托莫是意大利矫饰主义代表人物，那种刻意夸张的优雅与说不清道不明的疏离感，是16世纪宫廷肖像画的最高水准。盖蒂1989年以 3,520万美元 购入，三倍刷新了此前古画拍卖纪录。</div>
+  <div class="detail"><h4>深度解读</h4>
+  <p>画中人物身份至今争议未决。主流假说有两个：其一认为他是科西莫一世·德·美第奇（Cosimo I de' Medici），未来的佛罗伦萨公爵；其二则认为是名叫弗朗切斯科·瓜尔迪（Francesco Guardi）的年轻侍卫。近年X光与红外线反射检查发现画面曾有重大修改——早期草稿中人物手持的是长矛而非斧枪，帽子形状也与最终版本不同，暗示委托方可能在创作中途更换了人物。</p>
+  <p>蓬托莫（Jacopo Pontormo, 1494–1557）是"矫饰主义"（Mannerism）的代表人物。这一风格刻意背离文艺复兴的和谐与平衡，转而追求扭曲的优雅、莫名的张力和心理上的不稳定感。画中少年那种刻意漠然的目光和略显夸张的身姿，正是矫饰主义典型的"bella maniera"——美丽但疏离的风格。</p>
+  <p>盖蒂1989年斥资3,520万美元购入，相当于今天约8,500万美元。这笔交易创下彼时文艺复兴绘画的拍卖纪录，也使盖蒂一夜之间成为意大利矫饰主义绘画最重要的海外收藏机构之一。</p></div>
+</div>
+
+<div class="artwork-card" id="card-19">
+  <div class="art-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Lorenzo_Lotto_-_Venus_and_Cupid_%28c._1520%27s%29.jpg/960px-Lorenzo_Lotto_-_Venus_and_Cupid_%28c._1520%27s%29.jpg" alt="维纳斯与丘比特"></div>
+  <div class="room-tag">北馆 二楼 · N205</div>
+  <div class="art-title">维纳斯与丘比特 · <em>Venus and Cupid</em></div>
+  <div class="art-meta">洛伦佐·洛托（Lorenzo Lotto）· 约1520–1525年 · 油彩 · 画布</div>
+  <div class="tags"><span class="tag movement">威尼斯文艺复兴</span><span class="tag price">🏛 文艺复兴婚礼画的稀见样本</span></div>
+  <div class="art-desc">维纳斯半裸斜卧，头顶桃金娘花冠（爱情与婚姻的象征），小丘比特手持贝壳向她喷水——这是一幅悬挂于婚床上方的祝福画，祈愿新婚幸福与多子。洛托以轻快的笔触和金色暖调演绎古典神话，既有威尼斯式的感官愉悦，又带一丝威尼斯人特有的优雅幽默。</div>
+  <div class="detail"><h4>深度解读</h4>
+  <p>洛伦佐·洛托（Lorenzo Lotto, 约1480–1556/57）是威尼斯画派的"局外人"：他生于威尼斯，却在异乡（贝加莫、安科纳、洛雷托等城市）度过了大半职业生涯。相比提香的宏大与霸气，洛托的风格更加亲密和心理化——他的肖像作品尤以捕捉人物内心状态见长，有时甚至近于现代意义上的心理肖像。</p>
+  <p>这幅画的主题是文艺复兴时代的"婚礼画"（nuptial painting）传统：画面中的丘比特从贝壳（或花冠）向维纳斯倾洒液体，象征多产；维纳斯头顶桃金娘花环是标准的婚姻图符；整体构图暗示这是委托给新人的礼物，用来悬挂于新婚卧室。这类私密委托极少留存，盖蒂的这幅是存世最完好的样本之一。</p>
+  <p>与N204的蓬托莫并置是N205叙事的关键：同为1520年代，同为意大利中部到北部的艺术家，却代表了两种截然不同的选择——蓬托莫的矫饰主义以心理疏离和形式实验为特征，洛托则延续威尼斯式的感官丰沛和叙事亲切。</p></div>
+</div>
+
+<div class="artwork-card" id="card-20">
+  <div class="art-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Joseph_Mallord_William_Turner_-_Modern_Rome%3B_Campo_Vacino.JPG/960px-Joseph_Mallord_William_Turner_-_Modern_Rome%3B_Campo_Vacino.JPG" alt="现代罗马"></div>
+  <div class="room-tag">北馆 二楼 · N202/N203</div>
+  <div class="art-title">现代罗马—凡西诺广场 · <em>Modern Rome</em></div>
+  <div class="art-meta">J.M.W. 透纳 · 1839年 · 油画 · 90.2 × 122 厘米</div>
+  <div class="tags"><span class="tag movement">浪漫主义</span><span class="tag price">🏛 透纳晚期代表作</span></div>
+  <div class="art-desc">透纳64岁时的晚期杰作。画面以淡金色烟霭笼罩古罗马论坛遗址，古代废墟与19世纪平凡的市集生活并置于同一画面，时间的流逝被光线溶解为无声的哲思。透纳"溶化一切于光中"的美学在此达到极致——你几乎分不清哪里是建筑，哪里是天空，哪里是幻觉。</div>
+  <div class="detail"><h4>深度解读</h4>
+  <p>透纳一生三次赴罗马（1819、1828、1840年）。这幅《现代罗马》完成于最后一次罗马之旅的十年后，是基于记忆与想象的再创作，而非现场写生。画面中所谓的"凡西诺广场"（Campo Vaccino）是当时罗马论坛遗址的俗称——字面意思是"牛场"，因这片古迹荒废已久，实际上被用作放牛的牧场。</p>
+  <p>透纳晚期风格以"溶解"著称：建筑轮廓模糊，色彩相互渗透，光线成为结构本身。英国批评家约翰·罗斯金（John Ruskin）是透纳最有力的支持者，但也有批评者嘲笑他的晚期作品是"肥皂泡和白垩水"。</p>
+  <p>2010年，《现代罗马》在苏富比伦敦拍卖，以2,969万英镑创下透纳个人拍卖纪录。盖蒂随后购入，使这幅画成为馆内英国绘画收藏的旗舰作品。</p></div>
+</div>
+
+<div class="artwork-card" id="card-21">
+  <div class="art-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Personnages_de_la_sc%C3%A8ne_de_Janvier_%28Fr%C3%A8res_Limbourg_%3F%29_-_Tr%C3%A8s_Riches_Heures_du_duc_de_Berry_%28f.1%29.jpg/960px-Personnages_de_la_sc%C3%A8ne_de_Janvier_%28Fr%C3%A8res_Limbourg_%3F%29_-_Tr%C3%A8s_Riches_Heures_du_duc_de_Berry_%28f.1%29.jpg" alt="彩饰手稿"></div>
+  <div class="room-tag">北馆 一楼 · N101 · 低光展厅</div>
+  <div class="art-title">彩饰手稿 · <em>Illuminated Manuscripts</em></div>
+  <div class="art-meta">8–16世纪 · 羊皮纸蛋彩画</div>
+  <div class="tags"><span class="tag movement">中世纪艺术</span><span class="tag price">🏛 全美最重要的手稿收藏之一</span></div>
+  <div class="art-desc">羊皮纸页面以金箔打底，青金石研磨的蓝、朱砂的红历经600年依旧饱满，是任何现代颜料无法复制的。代表作包括 Lorenzo Monaco《耶稣升天》首字母装饰页（1431年），以及多部15世纪法国贵族委托的时祷书（Book of Hours）——那是中世纪最私密、也最奢华的艺术委托形式。</div>
+  <div class="detail"><h4>深度解读</h4>
+  <p>盖蒂馆藏彩饰手稿以《路德维希藏本》（Ludwig Collection）为核心，1983年由慕尼黑商人彼得·路德维希出售给盖蒂，共计144件，是20世纪最重要的私人手稿收藏交易之一。这批手稿横跨9至16世纪，地域覆盖法国、意大利、德意志、英格兰与波斯。</p>
+  <p>手稿制作工艺极为繁复：先将小牛皮或羊皮鞣制打磨成超薄的书写面（vellum），再由抄写员誊抄文字，留出装饰空间后交给细密画师绘制图像。颜料来自天然矿物——蓝色取自青金石（lapis lazuli，当时比黄金更贵），红色来自朱砂，金色则是真正的金箔研磨后调和入胶液手工涂敷。</p>
+  <p>低光展厅的设计是必要之举：紫外线和强可见光是手稿的天敌，持续照射会使颜料褪色、皮革脆化。盖蒂规定每件手稿每年在灯光下展出不超过数百小时，其余时间存放于恒温恒湿的无光库房。</p></div>
+</div>
+
+<div class="artwork-card" id="card-22">
+  <div class="art-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Getty%2C_cabinet.JPG/960px-Getty%2C_cabinet.JPG" alt="奥格斯堡珍藏柜"></div>
+  <div class="room-tag">北馆 一楼 · N102</div>
+  <div class="art-title">奥格斯堡珍藏柜 · <em>Kunstschrank</em></div>
+  <div class="art-meta">德意志 · 约1630年 · 乌木、象牙、彩色石材镶嵌</div>
+  <div class="tags"><span class="tag movement">文艺复兴 / 矫饰主义</span><span class="tag price">🏛 文艺复兴收藏文化的实物缩影</span></div>
+  <div class="art-desc">"珍藏柜"（Kunstschrank）是文艺复兴时代德意志贵族的终极炫富工具——一件融合建筑、绘画、雕塑与器皿的复合艺术品。打开后展露出数十个暗格，每格摆放与主人知识品味相称的珍藏：古代钱币、宝石、小型铜像、精密仪器。盖蒂这件约建于1630年的奥格斯堡范本，以乌木框架、象牙浮雕镶板和大理石细件装饰，是北馆一楼最具冲击力的藏品之一。</div>
+  <div class="detail"><h4>深度解读</h4>
+  <p>奥格斯堡（Augsburg）是16–17世纪南德意志的艺术和金融中心，银行家富格尔家族（Fugger）的财富使这座城市成为欧洲最重要的奢侈品生产地。Kunstschrank是"珍奇柜"（Kunstkammer / Wunderkammer）文化的巅峰产品——这种收藏哲学认为，将自然界（珊瑚、化石、象牙）、人工制品（精密仪器、微型铜像）和奇珍汇聚一处，即可"占有"整个宇宙的知识秩序。</p>
+  <p>打开柜子本身就是仪式：先是门扇展开，然后多层抽屉依次推出，主人以此向客人展示品味与财富。关闭状态下它是一件建筑；打开后是一个微缩博物馆。这种展示逻辑直接预示了后来公共博物馆的诞生——博物馆本质上就是对Wunderkammer的民主化改造。</p>
+  <p>这件藏品所在的N102展室以"北欧收藏文化"为主题，展示16–17世纪荷兰、德意志、弗拉芒贵族和商人如何通过组建收藏来表达身份认同——收藏的对象、陈列的方式、柜子本身的工艺，都是权力与学识的视觉宣言。</p></div>
+</div>
+
+<div class="artwork-card" id="card-23">
+  <div class="art-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Getty_Center_-_Stained_glass_window_-_Housing_the_stranger_%281560-1570%29.JPG/960px-Getty_Center_-_Stained_glass_window_-_Housing_the_stranger_%281560-1570%29.JPG" alt="彩色玻璃"></div>
+  <div class="room-tag">北馆 一楼 · N103</div>
+  <div class="art-title">神圣艺术 · 彩色玻璃 · <em>Sacred Art &amp; Stained Glass</em></div>
+  <div class="art-meta">1150–1600年 · 利摩日珐琅 · 铅条镶嵌彩色玻璃 · 象牙雕刻</div>
+  <div class="tags"><span class="tag movement">罗马式 / 哥特式</span><span class="tag price">🏛 中世纪教堂原件</span></div>
+  <div class="art-desc">这个展室把光线本身变成了展品：多扇13–16世纪彩色玻璃窗嵌入墙面，当日光透过铅条和着色玻璃投入，中世纪大教堂的神圣光学效果在此真实还原。利摩日珐琅（Limoges enamelwork）、象牙雕刻、镀金铜像，以及用于弥撒的圣器——共同构成中世纪欧洲教堂圣器室（treasury）的完整拼图。</div>
+  <div class="detail"><h4>深度解读</h4>
+  <p>利摩日（Limoges）位于法国中部，12–13世纪以掐丝珐琅（champlevé enamel）闻名全欧。制作工艺是在铜版上凿出凹槽，填入矿物颜料粉末，高温烧制后打磨光滑——色彩鲜艳度千年不褪。盖蒂藏有描绘《基督荣光》（Christ in Majesty）的利摩日圣盒与十字架托座。</p>
+  <p>中世纪彩色玻璃是"文盲的圣经"：在人人不识字的年代，玻璃画面是教堂向平民讲述圣经故事的主要媒介。铅条（leading）将玻璃片固定成画面，每块玻璃的颜色由金属氧化物决定：铜绿、钴蓝、锰紫，制作工艺不可逆——一旦烧制成型，颜色便永久凝固在玻璃中。</p>
+  <p>展室刻意模仿中世纪大教堂宝库（treasury）的幽暗氛围，光线调低以保护文物，也让观者感受彩色玻璃在低光环境中的特殊光学质感——这与楼上明亮的绘画展厅形成极端反差，是北馆一楼参观体验中最令人意外的一刻。</p></div>
+</div>
+
+<div class="artwork-card" id="card-24">
+  <div class="art-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Getty_Center_-_Filigrana_Beaker.JPG/960px-Getty_Center_-_Filigrana_Beaker.JPG" alt="威尼斯丝线玻璃杯"></div>
+  <div class="room-tag">北馆 一楼 · N104</div>
+  <div class="art-title">欧洲玻璃与陶瓷 · <em>Glass &amp; Ceramics</em></div>
+  <div class="art-meta">1400–1700年 · 威尼斯穆拉诺丝线玻璃 · 马约利卡陶瓷</div>
+  <div class="tags"><span class="tag movement">文艺复兴工艺</span><span class="tag price">🏺 从伊斯兰到威尼斯的技术传播链</span></div>
+  <div class="art-desc">这个展室讲的是一段被玻璃和陶瓷记录下来的全球化故事。威尼斯工匠向中东穆斯林学习了玻璃吹制和金属着色技术，意大利陶工从伊斯兰釉陶借鉴了锡釉白底彩绘（马约利卡），最终影响了欧洲王室的餐桌器皿文化。盖蒂的"丝线玻璃"（filigrana）样品是15–16世纪穆拉诺岛大师的代表作：白色玻璃线条封入透明玻璃中，呈现精细编织效果。</div>
+  <div class="detail"><h4>深度解读</h4>
+  <p>威尼斯玻璃最重要的技术革新来自伊斯兰玻璃。中世纪伊斯兰工匠已掌握玻璃彩绘、鎏金和色彩混合技术，这些知识通过十字军东征和贸易传入威尼斯。穆拉诺岛（Murano）自1291年起成为威尼斯所有玻璃工坊的法定聚居地，目的是防火——更重要的是防止技术外泄。离岛的玻璃工匠曾被列为"威尼斯国家机密"，私自出走等同叛国罪。</p>
+  <p>马约利卡（Maiolica）的传播链更为曲折：伊斯兰白釉陶（fritware）→ 西班牙摩尔人→ 意大利文艺复兴城邦 → 荷兰代尔夫特蓝（Delftware）。一项技术横跨三大洲，在每个节点上都被当地文化重新诠释。</p>
+  <p>展室中还陈列来自中东的伊斯兰玻璃器（8–14世纪）：带库法体铭文的碗、朝圣烧瓶、鎏金描绘几何纹样的杯，它们与旁边的威尼斯制品并置，让技术传播的脉络一目了然。</p></div>
+</div>
+
+</div>
+
+<style>
+.artwork-card .art-img { width: 100%; max-height: 360px; overflow: hidden; background: #1a1a1a; }
+.artwork-card .art-img img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.artwork-card .room-tag {
+  display: inline-block; font-size: 0.6rem; letter-spacing: 0.14em;
+  color: var(--north); font-weight: 700; margin: 1.4rem 1.6rem 0.6rem; text-transform: uppercase;
+}
+.artwork-card .art-title {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.55rem; font-weight: 500;
+  margin: 0 1.6rem .5rem; line-height: 1.2;
+}
+.artwork-card .art-meta { color: var(--muted); font-size: 0.72rem; margin: 0 1.6rem 0.9rem; font-style: italic; }
+.artwork-card .tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 0 1.6rem 1.1rem; }
+.artwork-card .art-desc { color: var(--ink2); font-size: 0.82rem; line-height: 1.7; margin: 0 1.6rem 1.1rem; }
+.artwork-card .detail { border-top: 1px solid var(--line); padding: 1rem 1.6rem 1.6rem; }
+.artwork-card .detail h4 { font-size: 0.7rem; letter-spacing: 0.16em; color: var(--muted); text-transform: uppercase; margin: 0 0 0.7rem 0; }
+.artwork-card .detail p { font-size: 0.76rem; line-height: 1.7; color: var(--ink2); margin: 0 0 0.7rem 0; }
+</style>
+
+<script>
+function openCard(cardId) {
+  const card = document.getElementById(cardId);
+  if (!card) return;
+  const inner = document.getElementById('modal-inner');
+  inner.innerHTML = card.outerHTML;
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(e) {
+  if (e && e.target !== e.currentTarget && !e.target.classList.contains('modal-close')) return;
+  document.getElementById('modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.querySelectorAll('.art-pin').forEach(btn => {
+  btn.addEventListener('click', () => openCard(btn.dataset.card));
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeModal({target: document.getElementById('modal'), currentTarget: document.getElementById('modal')});
+});
+</script>
+
+</body>
+</html>
