@@ -4,6 +4,9 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Italia Antiqua et Nova — 1300 to 1600</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&display=swap" rel="stylesheet">
 <style>
   :root {
     --paper: #e8d5a8;
@@ -31,7 +34,7 @@
       radial-gradient(ellipse at 80% 90%, #c8b07c 0%, transparent 60%),
       var(--paper);
     color: var(--ink);
-    font-family: "Georgia", "Iowan Old Style", "Times New Roman", serif;
+    font-family: "Cormorant Garamond", "Iowan Old Style", "Times New Roman", serif;
     -webkit-font-smoothing: antialiased;
   }
   .wrap {
@@ -45,68 +48,18 @@
   .map-card {
     position: relative;
     background: var(--paper);
-    padding: 22px;
+    padding: 14px;
     box-shadow:
-      /* outer dark line */
       inset 0 0 0 1px var(--frame),
-      /* inner dark band */
-      inset 0 0 0 4px var(--frame-mid),
-      inset 0 0 0 5px var(--frame),
-      /* gold band */
-      inset 0 0 0 8px var(--gold-light),
-      inset 0 0 0 9px var(--frame-gold),
-      /* paper inset */
-      inset 0 0 0 12px var(--paper-light),
-      inset 0 0 0 13px var(--frame),
-      /* outer paper ring before the SVG */
-      inset 0 0 0 16px var(--paper-dark),
-      inset 0 0 0 17px var(--frame),
-      0 2px 0 rgba(0,0,0,0.04),
-      0 8px 32px rgba(90,50,16,0.18);
+      inset 0 0 0 5px var(--paper),
+      inset 0 0 0 6px var(--frame),
+      0 6px 28px rgba(90,50,16,0.14);
   }
   .map-card::before, .map-card::after {
-    content: "";
-    position: absolute;
-    inset: 4px;
-    pointer-events: none;
-    background:
-      repeating-linear-gradient(0deg, transparent 0 8px, rgba(90,50,16,0.04) 8px 9px),
-      repeating-linear-gradient(90deg, transparent 0 8px, rgba(90,50,16,0.04) 8px 9px);
-    mix-blend-mode: multiply;
-  }
-  .map-card::after {
-    background:
-      radial-gradient(ellipse 80% 60% at 50% 50%, transparent 60%, rgba(90,50,16,0.18) 100%);
+    content: none;
   }
 
-  /* Corner medallions — small painted portrait placeholders */
-  .corner-medallion {
-    position: absolute;
-    width: 30px; height: 30px;
-    background:
-      radial-gradient(circle at 35% 35%, #d8a85c 0%, #8a5818 60%, #4a2810 100%);
-    border: 2px solid var(--frame);
-    border-radius: 50%;
-    box-shadow:
-      inset 0 0 0 2px var(--gold-light),
-      inset 2px 2px 4px rgba(255,220,160,0.3),
-      inset -2px -2px 4px rgba(0,0,0,0.4),
-      0 0 0 1.5px var(--frame-gold);
-    z-index: 3;
-  }
-  .corner-medallion::after {
-    content: "";
-    position: absolute;
-    inset: 7px;
-    border-radius: 50%;
-    background:
-      radial-gradient(circle at 40% 40%, #c89878 30%, #6b3a1a 90%);
-    opacity: 0.85;
-  }
-  .corner-medallion.tl { top: 1px; left: 1px; }
-  .corner-medallion.tr { top: 1px; right: 1px; }
-  .corner-medallion.bl { bottom: 1px; left: 1px; }
-  .corner-medallion.br { bottom: 1px; right: 1px; }
+  .corner-medallion { display: none; }
 
   .map-card svg.map {
     display: block;
@@ -117,79 +70,83 @@
     z-index: 1;
   }
 
-  /* === Title cartouche over the top of the map === */
-  .title-floating {
-    position: absolute;
-    top: 6px;
-    right: 28px;
-    z-index: 4;
+  /* === Page header (above the map) === */
+  .page-header {
     text-align: center;
-    pointer-events: none;
+    margin: 8px 0 18px;
   }
+  .page-header .title {
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(20px, 3.6vw, 28px);
+    color: var(--frame);
+    letter-spacing: 0.16em;
+    margin: 0;
+    text-transform: none;
+  }
+  .page-header .title em {
+    font-style: normal;
+    font-variant: small-caps;
+    letter-spacing: 0.22em;
+  }
+  .page-header .subtitle {
+    margin-top: 4px;
+    font-style: italic;
+    color: var(--ink-3);
+    font-size: clamp(10px, 1.5vw, 12px);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .page-header .rule {
+    width: 80px;
+    height: 1px;
+    background: var(--frame-mid);
+    margin: 10px auto 0;
+    opacity: 0.5;
+  }
+
+  .title-floating { display: none; }
   .title-cartouche {
     display: inline-block;
     position: relative;
-    padding: 6px 38px 5px;
-    background: linear-gradient(180deg, #f5e5b8, #e3cf90);
-    border: 1px solid var(--frame);
-    box-shadow:
-      inset 0 0 0 2px var(--paper-light),
-      inset 0 0 0 3px var(--frame-gold),
-      inset 0 0 0 4px var(--paper-light),
-      0 1px 0 rgba(0,0,0,0.1);
+    padding: 0;
+    background: none;
+    border: 0;
+    box-shadow: none;
   }
-  .title-cartouche::before, .title-cartouche::after {
-    content: "";
-    position: absolute;
-    top: 0; bottom: 0;
-    width: 18px;
-    background: linear-gradient(180deg, #c89a4a, #8a5818);
-    border: 1px solid var(--frame);
-  }
-  .title-cartouche::before {
-    left: -10px;
-    clip-path: polygon(60% 0, 100% 0, 100% 100%, 60% 100%, 0 70%, 0 30%);
-  }
-  .title-cartouche::after {
-    right: -10px;
-    clip-path: polygon(0 0, 40% 0, 100% 30%, 100% 70%, 40% 100%, 0 100%);
-  }
+  .title-cartouche::before, .title-cartouche::after { content: none; }
   .title-cartouche h1 {
     margin: 0;
-    font-weight: 700;
-    letter-spacing: 0.16em;
-    font-size: clamp(11px, 2.2vw, 14px);
+    font-weight: 400;
+    letter-spacing: 0.32em;
+    font-size: clamp(11px, 2.2vw, 13px);
     color: var(--frame);
     text-transform: uppercase;
-    font-variant: small-caps;
+    font-variant: normal;
+    font-style: italic;
   }
   .title-cartouche .sub {
     margin-top: 1px;
     font-style: italic;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.22em;
     font-size: clamp(7px, 1.2vw, 8.5px);
     color: var(--ink-3);
     text-transform: uppercase;
   }
 
   .controls {
-    margin-top: 18px;
-    padding: 12px 16px 12px;
-    background: var(--paper);
-    box-shadow:
-      inset 0 0 0 1px var(--frame),
-      inset 0 0 0 3px var(--paper-light),
-      inset 0 0 0 4px var(--frame-gold),
-      inset 0 0 0 6px var(--paper-light),
-      inset 0 0 0 7px var(--frame);
-    border-radius: 1px;
+    margin-top: 22px;
+    padding: 0 6px;
   }
-  .year-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 14px;
-    padding: 4px 8px 0;
+  .year-row { display: none; }
+  .event {
+    margin-top: 18px;
+    text-align: center;
+    font-style: italic;
+    color: var(--ink-3);
+    font-size: 12px;
+    line-height: 1.5;
+    letter-spacing: 0.02em;
   }
   .year-num {
     font-weight: 700;
@@ -220,13 +177,113 @@
     border-left: 1px solid rgba(90,50,16,0.3);
     max-width: 60%;
   }
-  .slider-row {
-    margin-top: 14px;
+  /* === Timeline (replaces slider + snapshot buttons) === */
+  /* Reference line is at y = 28px from .timeline top. All dots pin to it. */
+  .timeline {
+    position: relative;
+    margin: 22px 18px 8px;
+    height: 56px;
+    user-select: none;
+  }
+  .timeline .tl-track {
+    position: absolute;
+    top: 0;
+    left: 0; right: 0;
+    height: 56px;
+    cursor: pointer;
+  }
+  .timeline .tl-rail {
+    position: absolute;
+    top: 28px;
+    left: 0; right: 0;
+    height: 1px;
+    background: var(--frame-mid);
+    opacity: 0.55;
+    transform: translateY(-0.5px);
+  }
+  .timeline .tl-progress {
+    position: absolute;
+    top: 27px;
+    left: 0;
+    height: 2px;
+    background: var(--frame);
+    transition: width 420ms cubic-bezier(.4,1.4,.5,1);
+  }
+  .timeline .tl-cursor {
+    position: absolute;
+    top: 28px;
+    left: 0;
+    width: 18px;
+    height: 18px;
+    margin: -9px 0 0 -9px;
+    border-radius: 50%;
+    background: var(--paper-light);
+    border: 1.5px solid var(--frame);
+    box-shadow: 0 0 0 3px var(--paper);
+    transition: left 420ms cubic-bezier(.4,1.4,.5,1);
+    z-index: 3;
+    cursor: grab;
+  }
+  .timeline .tl-cursor.dragging {
+    cursor: grabbing;
+    transition: none;
+  }
+  .timeline .tl-cursor::after {
+    content: "";
+    position: absolute;
+    inset: 4px;
+    border-radius: 50%;
+    background: var(--frame);
+  }
+  .timeline .tl-stop {
+    position: absolute;
+    top: 28px;
+    transform: translate(-50%, -50%);
+    width: 14px;
+    height: 14px;
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 0 8px;
+    justify-content: center;
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    font-family: inherit;
+    z-index: 2;
   }
+  .timeline .tl-stop .tl-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--paper);
+    border: 1.2px solid var(--frame-mid);
+    transition: background 0.2s, border-color 0.2s, transform 0.2s;
+  }
+  .timeline .tl-stop:hover .tl-dot {
+    background: var(--frame-gold);
+    border-color: var(--frame);
+    transform: scale(1.18);
+  }
+  .timeline .tl-stop.active .tl-dot {
+    background: var(--frame);
+    border-color: var(--frame);
+  }
+  .timeline .tl-year {
+    position: absolute;
+    top: 44px;
+    transform: translateX(-50%);
+    font-size: 11px;
+    font-variant: small-caps;
+    font-style: italic;
+    letter-spacing: 0.08em;
+    color: var(--ink-3);
+    white-space: nowrap;
+    pointer-events: none;
+    transition: color 0.2s;
+  }
+  .timeline .tl-year.active { color: var(--frame); font-weight: 600; }
+
+  /* Hide legacy slider/snapshot styles — they're not used anymore */
+  .slider-row, .snapshots, .snap-btn { display: none !important; }
   .slider-row .endcap {
     font-size: 10.5px;
     color: var(--ink-3);
@@ -235,44 +292,93 @@
     font-style: italic;
     font-variant: small-caps;
   }
+  .slider-wrap {
+    position: relative;
+    flex: 1;
+    height: 28px;
+    display: flex;
+    align-items: center;
+  }
+  /* Brass-rail decoration behind the native slider */
+  .slider-wrap::before {
+    content: "";
+    position: absolute;
+    inset: 12px 0 12px 0;
+    height: 8px;
+    background:
+      linear-gradient(180deg, rgba(0,0,0,0.25) 0%, transparent 25%, transparent 75%, rgba(255,255,255,0.3) 100%),
+      linear-gradient(to right, #8a5a1a, #d4a058, #8a5a1a);
+    border: 1px solid #3a1f08;
+    border-radius: 1px;
+    box-shadow:
+      inset 0 1px 0 rgba(255,220,160,0.5),
+      inset 0 -1px 0 rgba(0,0,0,0.35),
+      0 1px 0 rgba(255,255,255,0.3);
+    pointer-events: none;
+  }
+  /* Tick marks for each snapshot year */
+  .slider-ticks {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .slider-ticks .tick {
+    position: absolute;
+    top: 5px;
+    width: 1px;
+    height: 6px;
+    background: #3a1f08;
+    transform: translateX(-0.5px);
+    opacity: 0.6;
+  }
+  .slider-ticks .tick.lg {
+    top: 3px;
+    height: 10px;
+    width: 2px;
+    transform: translateX(-1px);
+    background: #2a1406;
+    opacity: 0.85;
+  }
   input[type="range"] {
     -webkit-appearance: none;
     appearance: none;
-    flex: 1;
-    height: 22px;
+    width: 100%;
+    height: 28px;
     background: transparent;
     cursor: pointer;
+    position: relative;
+    z-index: 2;
   }
   input[type="range"]::-webkit-slider-runnable-track {
-    height: 6px;
-    background: linear-gradient(to right, var(--gold-light), var(--frame-mid), var(--frame));
-    border-radius: 1px;
-    border-top: 1px solid rgba(0,0,0,0.25);
-    border-bottom: 1px solid rgba(255,255,255,0.3);
+    height: 8px;
+    background: transparent;
   }
   input[type="range"]::-moz-range-track {
-    height: 6px;
-    background: linear-gradient(to right, var(--gold-light), var(--frame));
+    height: 8px;
+    background: transparent;
   }
   input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height: 22px;
     border-radius: 50%;
     background:
-      radial-gradient(circle at 30% 30%, #f0d488, #b88040 50%, #5a3210 100%);
+      radial-gradient(circle at 32% 28%, #fde8a0 0%, #e0b46c 32%, #a87830 65%, #5a3210 100%);
     border: 1.5px solid var(--frame);
     margin-top: -8px;
     box-shadow:
-      inset 0 1px 0 rgba(255,255,255,0.5),
-      0 1px 4px rgba(0,0,0,0.45);
+      inset 0 1.5px 0 rgba(255,255,255,0.55),
+      inset 0 -1.5px 0 rgba(0,0,0,0.4),
+      0 2px 4px rgba(0,0,0,0.5),
+      0 0 0 1px rgba(120,80,30,0.4);
   }
   input[type="range"]::-moz-range-thumb {
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
-    background: radial-gradient(circle at 30% 30%, #f0d488, #b88040 50%, #5a3210 100%);
+    background: radial-gradient(circle at 32% 28%, #fde8a0 0%, #e0b46c 32%, #a87830 65%, #5a3210 100%);
     border: 1.5px solid var(--frame);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.4);
   }
   .snapshots {
     margin-top: 12px;
@@ -282,44 +388,62 @@
     justify-content: center;
   }
   .snap-btn {
-    font-family: Georgia, serif;
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    padding: 5px 12px;
-    background: var(--paper-light);
-    color: var(--ink-2);
+    font-family: inherit;
+    font-size: 11.5px;
+    letter-spacing: 0.12em;
+    padding: 6px 13px;
+    background:
+      radial-gradient(ellipse at 30% 20%, #f5e4ba 0%, #e0c890 100%);
+    color: var(--frame);
     border: 1px solid var(--frame-mid);
     border-radius: 1px;
     cursor: pointer;
     font-variant: small-caps;
-    transition: background 0.15s, color 0.15s;
+    font-style: italic;
+    font-weight: 600;
+    transition: background 0.15s, color 0.15s, transform 0.1s;
     box-shadow:
-      inset 0 0 0 1px var(--paper),
-      inset 0 1px 0 rgba(255,255,255,0.4);
+      inset 0 0 0 1px rgba(255,255,255,0.4),
+      inset 0 -1px 2px rgba(90,50,16,0.18),
+      0 1px 0 rgba(0,0,0,0.08);
+    position: relative;
   }
+  .snap-btn::before, .snap-btn::after {
+    content: "";
+    position: absolute;
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #6a3818, #2a1406);
+    box-shadow: 0 0 0 0.5px rgba(255,220,160,0.4);
+    top: 50%; transform: translateY(-50%);
+  }
+  .snap-btn::before { left: 3px; }
+  .snap-btn::after  { right: 3px; }
   .snap-btn:hover {
-    background: var(--paper-dark);
-    color: var(--frame);
+    background: radial-gradient(ellipse at 30% 20%, #fae8be 0%, #d8c088 100%);
+    transform: translateY(-1px);
   }
   .snap-btn.active {
-    background: var(--frame);
+    background: linear-gradient(180deg, #6b3a14 0%, #3a1f08 100%);
     color: var(--paper-light);
     border-color: var(--frame);
     box-shadow:
       inset 0 0 0 1px var(--gold-light),
-      inset 0 1px 0 rgba(0,0,0,0.2);
+      inset 0 1px 0 rgba(0,0,0,0.4),
+      0 0 0 2px rgba(168,120,48,0.25);
   }
   .legend {
-    margin-top: 14px;
-    padding: 10px 14px;
-    background: var(--paper-light);
-    border: 1px solid var(--frame-mid);
-    box-shadow: inset 0 0 0 2px var(--paper), inset 0 0 0 3px rgba(168,120,48,0.4);
+    margin-top: 18px;
+    padding: 0;
+    background: none;
+    box-shadow: none;
+    border: none;
     display: flex;
     flex-wrap: wrap;
-    gap: 6px 16px;
+    gap: 6px 18px;
     font-size: 11px;
-    color: var(--ink);
+    color: var(--ink-2);
+    justify-content: center;
   }
   .legend .item {
     display: inline-flex;
@@ -406,8 +530,8 @@
 
   .border-line {
     fill: none;
-    stroke: #2a1406;
-    stroke-width: 1.2;
+    stroke: #1a0a02;
+    stroke-width: 0.65;
     stroke-linejoin: round;
     stroke-linecap: round;
     transition: stroke-opacity 280ms ease;
@@ -446,9 +570,7 @@
     opacity: 0.5;
   }
 
-  /* Entity labels — large, centered in cluster, hand-drawn antique feel.
-     `fill` is intentionally omitted here so each label can set its own
-     darker-of-territory-colour ink via inline style without specificity fights. */
+  /* Entity labels — large, centered in cluster, hand-drawn antique feel */
   .entity-label {
     font-size: 12px;
     font-weight: 700;
@@ -570,6 +692,11 @@
 </head>
 <body>
 <div class="wrap">
+  <header class="page-header">
+    <h1 class="title">Italia <em>Antiqua et Nova</em></h1>
+    <div class="subtitle">Political Control of the Italian Peninsula · 1300–1600</div>
+    <div class="rule"></div>
+  </header>
   <div class="map-card">
     <span class="corner-medallion tl"></span>
     <span class="corner-medallion tr"></span>
@@ -664,6 +791,30 @@
           <path d="M0,0 Q8,4 8,14 Q8,24 0,28 L0,24 Q4,22 4,14 Q4,6 0,4 Z" fill="#a87830" opacity="0.9"/>
           <circle cx="6" cy="14" r="2" fill="#5a3210"/>
         </symbol>
+
+        <!-- City marker: small medallion (circle + dot) — classic antique-map style -->
+        <symbol id="cityTower" viewBox="-4 -4 8 8">
+          <circle r="2.6" fill="#f1e1b4" stroke="#2a1406" stroke-width="0.7"/>
+          <circle r="0.85" fill="#2a1406"/>
+        </symbol>
+
+        <!-- Foxing: a handful of irregular age-spots, large pattern tile -->
+        <pattern id="foxing" patternUnits="userSpaceOnUse" width="420" height="380">
+          <rect width="420" height="380" fill="transparent"/>
+          <circle cx="68"  cy="48"  r="7.5" fill="#9a6028" opacity="0.05"/>
+          <circle cx="71"  cy="51"  r="1.4" fill="#4a2810" opacity="0.09"/>
+          <circle cx="262" cy="108" r="4.0" fill="#7a4818" opacity="0.06"/>
+          <circle cx="264" cy="110" r="0.9" fill="#3a1808" opacity="0.10"/>
+          <circle cx="156" cy="232" r="9.0" fill="#9a6028" opacity="0.04"/>
+          <circle cx="160" cy="236" r="2.0" fill="#5a3010" opacity="0.07"/>
+          <circle cx="358" cy="288" r="5.5" fill="#7a4818" opacity="0.05"/>
+        </pattern>
+
+        <!-- Vignette mask: darkens the corners of the map -->
+        <radialGradient id="vignette" cx="50%" cy="50%" r="72%" fx="50%" fy="50%">
+          <stop offset="55%" stop-color="#000" stop-opacity="0"/>
+          <stop offset="100%" stop-color="#3a1f08" stop-opacity="0.28"/>
+        </radialGradient>
       </defs>
 
       <!-- Sea base -->
@@ -677,14 +828,7 @@
         <text class="sea-text sm" x="100" y="540">Mare Mediterraneum</text>
       </g>
 
-      <!-- Sea decorations -->
-      <g id="seaDecor" opacity="0.85">
-        <use href="#galleon" x="100" y="290" width="22" height="15"/>
-        <use href="#galleon" x="380" y="180" width="20" height="14"/>
-        <use href="#galleon" x="200" y="500" width="24" height="16"/>
-        <use href="#seaMonster" x="60" y="430" width="36" height="15"/>
-        <use href="#seaMonster" x="430" y="410" width="34" height="15"/>
-      </g>
+      <!-- Sea decorations — removed for restraint -->
 
       <!-- Coastline shadow (creates the brown halo around Italy in old maps) -->
       <path id="coastShadow" class="coast-shadow"/>
@@ -700,10 +844,13 @@
         <g id="zones"></g>
         <!-- Polity-type pattern overlay (no filter, crisp) -->
         <g id="polityOverlay"></g>
-        <rect x="0" y="0" width="520" height="600" fill="url(#reliefHatch)" opacity="0.45"/>
-        <rect x="0" y="0" width="520" height="600" fill="url(#paperStipple)" opacity="0.6"/>
+        <rect x="0" y="0" width="520" height="600" fill="url(#reliefHatch)" opacity="0.22"/>
+        <rect x="0" y="0" width="520" height="600" fill="url(#paperStipple)" opacity="0.35"/>
         <g id="borders"></g>
       </g>
+
+      <!-- Foxing: scattered age-spots across the whole map (sea + land) -->
+      <rect x="0" y="0" width="520" height="600" fill="url(#foxing)" pointer-events="none"/>
 
       <!-- Coastline outline -->
       <path id="coastOutline" class="coast"/>
@@ -714,80 +861,48 @@
       <!-- Entity labels (drawn per-snapshot at cluster centroids) -->
       <g id="entityLabels"></g>
 
-      <!-- Compass rose (lower-left, ornate 16-point) -->
-      <g transform="translate(76,500)">
-        <circle r="30" fill="rgba(241,225,180,0.55)" stroke="#5a3210" stroke-width="0.6"/>
-        <circle r="30" fill="none" stroke="#a87830" stroke-width="0.4" stroke-dasharray="2 2"/>
-        <circle r="22" fill="none" stroke="#7a4a1c" stroke-width="0.3"/>
-        <!-- 8 long points + 8 short points -->
-        <g>
-          <polygon points="0,-28 -2.5,-3 0,0 2.5,-3" fill="#6b2018"/>
-          <polygon points="0,28  -2.5,3 0,0 2.5,3" fill="#2a1406"/>
-          <polygon points="-28,0 -2.5,-3 0,0 -2.5,3" fill="#2a1406"/>
-          <polygon points="28,0  2.5,-3 0,0 2.5,3" fill="#2a1406"/>
-          <polygon points="-19.8,-19.8 -2,-3.5 0,0 -3.5,-2" fill="#5a3210"/>
-          <polygon points="19.8,-19.8 2,-3.5 0,0 3.5,-2" fill="#5a3210"/>
-          <polygon points="-19.8,19.8 -2,3.5 0,0 -3.5,2" fill="#5a3210"/>
-          <polygon points="19.8,19.8 2,3.5 0,0 3.5,2" fill="#5a3210"/>
-          <!-- short rays -->
-          <g stroke="#7a4a1c" stroke-width="0.6" fill="none" opacity="0.6">
-            <line x1="0" y1="0" x2="11" y2="-26"/><line x1="0" y1="0" x2="-11" y2="-26"/>
-            <line x1="0" y1="0" x2="11" y2="26"/><line x1="0" y1="0" x2="-11" y2="26"/>
-            <line x1="0" y1="0" x2="26" y2="-11"/><line x1="0" y1="0" x2="-26" y2="-11"/>
-            <line x1="0" y1="0" x2="26" y2="11"/><line x1="0" y1="0" x2="-26" y2="11"/>
-          </g>
-        </g>
-        <circle r="3.4" fill="#a87830" stroke="#5a3210" stroke-width="0.6"/>
-        <circle r="1.4" fill="#2a1406"/>
-        <text y="-34" text-anchor="middle" font-family="Georgia" font-size="9" font-weight="700" fill="#5a3210" letter-spacing="0.18em" font-style="italic">N</text>
-        <text y="40"  text-anchor="middle" font-family="Georgia" font-size="9" font-weight="700" fill="#5a3210" letter-spacing="0.18em" font-style="italic">S</text>
-        <text x="-36" y="2" text-anchor="middle" font-family="Georgia" font-size="9" font-weight="700" fill="#5a3210" letter-spacing="0.18em" font-style="italic">W</text>
-        <text x="36"  y="2" text-anchor="middle" font-family="Georgia" font-size="9" font-weight="700" fill="#5a3210" letter-spacing="0.18em" font-style="italic">E</text>
+      <!-- Compass: simple line-only — N arrow + cardinal labels -->
+      <g transform="translate(72,500)" opacity="0.7">
+        <circle r="24" fill="none" stroke="#5a3210" stroke-width="0.4"/>
+        <line x1="0" y1="-24" x2="0" y2="24" stroke="#5a3210" stroke-width="0.4"/>
+        <line x1="-24" y1="0" x2="24" y2="0" stroke="#5a3210" stroke-width="0.4"/>
+        <polygon points="0,-22 -3,-12 0,-14 3,-12" fill="#5a3210"/>
+        <circle r="1" fill="#5a3210"/>
+        <text y="-28" text-anchor="middle" font-family="inherit" font-size="10" font-style="italic" fill="#5a3210" letter-spacing="0.1em">N</text>
       </g>
 
-      <!-- Scale cartouche (bottom-right) -->
-      <g transform="translate(348,548)">
-        <use href="#scrollLeft" x="-10" y="-14" width="12" height="28"/>
-        <use href="#scrollRight" x="160" y="-14" width="12" height="28"/>
-        <rect x="2" y="-14" width="158" height="28" fill="rgba(241,225,180,0.92)" stroke="#5a3210" stroke-width="0.6"/>
-        <rect x="5" y="-11" width="152" height="22" fill="none" stroke="#a87830" stroke-width="0.5"/>
-        <text x="81" y="-3" text-anchor="middle" font-family="Georgia" font-size="9" font-weight="700" fill="#5a3210" letter-spacing="0.2em" font-variant="small-caps" font-style="italic">Scala Miliarium</text>
-        <g transform="translate(20,4)">
-          <rect x="0"   y="0" width="20" height="4" fill="#2a1406"/>
-          <rect x="20"  y="0" width="20" height="4" fill="#f1e1b4" stroke="#2a1406" stroke-width="0.4"/>
-          <rect x="40"  y="0" width="20" height="4" fill="#2a1406"/>
-          <rect x="60"  y="0" width="20" height="4" fill="#f1e1b4" stroke="#2a1406" stroke-width="0.4"/>
-          <rect x="80"  y="0" width="20" height="4" fill="#2a1406"/>
-          <rect x="100" y="0" width="20" height="4" fill="#f1e1b4" stroke="#2a1406" stroke-width="0.4"/>
-          <text x="0"   y="11" font-size="6.5" fill="#2a1406" font-style="italic">0</text>
-          <text x="58"  y="11" font-size="6.5" fill="#2a1406" font-style="italic">100</text>
-          <text x="116" y="11" font-size="6.5" fill="#2a1406" font-style="italic">200</text>
-        </g>
+      <!-- Scale bar removed: not load-bearing -->
+
+      <!-- Year notation: plain italic numerals, top-left, no cartouche -->
+      <g id="yearCartouche" transform="translate(34,36)">
+        <text id="yearArabic" x="0" y="0" text-anchor="start" font-family="inherit" font-size="20" font-style="italic" font-weight="400" fill="#3a1808" letter-spacing="0.04em">1300</text>
+        <text id="yearRoman" x="0" y="13" text-anchor="start" font-family="inherit" font-size="9" font-style="italic" fill="#7a4a1c" letter-spacing="0.14em">Anno Domini MCCC</text>
       </g>
 
-      <!-- Year cartouche (top-left of map, like reference) -->
-      <g id="yearCartouche" transform="translate(85,38)">
-        <use href="#scrollLeft"  x="-72" y="-15" width="12" height="30"/>
-        <use href="#scrollRight" x="60"  y="-15" width="12" height="30"/>
-        <rect x="-60" y="-15" width="120" height="30" fill="rgba(241,225,180,0.97)" stroke="#5a3210" stroke-width="0.7"/>
-        <rect x="-57" y="-12" width="114" height="24" fill="none" stroke="#a87830" stroke-width="0.5"/>
-        <line x1="0" y1="-13" x2="0" y2="13" stroke="#5a3210" stroke-width="0.4"/>
-        <text id="yearRoman" x="-30" y="5" text-anchor="middle" font-family="Georgia" font-size="12" font-weight="700" fill="#5a3210" letter-spacing="0.18em" font-variant="small-caps">MCCC</text>
-        <text id="yearArabic" x="30"  y="5" text-anchor="middle" font-family="Georgia" font-size="13" font-weight="700" fill="#2a1406" letter-spacing="0.08em">1300</text>
-      </g>
+      <!-- Vignette: dark corners for aged-paper feel (drawn last) -->
+      <rect x="0" y="0" width="520" height="600" fill="url(#vignette)" pointer-events="none"/>
     </svg>
 
     <div class="tooltip" id="tooltip" role="status" aria-live="polite"></div>
   </div>
 
   <div class="controls">
-    <div class="year-row">
-      <div class="year-num" id="yearNum">1300<span class="roman" id="yearRomanLg">MCCC</span></div>
-      <div class="event" id="eventText">Late medieval communes; Aragon holds Sicily after the Vespers (1282).</div>
+    <div class="timeline" id="timeline">
+      <div class="tl-track" id="tlTrack">
+        <div class="tl-rail"></div>
+        <div class="tl-progress" id="tlProgress" style="width:0%"></div>
+      </div>
+      <div class="tl-cursor" id="tlCursor" style="left:0%"></div>
+      <div id="tlStops"></div>
+      <div id="tlYears"></div>
     </div>
+    <div class="event" id="eventText">Late medieval communes; Aragon holds Sicily after the Vespers (1282).</div>
     <div class="slider-row">
       <span class="endcap">1300</span>
-      <input type="range" id="slider" min="1300" max="1600" step="1" value="1300" />
+      <div class="slider-wrap">
+        <div class="slider-ticks" id="sliderTicks"></div>
+        <input type="range" id="slider" min="1300" max="1600" step="1" value="1300" />
+      </div>
       <span class="endcap">1600</span>
     </div>
     <div class="snapshots" id="snapshots"></div>
@@ -846,16 +961,16 @@ const NEIGHBORS = [
 ];
 
 const ZONES = [
-  { id:"savoy",    name:"Savoy",            label:[7.7,44.9],
-    coords:[[[6.4,46.0],[8.4,46.0],[8.4,45.5],[8.85,45.0],[8.85,44.55],[8.45,44.55],[8.10,44.4],[7.5,43.6],[6.5,44.6],[6.4,46.0]]] },
-  { id:"milan",    name:"Milan",            label:[10.0,45.55],
-    coords:[[[8.4,46.0],[8.4,46.45],[8.45,46.45],[8.55,46.25],[8.95,46.05],[9.25,46.50],[10.05,46.55],[10.45,46.85],[10.7,46.05],[10.7,45.0],[10.45,44.8],[9.4,44.8],[8.85,44.55],[8.85,45.0],[8.4,45.5],[8.4,46.0]]] },
+  { id:"savoy",    name:"Savoy",            label:[7.5,45.2],
+    coords:[[[7.5,43.78],[7.45,44.10],[6.85,44.55],[6.65,45.10],[7.05,45.85],[7.85,45.92],[8.4,45.5],[8.85,45.0],[8.85,44.55],[8.45,44.55],[8.10,44.4],[7.5,43.78]]] },
+  { id:"milan",    name:"Milan",            label:[9.6,45.7],
+    coords:[[[7.85,45.92],[8.15,46.20],[8.45,46.45],[8.55,46.25],[8.95,46.05],[9.25,46.50],[10.05,46.55],[10.45,46.85],[10.7,46.85],[10.7,44.8],[9.4,44.8],[8.85,44.55],[8.85,45.0],[8.4,45.5],[7.85,45.92]]] },
   { id:"venice",   name:"Venice",           label:[12.2,45.7],
     coords:[[[10.7,46.85],[13.7,46.2],[13.6,45.75],[12.45,44.95],[10.7,45.0],[10.7,46.05],[10.7,46.85]]] },
   { id:"genoa",    name:"Genoa",            label:[8.4,44.0],
     coords:[[[7.50,43.78],[8.10,44.40],[8.45,44.55],[8.85,44.55],[9.20,44.45],[9.85,44.30],[10.05,44.07],[10.05,43.50],[9.0,43.7],[7.50,43.78]]] },
   { id:"wEmilia",  name:"West Emilia",      label:[10.2,44.45],
-    coords:[[[8.45,44.55],[8.85,44.55],[9.20,44.45],[9.85,44.30],[10.05,44.07],[11.2,44.2],[11.2,44.8],[10.45,44.80],[9.40,44.80],[8.85,44.40],[8.45,44.55]]] },
+    coords:[[[8.45,44.55],[8.85,44.55],[9.20,44.45],[9.85,44.30],[10.05,44.07],[11.2,44.2],[11.2,44.8],[9.4,44.8],[8.85,44.55],[8.45,44.55]]] },
   { id:"bologna",  name:"Bologna",          label:[11.45,44.55],
     coords:[[[11.2,44.8],[12.0,44.8],[12.0,44.0],[11.2,44.2],[11.2,44.8]]] },
   { id:"romagna",  name:"Romagna",          label:[12.3,44.3],
@@ -875,25 +990,25 @@ const ZONES = [
   { id:"apulia",   name:"Apulia",           label:[16.85,41.2],
     coords:[[[15.10,41.95],[16.00,41.95],[16.20,41.65],[16.85,41.20],[17.20,40.85],[17.90,40.50],[18.50,40.15],[18.50,40.05],[18.05,40.05],[17.90,40.50],[17.20,40.50],[16.40,40.40],[15.30,40.55],[15.10,41.20],[15.10,41.95]]] },
   { id:"south",    name:"Calabria & Lucania", label:[16.3,39.4],
-    coords:[[[15.30,40.55],[16.40,40.40],[17.20,40.50],[17.10,39.45],[16.50,38.95],[15.65,37.92],[16.10,37.95],[15.95,38.40],[16.00,39.05],[15.65,39.40],[15.60,39.90],[15.30,40.00],[15.30,40.55]]] },
-  { id:"este",     name:"Ferrara",          label:[11.55,44.95],
-    coords:[[[10.7,45.0],[12.45,44.95],[12.0,44.8],[11.2,44.8],[10.7,44.8],[10.7,45.0]]] },
+    coords:[[[15.30,40.55],[16.40,40.40],[17.20,40.50],[17.20,40.50],[17.10,39.45],[16.50,38.95],[15.65,37.92],[15.95,38.40],[16.00,39.05],[15.65,39.40],[15.60,39.90],[15.30,40.00],[15.30,40.55]]] },
+  { id:"este",     name:"Ferrara",          label:[11.55,44.9],
+    coords:[[[10.7,45.0],[12.45,44.95],[12.0,44.8],[10.7,44.8],[10.7,45.0]]] },
   { id:"sicily",   name:"Sicily",           label:[14.05,37.55], coords: SICILY.coordinates },
   { id:"sardinia", name:"Sardinia",         label:[9.05,40.15],  coords: SARDINIA.coordinates },
-  { id:"trentino", name:"Trent",            label:[11.0,46.45],
-    coords:[[[10.45,46.85],[12.20,46.85],[12.40,46.65],[13.40,46.20],[10.7,46.85],[10.7,46.05],[10.45,46.85]]] }
+  { id:"trentino", name:"Trent",            label:[11.5,46.5],
+    coords:[[[10.7,46.85],[11.05,46.85],[12.20,46.85],[12.40,46.65],[13.40,46.20],[10.7,46.85]]] }
 ];
 
 const BORDERS = [
-  { a:"savoy",   b:"milan",    coords:[[8.4,46.0],[8.4,45.5],[8.85,45.0],[8.85,44.55]] },
+  { a:"savoy",   b:"milan",    coords:[[7.85,45.92],[8.4,45.5],[8.85,45.0],[8.85,44.55]] },
   { a:"savoy",   b:"genoa",    coords:[[8.85,44.55],[8.45,44.55],[8.10,44.40],[7.5,43.78]] },
-  { a:"milan",   b:"venice",   coords:[[10.7,46.05],[10.7,45.0]] },
-  { a:"milan",   b:"wEmilia",  coords:[[8.85,44.55],[9.40,44.80],[10.45,44.80]] },
+  { a:"milan",   b:"venice",   coords:[[10.7,46.85],[10.7,45.0]] },
+  { a:"milan",   b:"wEmilia",  coords:[[8.85,44.55],[9.40,44.80],[10.7,44.8]] },
   { a:"milan",   b:"este",     coords:[[10.7,45.0],[10.7,44.8]] },
-  { a:"milan",   b:"trentino", coords:[[10.45,46.85],[10.7,46.05]] },
-  { a:"venice",  b:"trentino", coords:[[10.7,46.85],[12.40,46.65],[13.40,46.20]] },
+  { a:"milan",   b:"trentino", coords:[[10.45,46.85],[10.7,46.85]] },
+  { a:"venice",  b:"trentino", coords:[[10.7,46.85],[13.40,46.20]] },
   { a:"venice",  b:"este",     coords:[[10.7,45.0],[12.45,44.95]] },
-  { a:"romagna", b:"este",     coords:[[12.0,44.8],[12.45,44.95]] },
+  { a:"venice",  b:"romagna",  coords:[[12.45,44.95],[12.45,44.95]] },
   { a:"genoa",   b:"wEmilia",  coords:[[8.45,44.55],[8.85,44.55],[9.20,44.45],[9.85,44.30],[10.05,44.07]] },
   { a:"genoa",   b:"lucca",    coords:[[10.05,44.07],[10.05,43.5]] },
   { a:"wEmilia", b:"lucca",    coords:[[10.05,44.07],[10.6,44.07]] },
@@ -903,6 +1018,7 @@ const BORDERS = [
   { a:"bologna", b:"florence", coords:[[11.2,44.2],[12.0,44.0]] },
   { a:"bologna", b:"romagna",  coords:[[12.0,44.0],[12.0,44.8]] },
   { a:"bologna", b:"este",     coords:[[11.2,44.8],[12.0,44.8]] },
+  { a:"este",    b:"romagna",  coords:[[12.0,44.8],[12.45,44.95]] },
   { a:"romagna", b:"florence", coords:[[12.0,44.0],[12.0,43.6]] },
   { a:"romagna", b:"papal",    coords:[[12.0,43.6],[13.10,43.55]] },
   { a:"lucca",   b:"florence", coords:[[10.6,44.07],[10.6,43.5]] },
@@ -921,30 +1037,29 @@ const BORDERS = [
 /* === Entities — antique-toned washes === */
 /* polity — D=Duchy, R=Republic, K=Kingdom, P=Papal, C=Commune/Other */
 const ENTITIES = {
-  savoy:    { name: "Savoy",     full: "Duchy of Savoy",          polity: "D", color: "#a8b088" },
-  genoa:    { name: "Genoa",     full: "Republic of Genoa",       polity: "R", color: "#bf7a68" },
-  milan:    { name: "Milan",     full: "Duchy of Milan",          polity: "D", color: "#bb9870" },
-  venice:   { name: "Venice",    full: "Republic of Venice",      polity: "R", color: "#8c9eb8" },
-  florence: { name: "Florence",  full: "Republic of Florence",    polity: "R", color: "#c8866e" },
-  tuscany:  { name: "Tuscany",   full: "Grand Duchy of Tuscany",  polity: "D", color: "#bb7060" },
-  este:     { name: "Ferrara",   full: "Duchy of Ferrara",        polity: "D", color: "#7d8a4a" },
-  papal:    { name: "Papal",     full: "Papal States",            polity: "P", color: "#a892b0" },
-  naples:   { name: "Naples",    full: "Kingdom of Naples",       polity: "K", color: "#90a89a" },
-  aragon:   { name: "Aragon",    full: "Crown of Aragon",         polity: "K", color: "#d4a058" },
-  spain:    { name: "Spain",     full: "Habsburg Spain",          polity: "K", color: "#d8b878" },
-  // Spanish-ruled Italian dominions from 1527 onward — distinct kingdoms/duchies
-  // under the Spanish Habsburg crown. Same gold colour as `spain` so they read
-  // as one bloc visually, but each keeps its own name + polity so its label
-  // ("MILAN", "NAPLES", "SICILY", "SARDINIA") still appears on its territory.
-  // The `parent: "spain"` field collapses them into a single legend entry.
-  spainMilan:    { name: "Milan",    full: "Duchy of Milan (Habsburg)",      polity: "D", color: "#d8b878", parent: "spain" },
-  spainNaples:   { name: "Naples",   full: "Kingdom of Naples (Spanish)",    polity: "K", color: "#d8b878", parent: "spain" },
-  spainSicily:   { name: "Sicily",   full: "Kingdom of Sicily (Spanish)",    polity: "K", color: "#d8b878", parent: "spain" },
-  spainSardinia: { name: "Sardinia", full: "Kingdom of Sardinia (Spanish)",  polity: "K", color: "#d8b878", parent: "spain" },
-  lucca:    { name: "Lucca",     full: "Republic of Lucca",       polity: "R", color: "#b8c098" },
-  siena:    { name: "Siena",     full: "Republic of Siena",       polity: "R", color: "#9e5a3c" },
-  commune:  { name: "Communes",  full: "Communes & City-States",  polity: "C", color: "#c0b094" },
-  various:  { name: "Various",   full: "Various local powers",    polity: "C", color: "#c8baa0" }
+  savoy:    { name: "Savoy",     full: "Duchy of Savoy",          polity: "D", color: "#a8b088", labelColor: "#2c4818" },
+  genoa:    { name: "Genoa",     full: "Republic of Genoa",       polity: "R", color: "#bf7a68", labelColor: "#5a1410" },
+  milan:    { name: "Milan",     full: "Duchy of Milan",          polity: "D", color: "#bb9870", labelColor: "#4a2810" },
+  venice:   { name: "Venice",    full: "Republic of Venice",      polity: "R", color: "#8c9eb8", labelColor: "#152a52" },
+  florence: { name: "Florence",  full: "Republic of Florence",    polity: "R", color: "#c8866e", labelColor: "#6a1810" },
+  tuscany:  { name: "Tuscany",   full: "Grand Duchy of Tuscany",  polity: "D", color: "#bb7060", labelColor: "#52120c" },
+  este:     { name: "Ferrara",   full: "Duchy of Ferrara",        polity: "D", color: "#7d8a4a", labelColor: "#28380a" },
+  papal:    { name: "Papal",     full: "Papal States",            polity: "P", color: "#a892b0", labelColor: "#3a1858" },
+  naples:   { name: "Naples",    full: "Kingdom of Naples",       polity: "K", color: "#90a89a", labelColor: "#0e3a2a" },
+  aragon:   { name: "Aragon",    full: "Crown of Aragon",         polity: "K", color: "#d4a058", labelColor: "#6a3208" },
+  spain:    { name: "Spain",     full: "Habsburg Spain",          polity: "K", color: "#d8b878", labelColor: "#5a3818" },
+  // Spanish-ruled Italian dominions (1527+) — distinct kingdoms/duchies under the
+  // Spanish Habsburg crown. Same gold colour as `spain` so they read as one bloc
+  // visually, but each keeps its own name + polity so its label appears on its
+  // territory. The `parent: "spain"` field collapses them into a single legend entry.
+  spainMilan:    { name: "Milan",    full: "Duchy of Milan (Habsburg)",      polity: "D", color: "#d8b878", labelColor: "#5a3818", parent: "spain" },
+  spainNaples:   { name: "Naples",   full: "Kingdom of Naples (Spanish)",    polity: "K", color: "#d8b878", labelColor: "#5a3818", parent: "spain" },
+  spainSicily:   { name: "Sicily",   full: "Kingdom of Sicily (Spanish)",    polity: "K", color: "#d8b878", labelColor: "#5a3818", parent: "spain" },
+  spainSardinia: { name: "Sardinia", full: "Kingdom of Sardinia (Spanish)",  polity: "K", color: "#d8b878", labelColor: "#5a3818", parent: "spain" },
+  lucca:    { name: "Lucca",     full: "Republic of Lucca",       polity: "R", color: "#b8c098", labelColor: "#384810" },
+  siena:    { name: "Siena",     full: "Republic of Siena",       polity: "R", color: "#cc9878", labelColor: "#722810" },
+  commune:  { name: "Communes",  full: "Communes & City-States",  polity: "C", color: "#c0b094", labelColor: "#3a2814" },
+  various:  { name: "Various",   full: "Various local powers",    polity: "C", color: "#c8baa0", labelColor: "#4a3820" }
 };
 
 /* Polity glyphs — small antique heraldic marks */
@@ -1060,20 +1175,6 @@ const CITIES = [
     }).join("");
   }
 
-  // Darken a hex colour by multiplying each RGB channel by `factor` (0..1).
-  // factor=0.45 → ~55% darker; used for entity labels so each name reads as
-  // a "deeper ink" of the same hue as its territory.
-  function darkenColor(hex, factor) {
-    const m = /^#?([0-9a-f]{6})$/i.exec(hex);
-    if (!m) return "#2a1406"; // fallback to default ink
-    const n = parseInt(m[1], 16);
-    const r = Math.round(((n >> 16) & 0xff) * factor);
-    const g = Math.round(((n >>  8) & 0xff) * factor);
-    const b = Math.round(( n        & 0xff) * factor);
-    const h = (v) => v.toString(16).padStart(2, "0");
-    return "#" + h(r) + h(g) + h(b);
-  }
-
   // Polygon area (shoelace) — used to weight centroids
   function polyArea(ring, project) {
     let a = 0;
@@ -1129,6 +1230,26 @@ const CITIES = [
   document.getElementById("coastShadow").setAttribute("d", italyClipD);
 
   const NS = "http://www.w3.org/2000/svg";
+
+  // Darken a hex color by mixing it with black (0..1 = fully black). Returns hex.
+  function darkenHex(hex, amount) {
+    const h = hex.replace('#','');
+    const r = parseInt(h.slice(0,2),16), g = parseInt(h.slice(2,4),16), b = parseInt(h.slice(4,6),16);
+    const f = (c) => Math.max(0, Math.min(255, Math.round(c * (1 - amount))));
+    const toHex = (n) => n.toString(16).padStart(2,'0');
+    return '#' + toHex(f(r)) + toHex(f(g)) + toHex(f(b));
+  }
+
+  // Lighten a hex color by mixing it with parchment cream. Returns hex.
+  function lightenHex(hex, amount) {
+    const h = hex.replace('#','');
+    const r = parseInt(h.slice(0,2),16), g = parseInt(h.slice(2,4),16), b = parseInt(h.slice(4,6),16);
+    // Mix toward parchment (#f1e1b4) rather than pure white for warmth
+    const TR = 0xf1, TG = 0xe1, TB = 0xb4;
+    const f = (c, t) => Math.max(0, Math.min(255, Math.round(c + (t - c) * amount)));
+    const toHex = (n) => n.toString(16).padStart(2,'0');
+    return '#' + toHex(f(r,TR)) + toHex(f(g,TG)) + toHex(f(b,TB));
+  }
 
   // Neighbors
   const gNeighbors = document.getElementById("neighbors");
@@ -1191,8 +1312,7 @@ const CITIES = [
     g.setAttribute("class", "city-mark");
     g.setAttribute("transform", `translate(${x.toFixed(2)},${y.toFixed(2)})`);
     g.innerHTML = `
-      <circle r="2.4" fill="#f1e1b4" stroke="#2a1406" stroke-width="0.7"/>
-      <circle r="0.9" fill="#6e5a44"/>
+      <use href="#cityTower" x="-3" y="-3" width="6" height="6"/>
     `;
     gCities.appendChild(g);
     const t = document.createElementNS(NS, "text");
@@ -1302,7 +1422,7 @@ const CITIES = [
     for (const p of borderEls) {
       const a = p.getAttribute("data-a"), b = p.getAttribute("data-b");
       const ea = entityFor(a, snap), eb = entityFor(b, snap);
-      p.setAttribute("stroke-opacity", (ea === eb && ea != null) ? 0 : 0.85);
+      p.setAttribute("stroke-opacity", (ea === eb && ea != null) ? 0 : 1);
     }
 
     // === Entity-cluster labels ===
@@ -1314,7 +1434,7 @@ const CITIES = [
       venice:   [12.6, 46.1],
       florence: [11.4, 43.7],
       tuscany:  [11.4, 43.4],
-      este:     [10.75, 44.9],
+      este:     [11.5, 45.1],
       papal:    [12.7, 42.5],
       naples:   [16.5, 40.6],
       aragon:   [14.2, 37.4],
@@ -1379,14 +1499,6 @@ const CITIES = [
       // Create temp text node for measurement
       const t = document.createElementNS(NS, "text");
       t.setAttribute("class", cls);
-      // Each label uses a darker version of its territory's fill colour as ink —
-      // factor 0.55 keeps the hue clearly recognisable (not just "dark") while
-      // staying readable against the lighter territory fill.
-      // setProperty with "important" guarantees the inline style wins over any
-      // inherited or stylesheet rule the page might pick up after future edits.
-      const labelInk = darkenColor(ent.color, 0.55);
-      t.setAttribute("fill", labelInk);
-      t.style.setProperty("fill", labelInk, "important");
       t.setAttribute("x", -9999); t.setAttribute("y", -9999);
       gLabels.appendChild(t);
 
@@ -1430,6 +1542,11 @@ const CITIES = [
       t.setAttribute("x", x);
       t.setAttribute("y", y);
       t.textContent = chosenText;
+      // Color label text as a darker shade of the entity's fill color.
+      // Use inline style because CSS rule (if any) wins over the fill attribute.
+      t.style.fill = ent.labelColor || darkenHex(ent.color, 0.6);
+      // Stroke = light, warm version of the entity color (same hue family)
+      t.style.stroke = lightenHex(ent.color, 0.65);
       placed.push(chosenBBox);
 
 
@@ -1449,21 +1566,20 @@ const CITIES = [
     }
 
     // Year + event UI
-    document.getElementById("yearNum").firstChild.nodeValue = snap.year;
-    document.getElementById("yearRomanLg").textContent = snap.roman;
-    document.getElementById("yearRoman").textContent = snap.roman;
+    document.getElementById("yearRoman").textContent = "Anno Domini " + snap.roman;
     document.getElementById("yearArabic").textContent = snap.year;
     document.getElementById("eventText").textContent = snap.event;
+    updateTimeline(snap);
 
     document.querySelectorAll(".snap-btn").forEach(btn => {
       btn.classList.toggle("active", parseInt(btn.dataset.year, 10) === snap.year);
     });
 
-    // Legend
+    // Legend — resolve sub-entities (e.g. spainMilan, spainNaples, …) to their
+    // parent entity for display so Habsburg Spain shows as one legend item,
+    // not four.
     const used = new Set();
     for (const z of ZONES) used.add(entityFor(z.id, snap));
-    // Resolve sub-entities (e.g. spainMilan, spainNaples, …) to their parent
-    // entity for legend display, so Habsburg Spain shows as a single entry.
     const legendIds = new Set();
     for (const eid of used) {
       const ent = ENTITIES[eid]; if (!ent) continue;
@@ -1514,8 +1630,138 @@ const CITIES = [
     snapBox.appendChild(b);
   }
 
+  // === Timeline (animated cursor + clickable stops + drag) ===
+  const minY = 1300, maxY = 1600;
+  function yearToPct(y) { return (y - minY) / (maxY - minY) * 100; }
+
+  (function buildTimeline() {
+    const stops = document.getElementById("tlStops");
+    const years = document.getElementById("tlYears");
+    if (!stops || !years) return;
+    for (const s of SNAPSHOTS) {
+      const pct = yearToPct(s.year);
+      const b = document.createElement("button");
+      b.className = "tl-stop";
+      b.dataset.year = s.year;
+      b.style.left = pct + "%";
+      b.innerHTML = `<span class="tl-dot"></span>`;
+      b.addEventListener("click", (e) => { e.stopPropagation(); applySnapshot(s); });
+      stops.appendChild(b);
+
+      const yEl = document.createElement("div");
+      yEl.className = "tl-year";
+      yEl.dataset.year = s.year;
+      yEl.style.left = pct + "%";
+      yEl.textContent = s.year;
+      years.appendChild(yEl);
+    }
+  })();
+
+  let suppressTimelineUpdate = false;
+  function updateTimeline(snap) {
+    if (suppressTimelineUpdate) return;
+    const pct = yearToPct(snap.year);
+    document.getElementById("tlCursor").style.left = pct + "%";
+    document.getElementById("tlProgress").style.width = pct + "%";
+    document.querySelectorAll(".tl-stop").forEach(b => {
+      b.classList.toggle("active", parseInt(b.dataset.year,10) === snap.year);
+    });
+    document.querySelectorAll(".tl-year").forEach(y => {
+      y.classList.toggle("active", parseInt(y.dataset.year,10) === snap.year);
+    });
+  }
+
+  // Drag the cursor or click anywhere on the track to scrub
+  (function bindTimelineDrag() {
+    const timeline = document.getElementById("timeline");
+    const cursor = document.getElementById("tlCursor");
+    const track = document.getElementById("tlTrack");
+    if (!timeline || !cursor || !track) return;
+
+    let dragging = false;
+
+    function pctFromEvent(evt) {
+      const rect = timeline.getBoundingClientRect();
+      const x = (evt.touches ? evt.touches[0].clientX : evt.clientX) - rect.left;
+      return Math.max(0, Math.min(100, (x / rect.width) * 100));
+    }
+    function yearFromPct(pct) { return Math.round(minY + (maxY - minY) * pct / 100); }
+
+    function onMove(evt) {
+      if (!dragging) return;
+      const pct = pctFromEvent(evt);
+      // While dragging: cursor follows pointer instantly, map updates to nearest snapshot
+      cursor.style.left = pct + "%";
+      const snap = nearestSnapshot(yearFromPct(pct));
+      if (snap !== currentSnap) applyOnly(snap);
+      evt.preventDefault();
+    }
+    function onEnd(evt) {
+      if (!dragging) return;
+      dragging = false;
+      cursor.classList.remove("dragging");
+      // Snap cursor to nearest snapshot with smooth animation
+      const snap = currentSnap;
+      cursor.style.left = yearToPct(snap.year) + "%";
+      document.removeEventListener("mousemove", onMove);
+      document.removeEventListener("mouseup", onEnd);
+      document.removeEventListener("touchmove", onMove);
+      document.removeEventListener("touchend", onEnd);
+    }
+    function startDrag(evt) {
+      dragging = true;
+      cursor.classList.add("dragging");
+      onMove(evt);
+      document.addEventListener("mousemove", onMove);
+      document.addEventListener("mouseup", onEnd);
+      document.addEventListener("touchmove", onMove, {passive: false});
+      document.addEventListener("touchend", onEnd);
+      evt.preventDefault();
+    }
+
+    cursor.addEventListener("mousedown", startDrag);
+    cursor.addEventListener("touchstart", startDrag, {passive: false});
+    track.addEventListener("mousedown", startDrag);
+    track.addEventListener("touchstart", startDrag, {passive: false});
+  })();
+
+  // applySnapshot variant that updates only state + map, leaves timeline alone
+  // (used during drag so cursor doesn't fight the user's pointer)
+  function applyOnly(snap) {
+    suppressTimelineUpdate = true;
+    applySnapshot(snap);
+    suppressTimelineUpdate = false;
+  }
+
+  // Snapshot tick marks under the slider rail
+  (function buildTicks() {
+    const wrap = document.getElementById("sliderTicks");
+    if (!wrap) return;
+    const minY = 1300, maxY = 1600;
+    for (const s of SNAPSHOTS) {
+      const pct = (s.year - minY) / (maxY - minY) * 100;
+      const t = document.createElement("div");
+      t.className = "tick lg";
+      t.style.left = pct + "%";
+      wrap.appendChild(t);
+    }
+    // Decade ticks (smaller, in between)
+    for (let y = 1300; y <= 1600; y += 10) {
+      if (SNAPSHOTS.some(s => s.year === y)) continue;
+      const pct = (y - minY) / (maxY - minY) * 100;
+      const t = document.createElement("div");
+      t.className = "tick";
+      t.style.left = pct + "%";
+      wrap.appendChild(t);
+    }
+  })();
+
   document.getElementById("slider").addEventListener("input", (e) => {
-    applySnapshot(nearestSnapshot(parseInt(e.target.value, 10)));
+    const v = parseInt(e.target.value, 10);
+    const snap = nearestSnapshot(v);
+    // Snap the thumb visually to the chosen snapshot year
+    if (e.target.value !== String(snap.year)) e.target.value = String(snap.year);
+    applySnapshot(snap);
   });
 
   // Tooltip
