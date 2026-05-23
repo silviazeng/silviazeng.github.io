@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>盖蒂中心 · 北馆楼层导览图</title>
+<title>盖蒂中心 · 展厅楼层导览图</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,700;1,400;1,500&display=swap" rel="stylesheet">
@@ -17,6 +17,8 @@
   --line: #d8cdb4;
   --north: #2a5c30;
   --north-lt: #e3ebdc;
+  --south: #7a1e14;
+  --south-lt: #f1d8d3;
   --gold: #b8923a;
   --gold-lt: #f5ecd2;
 }
@@ -131,10 +133,236 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 .floor-canvas {
   position: relative;
   width: 100%;
-  aspect-ratio: 8 / 5;
 }
-.floor-canvas svg { width: 100%; height: 100%; display: block; }
-.floor-canvas.f1 { aspect-ratio: 6 / 5; }
+.floor-canvas .floor-bg {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 6px;
+}
+
+/* SVG-based floor plan recreation */
+.floor-svg-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  background: #f1ead8;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.5rem;
+}
+.floor-svg-wrap .signage-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.floor-svg-wrap .art-pin { width: 8%; border-width: 3px; }
+.floor-svg-wrap .art-pin .pin-num { display: none; }
+.floor-canvas .floor-bg.tinted {
+  /* Convert Getty blue → cream/beige to match site theme (only for PDF crops) */
+  filter: sepia(1) hue-rotate(-18deg) saturate(0.7) brightness(1.06) contrast(.95);
+}
+.pav-tabs {
+  display: flex; gap: 0.5rem; margin-top: 1.6rem; flex-wrap: wrap;
+}
+.pav-tab {
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em;
+  text-decoration: none; padding: 0.5rem 0.9rem; border-radius: 4px;
+  border: 2px solid var(--line); color: var(--ink2);
+  transition: border-color .2s, background .2s;
+}
+.pav-tab.north:hover { border-color: var(--north); background: var(--north-lt); color: var(--north); }
+.pav-tab.south:hover { border-color: var(--south); background: var(--south-lt); color: var(--south); }
+
+/* ===== Location widget (GPS + manual override) ===== */
+.loc-widget {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  margin-top: 1rem; padding: 0.35rem 0.65rem;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  font-size: 0.7rem;
+  color: var(--ink2);
+  font-family: 'Noto Sans SC', sans-serif;
+}
+.loc-widget .loc-pin { font-size: 0.85rem; }
+.loc-widget .loc-text { min-width: 130px; }
+.loc-widget .loc-toggle { display: flex; gap: 0.2rem; margin-left: 0.3rem; }
+.loc-btn {
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  padding: 0.15rem 0.55rem;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  cursor: pointer;
+  font-family: inherit;
+  transition: background .15s, border-color .15s, color .15s;
+}
+.loc-btn.active { background: var(--north); color: #fff; border-color: var(--north); }
+.loc-btn:hover:not(.active) { border-color: var(--north); color: var(--north); }
+.pav-divider.active-pavilion {
+  box-shadow: inset 5px 0 0 var(--gold), 0 1px 0 var(--gold-lt);
+  background: linear-gradient(180deg, var(--gold-lt) 0%, var(--bg) 100%);
+}
+
+/* ===== Visit tracking (click a room to mark visited) ===== */
+.room-tap { fill: transparent; pointer-events: all; cursor: pointer; transition: fill .15s; }
+.room-tap:hover { fill: rgba(184, 146, 58, 0.10); }
+.visit-badge { pointer-events: none; display: none; }
+.visit-badge.shown { display: block; }
+
+/* Visited rooms get a subtle gold tint */
+.room-tint { fill: rgba(184, 146, 58, 0); pointer-events: none; transition: fill 0.3s; }
+.room-tint.shown { fill: rgba(184, 146, 58, 0.13); }
+
+/* Dashed trail connecting visit centers */
+.visit-path-line {
+  fill: none;
+  stroke: #b8923a;
+  stroke-width: 5;
+  stroke-dasharray: 9 7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pointer-events: none;
+  opacity: 0.85;
+  filter: drop-shadow(0 1px 1.5px rgba(0,0,0,0.18));
+}
+
+/* Pulsing red marker at the LAST visited room ("you are here now") */
+.current-marker { pointer-events: none; display: none; }
+.current-marker.shown { display: block; }
+.current-marker .pulse-ring {
+  fill: rgba(168, 62, 42, 0.28);
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: currentPulse 1.8s ease-out infinite;
+}
+@keyframes currentPulse {
+  0%   { transform: scale(0.85); opacity: 0.7; }
+  100% { transform: scale(1.7);  opacity: 0; }
+}
+
+/* Highlight the current (last) tag in the top widget */
+.visit-track-widget .visit-tag.current {
+  background: #a83e2a;
+  color: white;
+  box-shadow: 0 0 0 2px rgba(168, 62, 42, 0.22);
+}
+.visit-track-widget {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  margin-top: 0.6rem; padding: 0.35rem 0.65rem;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  font-size: 0.7rem;
+  color: var(--ink2);
+  font-family: 'Noto Sans SC', sans-serif;
+  flex-wrap: wrap;
+}
+.visit-track-widget .vt-label {
+  font-weight: 700; color: var(--muted);
+  letter-spacing: 0.1em; font-size: 0.62rem;
+  text-transform: uppercase;
+}
+.visit-track-widget .vt-history { min-width: 100px; }
+.visit-track-widget .vt-empty { color: var(--muted); font-size: 0.65rem; font-style: italic; }
+.visit-track-widget .visit-tag {
+  display: inline-block;
+  padding: 0.1rem 0.45rem;
+  margin: 0.05rem 0.1rem;
+  background: var(--gold-lt);
+  color: #846720;
+  border-radius: 3px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.visit-track-widget .vt-sep { color: var(--muted); font-size: 0.6rem; margin: 0 0.05rem; }
+.visit-track-widget .vt-clear {
+  background: transparent; border: 1px solid var(--line);
+  border-radius: 3px; padding: 0.15rem 0.5rem;
+  font-size: 0.6rem; font-weight: 700; color: var(--muted);
+  cursor: pointer; font-family: inherit; margin-left: 0.3rem;
+  transition: border-color .15s, color .15s;
+}
+.visit-track-widget .vt-clear:hover { border-color: var(--south); color: var(--south); }
+
+/* ===== Brighten ONLY the dark paintings (selective, avoid over-exposing the bright ones) =====
+   N202 Mantegna "Adoration of the Magi" — dark background, tight crop
+   N203 Rogier   "Dream of Pope Sergius" — dark interior scene
+   N203 Gossaert "Holy Family"           — slightly underlit
+   N205 Titian   "Alfonso d'Avalos"      — dark armor + dark background
+   All others (gold-ground Daddi/Martini, yellow-ground Pontormo, sky-lit Carpaccio)
+   stay unfiltered so they don't get washed out. */
+.art-pin[data-card="card-16"] img,
+.art-pin[data-card="card-17"] img,
+.art-pin[data-card="card-36"] img,
+.art-pin[data-card="card-38"] img {
+  filter: brightness(1.22) contrast(1.10) saturate(1.05);
+}
+
+/* ===== Large-text mode (elderly-friendly toggle) =====
+   Bumps the root font-size by 20%; everything in rem (modal, widgets, descriptions,
+   theme labels) scales. Also enlarges SVG-plan pins from 8% → 11% so they're easier
+   to tap, and the visit-tracker badge ring grows to match. */
+html.large-text { font-size: 24px; }
+html.large-text .floor-svg-wrap .art-pin { width: 11%; border-width: 4px; }
+html.large-text .visit-badge circle { r: 18; }
+html.large-text .visit-badge text { font-size: 18px; }
+html.large-text .signage-svg .room-tap { stroke: rgba(184, 146, 58, 0); stroke-width: 6; }
+
+.lt-btn {
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  margin-top: 0.6rem;
+  margin-left: 0.4rem;
+  padding: 0.35rem 0.7rem;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--ink2);
+  cursor: pointer;
+  font-family: 'Noto Sans SC', sans-serif;
+  transition: background .15s, color .15s, border-color .15s;
+}
+.lt-btn:hover { border-color: var(--north); color: var(--north); }
+.lt-btn.active { background: var(--north); color: white; border-color: var(--north); }
+.lt-btn .lt-icon { font-size: 1.05em; font-weight: 700; }
+.pav-divider {
+  background: linear-gradient(180deg, var(--bg2) 0%, var(--bg) 100%);
+  padding: 3rem 5vw 1rem;
+  border-top: 2px solid var(--line);
+}
+.pav-divider .pav-badge-row {
+  display: flex; align-items: center; gap: 0.8rem;
+}
+.pav-divider .pav-dot {
+  width: 14px; height: 14px; border-radius: 50%;
+}
+.pav-divider .pav-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.2rem; font-weight: 500;
+  margin: 0;
+}
+.pav-divider.south { border-left: 6px solid var(--south); }
+.pav-divider.north { border-left: 6px solid var(--north); }
+.pav-divider.south .pav-name { color: var(--south); }
+.pav-divider.south .pav-dot { background: var(--south); }
+.pav-divider.north .pav-name { color: var(--north); }
+.pav-divider.north .pav-dot { background: var(--north); }
+.pav-divider .pav-tagline {
+  font-size: 0.78rem; color: var(--muted);
+  margin: 0.4rem 0 0 0;
+}
+.floor-section.south .floor-label { color: var(--south); }
+.floor-section.south .art-pin .pin-num { background: var(--south); }
 
 .art-pin {
   position: absolute;
@@ -299,130 +527,417 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 
 <header class="page-header">
   <a href="getty-center-guide.html" class="back-link">← 返回完整指南</a>
-  <div class="page-eyebrow">North Pavilion · 北馆楼层导览图</div>
+  <div class="page-eyebrow">Floor Plans · 展厅楼层导览图</div>
   <h1 class="page-title">点击展品圆点 · 查看 <em>详细介绍</em></h1>
-  <p class="page-desc">北馆共两层，二楼为意大利与北欧文艺复兴绘画全景，一楼为彩饰手稿、中世纪装饰艺术与玻璃陶瓷。共10件代表性藏品。</p>
-  <div class="legend-bar">
-    <span><span class="lg-room"></span> 展厅</span>
-    <span><span class="lg-pin"></span> 点击查看展品</span>
+  <p class="page-desc">基于盖蒂中心馆内实体导览标牌还原，展厅形状准确（不规则），含主题分区。北馆 = 文艺复兴绘画；南馆 = 装饰艺术 · 法国宫廷。</p>
+  <div class="pav-tabs">
+    <a class="pav-tab north" href="#north-2f">北馆 2F</a>
+    <a class="pav-tab north" href="#north-1f">北馆 1F</a>
+    <a class="pav-tab south" href="#south-2f">南馆 2F</a>
+    <a class="pav-tab south" href="#south-1f">南馆 1F</a>
   </div>
+  <div class="loc-widget" id="locWidget">
+    <span class="loc-pin">📍</span>
+    <span class="loc-text" id="locText">检测中…</span>
+    <div class="loc-toggle">
+      <button class="loc-btn active" data-mode="auto">自动</button>
+      <button class="loc-btn" data-mode="north">北馆</button>
+      <button class="loc-btn" data-mode="south">南馆</button>
+    </div>
+  </div>
+  <div class="visit-track-widget" id="visitTrack">
+    <span class="vt-label">参观轨迹</span>
+    <span class="vt-history" id="visitHistory"><span class="vt-empty">点房间记录</span></span>
+    <button class="vt-clear" id="visitClear">清空</button>
+  </div>
+  <button class="lt-btn" id="largeTextBtn" title="切换大字模式（适合老年人 / 视力较弱者）" aria-pressed="false">
+    <span class="lt-icon">Aa</span>
+    <span>大字模式</span>
+  </button>
 </header>
 
-<!-- ===== 二楼 ===== -->
-<section class="floor-section">
+<!-- ===== 北馆 ===== -->
+<div class="pav-divider north">
+  <div class="pav-badge-row"><span class="pav-dot"></span><h2 class="pav-name">北馆 · <em>North Pavilion</em></h2></div>
+  <p class="pav-tagline">文艺复兴 · 彩饰手稿 · 中世纪装饰艺术</p>
+</div>
+
+<!-- ===== 北 二楼 ===== -->
+<section class="floor-section" id="north-2f">
   <div class="floor-head">
     <span class="floor-label">二楼 · 2F</span>
     <h2 class="floor-name">文艺复兴绘画全景 · <em>N201–N205</em></h2>
     <p class="floor-desc">从13世纪锡耶纳金底圣像，到尼德兰油画、矫饰主义与威尼斯诸家——一条400年欧洲绘画的纵深线。</p>
   </div>
   <div class="floor-plan">
-    <div class="floor-canvas">
-      <svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
-        <!-- background -->
-        <rect width="800" height="500" fill="#f7f1e1" rx="8"/>
-        <!-- N201 -->
-        <rect x="30" y="60" width="220" height="180" rx="6" fill="#e3ebdc" stroke="#2a5c30" stroke-width="2"/>
-        <text x="48" y="86" fill="#2a5c30" font-size="16" font-weight="700" font-family="sans-serif">N201</text>
-        <text x="48" y="105" fill="#5a6e58" font-size="11" font-family="sans-serif">锡耶纳哥特式</text>
-        <!-- N202 -->
-        <rect x="270" y="60" width="220" height="180" rx="6" fill="#e3ebdc" stroke="#2a5c30" stroke-width="2"/>
-        <text x="288" y="86" fill="#2a5c30" font-size="16" font-weight="700" font-family="sans-serif">N202</text>
-        <text x="288" y="105" fill="#5a6e58" font-size="11" font-family="sans-serif">北意大利文艺复兴</text>
-        <!-- N203 -->
-        <rect x="510" y="60" width="220" height="180" rx="6" fill="#e3ebdc" stroke="#2a5c30" stroke-width="2"/>
-        <text x="528" y="86" fill="#2a5c30" font-size="16" font-weight="700" font-family="sans-serif">N203</text>
-        <text x="528" y="105" fill="#5a6e58" font-size="11" font-family="sans-serif">北欧绘画</text>
-        <!-- N204 -->
-        <rect x="270" y="280" width="220" height="180" rx="6" fill="#e3ebdc" stroke="#2a5c30" stroke-width="2"/>
-        <text x="288" y="306" fill="#2a5c30" font-size="16" font-weight="700" font-family="sans-serif">N204</text>
-        <text x="288" y="325" fill="#5a6e58" font-size="11" font-family="sans-serif">矫饰主义</text>
-        <!-- N205 -->
-        <rect x="510" y="280" width="220" height="180" rx="6" fill="#e3ebdc" stroke="#2a5c30" stroke-width="2"/>
-        <text x="528" y="306" fill="#2a5c30" font-size="16" font-weight="700" font-family="sans-serif">N205</text>
-        <text x="528" y="325" fill="#5a6e58" font-size="11" font-family="sans-serif">威尼斯文艺复兴</text>
-        <!-- corridor / entrance arrow -->
-        <line x1="30" y1="260" x2="730" y2="260" stroke="#c8b890" stroke-width="1" stroke-dasharray="4,4"/>
-        <text x="380" y="490" fill="#8a7560" font-size="10" font-family="sans-serif" text-anchor="middle" letter-spacing="2">↑  从中央楼梯进入  ↑</text>
+    <div class="floor-svg-wrap">
+      <svg viewBox="0 0 1210 1500" xmlns="http://www.w3.org/2000/svg" class="signage-svg" preserveAspectRatio="xMidYMid meet">
+        <!-- Background -->
+        <rect width="1210" height="1500" fill="#f5f0e0"/>
+
+        <!-- ===== AREA FILLS =====
+             Per getty-north-2f-sign.jpg, with N203 shifted LEFT of N202 (NOT directly above):
+               N203  x=310-550 (left edge LEFT of N202's left; right edge LEFT of N202's right)
+               N202  x=370-660 (wider than N203, shifted right)
+               N204  x=660-960 (large upper-right)
+               N205  x=660-960 (large lower-right)
+               N201  x=80-370  (lower-left)
+               brown x=80-370  (closed area below N201)
+               corridor x=370-660 (middle-bottom strip)
+               cream  upper-left wedge bounded by balcony curve, with a strip below N203 extending to N202's left wall -->
+        <!-- Balcony / terrace (cream): only the area under the curve (y=180-420), with white-square notch -->
+        <path d="M 310 180 Q 100 30 80 340 L 80 420 L 310 420 L 310 180 Z" fill="#ede4cf"/>
+        <!-- Small CREAM room: spans the full bottom strip from outer wall to N202's left.
+             Left wall (x=80) = outer wall with Exhibitions Pavilion door (direct exit).
+             Right wall (x=370) = adjacent to N202. -->
+        <rect x="80" y="420" width="290" height="120" fill="#ede4cf"/>
+        <!-- Small WHITE square enclosed between N203 (above), N202 (right), small cream room (below), balcony (left) -->
+        <rect x="310" y="320" width="60" height="100" fill="#ffffff"/>
+        <!-- Corridor (beige) middle-bottom -->
+        <rect x="370" y="540" width="290" height="470" fill="#bfa686"/>
+        <!-- Brown closed area below N201 -->
+        <rect x="80" y="760" width="290" height="250" fill="#6b5a3f"/>
+        <!-- Light blue gallery rooms -->
+        <rect x="310" y="180" width="240" height="140" fill="#d7e0ec"/>   <!-- N203 (shifted LEFT of N202, narrower) -->
+        <rect x="370" y="320" width="290" height="220" fill="#d7e0ec"/>   <!-- N202 (wider, shifted right) -->
+        <rect x="660" y="320" width="300" height="360" fill="#d7e0ec"/>   <!-- N204 (upper-right) -->
+        <rect x="660" y="680" width="300" height="330" fill="#d7e0ec"/>   <!-- N205 (lower-right) -->
+        <rect x="80" y="540" width="290" height="220" fill="#d7e0ec"/>    <!-- N201 (lower-left) -->
+
+        <!-- ===== BALCONY CURVE (upper-left, from N203 top-left to left wall above the door) ===== -->
+        <path d="M 310 180 Q 100 30 80 340" fill="none" stroke="#1a1a1a" stroke-width="5" stroke-linecap="round"/>
+
+        <!-- ===== OUTER OUTLINE (rest of building, picks up from curve endpoints) ===== -->
+        <!-- From N203 top-left, right along N203 top, down N203's right wall, right along outer top of N202+N204 strip, down right wall, left across bottom to exit gap -->
+        <path d="M 310 180 L 550 180 L 550 320 L 960 320 L 960 1010 L 465 1010" fill="none" stroke="#1a1a1a" stroke-width="5" stroke-linejoin="miter"/>
+        <!-- Exit gap at y=1010, x=405-465 (offset LEFT of stairs/elevator column) -->
+        <!-- From left of exit gap, across bottom, up left wall to Exhibitions Pavilion door -->
+        <path d="M 405 1010 L 80 1010 L 80 520" fill="none" stroke="#1a1a1a" stroke-width="5" stroke-linejoin="miter"/>
+        <!-- Door gap at x=80, y=470-520 -->
+        <!-- Left wall above door, up to curve endpoint -->
+        <path d="M 80 470 L 80 340" fill="none" stroke="#1a1a1a" stroke-width="5" stroke-linejoin="miter"/>
+
+        <!-- ===== INTERNAL WALLS with door gaps ===== -->
+        <g fill="none" stroke="#1a1a1a" stroke-width="5" stroke-linecap="butt">
+          <!-- N203 left = cream right at x=310, y=180-320 (NO door, solid).
+               Extends down to y=420 as the white square's left wall (against balcony). -->
+          <line x1="310" y1="180" x2="310" y2="420"/>
+
+          <!-- Cream's notch top under N203 = N203 bottom at y=320, x=310-370 (small step, solid) -->
+          <line x1="310" y1="320" x2="370" y2="320"/>
+
+          <!-- N203 bottom: x=310-370 is white-square TOP (solid); x=370-550 is N202 TOP with door at x=440-475 -->
+          <line x1="310" y1="320" x2="440" y2="320"/>
+          <line x1="475" y1="320" x2="550" y2="320"/>
+
+          <!-- N202 left = white square right at x=370, y=320-420 (solid, no door above) -->
+          <line x1="370" y1="320" x2="370" y2="420"/>
+          <!-- N202 left = balcony right at x=370, y=420-540 (door at y=465-500) -->
+          <line x1="370" y1="420" x2="370" y2="465"/>
+          <line x1="370" y1="500" x2="370" y2="540"/>
+
+          <!-- Small room TOP = balcony bottom at y=420, x=80-310 (solid).
+               At x=310-370 the top is the white-square bottom (also solid; drawn implicitly by the white rect). -->
+          <line x1="80" y1="420" x2="310" y2="420"/>
+
+          <!-- N202 right = N204 left at x=660, y=320-540 (door at y=395-430) -->
+          <line x1="660" y1="320" x2="660" y2="395"/>
+          <line x1="660" y1="430" x2="660" y2="540"/>
+
+          <!-- N204 bottom = N205 top at y=680, x=660-960 (door at x=780-815) -->
+          <line x1="660" y1="680" x2="780" y2="680"/>
+          <line x1="815" y1="680" x2="960" y2="680"/>
+
+          <!-- N204 left = corridor right at x=660, y=540-680 (door at y=580-615) -->
+          <line x1="660" y1="540" x2="660" y2="580"/>
+          <line x1="660" y1="615" x2="660" y2="680"/>
+
+          <!-- N205 left = corridor right at x=660, y=680-1010 (door at y=830-865) -->
+          <line x1="660" y1="680" x2="660" y2="830"/>
+          <line x1="660" y1="865" x2="660" y2="1010"/>
+
+          <!-- N202 bottom = corridor top at y=540, x=370-660 (door at x=440-475) -->
+          <line x1="370" y1="540" x2="440" y2="540"/>
+          <line x1="475" y1="540" x2="660" y2="540"/>
+
+          <!-- Small room bottom = N201 top at y=540, x=80-370 (solid, no door) -->
+          <line x1="80" y1="540" x2="370" y2="540"/>
+
+          <!-- N201 right = corridor left at x=370, y=540-760 (door at y=640-675) -->
+          <line x1="370" y1="540" x2="370" y2="640"/>
+          <line x1="370" y1="675" x2="370" y2="760"/>
+
+          <!-- N201 bottom = brown top at y=760, x=80-370 (solid) -->
+          <line x1="80" y1="760" x2="370" y2="760"/>
+
+          <!-- Brown right = corridor left at x=370, y=760-1010 (solid) -->
+          <line x1="370" y1="760" x2="370" y2="1010"/>
+        </g>
+
+        <!-- ===== ROOM NUMBER LABELS (top-right of each room) ===== -->
+        <g pointer-events="none" font-family="sans-serif" font-size="22" fill="#1a1a1a">
+          <text x="542" y="206" text-anchor="end">N 203</text>
+          <text x="652" y="346" text-anchor="end">N 202</text>
+          <text x="952" y="346" text-anchor="end">N 204</text>
+          <text x="952" y="706" text-anchor="end">N 205</text>
+          <text x="362" y="566" text-anchor="end">N 201</text>
+        </g>
+
+        <!-- ===== THEME LABELS (Cormorant serif) ===== -->
+        <g pointer-events="none" font-family="Cormorant Garamond, serif" fill="#1a1a1a">
+          <!-- N203 (small box) -->
+          <text x="320" y="232" font-size="17">Northern European</text>
+          <text x="320" y="253" font-size="15" fill="#5c5040">Paintings · 1400–1600</text>
+          <!-- N202 -->
+          <text x="382" y="500" font-size="22">European Paintings</text>
+          <text x="382" y="525" font-size="20" fill="#5c5040">1400–1500</text>
+          <!-- N204 -->
+          <text x="675" y="500" font-size="22">Italian Paintings</text>
+          <text x="675" y="525" font-size="20" fill="#5c5040">1500–1600</text>
+          <!-- N205 -->
+          <text x="675" y="980" font-size="22">Italian Paintings</text>
+          <text x="675" y="1005" font-size="20" fill="#5c5040">1500–1600</text>
+          <!-- N201 -->
+          <text x="100" y="720" font-size="22">Italian Paintings</text>
+          <text x="100" y="745" font-size="20" fill="#5c5040">1300–1400</text>
+        </g>
+
+        <!-- ===== STAIRS box (RIGHT side of corridor, upper portion — same column as elevator) ===== -->
+        <g pointer-events="none">
+          <rect x="520" y="580" width="120" height="115" fill="#ffffff" stroke="#1a1a1a" stroke-width="3"/>
+          <path d="M 535 685 L 552 685 L 552 665 L 569 665 L 569 645 L 586 645 L 586 625 L 603 625 L 603 605 L 625 605" fill="none" stroke="#1a1a1a" stroke-width="2.5" stroke-linejoin="miter"/>
+        </g>
+
+        <!-- ===== ELEVATOR box (RIGHT side of corridor, same column as stairs, just above exit zone) ===== -->
+        <g pointer-events="none">
+          <rect x="540" y="870" width="80" height="80" fill="#ffffff" stroke="#1a1a1a" stroke-width="2.5"/>
+          <line x1="565" y1="888" x2="565" y2="935" stroke="#1a1a1a" stroke-width="2"/>
+          <polygon points="565,942 558,929 572,929" fill="#1a1a1a"/>
+          <line x1="595" y1="932" x2="595" y2="885" stroke="#1a1a1a" stroke-width="2"/>
+          <polygon points="595,878 588,891 602,891" fill="#1a1a1a"/>
+        </g>
+
+        <!-- ===== EXIT ARROW + LABEL (East Pavilion, offset LEFT of the stairs/elevator column) ===== -->
+        <g pointer-events="none">
+          <line x1="435" y1="1030" x2="435" y2="1110" stroke="#1a1a1a" stroke-width="3"/>
+          <polygon points="435,1122 425,1102 445,1102" fill="#1a1a1a"/>
+          <text x="435" y="1170" font-family="sans-serif" font-size="32" font-weight="700" fill="#1a1a1a" text-anchor="middle">East Pavilion</text>
+        </g>
+
+        <!-- ===== EXHIBITIONS PAVILION arrow (left margin, two-line label + arrowhead pointing into door at y=495) ===== -->
+        <g pointer-events="none">
+          <text x="6" y="482" font-family="sans-serif" font-size="18" font-weight="700" fill="#1a1a1a">Exhibitions</text>
+          <text x="6" y="504" font-family="sans-serif" font-size="18" font-weight="700" fill="#1a1a1a">Pavilion</text>
+          <polygon points="60,498 76,490 76,506" fill="#1a1a1a"/>
+        </g>
+
+        <!-- ===== Visited-room tints (translucent gold overlay on rooms you've been to) ===== -->
+        <g class="room-tints" pointer-events="none">
+          <rect class="room-tint" data-room="N201" x="80" y="540" width="290" height="220"/>
+          <rect class="room-tint" data-room="N202" x="370" y="320" width="290" height="220"/>
+          <rect class="room-tint" data-room="N203" x="310" y="180" width="240" height="140"/>
+          <rect class="room-tint" data-room="N204" x="660" y="320" width="300" height="360"/>
+          <rect class="room-tint" data-room="N205" x="660" y="680" width="300" height="330"/>
+        </g>
+
+        <!-- ===== Visit-path trail (dashed gold polyline through room centers, with arrow at end) ===== -->
+        <defs>
+          <marker id="pathArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="4" markerHeight="4" orient="auto">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#b8923a"/>
+          </marker>
+        </defs>
+        <polyline class="visit-path-line" id="visitPathLine" points="" marker-end="url(#pathArrow)"/>
+
+        <!-- ===== Visit-tracker click targets (invisible, must stay on top so clicks land) ===== -->
+        <g class="room-taps">
+          <rect class="room-tap" data-room="N201" x="80" y="540" width="290" height="220"/>
+          <rect class="room-tap" data-room="N202" x="370" y="320" width="290" height="220"/>
+          <rect class="room-tap" data-room="N203" x="310" y="180" width="240" height="140"/>
+          <rect class="room-tap" data-room="N204" x="660" y="320" width="300" height="360"/>
+          <rect class="room-tap" data-room="N205" x="660" y="680" width="300" height="330"/>
+        </g>
+
+        <!-- ===== "You are here now" pulsing red marker at last visited room center ===== -->
+        <g class="current-marker" id="currentMarker">
+          <circle class="pulse-ring" r="22" />
+          <circle r="14" fill="#a83e2a" stroke="#fff" stroke-width="3"/>
+        </g>
+
+        <!-- ===== Visit badges (corner labels showing first-visit order; JS toggles .shown) ===== -->
+        <g class="visit-badges" font-family="sans-serif" font-size="14" font-weight="700">
+          <g class="visit-badge" data-room="N201" transform="translate(105, 560)">
+            <circle r="14" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
+            <text y="5" text-anchor="middle" fill="#fff">1</text>
+          </g>
+          <g class="visit-badge" data-room="N202" transform="translate(395, 340)">
+            <circle r="14" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
+            <text y="5" text-anchor="middle" fill="#fff">1</text>
+          </g>
+          <g class="visit-badge" data-room="N203" transform="translate(335, 200)">
+            <circle r="14" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
+            <text y="5" text-anchor="middle" fill="#fff">1</text>
+          </g>
+          <g class="visit-badge" data-room="N204" transform="translate(685, 340)">
+            <circle r="14" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
+            <text y="5" text-anchor="middle" fill="#fff">1</text>
+          </g>
+          <g class="visit-badge" data-room="N205" transform="translate(685, 700)">
+            <circle r="14" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
+            <text y="5" text-anchor="middle" fill="#fff">1</text>
+          </g>
+        </g>
       </svg>
-      <!-- Pins -->
-      <button class="art-pin" data-card="card-15" style="left:17.5%;top:32%" title="圣路加">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Simone_Martini_-_St._Luke_-_82.PB.72_-_J._Paul_Getty_Museum.jpg/320px-Simone_Martini_-_St._Luke_-_82.PB.72_-_J._Paul_Getty_Museum.jpg" alt="圣路加">
+
+      <!-- Circular artwork pins overlaid on rooms -->
+      <button class="art-pin" data-card="card-15" style="left:13%;top:43%" title="Bernardo Daddi · 圣母与圣徒三联画 · N201">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Bernardo_Daddi_-_The_Virgin_Mary_with_Saints_Thomas_Aquinas_and_Paul_-_93.PB.16_-_J._Paul_Getty_Museum.jpg/960px-Bernardo_Daddi_-_The_Virgin_Mary_with_Saints_Thomas_Aquinas_and_Paul_-_93.PB.16_-_J._Paul_Getty_Museum.jpg" alt="圣母与圣多玛斯·阿奎那、圣保罗三联画">
         <span class="pin-num">12</span>
       </button>
-      <button class="art-pin" data-card="card-16" style="left:47.5%;top:32%" title="东方三博士朝圣">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Andrea_Mantegna_-_Adoration_of_the_Magi_-_85.PA.417_-_J._Paul_Getty_Museum.jpg/320px-Andrea_Mantegna_-_Adoration_of_the_Magi_-_85.PA.417_-_J._Paul_Getty_Museum.jpg" alt="东方三博士朝圣">
+      <button class="art-pin" data-card="card-16" style="left:40%;top:27%" title="Mantegna · 东方三博士朝圣 · N202">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Andrea_Mantegna_-_Adoration_of_the_Magi_-_85.PA.417_-_J._Paul_Getty_Museum.jpg/960px-Andrea_Mantegna_-_Adoration_of_the_Magi_-_85.PA.417_-_J._Paul_Getty_Museum.jpg" alt="东方三博士朝圣">
         <span class="pin-num">13</span>
       </button>
-      <button class="art-pin" data-card="card-20" style="left:62.5%;top:32%" title="现代罗马—凡西诺广场（横跨N202/N203）">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Joseph_Mallord_William_Turner_-_Modern_Rome%3B_Campo_Vacino.JPG/320px-Joseph_Mallord_William_Turner_-_Modern_Rome%3B_Campo_Vacino.JPG" alt="现代罗马">
-        <span class="pin-num">17</span>
-      </button>
-      <button class="art-pin" data-card="card-17" style="left:77.5%;top:32%" title="教皇之梦">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Workshop_of_Rogier_van_der_Weyden_-_The_Dream_of_Pope_Sergius_-_72.PB.20_-_J._Paul_Getty_Museum.jpg/320px-Workshop_of_Rogier_van_der_Weyden_-_The_Dream_of_Pope_Sergius_-_72.PB.20_-_J._Paul_Getty_Museum.jpg" alt="北欧绘画">
+      <button class="art-pin" data-card="card-17" style="left:33%;top:17%" title="Rogier van der Weyden · 教皇之梦 · N203">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Workshop_of_Rogier_van_der_Weyden_-_The_Dream_of_Pope_Sergius_-_72.PB.20_-_J._Paul_Getty_Museum.jpg/960px-Workshop_of_Rogier_van_der_Weyden_-_The_Dream_of_Pope_Sergius_-_72.PB.20_-_J._Paul_Getty_Museum.jpg" alt="教皇之梦">
         <span class="pin-num">14</span>
       </button>
-      <button class="art-pin" data-card="card-18" style="left:47.5%;top:75%" title="持斧枪者肖像">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Pontormo%2C_alabardiere%2C_forse_francesco_guardi%2C_1528-30.JPG/320px-Pontormo%2C_alabardiere%2C_forse_francesco_guardi%2C_1528-30.JPG" alt="持斧枪者肖像">
+      <button class="art-pin" data-card="card-18" style="left:67%;top:33%" title="Pontormo · 持斧枪者肖像 · N204">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Pontormo%2C_alabardiere%2C_forse_francesco_guardi%2C_1528-30.JPG/960px-Pontormo%2C_alabardiere%2C_forse_francesco_guardi%2C_1528-30.JPG" alt="持斧枪者肖像">
         <span class="pin-num">15</span>
       </button>
-      <button class="art-pin" data-card="card-19" style="left:77.5%;top:75%" title="维纳斯与丘比特">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Lorenzo_Lotto_-_Venus_and_Cupid_%28c._1520%27s%29.jpg/320px-Lorenzo_Lotto_-_Venus_and_Cupid_%28c._1520%27s%29.jpg" alt="维纳斯与丘比特">
+      <button class="art-pin" data-card="card-19" style="left:67%;top:57%" title="Lorenzo Lotto · 维纳斯与丘比特 · N205">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Lorenzo_Lotto_-_Venus_and_Cupid_%28c._1520%27s%29.jpg/960px-Lorenzo_Lotto_-_Venus_and_Cupid_%28c._1520%27s%29.jpg" alt="维纳斯与丘比特">
         <span class="pin-num">16</span>
       </button>
+      <!-- Second exhibit per gallery -->
+      <button class="art-pin" data-card="card-34" style="left:25%;top:48%" title="Simone Martini · 圣路加 · N201">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Simone_Martini_-_St._Luke_-_82.PB.72_-_J._Paul_Getty_Museum.jpg/960px-Simone_Martini_-_St._Luke_-_82.PB.72_-_J._Paul_Getty_Museum.jpg" alt="圣路加">
+        <span class="pin-num">31</span>
+      </button>
+      <button class="art-pin" data-card="card-35" style="left:50%;top:33%" title="Carpaccio · 潟湖狩猎 · N202">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Vittore_Carpaccio_-_Hunting_on_the_Lagoon_%28recto%29%2C_Letter_Rack_%28verso%29_-_79.PB.72_-_J._Paul_Getty_Museum.jpg/960px-Vittore_Carpaccio_-_Hunting_on_the_Lagoon_%28recto%29%2C_Letter_Rack_%28verso%29_-_79.PB.72_-_J._Paul_Getty_Museum.jpg" alt="潟湖狩猎">
+        <span class="pin-num">32</span>
+      </button>
+      <button class="art-pin" data-card="card-36" style="left:42%;top:14%" title="Gossaert · 圣家族 · N203">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Jan_Gossaert_-_The_Holy_Family_-_71.PB.45_-_J._Paul_Getty_Museum.jpg/960px-Jan_Gossaert_-_The_Holy_Family_-_71.PB.45_-_J._Paul_Getty_Museum.jpg" alt="圣家族">
+        <span class="pin-num">33</span>
+      </button>
+      <button class="art-pin" data-card="card-37" style="left:74%;top:42%" title="Lotto · 圣母子与两位捐赠人 · N204">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Lorenzo_Lotto_-_Madonna_and_Child_with_Two_Donors_-_77.PA.110_-_J._Paul_Getty_Museum.jpg/960px-Lorenzo_Lotto_-_Madonna_and_Child_with_Two_Donors_-_77.PA.110_-_J._Paul_Getty_Museum.jpg" alt="圣母子与两位捐赠人">
+        <span class="pin-num">34</span>
+      </button>
+      <button class="art-pin" data-card="card-38" style="left:74%;top:50%" title="Titian · 阿尔丰索·达瓦洛斯肖像 · N205">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Titian_Portrait_of_Alfonso_d%27Avalos%2C_Marchese_del_Vasto%2C_in_Armor_with_a_Page_Getty_Museum.jpg/960px-Titian_Portrait_of_Alfonso_d%27Avalos%2C_Marchese_del_Vasto%2C_in_Armor_with_a_Page_Getty_Museum.jpg" alt="阿尔丰索·达瓦洛斯肖像">
+        <span class="pin-num">35</span>
+      </button>
     </div>
-    <div class="floor-foot">N · NORTH PAVILION · 2F</div>
+    <div class="floor-foot">N · NORTH PAVILION · 2F · 网页复现版</div>
   </div>
 </section>
 
-<!-- ===== 一楼 ===== -->
-<section class="floor-section alt">
+<!-- ===== 北 一楼 ===== -->
+<section class="floor-section alt" id="north-1f">
   <div class="floor-head">
     <span class="floor-label">一楼 · 1F</span>
     <h2 class="floor-name">彩饰手稿 · 中世纪装饰艺术 · <em>N101–N104</em></h2>
-    <p class="floor-desc">低光展厅珍藏彩饰手稿、中世纪彩色玻璃、奥格斯堡珍藏柜与威尼斯丝线玻璃。</p>
+    <p class="floor-desc">低光展厅珍藏彩饰手稿、中世纪彩色玻璃、奥格斯堡珍藏柜与威尼斯丝线玻璃。<em style="font-style:normal;color:var(--muted);font-size:.7rem">（无实体标牌照片，使用 Getty 2010 官方 PDF 平面图）</em></p>
   </div>
   <div class="floor-plan">
     <div class="floor-canvas f1">
-      <svg viewBox="0 0 600 500" xmlns="http://www.w3.org/2000/svg">
-        <rect width="600" height="500" fill="#f7f1e1" rx="8"/>
-        <!-- N101 -->
-        <rect x="30" y="60" width="270" height="180" rx="6" fill="#e3ebdc" stroke="#2a5c30" stroke-width="2"/>
-        <text x="48" y="86" fill="#2a5c30" font-size="16" font-weight="700" font-family="sans-serif">N101</text>
-        <text x="48" y="105" fill="#5a6e58" font-size="11" font-family="sans-serif">彩饰手稿 · 低光展厅</text>
-        <!-- N102 -->
-        <rect x="300" y="60" width="270" height="180" rx="6" fill="#e3ebdc" stroke="#2a5c30" stroke-width="2"/>
-        <text x="318" y="86" fill="#2a5c30" font-size="16" font-weight="700" font-family="sans-serif">N102</text>
-        <text x="318" y="105" fill="#5a6e58" font-size="11" font-family="sans-serif">奥格斯堡珍藏柜</text>
-        <!-- N103 -->
-        <rect x="30" y="260" width="270" height="180" rx="6" fill="#e3ebdc" stroke="#2a5c30" stroke-width="2"/>
-        <text x="48" y="286" fill="#2a5c30" font-size="16" font-weight="700" font-family="sans-serif">N103</text>
-        <text x="48" y="305" fill="#5a6e58" font-size="11" font-family="sans-serif">中世纪彩色玻璃</text>
-        <!-- N104 -->
-        <rect x="300" y="260" width="270" height="180" rx="6" fill="#e3ebdc" stroke="#2a5c30" stroke-width="2"/>
-        <text x="318" y="286" fill="#2a5c30" font-size="16" font-weight="700" font-family="sans-serif">N104</text>
-        <text x="318" y="305" fill="#5a6e58" font-size="11" font-family="sans-serif">欧洲玻璃与陶瓷</text>
-        <!-- entry -->
-        <line x1="30" y1="250" x2="570" y2="250" stroke="#c8b890" stroke-width="1" stroke-dasharray="4,4"/>
-        <text x="300" y="490" fill="#8a7560" font-size="10" font-family="sans-serif" text-anchor="middle" letter-spacing="2">↑  从中央楼梯进入  ↑</text>
-      </svg>
-      <button class="art-pin" data-card="card-21" style="left:27.5%;top:32%" title="彩饰手稿">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Personnages_de_la_sc%C3%A8ne_de_Janvier_%28Fr%C3%A8res_Limbourg_%3F%29_-_Tr%C3%A8s_Riches_Heures_du_duc_de_Berry_%28f.1%29.jpg/320px-Personnages_de_la_sc%C3%A8ne_de_Janvier_%28Fr%C3%A8res_Limbourg_%3F%29_-_Tr%C3%A8s_Riches_Heures_du_duc_de_Berry_%28f.1%29.jpg" alt="彩饰手稿">
+      <img class="floor-bg tinted" src="getty-north-1f-plan.png" alt="北馆一楼平面图（Getty 官方 PDF）">
+      <!-- Pins (positions in % of image 440x260) -->
+      <button class="art-pin" data-card="card-21" style="left:81%;top:88%" title="彩饰手稿 N101">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Personnages_de_la_sc%C3%A8ne_de_Janvier_%28Fr%C3%A8res_Limbourg_%3F%29_-_Tr%C3%A8s_Riches_Heures_du_duc_de_Berry_%28f.1%29.jpg/960px-Personnages_de_la_sc%C3%A8ne_de_Janvier_%28Fr%C3%A8res_Limbourg_%3F%29_-_Tr%C3%A8s_Riches_Heures_du_duc_de_Berry_%28f.1%29.jpg" alt="彩饰手稿">
         <span class="pin-num">18</span>
       </button>
-      <button class="art-pin" data-card="card-22" style="left:72.5%;top:32%" title="奥格斯堡珍藏柜">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Getty%2C_cabinet.JPG/320px-Getty%2C_cabinet.JPG" alt="奥格斯堡珍藏柜">
+      <button class="art-pin" data-card="card-22" style="left:53%;top:78%" title="奥格斯堡珍藏柜 N102">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Getty%2C_cabinet.JPG/960px-Getty%2C_cabinet.JPG" alt="奥格斯堡珍藏柜">
         <span class="pin-num">19</span>
       </button>
-      <button class="art-pin" data-card="card-23" style="left:27.5%;top:72%" title="中世纪彩色玻璃">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Getty_Center_-_Stained_glass_window_-_Housing_the_stranger_%281560-1570%29.JPG/320px-Getty_Center_-_Stained_glass_window_-_Housing_the_stranger_%281560-1570%29.JPG" alt="中世纪彩色玻璃">
+      <button class="art-pin" data-card="card-23" style="left:30%;top:78%" title="中世纪彩色玻璃 N103">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Getty_Center_-_Stained_glass_window_-_Housing_the_stranger_%281560-1570%29.JPG/960px-Getty_Center_-_Stained_glass_window_-_Housing_the_stranger_%281560-1570%29.JPG" alt="中世纪彩色玻璃">
         <span class="pin-num">20</span>
       </button>
-      <button class="art-pin" data-card="card-24" style="left:72.5%;top:72%" title="欧洲玻璃与陶瓷">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Getty_Center_-_Filigrana_Beaker.JPG/320px-Getty_Center_-_Filigrana_Beaker.JPG" alt="欧洲玻璃与陶瓷">
+      <button class="art-pin" data-card="card-24" style="left:30%;top:55%" title="欧洲玻璃与陶瓷 N104">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Getty_Center_-_Filigrana_Beaker.JPG/960px-Getty_Center_-_Filigrana_Beaker.JPG" alt="欧洲玻璃与陶瓷">
         <span class="pin-num">21</span>
       </button>
     </div>
-    <div class="floor-foot">N · NORTH PAVILION · 1F</div>
+    <div class="floor-foot">N · NORTH PAVILION · 1F · 官方平面图</div>
+  </div>
+</section>
+
+<!-- ===== 南馆 ===== -->
+<div class="pav-divider south">
+  <div class="pav-badge-row"><span class="pav-dot"></span><h2 class="pav-name">南馆 · <em>South Pavilion</em></h2></div>
+  <p class="pav-tagline">装饰艺术 · 法国宫廷 · 18世纪绘画</p>
+</div>
+
+<!-- ===== 南 二楼 ===== -->
+<section class="floor-section south" id="south-2f">
+  <div class="floor-head">
+    <span class="floor-label">二楼 · 2F</span>
+    <h2 class="floor-name">18世纪欧洲绘画 · <em>S201–S206</em></h2>
+    <p class="floor-desc">布歇、庚斯博罗、戈雅——18世纪法国洛可可、英国乡绅肖像、西班牙宫廷绘画三种品味的并置。</p>
+  </div>
+  <div class="floor-plan">
+    <div class="floor-canvas">
+      <img class="floor-bg" src="getty-south-2f-sign.jpg" alt="南馆二楼平面图（馆内导览标牌）">
+      <!-- Pins on 940x950 image -->
+      <button class="art-pin" data-card="card-25" style="left:53%;top:24%" title="爱之泉 S202">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Fran%C3%A7ois_Boucher_-_The_Fountain_of_Love_-_71.PA.37_-_J._Paul_Getty_Museum.jpg/960px-Fran%C3%A7ois_Boucher_-_The_Fountain_of_Love_-_71.PA.37_-_J._Paul_Getty_Museum.jpg" alt="爱之泉">
+        <span class="pin-num">22</span>
+      </button>
+      <button class="art-pin" data-card="card-26" style="left:84%;top:48%" title="詹姆斯·克里斯蒂肖像 S204">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Thomas_Gainsborough_-_Portrait_of_James_Christie.jpg/960px-Thomas_Gainsborough_-_Portrait_of_James_Christie.jpg" alt="James Christie">
+        <span class="pin-num">23</span>
+      </button>
+      <button class="art-pin" data-card="card-27" style="left:30%;top:48%" title="圣地亚哥侯爵夫人肖像 S205">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Portrait_of_the_Marquesa_de_Santiago_by_Francisco_de_Goya%2C_1804%2C_Getty_Center.JPG/960px-Portrait_of_the_Marquesa_de_Santiago_by_Francisco_de_Goya%2C_1804%2C_Getty_Center.JPG" alt="Marquesa">
+        <span class="pin-num">24</span>
+      </button>
+    </div>
+    <div class="floor-foot">S · SOUTH PAVILION · 2F · 馆内实体标牌</div>
+  </div>
+</section>
+
+<!-- ===== 南 一楼 ===== -->
+<section class="floor-section south alt" id="south-1f">
+  <div class="floor-head">
+    <span class="floor-label">一楼 · 1F</span>
+    <h2 class="floor-name">法国装饰艺术 · 宫廷复原房间 · <em>S101–S116</em></h2>
+    <p class="floor-desc">多个完整复原的17–18世纪欧洲贵族房间——家具、墙板、地板、吊灯全是真品，仿佛凡尔赛时光倒流。</p>
+  </div>
+  <div class="floor-plan">
+    <div class="floor-canvas">
+      <img class="floor-bg" src="getty-south-1f-sign.jpg" alt="南馆一楼平面图（馆内导览标牌）">
+      <!-- Pins on 1990x1500 image -->
+      <button class="art-pin" data-card="card-31" style="left:28%;top:9%" title="布歇皇家挂毯 S102">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/The_Toilette_of_Psyche_from_The_Story_of_Psyche_tapestry_series%2C_by_Fran%C3%A7ois_Boucher_%28Getty_103SC9%29.jpg/960px-The_Toilette_of_Psyche_from_The_Story_of_Psyche_tapestry_series%2C_by_Fran%C3%A7ois_Boucher_%28Getty_103SC9%29.jpg" alt="Boucher Tapestry">
+        <span class="pin-num">28</span>
+      </button>
+      <button class="art-pin" data-card="card-28" style="left:34%;top:48%" title="摄政王镶板房 S108">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Getty_Museum_Attributed_to_Andr%C3%A9-Charles_Boulle_1642_-_1732.jpg/960px-Getty_Museum_Attributed_to_Andr%C3%A9-Charles_Boulle_1642_-_1732.jpg" alt="Régence Room">
+        <span class="pin-num">25</span>
+      </button>
+      <button class="art-pin" data-card="card-29" style="left:75%;top:46%" title="洛可可镶板房 S107">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Paneled_Room_%28salon_de_compagnie%29%2C_by_Claude_Nicolas_Ledoux_%28Getty_107VRX%29.jpg/960px-Paneled_Room_%28salon_de_compagnie%29%2C_by_Claude_Nicolas_Ledoux_%28Getty_107VRX%29.jpg" alt="Rococo Room">
+        <span class="pin-num">26</span>
+      </button>
+      <button class="art-pin" data-card="card-30" style="left:37%;top:39%" title="塞夫勒皇家瓷器 S110">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Lidded_Pot-pourri_Vase_%28vase_or_pot-pourri_vaisseau_%C3%A0_m%C3%A2t%2C_deuxi%C3%A8me_grandeur%29%2C_by_Charles-Nicolas_Dodin_%28Getty_103SFE%29.jpg/960px-Lidded_Pot-pourri_Vase_%28vase_or_pot-pourri_vaisseau_%C3%A0_m%C3%A2t%2C_deuxi%C3%A8me_grandeur%29%2C_by_Charles-Nicolas_Dodin_%28Getty_103SFE%29.jpg" alt="Sèvres">
+        <span class="pin-num">27</span>
+      </button>
+      <button class="art-pin" data-card="card-32" style="left:12%;top:38%" title="新古典主义镶板房 S116">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/A_Boudoir_%28Louis_XVI._Period%29.jpg/960px-A_Boudoir_%28Louis_XVI._Period%29.jpg" alt="Neoclassical Room">
+        <span class="pin-num">29</span>
+      </button>
+      <button class="art-pin" data-card="card-33" style="left:18%;top:50%" title="雷卡米埃肖像胸像 S114">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Bust_of_Juliette_R%C3%A9camier_%281777_-_1849%29%2C_by_Joseph_Chinard_%28Getty_103RRS%29.jpg/960px-Bust_of_Juliette_R%C3%A9camier_%281777_-_1849%29%2C_by_Joseph_Chinard_%28Getty_103RRS%29.jpg" alt="Récamier Bust">
+        <span class="pin-num">30</span>
+      </button>
+    </div>
+    <div class="floor-foot">S · SOUTH PAVILION · 1F · 馆内实体标牌</div>
   </div>
 </section>
 
@@ -438,16 +953,16 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 <div id="card-pool">
 
 <div class="artwork-card" id="card-15">
-  <div class="art-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Simone_Martini_-_St._Luke_-_82.PB.72_-_J._Paul_Getty_Museum.jpg/960px-Simone_Martini_-_St._Luke_-_82.PB.72_-_J._Paul_Getty_Museum.jpg" alt="圣路加"></div>
+  <div class="art-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Bernardo_Daddi_-_The_Virgin_Mary_with_Saints_Thomas_Aquinas_and_Paul_-_93.PB.16_-_J._Paul_Getty_Museum.jpg/960px-Bernardo_Daddi_-_The_Virgin_Mary_with_Saints_Thomas_Aquinas_and_Paul_-_93.PB.16_-_J._Paul_Getty_Museum.jpg" alt="圣母与圣多玛斯·阿奎那、圣保罗三联画"></div>
   <div class="room-tag">北馆 二楼 · N201</div>
-  <div class="art-title">圣路加 · <em>St. Luke</em></div>
-  <div class="art-meta">西蒙·马蒂尼（Simone Martini）· 约1330年 · 蛋彩 · 金底木板</div>
-  <div class="tags"><span class="tag movement">锡耶纳哥特式</span><span class="tag price">🏛 盖蒂馆藏最早期意大利绘画之一</span></div>
-  <div class="art-desc">北馆最古老的展室收藏的是"前文艺复兴"时代意大利画家的作品，而西蒙·马蒂尼的《圣路加》是其中最精彩的一件。圣路加手执笔墨、低首凝视羊皮纸，周身环绕金色锦纹底板与哥特式建筑小龛——这是14世纪锡耶纳画派的典型语汇：用黄金构筑神圣，用优雅线条描绘人性。</div>
+  <div class="art-title">圣母与圣多玛斯·阿奎那、圣保罗三联画 · <em>The Virgin Mary with Saints Thomas Aquinas and Paul</em></div>
+  <div class="art-meta">贝尔纳多·达迪（Bernardo Daddi）· 约1335年 · 蛋彩 · 金箔 · 木板</div>
+  <div class="tags"><span class="tag movement">14世纪佛罗伦萨派</span><span class="tag price">🏛 盖蒂馆藏代表性 Trecento 三联画</span></div>
+  <div class="art-desc">中央面板上的圣母身披深蓝色斗篷（由珍贵的青金石 ultramarine 研磨而成），手部探出大理石栏杆边缘，象征向凡间投下的怜悯。左侧为多明我会修士装束的圣多玛斯·阿奎那（Thomas Aquinas），手持代表自己著作的书卷；右侧为侧身转向圣母的圣保罗（Paul），手持殉道之剑。这是14世纪佛罗伦萨画派典型的小型礼拜三联画——为私人小礼拜堂而作。</div>
   <div class="detail"><h4>深度解读</h4>
-  <p>14世纪意大利绘画的两大中心在锡耶纳（Siena）与佛罗伦萨（Florence）之间展开了一场旷日持久的艺术竞争。佛罗伦萨以乔托（Giotto）为代表，追求人体体量感和空间纵深；锡耶纳以杜乔（Duccio）和西蒙·马蒂尼为代表，延续拜占庭金底传统，以甜美的曲线和精细的装饰为特色。</p>
-  <p>西蒙·马蒂尼（约1284–1344）晚年在法国南部教皇驻跸地阿维尼翁（Avignon）工作，他将锡耶纳风格传入法国宫廷，影响了整个国际哥特式（International Gothic）风潮。他还是诗人彼特拉克（Petrarch）的密友，曾为其著名的情人劳拉绘制肖像——那幅画今已失佚，但彼特拉克在诗中多次赞扬过它。</p>
-  <p>N201展室中还陈列同时期画家如保罗·威尼西亚诺（Paolo Veneziano）的作品，呈现从拜占庭向哥特式过渡的多元路径。这些作品多以蛋彩绘于木板，再覆以真金箔打底——制作工艺与北馆一楼的彩饰手稿一脉相承。</p></div>
+  <p>贝尔纳多·达迪（约1280–1348）是乔托（Giotto）在佛罗伦萨工坊最重要的弟子之一。他继承了乔托对人物体积感和空间感的探索，同时融入了当时国际哥特式风潮中的优雅线条与丰富的装饰金底——可以看作乔托写实传统和锡耶纳哥特式装饰风格的折中。</p>
+  <p>有趣的细节：16世纪时，有人在底部大理石栏杆前的中央加绘了一个躺卧的婴儿基督（油画颜料覆盖于原作之上）。盖蒂博物馆收藏此作之后，文物修复人员通过 X 光与颜料分析判定那个婴儿是后世添加，与达迪原作并不属同一时期，遂将其去除——这也是为什么现在中央圣母怀中没有圣婴的原因。</p>
+  <p>N201 展室是北馆最古老的展厅，集中陈列1300–1400年间的意大利绘画，包括锡耶纳画派与佛罗伦萨画派的对话。这些作品多以蛋彩绘于木板、再覆以真金箔打底——制作工艺与北馆一楼的彩饰手稿一脉相承。</p></div>
 </div>
 
 <div class="artwork-card" id="card-16">
@@ -567,6 +1082,179 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <p>展室中还陈列来自中东的伊斯兰玻璃器（8–14世纪）：带库法体铭文的碗、朝圣烧瓶、鎏金描绘几何纹样的杯，它们与旁边的威尼斯制品并置，让技术传播的脉络一目了然。</p></div>
 </div>
 
+<div class="artwork-card south" id="card-25">
+  <div class="art-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Fran%C3%A7ois_Boucher_-_The_Fountain_of_Love_-_71.PA.37_-_J._Paul_Getty_Museum.jpg/960px-Fran%C3%A7ois_Boucher_-_The_Fountain_of_Love_-_71.PA.37_-_J._Paul_Getty_Museum.jpg" alt="爱之泉"></div>
+  <div class="room-tag">南馆 二楼 · 18世纪法国绘画</div>
+  <div class="art-title">爱之泉 · <em>The Fountain of Love</em></div>
+  <div class="art-meta">弗朗索瓦·布歇 · 约1748年 · 油画</div>
+  <div class="tags"><span class="tag movement">洛可可</span><span class="tag price">🏛 路易十五御用画家</span></div>
+  <div class="art-desc">粉嫩色调与柔软笔触是洛可可绘画的典型特征。布歇是路易十五宠妃蓬帕杜夫人的御用画家，她的品味深刻塑造了整个18世纪法国的视觉语言。</div>
+  <div class="detail"><h4>深度解读</h4>
+  <p><strong>布歇与洛可可</strong>：弗朗索瓦·布歇（1703–1770）是18世纪法国宫廷最受宠的画家，官方头衔包括"国王首席画家"。他的画作以华丽、感官、乐观著称，粉色与蓝色的搭配几乎成为他的签名色。</p>
+  <p><strong>蓬帕杜夫人的品味机器</strong>：布歇与路易十五的宠妃蓬帕杜夫人关系密切——后者是他最重要的赞助人，也是他风格形成的推手。他为她画肖像、设计室内装饰、绘制戈布兰挂毯的草图，这种艺术家-赞助人的深度协作关系，是了解整个洛可可运动的一把钥匙。</p>
+  <p><strong>《爱之泉》主题</strong>：这一主题在洛可可绘画中反复出现——爱泉旁的约会、少男少女的眉目传情，充斥着一种刻意营造的甜蜜轻盈。法国大革命后这种"为美而美"的风格迅速被认为是道德腐败的象征，在19世纪长期遭受批评，直到20世纪才重获正名。</p></div>
+</div>
+
+<div class="artwork-card south" id="card-26">
+  <div class="art-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Thomas_Gainsborough_-_Portrait_of_James_Christie.jpg/960px-Thomas_Gainsborough_-_Portrait_of_James_Christie.jpg" alt="James Christie"></div>
+  <div class="room-tag">南馆 二楼 · 18世纪英国绘画</div>
+  <div class="art-title">詹姆斯·克里斯蒂肖像 · <em>Portrait of James Christie</em></div>
+  <div class="art-meta">托马斯·庚斯博罗 · 1778年 · 油画</div>
+  <div class="tags"><span class="tag movement">浪漫主义前期</span><span class="tag price">🏛 克里斯蒂拍卖行创始人</span></div>
+  <div class="art-desc">画中人正是克里斯蒂拍卖行的创始人詹姆斯·克里斯蒂。这幅肖像最终在克里斯蒂拍卖行上拍，由盖蒂购入——命运颇具戏剧性的一个循环。</div>
+  <div class="detail"><h4>深度解读</h4>
+  <p><strong>一个循环的故事</strong>：詹姆斯·克里斯蒂（1730–1803）于1766年创立克里斯蒂拍卖行，至今仍是全球最著名的艺术品拍卖机构之一。他的肖像由好友庚斯博罗绘制，画中背景隐约可见另一幅画的局部——传说是雷诺兹的作品。这幅肖像最终在克里斯蒂拍卖行上拍售出，由盖蒂购入。</p>
+  <p><strong>庚斯博罗的肖像语言</strong>：托马斯·庚斯博罗（1727–1788）是18世纪英国最重要的肖像画家之一，与雷诺兹并驾齐驱。他的肖像风格偏向随意自然，注重人物气质的流露——画中的克里斯蒂神情随意但自信，完全不像在摆姿势。</p>
+  <p><strong>南馆的叙事价值</strong>：将这幅画与南馆的法国洛可可藏品并置，形成18世纪欧洲南北品味的对照：法国宫廷品味的华丽炫目，对照英国中产阶级的务实自信。</p></div>
+</div>
+
+<div class="artwork-card south" id="card-27">
+  <div class="art-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Portrait_of_the_Marquesa_de_Santiago_by_Francisco_de_Goya%2C_1804%2C_Getty_Center.JPG/960px-Portrait_of_the_Marquesa_de_Santiago_by_Francisco_de_Goya%2C_1804%2C_Getty_Center.JPG" alt="戈雅侯爵夫人"></div>
+  <div class="room-tag">南馆 二楼 · 18世纪西班牙绘画</div>
+  <div class="art-title">圣地亚哥侯爵夫人肖像 · <em>Marquesa de Santiago</em></div>
+  <div class="art-meta">弗朗西斯科·戈雅 · 1804年 · 油画</div>
+  <div class="tags"><span class="tag movement">新古典主义</span><span class="tag price">🏛 西班牙国王御用画家</span></div>
+  <div class="art-desc">侯爵夫人以俯视姿态直视观者，黑色背景衬托出面部微妙的复杂表情。这不是歌功颂德的贵族肖像，而是一次对权力与个性的深刻凝视。</div>
+  <div class="detail"><h4>深度解读</h4>
+  <p><strong>戈雅的双重视角</strong>：弗朗西斯科·戈雅（1746–1828）是西班牙历史上最重要的画家，也是欧洲从古典主义向浪漫主义过渡的关键人物。作为西班牙国王查理四世的御用画家，他一方面不得不颂扬贵族和皇室，另一方面又以《战争的灾难》版画系列和"黑色绘画"系列表达对人类暴力的深刻反思。</p>
+  <p><strong>《侯爵夫人》的不寻常之处</strong>：与同时期的法国洛可可肖像相比，这幅画显得克制而内敛。画中夫人没有绚丽服饰，没有甜蜜微笑，而是以一种几乎挑衅式的直视面向观者。</p></div>
+</div>
+
+<div class="artwork-card south" id="card-28">
+  <div class="art-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Getty_Museum_Attributed_to_Andr%C3%A9-Charles_Boulle_1642_-_1732.jpg/960px-Getty_Museum_Attributed_to_Andr%C3%A9-Charles_Boulle_1642_-_1732.jpg" alt="Régence Room"></div>
+  <div class="room-tag">南馆 一楼 · S108</div>
+  <div class="art-title">摄政王镶板房 · <em>Régence Paneled Room</em></div>
+  <div class="art-meta">原 Hôtel de Varengeville · 约 1670–1720 · 巴黎</div>
+  <div class="tags"><span class="tag movement">路易十四 / 摄政王风格</span><span class="tag price">🏛 盖蒂亲自购入的镇馆内饰</span></div>
+  <div class="art-desc">这是南馆最著名的展室：J·保罗·盖蒂本人于1938年将整套宫廷内饰从法国罗昂家族的巴黎公馆拆卸编号运来。护墙板、壁炉大理石镶嵌、天花板线脚，全是原件。房间呈现路易十四晚期至路易十五初期"摄政王风格"（Régence）的过渡美学——巴洛克的宏伟与洛可可的轻盈在此并存。</div>
+  <div class="detail"><h4>深度解读</h4>
+  <p>"摄政王风格"（Régence）出现于路易十四去世后（1715）、路易十五亲政前的短暂时期，以奥尔良公爵菲利普二世摄政得名。风格特征：家具腿部从直线改为弯腿（cabriole leg），装饰从沉重的巴洛克卷草纹转向轻盈的贝壳形与花卉纹，色彩从深暗转向明亮。</p>
+  <p>房间内最引人注目的是 André-Charles Boulle（布勒）风格的写字台，以乌木、黄铜、玳瑁（tortoiseshell）精密拼贴而成——"布勒镶嵌"（Boulle work）此后成为法国宫廷奢华家具的代名词。</p>
+  <p>这套内饰在法国本地流散于大革命后，辗转在英国贵族手中保存至20世纪。盖蒂从伦敦拍卖行购入时，一同购入了完整的原始木工结构、壁炉设备和天花板装饰。</p></div>
+</div>
+
+<div class="artwork-card south" id="card-29">
+  <div class="art-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Paneled_Room_%28salon_de_compagnie%29%2C_by_Claude_Nicolas_Ledoux_%28Getty_107VRX%29.jpg/960px-Paneled_Room_%28salon_de_compagnie%29%2C_by_Claude_Nicolas_Ledoux_%28Getty_107VRX%29.jpg" alt="Ledoux Salon"></div>
+  <div class="room-tag">南馆 一楼 · S107</div>
+  <div class="art-title">洛可可镶板房 · <em>Ledoux Salon de Compagnie</em></div>
+  <div class="art-meta">设计：Claude-Nicolas Ledoux · 约 1730–1755 · 法国</div>
+  <div class="tags"><span class="tag movement">洛可可</span><span class="tag price">🪞 克劳德·尼古拉·勒杜设计</span></div>
+  <div class="art-desc">这间沙龙的护墙板由建筑师克劳德-尼古拉·勒杜（Claude-Nicolas Ledoux, 1736–1806）设计，是他早期洛可可风格的代表作。镶嵌板上的精细雕花——贝壳、涡卷、花束——以浅浮雕方式呈现，整体以乳白色和金色为主，构成典型的路易十五审美：轻盈、不对称、充满生命力的曲线。</div>
+  <div class="detail"><h4>深度解读</h4>
+  <p>勒杜（Ledoux）在建筑史上以晚期的"理想城市"设计（Chaux皇家盐场）著称，被誉为法国启蒙时代最具想象力的建筑师。但他的早期职业生涯其实充满了为贵族设计精美沙龙的室内工作，这间展室正来自那个时期。</p>
+  <p>洛可可室内设计的核心原则是"将整个房间视为一件艺术品"——护墙板、天花板彩绘、家具、瓷器摆件、蜡烛台，所有元素都应在色彩和风格上和谐统一。</p></div>
+</div>
+
+<div class="artwork-card south" id="card-30">
+  <div class="art-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Lidded_Pot-pourri_Vase_%28vase_or_pot-pourri_vaisseau_%C3%A0_m%C3%A2t%2C_deuxi%C3%A8me_grandeur%29%2C_by_Charles-Nicolas_Dodin_%28Getty_103SFE%29.jpg/960px-Lidded_Pot-pourri_Vase_%28vase_or_pot-pourri_vaisseau_%C3%A0_m%C3%A2t%2C_deuxi%C3%A8me_grandeur%29%2C_by_Charles-Nicolas_Dodin_%28Getty_103SFE%29.jpg" alt="Sèvres Porcelain"></div>
+  <div class="room-tag">南馆 一楼 · S110</div>
+  <div class="art-title">塞夫勒皇家瓷器 · <em>Sèvres Porcelain</em></div>
+  <div class="art-meta">Charles-Nicolas Dodin 等 · 1745–1760 · 法国王室御窑</div>
+  <div class="tags"><span class="tag movement">洛可可装饰艺术</span><span class="tag price">🏛 法国以外最重要收藏之一</span></div>
+  <div class="art-desc">塞夫勒是路易十五设立的御用窑口，其"国王蓝"（bleu royal）与"蔷薇粉"（rose Pompadour）是18世纪陶瓷技术与审美的双重顶峰。盖蒂的核心藏品是一对"花船形"有盖香薰瓶，上绘宫廷人物场景。这种软质瓷（pâte tendre）比迈森硬质瓷更柔和，釉面有独特的蜡质光泽。</div>
+  <div class="detail"><h4>深度解读</h4>
+  <p>主要绘瓷师 Charles-Nicolas Dodin（1734–1803）在塞夫勒工作长达44年，专门绘制人物场景（fêtes galantes，牧歌式宫廷场景）。他的瓷绘借鉴了华托、布歇等洛可可画家的构图，将油画的细密技法缩放至方寸之间。</p>
+  <p>蓬巴杜侯爵夫人每年在凡尔赛宫举办私人瓷器销售，直接向贵族推销塞夫勒新品，"蔷薇粉"颜色因此以她命名。</p></div>
+</div>
+
+<div class="artwork-card south" id="card-31">
+  <div class="art-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/The_Toilette_of_Psyche_from_The_Story_of_Psyche_tapestry_series%2C_by_Fran%C3%A7ois_Boucher_%28Getty_103SC9%29.jpg/960px-The_Toilette_of_Psyche_from_The_Story_of_Psyche_tapestry_series%2C_by_Fran%C3%A7ois_Boucher_%28Getty_103SC9%29.jpg" alt="Boucher Tapestry"></div>
+  <div class="room-tag">南馆 一楼 · S102 / S111</div>
+  <div class="art-title">布歇皇家挂毯 · <em>The Story of Psyche</em></div>
+  <div class="art-meta">原稿：弗朗索瓦·布歇 · 约 1737–1745 · 博韦皇家工厂织造</div>
+  <div class="tags"><span class="tag movement">洛可可</span><span class="tag price">🧵 博韦皇家工厂顶级精品</span></div>
+  <div class="art-desc">这套挂毯描绘古希腊神话《丘比特与普赛克》系列，原作由布歇绘制，由博韦皇家工厂（Manufacture royale de Beauvais）织造。挂毯不仅是装饰品——18世纪法国宫廷视之为最昂贵的艺术形式，价格往往超过油画。一面墙的挂毯耗时一年制成，金银线穿插其中，光线下熠熠生辉。</div>
+  <div class="detail"><h4>深度解读</h4>
+  <p>博韦皇家工厂创立于1664年，是法国三大皇家挂毯工厂之一。"皇家"意味着它接受王室和最顶级贵族的委托，制作工艺受国家保密保护。</p>
+  <p>挂毯的展陈通常沿房间四壁连续悬挂，与护墙板和家具构成"总体艺术"（ensemble）。盖蒂南馆的展室保留了这一完整的室内语境。</p></div>
+</div>
+
+<div class="artwork-card south" id="card-32">
+  <div class="art-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/A_Boudoir_%28Louis_XVI._Period%29.jpg/960px-A_Boudoir_%28Louis_XVI._Period%29.jpg" alt="Neoclassical Boudoir"></div>
+  <div class="room-tag">南馆 一楼 · S116</div>
+  <div class="art-title">新古典主义镶板房 · <em>Neoclassical Boudoir</em></div>
+  <div class="art-meta">路易十六风格 · 1765–1795 · 法国</div>
+  <div class="tags"><span class="tag movement">新古典主义</span><span class="tag price">🏛 旧制度最后辉煌</span></div>
+  <div class="art-desc">这间小型起居室（boudoir）代表了18世纪末法国从洛可可向新古典主义的转向：装饰更克制、对称、回归古希腊罗马的纯净线条。1789年法国大革命爆发，宫廷委托骤停，这套展室保存了革命前夕最后几年的宫廷装饰原件。</div>
+  <div class="detail"><h4>深度解读</h4>
+  <p>"路易十六风格"出现于1760年代——比路易十六本人继位（1774年）还早，源自考古发现（庞贝古城、赫库兰尼姆古城）激发的"重返古典"风潮。装饰元素从洛可可的不对称曲线，转回对称的直线、希腊柱式、罗马卷草纹。</p>
+  <p>1789年法国大革命爆发，宫廷委托骤停，大量制作中的家具和护墙板就此散佚。南馆这套展室保存了革命前夕最后几年的宫廷装饰原件，是"旧制度"（Ancien Régime）最后辉煌的实物见证。</p></div>
+</div>
+
+<div class="artwork-card south" id="card-33">
+  <div class="art-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Bust_of_Juliette_R%C3%A9camier_%281777_-_1849%29%2C_by_Joseph_Chinard_%28Getty_103RRS%29.jpg/960px-Bust_of_Juliette_R%C3%A9camier_%281777_-_1849%29%2C_by_Joseph_Chinard_%28Getty_103RRS%29.jpg" alt="Récamier Bust"></div>
+  <div class="room-tag">南馆 一楼 · S114</div>
+  <div class="art-title">雷卡米埃肖像胸像 · <em>Bust of Juliette Récamier</em></div>
+  <div class="art-meta">约瑟夫·希纳尔（Joseph Chinard）· 约 1801–1802 · 赤陶</div>
+  <div class="tags"><span class="tag movement">新古典主义雕塑</span><span class="tag price">🗿 法国大革命后的名媛肖像</span></div>
+  <div class="art-desc">茱莉叶·雷卡米埃是19世纪初巴黎沙龙文化的核心人物，她的肖像被多位艺术家描绘。希纳尔的这件赤陶胸像捕捉了她25岁时的优雅——发髻高挽、目光斜垂，是新古典主义雕塑的典范。</div>
+  <div class="detail"><h4>深度解读</h4>
+  <p>茱莉叶·雷卡米埃在同时代人的回忆录中无处不在——她是夏多布里昂的挚友和情人，是雅克-路易·大卫《雷卡米埃夫人》（1800）名画的主角，也是19世纪上半叶欧洲最受仰慕的女性之一。希纳尔的这座赤陶胸像制作于大卫为她作画后约一两年。</p>
+  <p>S114展室陈列了一批18世纪法国赤陶和大理石雕塑，涵盖神话题材的装饰性小像、贵族肖像胸像，以及克洛狄翁（Clodion）风格的浴女人体。</p></div>
+</div>
+
+<!-- ===== Second exhibit per gallery (N201–N205) ===== -->
+
+<div class="artwork-card" id="card-34">
+  <div class="art-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Simone_Martini_-_St._Luke_-_82.PB.72_-_J._Paul_Getty_Museum.jpg/960px-Simone_Martini_-_St._Luke_-_82.PB.72_-_J._Paul_Getty_Museum.jpg" alt="圣路加"></div>
+  <div class="room-tag">北馆 二楼 · N201</div>
+  <div class="art-title">圣路加 · <em>St. Luke</em></div>
+  <div class="art-meta">西蒙·马蒂尼（Simone Martini）· 约1330年 · 蛋彩 · 金箔 · 木板</div>
+  <div class="tags"><span class="tag movement">锡耶纳哥特式</span><span class="tag price">✒️ 圣路加是画家行会的主保圣人</span></div>
+  <div class="art-desc">圣路加手执笔墨、低首凝视羊皮纸，周身环绕金色锦纹底板与哥特式建筑小龛——这是14世纪锡耶纳画派的典型语汇：用黄金构筑神圣，用优雅线条描绘人性。这件作品来自一组原本属于祭坛画的小尺寸圣徒像。</div>
+  <div class="detail"><h4>深度解读</h4>
+  <p>圣路加（St. Luke）被传统认为是新约《路加福音》的作者，相传他也曾为圣母玛利亚绘制肖像，因此被尊为画家行会的主保圣人。文艺复兴及之前的画家们常以他为题材，既是宗教献礼，也是行业自勉。</p>
+  <p>西蒙·马蒂尼（约1284–1344）继承杜乔（Duccio）的锡耶纳传统，画面以纯金箔做底——金箔不只是装饰，而是宗教语言：它代表神圣不灭的光辉，让圣徒形象脱离凡俗时空。他晚年在法国阿维尼翁教廷工作，影响了整个国际哥特式（International Gothic）风潮。</p></div>
+</div>
+
+<div class="artwork-card" id="card-35">
+  <div class="art-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Vittore_Carpaccio_-_Hunting_on_the_Lagoon_%28recto%29%2C_Letter_Rack_%28verso%29_-_79.PB.72_-_J._Paul_Getty_Museum.jpg/960px-Vittore_Carpaccio_-_Hunting_on_the_Lagoon_%28recto%29%2C_Letter_Rack_%28verso%29_-_79.PB.72_-_J._Paul_Getty_Museum.jpg" alt="潟湖狩猎"></div>
+  <div class="room-tag">北馆 二楼 · N202</div>
+  <div class="art-title">潟湖狩猎 · <em>Hunting on the Lagoon</em></div>
+  <div class="art-meta">维托雷·卡尔帕乔（Vittore Carpaccio）· 约1490–1495 · 油彩 · 木板</div>
+  <div class="tags"><span class="tag movement">威尼斯文艺复兴</span><span class="tag price">🦆 与威尼斯科雷尔博物馆藏《两位威尼斯贵妇》原属同一画</span></div>
+  <div class="art-desc">渔民在潟湖里用弓弩猎水鸟——这是15世纪末威尼斯日常的一帧静默切片。但这幅画真正出名的，是它的下半身：科雷尔博物馆有一幅《两位威尼斯贵妇》（曾被罗斯金称为"世界上最美的画"），多年后学者才发现两者原本是同一木板的上下两段。</div>
+  <div class="detail"><h4>深度解读</h4>
+  <p>卡尔帕乔是15世纪威尼斯画派最重要的叙事画家之一，与贝里尼（Bellini）兄弟同时代。他擅长把宗教题材包装在威尼斯日常生活的场景里——背景里的运河、贡多拉、晾衣绳、烟囱，都比主角更生动。</p>
+  <p>《潟湖狩猎》的下半部曾长期独立存在，直到1963年学者将它与威尼斯的《两位威尼斯贵妇》并置——画里贵妇身后阳台栏杆上有一支百合的茎，茎的另一端正好出现在 Getty 这件作品的下边缘。两幅画从此被视为原本一体的木板（可能是一扇橱柜门）。一件双面画：背面（在 Getty 这块上）画的是模拟书信架（trompe-l'œil letter rack），早期错视画的代表作。</p></div>
+</div>
+
+<div class="artwork-card" id="card-36">
+  <div class="art-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Jan_Gossaert_-_The_Holy_Family_-_71.PB.45_-_J._Paul_Getty_Museum.jpg/960px-Jan_Gossaert_-_The_Holy_Family_-_71.PB.45_-_J._Paul_Getty_Museum.jpg" alt="圣家族"></div>
+  <div class="room-tag">北馆 二楼 · N203</div>
+  <div class="art-title">圣家族 · <em>The Holy Family</em></div>
+  <div class="art-meta">扬·戈塞特（Jan Gossaert / Mabuse）· 约1507–1508 · 油彩 · 木板</div>
+  <div class="tags"><span class="tag movement">尼德兰文艺复兴</span><span class="tag price">🇮🇹 北方画家最早一批受意大利古典影响的</span></div>
+  <div class="art-desc">戈塞特用尼德兰画派典型的细腻笔触描绘圣母圣子与约瑟夫，但人物的造型——尤其圣母衣袍的褶皱、圣子的人体比例——已能看见他刚从意大利学到的古典样式。</div>
+  <div class="detail"><h4>深度解读</h4>
+  <p>扬·戈塞特（约1478–1532）通常被认为是把意大利文艺复兴风格引入北方的关键人物。1508–1509年他随勃艮第大公菲利普赴罗马，亲眼看到古代雕塑残件与拉斐尔、米开朗琪罗等人的新作品，回到尼德兰后，他的画里开始出现明显的肌肉、阴影、人体姿态的对比——这在传统尼德兰画派里非常少见。</p>
+  <p>这件《圣家族》大致绘于他动身去意大利前后。圣母的脸庞还保留北方画派的清纯，但约瑟夫粗壮的手臂、衣袍厚重的雕塑感，已经在向意大利风格转型。</p></div>
+</div>
+
+<div class="artwork-card" id="card-37">
+  <div class="art-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Lorenzo_Lotto_-_Madonna_and_Child_with_Two_Donors_-_77.PA.110_-_J._Paul_Getty_Museum.jpg/960px-Lorenzo_Lotto_-_Madonna_and_Child_with_Two_Donors_-_77.PA.110_-_J._Paul_Getty_Museum.jpg" alt="圣母子与两位捐赠人"></div>
+  <div class="room-tag">北馆 二楼 · N204</div>
+  <div class="art-title">圣母子与两位捐赠人 · <em>Madonna and Child with Two Donors</em></div>
+  <div class="art-meta">洛伦佐·洛托（Lorenzo Lotto）· 约1525–1530 · 油彩 · 画布</div>
+  <div class="tags"><span class="tag movement">威尼斯文艺复兴</span><span class="tag price">🙏 委托画 · 把出资人画进画里</span></div>
+  <div class="art-desc">圣母怀抱圣婴，两位捐赠者（出资委托此画的世俗夫妻）跪在两侧，与圣母同框接受祝福——这是文艺复兴典型的"出资人肖像"（donor portrait）传统。洛托是与提香（Titian）同时代的威尼斯画家，但风格更内省、心理更细腻。</div>
+  <div class="detail"><h4>深度解读</h4>
+  <p>洛伦佐·洛托（1480–1556/57）一生颠沛流离，没有像提香那样定居威尼斯获得稳定的宫廷订单，反而长年在威尼托（Veneto）、马尔凯（Marche）小城工作，给地方贵族和教会画委托画。也因此他的人物更朴实、有人间烟火气，少了威尼斯画派常见的官方铺张。</p>
+  <p>这件画的两位捐赠者身份至今未明，但他们与圣母同处一个画面空间——这意味着他们花了大笔金钱让自己被永远"放进神圣场景里"，是文艺复兴宗教绘画里典型的私人订制结构。</p></div>
+</div>
+
+<div class="artwork-card" id="card-38">
+  <div class="art-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Titian_Portrait_of_Alfonso_d%27Avalos%2C_Marchese_del_Vasto%2C_in_Armor_with_a_Page_Getty_Museum.jpg/960px-Titian_Portrait_of_Alfonso_d%27Avalos%2C_Marchese_del_Vasto%2C_in_Armor_with_a_Page_Getty_Museum.jpg" alt="阿尔丰索·达瓦洛斯肖像"></div>
+  <div class="room-tag">北馆 二楼 · N205</div>
+  <div class="art-title">阿尔丰索·达瓦洛斯肖像 · <em>Portrait of Alfonso d'Avalos, Marquis of Vasto, in Armor with a Page</em></div>
+  <div class="art-meta">提香（Titian / Tiziano Vecellio）· 约1533 · 油彩 · 画布</div>
+  <div class="tags"><span class="tag movement">威尼斯盛期文艺复兴</span><span class="tag price">⚔️ 提香最早的"全身武装贵族像"之一</span></div>
+  <div class="art-desc">提香为西班牙国王查理五世的将军阿尔丰索·达瓦洛斯（瓦斯托侯爵）所作的全身武装肖像，是欧洲后来三百年所有"将军 + 副官 + 全甲"肖像的范式之祖。侯爵手按军杖，身披全套米兰式盔甲，身侧站着一位手持头盔的少年侍从——画里每一个元素都在宣告权力的合法性。</div>
+  <div class="detail"><h4>深度解读</h4>
+  <p>提香（约1488/90–1576）是威尼斯画派的中流砥柱，也是欧洲第一位真正国际化的肖像画家——他的客户名单从威尼斯总督一路到神圣罗马帝国皇帝。这件画绘于他职业生涯的中期，刚开始接受哈布斯堡王朝大量的肖像委托。</p>
+  <p>阿尔丰索·达瓦洛斯（1502–1546）是查理五世帝国军队最重要的将领之一，参与了1527年的"罗马之劫"（Sack of Rome）。提香给他设计的姿态——一手按军杖、目光斜视画外、由侍从托举头盔——成为之后委拉斯凯兹（Velázquez）画西班牙王室子嗣、范戴克（Van Dyck）画查理一世的视觉模板。</p></div>
+</div>
+
 </div>
 
 <style>
@@ -576,6 +1264,8 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   display: inline-block; font-size: 0.6rem; letter-spacing: 0.14em;
   color: var(--north); font-weight: 700; margin: 1.4rem 1.6rem 0.6rem; text-transform: uppercase;
 }
+.artwork-card.south .room-tag { color: var(--south); }
+.artwork-card.south .tag.movement { background: var(--south-lt); color: var(--south); }
 .artwork-card .art-title {
   font-family: 'Cormorant Garamond', serif; font-size: 1.55rem; font-weight: 500;
   margin: 0 1.6rem .5rem; line-height: 1.2;
@@ -608,6 +1298,264 @@ document.querySelectorAll('.art-pin').forEach(btn => {
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeModal({target: document.getElementById('modal'), currentTarget: document.getElementById('modal')});
 });
+
+/* ===== Location widget: GPS detect (pavilion-level) + manual override ===== */
+(function() {
+  // Getty Center reference coords (Wikipedia: 34.0778°N, -118.4741°W).
+  // North and South Pavilions sit on opposite sides of the central plaza,
+  // separated by ~50–80m. GPS indoor accuracy is ~15-40m so the closer-of-two
+  // heuristic gives a reasonable hint but not a guarantee.
+  var GETTY_LAT = 34.0781, GETTY_LON = -118.4741;
+  var NORTH_LAT = 34.0784, NORTH_LON = -118.4744;
+  var SOUTH_LAT = 34.0775, SOUTH_LON = -118.4738;
+  var GETTY_RADIUS_M = 300;  // ~300m around the Getty complex
+
+  function haversine(lat1, lon1, lat2, lon2) {
+    var R = 6371000;
+    var toRad = function(d) { return d * Math.PI / 180; };
+    var dLat = toRad(lat2 - lat1), dLon = toRad(lon2 - lon1);
+    var a = Math.sin(dLat/2)*Math.sin(dLat/2) +
+            Math.cos(toRad(lat1))*Math.cos(toRad(lat2)) *
+            Math.sin(dLon/2)*Math.sin(dLon/2);
+    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  }
+
+  var widget = document.getElementById('locWidget');
+  var textEl = document.getElementById('locText');
+  if (!widget || !textEl) return;
+  var btns = widget.querySelectorAll('.loc-btn');
+
+  var mode = 'auto';           // 'auto' | 'north' | 'south'
+  var autoResult = null;       // 'north' | 'south' | 'far' | 'denied' | 'unavailable' | null (still detecting)
+  var lastDistanceM = null;
+
+  function highlightPavilion(p) {
+    document.querySelectorAll('.pav-divider').forEach(function(d) {
+      var match = (p === 'north' && d.classList.contains('north')) ||
+                  (p === 'south' && d.classList.contains('south'));
+      d.classList.toggle('active-pavilion', match);
+    });
+  }
+
+  function render() {
+    btns.forEach(function(b) { b.classList.toggle('active', b.dataset.mode === mode); });
+    if (mode === 'auto') {
+      if (autoResult === 'north') {
+        textEl.textContent = '在盖蒂中心 · 北馆';
+        highlightPavilion('north');
+      } else if (autoResult === 'south') {
+        textEl.textContent = '在盖蒂中心 · 南馆';
+        highlightPavilion('south');
+      } else if (autoResult === 'far') {
+        textEl.textContent = '不在盖蒂中心（距 ' + Math.round(lastDistanceM) + 'm）';
+        highlightPavilion(null);
+      } else if (autoResult === 'denied') {
+        textEl.textContent = '定位权限被拒，请用手动';
+        highlightPavilion(null);
+      } else if (autoResult === 'unavailable') {
+        textEl.textContent = '定位不可用';
+        highlightPavilion(null);
+      } else {
+        textEl.textContent = '检测中…';
+      }
+    } else if (mode === 'north') {
+      textEl.textContent = '手动：北馆';
+      highlightPavilion('north');
+    } else if (mode === 'south') {
+      textEl.textContent = '手动：南馆';
+      highlightPavilion('south');
+    }
+  }
+
+  function detect() {
+    if (!('geolocation' in navigator)) {
+      autoResult = 'unavailable';
+      render();
+      return;
+    }
+    navigator.geolocation.getCurrentPosition(
+      function(pos) {
+        var lat = pos.coords.latitude, lon = pos.coords.longitude;
+        var distToGetty = haversine(lat, lon, GETTY_LAT, GETTY_LON);
+        lastDistanceM = distToGetty;
+        if (distToGetty > GETTY_RADIUS_M) {
+          autoResult = 'far';
+        } else {
+          var dn = haversine(lat, lon, NORTH_LAT, NORTH_LON);
+          var ds = haversine(lat, lon, SOUTH_LAT, SOUTH_LON);
+          autoResult = (dn < ds) ? 'north' : 'south';
+        }
+        render();
+      },
+      function(err) {
+        autoResult = (err.code === err.PERMISSION_DENIED) ? 'denied' : 'unavailable';
+        render();
+      },
+      { enableHighAccuracy: false, timeout: 8000, maximumAge: 60000 }
+    );
+  }
+
+  btns.forEach(function(b) {
+    b.addEventListener('click', function() {
+      mode = b.dataset.mode;
+      if (mode === 'auto') {
+        autoResult = null;
+        render();
+        detect();
+      } else {
+        render();
+      }
+    });
+  });
+
+  render();
+  detect();
+})();
+
+/* ===== Visit-track widget: click a room to mark visited; persists via localStorage ===== */
+(function() {
+  var KEY = 'getty-n2f-visit-order';
+  var visitOrder;
+  try { visitOrder = JSON.parse(localStorage.getItem(KEY) || '[]') || []; }
+  catch (e) { visitOrder = []; }
+
+  var historyEl = document.getElementById('visitHistory');
+  var clearBtn = document.getElementById('visitClear');
+  if (!historyEl || !clearBtn) return;
+
+  function save() {
+    try { localStorage.setItem(KEY, JSON.stringify(visitOrder)); } catch (e) {}
+  }
+
+  function recordVisit(room) {
+    // Toggle: clicking the same room as the last entry pops it (undo).
+    // Otherwise append. (Same room can re-appear later in the sequence.)
+    if (visitOrder.length > 0 && visitOrder[visitOrder.length - 1] === room) {
+      visitOrder.pop();
+    } else {
+      visitOrder.push(room);
+    }
+    save();
+    render();
+  }
+
+  function clearAll() {
+    visitOrder = [];
+    save();
+    render();
+  }
+
+  // Geometric centers for each gallery room — used for the trail polyline and the "you are here" marker.
+  var ROOM_CENTERS = {
+    N201: { x: 225, y: 650 },
+    N202: { x: 515, y: 430 },
+    N203: { x: 430, y: 250 },
+    N204: { x: 810, y: 500 },
+    N205: { x: 810, y: 845 }
+  };
+
+  function render() {
+    // Compute first-visit order per unique room.
+    var firstOrder = {};
+    var visitedSet = {};
+    visitOrder.forEach(function(room, i) {
+      if (!(room in firstOrder)) firstOrder[room] = i + 1;
+      visitedSet[room] = true;
+    });
+
+    // Update corner badges (numbers = first-visit order).
+    document.querySelectorAll('.visit-badge').forEach(function(badge) {
+      var room = badge.dataset.room;
+      if (room in firstOrder) {
+        badge.classList.add('shown');
+        var t = badge.querySelector('text');
+        if (t) t.textContent = firstOrder[room];
+      } else {
+        badge.classList.remove('shown');
+      }
+    });
+
+    // Tint visited rooms with a translucent gold overlay.
+    document.querySelectorAll('.room-tint').forEach(function(tint) {
+      tint.classList.toggle('shown', !!visitedSet[tint.dataset.room]);
+    });
+
+    // Draw the dashed trail polyline through visited room centers.
+    var pathEl = document.getElementById('visitPathLine');
+    if (pathEl) {
+      if (visitOrder.length > 1) {
+        var pts = visitOrder
+          .map(function(r) { var c = ROOM_CENTERS[r]; return c ? c.x + ',' + c.y : ''; })
+          .filter(function(s) { return s; })
+          .join(' ');
+        pathEl.setAttribute('points', pts);
+      } else {
+        pathEl.setAttribute('points', '');
+      }
+    }
+
+    // Position the pulsing red "you are here NOW" marker at the most recent room center.
+    var marker = document.getElementById('currentMarker');
+    if (marker) {
+      if (visitOrder.length > 0) {
+        var lastRoom = visitOrder[visitOrder.length - 1];
+        var c = ROOM_CENTERS[lastRoom];
+        if (c) {
+          marker.setAttribute('transform', 'translate(' + c.x + ',' + c.y + ')');
+          marker.classList.add('shown');
+        }
+      } else {
+        marker.classList.remove('shown');
+      }
+    }
+
+    // Update top widget history display; mark the last tag as .current (red).
+    if (visitOrder.length === 0) {
+      historyEl.innerHTML = '<span class="vt-empty">点房间记录</span>';
+    } else {
+      var parts = [];
+      visitOrder.forEach(function(r, i) {
+        if (i > 0) parts.push('<span class="vt-sep">→</span>');
+        var cls = (i === visitOrder.length - 1) ? 'visit-tag current' : 'visit-tag';
+        parts.push('<span class="' + cls + '">' + r + '</span>');
+      });
+      historyEl.innerHTML = parts.join('');
+    }
+  }
+
+  document.querySelectorAll('.room-tap').forEach(function(rect) {
+    rect.addEventListener('click', function() {
+      recordVisit(rect.dataset.room);
+    });
+  });
+
+  clearBtn.addEventListener('click', clearAll);
+
+  render();
+})();
+
+/* ===== Large-text mode toggle (elderly-friendly) ===== */
+(function() {
+  var KEY = 'getty-n2f-large-text';
+  var btn = document.getElementById('largeTextBtn');
+  if (!btn) return;
+
+  var enabled = false;
+  try { enabled = localStorage.getItem(KEY) === '1'; } catch (e) {}
+
+  function apply() {
+    document.documentElement.classList.toggle('large-text', enabled);
+    btn.classList.toggle('active', enabled);
+    btn.setAttribute('aria-pressed', enabled ? 'true' : 'false');
+  }
+  apply();
+
+  btn.addEventListener('click', function() {
+    enabled = !enabled;
+    try { localStorage.setItem(KEY, enabled ? '1' : '0'); } catch (e) {}
+    apply();
+  });
+})();
 </script>
 
 </body>
