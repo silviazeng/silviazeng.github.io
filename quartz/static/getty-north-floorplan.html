@@ -226,6 +226,80 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 .footprint { fill: #b8923a; opacity: 0.88; }
 .footprint ellipse, .footprint circle { fill: #b8923a; }
 
+/* ===== N1F (image-based plan) overlays: HTML click targets + HTML badges +
+   SVG footprint layer. Positioned absolutely over the PNG image so the
+   visual feedback rides on top of the floor plan. ===== */
+.floor-canvas { /* (already exists; just adding overlay-related rules below) */ }
+
+.room-tap-img {
+  position: absolute;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  transition: background .15s;
+  z-index: 2;
+}
+.room-tap-img:hover { background: rgba(184, 146, 58, 0.10); }
+
+.visit-badge-img {
+  position: absolute;
+  width: 32px; height: 32px;
+  margin-left: -16px; margin-top: -16px;  /* center on coord */
+  border-radius: 50%;
+  background: var(--gold);
+  color: #fff;
+  border: 2.5px solid #fff;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-family: sans-serif;
+  font-weight: 700;
+  font-size: 0.7rem;
+  pointer-events: none;
+  z-index: 4;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+}
+.visit-badge-img.shown { display: flex; }
+
+.footprint-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 3;
+}
+.footprint-overlay .footprint { fill: #b8923a; opacity: 0.88; }
+.footprint-overlay .footprint ellipse,
+.footprint-overlay .footprint circle { fill: #b8923a; }
+
+.current-marker-img {
+  position: absolute;
+  width: 38px; height: 38px;
+  margin-left: -19px; margin-top: -19px;
+  pointer-events: none;
+  z-index: 4;
+  display: none;
+}
+.current-marker-img.shown { display: block; }
+.current-marker-img .cm-pulse {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: rgba(168, 62, 42, 0.28);
+  animation: currentPulse 1.8s ease-out infinite;
+  transform-origin: center;
+}
+.current-marker-img .cm-dot {
+  position: absolute;
+  inset: 7px;
+  border-radius: 50%;
+  background: #a83e2a;
+  border: 3px solid #fff;
+}
+
 /* ===== Room-theme toast (slides down from top when a room is visited for the first time) ===== */
 .room-toast {
   position: fixed;
@@ -967,8 +1041,27 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
     <p class="floor-desc">低光展厅珍藏彩饰手稿、中世纪彩色玻璃、奥格斯堡珍藏柜与威尼斯丝线玻璃。<em style="font-style:normal;color:var(--muted);font-size:.7rem">（无实体标牌照片，使用 Getty 2010 官方 PDF 平面图）</em></p>
   </div>
   <div class="floor-plan">
-    <div class="floor-canvas f1">
+    <div class="floor-canvas f1" id="floorCanvas1F">
       <img class="floor-bg tinted" src="getty-north-1f-plan.png" alt="北馆一楼平面图（Getty 官方 PDF）">
+      <!-- Room click targets (transparent HTML buttons over the image) -->
+      <button class="room-tap-img" data-room="N101" style="left:64%;top:73%;width:35%;height:26%" aria-label="N101 彩饰手稿"></button>
+      <button class="room-tap-img" data-room="N102" style="left:38%;top:64%;width:27%;height:32%" aria-label="N102 中世纪装饰艺术"></button>
+      <button class="room-tap-img" data-room="N103" style="left:13%;top:64%;width:26%;height:32%" aria-label="N103 彩色玻璃"></button>
+      <button class="room-tap-img" data-room="N104" style="left:13%;top:38%;width:26%;height:26%" aria-label="N104 玻璃与陶瓷"></button>
+      <!-- Footprint SVG overlay (440×260 to match the PNG aspect ratio) -->
+      <svg class="footprint-overlay" viewBox="0 0 440 260" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+        <g id="footsteps-1f"></g>
+      </svg>
+      <!-- Visit badges (HTML divs positioned at room corners, hidden by default) -->
+      <div class="visit-badge-img" data-room="N101" style="left:67%;top:75%">1</div>
+      <div class="visit-badge-img" data-room="N102" style="left:42%;top:67%">1</div>
+      <div class="visit-badge-img" data-room="N103" style="left:17%;top:67%">1</div>
+      <div class="visit-badge-img" data-room="N104" style="left:17%;top:42%">1</div>
+      <!-- Current-position pulsing red marker -->
+      <div class="current-marker-img" id="currentMarker1F" style="left:50%;top:50%">
+        <div class="cm-pulse"></div>
+        <div class="cm-dot"></div>
+      </div>
       <!-- Pins (positions in % of image 440x260) -->
       <button class="art-pin" data-card="card-21" style="left:81%;top:88%" title="彩饰手稿 N101">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Personnages_de_la_sc%C3%A8ne_de_Janvier_%28Fr%C3%A8res_Limbourg_%3F%29_-_Tr%C3%A8s_Riches_Heures_du_duc_de_Berry_%28f.1%29.jpg/960px-Personnages_de_la_sc%C3%A8ne_de_Janvier_%28Fr%C3%A8res_Limbourg_%3F%29_-_Tr%C3%A8s_Riches_Heures_du_duc_de_Berry_%28f.1%29.jpg" alt="彩饰手稿">
@@ -986,6 +1079,12 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Getty_Center_-_Filigrana_Beaker.JPG/960px-Getty_Center_-_Filigrana_Beaker.JPG" alt="欧洲玻璃与陶瓷">
         <span class="pin-num">21</span>
       </button>
+    </div>
+    <div class="floor-legend" aria-label="北馆一楼各展厅主题">
+      <div class="legend-item"><span class="legend-room">N 101</span><span class="legend-theme">彩饰手稿 · <em>Illuminated Manuscripts</em></span></div>
+      <div class="legend-item"><span class="legend-room">N 102</span><span class="legend-theme">中世纪装饰艺术 · <em>Medieval Decorative Arts</em></span></div>
+      <div class="legend-item"><span class="legend-room">N 103</span><span class="legend-theme">彩色玻璃 · <em>Stained Glass</em></span></div>
+      <div class="legend-item"><span class="legend-room">N 104</span><span class="legend-theme">欧洲玻璃与陶瓷 · <em>European Glass & Ceramics</em></span></div>
     </div>
     <div class="floor-foot">N · NORTH PAVILION · 1F · 官方平面图</div>
   </div>
@@ -1555,7 +1654,34 @@ document.addEventListener('keydown', (e) => {
   detect();
 })();
 
-/* ===== Visit-track widget: click a room to mark visited; persists via localStorage ===== */
+/* ===== Shared visit-tracking utilities (used by both floor trackers) ===== */
+// Theme strings shown when a room is visited for the FIRST time (badge appears).
+var ROOM_THEMES = {
+  N201: '<span class="rt-num">N 201</span><span class="rt-theme">意大利绘画 · <em>Italian Paintings</em> · 1300–1400</span>',
+  N202: '<span class="rt-num">N 202</span><span class="rt-theme">欧洲绘画 · <em>European Paintings</em> · 1400–1500</span>',
+  N203: '<span class="rt-num">N 203</span><span class="rt-theme">北方欧洲绘画 · <em>Northern European</em> · 1400–1600</span>',
+  N204: '<span class="rt-num">N 204</span><span class="rt-theme">意大利绘画 · <em>Italian Paintings</em> · 1500–1600</span>',
+  N205: '<span class="rt-num">N 205</span><span class="rt-theme">意大利绘画 · <em>Italian Paintings</em> · 1500–1600</span>',
+  N101: '<span class="rt-num">N 101</span><span class="rt-theme">彩饰手稿 · <em>Illuminated Manuscripts</em></span>',
+  N102: '<span class="rt-num">N 102</span><span class="rt-theme">中世纪装饰艺术 · <em>Medieval Decorative Arts</em></span>',
+  N103: '<span class="rt-num">N 103</span><span class="rt-theme">彩色玻璃 · <em>Stained Glass</em></span>',
+  N104: '<span class="rt-num">N 104</span><span class="rt-theme">欧洲玻璃与陶瓷 · <em>European Glass &amp; Ceramics</em></span>'
+};
+var toastTimer = null;
+function showRoomToast(room) {
+  var toast = document.getElementById('roomToast');
+  if (!toast || !ROOM_THEMES[room]) return;
+  toast.innerHTML = ROOM_THEMES[room];
+  if (toast.classList.contains('shown')) {
+    toast.classList.remove('shown');
+    void toast.offsetWidth;
+  }
+  requestAnimationFrame(function() { toast.classList.add('shown'); });
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function() { toast.classList.remove('shown'); }, 3200);
+}
+
+/* ===== N2F visit tracker (SVG floor plan, header widget) ===== */
 (function() {
   var KEY = 'getty-n2f-visit-order';
   var visitOrder;
@@ -1568,36 +1694,6 @@ document.addEventListener('keydown', (e) => {
 
   function save() {
     try { localStorage.setItem(KEY, JSON.stringify(visitOrder)); } catch (e) {}
-  }
-
-  // Theme strings shown when a room is visited for the FIRST time (badge appears).
-  var ROOM_THEMES = {
-    N201: '<span class="rt-num">N 201</span><span class="rt-theme">意大利绘画 · <em>Italian Paintings</em> · 1300–1400</span>',
-    N202: '<span class="rt-num">N 202</span><span class="rt-theme">欧洲绘画 · <em>European Paintings</em> · 1400–1500</span>',
-    N203: '<span class="rt-num">N 203</span><span class="rt-theme">北方欧洲绘画 · <em>Northern European</em> · 1400–1600</span>',
-    N204: '<span class="rt-num">N 204</span><span class="rt-theme">意大利绘画 · <em>Italian Paintings</em> · 1500–1600</span>',
-    N205: '<span class="rt-num">N 205</span><span class="rt-theme">意大利绘画 · <em>Italian Paintings</em> · 1500–1600</span>'
-  };
-  var toastTimer = null;
-  function showRoomToast(room) {
-    var toast = document.getElementById('roomToast');
-    if (!toast || !ROOM_THEMES[room]) return;
-    // Always replace content + (re)show + reset dismiss timer.
-    // If the previous toast is still on screen, this means it gets swapped to
-    // the new room instantly. Then we replay the slide-in animation by briefly
-    // dropping the .shown class on a separate frame.
-    toast.innerHTML = ROOM_THEMES[room];
-    if (toast.classList.contains('shown')) {
-      toast.classList.remove('shown');
-      void toast.offsetWidth;        // force reflow so the next class change actually transitions
-    }
-    requestAnimationFrame(function() {
-      toast.classList.add('shown');
-    });
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(function() {
-      toast.classList.remove('shown');
-    }, 3200);
   }
 
   function recordVisit(room) {
@@ -1780,6 +1876,147 @@ document.addEventListener('keydown', (e) => {
   });
 
   clearBtn.addEventListener('click', clearAll);
+
+  render();
+})();
+
+/* ===== N1F visit tracker (image-based plan, HTML overlay + SVG footprints) ===== */
+(function() {
+  var KEY = 'getty-n1f-visit-order';
+  var visitOrder;
+  try { visitOrder = JSON.parse(localStorage.getItem(KEY) || '[]') || []; }
+  catch (e) { visitOrder = []; }
+
+  // Room centers in PNG-space coordinates (0..440 × 0..260 — same as SVG overlay viewBox).
+  var ROOM_CENTERS = {
+    N101: { x: 356.4, y: 228.8 },
+    N102: { x: 233.2, y: 202.8 },
+    N103: { x: 132,   y: 202.8 },
+    N104: { x: 132,   y: 143   }
+  };
+
+  function save() {
+    try { localStorage.setItem(KEY, JSON.stringify(visitOrder)); } catch (e) {}
+  }
+
+  function recordVisit(room) {
+    var existingIndex = visitOrder.indexOf(room);
+    var lastIndex = visitOrder.length - 1;
+    if (existingIndex !== -1 && existingIndex === lastIndex) {
+      visitOrder.pop();
+    } else if (existingIndex !== -1) {
+      visitOrder = visitOrder.slice(0, existingIndex + 1);
+      showRoomToast(room);
+    } else {
+      visitOrder.push(room);
+      showRoomToast(room);
+    }
+    save();
+    render();
+  }
+
+  function render() {
+    var firstOrder = {};
+    var visitedSet = {};
+    visitOrder.forEach(function(room, i) {
+      if (!(room in firstOrder)) firstOrder[room] = i + 1;
+      visitedSet[room] = true;
+    });
+
+    // HTML corner badges
+    document.querySelectorAll('.visit-badge-img').forEach(function(badge) {
+      var room = badge.dataset.room;
+      if (room in firstOrder) {
+        badge.classList.add('shown');
+        badge.textContent = firstOrder[room];
+      } else {
+        badge.classList.remove('shown');
+      }
+    });
+
+    // Pulsing red current-position marker (HTML, positioned by % of container)
+    var marker = document.getElementById('currentMarker1F');
+    if (marker) {
+      if (visitOrder.length > 0) {
+        var lastRoom = visitOrder[visitOrder.length - 1];
+        var c = ROOM_CENTERS[lastRoom];
+        if (c) {
+          marker.style.left = (c.x / 440 * 100).toFixed(2) + '%';
+          marker.style.top  = (c.y / 260 * 100).toFixed(2) + '%';
+          marker.classList.add('shown');
+        }
+      } else {
+        marker.classList.remove('shown');
+      }
+    }
+
+    // SVG footstep overlay (coords in 0..440 × 0..260)
+    var feetGroup = document.getElementById('footsteps-1f');
+    if (feetGroup) {
+      var SVG_NS = 'http://www.w3.org/2000/svg';
+      while (feetGroup.firstChild) feetGroup.removeChild(feetGroup.firstChild);
+      for (var i = 0; i < visitOrder.length - 1; i++) {
+        var a = ROOM_CENTERS[visitOrder[i]];
+        var b = ROOM_CENTERS[visitOrder[i + 1]];
+        if (!a || !b) continue;
+        var dx = b.x - a.x;
+        var dy = b.y - a.y;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 1) continue;
+        var rot = Math.atan2(dy, dx) * 180 / Math.PI + 90;
+        var px = -dy / dist;
+        var py = dx / dist;
+        var perpOffset = 4;             // smaller offset in this coordinate space
+        var stepLen = 16;               // step every ~16 PNG-units
+        var numSteps = Math.max(2, Math.round(dist / stepLen));
+        for (var j = 0; j < numSteps; j++) {
+          var t = (j + 0.5) / numSteps;
+          var fx = a.x + dx * t;
+          var fy = a.y + dy * t;
+          var side = (j % 2 === 0) ? 1 : -1;
+          fx += px * perpOffset * side;
+          fy += py * perpOffset * side;
+          var foot = document.createElementNS(SVG_NS, 'g');
+          foot.setAttribute('class', 'footprint');
+          foot.setAttribute('transform',
+            'translate(' + fx.toFixed(1) + ',' + fy.toFixed(1) + ') ' +
+            'rotate(' + rot.toFixed(1) + ')'
+          );
+          // body (smaller because coords are ~1/4 of N2F SVG scale)
+          var body = document.createElementNS(SVG_NS, 'path');
+          body.setAttribute('d',
+            'M -2.4 -2.8 ' +
+            'C -2.4 -5.4 2.4 -5.4 2.4 -2.8 ' +
+            'C 2.4 -1.4 1.5 -0.5 1.5 0.5 ' +
+            'C 1.5 1.4 1.9 2.4 1.9 3.4 ' +
+            'C 1.9 5.3 -1.9 5.3 -1.9 3.4 ' +
+            'C -1.9 2.4 -1.5 1.4 -1.5 0.5 ' +
+            'C -1.5 -0.5 -2.4 -1.4 -2.4 -2.8 Z'
+          );
+          foot.appendChild(body);
+          var bigToeOnLeft = (side === 1);
+          var toes = bigToeOnLeft
+            ? [[-1.7, -5.6, 0.82], [-0.75, -6.4, 0.7], [0.2, -6.7, 0.62], [1.05, -6.45, 0.55], [1.75, -5.95, 0.48]]
+            : [[-1.75, -5.95, 0.48], [-1.05, -6.45, 0.55], [-0.2, -6.7, 0.62], [0.75, -6.4, 0.7], [1.7, -5.6, 0.82]];
+          for (var k = 0; k < 5; k++) {
+            var toe = document.createElementNS(SVG_NS, 'circle');
+            toe.setAttribute('cx', String(toes[k][0]));
+            toe.setAttribute('cy', String(toes[k][1]));
+            toe.setAttribute('r',  String(toes[k][2]));
+            foot.appendChild(toe);
+          }
+          feetGroup.appendChild(foot);
+        }
+      }
+    }
+  }
+
+  // Wire up the click overlays
+  document.querySelectorAll('.room-tap-img').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      recordVisit(btn.dataset.room);
+    });
+  });
 
   render();
 })();
