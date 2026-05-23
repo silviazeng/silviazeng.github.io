@@ -360,33 +360,39 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 .art-read-btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.55rem;
   margin: 1rem 1.6rem 0;
-  padding: 0.55rem 1.1rem;
+  padding: 0.7rem 1.3rem;
   background: var(--gold);
   color: #fff;
-  border: none;
-  border-radius: 24px;
-  font-size: 0.85rem;
+  border: 2px solid #fff;
+  border-radius: 30px;
+  font-size: 0.95rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   cursor: pointer;
   font-family: 'Noto Sans SC', sans-serif;
-  box-shadow: 0 3px 10px rgba(184, 146, 58, 0.45);
+  box-shadow: 0 4px 14px rgba(184, 146, 58, 0.55), 0 0 0 3px rgba(184, 146, 58, 0.18);
   transition: background .15s, transform .12s, box-shadow .15s;
 }
 .art-read-btn:hover {
   background: #a08130;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 14px rgba(184, 146, 58, 0.6);
+  transform: translateY(-1.5px);
+  box-shadow: 0 6px 18px rgba(184, 146, 58, 0.75), 0 0 0 3px rgba(184, 146, 58, 0.28);
 }
 .art-read-btn:active { transform: translateY(0); }
 .art-read-btn.playing {
   background: var(--south);
-  box-shadow: 0 3px 10px rgba(122, 30, 20, 0.55);
+  border-color: #fff;
+  box-shadow: 0 4px 14px rgba(122, 30, 20, 0.55);
   animation: readPulse 1.6s ease-in-out infinite;
 }
-.art-read-btn .ar-icon { font-size: 1.1em; }
+.art-read-btn .ar-svg {
+  width: 1.4em;
+  height: 1.4em;
+  flex-shrink: 0;
+  fill: currentColor;
+}
 @keyframes readPulse {
   0%, 100% { box-shadow: 0 3px 10px rgba(122, 30, 20, 0.45); }
   50%      { box-shadow: 0 3px 18px rgba(122, 30, 20, 0.75); }
@@ -1414,7 +1420,11 @@ function openCard(cardId) {
     btn.setAttribute('type', 'button');
     btn.setAttribute('aria-label', '朗读这件展品');
     btn.onclick = readAloud;
-    btn.innerHTML = '<span class="ar-icon">🔊</span><span>朗读全文</span>';
+    btn.innerHTML =
+      '<svg class="ar-svg" viewBox="0 0 24 24" aria-hidden="true">' +
+        '<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>' +
+      '</svg>' +
+      '<span>朗读全文</span>';
     titleEl.insertAdjacentElement('afterend', btn);
   }
   document.getElementById('modal').classList.add('open');
@@ -1782,17 +1792,27 @@ var speechActive = false;
 function getReadBtn() {
   return document.querySelector('#modal-inner .art-read-btn');
 }
+// Material-style SVG icons for the read-aloud button.
+var SPEAKER_SVG =
+  '<svg class="ar-svg" viewBox="0 0 24 24" aria-hidden="true">' +
+    '<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>' +
+  '</svg>';
+var PAUSE_SVG =
+  '<svg class="ar-svg" viewBox="0 0 24 24" aria-hidden="true">' +
+    '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>' +
+  '</svg>';
+
 function setReadBtnIdle(btn) {
   if (!btn) btn = getReadBtn();
   if (!btn) return;
   btn.classList.remove('playing');
-  btn.innerHTML = '<span class="ar-icon">🔊</span><span>朗读全文</span>';
+  btn.innerHTML = SPEAKER_SVG + '<span>朗读全文</span>';
 }
 function setReadBtnPlaying(btn) {
   if (!btn) btn = getReadBtn();
   if (!btn) return;
   btn.classList.add('playing');
-  btn.innerHTML = '<span class="ar-icon">⏸</span><span>停止朗读</span>';
+  btn.innerHTML = PAUSE_SVG + '<span>停止朗读</span>';
 }
 
 function readAloud() {
