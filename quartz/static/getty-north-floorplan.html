@@ -1583,17 +1583,15 @@ document.addEventListener('keydown', (e) => {
   }
 
   function recordVisit(room) {
-    // Detect a FIRST-time visit (no badge yet for this room) BEFORE mutating visitOrder.
-    var isFirstVisit = visitOrder.indexOf(room) === -1;
-
-    // Toggle: clicking the same room as the last entry pops it (undo).
-    // Otherwise append. (Same room can re-appear later in the sequence.)
-    if (visitOrder.length > 0 && visitOrder[visitOrder.length - 1] === room) {
-      visitOrder.pop();
+    var existingIndex = visitOrder.indexOf(room);
+    if (existingIndex !== -1) {
+      // Room is already in the trajectory — truncate so the path ends at this room
+      // (user is "backing up" to a previously visited room). No toast.
+      visitOrder = visitOrder.slice(0, existingIndex + 1);
     } else {
+      // First time visiting this room — extend the trajectory forward + pop the theme toast.
       visitOrder.push(room);
-      // Show theme toast only on the first visit (when the gold badge first appears).
-      if (isFirstVisit) showRoomToast(room);
+      showRoomToast(room);
     }
     save();
     render();
@@ -1682,26 +1680,18 @@ document.addEventListener('keydown', (e) => {
           fx += px * perpOffset * side;
           fy += py * perpOffset * side;
 
-          var foot = document.createElementNS(SVG_NS, 'g');
+          // Single clean oval per step — simple footprint silhouette,
+          // alternating L/R perpendicular for walking gait.
+          var foot = document.createElementNS(SVG_NS, 'ellipse');
           foot.setAttribute('class', 'footprint');
+          foot.setAttribute('cx', '0');
+          foot.setAttribute('cy', '0');
+          foot.setAttribute('rx', '4.5');
+          foot.setAttribute('ry', '9');
           foot.setAttribute('transform',
             'translate(' + fx.toFixed(1) + ',' + fy.toFixed(1) + ') ' +
             'rotate(' + rot.toFixed(1) + ')'
           );
-          // foot body (oval, toes-up natural orientation before rotate)
-          var body = document.createElementNS(SVG_NS, 'ellipse');
-          body.setAttribute('cx', '0'); body.setAttribute('cy', '2');
-          body.setAttribute('rx', '6'); body.setAttribute('ry', '11');
-          foot.appendChild(body);
-          // three toe dots above the body
-          var toes = [[-3, -10, 1.6], [0, -12, 1.9], [3, -11, 1.6]];
-          for (var k = 0; k < 3; k++) {
-            var toe = document.createElementNS(SVG_NS, 'circle');
-            toe.setAttribute('cx', String(toes[k][0]));
-            toe.setAttribute('cy', String(toes[k][1]));
-            toe.setAttribute('r', String(toes[k][2]));
-            foot.appendChild(toe);
-          }
           feetGroup.appendChild(foot);
         }
       }
