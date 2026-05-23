@@ -1572,10 +1572,18 @@ document.addEventListener('keydown', (e) => {
   function showRoomToast(room) {
     var toast = document.getElementById('roomToast');
     if (!toast || !ROOM_THEMES[room]) return;
+    // Always replace content + (re)show + reset dismiss timer.
+    // If the previous toast is still on screen, this means it gets swapped to
+    // the new room instantly. Then we replay the slide-in animation by briefly
+    // dropping the .shown class on a separate frame.
     toast.innerHTML = ROOM_THEMES[room];
-    // Force reflow so re-shown toast restarts the slide animation.
-    void toast.offsetWidth;
-    toast.classList.add('shown');
+    if (toast.classList.contains('shown')) {
+      toast.classList.remove('shown');
+      void toast.offsetWidth;        // force reflow so the next class change actually transitions
+    }
+    requestAnimationFrame(function() {
+      toast.classList.add('shown');
+    });
     clearTimeout(toastTimer);
     toastTimer = setTimeout(function() {
       toast.classList.remove('shown');
@@ -1586,12 +1594,13 @@ document.addEventListener('keydown', (e) => {
     var existingIndex = visitOrder.indexOf(room);
     var lastIndex = visitOrder.length - 1;
     if (existingIndex !== -1 && existingIndex === lastIndex) {
-      // Clicking the CURRENT (last-visited) room → undo it (pop).
-      // Works regardless of how we got here — direct visit or post-truncation.
+      // Clicking the CURRENT (last-visited) room → undo it (pop). No toast.
       visitOrder.pop();
     } else if (existingIndex !== -1) {
-      // Clicking an earlier room in the trajectory → back up to that room (truncate).
+      // Clicking an EARLIER room → back up to it. Show toast for the room
+      // we backed up to so the user sees confirmation of the new position.
       visitOrder = visitOrder.slice(0, existingIndex + 1);
+      showRoomToast(room);
     } else {
       // Brand-new room → extend trajectory forward and pop the theme toast.
       visitOrder.push(room);
@@ -1684,34 +1693,42 @@ document.addEventListener('keydown', (e) => {
           fx += px * perpOffset * side;
           fy += py * perpOffset * side;
 
-          // Proper footprint silhouette: wide ball+toes at top, narrow arch in
-          // the middle, rounded heel at bottom. Toes naturally point UP in the
-          // unrotated shape; rotate(rot) aligns toes with direction of travel.
+          // Proper footprint: ball + arch + heel silhouette PLUS 5 toes in an arc
+          // above the ball. Big toe on the inside, so feet mirror left/right based
+          // on the perpendicular side variable. Whole group rotates to direction.
           var foot = document.createElementNS(SVG_NS, 'g');
           foot.setAttribute('class', 'footprint');
           foot.setAttribute('transform',
             'translate(' + fx.toFixed(1) + ',' + fy.toFixed(1) + ') ' +
             'rotate(' + rot.toFixed(1) + ')'
           );
-          // Body: ball + arch + heel outline
+          // Body: ball + arch + heel outline (toes-up natural orientation)
           var body = document.createElementNS(SVG_NS, 'path');
           body.setAttribute('d',
-            'M -5 -7 ' +
-            'C -5 -12 5 -12 5 -7 ' +     // ball + toes (top, widest)
+            'M -5 -6 ' +
+            'C -5 -11 5 -11 5 -6 ' +     // ball (top, widest)
             'C 5 -3 3 -1 3 1 ' +          // narrows to arch
             'C 3 3 4 5 4 7 ' +            // widens for heel
             'C 4 11 -4 11 -4 7 ' +        // heel bottom
             'C -4 5 -3 3 -3 1 ' +         // arch back up
-            'C -3 -1 -5 -3 -5 -7 Z'       // close
+            'C -3 -1 -5 -3 -5 -6 Z'       // close
           );
           foot.appendChild(body);
-          // Big toe dot (a single small circle just above the ball, slightly offset
-          // to one side, alternating with L/R so the print reads as left vs right foot).
-          var toe = document.createElementNS(SVG_NS, 'circle');
-          toe.setAttribute('cx', (side === 1 ? '-2' : '2'));
-          toe.setAttribute('cy', '-13');
-          toe.setAttribute('r', '1.8');
-          foot.appendChild(toe);
+          // 5 toes in an arc above the ball. Big toe is the biggest, on the
+          // inside (mirror per L/R foot via the `side` flag).
+          // toes laid out left→right when side===1 (so big toe is on the left);
+          // mirrored when side===-1 (big toe on the right).
+          var bigToeOnLeft = (side === 1);
+          var toes = bigToeOnLeft
+            ? [[-3.6, -11.6, 1.7], [-1.6, -13.4, 1.45], [0.4, -14.0, 1.3], [2.2, -13.5, 1.15], [3.7, -12.4, 1.0]]
+            : [[-3.7, -12.4, 1.0], [-2.2, -13.5, 1.15], [-0.4, -14.0, 1.3], [1.6, -13.4, 1.45], [3.6, -11.6, 1.7]];
+          for (var k = 0; k < 5; k++) {
+            var t = document.createElementNS(SVG_NS, 'circle');
+            t.setAttribute('cx', String(toes[k][0]));
+            t.setAttribute('cy', String(toes[k][1]));
+            t.setAttribute('r', String(toes[k][2]));
+            foot.appendChild(t);
+          }
           feetGroup.appendChild(foot);
         }
       }
