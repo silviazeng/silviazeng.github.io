@@ -226,6 +226,57 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 .footprint { fill: #b8923a; opacity: 0.88; }
 .footprint ellipse, .footprint circle { fill: #b8923a; }
 
+/* ===== Room-theme toast (slides down from top when a room is visited for the first time) ===== */
+.room-toast {
+  position: fixed;
+  top: 1.4rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(-150%);
+  z-index: 10000;
+  max-width: 92vw;
+  padding: 0.85rem 1.3rem;
+  background: var(--north);
+  color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 8px 28px rgba(42, 92, 48, 0.4), 0 2px 8px rgba(0,0,0,0.15);
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 0.78rem;
+  text-align: center;
+  pointer-events: none;
+  opacity: 0;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.room-toast.shown {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+.room-toast .rt-num {
+  display: inline-block;
+  font-family: sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  background: rgba(255,255,255,0.18);
+  color: #fff;
+  padding: 0.18rem 0.55rem;
+  border-radius: 4px;
+  font-size: 0.82rem;
+}
+.room-toast .rt-theme {
+  color: #fff;
+  line-height: 1.4;
+}
+.room-toast .rt-theme em {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 500;
+  color: var(--gold-lt);
+}
+
 /* Pulsing red marker at the LAST visited room ("you are here now") */
 .current-marker { pointer-events: none; display: none; }
 .current-marker.shown { display: block; }
@@ -1009,6 +1060,9 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 </section>
 
 <!-- ===== MODAL ===== -->
+<!-- Toast that slides down from the top when a room is visited for the first time -->
+<div class="room-toast" id="roomToast" role="status" aria-live="polite"></div>
+
 <div id="modal" class="modal-overlay" onclick="closeModal(event)">
   <div class="modal-content" onclick="event.stopPropagation()">
     <button class="modal-close" onclick="closeModal()" aria-label="关闭">×</button>
@@ -1506,13 +1560,40 @@ document.addEventListener('keydown', (e) => {
     try { localStorage.setItem(KEY, JSON.stringify(visitOrder)); } catch (e) {}
   }
 
+  // Theme strings shown when a room is visited for the FIRST time (badge appears).
+  var ROOM_THEMES = {
+    N201: '<span class="rt-num">N 201</span><span class="rt-theme">意大利绘画 · <em>Italian Paintings</em> · 1300–1400</span>',
+    N202: '<span class="rt-num">N 202</span><span class="rt-theme">欧洲绘画 · <em>European Paintings</em> · 1400–1500</span>',
+    N203: '<span class="rt-num">N 203</span><span class="rt-theme">北方欧洲绘画 · <em>Northern European</em> · 1400–1600</span>',
+    N204: '<span class="rt-num">N 204</span><span class="rt-theme">意大利绘画 · <em>Italian Paintings</em> · 1500–1600</span>',
+    N205: '<span class="rt-num">N 205</span><span class="rt-theme">意大利绘画 · <em>Italian Paintings</em> · 1500–1600</span>'
+  };
+  var toastTimer = null;
+  function showRoomToast(room) {
+    var toast = document.getElementById('roomToast');
+    if (!toast || !ROOM_THEMES[room]) return;
+    toast.innerHTML = ROOM_THEMES[room];
+    // Force reflow so re-shown toast restarts the slide animation.
+    void toast.offsetWidth;
+    toast.classList.add('shown');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() {
+      toast.classList.remove('shown');
+    }, 3200);
+  }
+
   function recordVisit(room) {
+    // Detect a FIRST-time visit (no badge yet for this room) BEFORE mutating visitOrder.
+    var isFirstVisit = visitOrder.indexOf(room) === -1;
+
     // Toggle: clicking the same room as the last entry pops it (undo).
     // Otherwise append. (Same room can re-appear later in the sequence.)
     if (visitOrder.length > 0 && visitOrder[visitOrder.length - 1] === room) {
       visitOrder.pop();
     } else {
       visitOrder.push(room);
+      // Show theme toast only on the first visit (when the gold badge first appears).
+      if (isFirstVisit) showRoomToast(room);
     }
     save();
     render();
