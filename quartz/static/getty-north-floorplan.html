@@ -1037,45 +1037,156 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 <section class="floor-section alt" id="north-1f">
   <div class="floor-head">
     <span class="floor-label">一楼 · 1F</span>
-    <h2 class="floor-name">彩饰手稿 · 中世纪装饰艺术 · <em>N101–N104</em></h2>
-    <p class="floor-desc">低光展厅珍藏彩饰手稿、中世纪彩色玻璃、奥格斯堡珍藏柜与威尼斯丝线玻璃。<em style="font-style:normal;color:var(--muted);font-size:.7rem">（无实体标牌照片，使用 Getty 2010 官方 PDF 平面图）</em></p>
+    <h2 class="floor-name">彩饰手稿 · 中世纪装饰艺术 · <em>N101–N106</em></h2>
+    <p class="floor-desc">低光展厅珍藏彩饰手稿、中世纪彩色玻璃、奥格斯堡珍藏柜与威尼斯丝线玻璃。<em style="font-style:normal;color:var(--muted);font-size:.7rem">（按 Getty 2010 官方平面图重绘为同款配色）</em></p>
   </div>
   <div class="floor-plan">
-    <div class="floor-canvas f1" id="floorCanvas1F">
-      <img class="floor-bg tinted" src="getty-north-1f-plan.png" alt="北馆一楼平面图（Getty 官方 PDF）">
-      <!-- Room click targets (transparent HTML buttons over the image) -->
-      <button class="room-tap-img" data-room="N101" style="left:64%;top:73%;width:35%;height:26%" aria-label="N101 彩饰手稿"></button>
-      <button class="room-tap-img" data-room="N102" style="left:38%;top:64%;width:27%;height:32%" aria-label="N102 中世纪装饰艺术"></button>
-      <button class="room-tap-img" data-room="N103" style="left:13%;top:64%;width:26%;height:32%" aria-label="N103 彩色玻璃"></button>
-      <button class="room-tap-img" data-room="N104" style="left:13%;top:38%;width:26%;height:26%" aria-label="N104 玻璃与陶瓷"></button>
-      <!-- Footprint SVG overlay (440×260 to match the PNG aspect ratio) -->
-      <svg class="footprint-overlay" viewBox="0 0 440 260" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-        <g id="footsteps-1f"></g>
+    <div class="floor-svg-wrap">
+      <svg viewBox="20 20 840 510" xmlns="http://www.w3.org/2000/svg" class="signage-svg" preserveAspectRatio="xMidYMid meet">
+        <!-- Background -->
+        <rect width="880" height="540" fill="#f5f0e0"/>
+
+        <!-- ===== AREA FILLS ===== -->
+        <!-- Atrium (beige) — fills entire building, rooms layered on top -->
+        <rect x="80" y="40" width="740" height="460" fill="#bfa686"/>
+        <!-- Six light-blue gallery rooms -->
+        <rect x="80"  y="40"  width="180" height="140" fill="#d7e0ec"/>   <!-- N105 (top-left) -->
+        <rect x="80"  y="200" width="180" height="140" fill="#d7e0ec"/>   <!-- N104 (middle-left) -->
+        <rect x="80"  y="360" width="180" height="140" fill="#d7e0ec"/>   <!-- N103 (bottom-left) -->
+        <rect x="280" y="360" width="180" height="140" fill="#d7e0ec"/>   <!-- N102 (bottom-center) -->
+        <rect x="580" y="180" width="240" height="160" fill="#d7e0ec"/>   <!-- N106 (right, middle) -->
+        <rect x="580" y="360" width="240" height="140" fill="#d7e0ec"/>   <!-- N101 (bottom-right) -->
+
+        <!-- ===== OUTER OUTLINE ===== -->
+        <rect x="80" y="40" width="740" height="460" fill="none" stroke="#1a1a1a" stroke-width="5"/>
+
+        <!-- ===== INTERNAL WALLS (each non-outer room boundary, with door gaps to the atrium) ===== -->
+        <g fill="none" stroke="#1a1a1a" stroke-width="5">
+          <!-- N105: bottom (open door to N104 via atrium gap) and right (door at y=95-130) -->
+          <line x1="80"  y1="180" x2="260" y2="180"/>
+          <line x1="260" y1="40"  x2="260" y2="95"/>
+          <line x1="260" y1="130" x2="260" y2="180"/>
+          <!-- N104: top, bottom, right (right has door at y=255-290 to atrium) -->
+          <line x1="80"  y1="200" x2="260" y2="200"/>
+          <line x1="80"  y1="340" x2="260" y2="340"/>
+          <line x1="260" y1="200" x2="260" y2="255"/>
+          <line x1="260" y1="290" x2="260" y2="340"/>
+          <!-- N103: top, right (door y=395-430) -->
+          <line x1="80"  y1="360" x2="260" y2="360"/>
+          <line x1="260" y1="360" x2="260" y2="395"/>
+          <line x1="260" y1="430" x2="260" y2="500"/>
+          <!-- N102: top, left (door y=395-430), right -->
+          <line x1="280" y1="360" x2="460" y2="360"/>
+          <line x1="280" y1="360" x2="280" y2="395"/>
+          <line x1="280" y1="430" x2="280" y2="500"/>
+          <line x1="460" y1="360" x2="460" y2="500"/>
+          <!-- N106: top, bottom, left (door y=235-275 to atrium) -->
+          <line x1="580" y1="180" x2="820" y2="180"/>
+          <line x1="580" y1="340" x2="820" y2="340"/>
+          <line x1="580" y1="180" x2="580" y2="235"/>
+          <line x1="580" y1="275" x2="580" y2="340"/>
+          <!-- N101: top, left (door y=410-445 to atrium) -->
+          <line x1="580" y1="360" x2="820" y2="360"/>
+          <line x1="580" y1="360" x2="580" y2="410"/>
+          <line x1="580" y1="445" x2="580" y2="500"/>
+        </g>
+
+        <!-- ===== NORTH ATRIUM label ===== -->
+        <g pointer-events="none">
+          <text x="420" y="88" font-family="sans-serif" font-size="22" font-weight="500"
+                fill="#fff" text-anchor="middle" letter-spacing="3" opacity="0.85">NORTH ATRIUM</text>
+        </g>
+
+        <!-- ===== STAIRS box (central atrium, with up arrow) ===== -->
+        <g pointer-events="none">
+          <rect x="330" y="120" width="120" height="120" fill="#ffffff" stroke="#1a1a1a" stroke-width="3"/>
+          <path d="M 345 230 L 365 230 L 365 210 L 385 210 L 385 190 L 405 190 L 405 170 L 425 170 L 425 150 L 445 150"
+                fill="none" stroke="#1a1a1a" stroke-width="2.5" stroke-linejoin="miter"/>
+          <line x1="450" y1="135" x2="450" y2="120" stroke="#1a1a1a" stroke-width="2"/>
+          <polygon points="450,113 444,125 456,125" fill="#1a1a1a"/>
+        </g>
+
+        <!-- ===== ELEVATOR box (atrium lower portion, with up/down arrows) ===== -->
+        <g pointer-events="none">
+          <rect x="360" y="260" width="90" height="80" fill="#ffffff" stroke="#1a1a1a" stroke-width="2.5"/>
+          <line x1="385" y1="278" x2="385" y2="322" stroke="#1a1a1a" stroke-width="2"/>
+          <polygon points="385,328 378,315 392,315" fill="#1a1a1a"/>
+          <line x1="425" y1="322" x2="425" y2="278" stroke="#1a1a1a" stroke-width="2"/>
+          <polygon points="425,272 418,285 432,285" fill="#1a1a1a"/>
+        </g>
+
+        <!-- ===== ROOM NUMBER LABELS (top-right of each room) ===== -->
+        <g pointer-events="none" font-family="sans-serif" font-size="28" font-weight="500" fill="#1a1a1a">
+          <text x="252" y="72"  text-anchor="end">N 105</text>
+          <text x="252" y="232" text-anchor="end">N 104</text>
+          <text x="252" y="392" text-anchor="end">N 103</text>
+          <text x="452" y="392" text-anchor="end">N 102</text>
+          <text x="812" y="212" text-anchor="end">N 106</text>
+          <text x="812" y="392" text-anchor="end">N 101</text>
+        </g>
+
+        <!-- ===== Visit-tracker click targets ===== -->
+        <g class="room-taps">
+          <rect class="room-tap" fill="transparent" data-room="N101" x="580" y="360" width="240" height="140"/>
+          <rect class="room-tap" fill="transparent" data-room="N102" x="280" y="360" width="180" height="140"/>
+          <rect class="room-tap" fill="transparent" data-room="N103" x="80"  y="360" width="180" height="140"/>
+          <rect class="room-tap" fill="transparent" data-room="N104" x="80"  y="200" width="180" height="140"/>
+          <rect class="room-tap" fill="transparent" data-room="N105" x="80"  y="40"  width="180" height="140"/>
+          <rect class="room-tap" fill="transparent" data-room="N106" x="580" y="180" width="240" height="160"/>
+        </g>
+
+        <!-- ===== Footsteps (JS-generated) ===== -->
+        <g class="footsteps" id="footsteps-1f" pointer-events="none"></g>
+
+        <!-- ===== "You are here NOW" pulsing red marker ===== -->
+        <g class="current-marker" id="currentMarker1F">
+          <circle class="pulse-ring" r="22" />
+          <circle r="14" fill="#a83e2a" stroke="#fff" stroke-width="3"/>
+        </g>
+
+        <!-- ===== Visit badges (corner labels showing first-visit order) ===== -->
+        <g class="visit-badges" font-family="sans-serif" font-size="17" font-weight="700">
+          <g class="visit-badge" data-room="N105" transform="translate(100, 60)">
+            <circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
+            <text y="6" text-anchor="middle" fill="#fff">1</text>
+          </g>
+          <g class="visit-badge" data-room="N104" transform="translate(100, 220)">
+            <circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
+            <text y="6" text-anchor="middle" fill="#fff">1</text>
+          </g>
+          <g class="visit-badge" data-room="N103" transform="translate(100, 380)">
+            <circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
+            <text y="6" text-anchor="middle" fill="#fff">1</text>
+          </g>
+          <g class="visit-badge" data-room="N102" transform="translate(300, 380)">
+            <circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
+            <text y="6" text-anchor="middle" fill="#fff">1</text>
+          </g>
+          <g class="visit-badge" data-room="N106" transform="translate(600, 200)">
+            <circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
+            <text y="6" text-anchor="middle" fill="#fff">1</text>
+          </g>
+          <g class="visit-badge" data-room="N101" transform="translate(600, 380)">
+            <circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
+            <text y="6" text-anchor="middle" fill="#fff">1</text>
+          </g>
+        </g>
       </svg>
-      <!-- Visit badges (HTML divs positioned at room corners, hidden by default) -->
-      <div class="visit-badge-img" data-room="N101" style="left:67%;top:75%">1</div>
-      <div class="visit-badge-img" data-room="N102" style="left:42%;top:67%">1</div>
-      <div class="visit-badge-img" data-room="N103" style="left:17%;top:67%">1</div>
-      <div class="visit-badge-img" data-room="N104" style="left:17%;top:42%">1</div>
-      <!-- Current-position pulsing red marker -->
-      <div class="current-marker-img" id="currentMarker1F" style="left:50%;top:50%">
-        <div class="cm-pulse"></div>
-        <div class="cm-dot"></div>
-      </div>
-      <!-- Pins (positions in % of image 440x260) -->
-      <button class="art-pin" data-card="card-21" style="left:81%;top:88%" title="彩饰手稿 N101">
+
+      <!-- Circular artwork pins (positions in % of the 840×510 visible viewBox) -->
+      <button class="art-pin" data-card="card-21" style="left:81%;top:80%" title="彩饰手稿 N101">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Personnages_de_la_sc%C3%A8ne_de_Janvier_%28Fr%C3%A8res_Limbourg_%3F%29_-_Tr%C3%A8s_Riches_Heures_du_duc_de_Berry_%28f.1%29.jpg/960px-Personnages_de_la_sc%C3%A8ne_de_Janvier_%28Fr%C3%A8res_Limbourg_%3F%29_-_Tr%C3%A8s_Riches_Heures_du_duc_de_Berry_%28f.1%29.jpg" alt="彩饰手稿">
         <span class="pin-num">18</span>
       </button>
-      <button class="art-pin" data-card="card-22" style="left:53%;top:78%" title="奥格斯堡珍藏柜 N102">
+      <button class="art-pin" data-card="card-22" style="left:42%;top:80%" title="奥格斯堡珍藏柜 N102">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Getty%2C_cabinet.JPG/960px-Getty%2C_cabinet.JPG" alt="奥格斯堡珍藏柜">
         <span class="pin-num">19</span>
       </button>
-      <button class="art-pin" data-card="card-23" style="left:30%;top:78%" title="中世纪彩色玻璃 N103">
+      <button class="art-pin" data-card="card-23" style="left:18%;top:80%" title="中世纪彩色玻璃 N103">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Getty_Center_-_Stained_glass_window_-_Housing_the_stranger_%281560-1570%29.JPG/960px-Getty_Center_-_Stained_glass_window_-_Housing_the_stranger_%281560-1570%29.JPG" alt="中世纪彩色玻璃">
         <span class="pin-num">20</span>
       </button>
-      <button class="art-pin" data-card="card-24" style="left:30%;top:55%" title="欧洲玻璃与陶瓷 N104">
+      <button class="art-pin" data-card="card-24" style="left:18%;top:49%" title="欧洲玻璃与陶瓷 N104">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Getty_Center_-_Filigrana_Beaker.JPG/960px-Getty_Center_-_Filigrana_Beaker.JPG" alt="欧洲玻璃与陶瓷">
         <span class="pin-num">21</span>
       </button>
@@ -1084,9 +1195,11 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
       <div class="legend-item"><span class="legend-room">N 101</span><span class="legend-theme">彩饰手稿 · <em>Illuminated Manuscripts</em></span></div>
       <div class="legend-item"><span class="legend-room">N 102</span><span class="legend-theme">中世纪装饰艺术 · <em>Medieval Decorative Arts</em></span></div>
       <div class="legend-item"><span class="legend-room">N 103</span><span class="legend-theme">彩色玻璃 · <em>Stained Glass</em></span></div>
-      <div class="legend-item"><span class="legend-room">N 104</span><span class="legend-theme">欧洲玻璃与陶瓷 · <em>European Glass & Ceramics</em></span></div>
+      <div class="legend-item"><span class="legend-room">N 104</span><span class="legend-theme">欧洲玻璃与陶瓷 · <em>European Glass &amp; Ceramics</em></span></div>
+      <div class="legend-item"><span class="legend-room">N 105</span><span class="legend-theme">中世纪手稿 · <em>Medieval Manuscripts</em></span></div>
+      <div class="legend-item"><span class="legend-room">N 106</span><span class="legend-theme">文艺复兴装饰艺术 · <em>Renaissance Decorative Arts</em></span></div>
     </div>
-    <div class="floor-foot">N · NORTH PAVILION · 1F · 官方平面图</div>
+    <div class="floor-foot">N · NORTH PAVILION · 1F · 网页复现版</div>
   </div>
 </section>
 
@@ -1665,7 +1778,9 @@ var ROOM_THEMES = {
   N101: '<span class="rt-num">N 101</span><span class="rt-theme">彩饰手稿 · <em>Illuminated Manuscripts</em></span>',
   N102: '<span class="rt-num">N 102</span><span class="rt-theme">中世纪装饰艺术 · <em>Medieval Decorative Arts</em></span>',
   N103: '<span class="rt-num">N 103</span><span class="rt-theme">彩色玻璃 · <em>Stained Glass</em></span>',
-  N104: '<span class="rt-num">N 104</span><span class="rt-theme">欧洲玻璃与陶瓷 · <em>European Glass &amp; Ceramics</em></span>'
+  N104: '<span class="rt-num">N 104</span><span class="rt-theme">欧洲玻璃与陶瓷 · <em>European Glass &amp; Ceramics</em></span>',
+  N105: '<span class="rt-num">N 105</span><span class="rt-theme">中世纪手稿 · <em>Medieval Manuscripts</em></span>',
+  N106: '<span class="rt-num">N 106</span><span class="rt-theme">文艺复兴装饰艺术 · <em>Renaissance Decorative Arts</em></span>'
 };
 var toastTimer = null;
 function showRoomToast(room) {
@@ -1741,7 +1856,7 @@ function showRoomToast(room) {
     });
 
     // Update corner badges (numbers = first-visit order).
-    document.querySelectorAll('.visit-badge').forEach(function(badge) {
+    document.querySelectorAll('#north-2f .visit-badge').forEach(function(badge) {
       var room = badge.dataset.room;
       if (room in firstOrder) {
         badge.classList.add('shown');
@@ -1753,7 +1868,7 @@ function showRoomToast(room) {
     });
 
     // Tint visited rooms with a translucent gold overlay.
-    document.querySelectorAll('.room-tint').forEach(function(tint) {
+    document.querySelectorAll('#north-2f .room-tint').forEach(function(tint) {
       tint.classList.toggle('shown', !!visitedSet[tint.dataset.room]);
     });
 
@@ -1869,7 +1984,7 @@ function showRoomToast(room) {
     }
   }
 
-  document.querySelectorAll('.room-tap').forEach(function(rect) {
+  document.querySelectorAll('#north-2f .room-tap').forEach(function(rect) {
     rect.addEventListener('click', function() {
       recordVisit(rect.dataset.room);
     });
@@ -1880,19 +1995,21 @@ function showRoomToast(room) {
   render();
 })();
 
-/* ===== N1F visit tracker (image-based plan, HTML overlay + SVG footprints) ===== */
+/* ===== N1F visit tracker (SVG floor plan, same style/structure as N2F) ===== */
 (function() {
   var KEY = 'getty-n1f-visit-order';
   var visitOrder;
   try { visitOrder = JSON.parse(localStorage.getItem(KEY) || '[]') || []; }
   catch (e) { visitOrder = []; }
 
-  // Room centers in PNG-space coordinates (0..440 × 0..260 — same as SVG overlay viewBox).
+  // Room centers in the new N1F SVG coord space (viewBox 20 20 840 510 → x 80-820, y 40-500)
   var ROOM_CENTERS = {
-    N101: { x: 356.4, y: 228.8 },
-    N102: { x: 233.2, y: 202.8 },
-    N103: { x: 132,   y: 202.8 },
-    N104: { x: 132,   y: 143   }
+    N105: { x: 170, y: 110 },
+    N104: { x: 170, y: 270 },
+    N103: { x: 170, y: 430 },
+    N102: { x: 370, y: 430 },
+    N106: { x: 700, y: 260 },
+    N101: { x: 700, y: 430 }
   };
 
   function save() {
@@ -1923,26 +2040,26 @@ function showRoomToast(room) {
       visitedSet[room] = true;
     });
 
-    // HTML corner badges
-    document.querySelectorAll('.visit-badge-img').forEach(function(badge) {
+    // SVG corner badges (scoped to N1F)
+    document.querySelectorAll('#north-1f .visit-badge').forEach(function(badge) {
       var room = badge.dataset.room;
       if (room in firstOrder) {
         badge.classList.add('shown');
-        badge.textContent = firstOrder[room];
+        var t = badge.querySelector('text');
+        if (t) t.textContent = firstOrder[room];
       } else {
         badge.classList.remove('shown');
       }
     });
 
-    // Pulsing red current-position marker (HTML, positioned by % of container)
+    // Pulsing red "you are here NOW" marker (SVG group, positioned by transform)
     var marker = document.getElementById('currentMarker1F');
     if (marker) {
       if (visitOrder.length > 0) {
         var lastRoom = visitOrder[visitOrder.length - 1];
         var c = ROOM_CENTERS[lastRoom];
         if (c) {
-          marker.style.left = (c.x / 440 * 100).toFixed(2) + '%';
-          marker.style.top  = (c.y / 260 * 100).toFixed(2) + '%';
+          marker.setAttribute('transform', 'translate(' + c.x + ',' + c.y + ')');
           marker.classList.add('shown');
         }
       } else {
@@ -1950,7 +2067,7 @@ function showRoomToast(room) {
       }
     }
 
-    // SVG footstep overlay (coords in 0..440 × 0..260)
+    // Footsteps between visited rooms — same path style as N2F, just smaller scale
     var feetGroup = document.getElementById('footsteps-1f');
     if (feetGroup) {
       var SVG_NS = 'http://www.w3.org/2000/svg';
@@ -1966,8 +2083,8 @@ function showRoomToast(room) {
         var rot = Math.atan2(dy, dx) * 180 / Math.PI + 90;
         var px = -dy / dist;
         var py = dx / dist;
-        var perpOffset = 4;             // smaller offset in this coordinate space
-        var stepLen = 16;               // step every ~16 PNG-units
+        var perpOffset = 8;
+        var stepLen = 34;
         var numSteps = Math.max(2, Math.round(dist / stepLen));
         for (var j = 0; j < numSteps; j++) {
           var t = (j + 0.5) / numSteps;
@@ -1982,22 +2099,21 @@ function showRoomToast(room) {
             'translate(' + fx.toFixed(1) + ',' + fy.toFixed(1) + ') ' +
             'rotate(' + rot.toFixed(1) + ')'
           );
-          // body (smaller because coords are ~1/4 of N2F SVG scale)
           var body = document.createElementNS(SVG_NS, 'path');
           body.setAttribute('d',
-            'M -2.4 -2.8 ' +
-            'C -2.4 -5.4 2.4 -5.4 2.4 -2.8 ' +
-            'C 2.4 -1.4 1.5 -0.5 1.5 0.5 ' +
-            'C 1.5 1.4 1.9 2.4 1.9 3.4 ' +
-            'C 1.9 5.3 -1.9 5.3 -1.9 3.4 ' +
-            'C -1.9 2.4 -1.5 1.4 -1.5 0.5 ' +
-            'C -1.5 -0.5 -2.4 -1.4 -2.4 -2.8 Z'
+            'M -5 -6 ' +
+            'C -5 -11 5 -11 5 -6 ' +
+            'C 5 -3 3 -1 3 1 ' +
+            'C 3 3 4 5 4 7 ' +
+            'C 4 11 -4 11 -4 7 ' +
+            'C -4 5 -3 3 -3 1 ' +
+            'C -3 -1 -5 -3 -5 -6 Z'
           );
           foot.appendChild(body);
           var bigToeOnLeft = (side === 1);
           var toes = bigToeOnLeft
-            ? [[-1.7, -5.6, 0.82], [-0.75, -6.4, 0.7], [0.2, -6.7, 0.62], [1.05, -6.45, 0.55], [1.75, -5.95, 0.48]]
-            : [[-1.75, -5.95, 0.48], [-1.05, -6.45, 0.55], [-0.2, -6.7, 0.62], [0.75, -6.4, 0.7], [1.7, -5.6, 0.82]];
+            ? [[-3.6, -11.6, 1.7], [-1.6, -13.4, 1.45], [0.4, -14.0, 1.3], [2.2, -13.5, 1.15], [3.7, -12.4, 1.0]]
+            : [[-3.7, -12.4, 1.0], [-2.2, -13.5, 1.15], [-0.4, -14.0, 1.3], [1.6, -13.4, 1.45], [3.6, -11.6, 1.7]];
           for (var k = 0; k < 5; k++) {
             var toe = document.createElementNS(SVG_NS, 'circle');
             toe.setAttribute('cx', String(toes[k][0]));
@@ -2011,10 +2127,9 @@ function showRoomToast(room) {
     }
   }
 
-  // Wire up the click overlays
-  document.querySelectorAll('.room-tap-img').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      recordVisit(btn.dataset.room);
+  document.querySelectorAll('#north-1f .room-tap').forEach(function(rect) {
+    rect.addEventListener('click', function() {
+      recordVisit(rect.dataset.room);
     });
   });
 
