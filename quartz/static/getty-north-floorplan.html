@@ -915,11 +915,13 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
           <text x="435" y="1170" font-family="sans-serif" font-size="32" font-weight="700" fill="#1a1a1a" text-anchor="middle">East Pavilion</text>
         </g>
 
-        <!-- ===== EXHIBITIONS PAVILION arrow (text moved OUT of SVG into the .floor-exits caption below;
-             only the arrow remains here at the door at y=495). ===== -->
+        <!-- ===== ENTRANCE PAVILION arrow + vertical label
+             (text rotated -90 because the strip left of the wall is only 60 units wide,
+             too narrow for horizontal "Entrance Pavilion" at the same font size as East Pavilion). ===== -->
         <g pointer-events="none">
           <polygon points="40,495 64,483 64,507" fill="#1a1a1a"/>
           <line x1="64" y1="495" x2="80" y2="495" stroke="#1a1a1a" stroke-width="4" stroke-linecap="butt"/>
+          <text x="50" y="660" font-family="sans-serif" font-size="32" font-weight="700" fill="#1a1a1a" text-anchor="middle" transform="rotate(-90, 50, 660)">Entrance Pavilion</text>
         </g>
 
         <!-- ===== Visited-room tints (translucent gold overlay on rooms you've been to) ===== -->
