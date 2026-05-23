@@ -220,17 +220,23 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 .room-tint { fill: rgba(184, 146, 58, 0); pointer-events: none; transition: fill 0.3s; }
 .room-tint.shown { fill: rgba(184, 146, 58, 0.13); }
 
-/* Dashed trail connecting visit centers */
+/* Trail of round gold dots between visit centers; an emoji footprint sits at each visited room. */
 .visit-path-line {
   fill: none;
   stroke: #b8923a;
-  stroke-width: 5;
-  stroke-dasharray: 9 7;
+  stroke-width: 14;            /* chunky so it doesn't look like a fine dashed line */
+  stroke-dasharray: 0 34;      /* dash 0 + round linecap = circles every 34 units */
   stroke-linecap: round;
   stroke-linejoin: round;
   pointer-events: none;
-  opacity: 0.85;
-  filter: drop-shadow(0 1px 1.5px rgba(0,0,0,0.18));
+  opacity: 0.92;
+  filter: drop-shadow(0 1.5px 2.5px rgba(0,0,0,0.28));
+}
+.visit-path-foot {
+  pointer-events: none;
+  font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', emoji;
+  font-size: 36px;
+  letter-spacing: 24px;        /* spacing between successive 👣 along the path */
 }
 
 /* Pulsing red marker at the LAST visited room ("you are here now") */
@@ -690,32 +696,32 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
           <line x1="370" y1="760" x2="370" y2="1010"/>
         </g>
 
-        <!-- ===== ROOM NUMBER LABELS (top-right of each room) — enlarged for accessibility ===== -->
-        <g pointer-events="none" font-family="sans-serif" font-size="28" font-weight="500" fill="#1a1a1a">
-          <text x="544" y="210" text-anchor="end">N 203</text>
-          <text x="654" y="350" text-anchor="end">N 202</text>
-          <text x="954" y="350" text-anchor="end">N 204</text>
-          <text x="954" y="710" text-anchor="end">N 205</text>
-          <text x="364" y="570" text-anchor="end">N 201</text>
+        <!-- ===== ROOM NUMBER LABELS — large enough for mobile after SVG scale-down ===== -->
+        <g pointer-events="none" font-family="sans-serif" font-size="42" font-weight="500" fill="#1a1a1a">
+          <text x="546" y="218" text-anchor="end">N 203</text>
+          <text x="656" y="362" text-anchor="end">N 202</text>
+          <text x="956" y="362" text-anchor="end">N 204</text>
+          <text x="956" y="720" text-anchor="end">N 205</text>
+          <text x="366" y="580" text-anchor="end">N 201</text>
         </g>
 
-        <!-- ===== THEME LABELS (Cormorant serif) — enlarged for accessibility ===== -->
+        <!-- ===== THEME LABELS (Cormorant serif) — much larger so text is readable on phone ===== -->
         <g pointer-events="none" font-family="Cormorant Garamond, serif" fill="#1a1a1a">
-          <!-- N203 (small box — text sized to still fit) -->
-          <text x="320" y="232" font-size="21">Northern European</text>
-          <text x="320" y="258" font-size="19" fill="#5c5040">Paintings · 1400–1600</text>
-          <!-- N202 -->
-          <text x="382" y="498" font-size="27">European Paintings</text>
-          <text x="382" y="528" font-size="24" fill="#5c5040">1400–1500</text>
-          <!-- N204 -->
-          <text x="675" y="498" font-size="27">Italian Paintings</text>
-          <text x="675" y="528" font-size="24" fill="#5c5040">1500–1600</text>
-          <!-- N205 -->
-          <text x="675" y="975" font-size="27">Italian Paintings</text>
-          <text x="675" y="1005" font-size="24" fill="#5c5040">1500–1600</text>
-          <!-- N201 -->
-          <text x="100" y="718" font-size="27">Italian Paintings</text>
-          <text x="100" y="748" font-size="24" fill="#5c5040">1300–1400</text>
+          <!-- N203 (smallest room — 240×140 — keep label small enough to fit) -->
+          <text x="320" y="248" font-size="29">Northern European</text>
+          <text x="320" y="280" font-size="25" fill="#5c5040">Paintings · 1400–1600</text>
+          <!-- N202 ("European Paintings" is the longest at 18 chars — use 30 to stay within 290 wide) -->
+          <text x="382" y="495" font-size="32">European Paintings</text>
+          <text x="382" y="530" font-size="28" fill="#5c5040">1400–1500</text>
+          <!-- N204 (300 wide) -->
+          <text x="675" y="495" font-size="34">Italian Paintings</text>
+          <text x="675" y="530" font-size="28" fill="#5c5040">1500–1600</text>
+          <!-- N205 (300 wide) -->
+          <text x="675" y="965" font-size="34">Italian Paintings</text>
+          <text x="675" y="1000" font-size="28" fill="#5c5040">1500–1600</text>
+          <!-- N201 (290 wide) -->
+          <text x="100" y="710" font-size="34">Italian Paintings</text>
+          <text x="100" y="745" font-size="28" fill="#5c5040">1300–1400</text>
         </g>
 
         <!-- ===== STAIRS box (RIGHT side of corridor, upper portion — same column as elevator) ===== -->
@@ -758,11 +764,16 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 
         <!-- ===== Visit-path trail (dashed gold polyline through room centers, with arrow at end) ===== -->
         <defs>
-          <marker id="pathArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="4" markerHeight="4" orient="auto">
+          <marker id="pathArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="3.5" markerHeight="3.5" orient="auto">
             <path d="M 0 0 L 10 5 L 0 10 z" fill="#b8923a"/>
           </marker>
         </defs>
-        <polyline class="visit-path-line" id="visitPathLine" points="" marker-end="url(#pathArrow)"/>
+        <!-- Trail as a <path> (so textPath can ride on it) — rendered as chunky gold dots. -->
+        <path class="visit-path-line" id="visitPathLine" d="" fill="none" marker-end="url(#pathArrow)"/>
+        <!-- Footprint emoji marching along the same path. -->
+        <text class="visit-path-foot">
+          <textPath id="visitPathFoot" href="#visitPathLine" startOffset="14">👣 👣 👣 👣 👣 👣 👣 👣 👣 👣 👣 👣 👣 👣 👣 👣 👣 👣 👣 👣</textPath>
+        </text>
 
         <!-- ===== Visit-tracker click targets (invisible, must stay on top so clicks land) ===== -->
         <g class="room-taps">
@@ -1497,17 +1508,22 @@ document.addEventListener('keydown', (e) => {
       tint.classList.toggle('shown', !!visitedSet[tint.dataset.room]);
     });
 
-    // Draw the dashed trail polyline through visited room centers.
+    // Draw the trail as an SVG <path> through visited room centers
+    // (path d= instead of polyline points= — textPath needs a path to ride on).
     var pathEl = document.getElementById('visitPathLine');
     if (pathEl) {
       if (visitOrder.length > 1) {
-        var pts = visitOrder
-          .map(function(r) { var c = ROOM_CENTERS[r]; return c ? c.x + ',' + c.y : ''; })
+        var d = visitOrder
+          .map(function(r, i) {
+            var c = ROOM_CENTERS[r];
+            if (!c) return '';
+            return (i === 0 ? 'M ' : 'L ') + c.x + ' ' + c.y;
+          })
           .filter(function(s) { return s; })
           .join(' ');
-        pathEl.setAttribute('points', pts);
+        pathEl.setAttribute('d', d);
       } else {
-        pathEl.setAttribute('points', '');
+        pathEl.setAttribute('d', '');
       }
     }
 
