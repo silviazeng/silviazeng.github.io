@@ -1046,73 +1046,75 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
         <!-- Background -->
         <rect width="880" height="540" fill="#f5f0e0"/>
 
-        <!-- ===== AREA FILLS ===== -->
-        <!-- Atrium (beige) — fills entire building, rooms layered on top -->
-        <rect x="80" y="40" width="740" height="460" fill="#bfa686"/>
-        <!-- Six light-blue gallery rooms -->
-        <rect x="80"  y="40"  width="180" height="140" fill="#d7e0ec"/>   <!-- N105 (top-left) -->
-        <rect x="80"  y="200" width="180" height="140" fill="#d7e0ec"/>   <!-- N104 (middle-left) -->
-        <rect x="80"  y="360" width="180" height="140" fill="#d7e0ec"/>   <!-- N103 (bottom-left) -->
-        <rect x="280" y="360" width="180" height="140" fill="#d7e0ec"/>   <!-- N102 (bottom-center) -->
-        <rect x="580" y="180" width="240" height="160" fill="#d7e0ec"/>   <!-- N106 (right, middle) -->
-        <rect x="580" y="360" width="240" height="140" fill="#d7e0ec"/>   <!-- N101 (bottom-right) -->
+        <!-- ===== AREA FILLS =====
+             Layout matches the Getty 2010 PDF:
+               LEFT col   = N105 / N104 / N103 stacked (small rooms)
+               BOTTOM mid = N102 (narrow), right of N103
+               RIGHT      = N106 (large, upper-middle) + N101 (smaller, lower)
+               CENTER     = NORTH ATRIUM with elevator at top + stairs in middle
+        -->
+        <rect x="80" y="40" width="740" height="460" fill="#bfa686"/>   <!-- atrium fill -->
+        <rect x="80"  y="40"  width="180" height="140" fill="#d7e0ec"/> <!-- N 105 -->
+        <rect x="80"  y="200" width="180" height="140" fill="#d7e0ec"/> <!-- N 104 -->
+        <rect x="80"  y="360" width="180" height="140" fill="#d7e0ec"/> <!-- N 103 -->
+        <rect x="280" y="360" width="140" height="140" fill="#d7e0ec"/> <!-- N 102 (narrower) -->
+        <rect x="540" y="140" width="280" height="220" fill="#d7e0ec"/> <!-- N 106 (large) -->
+        <rect x="540" y="380" width="280" height="120" fill="#d7e0ec"/> <!-- N 101 (smaller) -->
 
-        <!-- ===== OUTER OUTLINE ===== -->
+        <!-- Outer building outline -->
         <rect x="80" y="40" width="740" height="460" fill="none" stroke="#1a1a1a" stroke-width="5"/>
 
-        <!-- ===== INTERNAL WALLS (each non-outer room boundary, with door gaps to the atrium) ===== -->
+        <!-- ===== INTERNAL WALLS (with door gaps to the atrium) ===== -->
         <g fill="none" stroke="#1a1a1a" stroke-width="5">
-          <!-- N105: bottom (open door to N104 via atrium gap) and right (door at y=95-130) -->
+          <!-- N 105: bottom + right (door y=95-130) -->
           <line x1="80"  y1="180" x2="260" y2="180"/>
           <line x1="260" y1="40"  x2="260" y2="95"/>
           <line x1="260" y1="130" x2="260" y2="180"/>
-          <!-- N104: top, bottom, right (right has door at y=255-290 to atrium) -->
+          <!-- N 104: top, bottom, right (door y=255-290) -->
           <line x1="80"  y1="200" x2="260" y2="200"/>
           <line x1="80"  y1="340" x2="260" y2="340"/>
           <line x1="260" y1="200" x2="260" y2="255"/>
           <line x1="260" y1="290" x2="260" y2="340"/>
-          <!-- N103: top, right (door y=395-430) -->
+          <!-- N 103: top, right (door y=410-445) -->
           <line x1="80"  y1="360" x2="260" y2="360"/>
-          <line x1="260" y1="360" x2="260" y2="395"/>
-          <line x1="260" y1="430" x2="260" y2="500"/>
-          <!-- N102: top, left (door y=395-430), right -->
-          <line x1="280" y1="360" x2="460" y2="360"/>
-          <line x1="280" y1="360" x2="280" y2="395"/>
-          <line x1="280" y1="430" x2="280" y2="500"/>
-          <line x1="460" y1="360" x2="460" y2="500"/>
-          <!-- N106: top, bottom, left (door y=235-275 to atrium) -->
-          <line x1="580" y1="180" x2="820" y2="180"/>
-          <line x1="580" y1="340" x2="820" y2="340"/>
-          <line x1="580" y1="180" x2="580" y2="235"/>
-          <line x1="580" y1="275" x2="580" y2="340"/>
-          <!-- N101: top, left (door y=410-445 to atrium) -->
-          <line x1="580" y1="360" x2="820" y2="360"/>
-          <line x1="580" y1="360" x2="580" y2="410"/>
-          <line x1="580" y1="445" x2="580" y2="500"/>
+          <line x1="260" y1="360" x2="260" y2="410"/>
+          <line x1="260" y1="445" x2="260" y2="500"/>
+          <!-- N 102: top (door x=320-360), left, right -->
+          <line x1="280" y1="360" x2="320" y2="360"/>
+          <line x1="360" y1="360" x2="420" y2="360"/>
+          <line x1="280" y1="360" x2="280" y2="500"/>
+          <line x1="420" y1="360" x2="420" y2="500"/>
+          <!-- N 106: top, bottom, left (door y=235-275) -->
+          <line x1="540" y1="140" x2="820" y2="140"/>
+          <line x1="540" y1="360" x2="820" y2="360"/>
+          <line x1="540" y1="140" x2="540" y2="235"/>
+          <line x1="540" y1="275" x2="540" y2="360"/>
+          <!-- N 101: top, left (door y=420-455) -->
+          <line x1="540" y1="380" x2="820" y2="380"/>
+          <line x1="540" y1="380" x2="540" y2="420"/>
+          <line x1="540" y1="455" x2="540" y2="500"/>
         </g>
 
-        <!-- ===== NORTH ATRIUM label ===== -->
+        <!-- ===== ELEVATOR (at TOP of atrium, small box with ↓↑) ===== -->
         <g pointer-events="none">
-          <text x="420" y="88" font-family="sans-serif" font-size="22" font-weight="500"
+          <rect x="370" y="60" width="80" height="80" fill="#ffffff" stroke="#1a1a1a" stroke-width="2.5"/>
+          <line x1="395" y1="78" x2="395" y2="122" stroke="#1a1a1a" stroke-width="2"/>
+          <polygon points="395,128 388,115 402,115" fill="#1a1a1a"/>
+          <line x1="435" y1="122" x2="435" y2="78" stroke="#1a1a1a" stroke-width="2"/>
+          <polygon points="435,72 428,85 442,85" fill="#1a1a1a"/>
+        </g>
+
+        <!-- ===== "NORTH ATRIUM" label (between elevator and stairs) ===== -->
+        <g pointer-events="none">
+          <text x="410" y="178" font-family="sans-serif" font-size="22" font-weight="500"
                 fill="#fff" text-anchor="middle" letter-spacing="3" opacity="0.85">NORTH ATRIUM</text>
         </g>
 
-        <!-- ===== STAIRS box (central atrium, with up arrow) ===== -->
+        <!-- ===== STAIRS (in MIDDLE of atrium, larger box with zigzag + up arrow) ===== -->
         <g pointer-events="none">
-          <rect x="330" y="120" width="120" height="120" fill="#ffffff" stroke="#1a1a1a" stroke-width="3"/>
-          <path d="M 345 230 L 365 230 L 365 210 L 385 210 L 385 190 L 405 190 L 405 170 L 425 170 L 425 150 L 445 150"
+          <rect x="320" y="200" width="140" height="140" fill="#ffffff" stroke="#1a1a1a" stroke-width="3"/>
+          <path d="M 335 325 L 355 325 L 355 305 L 375 305 L 375 285 L 395 285 L 395 265 L 415 265 L 415 245 L 435 245 L 435 225 L 455 225"
                 fill="none" stroke="#1a1a1a" stroke-width="2.5" stroke-linejoin="miter"/>
-          <line x1="450" y1="135" x2="450" y2="120" stroke="#1a1a1a" stroke-width="2"/>
-          <polygon points="450,113 444,125 456,125" fill="#1a1a1a"/>
-        </g>
-
-        <!-- ===== ELEVATOR box (atrium lower portion, with up/down arrows) ===== -->
-        <g pointer-events="none">
-          <rect x="360" y="260" width="90" height="80" fill="#ffffff" stroke="#1a1a1a" stroke-width="2.5"/>
-          <line x1="385" y1="278" x2="385" y2="322" stroke="#1a1a1a" stroke-width="2"/>
-          <polygon points="385,328 378,315 392,315" fill="#1a1a1a"/>
-          <line x1="425" y1="322" x2="425" y2="278" stroke="#1a1a1a" stroke-width="2"/>
-          <polygon points="425,272 418,285 432,285" fill="#1a1a1a"/>
         </g>
 
         <!-- ===== ROOM NUMBER LABELS (top-right of each room) ===== -->
@@ -1120,31 +1122,31 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
           <text x="252" y="72"  text-anchor="end">N 105</text>
           <text x="252" y="232" text-anchor="end">N 104</text>
           <text x="252" y="392" text-anchor="end">N 103</text>
-          <text x="452" y="392" text-anchor="end">N 102</text>
-          <text x="812" y="212" text-anchor="end">N 106</text>
-          <text x="812" y="392" text-anchor="end">N 101</text>
+          <text x="412" y="392" text-anchor="end">N 102</text>
+          <text x="812" y="172" text-anchor="end">N 106</text>
+          <text x="812" y="412" text-anchor="end">N 101</text>
         </g>
 
         <!-- ===== Visit-tracker click targets ===== -->
         <g class="room-taps">
-          <rect class="room-tap" fill="transparent" data-room="N101" x="580" y="360" width="240" height="140"/>
-          <rect class="room-tap" fill="transparent" data-room="N102" x="280" y="360" width="180" height="140"/>
+          <rect class="room-tap" fill="transparent" data-room="N101" x="540" y="380" width="280" height="120"/>
+          <rect class="room-tap" fill="transparent" data-room="N102" x="280" y="360" width="140" height="140"/>
           <rect class="room-tap" fill="transparent" data-room="N103" x="80"  y="360" width="180" height="140"/>
           <rect class="room-tap" fill="transparent" data-room="N104" x="80"  y="200" width="180" height="140"/>
           <rect class="room-tap" fill="transparent" data-room="N105" x="80"  y="40"  width="180" height="140"/>
-          <rect class="room-tap" fill="transparent" data-room="N106" x="580" y="180" width="240" height="160"/>
+          <rect class="room-tap" fill="transparent" data-room="N106" x="540" y="140" width="280" height="220"/>
         </g>
 
-        <!-- ===== Footsteps (JS-generated) ===== -->
+        <!-- Footsteps (JS-generated) -->
         <g class="footsteps" id="footsteps-1f" pointer-events="none"></g>
 
-        <!-- ===== "You are here NOW" pulsing red marker ===== -->
+        <!-- "You are here NOW" pulsing red marker -->
         <g class="current-marker" id="currentMarker1F">
           <circle class="pulse-ring" r="22" />
           <circle r="14" fill="#a83e2a" stroke="#fff" stroke-width="3"/>
         </g>
 
-        <!-- ===== Visit badges (corner labels showing first-visit order) ===== -->
+        <!-- Visit badges -->
         <g class="visit-badges" font-family="sans-serif" font-size="17" font-weight="700">
           <g class="visit-badge" data-room="N105" transform="translate(100, 60)">
             <circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
@@ -1162,11 +1164,11 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
             <circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
             <text y="6" text-anchor="middle" fill="#fff">1</text>
           </g>
-          <g class="visit-badge" data-room="N106" transform="translate(600, 200)">
+          <g class="visit-badge" data-room="N106" transform="translate(560, 160)">
             <circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
             <text y="6" text-anchor="middle" fill="#fff">1</text>
           </g>
-          <g class="visit-badge" data-room="N101" transform="translate(600, 380)">
+          <g class="visit-badge" data-room="N101" transform="translate(560, 400)">
             <circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
             <text y="6" text-anchor="middle" fill="#fff">1</text>
           </g>
@@ -2002,14 +2004,14 @@ function showRoomToast(room) {
   try { visitOrder = JSON.parse(localStorage.getItem(KEY) || '[]') || []; }
   catch (e) { visitOrder = []; }
 
-  // Room centers in the new N1F SVG coord space (viewBox 20 20 840 510 → x 80-820, y 40-500)
+  // Room centers in the N1F SVG coord space (viewBox 20 20 840 510)
   var ROOM_CENTERS = {
     N105: { x: 170, y: 110 },
     N104: { x: 170, y: 270 },
     N103: { x: 170, y: 430 },
-    N102: { x: 370, y: 430 },
-    N106: { x: 700, y: 260 },
-    N101: { x: 700, y: 430 }
+    N102: { x: 350, y: 430 },
+    N106: { x: 680, y: 250 },
+    N101: { x: 680, y: 440 }
   };
 
   function save() {
