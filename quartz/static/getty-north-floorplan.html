@@ -220,20 +220,11 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 .room-tint { fill: rgba(184, 146, 58, 0); pointer-events: none; transition: fill 0.3s; }
 .room-tint.shown { fill: rgba(184, 146, 58, 0.13); }
 
-/* The path itself is invisible — only the 👣 emoji along it remains.
-   (Kept as a real <path> with no stroke so the textPath has something to ride on.) */
-.visit-path-line {
-  fill: none;
-  stroke: none;
-  pointer-events: none;
-}
-.visit-path-foot {
-  pointer-events: none;
-  font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', emoji, sans-serif;
-  font-size: 44px;             /* larger so footprints are clearly visible */
-  letter-spacing: 22px;        /* spacing between successive 👣 along the path */
-  filter: drop-shadow(0 1.5px 2.5px rgba(0,0,0,0.25));
-}
+/* Footsteps: each is an SVG <g> rotated to match the direction of travel from
+   the previous room to the next. Alternating left/right offset perpendicular to
+   the path simulates real walking. Generated dynamically by JS. */
+.footprint { fill: #b8923a; opacity: 0.88; }
+.footprint ellipse, .footprint circle { fill: #b8923a; }
 
 /* Pulsing red marker at the LAST visited room ("you are here now") */
 .current-marker { pointer-events: none; display: none; }
@@ -312,31 +303,42 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
    .floor-svg-wrap .art-pin width, plus enlarged SVG text size attributes inline.
    No toggle button anymore.) */
 
-/* ===== Modal read-aloud button (Web Speech API TTS) ===== */
-.modal-read {
-  position: absolute;
-  top: 12px; right: 60px;  /* sits to the LEFT of the × close button */
-  width: 38px; height: 38px;
-  border-radius: 50%;
-  background: rgba(255,255,255,.92);
-  border: none;
-  font-size: 1.05rem;
-  cursor: pointer;
-  color: var(--ink);
-  z-index: 10;
-  display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 2px 8px rgba(0,0,0,.2);
-  transition: background .15s, color .15s, transform .15s;
-}
-.modal-read:hover { background: #fff; transform: scale(1.08); }
-.modal-read.playing {
-  background: var(--south);
+/* ===== Modal read-aloud button (Web Speech API TTS) =====
+   Placed BELOW the painting image (inline in the content flow), as a clearly
+   labeled gold pill — not a tiny icon floating on top of the painting. */
+.art-read-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1rem 1.6rem 0;
+  padding: 0.55rem 1.1rem;
+  background: var(--gold);
   color: #fff;
+  border: none;
+  border-radius: 24px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  font-family: 'Noto Sans SC', sans-serif;
+  box-shadow: 0 3px 10px rgba(184, 146, 58, 0.45);
+  transition: background .15s, transform .12s, box-shadow .15s;
+}
+.art-read-btn:hover {
+  background: #a08130;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(184, 146, 58, 0.6);
+}
+.art-read-btn:active { transform: translateY(0); }
+.art-read-btn.playing {
+  background: var(--south);
+  box-shadow: 0 3px 10px rgba(122, 30, 20, 0.55);
   animation: readPulse 1.6s ease-in-out infinite;
 }
+.art-read-btn .ar-icon { font-size: 1.1em; }
 @keyframes readPulse {
-  0%, 100% { box-shadow: 0 2px 8px rgba(0,0,0,.2); }
-  50%      { box-shadow: 0 2px 16px rgba(122, 30, 20, .55); }
+  0%, 100% { box-shadow: 0 3px 10px rgba(122, 30, 20, 0.45); }
+  50%      { box-shadow: 0 3px 18px rgba(122, 30, 20, 0.75); }
 }
 .pav-divider {
   background: linear-gradient(180deg, var(--bg2) 0%, var(--bg) 100%);
@@ -400,6 +402,22 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   display: flex; align-items: center; justify-content: center;
   border: 2px solid #fff;
 }
+
+.floor-exits {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.2rem;
+  justify-content: center;
+  margin: 0.9rem auto 0;
+  max-width: 720px;
+  padding: 0 0.5rem;
+  font-size: 0.78rem;
+  color: var(--ink2);
+  font-family: 'Noto Sans SC', sans-serif;
+}
+.floor-exits .exit-item { display: inline-flex; align-items: center; gap: 0.4rem; }
+.floor-exits .exit-arrow { font-size: 1.15rem; color: var(--north); font-weight: 700; line-height: 1; }
+.floor-exits strong { font-weight: 700; color: var(--ink); }
 
 .floor-legend {
   display: grid;
@@ -766,11 +784,11 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
           <text x="435" y="1170" font-family="sans-serif" font-size="32" font-weight="700" fill="#1a1a1a" text-anchor="middle">East Pavilion</text>
         </g>
 
-        <!-- ===== EXHIBITIONS PAVILION arrow (left margin, two-line label + arrowhead pointing into door at y=495) ===== -->
+        <!-- ===== EXHIBITIONS PAVILION arrow (text moved OUT of SVG into the .floor-exits caption below;
+             only the arrow remains here at the door at y=495). ===== -->
         <g pointer-events="none">
-          <text x="6" y="478" font-family="sans-serif" font-size="22" font-weight="700" fill="#1a1a1a">Exhibitions</text>
-          <text x="6" y="504" font-family="sans-serif" font-size="22" font-weight="700" fill="#1a1a1a">Pavilion</text>
-          <polygon points="60,498 76,490 76,506" fill="#1a1a1a"/>
+          <polygon points="40,495 64,483 64,507" fill="#1a1a1a"/>
+          <line x1="64" y1="495" x2="80" y2="495" stroke="#1a1a1a" stroke-width="4" stroke-linecap="butt"/>
         </g>
 
         <!-- ===== Visited-room tints (translucent gold overlay on rooms you've been to) ===== -->
@@ -782,18 +800,9 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
           <rect class="room-tint" fill="transparent" data-room="N205" x="660" y="680" width="300" height="330"/>
         </g>
 
-        <!-- ===== Visit-path trail (dashed gold polyline through room centers, with arrow at end) ===== -->
-        <defs>
-          <marker id="pathArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="3.5" markerHeight="3.5" orient="auto">
-            <path d="M 0 0 L 10 5 L 0 10 z" fill="#b8923a"/>
-          </marker>
-        </defs>
-        <!-- Trail as an invisible <path> (so textPath has something to ride on). No stroke, no arrow. -->
-        <path class="visit-path-line" id="visitPathLine" d="" fill="none"/>
-        <!-- Footprint emoji marching along the same path. -->
-        <text class="visit-path-foot">
-          <textPath id="visitPathFoot" href="#visitPathLine" startOffset="14">👣 👣 👣 👣 👣 👣 👣 👣 👣 👣 👣 👣 👣 👣 👣 👣 👣 👣 👣 👣</textPath>
-        </text>
+        <!-- ===== Visit footsteps (generated by JS as individual rotated SVG groups,
+             so each step actually points in the direction of travel between rooms) ===== -->
+        <g class="footsteps" id="footsteps" pointer-events="none"></g>
 
         <!-- ===== Visit-tracker click targets (invisible, must stay on top so clicks land) ===== -->
         <g class="room-taps">
@@ -877,6 +886,10 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Titian_Portrait_of_Alfonso_d%27Avalos%2C_Marchese_del_Vasto%2C_in_Armor_with_a_Page_Getty_Museum.jpg/960px-Titian_Portrait_of_Alfonso_d%27Avalos%2C_Marchese_del_Vasto%2C_in_Armor_with_a_Page_Getty_Museum.jpg" alt="阿尔丰索·达瓦洛斯肖像">
         <span class="pin-num">35</span>
       </button>
+    </div>
+    <div class="floor-exits" aria-label="出口方向说明">
+      <span class="exit-item"><span class="exit-arrow">←</span> 西门通往 <strong>Exhibitions Pavilion</strong></span>
+      <span class="exit-item"><span class="exit-arrow">↓</span> 南门通往 <strong>East Pavilion</strong></span>
     </div>
     <div class="floor-legend" aria-label="北馆二楼各展厅主题">
       <div class="legend-item"><span class="legend-room">N 201</span><span class="legend-theme">意大利绘画 · <em>Italian Paintings</em> · 1300–1400</span></div>
@@ -999,7 +1012,6 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 <div id="modal" class="modal-overlay" onclick="closeModal(event)">
   <div class="modal-content" onclick="event.stopPropagation()">
     <button class="modal-close" onclick="closeModal()" aria-label="关闭">×</button>
-    <button class="modal-read" id="modalRead" onclick="readAloud()" aria-label="朗读这件展品" title="🔊 朗读全文">🔊</button>
     <div id="modal-inner"></div>
   </div>
 </div>
@@ -1339,6 +1351,18 @@ function openCard(cardId) {
   if (!card) return;
   const inner = document.getElementById('modal-inner');
   inner.innerHTML = card.outerHTML;
+  // Insert the read-aloud pill button right after the title so it's visible
+  // in the content flow (not floating on top of the painting image).
+  const titleEl = inner.querySelector('.art-title');
+  if (titleEl && !inner.querySelector('.art-read-btn')) {
+    const btn = document.createElement('button');
+    btn.className = 'art-read-btn';
+    btn.setAttribute('type', 'button');
+    btn.setAttribute('aria-label', '朗读这件展品');
+    btn.onclick = readAloud;
+    btn.innerHTML = '<span class="ar-icon">🔊</span><span>朗读全文</span>';
+    titleEl.insertAdjacentElement('afterend', btn);
+  }
   document.getElementById('modal').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -1535,22 +1559,70 @@ document.addEventListener('keydown', (e) => {
       tint.classList.toggle('shown', !!visitedSet[tint.dataset.room]);
     });
 
-    // Draw the trail as an SVG <path> through visited room centers
-    // (path d= instead of polyline points= — textPath needs a path to ride on).
-    var pathEl = document.getElementById('visitPathLine');
-    if (pathEl) {
-      if (visitOrder.length > 1) {
-        var d = visitOrder
-          .map(function(r, i) {
-            var c = ROOM_CENTERS[r];
-            if (!c) return '';
-            return (i === 0 ? 'M ' : 'L ') + c.x + ' ' + c.y;
-          })
-          .filter(function(s) { return s; })
-          .join(' ');
-        pathEl.setAttribute('d', d);
-      } else {
-        pathEl.setAttribute('d', '');
+    // Generate footsteps between consecutive visited rooms.
+    // Each footprint is a small SVG <g> placed along the segment, rotated to
+    // match the direction of travel, alternating left/right perpendicular
+    // offset so the trail looks like real walking. (👣 emoji couldn't rotate;
+    // browsers render it as a bitmap glyph at fixed orientation.)
+    var feetGroup = document.getElementById('footsteps');
+    if (feetGroup) {
+      var SVG_NS = 'http://www.w3.org/2000/svg';
+      while (feetGroup.firstChild) feetGroup.removeChild(feetGroup.firstChild);
+
+      for (var i = 0; i < visitOrder.length - 1; i++) {
+        var a = ROOM_CENTERS[visitOrder[i]];
+        var b = ROOM_CENTERS[visitOrder[i + 1]];
+        if (!a || !b) continue;
+
+        var dx = b.x - a.x;
+        var dy = b.y - a.y;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 1) continue;
+
+        // Direction angle (degrees) in SVG coordinates. atan2 here is in
+        // SVG space (y-down). Foot is drawn with toes UP (toward -y), so we
+        // add 90° to rotate "up" → path direction.
+        var rot = Math.atan2(dy, dx) * 180 / Math.PI + 90;
+
+        // Perpendicular unit vector (90° CCW of direction) for L/R offset.
+        var px = -dy / dist;
+        var py = dx / dist;
+        var perpOffset = 9;
+
+        // ~one footprint every 38 SVG units along the segment.
+        var stepLen = 38;
+        var numSteps = Math.max(2, Math.round(dist / stepLen));
+
+        for (var j = 0; j < numSteps; j++) {
+          var t = (j + 0.5) / numSteps;
+          var fx = a.x + dx * t;
+          var fy = a.y + dy * t;
+          var side = (j % 2 === 0) ? 1 : -1;
+          fx += px * perpOffset * side;
+          fy += py * perpOffset * side;
+
+          var foot = document.createElementNS(SVG_NS, 'g');
+          foot.setAttribute('class', 'footprint');
+          foot.setAttribute('transform',
+            'translate(' + fx.toFixed(1) + ',' + fy.toFixed(1) + ') ' +
+            'rotate(' + rot.toFixed(1) + ')'
+          );
+          // foot body (oval, toes-up natural orientation before rotate)
+          var body = document.createElementNS(SVG_NS, 'ellipse');
+          body.setAttribute('cx', '0'); body.setAttribute('cy', '2');
+          body.setAttribute('rx', '6'); body.setAttribute('ry', '11');
+          foot.appendChild(body);
+          // three toe dots above the body
+          var toes = [[-3, -10, 1.6], [0, -12, 1.9], [3, -11, 1.6]];
+          for (var k = 0; k < 3; k++) {
+            var toe = document.createElementNS(SVG_NS, 'circle');
+            toe.setAttribute('cx', String(toes[k][0]));
+            toe.setAttribute('cy', String(toes[k][1]));
+            toe.setAttribute('r', String(toes[k][2]));
+            foot.appendChild(toe);
+          }
+          feetGroup.appendChild(foot);
+        }
       }
     }
 
@@ -1599,12 +1671,28 @@ document.addEventListener('keydown', (e) => {
 /* ===== Modal read-aloud via Web Speech API (browser TTS) ===== */
 var speechActive = false;
 
+function getReadBtn() {
+  return document.querySelector('#modal-inner .art-read-btn');
+}
+function setReadBtnIdle(btn) {
+  if (!btn) btn = getReadBtn();
+  if (!btn) return;
+  btn.classList.remove('playing');
+  btn.innerHTML = '<span class="ar-icon">🔊</span><span>朗读全文</span>';
+}
+function setReadBtnPlaying(btn) {
+  if (!btn) btn = getReadBtn();
+  if (!btn) return;
+  btn.classList.add('playing');
+  btn.innerHTML = '<span class="ar-icon">⏸</span><span>停止朗读</span>';
+}
+
 function readAloud() {
-  var btn = document.getElementById('modalRead');
+  var btn = getReadBtn();
   if (speechActive) {
     try { window.speechSynthesis.cancel(); } catch (e) {}
     speechActive = false;
-    if (btn) { btn.textContent = '🔊'; btn.classList.remove('playing'); }
+    setReadBtnIdle(btn);
     return;
   }
 
@@ -1635,7 +1723,7 @@ function readAloud() {
   u.pitch = 1.0;
   function stop() {
     speechActive = false;
-    if (btn) { btn.textContent = '🔊'; btn.classList.remove('playing'); }
+    setReadBtnIdle();
   }
   u.onend = stop;
   u.onerror = stop;
@@ -1644,7 +1732,7 @@ function readAloud() {
     window.speechSynthesis.cancel();  // clear any prior utterance
     window.speechSynthesis.speak(u);
     speechActive = true;
-    if (btn) { btn.textContent = '⏸'; btn.classList.add('playing'); }
+    setReadBtnPlaying(btn);
   } catch (e) {
     stop();
   }
@@ -1658,8 +1746,7 @@ function readAloud() {
     if (speechActive) {
       try { window.speechSynthesis.cancel(); } catch (err) {}
       speechActive = false;
-      var btn = document.getElementById('modalRead');
-      if (btn) { btn.textContent = '🔊'; btn.classList.remove('playing'); }
+      setReadBtnIdle();
     }
     return origClose(e);
   };
