@@ -113,6 +113,10 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   margin: 0;
   color: var(--ink);
 }
+/* The Latin/Roman half (room range like "N201–N205") is wrapped in <em>; shrink it so
+   the Chinese theme phrase stays prominent and the line doesn't blow past the viewport.
+   white-space: nowrap keeps the en-dash in "N101–N106" from acting as a soft break. */
+.floor-name em { font-size: 0.62em; font-weight: 500; letter-spacing: 0.01em; white-space: nowrap; }
 .floor-desc {
   color: var(--muted);
   font-size: 0.74rem;
@@ -487,6 +491,10 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   font-size: 2.2rem; font-weight: 500;
   margin: 0;
 }
+/* English half ("North Pavilion") wrapped in <em>; shrink so it doesn't push the line
+   wide enough to wrap on mobile while the Chinese 馆名 stays prominent. nowrap keeps
+   "North Pavilion" / "South Pavilion" intact when the line is tight. */
+.pav-divider .pav-name em { font-size: 0.62em; font-weight: 500; letter-spacing: 0.01em; white-space: nowrap; }
 .pav-divider.south { border-left: 6px solid var(--south); }
 .pav-divider.north { border-left: 6px solid var(--north); }
 .pav-divider.south .pav-name { color: var(--south); }
@@ -702,12 +710,14 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 @media (max-width: 640px) {
   html { font-size: 21px; }  /* still large on mobile (was 17px) */
   .page-header { padding: 2rem 5vw 1.5rem; }
-  /* Titles: shrink so the full phrase fits one line, and use word-break: keep-all
-     so Chinese never splits mid-word (e.g. "查/看", "装饰/艺术") and Latin compound
-     words break only at real word boundaries. */
-  .page-title { font-size: 1.55rem; word-break: keep-all; overflow-wrap: break-word; }
-  .pav-divider .pav-name { font-size: 1.35rem; word-break: keep-all; overflow-wrap: break-word; }
-  .floor-name { font-size: 1.2rem; word-break: keep-all; overflow-wrap: break-word; }
+  .page-title { font-size: 2rem; }
+  /* Don't shrink the title font on mobile — instead, just guarantee that any
+     wrapping happens at " · " punctuation rather than mid-CJK or mid-Latin word.
+     English Latin inside titles is already shrunk via the global .pav-name em
+     / .floor-name em rules below. */
+  .page-title,
+  .pav-divider .pav-name,
+  .floor-name { word-break: keep-all; overflow-wrap: break-word; }
   /* Floor plans fill the viewport edge-to-edge on mobile (no margin / border / radius) */
   .floor-section { padding: 1.5rem 0 2.5rem; }
   .floor-head { padding: 0 4vw; }
