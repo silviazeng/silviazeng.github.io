@@ -95,6 +95,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 .floor-section {
   padding: 3rem 5vw 3.5rem;
   border-bottom: 1px solid var(--line);
+  scroll-margin-top: 68px;  /* keep section header clear of the sticky-top bar on anchor jumps */
 }
 .floor-section.alt { background: var(--bg2); }
 .floor-head { margin-bottom: 1.4rem; }
@@ -209,9 +210,8 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 }
 .loc-btn.active { background: var(--north); color: #fff; border-color: var(--north); }
 .loc-btn:hover:not(.active) { border-color: var(--north); color: var(--north); }
-.pav-divider.active-pavilion {
-  box-shadow: inset 5px 0 0 var(--gold), 0 1px 0 var(--gold-lt);
-  background: linear-gradient(180deg, var(--gold-lt) 0%, var(--bg) 100%);
+.floor-section.active-pavilion {
+  box-shadow: inset 5px 0 0 var(--gold);
 }
 
 /* ===== Visit tracking (click a room to mark visited) ===== */
@@ -1021,16 +1021,10 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   </div>
 </header>
 
-<!-- ===== 北馆 ===== -->
-<div class="pav-divider north">
-  <div class="pav-badge-row"><span class="pav-dot"></span><h2 class="pav-name">北馆 · <em>North Pavilion</em></h2></div>
-  <p class="pav-tagline">文艺复兴 · 彩饰手稿 · 中世纪装饰艺术</p>
-</div>
-
 <!-- ===== 北 二楼 ===== -->
 <section class="floor-section" id="north-2f">
   <div class="floor-head">
-    <span class="floor-label">二楼 · 2F</span>
+    <span class="floor-label">北馆 二楼 · 2F</span>
     <h2 class="floor-name">文艺复兴绘画全景 · <em>N201–N205</em></h2>
     <p class="floor-desc">从13世纪锡耶纳金底圣像，到尼德兰油画、矫饰主义与威尼斯诸家——一条400年欧洲绘画的纵深线。</p>
   </div>
@@ -1290,7 +1284,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 <!-- ===== 北 一楼 ===== -->
 <section class="floor-section alt" id="north-1f">
   <div class="floor-head">
-    <span class="floor-label">一楼 · 1F</span>
+    <span class="floor-label">北馆 一楼 · 1F</span>
     <h2 class="floor-name">彩饰手稿 · 中世纪装饰艺术 · <em>N101–N106</em></h2>
     <p class="floor-desc">低光展厅珍藏彩饰手稿、中世纪彩色玻璃、奥格斯堡珍藏柜与威尼斯丝线玻璃。</p>
   </div>
@@ -1448,16 +1442,10 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   </div>
 </section>
 
-<!-- ===== 南馆 ===== -->
-<div class="pav-divider south">
-  <div class="pav-badge-row"><span class="pav-dot"></span><h2 class="pav-name">南馆 · <em>South Pavilion</em></h2></div>
-  <p class="pav-tagline">装饰艺术 · 法国宫廷 · 18世纪绘画</p>
-</div>
-
 <!-- ===== 南 二楼 ===== -->
 <section class="floor-section south" id="south-2f">
   <div class="floor-head">
-    <span class="floor-label">二楼 · 2F</span>
+    <span class="floor-label">南馆 二楼 · 2F</span>
     <h2 class="floor-name">18世纪欧洲绘画 · <em>S201–S206</em></h2>
     <p class="floor-desc">布歇、庚斯博罗、戈雅——18世纪法国洛可可、英国乡绅肖像、西班牙宫廷绘画三种品味的并置。</p>
   </div>
@@ -1485,7 +1473,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 <!-- ===== 南 一楼 ===== -->
 <section class="floor-section south alt" id="south-1f">
   <div class="floor-head">
-    <span class="floor-label">一楼 · 1F</span>
+    <span class="floor-label">南馆 一楼 · 1F</span>
     <h2 class="floor-name">法国装饰艺术 · 宫廷复原房间 · <em>S101–S116</em></h2>
     <p class="floor-desc">多个完整复原的17–18世纪欧洲贵族房间——家具、墙板、地板、吊灯全是真品，仿佛凡尔赛时光倒流。</p>
   </div>
@@ -1948,10 +1936,13 @@ document.addEventListener('keydown', (e) => {
   var lastDistanceM = null;
 
   function highlightPavilion(p) {
-    document.querySelectorAll('.pav-divider').forEach(function(d) {
-      var match = (p === 'north' && d.classList.contains('north')) ||
-                  (p === 'south' && d.classList.contains('south'));
-      d.classList.toggle('active-pavilion', match);
+    // The standalone .pav-divider headers were removed (info now lives in the
+    // sticky top chips + floor-label). Highlight the matching floor-sections
+    // instead, so the GPS detection still gives a visual cue.
+    document.querySelectorAll('.floor-section').forEach(function(s) {
+      var match = (p === 'north' && !s.classList.contains('south')) ||
+                  (p === 'south' && s.classList.contains('south'));
+      s.classList.toggle('active-pavilion', match);
     });
   }
 
