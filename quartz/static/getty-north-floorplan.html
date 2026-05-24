@@ -524,7 +524,17 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   background: #fff;
   transition: transform .18s, box-shadow .18s;
   z-index: 2;
-  touch-action: none;  /* let JS handle drag instead of native scroll */
+  touch-action: none;           /* let JS handle drag instead of native scroll */
+  -webkit-touch-callout: none;  /* kill iOS Safari's long-press image preview */
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.art-pin img {
+  pointer-events: none;         /* image can't intercept the long-press */
+  -webkit-user-drag: none;
+  user-select: none;
+  -webkit-user-select: none;
 }
 .art-pin:hover {
   transform: translate(-50%, -50%) translate(var(--drag-x), var(--drag-y)) scale(1.18);
@@ -1940,6 +1950,14 @@ function closeModal(e) {
   var SNAP_MS = 280;        // matches CSS .snap-back transition
 
   document.querySelectorAll('.art-pin').forEach(function(btn) {
+    // Belt-and-suspenders: block the native drag/preview on the inner image too.
+    var innerImg = btn.querySelector('img');
+    if (innerImg) {
+      innerImg.draggable = false;
+      innerImg.addEventListener('dragstart', function(e) { e.preventDefault(); });
+    }
+    btn.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+
     var holdTimer = null;
     var startX = 0, startY = 0;
     var dragging = false;
