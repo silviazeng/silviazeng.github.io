@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Variant B · Floating FAB + Location Banner</title>
+<style>
+  :root {
+    --bg: #f5f0e0;
+    --ink: #1a1a1a;
+    --muted: #6b5a3f;
+    --gold: #b8923a;
+    --north: #2a5c30;
+    --south: #7a1e14;
+    --cream-card: #fff8e6;
+    --line: rgba(26,26,26,.15);
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html { font-size: 18px; }
+  body {
+    margin: 0;
+    font-family: -apple-system, "PingFang SC", "Noto Sans CJK SC", sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.45;
+  }
+
+  /* ===== MINIMAL TOP ===== */
+  .top-mini {
+    display: flex;
+    align-items: center;
+    padding: 14px 18px 6px;
+  }
+  .top-mini a.back {
+    color: var(--gold);
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-decoration: none;
+    padding: 8px 10px;
+    border-radius: 10px;
+  }
+
+  /* ===== PAGE CONTENT (representative slice) ===== */
+  .page {
+    padding: 4px 18px 200px; /* extra bottom padding so floating widgets don't cover content */
+  }
+  .eyebrow {
+    font-size: .85rem;
+    letter-spacing: .12em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin: 6px 0 10px;
+    font-weight: 600;
+  }
+  h1 {
+    font-family: "Source Han Serif SC", "Songti SC", serif;
+    font-size: 2rem;
+    line-height: 1.25;
+    margin: 0 0 14px;
+    font-weight: 600;
+  }
+  h1 em { color: var(--north); font-style: normal; font-weight: 700; }
+
+  /* Pseudo floorplan card */
+  .plan-card {
+    background: var(--cream-card);
+    border-radius: 14px;
+    padding: 14px;
+    margin: 18px 0;
+    border: 1px solid var(--line);
+  }
+  .plan-svg {
+    width: 100%;
+    aspect-ratio: 1 / 1.05;
+    background: linear-gradient(135deg, #ede4cf 0%, #d7c8a4 100%);
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+  }
+  .room {
+    position: absolute;
+    background: #d7e0ec;
+    border: 2px solid var(--ink);
+    border-radius: 4px;
+    color: var(--ink);
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 4px 6px;
+  }
+  .room.r1 { left: 6%;  top: 10%; width: 30%; height: 22%; }
+  .room.r2 { left: 6%;  top: 36%; width: 30%; height: 24%; }
+  .room.r3 { left: 6%;  top: 64%; width: 30%; height: 26%; }
+  .room.r4 { left: 56%; top: 18%; width: 38%; height: 32%; }
+  .room.r5 { left: 56%; top: 56%; width: 38%; height: 32%; }
+  .pin {
+    position: absolute;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #b8923a center/cover no-repeat;
+    border: 3px solid #fff;
+    box-shadow: 0 2px 6px rgba(0,0,0,.3);
+  }
+  .pin.p1 { left: 12%; top: 18%; background-color: #c14f3c; }
+  .pin.p2 { left: 18%; top: 70%; background-color: #6e4b32; }
+  .pin.p3 { left: 62%; top: 24%; background-color: #4a6b8a; }
+  .pin.p4 { left: 74%; top: 60%; background-color: #2e5333; }
+  .pin.p5 { left: 64%; top: 78%; background-color: #88203d; }
+
+  /* ===== FLOATING LOCATION BANNER ===== */
+  .loc-banner {
+    position: fixed;
+    bottom: 132px;        /* above FAB */
+    left: 18px;
+    right: 100px;          /* leave room for FAB */
+    background: linear-gradient(180deg, #fff8e6 0%, #f5e5b8 100%);
+    border: 2px solid var(--gold);
+    border-radius: 20px;
+    padding: 14px 16px;
+    box-shadow: 0 6px 16px rgba(0,0,0,.12);
+    z-index: 40;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .loc-banner .pin-icon {
+    flex: 0 0 auto;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #a83e2a;
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    box-shadow: 0 0 0 4px rgba(168,62,42,.25);
+  }
+  .loc-banner .loc-text {
+    flex: 1;
+    min-width: 0;
+  }
+  .loc-banner .loc-text .lt-line1 {
+    font-size: .8rem;
+    color: var(--muted);
+    font-weight: 500;
+    letter-spacing: .05em;
+  }
+  .loc-banner .loc-text .lt-line2 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-top: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* ===== FAB (floor switcher) ===== */
+  .fab {
+    position: fixed;
+    bottom: 28px;
+    right: 22px;
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    background: var(--north);
+    color: #fff;
+    border: 4px solid var(--gold);
+    box-shadow: 0 8px 20px rgba(0,0,0,.25);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    cursor: pointer;
+    z-index: 50;
+    padding: 0;
+    font-family: inherit;
+  }
+  .fab .fab-pav { font-size: .8rem; font-weight: 500; opacity: .9; letter-spacing: .1em; }
+  .fab .fab-floor { font-size: 1.8rem; line-height: 1; margin-top: 1px; }
+
+  /* Ghost previews of fan-out floors (hint) */
+  .fab-ghost {
+    position: fixed;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.7);
+    border: 2px dashed var(--gold);
+    color: var(--muted);
+    font-size: .75rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 38;
+    opacity: .35;
+    pointer-events: none;
+  }
+  .fab-ghost.g1 { right: 110px; bottom: 50px; }
+  .fab-ghost.g2 { right: 90px;  bottom: 130px; }
+
+  /* Variant label callout */
+  .variant-label {
+    position: fixed;
+    top: 14px;
+    right: 14px;
+    background: var(--ink);
+    color: #fff;
+    padding: 5px 11px;
+    border-radius: 18px;
+    font-size: .8rem;
+    font-weight: 700;
+    z-index: 60;
+    letter-spacing: .04em;
+  }
+</style>
+</head>
+<body>
+
+<header class="top-mini">
+  <a class="back" href="#">← 指南</a>
+</header>
+
+<span class="variant-label">B · FAB + 位置条</span>
+
+<main class="page">
+  <div class="eyebrow">Floor Plans · 展厅楼层导览图</div>
+  <h1>点击展品圆点 · 查看 <em>详细介绍</em></h1>
+
+  <div class="plan-card" aria-label="北馆 2F 平面图">
+    <div class="plan-svg">
+      <div class="room r1">N 205</div>
+      <div class="room r2">N 204</div>
+      <div class="room r3">N 203</div>
+      <div class="room r4">N 201</div>
+      <div class="room r5">N 202</div>
+      <div class="pin p1"></div>
+      <div class="pin p2"></div>
+      <div class="pin p3"></div>
+      <div class="pin p4"></div>
+      <div class="pin p5"></div>
+    </div>
+    <p style="margin: 14px 4px 4px; font-size: .95rem; color: var(--muted); line-height: 1.5;">
+      ← 西门通往 <strong style="color:var(--ink)">Entrance Pavilion</strong> · ↓ 南门通往 <strong style="color:var(--ink)">East Pavilion</strong>
+    </p>
+  </div>
+</main>
+
+<div class="loc-banner" role="status" aria-label="当前位置">
+  <span class="pin-icon">📍</span>
+  <span class="loc-text">
+    <span class="lt-line1">你在</span>
+    <span class="lt-line2">N203 · 北方欧洲绘画</span>
+  </span>
+</div>
+
+<span class="fab-ghost g1">北1F</span>
+<span class="fab-ghost g2">南2F</span>
+
+<button class="fab" aria-label="切换楼层">
+  <span class="fab-pav">北馆</span>
+  <span class="fab-floor">2F</span>
+</button>
+
+</body>
+</html>
