@@ -516,28 +516,37 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   overflow: hidden;
   border: 3px solid #fff;
   box-shadow: 0 2px 8px rgba(0,0,0,.35);
-  transform: translate(-50%, -50%);
+  --drag-x: 0px;
+  --drag-y: 0px;
+  transform: translate(-50%, -50%) translate(var(--drag-x), var(--drag-y));
   cursor: pointer;
   padding: 0;
   background: #fff;
   transition: transform .18s, box-shadow .18s;
   z-index: 2;
+  touch-action: none;  /* let JS handle drag instead of native scroll */
 }
 .art-pin:hover {
-  transform: translate(-50%, -50%) scale(1.18);
+  transform: translate(-50%, -50%) translate(var(--drag-x), var(--drag-y)) scale(1.18);
   box-shadow: 0 4px 14px rgba(0,0,0,.45);
   z-index: 3;
 }
-/* Long-press peek: hold any pin to fade ALL pins so the room labels, walls,
-   footstep trails, etc. underneath become visible. Release to restore. */
-body.pins-peek .art-pin {
-  opacity: 0.15;
-  transition: opacity .15s ease;
+/* Drag-to-peek: long-press a pin and drag it aside to reveal what's beneath.
+   While being dragged, no transition (so it tracks the finger 1:1); after
+   release, .snap-back kicks in to animate back to the anchor. */
+.art-pin.dragging {
+  transition: none !important;
+  z-index: 10;
+  box-shadow: 0 6px 20px rgba(0,0,0,.45);
+  cursor: grabbing;
 }
-body.pins-peek .art-pin.pin-held {
-  opacity: 0.35;  /* the one being held stays slightly more visible so the user can see their finger anchor */
+.art-pin.dragging:hover {
+  /* Don't apply scale during drag; the finger position is what matters */
+  transform: translate(-50%, -50%) translate(var(--drag-x), var(--drag-y));
 }
-.art-pin { transition: transform .18s, box-shadow .18s, opacity .15s ease; }
+.art-pin.snap-back {
+  transition: transform .28s cubic-bezier(.2, .8, .3, 1.1), box-shadow .28s ease;
+}
 .art-pin img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .art-pin .pin-num {
   position: absolute;
@@ -1922,44 +1931,83 @@ function closeModal(e) {
   document.getElementById('modal').classList.remove('open');
   document.body.style.overflow = '';
 }
-// Art-pin interaction: short tap opens the modal; long-press (>350ms) fades
-// every pin so the user can peek at the room labels / walls / footstep trail
-// underneath. Release restores the pins.
+// Art-pin interaction: short tap opens the modal; press-and-drag temporarily
+// pulls the pin aside (following the finger) so the user can see what's
+// underneath. Release snaps the pin back to its anchor with a spring.
 (function() {
-  var HOLD_MS = 350;
-  var holdTimer = null;
-  var holdActive = false;  // becomes true once the hold threshold trips
+  var HOLD_MS = 220;        // ms before drag is engaged
+  var MOVE_THRESHOLD = 6;   // px finger movement before drag engages early
+  var SNAP_MS = 280;        // matches CSS .snap-back transition
+
   document.querySelectorAll('.art-pin').forEach(function(btn) {
+    var holdTimer = null;
+    var startX = 0, startY = 0;
+    var dragging = false;
+    var didDrag = false;     // flips true once a drag actually happened (used to suppress the click)
+
+    function beginDrag() {
+      if (dragging) return;
+      dragging = true;
+      btn.classList.remove('snap-back');
+      btn.classList.add('dragging');
+    }
+
+    function endDrag() {
+      if (!dragging) return;
+      dragging = false;
+      didDrag = true;
+      btn.classList.remove('dragging');
+      btn.classList.add('snap-back');
+      btn.style.setProperty('--drag-x', '0px');
+      btn.style.setProperty('--drag-y', '0px');
+      setTimeout(function() {
+        btn.classList.remove('snap-back');
+        // Allow clicks again after the snap-back animation finishes
+        didDrag = false;
+      }, SNAP_MS);
+    }
+
     btn.addEventListener('click', function(e) {
-      if (holdActive) {                    // suppress the click that follows a long-press release
+      if (didDrag) {
         e.preventDefault();
         e.stopPropagation();
         return;
       }
       openCard(btn.dataset.card);
     });
-    btn.addEventListener('pointerdown', function() {
+
+    btn.addEventListener('pointerdown', function(e) {
+      startX = e.clientX;
+      startY = e.clientY;
       clearTimeout(holdTimer);
-      holdActive = false;
-      holdTimer = setTimeout(function() {
-        holdActive = true;
-        btn.classList.add('pin-held');
-        document.body.classList.add('pins-peek');
-      }, HOLD_MS);
+      try { btn.setPointerCapture(e.pointerId); } catch (err) {}
+      holdTimer = setTimeout(beginDrag, HOLD_MS);
     });
-    var release = function() {
-      clearTimeout(holdTimer);
-      if (holdActive) {
-        document.body.classList.remove('pins-peek');
-        btn.classList.remove('pin-held');
-        // Keep holdActive=true for one more event loop so the click event
-        // that follows pointerup is suppressed; then reset.
-        setTimeout(function() { holdActive = false; }, 50);
+
+    btn.addEventListener('pointermove', function(e) {
+      var dx = e.clientX - startX;
+      var dy = e.clientY - startY;
+      if (!dragging) {
+        // If the user moves their finger significantly before the hold timer fires,
+        // start the drag immediately so the gesture feels responsive.
+        if (Math.abs(dx) > MOVE_THRESHOLD || Math.abs(dy) > MOVE_THRESHOLD) {
+          clearTimeout(holdTimer);
+          beginDrag();
+        } else {
+          return;
+        }
       }
-    };
+      btn.style.setProperty('--drag-x', dx + 'px');
+      btn.style.setProperty('--drag-y', dy + 'px');
+    });
+
+    function release(e) {
+      clearTimeout(holdTimer);
+      try { btn.releasePointerCapture(e.pointerId); } catch (err) {}
+      endDrag();
+    }
     btn.addEventListener('pointerup', release);
     btn.addEventListener('pointercancel', release);
-    btn.addEventListener('pointerleave', release);
   });
 })();
 document.addEventListener('keydown', (e) => {
