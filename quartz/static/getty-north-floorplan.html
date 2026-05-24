@@ -1049,8 +1049,8 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
         -->
         <rect x="80" y="40" width="740" height="460" fill="#bfa686"/>   <!-- atrium fill -->
         <rect x="80"  y="40"  width="180" height="140" fill="#d7e0ec"/> <!-- N 105 -->
-        <rect x="80"  y="200" width="180" height="140" fill="#d7e0ec"/> <!-- N 104 -->
-        <rect x="80"  y="360" width="180" height="140" fill="#d7e0ec"/> <!-- N 103 -->
+        <rect x="80"  y="180" width="180" height="160" fill="#d7e0ec"/> <!-- N 104 (flush against N105 + N103) -->
+        <rect x="80"  y="340" width="180" height="160" fill="#d7e0ec"/> <!-- N 103 (flush against N104) -->
         <rect x="260" y="340" width="140" height="160" fill="#d7e0ec"/> <!-- N 102 (flush against N103 and stairs) -->
         <rect x="540" y="140" width="280" height="220" fill="#d7e0ec"/> <!-- N 106 (large) -->
         <rect x="540" y="380" width="280" height="120" fill="#d7e0ec"/> <!-- N 101 (smaller) -->
@@ -1060,24 +1060,20 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 
         <!-- ===== INTERNAL WALLS (with door gaps to the atrium) ===== -->
         <g fill="none" stroke="#1a1a1a" stroke-width="5">
-          <!-- N 105: bottom + right (door y=95-130) -->
-          <line x1="80"  y1="180" x2="260" y2="180"/>
+          <!-- N 105: right wall door y=95-130; bottom shared with N104 top, door at x=155-185 = N105↔N104 direct passage -->
+          <line x1="80"  y1="180" x2="155" y2="180"/>
+          <line x1="185" y1="180" x2="260" y2="180"/>
           <line x1="260" y1="40"  x2="260" y2="95"/>
           <line x1="260" y1="130" x2="260" y2="180"/>
-          <!-- N 104: right wall solid; top + bottom walls each have a door at x=155-185 -->
-          <line x1="80"  y1="200" x2="155" y2="200"/>
-          <line x1="185" y1="200" x2="260" y2="200"/>
+          <!-- N 104 (flush w/ N105 + N103): right wall solid; top = N105 bottom (above); bottom shared with N103 top, door at x=155-185 -->
           <line x1="80"  y1="340" x2="155" y2="340"/>
           <line x1="185" y1="340" x2="260" y2="340"/>
-          <line x1="260" y1="200" x2="260" y2="340"/>
-          <!-- N 103: top has door at x=155-185 (aligns w/ N104 bottom); right wall shared with N102 (door y=410-445 connects N103↔N102) -->
-          <line x1="80"  y1="360" x2="155" y2="360"/>
-          <line x1="185" y1="360" x2="260" y2="360"/>
-          <line x1="260" y1="360" x2="260" y2="410"/>
+          <line x1="260" y1="180" x2="260" y2="340"/>
+          <!-- N 103: top = N104 bottom (above); right wall shared with N102, door y=410-445 = N103↔N102 -->
+          <line x1="260" y1="340" x2="260" y2="410"/>
           <line x1="260" y1="445" x2="260" y2="500"/>
-          <!-- N 102 (flush against N103 + stairs): top solid (stairs above), left extends 20 above N103 top, right wall has door y=405-435 to atrium -->
+          <!-- N 102 (flush w/ N103 + stairs): top shared with stairs bottom (solid); right wall door y=405-435 to atrium -->
           <line x1="260" y1="340" x2="400" y2="340"/>
-          <line x1="260" y1="340" x2="260" y2="360"/>
           <line x1="400" y1="340" x2="400" y2="405"/>
           <line x1="400" y1="435" x2="400" y2="500"/>
           <!-- N 106: top, bottom, left (door y=235-275) -->
@@ -1116,8 +1112,8 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
         <!-- ===== ROOM NUMBER LABELS (top-right of each room) ===== -->
         <g pointer-events="none" font-family="sans-serif" font-size="28" font-weight="500" fill="#1a1a1a">
           <text x="252" y="72"  text-anchor="end">N 105</text>
-          <text x="252" y="232" text-anchor="end">N 104</text>
-          <text x="252" y="392" text-anchor="end">N 103</text>
+          <text x="252" y="212" text-anchor="end">N 104</text>
+          <text x="252" y="372" text-anchor="end">N 103</text>
           <text x="392" y="372" text-anchor="end">N 102</text>
           <text x="812" y="172" text-anchor="end">N 106</text>
           <text x="812" y="412" text-anchor="end">N 101</text>
@@ -1127,8 +1123,8 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
         <g class="room-taps">
           <rect class="room-tap" fill="transparent" data-room="N101" x="540" y="380" width="280" height="120"/>
           <rect class="room-tap" fill="transparent" data-room="N102" x="260" y="340" width="140" height="160"/>
-          <rect class="room-tap" fill="transparent" data-room="N103" x="80"  y="360" width="180" height="140"/>
-          <rect class="room-tap" fill="transparent" data-room="N104" x="80"  y="200" width="180" height="140"/>
+          <rect class="room-tap" fill="transparent" data-room="N103" x="80"  y="340" width="180" height="160"/>
+          <rect class="room-tap" fill="transparent" data-room="N104" x="80"  y="180" width="180" height="160"/>
           <rect class="room-tap" fill="transparent" data-room="N105" x="80"  y="40"  width="180" height="140"/>
           <rect class="room-tap" fill="transparent" data-room="N106" x="540" y="140" width="280" height="220"/>
         </g>
@@ -1148,11 +1144,11 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
             <circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
             <text y="6" text-anchor="middle" fill="#fff">1</text>
           </g>
-          <g class="visit-badge" data-room="N104" transform="translate(100, 220)">
+          <g class="visit-badge" data-room="N104" transform="translate(100, 200)">
             <circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
             <text y="6" text-anchor="middle" fill="#fff">1</text>
           </g>
-          <g class="visit-badge" data-room="N103" transform="translate(100, 380)">
+          <g class="visit-badge" data-room="N103" transform="translate(100, 360)">
             <circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
             <text y="6" text-anchor="middle" fill="#fff">1</text>
           </g>
@@ -1995,8 +1991,8 @@ function showRoomToast(room) {
   // Room centers in the N1F SVG coord space (viewBox 20 20 840 510)
   var ROOM_CENTERS = {
     N105: { x: 170, y: 110 },
-    N104: { x: 170, y: 270 },
-    N103: { x: 170, y: 430 },
+    N104: { x: 170, y: 260 },
+    N103: { x: 170, y: 420 },
     N102: { x: 330, y: 420 },
     N106: { x: 680, y: 250 },
     N101: { x: 680, y: 440 }
