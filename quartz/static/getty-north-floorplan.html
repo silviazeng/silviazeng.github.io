@@ -1495,18 +1495,158 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
     <p class="floor-desc">布歇、庚斯博罗、戈雅——18世纪法国洛可可、英国乡绅肖像、西班牙宫廷绘画三种品味的并置。</p>
   </div>
   <div class="floor-plan">
-    <div class="floor-canvas">
-      <img class="floor-bg" src="getty-south-2f-sign.jpg" alt="南馆二楼平面图">
-      <!-- Pins on 940x950 image -->
-      <button class="art-pin" data-card="card-25" style="left:53%;top:24%" title="爱之泉 S202">
+    <div class="floor-svg-wrap">
+      <svg viewBox="20 20 880 880" xmlns="http://www.w3.org/2000/svg" class="signage-svg" preserveAspectRatio="xMidYMid meet">
+        <!-- Background -->
+        <rect width="920" height="920" fill="#f5f0e0"/>
+
+        <!-- ===== AREA FILLS =====
+             Layout (per on-site signage photo):
+               TOP row:   S201 (left) | S202 (mid, wider) | S203 (right, shorter)
+               LEFT col:  S205 (mid-left)
+               RIGHT col: S204 (mid-right)
+               BOTTOM:    S206 (wide; pastels & changing exhibitions — tinted red)
+               CENTER:    atrium with stairs at bottom-right and West-Pavilion exit south
+        -->
+        <rect x="60" y="80" width="720" height="720" fill="#bfa686"/>          <!-- atrium fill -->
+        <rect x="60"  y="80"  width="200" height="200" fill="#d7e0ec"/>        <!-- S 201 -->
+        <rect x="260" y="80"  width="260" height="200" fill="#d7e0ec"/>        <!-- S 202 -->
+        <rect x="520" y="80"  width="260" height="140" fill="#d7e0ec"/>        <!-- S 203 -->
+        <rect x="560" y="300" width="220" height="240" fill="#d7e0ec"/>        <!-- S 204 -->
+        <rect x="60"  y="300" width="220" height="260" fill="#d7e0ec"/>        <!-- S 205 -->
+        <rect x="60"  y="580" width="500" height="220" fill="#d7e0ec"/>        <!-- S 206 (base) -->
+        <rect x="60"  y="580" width="500" height="220" fill="rgba(122,30,20,0.12)"/> <!-- S 206 red overlay (changing exhibitions) -->
+
+        <!-- Outer building outline -->
+        <rect x="60" y="80" width="720" height="720" fill="none" stroke="#1a1a1a" stroke-width="5"/>
+
+        <!-- ===== INTERNAL WALLS (with door gaps to the atrium) ===== -->
+        <g fill="none" stroke="#1a1a1a" stroke-width="5">
+          <!-- S 201: right wall (door y=170-205); bottom wall solid -->
+          <line x1="60"  y1="280" x2="260" y2="280"/>
+          <line x1="260" y1="80"  x2="260" y2="170"/>
+          <line x1="260" y1="205" x2="260" y2="280"/>
+          <!-- S 202: bottom wall (door x=360-400); left/right shared with neighbors -->
+          <line x1="260" y1="280" x2="360" y2="280"/>
+          <line x1="400" y1="280" x2="520" y2="280"/>
+          <!-- S 203: bottom wall (door x=620-660); left shared with S202 (separating wall) -->
+          <line x1="520" y1="80"  x2="520" y2="220"/>
+          <line x1="520" y1="220" x2="620" y2="220"/>
+          <line x1="660" y1="220" x2="780" y2="220"/>
+          <!-- S 204: top + bottom + left walls; door on left wall y=395-430 to atrium -->
+          <line x1="560" y1="300" x2="780" y2="300"/>
+          <line x1="560" y1="540" x2="780" y2="540"/>
+          <line x1="560" y1="300" x2="560" y2="395"/>
+          <line x1="560" y1="430" x2="560" y2="540"/>
+          <!-- S 205: top + bottom + right walls; door on right wall y=415-450 to atrium -->
+          <line x1="60"  y1="300" x2="280" y2="300"/>
+          <line x1="60"  y1="560" x2="280" y2="560"/>
+          <line x1="280" y1="300" x2="280" y2="415"/>
+          <line x1="280" y1="450" x2="280" y2="560"/>
+          <!-- S 206: top wall (door x=280-320 to atrium); right wall separating from stairs corridor -->
+          <line x1="60"  y1="580" x2="280" y2="580"/>
+          <line x1="320" y1="580" x2="560" y2="580"/>
+          <line x1="560" y1="580" x2="560" y2="800"/>
+        </g>
+
+        <!-- ===== STAIRS (bottom-right, with zigzag + up arrow) ===== -->
+        <g pointer-events="none">
+          <rect x="600" y="620" width="140" height="140" fill="#ffffff" stroke="#1a1a1a" stroke-width="3"/>
+          <path d="M 615 745 L 635 745 L 635 725 L 655 725 L 655 705 L 675 705 L 675 685 L 695 685 L 695 665 L 715 665 L 715 645 L 735 645"
+                fill="none" stroke="#1a1a1a" stroke-width="2.5" stroke-linejoin="miter"/>
+        </g>
+
+        <!-- ===== "SOUTH ATRIUM" label (center, above stairs) ===== -->
+        <g pointer-events="none">
+          <text x="420" y="450" font-family="sans-serif" font-size="22" font-weight="500"
+                fill="#fff" text-anchor="middle" letter-spacing="3" opacity="0.85">SOUTH ATRIUM</text>
+        </g>
+
+        <!-- ===== EXIT ARROW + LABEL (West Pavilion, south through bottom of atrium) ===== -->
+        <g pointer-events="none">
+          <line x1="420" y1="800" x2="420" y2="850" stroke="#1a1a1a" stroke-width="3"/>
+          <polygon points="420,862 410,842 430,842" fill="#1a1a1a"/>
+          <text x="420" y="888" font-family="sans-serif" font-size="32" font-weight="700" fill="#1a1a1a" text-anchor="middle">West Pavilion</text>
+        </g>
+
+        <!-- ===== ROOM NUMBER LABELS (top-right of each room) ===== -->
+        <g pointer-events="none" font-family="sans-serif" font-size="28" font-weight="500" fill="#1a1a1a">
+          <text x="252" y="112" text-anchor="end">S 201</text>
+          <text x="512" y="112" text-anchor="end">S 202</text>
+          <text x="772" y="112" text-anchor="end">S 203</text>
+          <text x="772" y="332" text-anchor="end">S 204</text>
+          <text x="272" y="332" text-anchor="end">S 205</text>
+          <text x="552" y="612" text-anchor="end">S 206</text>
+        </g>
+
+        <!-- ===== Visited-room tints (translucent gold overlay on visited rooms) ===== -->
+        <g class="room-tints" pointer-events="none">
+          <rect class="room-tint" fill="transparent" data-room="S201" x="60"  y="80"  width="200" height="200"/>
+          <rect class="room-tint" fill="transparent" data-room="S202" x="260" y="80"  width="260" height="200"/>
+          <rect class="room-tint" fill="transparent" data-room="S203" x="520" y="80"  width="260" height="140"/>
+          <rect class="room-tint" fill="transparent" data-room="S204" x="560" y="300" width="220" height="240"/>
+          <rect class="room-tint" fill="transparent" data-room="S205" x="60"  y="300" width="220" height="260"/>
+          <rect class="room-tint" fill="transparent" data-room="S206" x="60"  y="580" width="500" height="220"/>
+        </g>
+
+        <!-- ===== Visit footsteps (generated by JS as rotated SVG groups) ===== -->
+        <g class="footsteps" id="footsteps-s2f" pointer-events="none"></g>
+
+        <!-- ===== Visit-tracker click targets ===== -->
+        <g class="room-taps">
+          <rect class="room-tap" fill="transparent" data-room="S201" x="60"  y="80"  width="200" height="200"/>
+          <rect class="room-tap" fill="transparent" data-room="S202" x="260" y="80"  width="260" height="200"/>
+          <rect class="room-tap" fill="transparent" data-room="S203" x="520" y="80"  width="260" height="140"/>
+          <rect class="room-tap" fill="transparent" data-room="S204" x="560" y="300" width="220" height="240"/>
+          <rect class="room-tap" fill="transparent" data-room="S205" x="60"  y="300" width="220" height="260"/>
+          <rect class="room-tap" fill="transparent" data-room="S206" x="60"  y="580" width="500" height="220"/>
+        </g>
+
+        <!-- ===== Pulsing red "you are here" marker at last visited room center ===== -->
+        <g class="current-marker" id="currentMarkerS2F">
+          <circle class="pulse-ring" r="22" />
+          <circle r="14" fill="#a83e2a" stroke="#fff" stroke-width="3"/>
+        </g>
+
+        <!-- ===== Visit badges ===== -->
+        <g class="visit-badges" font-family="sans-serif" font-size="17" font-weight="700">
+          <g class="visit-badge" data-room="S201" transform="translate(85, 105)">
+            <circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
+            <text y="6" text-anchor="middle" fill="#fff">1</text>
+          </g>
+          <g class="visit-badge" data-room="S202" transform="translate(285, 105)">
+            <circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
+            <text y="6" text-anchor="middle" fill="#fff">1</text>
+          </g>
+          <g class="visit-badge" data-room="S203" transform="translate(545, 105)">
+            <circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
+            <text y="6" text-anchor="middle" fill="#fff">1</text>
+          </g>
+          <g class="visit-badge" data-room="S204" transform="translate(585, 325)">
+            <circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
+            <text y="6" text-anchor="middle" fill="#fff">1</text>
+          </g>
+          <g class="visit-badge" data-room="S205" transform="translate(85, 325)">
+            <circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
+            <text y="6" text-anchor="middle" fill="#fff">1</text>
+          </g>
+          <g class="visit-badge" data-room="S206" transform="translate(85, 605)">
+            <circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
+            <text y="6" text-anchor="middle" fill="#fff">1</text>
+          </g>
+        </g>
+      </svg>
+
+      <!-- Art pins overlaid on rooms (viewBox 20 20 880 880; positions in % of that box) -->
+      <button class="art-pin" data-card="card-25" style="left:42%;top:18%" title="Boucher · 爱之泉 · S202">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Fran%C3%A7ois_Boucher_-_The_Fountain_of_Love_-_71.PA.37_-_J._Paul_Getty_Museum.jpg/960px-Fran%C3%A7ois_Boucher_-_The_Fountain_of_Love_-_71.PA.37_-_J._Paul_Getty_Museum.jpg" alt="爱之泉">
         <span class="pin-num">22</span>
       </button>
-      <button class="art-pin" data-card="card-26" style="left:84%;top:48%" title="詹姆斯·克里斯蒂肖像 S204">
+      <button class="art-pin" data-card="card-26" style="left:74%;top:46%" title="Gainsborough · 詹姆斯·克里斯蒂肖像 · S204">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Thomas_Gainsborough_-_Portrait_of_James_Christie.jpg/960px-Thomas_Gainsborough_-_Portrait_of_James_Christie.jpg" alt="James Christie">
         <span class="pin-num">23</span>
       </button>
-      <button class="art-pin" data-card="card-27" style="left:30%;top:48%" title="圣地亚哥侯爵夫人肖像 S205">
+      <button class="art-pin" data-card="card-27" style="left:18%;top:48%" title="Goya · 圣地亚哥侯爵夫人肖像 · S205">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Portrait_of_the_Marquesa_de_Santiago_by_Francisco_de_Goya%2C_1804%2C_Getty_Center.JPG/960px-Portrait_of_the_Marquesa_de_Santiago_by_Francisco_de_Goya%2C_1804%2C_Getty_Center.JPG" alt="Marquesa">
         <span class="pin-num">24</span>
       </button>
@@ -2161,7 +2301,13 @@ var ROOM_THEMES = {
   N103: '<span class="rt-num">N 103</span><span class="rt-theme">彩色玻璃 · <em>Stained Glass</em></span>',
   N104: '<span class="rt-num">N 104</span><span class="rt-theme">欧洲玻璃与陶瓷 · <em>European Glass &amp; Ceramics</em></span>',
   N105: '<span class="rt-num">N 105</span><span class="rt-theme">中世纪手稿 · <em>Medieval Manuscripts</em></span>',
-  N106: '<span class="rt-num">N 106</span><span class="rt-theme">文艺复兴装饰艺术 · <em>Renaissance Decorative Arts</em></span>'
+  N106: '<span class="rt-num">N 106</span><span class="rt-theme">文艺复兴装饰艺术 · <em>Renaissance Decorative Arts</em></span>',
+  S201: '<span class="rt-num">S 201</span><span class="rt-theme">欧洲绘画 · <em>European Paintings</em> · 1700–1800</span>',
+  S202: '<span class="rt-num">S 202</span><span class="rt-theme">欧洲绘画 · <em>European Paintings</em> · 1700–1800</span>',
+  S203: '<span class="rt-num">S 203</span><span class="rt-theme">欧洲绘画 · <em>European Paintings</em> · 1600–1800</span>',
+  S204: '<span class="rt-num">S 204</span><span class="rt-theme">欧洲绘画 · <em>European Paintings</em> · 1700–1800</span>',
+  S205: '<span class="rt-num">S 205</span><span class="rt-theme">欧洲绘画 · <em>European Paintings</em> · 1700–1800</span>',
+  S206: '<span class="rt-num">S 206</span><span class="rt-theme">粉彩与水彩 · <em>Pastels &amp; Watercolors</em> · 临展</span>'
 };
 var toastTimer = null;
 function showRoomToast(room) {
@@ -2514,6 +2660,154 @@ function showRoomToast(room) {
   render();
 })();
 
+/* ===== S2F visit tracker (SVG floor plan, same style/structure as N2F + N1F) ===== */
+(function() {
+  var KEY = 'getty-s2f-visit-order';
+  var visitOrder;
+  try { visitOrder = JSON.parse(localStorage.getItem(KEY) || '[]') || []; }
+  catch (e) { visitOrder = []; }
+
+  // Room centers in the S2F SVG coord space (viewBox 20 20 880 880)
+  var ROOM_CENTERS = {
+    S201: { x: 160, y: 180 },
+    S202: { x: 390, y: 180 },
+    S203: { x: 650, y: 150 },
+    S204: { x: 670, y: 420 },
+    S205: { x: 170, y: 430 },
+    S206: { x: 310, y: 690 }
+  };
+
+  function save() {
+    try { localStorage.setItem(KEY, JSON.stringify(visitOrder)); } catch (e) {}
+    document.dispatchEvent(new Event('footprints-changed'));
+  }
+
+  function clearAll() {
+    visitOrder = [];
+    save();
+    render();
+  }
+  document.addEventListener('clear-all-footprints', clearAll);
+
+  function recordVisit(room) {
+    var existingIndex = visitOrder.indexOf(room);
+    var lastIndex = visitOrder.length - 1;
+    if (existingIndex !== -1 && existingIndex === lastIndex) {
+      visitOrder.pop();
+    } else if (existingIndex !== -1) {
+      visitOrder = visitOrder.slice(0, existingIndex + 1);
+      showRoomToast(room);
+    } else {
+      visitOrder.push(room);
+      showRoomToast(room);
+    }
+    save();
+    render();
+  }
+
+  function render() {
+    var firstOrder = {};
+    var visitedSet = {};
+    visitOrder.forEach(function(room, i) {
+      if (!(room in firstOrder)) firstOrder[room] = i + 1;
+      visitedSet[room] = true;
+    });
+
+    // Corner badges (scoped to S2F)
+    document.querySelectorAll('#south-2f .visit-badge').forEach(function(badge) {
+      var room = badge.dataset.room;
+      if (room in firstOrder) {
+        badge.classList.add('shown');
+        var t = badge.querySelector('text');
+        if (t) t.textContent = firstOrder[room];
+      } else {
+        badge.classList.remove('shown');
+      }
+    });
+
+    // Room-tint gold overlay
+    document.querySelectorAll('#south-2f .room-tint').forEach(function(rect) {
+      rect.classList.toggle('shown', !!visitedSet[rect.dataset.room]);
+    });
+
+    // Pulsing red "you are here NOW" marker
+    var marker = document.getElementById('currentMarkerS2F');
+    if (marker) {
+      if (visitOrder.length > 0) {
+        var lastRoom = visitOrder[visitOrder.length - 1];
+        var c = ROOM_CENTERS[lastRoom];
+        if (c) {
+          marker.setAttribute('transform', 'translate(' + c.x + ',' + c.y + ')');
+          marker.classList.add('shown');
+        }
+      } else {
+        marker.classList.remove('shown');
+      }
+    }
+
+    // Footsteps between visited rooms
+    var feetGroup = document.getElementById('footsteps-s2f');
+    if (feetGroup) {
+      var SVG_NS = 'http://www.w3.org/2000/svg';
+      while (feetGroup.firstChild) feetGroup.removeChild(feetGroup.firstChild);
+      for (var i = 0; i < visitOrder.length - 1; i++) {
+        var a = ROOM_CENTERS[visitOrder[i]];
+        var b = ROOM_CENTERS[visitOrder[i + 1]];
+        if (!a || !b) continue;
+        var dx = b.x - a.x;
+        var dy = b.y - a.y;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 1) continue;
+        var rot = Math.atan2(dy, dx) * 180 / Math.PI + 90;
+        var px = -dy / dist;
+        var py = dx / dist;
+        var perpOffset = 8;
+        var stepLen = 38;
+        var numSteps = Math.max(2, Math.round(dist / stepLen));
+        for (var j = 0; j < numSteps; j++) {
+          var t = (j + 0.5) / numSteps;
+          var fx = a.x + dx * t;
+          var fy = a.y + dy * t;
+          var side = (j % 2 === 0) ? 1 : -1;
+          fx += px * perpOffset * side;
+          fy += py * perpOffset * side;
+          var foot = document.createElementNS(SVG_NS, 'g');
+          foot.setAttribute('class', 'footprint');
+          foot.setAttribute('transform',
+            'translate(' + fx.toFixed(1) + ',' + fy.toFixed(1) + ') ' +
+            'rotate(' + rot.toFixed(1) + ')'
+          );
+          var body = document.createElementNS(SVG_NS, 'path');
+          body.setAttribute('d',
+            'M -5 -6 C -5 -11 5 -11 5 -6 C 5 -3 3 -1 3 1 C 3 3 4 5 4 7 C 4 11 -4 11 -4 7 C -4 5 -3 3 -3 1 C -3 -1 -5 -3 -5 -6 Z'
+          );
+          foot.appendChild(body);
+          var bigToeOnLeft = (side === 1);
+          var toes = bigToeOnLeft
+            ? [[-3.6, -11.6, 2.0], [-1.6, -13.4, 1.45], [0.4, -14.0, 1.3], [2.2, -13.5, 1.15], [3.7, -12.4, 1.0]]
+            : [[-3.7, -12.4, 1.0], [-2.2, -13.5, 1.15], [-0.4, -14.0, 1.3], [1.6, -13.4, 1.45], [3.6, -11.6, 2.0]];
+          for (var k = 0; k < 5; k++) {
+            var toe = document.createElementNS(SVG_NS, 'circle');
+            toe.setAttribute('cx', String(toes[k][0]));
+            toe.setAttribute('cy', String(toes[k][1]));
+            toe.setAttribute('r',  String(toes[k][2]));
+            foot.appendChild(toe);
+          }
+          feetGroup.appendChild(foot);
+        }
+      }
+    }
+  }
+
+  document.querySelectorAll('#south-2f .room-tap').forEach(function(rect) {
+    rect.addEventListener('click', function() {
+      recordVisit(rect.dataset.room);
+    });
+  });
+
+  render();
+})();
+
 /* (Large-text toggle removed — large is now the permanent default.) */
 
 /* ===== Modal read-aloud via Web Speech API (browser TTS) ===== */
@@ -2623,6 +2917,7 @@ function readAloud() {
     var total = 0;
     try { total += (JSON.parse(localStorage.getItem('getty-n2f-visit-order') || '[]') || []).length; } catch (e) {}
     try { total += (JSON.parse(localStorage.getItem('getty-n1f-visit-order') || '[]') || []).length; } catch (e) {}
+    try { total += (JSON.parse(localStorage.getItem('getty-s2f-visit-order') || '[]') || []).length; } catch (e) {}
     if (total === 0) clearBtn.setAttribute('disabled', '');
     else clearBtn.removeAttribute('disabled');
   }
