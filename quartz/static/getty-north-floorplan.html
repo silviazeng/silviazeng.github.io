@@ -702,7 +702,12 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 @media (max-width: 640px) {
   html { font-size: 21px; }  /* still large on mobile (was 17px) */
   .page-header { padding: 2rem 5vw 1.5rem; }
-  .page-title { font-size: 2rem; }
+  /* Titles: shrink so the full phrase fits one line, and use word-break: keep-all
+     so Chinese never splits mid-word (e.g. "查/看", "装饰/艺术") and Latin compound
+     words break only at real word boundaries. */
+  .page-title { font-size: 1.55rem; word-break: keep-all; overflow-wrap: break-word; }
+  .pav-divider .pav-name { font-size: 1.35rem; word-break: keep-all; overflow-wrap: break-word; }
+  .floor-name { font-size: 1.2rem; word-break: keep-all; overflow-wrap: break-word; }
   /* Floor plans fill the viewport edge-to-edge on mobile (no margin / border / radius) */
   .floor-section { padding: 1.5rem 0 2.5rem; }
   .floor-head { padding: 0 4vw; }
