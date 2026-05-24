@@ -1026,8 +1026,6 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 
 <header class="page-header">
   <a href="getty-center-guide.html" class="back-link">← 返回完整指南</a>
-  <div class="page-eyebrow">Floor Plans · 展厅楼层导览图</div>
-  <h1 class="page-title">点击展品圆点 · 查看 <em>详细介绍</em></h1>
   <div class="pav-tabs">
     <a class="pav-tab north" href="#north-2f">北馆 2F</a>
     <a class="pav-tab north" href="#north-1f">北馆 1F</a>
@@ -1042,11 +1040,6 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
       <button class="loc-btn" data-mode="north">北馆</button>
       <button class="loc-btn" data-mode="south">南馆</button>
     </div>
-  </div>
-  <div class="visit-track-widget" id="visitTrack">
-    <span class="vt-label">参观轨迹</span>
-    <span class="vt-history" id="visitHistory"><span class="vt-empty">点房间记录</span></span>
-    <button class="vt-clear" id="visitClear">清空</button>
   </div>
 </header>
 
@@ -1302,11 +1295,6 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
         <span class="pin-num">35</span>
       </button>
     </div>
-    <div class="floor-exits" aria-label="出口方向说明">
-      <span class="exit-item"><span class="exit-arrow">←</span> 西门通往 <strong>Entrance Pavilion</strong></span>
-      <span class="exit-item"><span class="exit-arrow">↓</span> 南门通往 <strong>East Pavilion</strong></span>
-    </div>
-    <div class="floor-foot">N · NORTH PAVILION · 2F</div>
   </div>
 </section>
 
@@ -1467,7 +1455,6 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
         <span class="pin-num">21</span>
       </button>
     </div>
-    <div class="floor-foot">N · NORTH PAVILION · 1F</div>
   </div>
 </section>
 
@@ -1495,7 +1482,6 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
         <span class="pin-num">24</span>
       </button>
     </div>
-    <div class="floor-foot">S · SOUTH PAVILION · 2F</div>
   </div>
 </section>
 
@@ -1535,7 +1521,6 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
         <span class="pin-num">30</span>
       </button>
     </div>
-    <div class="floor-foot">S · SOUTH PAVILION · 1F</div>
   </div>
 </section>
 
@@ -2087,9 +2072,7 @@ function showRoomToast(room) {
   try { visitOrder = JSON.parse(localStorage.getItem(KEY) || '[]') || []; }
   catch (e) { visitOrder = []; }
 
-  var historyEl = document.getElementById('visitHistory');
-  var clearBtn = document.getElementById('visitClear');
-  if (!historyEl || !clearBtn) return;
+  // (The top visit-track-widget was removed; tracker just runs without a history breadcrumb.)
 
   function save() {
     try { localStorage.setItem(KEY, JSON.stringify(visitOrder)); } catch (e) {}
@@ -2255,18 +2238,6 @@ function showRoomToast(room) {
       }
     }
 
-    // Update top widget history display; mark the last tag as .current (red).
-    if (visitOrder.length === 0) {
-      historyEl.innerHTML = '<span class="vt-empty">点房间记录</span>';
-    } else {
-      var parts = [];
-      visitOrder.forEach(function(r, i) {
-        if (i > 0) parts.push('<span class="vt-sep">→</span>');
-        var cls = (i === visitOrder.length - 1) ? 'visit-tag current' : 'visit-tag';
-        parts.push('<span class="' + cls + '">' + r + '</span>');
-      });
-      historyEl.innerHTML = parts.join('');
-    }
   }
 
   document.querySelectorAll('#north-2f .room-tap').forEach(function(rect) {
@@ -2275,12 +2246,8 @@ function showRoomToast(room) {
     });
   });
 
-  // Both the top "清空" pill AND the bottom action bar "清足迹" button broadcast
-  // a `clear-all-footprints` event so EVERY floor's tracker wipes itself (the
-  // top pill used to clear N2F only, which was a bug).
-  clearBtn.addEventListener('click', function() {
-    document.dispatchEvent(new Event('clear-all-footprints'));
-  });
+  // The bottom action bar "清足迹" button broadcasts a `clear-all-footprints` event;
+  // every floor's tracker wipes itself in response.
   document.addEventListener('clear-all-footprints', clearAll);
 
   render();
