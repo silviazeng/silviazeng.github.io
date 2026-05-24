@@ -1053,7 +1053,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
         <rect x="80"  y="340" width="180" height="160" fill="#d7e0ec"/> <!-- N 103 (flush against N104) -->
         <rect x="260" y="340" width="140" height="160" fill="#d7e0ec"/> <!-- N 102 (flush against N103 and stairs) -->
         <rect x="540" y="140" width="280" height="220" fill="#d7e0ec"/> <!-- N 106 (large) -->
-        <rect x="540" y="380" width="280" height="120" fill="#d7e0ec"/> <!-- N 101 (smaller) -->
+        <rect x="540" y="360" width="280" height="140" fill="#d7e0ec"/> <!-- N 101 (flush against N106) -->
 
         <!-- Outer building outline -->
         <rect x="80" y="40" width="740" height="460" fill="none" stroke="#1a1a1a" stroke-width="5"/>
@@ -1081,9 +1081,8 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
           <line x1="540" y1="360" x2="820" y2="360"/>
           <line x1="540" y1="140" x2="540" y2="235"/>
           <line x1="540" y1="275" x2="540" y2="360"/>
-          <!-- N 101: top, left (door y=420-455) -->
-          <line x1="540" y1="380" x2="820" y2="380"/>
-          <line x1="540" y1="380" x2="540" y2="420"/>
+          <!-- N 101 (flush w/ N106): top = N106 bottom (above); left wall door y=420-455 to atrium -->
+          <line x1="540" y1="360" x2="540" y2="420"/>
           <line x1="540" y1="455" x2="540" y2="500"/>
         </g>
 
@@ -1116,12 +1115,12 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
           <text x="252" y="372" text-anchor="end">N 103</text>
           <text x="392" y="372" text-anchor="end">N 102</text>
           <text x="812" y="172" text-anchor="end">N 106</text>
-          <text x="812" y="412" text-anchor="end">N 101</text>
+          <text x="812" y="392" text-anchor="end">N 101</text>
         </g>
 
         <!-- ===== Visit-tracker click targets ===== -->
         <g class="room-taps">
-          <rect class="room-tap" fill="transparent" data-room="N101" x="540" y="380" width="280" height="120"/>
+          <rect class="room-tap" fill="transparent" data-room="N101" x="540" y="360" width="280" height="140"/>
           <rect class="room-tap" fill="transparent" data-room="N102" x="260" y="340" width="140" height="160"/>
           <rect class="room-tap" fill="transparent" data-room="N103" x="80"  y="340" width="180" height="160"/>
           <rect class="room-tap" fill="transparent" data-room="N104" x="80"  y="180" width="180" height="160"/>
@@ -1160,7 +1159,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
             <circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
             <text y="6" text-anchor="middle" fill="#fff">1</text>
           </g>
-          <g class="visit-badge" data-room="N101" transform="translate(560, 400)">
+          <g class="visit-badge" data-room="N101" transform="translate(560, 380)">
             <circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
             <text y="6" text-anchor="middle" fill="#fff">1</text>
           </g>
@@ -1995,7 +1994,7 @@ function showRoomToast(room) {
     N103: { x: 170, y: 420 },
     N102: { x: 330, y: 420 },
     N106: { x: 680, y: 250 },
-    N101: { x: 680, y: 440 }
+    N101: { x: 680, y: 430 }
   };
 
   function save() {
