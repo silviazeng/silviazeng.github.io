@@ -849,11 +849,20 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   font-weight: 600;
   font-size: 0.62rem;
   cursor: pointer;
-  padding: 4px 8px;
+  padding: 4px 6px;
   border-radius: 14px;
-  min-width: 80px;
+  min-width: 64px;
   min-height: 72px;
-  transition: color .15s;
+  transition: color .15s, opacity .15s;
+}
+.ab-btn[disabled] {
+  cursor: not-allowed;
+  opacity: 0.35;
+  pointer-events: none;
+}
+.ab-btn[disabled] .ab-icon {
+  background: rgba(26,26,26,.06);
+  color: var(--muted);
 }
 .ab-btn .ab-icon {
   width: 46px;
@@ -1534,6 +1543,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 <nav class="action-bar" aria-label="快捷操作">
   <button class="ab-btn" id="abWhereAmI" title="跳到当前所在的展馆"><span class="ab-icon">📍</span><span>我在哪</span></button>
   <button class="ab-btn" id="abArtList"  title="本页所有画作列表"><span class="ab-icon">📋</span><span>画作列表</span></button>
+  <button class="ab-btn" id="abClear"    title="清空所有楼层的足迹" disabled><span class="ab-icon">🧹</span><span>清足迹</span></button>
   <button class="ab-btn" id="abToTop"    title="回到顶部"><span class="ab-icon">⬆</span><span>回顶</span></button>
 </nav>
 
@@ -2083,6 +2093,7 @@ function showRoomToast(room) {
 
   function save() {
     try { localStorage.setItem(KEY, JSON.stringify(visitOrder)); } catch (e) {}
+    document.dispatchEvent(new Event('footprints-changed'));
   }
 
   function recordVisit(room) {
@@ -2264,7 +2275,13 @@ function showRoomToast(room) {
     });
   });
 
-  clearBtn.addEventListener('click', clearAll);
+  // Both the top "清空" pill AND the bottom action bar "清足迹" button broadcast
+  // a `clear-all-footprints` event so EVERY floor's tracker wipes itself (the
+  // top pill used to clear N2F only, which was a bug).
+  clearBtn.addEventListener('click', function() {
+    document.dispatchEvent(new Event('clear-all-footprints'));
+  });
+  document.addEventListener('clear-all-footprints', clearAll);
 
   render();
 })();
@@ -2288,7 +2305,15 @@ function showRoomToast(room) {
 
   function save() {
     try { localStorage.setItem(KEY, JSON.stringify(visitOrder)); } catch (e) {}
+    document.dispatchEvent(new Event('footprints-changed'));
   }
+
+  function clearAll() {
+    visitOrder = [];
+    save();
+    render();
+  }
+  document.addEventListener('clear-all-footprints', clearAll);
 
   function recordVisit(room) {
     var existingIndex = visitOrder.indexOf(room);
@@ -2516,6 +2541,25 @@ function readAloud() {
   if (topBtn) topBtn.addEventListener('click', function() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
+
+  // --- 清足迹 (broadcasts to all tracker IIFEs; disabled when nothing to clear) ---
+  var clearBtn = document.getElementById('abClear');
+  function updateClearBtnState() {
+    if (!clearBtn) return;
+    var total = 0;
+    try { total += (JSON.parse(localStorage.getItem('getty-n2f-visit-order') || '[]') || []).length; } catch (e) {}
+    try { total += (JSON.parse(localStorage.getItem('getty-n1f-visit-order') || '[]') || []).length; } catch (e) {}
+    if (total === 0) clearBtn.setAttribute('disabled', '');
+    else clearBtn.removeAttribute('disabled');
+  }
+  if (clearBtn) {
+    clearBtn.addEventListener('click', function() {
+      document.dispatchEvent(new Event('clear-all-footprints'));
+    });
+    document.addEventListener('footprints-changed', updateClearBtnState);
+    // Run once on init in case there are persisted footprints from a previous session
+    updateClearBtnState();
+  }
 
   // --- 我在哪 (uses locWidget's current mode if available) ---
   var whereBtn = document.getElementById('abWhereAmI');
