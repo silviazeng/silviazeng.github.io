@@ -849,9 +849,9 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   font-weight: 600;
   font-size: 0.62rem;
   cursor: pointer;
-  padding: 4px 6px;
+  padding: 4px 8px;
   border-radius: 14px;
-  min-width: 64px;
+  min-width: 80px;
   min-height: 72px;
   transition: color .15s, opacity .15s;
 }
@@ -1529,7 +1529,6 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <button class="ab-btn" id="abWhereAmI" title="跳到当前所在的展馆"><span class="ab-icon">📍</span><span>我在哪</span></button>
   <button class="ab-btn" id="abArtList"  title="本页所有画作列表"><span class="ab-icon">📋</span><span>画作列表</span></button>
   <button class="ab-btn" id="abClear"    title="清空所有楼层的足迹" disabled><span class="ab-icon">🧹</span><span>清足迹</span></button>
-  <button class="ab-btn" id="abToTop"    title="回到顶部"><span class="ab-icon">⬆</span><span>回顶</span></button>
 </nav>
 
 <!-- ===== ART LIST BOTTOM SHEET ===== -->
@@ -2504,11 +2503,6 @@ function readAloud() {
 // ===========================================================
 (function() {
   // --- 回顶 ---
-  var topBtn = document.getElementById('abToTop');
-  if (topBtn) topBtn.addEventListener('click', function() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-
   // --- 清足迹 (broadcasts to all tracker IIFEs; disabled when nothing to clear) ---
   var clearBtn = document.getElementById('abClear');
   function updateClearBtnState() {
