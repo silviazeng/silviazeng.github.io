@@ -1051,7 +1051,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
         <rect x="80"  y="40"  width="180" height="140" fill="#d7e0ec"/> <!-- N 105 -->
         <rect x="80"  y="200" width="180" height="140" fill="#d7e0ec"/> <!-- N 104 -->
         <rect x="80"  y="360" width="180" height="140" fill="#d7e0ec"/> <!-- N 103 -->
-        <rect x="280" y="360" width="140" height="140" fill="#d7e0ec"/> <!-- N 102 (narrower) -->
+        <rect x="260" y="340" width="140" height="160" fill="#d7e0ec"/> <!-- N 102 (flush against N103 and stairs) -->
         <rect x="540" y="140" width="280" height="220" fill="#d7e0ec"/> <!-- N 106 (large) -->
         <rect x="540" y="380" width="280" height="120" fill="#d7e0ec"/> <!-- N 101 (smaller) -->
 
@@ -1064,20 +1064,22 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
           <line x1="80"  y1="180" x2="260" y2="180"/>
           <line x1="260" y1="40"  x2="260" y2="95"/>
           <line x1="260" y1="130" x2="260" y2="180"/>
-          <!-- N 104: top, bottom, right (door y=255-290) -->
-          <line x1="80"  y1="200" x2="260" y2="200"/>
-          <line x1="80"  y1="340" x2="260" y2="340"/>
-          <line x1="260" y1="200" x2="260" y2="255"/>
-          <line x1="260" y1="290" x2="260" y2="340"/>
-          <!-- N 103: top, right (door y=410-445) -->
-          <line x1="80"  y1="360" x2="260" y2="360"/>
+          <!-- N 104: right wall solid; top + bottom walls each have a door at x=155-185 -->
+          <line x1="80"  y1="200" x2="155" y2="200"/>
+          <line x1="185" y1="200" x2="260" y2="200"/>
+          <line x1="80"  y1="340" x2="155" y2="340"/>
+          <line x1="185" y1="340" x2="260" y2="340"/>
+          <line x1="260" y1="200" x2="260" y2="340"/>
+          <!-- N 103: top has door at x=155-185 (aligns w/ N104 bottom); right wall shared with N102 (door y=410-445 connects N103↔N102) -->
+          <line x1="80"  y1="360" x2="155" y2="360"/>
+          <line x1="185" y1="360" x2="260" y2="360"/>
           <line x1="260" y1="360" x2="260" y2="410"/>
           <line x1="260" y1="445" x2="260" y2="500"/>
-          <!-- N 102: top (door x=320-360), left, right -->
-          <line x1="280" y1="360" x2="320" y2="360"/>
-          <line x1="360" y1="360" x2="420" y2="360"/>
-          <line x1="280" y1="360" x2="280" y2="500"/>
-          <line x1="420" y1="360" x2="420" y2="500"/>
+          <!-- N 102 (flush against N103 + stairs): top solid (stairs above), left extends 20 above N103 top, right wall has door y=405-435 to atrium -->
+          <line x1="260" y1="340" x2="400" y2="340"/>
+          <line x1="260" y1="340" x2="260" y2="360"/>
+          <line x1="400" y1="340" x2="400" y2="405"/>
+          <line x1="400" y1="435" x2="400" y2="500"/>
           <!-- N 106: top, bottom, left (door y=235-275) -->
           <line x1="540" y1="140" x2="820" y2="140"/>
           <line x1="540" y1="360" x2="820" y2="360"/>
@@ -1106,8 +1108,8 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 
         <!-- ===== STAIRS (in MIDDLE of atrium, larger box with zigzag + up arrow) ===== -->
         <g pointer-events="none">
-          <rect x="320" y="200" width="140" height="140" fill="#ffffff" stroke="#1a1a1a" stroke-width="3"/>
-          <path d="M 335 325 L 355 325 L 355 305 L 375 305 L 375 285 L 395 285 L 395 265 L 415 265 L 415 245 L 435 245 L 435 225 L 455 225"
+          <rect x="260" y="200" width="140" height="140" fill="#ffffff" stroke="#1a1a1a" stroke-width="3"/>
+          <path d="M 275 325 L 295 325 L 295 305 L 315 305 L 315 285 L 335 285 L 335 265 L 355 265 L 355 245 L 375 245 L 375 225 L 395 225"
                 fill="none" stroke="#1a1a1a" stroke-width="2.5" stroke-linejoin="miter"/>
         </g>
 
@@ -1116,7 +1118,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
           <text x="252" y="72"  text-anchor="end">N 105</text>
           <text x="252" y="232" text-anchor="end">N 104</text>
           <text x="252" y="392" text-anchor="end">N 103</text>
-          <text x="412" y="392" text-anchor="end">N 102</text>
+          <text x="392" y="372" text-anchor="end">N 102</text>
           <text x="812" y="172" text-anchor="end">N 106</text>
           <text x="812" y="412" text-anchor="end">N 101</text>
         </g>
@@ -1124,7 +1126,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
         <!-- ===== Visit-tracker click targets ===== -->
         <g class="room-taps">
           <rect class="room-tap" fill="transparent" data-room="N101" x="540" y="380" width="280" height="120"/>
-          <rect class="room-tap" fill="transparent" data-room="N102" x="280" y="360" width="140" height="140"/>
+          <rect class="room-tap" fill="transparent" data-room="N102" x="260" y="340" width="140" height="160"/>
           <rect class="room-tap" fill="transparent" data-room="N103" x="80"  y="360" width="180" height="140"/>
           <rect class="room-tap" fill="transparent" data-room="N104" x="80"  y="200" width="180" height="140"/>
           <rect class="room-tap" fill="transparent" data-room="N105" x="80"  y="40"  width="180" height="140"/>
@@ -1154,7 +1156,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
             <circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
             <text y="6" text-anchor="middle" fill="#fff">1</text>
           </g>
-          <g class="visit-badge" data-room="N102" transform="translate(300, 380)">
+          <g class="visit-badge" data-room="N102" transform="translate(280, 360)">
             <circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
             <text y="6" text-anchor="middle" fill="#fff">1</text>
           </g>
@@ -1995,7 +1997,7 @@ function showRoomToast(room) {
     N105: { x: 170, y: 110 },
     N104: { x: 170, y: 270 },
     N103: { x: 170, y: 430 },
-    N102: { x: 350, y: 430 },
+    N102: { x: 330, y: 420 },
     N106: { x: 680, y: 250 },
     N101: { x: 680, y: 440 }
   };
