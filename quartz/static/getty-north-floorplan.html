@@ -1336,28 +1336,28 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   </div>
   <div class="floor-plan">
     <div class="floor-svg-wrap">
-      <svg viewBox="20 20 840 660" xmlns="http://www.w3.org/2000/svg" class="signage-svg" preserveAspectRatio="xMidYMid meet">
+      <svg viewBox="20 20 840 600" xmlns="http://www.w3.org/2000/svg" class="signage-svg" preserveAspectRatio="xMidYMid meet">
         <!-- Background -->
-        <rect width="880" height="680" fill="#f5f0e0"/>
+        <rect width="880" height="620" fill="#f5f0e0"/>
 
         <!-- ===== AREA FILLS =====
-             Building shape is irregular: main rectangle (80,40)-(820,500) plus a
-             bottom extension (300,500)-(560,580) where N101 sits, sticking south
-             beyond the rest. N102 connects to N101 via a door on the right portion
-             of its bottom edge.
+             Per on-site signage:
+               - N106 occupies the entire top-right block; its bottom-left corner
+                 (400, 340) sits exactly on N102's top-right corner.
+               - N101 is a small SQUARE in a bottom extension, sitting below N102
+                 and offset to the right; entered via a door on N102's bottom edge.
         -->
-        <!-- Atrium fill follows the same irregular outline -->
-        <path d="M 80,40 L 820,40 L 820,500 L 560,500 L 560,580 L 300,580 L 300,500 L 80,500 Z" fill="#bfa686"/>
-        <!-- Rooms (light blue) -->
+        <!-- Atrium fill follows the irregular outline -->
+        <path d="M 80,40 L 820,40 L 820,500 L 460,500 L 460,600 L 360,600 L 360,500 L 80,500 Z" fill="#bfa686"/>
         <rect x="80"  y="40"  width="180" height="140" fill="#d7e0ec"/> <!-- N 105 -->
         <rect x="80"  y="180" width="180" height="160" fill="#d7e0ec"/> <!-- N 104 -->
         <rect x="80"  y="340" width="180" height="160" fill="#d7e0ec"/> <!-- N 103 -->
         <rect x="260" y="340" width="140" height="160" fill="#d7e0ec"/> <!-- N 102 -->
-        <rect x="540" y="140" width="280" height="220" fill="#d7e0ec"/> <!-- N 106 -->
-        <rect x="300" y="500" width="260" height="80"  fill="#d7e0ec"/> <!-- N 101 (in the bottom extension) -->
+        <rect x="400" y="140" width="420" height="200" fill="#d7e0ec"/> <!-- N 106 (now extends left to x=400, bottom at y=340 — corner-touches N102) -->
+        <rect x="360" y="500" width="100" height="100" fill="#d7e0ec"/> <!-- N 101 (100×100 square, below N102, offset right) -->
 
-        <!-- Outer building outline (irregular) -->
-        <path d="M 80,40 L 820,40 L 820,500 L 560,500 L 560,580 L 300,580 L 300,500 L 80,500 Z"
+        <!-- Outer building outline (main rect + south extension for N101) -->
+        <path d="M 80,40 L 820,40 L 820,500 L 460,500 L 460,600 L 360,600 L 360,500 L 80,500 Z"
               fill="none" stroke="#1a1a1a" stroke-width="5"/>
 
         <!-- ===== INTERNAL WALLS (with door gaps) ===== -->
@@ -1374,20 +1374,21 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
           <!-- N 103: top = N104 bottom (above); right shared with N102, door y=410-445 = N103↔N102 -->
           <line x1="260" y1="340" x2="260" y2="410"/>
           <line x1="260" y1="445" x2="260" y2="500"/>
-          <!-- N 102: top wall solid (stairs above in atrium); right wall door y=405-435 to atrium;
-               bottom wall has a door at x=355-395 leading DOWN into N101 (the bottom extension). -->
+          <!-- N 102: top (y=340) solid; right wall (x=400) door y=405-435 to atrium;
+               bottom (y=500) has a door at x=370-400 leading DOWN into N101. -->
           <line x1="260" y1="340" x2="400" y2="340"/>
           <line x1="400" y1="340" x2="400" y2="405"/>
           <line x1="400" y1="435" x2="400" y2="500"/>
-          <line x1="260" y1="500" x2="355" y2="500"/>   <!-- N102 bottom, left of door -->
-          <line x1="395" y1="500" x2="400" y2="500"/>   <!-- N102 bottom, right of door -->
-          <!-- N 101 top wall (the rest of y=500 across the extension, between atrium above and N101 below) -->
-          <line x1="400" y1="500" x2="560" y2="500"/>
-          <!-- N 106: top, bottom, left (door y=235-275 to atrium) -->
-          <line x1="540" y1="140" x2="820" y2="140"/>
-          <line x1="540" y1="360" x2="820" y2="360"/>
-          <line x1="540" y1="140" x2="540" y2="235"/>
-          <line x1="540" y1="275" x2="540" y2="360"/>
+          <line x1="260" y1="500" x2="370" y2="500"/>   <!-- N102 bottom, left of door -->
+          <!-- N 101: top wall y=500, x=400-460 (closing off the rest of N102's bottom row);
+               other sides covered by the building outline path. -->
+          <line x1="400" y1="500" x2="460" y2="500"/>
+          <!-- N 106: top, bottom, left (door y=235-275 to atrium); occupies x=400-820, y=140-340.
+               Its bottom-left corner = (400, 340) = N102's top-right corner. -->
+          <line x1="400" y1="140" x2="820" y2="140"/>
+          <line x1="400" y1="340" x2="820" y2="340"/>
+          <line x1="400" y1="140" x2="400" y2="235"/>
+          <line x1="400" y1="275" x2="400" y2="340"/>
         </g>
 
         <!-- ===== ELEVATOR (small, tucked into the top-left of North Atrium) ===== -->
@@ -1412,11 +1413,11 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
                 fill="none" stroke="#1a1a1a" stroke-width="2" stroke-linejoin="miter"/>
         </g>
 
-        <!-- ===== MUSEUM ENTRANCE HALL exit arrow (east of N102, through atrium) ===== -->
+        <!-- ===== MUSEUM ENTRANCE HALL exit arrow (east of N102, through atrium below N106) ===== -->
         <g pointer-events="none">
-          <line x1="420" y1="420" x2="490" y2="420" stroke="#1a1a1a" stroke-width="3"/>
-          <polygon points="500,420 482,412 482,428" fill="#1a1a1a"/>
-          <text x="510" y="427" font-family="sans-serif" font-size="22" font-weight="700" fill="#1a1a1a" text-anchor="start">Museum Entrance Hall</text>
+          <line x1="430" y1="420" x2="510" y2="420" stroke="#1a1a1a" stroke-width="3"/>
+          <polygon points="520,420 502,412 502,428" fill="#1a1a1a"/>
+          <text x="530" y="427" font-family="sans-serif" font-size="22" font-weight="700" fill="#1a1a1a" text-anchor="start">Museum Entrance Hall</text>
         </g>
 
         <!-- ===== ROOM NUMBER LABELS ===== -->
@@ -1426,27 +1427,27 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
           <text x="252" y="372" text-anchor="end">N 103</text>
           <text x="392" y="372" text-anchor="end">N 102</text>
           <text x="812" y="172" text-anchor="end">N 106</text>
-          <text x="552" y="535" text-anchor="end">N 101</text>
+          <text x="452" y="535" text-anchor="end">N 101</text>
         </g>
 
         <!-- ===== Visited-room tints ===== -->
         <g class="room-tints" pointer-events="none">
-          <rect class="room-tint" fill="transparent" data-room="N101" x="300" y="500" width="260" height="80"/>
+          <rect class="room-tint" fill="transparent" data-room="N101" x="360" y="500" width="100" height="100"/>
           <rect class="room-tint" fill="transparent" data-room="N102" x="260" y="340" width="140" height="160"/>
           <rect class="room-tint" fill="transparent" data-room="N103" x="80"  y="340" width="180" height="160"/>
           <rect class="room-tint" fill="transparent" data-room="N104" x="80"  y="180" width="180" height="160"/>
           <rect class="room-tint" fill="transparent" data-room="N105" x="80"  y="40"  width="180" height="140"/>
-          <rect class="room-tint" fill="transparent" data-room="N106" x="540" y="140" width="280" height="220"/>
+          <rect class="room-tint" fill="transparent" data-room="N106" x="400" y="140" width="420" height="200"/>
         </g>
 
         <!-- ===== Visit-tracker click targets ===== -->
         <g class="room-taps">
-          <rect class="room-tap" fill="transparent" data-room="N101" x="300" y="500" width="260" height="80"/>
+          <rect class="room-tap" fill="transparent" data-room="N101" x="360" y="500" width="100" height="100"/>
           <rect class="room-tap" fill="transparent" data-room="N102" x="260" y="340" width="140" height="160"/>
           <rect class="room-tap" fill="transparent" data-room="N103" x="80"  y="340" width="180" height="160"/>
           <rect class="room-tap" fill="transparent" data-room="N104" x="80"  y="180" width="180" height="160"/>
           <rect class="room-tap" fill="transparent" data-room="N105" x="80"  y="40"  width="180" height="140"/>
-          <rect class="room-tap" fill="transparent" data-room="N106" x="540" y="140" width="280" height="220"/>
+          <rect class="room-tap" fill="transparent" data-room="N106" x="400" y="140" width="420" height="200"/>
         </g>
 
         <!-- Footsteps (JS-generated) -->
@@ -1476,11 +1477,11 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
             <circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
             <text y="6" text-anchor="middle" fill="#fff">1</text>
           </g>
-          <g class="visit-badge" data-room="N106" transform="translate(560, 160)">
+          <g class="visit-badge" data-room="N106" transform="translate(420, 160)">
             <circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
             <text y="6" text-anchor="middle" fill="#fff">1</text>
           </g>
-          <g class="visit-badge" data-room="N101" transform="translate(320, 520)">
+          <g class="visit-badge" data-room="N101" transform="translate(380, 520)">
             <circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
             <text y="6" text-anchor="middle" fill="#fff">1</text>
           </g>
@@ -1488,19 +1489,19 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
       </svg>
 
       <!-- Circular artwork pins (positions in % of the 840×510 visible viewBox) -->
-      <button class="art-pin" data-card="card-21" style="left:50%;top:81%" title="彩饰手稿 N101">
+      <button class="art-pin" data-card="card-21" style="left:46%;top:88%" title="彩饰手稿 N101">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Personnages_de_la_sc%C3%A8ne_de_Janvier_%28Fr%C3%A8res_Limbourg_%3F%29_-_Tr%C3%A8s_Riches_Heures_du_duc_de_Berry_%28f.1%29.jpg/960px-Personnages_de_la_sc%C3%A8ne_de_Janvier_%28Fr%C3%A8res_Limbourg_%3F%29_-_Tr%C3%A8s_Riches_Heures_du_duc_de_Berry_%28f.1%29.jpg" alt="彩饰手稿">
         <span class="pin-num">18</span>
       </button>
-      <button class="art-pin" data-card="card-22" style="left:39%;top:61%" title="奥格斯堡珍藏柜 N102">
+      <button class="art-pin" data-card="card-22" style="left:37%;top:67%" title="奥格斯堡珍藏柜 N102">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Getty%2C_cabinet.JPG/960px-Getty%2C_cabinet.JPG" alt="奥格斯堡珍藏柜">
         <span class="pin-num">19</span>
       </button>
-      <button class="art-pin" data-card="card-23" style="left:18%;top:61%" title="中世纪彩色玻璃 N103">
+      <button class="art-pin" data-card="card-23" style="left:18%;top:67%" title="中世纪彩色玻璃 N103">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Getty_Center_-_Stained_glass_window_-_Housing_the_stranger_%281560-1570%29.JPG/960px-Getty_Center_-_Stained_glass_window_-_Housing_the_stranger_%281560-1570%29.JPG" alt="中世纪彩色玻璃">
         <span class="pin-num">20</span>
       </button>
-      <button class="art-pin" data-card="card-24" style="left:18%;top:37%" title="欧洲玻璃与陶瓷 N104">
+      <button class="art-pin" data-card="card-24" style="left:18%;top:40%" title="欧洲玻璃与陶瓷 N104">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Getty_Center_-_Filigrana_Beaker.JPG/960px-Getty_Center_-_Filigrana_Beaker.JPG" alt="欧洲玻璃与陶瓷">
         <span class="pin-num">21</span>
       </button>
@@ -2799,14 +2800,14 @@ function showRoomToast(room) {
   try { visitOrder = JSON.parse(localStorage.getItem(KEY) || '[]') || []; }
   catch (e) { visitOrder = []; }
 
-  // Room centers in the N1F SVG coord space (viewBox 20 20 840 660 — extended south for N101)
+  // Room centers in the N1F SVG coord space (viewBox 20 20 840 600 — extended south for N101)
   var ROOM_CENTERS = {
     N105: { x: 170, y: 110 },
     N104: { x: 170, y: 260 },
     N103: { x: 170, y: 420 },
     N102: { x: 330, y: 420 },
-    N106: { x: 680, y: 250 },
-    N101: { x: 430, y: 540 }
+    N106: { x: 610, y: 240 },
+    N101: { x: 410, y: 550 }
   };
 
   function save() {
