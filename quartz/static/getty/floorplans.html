@@ -16,7 +16,18 @@
   --bg2: #f1ead8;
   --line: #d8cdb4;
   --north: #2a5c30;
+  --west:  #1a4f8c;
+  --east:  #7a4010;
+  /* Legend categories (matches the on-site brochure):
+     paintings = light blue/lavender · sculpture & decorative arts = medium purple ·
+     changing exhibitions = orange · special exhibitions = red. */
+  --room-paintings:    #d7e0ec;
+  --room-decarts:      #c8c4d8;
+  --room-changing:     #f0d2a8;
+  --room-special:      #d86b48;
   --north-lt: #e3ebdc;
+  --west-lt:  #deeaf8;
+  --east-lt:  #f8ead8;
   --south: #7a1e14;
   --south-lt: #f1d8d3;
   --gold: #b8923a;
@@ -507,6 +518,10 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 }
 .floor-section.south .floor-label { color: var(--south); }
 .floor-section.south .art-pin .pin-num { background: var(--south); }
+.floor-section.west  .floor-label { color: var(--west); }
+.floor-section.west  .art-pin .pin-num { background: var(--west); }
+.floor-section.east  .floor-label { color: var(--east); }
+.floor-section.east  .art-pin .pin-num { background: var(--east); }
 
 .art-pin {
   position: absolute;
@@ -861,6 +876,8 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 .st-chip .stc-lvl { font-size: 0.82rem; }
 .st-chip.north { border-left: 5px solid var(--north); }
 .st-chip.south { border-left: 5px solid var(--south); }
+.st-chip.west  { border-left: 5px solid var(--west); }
+.st-chip.east  { border-left: 5px solid var(--east); }
 .st-chip.active.north {
   background: var(--north-lt);
   border-color: var(--north);
@@ -872,6 +889,18 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   border-color: var(--south);
   border-left-width: 5px;
   color: var(--south);
+}
+.st-chip.active.west {
+  background: var(--west-lt);
+  border-color: var(--west);
+  border-left-width: 5px;
+  color: var(--west);
+}
+.st-chip.active.east {
+  background: var(--east-lt);
+  border-color: var(--east);
+  border-left-width: 5px;
+  color: var(--east);
 }
 
 /* Bottom action bar */
@@ -1070,15 +1099,17 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 
 <!-- ===== STICKY TOP (mobile nav) — floor switcher always reachable ===== -->
 <nav class="sticky-top" aria-label="楼层切换">
-  <a class="st-back" href="getty-center-guide.html">← 指南</a>
+  <a class="st-back" href="center-guide.html">← 指南</a>
   <a class="st-chip north active" href="#north-2f" data-floor="north-2f"><span class="stc-pav">北馆</span><span class="stc-lvl">2F</span></a>
   <a class="st-chip north"        href="#north-1f" data-floor="north-1f"><span class="stc-pav">北馆</span><span class="stc-lvl">1F</span></a>
   <a class="st-chip south"        href="#south-2f" data-floor="south-2f"><span class="stc-pav">南馆</span><span class="stc-lvl">2F</span></a>
   <a class="st-chip south"        href="#south-1f" data-floor="south-1f"><span class="stc-pav">南馆</span><span class="stc-lvl">1F</span></a>
+  <a class="st-chip west"         href="#west-2f"  data-floor="west-2f"><span class="stc-pav">西馆</span><span class="stc-lvl">2F</span></a>
+  <a class="st-chip west"         href="#west-1f"  data-floor="west-1f"><span class="stc-pav">西馆</span><span class="stc-lvl">1F</span></a>
 </nav>
 
 <header class="page-header">
-  <a href="getty-center-guide.html" class="back-link">← 返回完整指南</a>
+  <a href="center-guide.html" class="back-link">← 返回完整指南</a>
   <div class="pav-tabs">
     <a class="pav-tab north" href="#north-2f">北馆 2F</a>
     <a class="pav-tab north" href="#north-1f">北馆 1F</a>
@@ -1985,6 +2016,266 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   </div>
 </section>
 
+<!-- ===== 西 二楼 ===== -->
+<section class="floor-section west" id="west-2f">
+  <div class="floor-head">
+    <span class="floor-label">西馆 二楼 · 2F</span>
+    <h2 class="floor-name">印象派与后印象派</h2>
+    <p class="floor-desc">梵高、莫奈、雷诺阿、塞尚、马奈——全馆人气最旺的一层，镇馆之宝《鸢尾花》就在 W204。</p>
+  </div>
+  <div class="floor-plan">
+    <div class="floor-svg-wrap">
+      <svg viewBox="20 20 800 660" xmlns="http://www.w3.org/2000/svg" class="signage-svg" preserveAspectRatio="xMidYMid meet">
+        <!-- Background -->
+        <rect width="840" height="680" fill="#f5f0e0"/>
+
+        <!-- ===== AREA FILLS (per on-site overview map) =====
+             W2F has the impressionist hall (W204, where Van Gogh's Irises lives)
+             with smaller rooms around it. WEST TERRACE wraps the south side. -->
+        <rect x="60" y="80" width="720" height="500" fill="#bfa686"/>             <!-- atrium/circulation -->
+        <rect x="80"  y="100" width="180" height="160" fill="var(--room-paintings)"/>  <!-- W 201 -->
+        <rect x="260" y="100" width="200" height="160" fill="var(--room-paintings)"/>  <!-- W 202 -->
+        <rect x="460" y="100" width="200" height="160" fill="var(--room-paintings)"/>  <!-- W 203 -->
+        <rect x="260" y="260" width="400" height="240" fill="var(--room-paintings)"/>  <!-- W 204 (large impressionist hall) -->
+        <rect x="80"  y="260" width="180" height="240" fill="var(--room-paintings)"/>  <!-- W 205 -->
+
+        <!-- Outer building outline -->
+        <rect x="60" y="80" width="720" height="500" fill="none" stroke="#1a1a1a" stroke-width="5"/>
+
+        <!-- Internal walls (with door gaps) -->
+        <g fill="none" stroke="#1a1a1a" stroke-width="5">
+          <!-- W 201: right wall (door y=160-195); bottom wall (door x=145-180) -->
+          <line x1="260" y1="100" x2="260" y2="160"/>
+          <line x1="260" y1="195" x2="260" y2="260"/>
+          <line x1="80"  y1="260" x2="145" y2="260"/>
+          <line x1="180" y1="260" x2="260" y2="260"/>
+          <!-- W 202: right wall (door y=160-195) -->
+          <line x1="460" y1="100" x2="460" y2="160"/>
+          <line x1="460" y1="195" x2="460" y2="260"/>
+          <line x1="260" y1="260" x2="460" y2="260"/>
+          <!-- W 203: bottom wall (door x=540-575) -->
+          <line x1="460" y1="260" x2="540" y2="260"/>
+          <line x1="575" y1="260" x2="660" y2="260"/>
+          <line x1="660" y1="100" x2="660" y2="500"/>
+          <!-- W 204 / W 205 division -->
+          <line x1="260" y1="500" x2="660" y2="500"/>
+          <line x1="80"  y1="500" x2="260" y2="500"/>
+        </g>
+
+        <!-- Stairs (small, in top-right corner area) -->
+        <g pointer-events="none">
+          <rect x="680" y="100" width="80" height="80" fill="#ffffff" stroke="#1a1a1a" stroke-width="2.5"/>
+          <path d="M 690 165 L 706 165 L 706 150 L 722 150 L 722 135 L 738 135 L 738 120 L 754 120 L 754 105"
+                fill="none" stroke="#1a1a1a" stroke-width="2" stroke-linejoin="miter"/>
+        </g>
+
+        <!-- WEST ATRIUM label -->
+        <g pointer-events="none">
+          <text x="420" y="80" font-family="sans-serif" font-size="20" font-weight="500" fill="#1a1a1a" text-anchor="middle" letter-spacing="3" opacity="0.65">WEST PAVILION · 2F</text>
+        </g>
+
+        <!-- WEST TERRACE label (outside south wall, south exit zone) -->
+        <g pointer-events="none">
+          <text x="420" y="620" font-family="sans-serif" font-size="22" font-weight="600" fill="#1a1a1a" text-anchor="middle" letter-spacing="2">WEST TERRACE</text>
+        </g>
+
+        <!-- ROOM NUMBER LABELS -->
+        <g pointer-events="none" font-family="sans-serif" font-size="28" font-weight="500" fill="#1a1a1a">
+          <text x="252" y="132" text-anchor="end">W 201</text>
+          <text x="452" y="132" text-anchor="end">W 202</text>
+          <text x="652" y="132" text-anchor="end">W 203</text>
+          <text x="652" y="292" text-anchor="end">W 204</text>
+          <text x="252" y="292" text-anchor="end">W 205</text>
+        </g>
+
+        <!-- Visited-room tints -->
+        <g class="room-tints" pointer-events="none">
+          <rect class="room-tint" fill="transparent" data-room="W201" x="80"  y="100" width="180" height="160"/>
+          <rect class="room-tint" fill="transparent" data-room="W202" x="260" y="100" width="200" height="160"/>
+          <rect class="room-tint" fill="transparent" data-room="W203" x="460" y="100" width="200" height="160"/>
+          <rect class="room-tint" fill="transparent" data-room="W204" x="260" y="260" width="400" height="240"/>
+          <rect class="room-tint" fill="transparent" data-room="W205" x="80"  y="260" width="180" height="240"/>
+        </g>
+
+        <!-- Footsteps -->
+        <g class="footsteps" id="footsteps-w2f" pointer-events="none"></g>
+
+        <!-- Click targets -->
+        <g class="room-taps">
+          <rect class="room-tap" fill="transparent" data-room="W201" x="80"  y="100" width="180" height="160"/>
+          <rect class="room-tap" fill="transparent" data-room="W202" x="260" y="100" width="200" height="160"/>
+          <rect class="room-tap" fill="transparent" data-room="W203" x="460" y="100" width="200" height="160"/>
+          <rect class="room-tap" fill="transparent" data-room="W204" x="260" y="260" width="400" height="240"/>
+          <rect class="room-tap" fill="transparent" data-room="W205" x="80"  y="260" width="180" height="240"/>
+        </g>
+
+        <!-- Current-location pulsing marker -->
+        <g class="current-marker" id="currentMarkerW2F">
+          <circle class="pulse-ring" r="22" />
+          <circle r="14" fill="#a83e2a" stroke="#fff" stroke-width="3"/>
+        </g>
+
+        <!-- Visit badges -->
+        <g class="visit-badges" font-family="sans-serif" font-size="17" font-weight="700">
+          <g class="visit-badge" data-room="W201" transform="translate(105, 125)"><circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="6" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="W202" transform="translate(285, 125)"><circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="6" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="W203" transform="translate(485, 125)"><circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="6" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="W204" transform="translate(285, 285)"><circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="6" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="W205" transform="translate(105, 285)"><circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="6" text-anchor="middle" fill="#fff">1</text></g>
+        </g>
+      </svg>
+
+      <!-- Art pins (viewBox 20 20 800 660) -->
+      <button class="art-pin" data-card="card-01" style="left:55%;top:55%" title="Van Gogh · 鸢尾花 · W204">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Irises-Vincent_van_Gogh.jpg/960px-Irises-Vincent_van_Gogh.jpg" alt="鸢尾花">
+        <span class="pin-num">01</span>
+      </button>
+      <button class="art-pin" data-card="card-02" style="left:38%;top:50%" title="Monet · 鲁昂大教堂 · W204">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Monet_Rouen_Cathedral_painting_%2839819981983%29.jpg/960px-Monet_Rouen_Cathedral_painting_%2839819981983%29.jpg" alt="Rouen Cathedral">
+        <span class="pin-num">02</span>
+      </button>
+      <button class="art-pin" data-card="card-03" style="left:70%;top:62%" title="Renoir · 散步 · W204">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/La_Promenade%2C_by_Pierre-Auguste_Renoir%2C_edited.jpg/960px-La_Promenade%2C_by_Pierre-Auguste_Renoir%2C_edited.jpg" alt="La Promenade">
+        <span class="pin-num">03</span>
+      </button>
+      <button class="art-pin" data-card="card-04" style="left:50%;top:68%" title="Cézanne · 静物与苹果 · W204">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Paul_C%C3%A9zanne_-_Still_Life_with_Apples.jpg/960px-Paul_C%C3%A9zanne_-_Still_Life_with_Apples.jpg" alt="Still Life">
+        <span class="pin-num">04</span>
+      </button>
+      <button class="art-pin" data-card="card-05" style="left:18%;top:55%" title="Manet · 让娜（春）· W205">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/%C3%89douard_Manet_-_Jeanne_%28Spring%29.jpg/960px-%C3%89douard_Manet_-_Jeanne_%28Spring%29.jpg" alt="Jeanne (Spring)">
+        <span class="pin-num">05</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 西 一楼 ===== -->
+<section class="floor-section west alt" id="west-1f">
+  <div class="floor-head">
+    <span class="floor-label">西馆 一楼 · 1F</span>
+    <h2 class="floor-name">恩索尔 · 新古典主义雕塑 · 摄影中心</h2>
+    <p class="floor-desc">W101 镇室是恩索尔巨幅《基督进入布鲁塞尔》；走廊陈列梅塞施密特人物头像，另设摄影中心轮换展出。</p>
+  </div>
+  <div class="floor-plan">
+    <div class="floor-svg-wrap">
+      <svg viewBox="20 20 760 540" xmlns="http://www.w3.org/2000/svg" class="signage-svg" preserveAspectRatio="xMidYMid meet">
+        <!-- Background -->
+        <rect width="800" height="560" fill="#f5f0e0"/>
+
+        <!-- Atrium fill -->
+        <rect x="60" y="80" width="700" height="440" fill="#bfa686"/>
+
+        <!-- Rooms (simplified layout based on the overview map) -->
+        <rect x="80"  y="100" width="220" height="220" fill="var(--room-paintings)"/>  <!-- W 101 (large, Ensor hall) -->
+        <rect x="300" y="100" width="160" height="100" fill="var(--room-decarts)"/>    <!-- W 102 (sculpture / Messerschmidt) -->
+        <rect x="300" y="200" width="160" height="120" fill="var(--room-decarts)"/>    <!-- W 103 (sculpture) -->
+        <rect x="460" y="100" width="160" height="100" fill="var(--room-paintings)"/>  <!-- W 104 -->
+        <rect x="460" y="200" width="160" height="120" fill="var(--room-paintings)"/>  <!-- W 105 -->
+        <rect x="80"  y="320" width="220" height="180" fill="var(--room-paintings)"/>  <!-- W 106 -->
+        <rect x="300" y="320" width="320" height="180" fill="var(--room-paintings)"/>  <!-- W 107 -->
+
+        <!-- Outer building outline -->
+        <rect x="60" y="80" width="700" height="440" fill="none" stroke="#1a1a1a" stroke-width="5"/>
+
+        <!-- Internal walls -->
+        <g fill="none" stroke="#1a1a1a" stroke-width="5">
+          <!-- W 101: right wall (door y=180-215); bottom (door x=170-210) -->
+          <line x1="300" y1="100" x2="300" y2="180"/>
+          <line x1="300" y1="215" x2="300" y2="320"/>
+          <line x1="80"  y1="320" x2="170" y2="320"/>
+          <line x1="210" y1="320" x2="300" y2="320"/>
+          <!-- W 102 / W 103 division (horizontal y=200) -->
+          <line x1="300" y1="200" x2="460" y2="200"/>
+          <!-- W 102 / W 104 division (vertical x=460); door y=140-175 -->
+          <line x1="460" y1="100" x2="460" y2="140"/>
+          <line x1="460" y1="175" x2="460" y2="200"/>
+          <!-- W 104 / W 105 division (horizontal y=200) -->
+          <line x1="460" y1="200" x2="620" y2="200"/>
+          <!-- W 105 right wall -->
+          <line x1="620" y1="100" x2="620" y2="320"/>
+          <!-- W 103 / W 107 division (y=320) -->
+          <line x1="300" y1="320" x2="620" y2="320"/>
+          <!-- W 106 / W 107 division (x=300); door y=380-415 -->
+          <line x1="300" y1="320" x2="300" y2="380"/>
+          <line x1="300" y1="415" x2="300" y2="500"/>
+        </g>
+
+        <!-- Stairs (upper right) -->
+        <g pointer-events="none">
+          <rect x="640" y="100" width="70" height="70" fill="#ffffff" stroke="#1a1a1a" stroke-width="2.5"/>
+          <path d="M 650 160 L 664 160 L 664 146 L 678 146 L 678 132 L 692 132 L 692 118 L 706 118"
+                fill="none" stroke="#1a1a1a" stroke-width="2" stroke-linejoin="miter"/>
+        </g>
+
+        <!-- WEST PAVILION 1F label -->
+        <g pointer-events="none">
+          <text x="400" y="68" font-family="sans-serif" font-size="20" font-weight="500" fill="#1a1a1a" text-anchor="middle" letter-spacing="3" opacity="0.65">WEST PAVILION · 1F</text>
+        </g>
+
+        <!-- ROOM NUMBER LABELS -->
+        <g pointer-events="none" font-family="sans-serif" font-size="24" font-weight="500" fill="#1a1a1a">
+          <text x="292" y="130" text-anchor="end">W 101</text>
+          <text x="452" y="130" text-anchor="end">W 102</text>
+          <text x="452" y="230" text-anchor="end">W 103</text>
+          <text x="612" y="130" text-anchor="end">W 104</text>
+          <text x="612" y="230" text-anchor="end">W 105</text>
+          <text x="292" y="350" text-anchor="end">W 106</text>
+          <text x="612" y="350" text-anchor="end">W 107</text>
+        </g>
+
+        <!-- Visited-room tints -->
+        <g class="room-tints" pointer-events="none">
+          <rect class="room-tint" fill="transparent" data-room="W101" x="80"  y="100" width="220" height="220"/>
+          <rect class="room-tint" fill="transparent" data-room="W102" x="300" y="100" width="160" height="100"/>
+          <rect class="room-tint" fill="transparent" data-room="W103" x="300" y="200" width="160" height="120"/>
+          <rect class="room-tint" fill="transparent" data-room="W104" x="460" y="100" width="160" height="100"/>
+          <rect class="room-tint" fill="transparent" data-room="W105" x="460" y="200" width="160" height="120"/>
+          <rect class="room-tint" fill="transparent" data-room="W106" x="80"  y="320" width="220" height="180"/>
+          <rect class="room-tint" fill="transparent" data-room="W107" x="300" y="320" width="320" height="180"/>
+        </g>
+
+        <!-- Footsteps -->
+        <g class="footsteps" id="footsteps-w1f" pointer-events="none"></g>
+
+        <!-- Click targets -->
+        <g class="room-taps">
+          <rect class="room-tap" fill="transparent" data-room="W101" x="80"  y="100" width="220" height="220"/>
+          <rect class="room-tap" fill="transparent" data-room="W102" x="300" y="100" width="160" height="100"/>
+          <rect class="room-tap" fill="transparent" data-room="W103" x="300" y="200" width="160" height="120"/>
+          <rect class="room-tap" fill="transparent" data-room="W104" x="460" y="100" width="160" height="100"/>
+          <rect class="room-tap" fill="transparent" data-room="W105" x="460" y="200" width="160" height="120"/>
+          <rect class="room-tap" fill="transparent" data-room="W106" x="80"  y="320" width="220" height="180"/>
+          <rect class="room-tap" fill="transparent" data-room="W107" x="300" y="320" width="320" height="180"/>
+        </g>
+
+        <!-- Current-location marker -->
+        <g class="current-marker" id="currentMarkerW1F">
+          <circle class="pulse-ring" r="22" />
+          <circle r="14" fill="#a83e2a" stroke="#fff" stroke-width="3"/>
+        </g>
+
+        <!-- Visit badges -->
+        <g class="visit-badges" font-family="sans-serif" font-size="15" font-weight="700">
+          <g class="visit-badge" data-room="W101" transform="translate(105, 125)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="W102" transform="translate(325, 125)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="W103" transform="translate(325, 225)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="W104" transform="translate(485, 125)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="W105" transform="translate(485, 225)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="W106" transform="translate(105, 345)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="W107" transform="translate(325, 345)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+        </g>
+      </svg>
+
+      <!-- Art pins -->
+      <button class="art-pin" data-card="card-06" style="left:23%;top:38%" title="Ensor · 基督进入布鲁塞尔 · W101">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Christ%27s_Entry_Into_Brussels_in_1889.jpg/960px-Christ%27s_Entry_Into_Brussels_in_1889.jpg" alt="Christ's Entry">
+        <span class="pin-num">06</span>
+      </button>
+    </div>
+  </div>
+</section>
+
 <!-- ===== BOTTOM ACTION BAR (mobile only) ===== -->
 <nav class="action-bar" aria-label="快捷操作">
   <button class="ab-btn" id="abWhereAmI" title="跳到当前所在的展馆">
@@ -2025,6 +2316,84 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 
 <!-- ===== CARD POOL (data only) ===== -->
 <div id="card-pool">
+
+<div class="artwork-card west" id="card-01">
+  <div class="art-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Irises-Vincent_van_Gogh.jpg/960px-Irises-Vincent_van_Gogh.jpg" alt="梵高《鸢尾花》1889年"></div>
+  <div class="room-tag">西馆 二楼 · Gallery W204</div>
+  <div class="art-title">鸢尾花 · <em>Irises</em></div>
+  <div class="art-meta">文森特·梵高（Vincent van Gogh）· 1889年 · 油画 · 74.3 × 94.3 厘米</div>
+  <div class="tags"><span class="tag movement">后印象派</span><span class="tag price">⭐ 镇馆之宝 · 1990年盖蒂购入</span></div>
+  <div class="art-desc">1889年5月，梵高主动住进法国圣雷米精神病院，就在入院第一周，他走进院内花园，一气呵成地画下了这片鸢尾花。画面以高饱和的蓝紫色占据几乎全部空间，笔触奔放如书写，其中混有一朵孤独的白花。距他去世仅剩一年。</div>
+  <div class="detail"><h4>深度解读</h4>
+  <p>梵高在圣雷米创作《鸢尾花》时，刻意选择了俯视的视角——没有天空，没有背景，整个画面被花朵和叶片填满，压迫感与生命力同时扑面而来。植物学家指出，他对鸢尾花的描绘相当精确：左下角那朵孤独的白花在现实中的确是鸢尾花的白化变种，并非梵高的随意创作。</p>
+  <p>画作的流传史充满戏剧性。1987年苏富比拍卖以5,390万美元创当时世界拍卖纪录，买家 Alan Bond 通过拍卖行提供的无息贷款付款，引发轩然大波。此后几年间 Bond 财务危机爆发，画作辗转数次私下转手，直至1990年盖蒂出资购入，具体价格至今未予公开。</p>
+  <p>目前《鸢尾花》常设展于西馆二楼 Gallery W204，与同系列的《玫瑰》（现藏纽约大都会博物馆）属同一时期作品。盖蒂每年为这幅画投入相当可观的照明与湿度控制预算，以防止颜料层在洛杉矶干燥气候下开裂。</p></div>
+</div>
+
+<div class="artwork-card west" id="card-02">
+  <div class="art-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Monet_Rouen_Cathedral_painting_%2839819981983%29.jpg/960px-Monet_Rouen_Cathedral_painting_%2839819981983%29.jpg" alt="莫奈《鲁昂大教堂·晨光》1894年"></div>
+  <div class="room-tag">西馆 二楼 · Gallery W204 · 与《鸢尾花》同厅</div>
+  <div class="art-title">鲁昂大教堂·晨光 · <em>Rouen Cathedral</em></div>
+  <div class="art-meta">克劳德·莫奈（Claude Monet）· 1894年 · 油画</div>
+  <div class="tags"><span class="tag movement">印象派</span><span class="tag price">🏛 印象派光影系列</span></div>
+  <div class="art-desc">同一主题画了三十余幅，此幅捕捉清晨石材表面那种柔和的玫瑰金质感。他曾说："我想捕捉的不是大教堂，而是笼罩在它周围的空气。"</div>
+  <div class="detail"><h4>深度解读</h4>
+  <p>1892至1894年间，莫奈在鲁昂共待了三个冬春，面对同一门面画下三十余幅。盖蒂这幅捕捉的是清晨光线——石材呈现玫瑰金与米白的混合，薄雾尚未完全散去。</p>
+  <p>这个系列是印象主义"瞬间光影"观念最极致的体现。同一块石头，晨曦、正午、傍晚呈现完全不同的色彩：玫瑰金、橙黄、深蓝。莫奈并非在画建筑，而是在记录光线本身随时间流动的轨迹。</p>
+  <p>该系列中有二十余幅分散于全球各大博物馆（波士顿、奥赛、芝加哥等），盖蒂版本是少数留在美国西海岸的一幅。</p></div>
+</div>
+
+<div class="artwork-card west" id="card-03">
+  <div class="art-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/La_Promenade%2C_by_Pierre-Auguste_Renoir%2C_edited.jpg/960px-La_Promenade%2C_by_Pierre-Auguste_Renoir%2C_edited.jpg" alt="雷诺阿《散步》1870年"></div>
+  <div class="room-tag">西馆 二楼 · Gallery W204 · 与《鸢尾花》同厅</div>
+  <div class="art-title">散步 · <em>La Promenade</em></div>
+  <div class="art-meta">皮埃尔-奥古斯特·雷诺阿（Pierre-Auguste Renoir）· 1870年 · 油画</div>
+  <div class="tags"><span class="tag movement">印象派</span><span class="tag price">🏛 印象派早期杰作</span></div>
+  <div class="art-desc">光影透过树叶碎落在情侣身上，是雷诺阿充满生命感的早期杰作。完成时雷诺阿29岁，正处于印象主义风格形成的关键期。</div>
+  <div class="detail"><h4>深度解读</h4>
+  <p>完成时雷诺阿29岁，正处于印象主义风格形成的关键期。夫妇俩穿行于树林间，光线穿透叶隙洒落，雷诺阿用细碎的笔触再现了这种自然散射光。次年普法战争爆发，这种充满活力与乐观的画风在战后反而愈发珍贵。</p>
+  <p>画面中对光影的处理极为精妙——树叶间隙透下的光斑并非均匀铺陈，而是随机散落，与人物衣裙的柔和质感形成对话。这种技法后来成为雷诺阿的标志性风格，在《煎饼磨坊的舞会》中达到顶峰。</p>
+  <p>雷诺阿与莫奈曾于1869年在"蛙塘"（La Grenouillère）并肩写生，互相影响，共同奠定了印象主义的技术基础。《散步》完成于次年，是那段黄金合作期的直接产物。</p></div>
+</div>
+
+<div class="artwork-card west" id="card-04">
+  <div class="art-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Paul_C%C3%A9zanne_-_Still_Life_with_Apples.jpg/960px-Paul_C%C3%A9zanne_-_Still_Life_with_Apples.jpg" alt="塞尚《静物与苹果》1893年"></div>
+  <div class="room-tag">西馆 二楼 · Gallery W204</div>
+  <div class="art-title">静物与苹果 · <em>Still Life with Apples</em></div>
+  <div class="art-meta">保罗·塞尚（Paul Cézanne）· 1893–94年 · 油画</div>
+  <div class="tags"><span class="tag movement">后印象派</span><span class="tag price">🏛 现代主义起点</span></div>
+  <div class="art-desc">几颗苹果毫无装饰地摆在桌上，却是西方艺术史上最具颠覆性的画作之一。塞尚破坏了传统透视法则，是立体主义的精神源头。</div>
+  <div class="detail"><h4>深度解读</h4>
+  <p>桌沿的两端不在同一水平面，盘子从两个角度同时被看见——塞尚解构了文艺复兴以来的统一透视体系。毕加索和布拉克正是从塞尚这里获得了立体主义的灵感。</p>
+  <p>塞尚曾说"我要用苹果征服巴黎"，这并非虚言。他用苹果这一普通静物，完成了对透视的革命——他画的不是苹果，而是苹果的"结构"，那个能够同时从多个角度被理解的几何本质。</p>
+  <p>该作现藏于盖蒂西馆二楼，与莫奈、雷诺阿同处一厅，形成了一个从印象派到后印象派过渡的完整叙事——从捕捉瞬间光影（莫奈、雷诺阿）到探索永恒形式（塞尚），正是现代主义的诞生路径。</p></div>
+</div>
+
+<div class="artwork-card west" id="card-05">
+  <div class="art-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/%C3%89douard_Manet_-_Jeanne_%28Spring%29.jpg/960px-%C3%89douard_Manet_-_Jeanne_%28Spring%29.jpg" alt="马奈《让娜·春》1881年"></div>
+  <div class="room-tag">西馆 二楼 · W205</div>
+  <div class="art-title">让娜（春）· <em>Jeanne (Spring)</em></div>
+  <div class="art-meta">爱德华·马奈（Édouard Manet）· 1881年 · 油画 · 74 × 51.5 厘米</div>
+  <div class="tags"><span class="tag movement">印象派先驱</span><span class="tag price">💰 2012年拍卖 $6,510万</span></div>
+  <div class="art-desc">马奈原计划以四季为题画一个系列，却只完成了这一幅"春"。画中让娜身着浅绿色春装、撑着白色阳伞，侧身望向画外，表情轻盈而疏离。她不再是神话人物，而是活生生的19世纪巴黎现代女性。</div>
+  <div class="detail"><h4>深度解读</h4>
+  <p>马奈原本计划以同一模特完成"四季"系列，春夏秋冬各一幅。但"春"完成后不久，他的健康急剧恶化——1881年正是他开始出现运动失调症状的一年，两年后他去世，其余三季永远停留在计划中。《让娜（春）》因此成为这个未竟系列唯一留存于世的作品，具有双重的艺术与历史价值。</p>
+  <p>画中模特让娜·德马赛（Jeanne Demarsy）是当时巴黎剧院界颇有名气的女演员。马奈用宽松的笔触处理她的服装，与脸部细腻刻画形成对比，暗示时代对"女性形象"的矛盾期待——她既是优雅的巴黎女性，又是行走于公共空间的独立个体。</p>
+  <p>2012年苏富比纽约秋拍，《让娜（春）》以6,510万美元落槌，超越此前马奈拍卖纪录近一倍。盖蒂方面确认购入，但具体交割条款未予公开。此画现陈列于西馆二楼，与《鸢尾花》同楼不同厅。</p></div>
+</div>
+
+<div class="artwork-card west" id="card-06">
+  <div class="art-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Christ%27s_Entry_Into_Brussels_in_1889.jpg/960px-Christ%27s_Entry_Into_Brussels_in_1889.jpg" alt="恩索尔《基督进入布鲁塞尔》1888年"></div>
+  <div class="room-tag">西馆 一楼 · Gallery W101</div>
+  <div class="art-title">基督进入布鲁塞尔 · <em>Christ's Entry into Brussels</em></div>
+  <div class="art-meta">詹姆斯·恩索尔（James Ensor）· 1888年 · 油画 · 258.5 × 430.5 厘米</div>
+  <div class="tags"><span class="tag movement">象征主义 / 表现主义先驱</span><span class="tag price">🏛 西馆一楼最大画作</span></div>
+  <div class="art-desc">画面旗帜上写着"VIVE LA SOCIALE"，基督骑驴进城却湮没在狂欢人群与骷髅面具中，是对社会虚伪与宗教形式主义的辛辣讽刺。宽逾四米，是盖蒂体量最大的单幅绘画之一。</div>
+  <div class="detail"><h4>深度解读</h4>
+  <p><strong>尺幅即宣言</strong>：这幅画高约2.6米、宽约4.3米，是盖蒂收藏中体量最大的单幅绘画之一。恩索尔创作于1888年，将受难周的圣经场景挪用为讽刺当代政治的寓言——画面中基督几乎被淹没在夸张的面具人群中，横幅上写的不是宗教颂词，而是"社会主义万岁"（VIVE LA SOCIALE）。</p>
+  <p><strong>被拒展出二十年</strong>：该作完成后，因政治与宗教内容过于激进，一直被拒于比利时主流展览门外，直到1929年才得以公开展出。恩索尔本人将此视为他最重要的作品——他在画中心人群里偷偷画了自己的肖像。</p>
+  <p><strong>先驱地位</strong>：这幅画比德国表现主义兴起（1905年前后）早了近二十年，却已呈现出强烈的表现主义笔触与社会批判意识。后来的诺尔德、科柯施卡均深受其影响，恩索尔因此被视为表现主义的精神先驱。</p></div>
+</div>
 
 <div class="artwork-card" id="card-15">
   <div class="art-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Bernardo_Daddi_-_The_Virgin_Mary_with_Saints_Thomas_Aquinas_and_Paul_-_93.PB.16_-_J._Paul_Getty_Museum.jpg/960px-Bernardo_Daddi_-_The_Virgin_Mary_with_Saints_Thomas_Aquinas_and_Paul_-_93.PB.16_-_J._Paul_Getty_Museum.jpg" alt="圣母与圣多玛斯·阿奎那、圣保罗三联画"></div>
@@ -2340,6 +2709,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 }
 .artwork-card.south .room-tag { color: var(--south); }
 .artwork-card.south .tag.movement { background: var(--south-lt); color: var(--south); }
+.artwork-card.west  .tag.movement { background: var(--west-lt);  color: var(--west); }
 .artwork-card .art-title {
   font-family: 'Cormorant Garamond', serif; font-size: 1.55rem; font-weight: 500;
   margin: 0 1.6rem .5rem; line-height: 1.2;
@@ -2627,7 +2997,19 @@ var ROOM_THEMES = {
   S113: '<span class="rt-num">S 113</span><span class="rt-theme">法国装饰艺术 · <em>French Decorative Arts</em> · 1770–1785</span>',
   S114: '<span class="rt-num">S 114</span><span class="rt-theme">法国装饰艺术 · <em>French Decorative Arts</em> · 1785–1790</span>',
   S115: '<span class="rt-num">S 115</span><span class="rt-theme">法国挂毯与德国装饰艺术 · <em>French Tapestries &amp; German Decorative Arts</em> · 1770–1800</span>',
-  S116: '<span class="rt-num">S 116</span><span class="rt-theme">新古典主义镶板房 · <em>Neoclassical Paneled Room</em> · 1765–1795</span>'
+  S116: '<span class="rt-num">S 116</span><span class="rt-theme">新古典主义镶板房 · <em>Neoclassical Paneled Room</em> · 1765–1795</span>',
+  W201: '<span class="rt-num">W 201</span><span class="rt-theme">19世纪绘画 · <em>19th-Century Paintings</em></span>',
+  W202: '<span class="rt-num">W 202</span><span class="rt-theme">19世纪绘画 · <em>19th-Century Paintings</em></span>',
+  W203: '<span class="rt-num">W 203</span><span class="rt-theme">19世纪绘画 · <em>19th-Century Paintings</em></span>',
+  W204: '<span class="rt-num">W 204</span><span class="rt-theme">印象派与后印象派 · <em>Impressionism &amp; Post-Impressionism</em> · 含《鸢尾花》</span>',
+  W205: '<span class="rt-num">W 205</span><span class="rt-theme">印象派 · <em>Impressionism</em> · 含马奈《让娜（春）》</span>',
+  W101: '<span class="rt-num">W 101</span><span class="rt-theme">象征主义 · <em>Symbolism</em> · 恩索尔《基督进入布鲁塞尔》</span>',
+  W102: '<span class="rt-num">W 102</span><span class="rt-theme">新古典主义雕塑 · <em>Neoclassical Sculpture</em></span>',
+  W103: '<span class="rt-num">W 103</span><span class="rt-theme">梅塞施密特人物头像 · <em>Messerschmidt Character Heads</em></span>',
+  W104: '<span class="rt-num">W 104</span><span class="rt-theme">19世纪绘画 · <em>19th-Century Paintings</em></span>',
+  W105: '<span class="rt-num">W 105</span><span class="rt-theme">摄影中心 · <em>Photography Center</em> · 轮换</span>',
+  W106: '<span class="rt-num">W 106</span><span class="rt-theme">象征主义大青铜花瓶 · <em>Symbolist Bronze Vase</em></span>',
+  W107: '<span class="rt-num">W 107</span><span class="rt-theme">摄影中心 · <em>Photography Center</em> · 轮换</span>'
 };
 var toastTimer = null;
 function showRoomToast(room) {
@@ -3278,6 +3660,208 @@ function showRoomToast(room) {
   render();
 })();
 
+/* ===== W2F visit tracker ===== */
+(function() {
+  var KEY = 'getty-w2f-visit-order';
+  var visitOrder;
+  try { visitOrder = JSON.parse(localStorage.getItem(KEY) || '[]') || []; }
+  catch (e) { visitOrder = []; }
+
+  // Room centers in the W2F SVG coord space (viewBox 20 20 800 660)
+  var ROOM_CENTERS = {
+    W201: { x: 170, y: 180 },
+    W202: { x: 360, y: 180 },
+    W203: { x: 560, y: 180 },
+    W204: { x: 460, y: 380 },
+    W205: { x: 170, y: 380 }
+  };
+
+  function save() {
+    try { localStorage.setItem(KEY, JSON.stringify(visitOrder)); } catch (e) {}
+    document.dispatchEvent(new Event('footprints-changed'));
+  }
+  function clearAll() { visitOrder = []; save(); render(); }
+  document.addEventListener('clear-all-footprints', clearAll);
+
+  function recordVisit(room) {
+    var existingIndex = visitOrder.indexOf(room);
+    var lastIndex = visitOrder.length - 1;
+    if (existingIndex !== -1 && existingIndex === lastIndex) visitOrder.pop();
+    else if (existingIndex !== -1) { visitOrder = visitOrder.slice(0, existingIndex + 1); showRoomToast(room); }
+    else { visitOrder.push(room); showRoomToast(room); }
+    save(); render();
+  }
+
+  function render() {
+    var firstOrder = {}, visitedSet = {};
+    visitOrder.forEach(function(room, i) { if (!(room in firstOrder)) firstOrder[room] = i + 1; visitedSet[room] = true; });
+
+    document.querySelectorAll('#west-2f .visit-badge').forEach(function(badge) {
+      var room = badge.dataset.room;
+      if (room in firstOrder) {
+        badge.classList.add('shown');
+        var t = badge.querySelector('text');
+        if (t) t.textContent = firstOrder[room];
+      } else badge.classList.remove('shown');
+    });
+    document.querySelectorAll('#west-2f .room-tint').forEach(function(rect) {
+      rect.classList.toggle('shown', !!visitedSet[rect.dataset.room]);
+    });
+
+    var marker = document.getElementById('currentMarkerW2F');
+    if (marker) {
+      if (visitOrder.length > 0) {
+        var c = ROOM_CENTERS[visitOrder[visitOrder.length - 1]];
+        if (c) { marker.setAttribute('transform', 'translate(' + c.x + ',' + c.y + ')'); marker.classList.add('shown'); }
+      } else marker.classList.remove('shown');
+    }
+
+    var feetGroup = document.getElementById('footsteps-w2f');
+    if (feetGroup) {
+      var SVG_NS = 'http://www.w3.org/2000/svg';
+      while (feetGroup.firstChild) feetGroup.removeChild(feetGroup.firstChild);
+      for (var i = 0; i < visitOrder.length - 1; i++) {
+        var a = ROOM_CENTERS[visitOrder[i]], b = ROOM_CENTERS[visitOrder[i + 1]];
+        if (!a || !b) continue;
+        var dx = b.x - a.x, dy = b.y - a.y, dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist < 1) continue;
+        var rot = Math.atan2(dy, dx) * 180 / Math.PI + 90;
+        var px = -dy/dist, py = dx/dist;
+        var stepLen = 38, numSteps = Math.max(2, Math.round(dist / stepLen));
+        for (var j = 0; j < numSteps; j++) {
+          var t = (j + 0.5) / numSteps;
+          var fx = a.x + dx*t, fy = a.y + dy*t;
+          var side = (j % 2 === 0) ? 1 : -1;
+          fx += px * 8 * side; fy += py * 8 * side;
+          var foot = document.createElementNS(SVG_NS, 'g');
+          foot.setAttribute('class', 'footprint');
+          foot.setAttribute('transform', 'translate(' + fx.toFixed(1) + ',' + fy.toFixed(1) + ') rotate(' + rot.toFixed(1) + ')');
+          var body = document.createElementNS(SVG_NS, 'path');
+          body.setAttribute('d', 'M -5 -6 C -5 -11 5 -11 5 -6 C 5 -3 3 -1 3 1 C 3 3 4 5 4 7 C 4 11 -4 11 -4 7 C -4 5 -3 3 -3 1 C -3 -1 -5 -3 -5 -6 Z');
+          foot.appendChild(body);
+          var bigToeOnLeft = (side === 1);
+          var toes = bigToeOnLeft
+            ? [[-3.6, -11.6, 2.0], [-1.6, -13.4, 1.45], [0.4, -14.0, 1.3], [2.2, -13.5, 1.15], [3.7, -12.4, 1.0]]
+            : [[-3.7, -12.4, 1.0], [-2.2, -13.5, 1.15], [-0.4, -14.0, 1.3], [1.6, -13.4, 1.45], [3.6, -11.6, 2.0]];
+          for (var k = 0; k < 5; k++) {
+            var toe = document.createElementNS(SVG_NS, 'circle');
+            toe.setAttribute('cx', String(toes[k][0])); toe.setAttribute('cy', String(toes[k][1])); toe.setAttribute('r', String(toes[k][2]));
+            foot.appendChild(toe);
+          }
+          feetGroup.appendChild(foot);
+        }
+      }
+    }
+  }
+
+  document.querySelectorAll('#west-2f .room-tap').forEach(function(rect) {
+    rect.addEventListener('click', function() { recordVisit(rect.dataset.room); });
+  });
+  render();
+})();
+
+/* ===== W1F visit tracker ===== */
+(function() {
+  var KEY = 'getty-w1f-visit-order';
+  var visitOrder;
+  try { visitOrder = JSON.parse(localStorage.getItem(KEY) || '[]') || []; }
+  catch (e) { visitOrder = []; }
+
+  // Room centers in W1F SVG (viewBox 20 20 760 540)
+  var ROOM_CENTERS = {
+    W101: { x: 190, y: 210 },
+    W102: { x: 380, y: 150 },
+    W103: { x: 380, y: 260 },
+    W104: { x: 540, y: 150 },
+    W105: { x: 540, y: 260 },
+    W106: { x: 190, y: 410 },
+    W107: { x: 460, y: 410 }
+  };
+
+  function save() {
+    try { localStorage.setItem(KEY, JSON.stringify(visitOrder)); } catch (e) {}
+    document.dispatchEvent(new Event('footprints-changed'));
+  }
+  function clearAll() { visitOrder = []; save(); render(); }
+  document.addEventListener('clear-all-footprints', clearAll);
+
+  function recordVisit(room) {
+    var existingIndex = visitOrder.indexOf(room);
+    var lastIndex = visitOrder.length - 1;
+    if (existingIndex !== -1 && existingIndex === lastIndex) visitOrder.pop();
+    else if (existingIndex !== -1) { visitOrder = visitOrder.slice(0, existingIndex + 1); showRoomToast(room); }
+    else { visitOrder.push(room); showRoomToast(room); }
+    save(); render();
+  }
+
+  function render() {
+    var firstOrder = {}, visitedSet = {};
+    visitOrder.forEach(function(room, i) { if (!(room in firstOrder)) firstOrder[room] = i + 1; visitedSet[room] = true; });
+
+    document.querySelectorAll('#west-1f .visit-badge').forEach(function(badge) {
+      var room = badge.dataset.room;
+      if (room in firstOrder) {
+        badge.classList.add('shown');
+        var t = badge.querySelector('text');
+        if (t) t.textContent = firstOrder[room];
+      } else badge.classList.remove('shown');
+    });
+    document.querySelectorAll('#west-1f .room-tint').forEach(function(rect) {
+      rect.classList.toggle('shown', !!visitedSet[rect.dataset.room]);
+    });
+
+    var marker = document.getElementById('currentMarkerW1F');
+    if (marker) {
+      if (visitOrder.length > 0) {
+        var c = ROOM_CENTERS[visitOrder[visitOrder.length - 1]];
+        if (c) { marker.setAttribute('transform', 'translate(' + c.x + ',' + c.y + ')'); marker.classList.add('shown'); }
+      } else marker.classList.remove('shown');
+    }
+
+    var feetGroup = document.getElementById('footsteps-w1f');
+    if (feetGroup) {
+      var SVG_NS = 'http://www.w3.org/2000/svg';
+      while (feetGroup.firstChild) feetGroup.removeChild(feetGroup.firstChild);
+      for (var i = 0; i < visitOrder.length - 1; i++) {
+        var a = ROOM_CENTERS[visitOrder[i]], b = ROOM_CENTERS[visitOrder[i + 1]];
+        if (!a || !b) continue;
+        var dx = b.x - a.x, dy = b.y - a.y, dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist < 1) continue;
+        var rot = Math.atan2(dy, dx) * 180 / Math.PI + 90;
+        var px = -dy/dist, py = dx/dist;
+        var stepLen = 36, numSteps = Math.max(2, Math.round(dist / stepLen));
+        for (var j = 0; j < numSteps; j++) {
+          var t = (j + 0.5) / numSteps;
+          var fx = a.x + dx*t, fy = a.y + dy*t;
+          var side = (j % 2 === 0) ? 1 : -1;
+          fx += px * 8 * side; fy += py * 8 * side;
+          var foot = document.createElementNS(SVG_NS, 'g');
+          foot.setAttribute('class', 'footprint');
+          foot.setAttribute('transform', 'translate(' + fx.toFixed(1) + ',' + fy.toFixed(1) + ') rotate(' + rot.toFixed(1) + ')');
+          var body = document.createElementNS(SVG_NS, 'path');
+          body.setAttribute('d', 'M -5 -6 C -5 -11 5 -11 5 -6 C 5 -3 3 -1 3 1 C 3 3 4 5 4 7 C 4 11 -4 11 -4 7 C -4 5 -3 3 -3 1 C -3 -1 -5 -3 -5 -6 Z');
+          foot.appendChild(body);
+          var bigToeOnLeft = (side === 1);
+          var toes = bigToeOnLeft
+            ? [[-3.6, -11.6, 2.0], [-1.6, -13.4, 1.45], [0.4, -14.0, 1.3], [2.2, -13.5, 1.15], [3.7, -12.4, 1.0]]
+            : [[-3.7, -12.4, 1.0], [-2.2, -13.5, 1.15], [-0.4, -14.0, 1.3], [1.6, -13.4, 1.45], [3.6, -11.6, 2.0]];
+          for (var k = 0; k < 5; k++) {
+            var toe = document.createElementNS(SVG_NS, 'circle');
+            toe.setAttribute('cx', String(toes[k][0])); toe.setAttribute('cy', String(toes[k][1])); toe.setAttribute('r', String(toes[k][2]));
+            foot.appendChild(toe);
+          }
+          feetGroup.appendChild(foot);
+        }
+      }
+    }
+  }
+
+  document.querySelectorAll('#west-1f .room-tap').forEach(function(rect) {
+    rect.addEventListener('click', function() { recordVisit(rect.dataset.room); });
+  });
+  render();
+})();
+
 /* (Large-text toggle removed — large is now the permanent default.) */
 
 /* ===== Modal read-aloud via Web Speech API (browser TTS) ===== */
@@ -3389,6 +3973,8 @@ function readAloud() {
     try { total += (JSON.parse(localStorage.getItem('getty-n1f-visit-order') || '[]') || []).length; } catch (e) {}
     try { total += (JSON.parse(localStorage.getItem('getty-s2f-visit-order') || '[]') || []).length; } catch (e) {}
     try { total += (JSON.parse(localStorage.getItem('getty-s1f-visit-order') || '[]') || []).length; } catch (e) {}
+    try { total += (JSON.parse(localStorage.getItem('getty-w2f-visit-order') || '[]') || []).length; } catch (e) {}
+    try { total += (JSON.parse(localStorage.getItem('getty-w1f-visit-order') || '[]') || []).length; } catch (e) {}
     if (total === 0) clearBtn.setAttribute('disabled', '');
     else clearBtn.removeAttribute('disabled');
   }
@@ -3436,7 +4022,9 @@ function readAloud() {
       { id: 'north-2f', label: '北馆 二楼 · N201–N205', cls: '' },
       { id: 'north-1f', label: '北馆 一楼 · N101–N106', cls: '' },
       { id: 'south-2f', label: '南馆 二楼 · S201–S206', cls: 'south' },
-      { id: 'south-1f', label: '南馆 一楼 · S101–S116', cls: 'south' }
+      { id: 'south-1f', label: '南馆 一楼 · S101–S116', cls: 'south' },
+      { id: 'west-2f',  label: '西馆 二楼 · W201–W205', cls: 'west' },
+      { id: 'west-1f',  label: '西馆 一楼 · W101–W107', cls: 'west' }
     ];
     var total = 0;
     sections.forEach(function(s) {
@@ -3497,7 +4085,7 @@ function readAloud() {
   // --- Sticky chip active-state follows scroll ---
   var chips = document.querySelectorAll('.st-chip');
   if (chips.length && 'IntersectionObserver' in window) {
-    var sectionIds = ['north-2f', 'north-1f', 'south-2f', 'south-1f'];
+    var sectionIds = ['north-2f', 'north-1f', 'south-2f', 'south-1f', 'west-2f', 'west-1f'];
     var sections = sectionIds
       .map(function(id) { return document.getElementById(id); })
       .filter(Boolean);
