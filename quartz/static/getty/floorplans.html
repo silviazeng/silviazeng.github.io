@@ -193,6 +193,33 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 .pav-tab.south:hover { border-color: var(--south); background: var(--south-lt); color: var(--south); }
 
 /* ===== Location widget (GPS + manual override) ===== */
+/* Room-type legend bar (color key for the floor plans) */
+.legend-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  padding: 0.7rem 5vw;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 0.78rem;
+  color: var(--ink);
+}
+.legend-bar .lg-item { display: inline-flex; align-items: center; gap: 0.4rem; white-space: nowrap; }
+.legend-bar em { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--muted); font-size: 0.72rem; margin-left: 0.15rem; }
+.legend-bar .lg-swatch {
+  display: inline-block;
+  width: 16px; height: 16px;
+  border-radius: 3px;
+  border: 1.5px solid #1a1a1a;
+  flex: 0 0 auto;
+}
+@media (max-width: 640px) {
+  .legend-bar { padding: 0.55rem 4vw; font-size: 0.72rem; gap: 0.4rem 0.8rem; }
+  .legend-bar em { font-size: 0.66rem; }
+  .legend-bar .lg-swatch { width: 14px; height: 14px; }
+}
+
 .loc-widget {
   display: inline-flex; align-items: center; gap: 0.5rem;
   margin-top: 1rem; padding: 0.35rem 0.65rem;
@@ -1127,6 +1154,14 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   </div>
 </header>
 
+<!-- ===== Room-type legend (per on-site brochure) ===== -->
+<div class="legend-bar" aria-label="展厅类别图例">
+  <span class="lg-item"><span class="lg-swatch" style="background: var(--room-paintings);"></span>绘画 <em>Paintings</em></span>
+  <span class="lg-item"><span class="lg-swatch" style="background: var(--room-decarts);"></span>雕塑与装饰艺术 <em>Sculpture &amp; Decorative Arts</em></span>
+  <span class="lg-item"><span class="lg-swatch" style="background: var(--room-changing);"></span>临展 <em>Changing Exhibitions</em></span>
+  <span class="lg-item"><span class="lg-swatch" style="background: var(--room-special);"></span>特展 <em>Special Exhibitions</em></span>
+</div>
+
 <!-- ===== 北 二楼 ===== -->
 <section class="floor-section" id="north-2f">
   <div class="floor-head">
@@ -1163,11 +1198,11 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
         <!-- Brown closed area below N201 -->
         <rect x="80" y="760" width="290" height="250" fill="#6b5a3f"/>
         <!-- Light blue gallery rooms -->
-        <rect x="310" y="180" width="240" height="140" fill="#d7e0ec"/>   <!-- N203 (shifted LEFT of N202, narrower) -->
-        <rect x="370" y="320" width="290" height="220" fill="#d7e0ec"/>   <!-- N202 (wider, shifted right) -->
-        <rect x="660" y="320" width="300" height="360" fill="#d7e0ec"/>   <!-- N204 (upper-right) -->
-        <rect x="660" y="680" width="300" height="330" fill="#d7e0ec"/>   <!-- N205 (lower-right) -->
-        <rect x="80" y="540" width="290" height="220" fill="#d7e0ec"/>    <!-- N201 (lower-left) -->
+        <rect x="310" y="180" width="240" height="140" fill="var(--room-paintings)"/>   <!-- N203 (shifted LEFT of N202, narrower) -->
+        <rect x="370" y="320" width="290" height="220" fill="var(--room-paintings)"/>   <!-- N202 (wider, shifted right) -->
+        <rect x="660" y="320" width="300" height="360" fill="var(--room-paintings)"/>   <!-- N204 (upper-right) -->
+        <rect x="660" y="680" width="300" height="330" fill="var(--room-paintings)"/>   <!-- N205 (lower-right) -->
+        <rect x="80" y="540" width="290" height="220" fill="var(--room-paintings)"/>    <!-- N201 (lower-left) -->
 
         <!-- ===== BALCONY CURVE (upper-left, from N203 top-left to left wall above the door) ===== -->
         <path d="M 310 180 Q 100 30 80 340" fill="none" stroke="#1a1a1a" stroke-width="5" stroke-linecap="round"/>
@@ -1405,12 +1440,12 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
         -->
         <!-- Atrium fill follows the irregular outline -->
         <path d="M 80,40 L 580,40 L 580,500 L 460,500 L 460,640 L 320,640 L 320,500 L 80,500 Z" fill="#bfa686"/>
-        <rect x="80"  y="40"  width="180" height="140" fill="#d7e0ec"/> <!-- N 105 -->
-        <rect x="80"  y="180" width="180" height="160" fill="#d7e0ec"/> <!-- N 104 -->
-        <rect x="80"  y="340" width="180" height="160" fill="#d7e0ec"/> <!-- N 103 -->
-        <rect x="260" y="340" width="140" height="160" fill="#d7e0ec"/> <!-- N 102 -->
-        <rect x="400" y="180" width="180" height="160" fill="#d7e0ec"/> <!-- N 106 (same size as N104; SW corner = N102 NE corner) -->
-        <rect x="320" y="500" width="140" height="140" fill="#d7e0ec"/> <!-- N 101 -->
+        <rect x="80"  y="40"  width="180" height="140" fill="var(--room-decarts)"/> <!-- N 105 -->
+        <rect x="80"  y="180" width="180" height="160" fill="var(--room-decarts)"/> <!-- N 104 -->
+        <rect x="80"  y="340" width="180" height="160" fill="var(--room-decarts)"/> <!-- N 103 -->
+        <rect x="260" y="340" width="140" height="160" fill="var(--room-decarts)"/> <!-- N 102 -->
+        <rect x="400" y="180" width="180" height="160" fill="var(--room-decarts)"/> <!-- N 106 (same size as N104; SW corner = N102 NE corner) -->
+        <rect x="320" y="500" width="140" height="140" fill="var(--room-decarts)"/> <!-- N 101 -->
 
         <!-- Outer building outline -->
         <path d="M 80,40 L 580,40 L 580,500 L 460,500 L 460,640 L 320,640 L 320,500 L 80,500 Z"
@@ -1588,13 +1623,12 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
                CENTER:    atrium with stairs at bottom-right and West-Pavilion exit south
         -->
         <rect x="60" y="80" width="720" height="720" fill="#bfa686"/>          <!-- atrium fill -->
-        <rect x="60"  y="80"  width="200" height="200" fill="#d7e0ec"/>        <!-- S 201 -->
-        <rect x="260" y="80"  width="260" height="200" fill="#d7e0ec"/>        <!-- S 202 -->
-        <rect x="520" y="80"  width="260" height="140" fill="#d7e0ec"/>        <!-- S 203 -->
-        <rect x="560" y="300" width="220" height="240" fill="#d7e0ec"/>        <!-- S 204 -->
-        <rect x="60"  y="300" width="220" height="260" fill="#d7e0ec"/>        <!-- S 205 -->
-        <rect x="60"  y="580" width="500" height="220" fill="#d7e0ec"/>        <!-- S 206 (base) -->
-        <rect x="60"  y="580" width="500" height="220" fill="rgba(122,30,20,0.12)"/> <!-- S 206 red overlay (changing exhibitions) -->
+        <rect x="60"  y="80"  width="200" height="200" fill="var(--room-paintings)"/>        <!-- S 201 -->
+        <rect x="260" y="80"  width="260" height="200" fill="var(--room-paintings)"/>        <!-- S 202 -->
+        <rect x="520" y="80"  width="260" height="140" fill="var(--room-paintings)"/>        <!-- S 203 -->
+        <rect x="560" y="300" width="220" height="240" fill="var(--room-paintings)"/>        <!-- S 204 -->
+        <rect x="60"  y="300" width="220" height="260" fill="var(--room-paintings)"/>        <!-- S 205 -->
+        <rect x="60"  y="580" width="500" height="220" fill="var(--room-changing)"/>          <!-- S 206 · Pastels &amp; Watercolors · Changing Exhibitions -->
 
         <!-- Outer building outline -->
         <rect x="60" y="80" width="720" height="720" fill="none" stroke="#1a1a1a" stroke-width="5"/>
@@ -1761,29 +1795,28 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
         <rect x="60" y="80" width="1080" height="720" fill="#bfa686"/>  <!-- atrium fill -->
 
         <!-- North row -->
-        <rect x="60"   y="80"  width="200" height="160" fill="#d7e0ec"/>                          <!-- S 101 base -->
-        <rect x="60"   y="80"  width="200" height="160" fill="rgba(122,30,20,0.18)"/>             <!-- S 101 red overlay -->
-        <rect x="260"  y="80"  width="240" height="160" fill="#d7e0ec"/>                          <!-- S 102 -->
-        <rect x="500"  y="80"  width="240" height="160" fill="#d7e0ec"/>                          <!-- S 103 -->
-        <rect x="740"  y="80"  width="140" height="100" fill="#d7e0ec"/>                          <!-- S 104 -->
+        <rect x="60"   y="80"  width="200" height="160" fill="var(--room-changing)"/>                            <!-- S 101 · Changing Exhibitions -->
+        <rect x="260"  y="80"  width="240" height="160" fill="var(--room-decarts)"/>                            <!-- S 102 -->
+        <rect x="500"  y="80"  width="240" height="160" fill="var(--room-decarts)"/>                            <!-- S 103 -->
+        <rect x="740"  y="80"  width="140" height="100" fill="var(--room-decarts)"/>                            <!-- S 104 -->
 
         <!-- East column (rooms along right side of building) -->
-        <rect x="940"  y="200" width="200" height="120" fill="#d7e0ec"/>                          <!-- S 105 -->
-        <rect x="940"  y="320" width="200" height="120" fill="#d7e0ec"/>                          <!-- S 106 -->
-        <rect x="940"  y="440" width="200" height="120" fill="#d7e0ec"/>                          <!-- S 107 -->
-        <rect x="940"  y="560" width="200" height="120" fill="#d7e0ec"/>                          <!-- S 108 -->
+        <rect x="940"  y="200" width="200" height="120" fill="var(--room-decarts)"/>                            <!-- S 105 -->
+        <rect x="940"  y="320" width="200" height="120" fill="var(--room-decarts)"/>                            <!-- S 106 -->
+        <rect x="940"  y="440" width="200" height="120" fill="var(--room-decarts)"/>                            <!-- S 107 -->
+        <rect x="940"  y="560" width="200" height="120" fill="var(--room-decarts)"/>                            <!-- S 108 -->
 
         <!-- Center cluster -->
-        <rect x="500"  y="260" width="280" height="220" fill="#d7e0ec"/>                          <!-- S 109 (big central room) -->
-        <rect x="340"  y="260" width="160" height="120" fill="#d7e0ec"/>                          <!-- S 111 -->
-        <rect x="340"  y="380" width="160" height="120" fill="#d7e0ec"/>                          <!-- S 110 -->
-        <rect x="500"  y="480" width="280" height="140" fill="#d7e0ec"/>                          <!-- S 112 -->
+        <rect x="500"  y="260" width="280" height="220" fill="var(--room-decarts)"/>                            <!-- S 109 (big central room) -->
+        <rect x="340"  y="260" width="160" height="120" fill="var(--room-decarts)"/>                            <!-- S 111 -->
+        <rect x="340"  y="380" width="160" height="120" fill="var(--room-decarts)"/>                            <!-- S 110 -->
+        <rect x="500"  y="480" width="280" height="140" fill="var(--room-decarts)"/>                            <!-- S 112 -->
 
         <!-- West + south-band rooms -->
-        <rect x="60"   y="280" width="220" height="220" fill="#d7e0ec"/>                          <!-- S 116 -->
-        <rect x="60"   y="500" width="220" height="160" fill="#d7e0ec"/>                          <!-- S 114 -->
-        <rect x="60"   y="680" width="380" height="120" fill="#d7e0ec"/>                          <!-- S 115 -->
-        <rect x="440"  y="640" width="340" height="160" fill="#d7e0ec"/>                          <!-- S 113 -->
+        <rect x="60"   y="280" width="220" height="220" fill="var(--room-decarts)"/>                            <!-- S 116 -->
+        <rect x="60"   y="500" width="220" height="160" fill="var(--room-decarts)"/>                            <!-- S 114 -->
+        <rect x="60"   y="680" width="380" height="120" fill="var(--room-decarts)"/>                            <!-- S 115 -->
+        <rect x="440"  y="640" width="340" height="160" fill="var(--room-decarts)"/>                            <!-- S 113 -->
 
         <!-- Outer building outline (simplified to a single rectangle) -->
         <rect x="60" y="80" width="1080" height="720" fill="none" stroke="#1a1a1a" stroke-width="5"/>
