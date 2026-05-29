@@ -11,7 +11,7 @@
 :root {
   --ink: #2a2218;
   --ink2: #4a3d2e;
-  --muted: #8a7560;
+  --muted: #6f5a3c;  /* darkened from #8a7560 for outdoor / older-eye legibility */
   --bg: #f9f5ea;
   --bg2: #f1ead8;
   --line: #d8cdb4;
@@ -76,7 +76,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   gap: 1.2rem;
   margin-top: 1.6rem;
   flex-wrap: wrap;
-  font-size: 0.68rem;
+  font-size: 0.78rem;                  /* bumped 0.68 → 0.78 for outdoor legibility */
   color: var(--muted);
 }
 .legend-bar span { display: flex; align-items: center; gap: 0.4rem; }
@@ -192,7 +192,8 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   color: var(--ink2);
   font-family: 'Noto Sans SC', sans-serif;
 }
-.loc-widget .loc-pin { font-size: 0.85rem; }
+.loc-widget .loc-pin { display: inline-flex; align-items: center; color: var(--gold); }
+.loc-widget .loc-pin svg { width: 1.05em; height: 1.05em; display: block; }
 .loc-widget .loc-text { min-width: 130px; }
 .loc-widget .loc-toggle { display: flex; gap: 0.2rem; margin-left: 0.3rem; }
 .loc-btn {
@@ -439,30 +440,29 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
-  margin: 1rem 1.6rem 0;
+  margin: 0.4rem 1.6rem 1.1rem;   /* sits between tags and desc now; tighter top, breathing room below */
   padding: 0.7rem 1.3rem;
   background: var(--gold);
   color: #fff;
-  border: 2px solid #fff;
+  border: none;
   border-radius: 30px;
   font-size: 0.95rem;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   cursor: pointer;
   font-family: 'Noto Sans SC', sans-serif;
-  box-shadow: 0 4px 14px rgba(184, 146, 58, 0.55), 0 0 0 3px rgba(184, 146, 58, 0.18);
+  box-shadow: 0 2px 8px rgba(184, 146, 58, 0.40);   /* single-layer; ditched the double-ring slop */
   transition: background .15s, transform .12s, box-shadow .15s;
 }
 .art-read-btn:hover {
   background: #a08130;
-  transform: translateY(-1.5px);
-  box-shadow: 0 6px 18px rgba(184, 146, 58, 0.75), 0 0 0 3px rgba(184, 146, 58, 0.28);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(184, 146, 58, 0.55);
 }
 .art-read-btn:active { transform: translateY(0); }
 .art-read-btn.playing {
   background: var(--south);
-  border-color: #fff;
-  box-shadow: 0 4px 14px rgba(122, 30, 20, 0.55);
+  box-shadow: 0 2px 8px rgba(122, 30, 20, 0.45);
   animation: readPulse 1.6s ease-in-out infinite;
 }
 .art-read-btn .ar-svg {
@@ -628,7 +628,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 .floor-foot {
   display: flex; justify-content: center; align-items: center; gap: 0.5rem;
   margin-top: 1rem;
-  font-size: 0.62rem;
+  font-size: 0.7rem;                   /* bumped 0.62 → 0.7 */
   color: var(--muted);
   letter-spacing: 0.12em;
 }
@@ -664,17 +664,19 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 }
 .modal-close {
   position: absolute;
-  top: 12px; right: 14px;
-  width: 36px; height: 36px;
+  top: 8px; right: 8px;
+  width: 44px; height: 44px;            /* 44px iOS touch minimum */
   border-radius: 50%;
-  background: rgba(255,255,255,.92);
+  background: rgba(255,255,255,.95);
   border: none;
-  font-size: 1.3rem;
+  font-size: 1.55rem;
+  line-height: 1;
   cursor: pointer;
   color: var(--ink);
   z-index: 10;
   display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 2px 8px rgba(0,0,0,.2);
+  box-shadow: 0 2px 10px rgba(0,0,0,.22);
+  -webkit-tap-highlight-color: transparent;
 }
 .modal-img { width: 100%; max-height: 360px; overflow: hidden; background: #1a1a1a; }
 .modal-img img { width: 100%; height: 100%; object-fit: contain; display: block; }
@@ -738,8 +740,18 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 
 @media (max-width: 640px) {
   html { font-size: 21px; }  /* still large on mobile (was 17px) */
-  .page-header { padding: 2rem 5vw 1.5rem; }
+  .page-header { padding: 1rem 5vw 0.5rem; }    /* mobile is mostly loc-widget; killed the dead air */
   .page-title { font-size: 2rem; }
+  /* Loc widget: no rigid min-width on the text — lets the row collapse to one line
+     when the GPS resolves cleanly, instead of pre-reserving 130px slot for a “检测中…” state. */
+  .loc-widget { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; padding: 0.3rem 0.55rem; margin-top: 0.5rem; }
+  /* Let the status text breathe by content first, only truncating when the buttons
+     would get pushed off-row. Buttons themselves stay rigid (no shrink, no CJK wrap). */
+  .loc-widget .loc-text { min-width: 0; flex: 0 1 auto; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .loc-widget .loc-toggle { flex: 0 0 auto; }
+  .loc-widget .loc-btn { white-space: nowrap; flex-shrink: 0; min-width: 0; }
+  /* Floor section header rhythm: serif name was 1.7rem (≈35.7px @ 21px root) — still legible at 1.5. */
+  .floor-name { font-size: 1.5rem; line-height: 1.15; }
   /* Don't shrink the title font on mobile — instead, just guarantee that any
      wrapping happens at " · " punctuation rather than mid-CJK or mid-Latin word.
      English Latin inside titles is already shrunk via the global .pav-name em
@@ -748,7 +760,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   .pav-divider .pav-name,
   .floor-name { word-break: keep-all; overflow-wrap: break-word; }
   /* Floor plans fill the viewport edge-to-edge on mobile (no margin / border / radius) */
-  .floor-section { padding: 1.5rem 0 2.5rem; }
+  .floor-section { padding: 1.25rem 0 2rem; }    /* tightened mobile vertical rhythm */
   .floor-head { padding: 0 4vw; }
   .floor-foot { padding: 0 4vw; }
   .floor-plan {
@@ -770,7 +782,15 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   .art-pin .pin-num { width: 20px; height: 20px; font-size: 0.55rem; }
   .modal-body { padding: 1.1rem 1.2rem 1.6rem; }
   .modal-title { font-size: 1.3rem; }
+  /* Modal painting was capped at 360px desktop — on a 390×844 viewport that’s 43% of the
+     screen, pushing the artist/date/tags off the first scroll. Cap to ~33% on mobile so
+     the meta block sits in the first scroll. */
+  .modal-img { max-height: 280px; }
+  .artwork-card .art-img { max-height: 280px !important; }    /* actual selector; !important because the artwork-card stylesheet is appended later in source order */
+  /* Italic gray art-meta is rough on older eyes; keep the gray, drop the italic on mobile. */
+  .artwork-card .art-meta { font-style: normal !important; }
   .modal-read { top: 10px; right: 56px; width: 36px; height: 36px; }
+  /* Modal close X stays at 44×44 on mobile too (touch min). */
   .floor-legend { padding: 0 4vw; max-width: 100%; grid-template-columns: 1fr; gap: 0.4rem; }
 }
 
@@ -785,12 +805,14 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 .sticky-top {
   position: fixed;
   top: 0; left: 0; right: 0;
-  height: 60px;
+  min-height: 60px;
+  padding-top: env(safe-area-inset-top);   /* clears iPhone notch */
   background: var(--bg);
-  border-bottom: 1px dashed var(--line);
+  border-bottom: 1px solid var(--line);   /* solid — dashed felt unfinished */
   align-items: center;
   gap: 0.45rem;
-  padding: 0 4vw;
+  padding-left: 4vw;
+  padding-right: 4vw;
   z-index: 80;
   overflow-x: auto;
   scrollbar-width: none;
@@ -870,19 +892,20 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2px;
+  gap: 4px;
   background: none;
   border: 0;
   color: var(--ink);
   font-family: 'Noto Sans SC', inherit;
   font-weight: 600;
-  font-size: 0.62rem;
+  font-size: 0.72rem;                  /* bumped 0.62 → 0.72 for senior eyes */
   cursor: pointer;
   padding: 4px 8px;
   border-radius: 14px;
   min-width: 80px;
   min-height: 72px;
   transition: color .15s, opacity .15s;
+  -webkit-tap-highlight-color: transparent;
 }
 .ab-btn[disabled] {
   cursor: not-allowed;
@@ -902,9 +925,9 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.35rem;
   transition: background .15s, color .15s;
 }
+.ab-btn .ab-icon svg { width: 24px; height: 24px; display: block; }
 .ab-btn:hover { color: var(--north); }
 .ab-btn:hover .ab-icon { background: var(--north-lt); color: var(--north); }
 .ab-btn.active { color: var(--north); }
@@ -948,7 +971,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   align-items: center;
   justify-content: space-between;
   padding: 0.2rem 1rem 0.7rem;
-  border-bottom: 1px dashed var(--line);
+  border-bottom: 1px solid var(--line);
 }
 .ash-head h3 {
   margin: 0;
@@ -989,7 +1012,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   text-align: left;
   background: none;
   border: 0;
-  border-bottom: 1px dashed var(--line);
+  border-bottom: 1px solid var(--line);
   padding: 0.85rem 1.1rem;
   color: var(--ink);
   font-size: 0.78rem;
@@ -997,6 +1020,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   cursor: pointer;
   font-weight: 500;
   line-height: 1.35;
+  -webkit-tap-highlight-color: transparent;
 }
 .ash-item:hover { background: var(--bg2); }
 .ashi-room {
@@ -1032,7 +1056,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 
 /* Mobile activation: show sticky bars, hide originals */
 @media (max-width: 768px) {
-  body { padding-top: 60px; padding-bottom: 88px; }
+  body { padding-top: calc(60px + env(safe-area-inset-top)); padding-bottom: 88px; }
   .sticky-top { display: flex; }
   .action-bar { display: flex; }
   .page-header .back-link,
@@ -1046,7 +1070,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 
 <!-- ===== STICKY TOP (mobile nav) — floor switcher always reachable ===== -->
 <nav class="sticky-top" aria-label="楼层切换">
-  <a class="st-back" href="center-guide.html">← 指南</a>
+  <a class="st-back" href="getty-center-guide.html">← 指南</a>
   <a class="st-chip north active" href="#north-2f" data-floor="north-2f"><span class="stc-pav">北馆</span><span class="stc-lvl">2F</span></a>
   <a class="st-chip north"        href="#north-1f" data-floor="north-1f"><span class="stc-pav">北馆</span><span class="stc-lvl">1F</span></a>
   <a class="st-chip south"        href="#south-2f" data-floor="south-2f"><span class="stc-pav">南馆</span><span class="stc-lvl">2F</span></a>
@@ -1054,7 +1078,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 </nav>
 
 <header class="page-header">
-  <a href="center-guide.html" class="back-link">← 返回完整指南</a>
+  <a href="getty-center-guide.html" class="back-link">← 返回完整指南</a>
   <div class="pav-tabs">
     <a class="pav-tab north" href="#north-2f">北馆 2F</a>
     <a class="pav-tab north" href="#north-1f">北馆 1F</a>
@@ -1062,7 +1086,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
     <a class="pav-tab south" href="#south-1f">南馆 1F</a>
   </div>
   <div class="loc-widget" id="locWidget">
-    <span class="loc-pin">📍</span>
+    <span class="loc-pin" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-7-7-7-12a7 7 0 0 1 14 0c0 5-7 12-7 12z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
     <span class="loc-text" id="locText">检测中…</span>
     <div class="loc-toggle">
       <button class="loc-btn active" data-mode="auto">自动</button>
@@ -1404,7 +1428,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 
         <!-- ===== "NORTH ATRIUM" label ===== -->
         <g pointer-events="none">
-          <text x="450" y="190" font-family="sans-serif" font-size="22" font-weight="500"
+          <text x="450" y="190" font-family="sans-serif" font-size="30" font-weight="500"
                 fill="#fff" text-anchor="middle" letter-spacing="3" opacity="0.85">NORTH ATRIUM</text>
         </g>
 
@@ -1419,11 +1443,11 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
         <g pointer-events="none">
           <line x1="420" y1="420" x2="555" y2="420" stroke="#1a1a1a" stroke-width="3"/>
           <polygon points="566,420 548,412 548,428" fill="#1a1a1a"/>
-          <text x="400" y="460" font-family="sans-serif" font-size="20" font-weight="700" fill="#1a1a1a" text-anchor="start">Museum Entrance Hall</text>
+          <text x="400" y="460" font-family="sans-serif" font-size="26" font-weight="700" fill="#1a1a1a" text-anchor="start">Museum Entrance Hall</text>
         </g>
 
-        <!-- ===== ROOM NUMBER LABELS ===== -->
-        <g pointer-events="none" font-family="sans-serif" font-size="28" font-weight="500" fill="#1a1a1a">
+        <!-- ===== ROOM NUMBER LABELS — normalized across all 4 floors so visual px at 390-wide viewport is ~16–17px. -->
+        <g pointer-events="none" font-family="sans-serif" font-size="35" font-weight="500" fill="#1a1a1a">
           <text x="252" y="72"  text-anchor="end">N 105</text>
           <text x="252" y="212" text-anchor="end">N 104</text>
           <text x="252" y="372" text-anchor="end">N 103</text>
@@ -1582,7 +1606,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 
         <!-- ===== "SOUTH ATRIUM" label (center, above stairs) ===== -->
         <g pointer-events="none">
-          <text x="420" y="450" font-family="sans-serif" font-size="22" font-weight="500"
+          <text x="420" y="450" font-family="sans-serif" font-size="30" font-weight="500"
                 fill="#fff" text-anchor="middle" letter-spacing="3" opacity="0.85">SOUTH ATRIUM</text>
         </g>
 
@@ -1593,8 +1617,8 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
           <text x="420" y="888" font-family="sans-serif" font-size="32" font-weight="700" fill="#1a1a1a" text-anchor="middle">West Pavilion</text>
         </g>
 
-        <!-- ===== ROOM NUMBER LABELS (top-right of each room) ===== -->
-        <g pointer-events="none" font-family="sans-serif" font-size="28" font-weight="500" fill="#1a1a1a">
+        <!-- ===== ROOM NUMBER LABELS — normalized to ~16–17px visual at 390-wide. -->
+        <g pointer-events="none" font-family="sans-serif" font-size="38" font-weight="500" fill="#1a1a1a">
           <text x="252" y="112" text-anchor="end">S 201</text>
           <text x="512" y="112" text-anchor="end">S 202</text>
           <text x="772" y="112" text-anchor="end">S 203</text>
@@ -1734,7 +1758,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
         <rect x="60" y="80" width="1080" height="720" fill="none" stroke="#1a1a1a" stroke-width="5"/>
 
         <!-- ===== INTERNAL WALLS (door gaps cut so visitors can enter from the atrium) ===== -->
-        <g fill="none" stroke="#1a1a1a" stroke-width="4">
+        <g fill="none" stroke="#1a1a1a" stroke-width="5">
           <!-- S 101: right wall, bottom wall (door y=190-225) -->
           <line x1="260" y1="80"  x2="260" y2="190"/>
           <line x1="260" y1="225" x2="260" y2="240"/>
@@ -1842,8 +1866,8 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
           <text x="240" y="888" font-family="sans-serif" font-size="26" font-weight="700" fill="#1a1a1a" text-anchor="middle">West Pavilion</text>
         </g>
 
-        <!-- ===== ROOM NUMBER LABELS ===== -->
-        <g pointer-events="none" font-family="sans-serif" font-size="24" font-weight="500" fill="#1a1a1a">
+        <!-- ===== ROOM NUMBER LABELS — normalized to ~16–17px visual at 390-wide. -->
+        <g pointer-events="none" font-family="sans-serif" font-size="38" font-weight="500" fill="#1a1a1a">
           <text x="252"  y="108" text-anchor="end">S 101</text>
           <text x="492"  y="108" text-anchor="end">S 102</text>
           <text x="732"  y="108" text-anchor="end">S 103</text>
@@ -1963,9 +1987,18 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 
 <!-- ===== BOTTOM ACTION BAR (mobile only) ===== -->
 <nav class="action-bar" aria-label="快捷操作">
-  <button class="ab-btn" id="abWhereAmI" title="跳到当前所在的展馆"><span class="ab-icon">📍</span><span>我在哪</span></button>
-  <button class="ab-btn" id="abArtList"  title="本页所有画作列表"><span class="ab-icon">📋</span><span>画作列表</span></button>
-  <button class="ab-btn" id="abClear"    title="清空所有楼层的足迹" disabled><span class="ab-icon">🧹</span><span>清足迹</span></button>
+  <button class="ab-btn" id="abWhereAmI" title="跳到当前所在的展馆">
+    <span class="ab-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-7-7-7-12a7 7 0 0 1 14 0c0 5-7 12-7 12z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
+    <span>我在哪</span>
+  </button>
+  <button class="ab-btn" id="abArtList" title="本页所有画作列表">
+    <span class="ab-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="1.3" fill="currentColor" stroke="none"/><circle cx="5" cy="12" r="1.3" fill="currentColor" stroke="none"/><circle cx="5" cy="18" r="1.3" fill="currentColor" stroke="none"/><line x1="10" y1="6" x2="20" y2="6"/><line x1="10" y1="12" x2="20" y2="12"/><line x1="10" y1="18" x2="20" y2="18"/></svg></span>
+    <span>画作列表</span>
+  </button>
+  <button class="ab-btn" id="abClear" title="清空所有楼层的足迹" disabled>
+    <span class="ab-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 5l-1.5-1.5a2 2 0 0 0-2.83 0L4 15.17V20h4.83L20.5 8.33a2 2 0 0 0 0-2.83z"/><line x1="13.5" y1="6.5" x2="17.5" y2="10.5"/><line x1="8" y1="20" x2="22" y2="20"/></svg></span>
+    <span>清足迹</span>
+  </button>
 </nav>
 
 <!-- ===== ART LIST BOTTOM SHEET ===== -->
@@ -1998,7 +2031,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="room-tag">北馆 二楼 · N201</div>
   <div class="art-title">圣母与圣多玛斯·阿奎那、圣保罗三联画 · <em>The Virgin Mary with Saints Thomas Aquinas and Paul</em></div>
   <div class="art-meta">贝尔纳多·达迪（Bernardo Daddi）· 约1335年 · 蛋彩 · 金箔 · 木板</div>
-  <div class="tags"><span class="tag movement">14世纪佛罗伦萨派</span><span class="tag price">🏛 盖蒂馆藏代表性 Trecento 三联画</span></div>
+  <div class="tags"><span class="tag movement">14世纪佛罗伦萨派</span><span class="tag price">盖蒂馆藏代表性 Trecento 三联画</span></div>
   <div class="art-desc">中央面板上的圣母身披深蓝色斗篷（由珍贵的青金石 ultramarine 研磨而成），手部探出大理石栏杆边缘，象征向凡间投下的怜悯。左侧为多明我会修士装束的圣多玛斯·阿奎那（Thomas Aquinas），手持代表自己著作的书卷；右侧为侧身转向圣母的圣保罗（Paul），手持殉道之剑。这是14世纪佛罗伦萨画派典型的小型礼拜三联画——为私人小礼拜堂而作。</div>
   <div class="detail"><h4>深度解读</h4>
   <p>贝尔纳多·达迪（约1280–1348）是乔托（Giotto）在佛罗伦萨工坊最重要的弟子之一。他继承了乔托对人物体积感和空间感的探索，同时融入了当时国际哥特式风潮中的优雅线条与丰富的装饰金底——可以看作乔托写实传统和锡耶纳哥特式装饰风格的折中。</p>
@@ -2011,7 +2044,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="room-tag">北馆 二楼 · N202</div>
   <div class="art-title">东方三博士朝圣 · <em>Adoration of the Magi</em></div>
   <div class="art-meta">安德烈亚·曼泰尼亚（Andrea Mantegna）· 约1495–1505年 · 蛋彩 · 亚麻布</div>
-  <div class="tags"><span class="tag movement">北意大利文艺复兴</span><span class="tag price">💰 1985年以850万美元购入</span></div>
+  <div class="tags"><span class="tag movement">北意大利文艺复兴</span><span class="tag price">1985年以850万美元购入</span></div>
   <div class="art-desc">整件作品绘于亚麻布（而非通常的木板），这是曼泰尼亚晚期实验的特殊技法。画面将三博士从东方长途跋涉、向圣婴献礼的圣经场景，塑造成一部层叠繁复的视觉史诗：浓密人群、异域服饰与精细织物纹样填满画面。盖蒂1985年斥资850万美元购入，是馆内北意大利文艺复兴绘画的旗舰。</div>
   <div class="detail"><h4>深度解读</h4>
   <p>曼泰尼亚（Andrea Mantegna, 1431–1506）是帕多瓦（Padua）画派的奠基人，也是意大利文艺复兴最重要的北方代表之一。他对古罗马雕刻的痴迷深刻影响了其绘画风格——人物仿佛凿于大理石，而非笔绘于画布，这种雕塑感的线条与体积，是北意大利文艺复兴区别于威尼斯或佛罗伦萨的鲜明标志。</p>
@@ -2024,7 +2057,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="room-tag">北馆 二楼 · N203</div>
   <div class="art-title">北欧绘画 · 教皇之梦 · <em>The Dream of Pope Sergius</em></div>
   <div class="art-meta">罗赫尔·范德韦登工作室 · 约1432–1435年 · 油彩 · 木板</div>
-  <div class="tags"><span class="tag movement">弗拉芒原始主义</span><span class="tag price">🏛 15世纪尼德兰油画精品</span></div>
+  <div class="tags"><span class="tag movement">弗拉芒原始主义</span><span class="tag price">15世纪尼德兰油画精品</span></div>
   <div class="art-desc">场景描绘教皇塞尔吉乌斯梦见圣胡贝特斯（St. Hubert）显灵的圣徒传说，但真正的主角是画面本身对"光与空间"的极致刻画。来自范德韦登工作室的这幅作品，展示了15世纪尼德兰画家独有的能力：室内光线如何折射，玻璃窗的半透明感，石材地面的冷光反射——这些在意大利画家还在用蛋彩的年代，尼德兰人已用油彩实现了真实视觉的完整再现。</div>
   <div class="detail"><h4>深度解读</h4>
   <p>罗赫尔·范德韦登（Rogier van der Weyden, 约1400–1464）是15世纪北欧最重要的画家，其工作室位于布鲁塞尔，承接来自整个欧洲贵族和宗教机构的委托。这幅《教皇之梦》是工作室制作，而非范德韦登本人亲笔——这反映了中世纪末期工坊（workshop）的典型运作模式：大师设计图稿，弟子执笔完成，产品以大师之名销售。</p>
@@ -2037,7 +2070,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="room-tag">北馆 二楼 · N204</div>
   <div class="art-title">持斧枪者肖像 · <em>Portrait of a Halberdier</em></div>
   <div class="art-meta">蓬托莫（Jacopo Pontormo）· 约1528–1530年 · 油画</div>
-  <div class="tags"><span class="tag movement">矫饰主义</span><span class="tag price">💰 1989年购入 $3,520万（当时文艺复兴绘画拍卖纪录）</span></div>
+  <div class="tags"><span class="tag movement">矫饰主义</span><span class="tag price">1989年购入 $3,520万（当时文艺复兴绘画拍卖纪录）</span></div>
   <div class="art-desc">画中人是一位年约16岁的佛罗伦萨少年，面容苍白，目光冷峻地正视观者，身着银色盔甲，手持斧枪。蓬托莫是意大利矫饰主义代表人物，那种刻意夸张的优雅与说不清道不明的疏离感，是16世纪宫廷肖像画的最高水准。盖蒂1989年以 3,520万美元 购入，三倍刷新了此前古画拍卖纪录。</div>
   <div class="detail"><h4>深度解读</h4>
   <p>画中人物身份至今争议未决。主流假说有两个：其一认为他是科西莫一世·德·美第奇（Cosimo I de' Medici），未来的佛罗伦萨公爵；其二则认为是名叫弗朗切斯科·瓜尔迪（Francesco Guardi）的年轻侍卫。近年X光与红外线反射检查发现画面曾有重大修改——早期草稿中人物手持的是长矛而非斧枪，帽子形状也与最终版本不同，暗示委托方可能在创作中途更换了人物。</p>
@@ -2050,7 +2083,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="room-tag">北馆 二楼 · N205</div>
   <div class="art-title">维纳斯与丘比特 · <em>Venus and Cupid</em></div>
   <div class="art-meta">洛伦佐·洛托（Lorenzo Lotto）· 约1520–1525年 · 油彩 · 画布</div>
-  <div class="tags"><span class="tag movement">威尼斯文艺复兴</span><span class="tag price">🏛 文艺复兴婚礼画的稀见样本</span></div>
+  <div class="tags"><span class="tag movement">威尼斯文艺复兴</span><span class="tag price">文艺复兴婚礼画的稀见样本</span></div>
   <div class="art-desc">维纳斯半裸斜卧，头顶桃金娘花冠（爱情与婚姻的象征），小丘比特手持贝壳向她喷水——这是一幅悬挂于婚床上方的祝福画，祈愿新婚幸福与多子。洛托以轻快的笔触和金色暖调演绎古典神话，既有威尼斯式的感官愉悦，又带一丝威尼斯人特有的优雅幽默。</div>
   <div class="detail"><h4>深度解读</h4>
   <p>洛伦佐·洛托（Lorenzo Lotto, 约1480–1556/57）是威尼斯画派的"局外人"：他生于威尼斯，却在异乡（贝加莫、安科纳、洛雷托等城市）度过了大半职业生涯。相比提香的宏大与霸气，洛托的风格更加亲密和心理化——他的肖像作品尤以捕捉人物内心状态见长，有时甚至近于现代意义上的心理肖像。</p>
@@ -2063,7 +2096,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="room-tag">北馆 二楼 · N202/N203</div>
   <div class="art-title">现代罗马—凡西诺广场 · <em>Modern Rome</em></div>
   <div class="art-meta">J.M.W. 透纳 · 1839年 · 油画 · 90.2 × 122 厘米</div>
-  <div class="tags"><span class="tag movement">浪漫主义</span><span class="tag price">🏛 透纳晚期代表作</span></div>
+  <div class="tags"><span class="tag movement">浪漫主义</span><span class="tag price">透纳晚期代表作</span></div>
   <div class="art-desc">透纳64岁时的晚期杰作。画面以淡金色烟霭笼罩古罗马论坛遗址，古代废墟与19世纪平凡的市集生活并置于同一画面，时间的流逝被光线溶解为无声的哲思。透纳"溶化一切于光中"的美学在此达到极致——你几乎分不清哪里是建筑，哪里是天空，哪里是幻觉。</div>
   <div class="detail"><h4>深度解读</h4>
   <p>透纳一生三次赴罗马（1819、1828、1840年）。这幅《现代罗马》完成于最后一次罗马之旅的十年后，是基于记忆与想象的再创作，而非现场写生。画面中所谓的"凡西诺广场"（Campo Vaccino）是当时罗马论坛遗址的俗称——字面意思是"牛场"，因这片古迹荒废已久，实际上被用作放牛的牧场。</p>
@@ -2076,7 +2109,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="room-tag">北馆 一楼 · N101 · 低光展厅</div>
   <div class="art-title">彩饰手稿 · <em>Illuminated Manuscripts</em></div>
   <div class="art-meta">8–16世纪 · 羊皮纸蛋彩画</div>
-  <div class="tags"><span class="tag movement">中世纪艺术</span><span class="tag price">🏛 全美最重要的手稿收藏之一</span></div>
+  <div class="tags"><span class="tag movement">中世纪艺术</span><span class="tag price">全美最重要的手稿收藏之一</span></div>
   <div class="art-desc">羊皮纸页面以金箔打底，青金石研磨的蓝、朱砂的红历经600年依旧饱满，是任何现代颜料无法复制的。代表作包括 Lorenzo Monaco《耶稣升天》首字母装饰页（1431年），以及多部15世纪法国贵族委托的时祷书（Book of Hours）——那是中世纪最私密、也最奢华的艺术委托形式。</div>
   <div class="detail"><h4>深度解读</h4>
   <p>盖蒂馆藏彩饰手稿以《路德维希藏本》（Ludwig Collection）为核心，1983年由慕尼黑商人彼得·路德维希出售给盖蒂，共计144件，是20世纪最重要的私人手稿收藏交易之一。这批手稿横跨9至16世纪，地域覆盖法国、意大利、德意志、英格兰与波斯。</p>
@@ -2089,7 +2122,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="room-tag">北馆 一楼 · N102</div>
   <div class="art-title">奥格斯堡珍藏柜 · <em>Kunstschrank</em></div>
   <div class="art-meta">德意志 · 约1630年 · 乌木、象牙、彩色石材镶嵌</div>
-  <div class="tags"><span class="tag movement">文艺复兴 / 矫饰主义</span><span class="tag price">🏛 文艺复兴收藏文化的实物缩影</span></div>
+  <div class="tags"><span class="tag movement">文艺复兴 / 矫饰主义</span><span class="tag price">文艺复兴收藏文化的实物缩影</span></div>
   <div class="art-desc">"珍藏柜"（Kunstschrank）是文艺复兴时代德意志贵族的终极炫富工具——一件融合建筑、绘画、雕塑与器皿的复合艺术品。打开后展露出数十个暗格，每格摆放与主人知识品味相称的珍藏：古代钱币、宝石、小型铜像、精密仪器。盖蒂这件约建于1630年的奥格斯堡范本，以乌木框架、象牙浮雕镶板和大理石细件装饰，是北馆一楼最具冲击力的藏品之一。</div>
   <div class="detail"><h4>深度解读</h4>
   <p>奥格斯堡（Augsburg）是16–17世纪南德意志的艺术和金融中心，银行家富格尔家族（Fugger）的财富使这座城市成为欧洲最重要的奢侈品生产地。Kunstschrank是"珍奇柜"（Kunstkammer / Wunderkammer）文化的巅峰产品——这种收藏哲学认为，将自然界（珊瑚、化石、象牙）、人工制品（精密仪器、微型铜像）和奇珍汇聚一处，即可"占有"整个宇宙的知识秩序。</p>
@@ -2102,7 +2135,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="room-tag">北馆 一楼 · N103</div>
   <div class="art-title">神圣艺术 · 彩色玻璃 · <em>Sacred Art &amp; Stained Glass</em></div>
   <div class="art-meta">1150–1600年 · 利摩日珐琅 · 铅条镶嵌彩色玻璃 · 象牙雕刻</div>
-  <div class="tags"><span class="tag movement">罗马式 / 哥特式</span><span class="tag price">🏛 中世纪教堂原件</span></div>
+  <div class="tags"><span class="tag movement">罗马式 / 哥特式</span><span class="tag price">中世纪教堂原件</span></div>
   <div class="art-desc">这个展室把光线本身变成了展品：多扇13–16世纪彩色玻璃窗嵌入墙面，当日光透过铅条和着色玻璃投入，中世纪大教堂的神圣光学效果在此真实还原。利摩日珐琅（Limoges enamelwork）、象牙雕刻、镀金铜像，以及用于弥撒的圣器——共同构成中世纪欧洲教堂圣器室（treasury）的完整拼图。</div>
   <div class="detail"><h4>深度解读</h4>
   <p>利摩日（Limoges）位于法国中部，12–13世纪以掐丝珐琅（champlevé enamel）闻名全欧。制作工艺是在铜版上凿出凹槽，填入矿物颜料粉末，高温烧制后打磨光滑——色彩鲜艳度千年不褪。盖蒂藏有描绘《基督荣光》（Christ in Majesty）的利摩日圣盒与十字架托座。</p>
@@ -2115,7 +2148,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="room-tag">北馆 一楼 · N104</div>
   <div class="art-title">欧洲玻璃与陶瓷 · <em>Glass &amp; Ceramics</em></div>
   <div class="art-meta">1400–1700年 · 威尼斯穆拉诺丝线玻璃 · 马约利卡陶瓷</div>
-  <div class="tags"><span class="tag movement">文艺复兴工艺</span><span class="tag price">🏺 从伊斯兰到威尼斯的技术传播链</span></div>
+  <div class="tags"><span class="tag movement">文艺复兴工艺</span><span class="tag price">从伊斯兰到威尼斯的技术传播链</span></div>
   <div class="art-desc">这个展室讲的是一段被玻璃和陶瓷记录下来的全球化故事。威尼斯工匠向中东穆斯林学习了玻璃吹制和金属着色技术，意大利陶工从伊斯兰釉陶借鉴了锡釉白底彩绘（马约利卡），最终影响了欧洲王室的餐桌器皿文化。盖蒂的"丝线玻璃"（filigrana）样品是15–16世纪穆拉诺岛大师的代表作：白色玻璃线条封入透明玻璃中，呈现精细编织效果。</div>
   <div class="detail"><h4>深度解读</h4>
   <p>威尼斯玻璃最重要的技术革新来自伊斯兰玻璃。中世纪伊斯兰工匠已掌握玻璃彩绘、鎏金和色彩混合技术，这些知识通过十字军东征和贸易传入威尼斯。穆拉诺岛（Murano）自1291年起成为威尼斯所有玻璃工坊的法定聚居地，目的是防火——更重要的是防止技术外泄。离岛的玻璃工匠曾被列为"威尼斯国家机密"，私自出走等同叛国罪。</p>
@@ -2128,7 +2161,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="room-tag">南馆 二楼 · 18世纪法国绘画</div>
   <div class="art-title">爱之泉 · <em>The Fountain of Love</em></div>
   <div class="art-meta">弗朗索瓦·布歇 · 约1748年 · 油画</div>
-  <div class="tags"><span class="tag movement">洛可可</span><span class="tag price">🏛 路易十五御用画家</span></div>
+  <div class="tags"><span class="tag movement">洛可可</span><span class="tag price">路易十五御用画家</span></div>
   <div class="art-desc">粉嫩色调与柔软笔触是洛可可绘画的典型特征。布歇是路易十五宠妃蓬帕杜夫人的御用画家，她的品味深刻塑造了整个18世纪法国的视觉语言。</div>
   <div class="detail"><h4>深度解读</h4>
   <p><strong>布歇与洛可可</strong>：弗朗索瓦·布歇（1703–1770）是18世纪法国宫廷最受宠的画家，官方头衔包括"国王首席画家"。他的画作以华丽、感官、乐观著称，粉色与蓝色的搭配几乎成为他的签名色。</p>
@@ -2141,7 +2174,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="room-tag">南馆 二楼 · 18世纪英国绘画</div>
   <div class="art-title">詹姆斯·克里斯蒂肖像 · <em>Portrait of James Christie</em></div>
   <div class="art-meta">托马斯·庚斯博罗 · 1778年 · 油画</div>
-  <div class="tags"><span class="tag movement">浪漫主义前期</span><span class="tag price">🏛 克里斯蒂拍卖行创始人</span></div>
+  <div class="tags"><span class="tag movement">浪漫主义前期</span><span class="tag price">克里斯蒂拍卖行创始人</span></div>
   <div class="art-desc">画中人正是克里斯蒂拍卖行的创始人詹姆斯·克里斯蒂。这幅肖像最终在克里斯蒂拍卖行上拍，由盖蒂购入——命运颇具戏剧性的一个循环。</div>
   <div class="detail"><h4>深度解读</h4>
   <p><strong>一个循环的故事</strong>：詹姆斯·克里斯蒂（1730–1803）于1766年创立克里斯蒂拍卖行，至今仍是全球最著名的艺术品拍卖机构之一。他的肖像由好友庚斯博罗绘制，画中背景隐约可见另一幅画的局部——传说是雷诺兹的作品。这幅肖像最终在克里斯蒂拍卖行上拍售出，由盖蒂购入。</p>
@@ -2154,7 +2187,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="room-tag">南馆 二楼 · 18世纪西班牙绘画</div>
   <div class="art-title">圣地亚哥侯爵夫人肖像 · <em>Marquesa de Santiago</em></div>
   <div class="art-meta">弗朗西斯科·戈雅 · 1804年 · 油画</div>
-  <div class="tags"><span class="tag movement">新古典主义</span><span class="tag price">🏛 西班牙国王御用画家</span></div>
+  <div class="tags"><span class="tag movement">新古典主义</span><span class="tag price">西班牙国王御用画家</span></div>
   <div class="art-desc">侯爵夫人以俯视姿态直视观者，黑色背景衬托出面部微妙的复杂表情。这不是歌功颂德的贵族肖像，而是一次对权力与个性的深刻凝视。</div>
   <div class="detail"><h4>深度解读</h4>
   <p><strong>戈雅的双重视角</strong>：弗朗西斯科·戈雅（1746–1828）是西班牙历史上最重要的画家，也是欧洲从古典主义向浪漫主义过渡的关键人物。作为西班牙国王查理四世的御用画家，他一方面不得不颂扬贵族和皇室，另一方面又以《战争的灾难》版画系列和"黑色绘画"系列表达对人类暴力的深刻反思。</p>
@@ -2166,7 +2199,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="room-tag">南馆 一楼 · S108</div>
   <div class="art-title">摄政王镶板房 · <em>Régence Paneled Room</em></div>
   <div class="art-meta">原 Hôtel de Varengeville · 约 1670–1720 · 巴黎</div>
-  <div class="tags"><span class="tag movement">路易十四 / 摄政王风格</span><span class="tag price">🏛 盖蒂亲自购入的镇馆内饰</span></div>
+  <div class="tags"><span class="tag movement">路易十四 / 摄政王风格</span><span class="tag price">盖蒂亲自购入的镇馆内饰</span></div>
   <div class="art-desc">这是南馆最著名的展室：J·保罗·盖蒂本人于1938年将整套宫廷内饰从法国罗昂家族的巴黎公馆拆卸编号运来。护墙板、壁炉大理石镶嵌、天花板线脚，全是原件。房间呈现路易十四晚期至路易十五初期"摄政王风格"（Régence）的过渡美学——巴洛克的宏伟与洛可可的轻盈在此并存。</div>
   <div class="detail"><h4>深度解读</h4>
   <p>"摄政王风格"（Régence）出现于路易十四去世后（1715）、路易十五亲政前的短暂时期，以奥尔良公爵菲利普二世摄政得名。风格特征：家具腿部从直线改为弯腿（cabriole leg），装饰从沉重的巴洛克卷草纹转向轻盈的贝壳形与花卉纹，色彩从深暗转向明亮。</p>
@@ -2179,7 +2212,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="room-tag">南馆 一楼 · S107</div>
   <div class="art-title">洛可可镶板房 · <em>Ledoux Salon de Compagnie</em></div>
   <div class="art-meta">设计：Claude-Nicolas Ledoux · 约 1730–1755 · 法国</div>
-  <div class="tags"><span class="tag movement">洛可可</span><span class="tag price">🪞 克劳德·尼古拉·勒杜设计</span></div>
+  <div class="tags"><span class="tag movement">洛可可</span><span class="tag price">克劳德·尼古拉·勒杜设计</span></div>
   <div class="art-desc">这间沙龙的护墙板由建筑师克劳德-尼古拉·勒杜（Claude-Nicolas Ledoux, 1736–1806）设计，是他早期洛可可风格的代表作。镶嵌板上的精细雕花——贝壳、涡卷、花束——以浅浮雕方式呈现，整体以乳白色和金色为主，构成典型的路易十五审美：轻盈、不对称、充满生命力的曲线。</div>
   <div class="detail"><h4>深度解读</h4>
   <p>勒杜（Ledoux）在建筑史上以晚期的"理想城市"设计（Chaux皇家盐场）著称，被誉为法国启蒙时代最具想象力的建筑师。但他的早期职业生涯其实充满了为贵族设计精美沙龙的室内工作，这间展室正来自那个时期。</p>
@@ -2191,7 +2224,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="room-tag">南馆 一楼 · S110</div>
   <div class="art-title">塞夫勒皇家瓷器 · <em>Sèvres Porcelain</em></div>
   <div class="art-meta">Charles-Nicolas Dodin 等 · 1745–1760 · 法国王室御窑</div>
-  <div class="tags"><span class="tag movement">洛可可装饰艺术</span><span class="tag price">🏛 法国以外最重要收藏之一</span></div>
+  <div class="tags"><span class="tag movement">洛可可装饰艺术</span><span class="tag price">法国以外最重要收藏之一</span></div>
   <div class="art-desc">塞夫勒是路易十五设立的御用窑口，其"国王蓝"（bleu royal）与"蔷薇粉"（rose Pompadour）是18世纪陶瓷技术与审美的双重顶峰。盖蒂的核心藏品是一对"花船形"有盖香薰瓶，上绘宫廷人物场景。这种软质瓷（pâte tendre）比迈森硬质瓷更柔和，釉面有独特的蜡质光泽。</div>
   <div class="detail"><h4>深度解读</h4>
   <p>主要绘瓷师 Charles-Nicolas Dodin（1734–1803）在塞夫勒工作长达44年，专门绘制人物场景（fêtes galantes，牧歌式宫廷场景）。他的瓷绘借鉴了华托、布歇等洛可可画家的构图，将油画的细密技法缩放至方寸之间。</p>
@@ -2203,7 +2236,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="room-tag">南馆 一楼 · S102 / S111</div>
   <div class="art-title">布歇皇家挂毯 · <em>The Story of Psyche</em></div>
   <div class="art-meta">原稿：弗朗索瓦·布歇 · 约 1737–1745 · 博韦皇家工厂织造</div>
-  <div class="tags"><span class="tag movement">洛可可</span><span class="tag price">🧵 博韦皇家工厂顶级精品</span></div>
+  <div class="tags"><span class="tag movement">洛可可</span><span class="tag price">博韦皇家工厂顶级精品</span></div>
   <div class="art-desc">这套挂毯描绘古希腊神话《丘比特与普赛克》系列，原作由布歇绘制，由博韦皇家工厂（Manufacture royale de Beauvais）织造。挂毯不仅是装饰品——18世纪法国宫廷视之为最昂贵的艺术形式，价格往往超过油画。一面墙的挂毯耗时一年制成，金银线穿插其中，光线下熠熠生辉。</div>
   <div class="detail"><h4>深度解读</h4>
   <p>博韦皇家工厂创立于1664年，是法国三大皇家挂毯工厂之一。"皇家"意味着它接受王室和最顶级贵族的委托，制作工艺受国家保密保护。</p>
@@ -2215,7 +2248,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="room-tag">南馆 一楼 · S116</div>
   <div class="art-title">新古典主义镶板房 · <em>Neoclassical Boudoir</em></div>
   <div class="art-meta">路易十六风格 · 1765–1795 · 法国</div>
-  <div class="tags"><span class="tag movement">新古典主义</span><span class="tag price">🏛 旧制度最后辉煌</span></div>
+  <div class="tags"><span class="tag movement">新古典主义</span><span class="tag price">旧制度最后辉煌</span></div>
   <div class="art-desc">这间小型起居室（boudoir）代表了18世纪末法国从洛可可向新古典主义的转向：装饰更克制、对称、回归古希腊罗马的纯净线条。1789年法国大革命爆发，宫廷委托骤停，这套展室保存了革命前夕最后几年的宫廷装饰原件。</div>
   <div class="detail"><h4>深度解读</h4>
   <p>"路易十六风格"出现于1760年代——比路易十六本人继位（1774年）还早，源自考古发现（庞贝古城、赫库兰尼姆古城）激发的"重返古典"风潮。装饰元素从洛可可的不对称曲线，转回对称的直线、希腊柱式、罗马卷草纹。</p>
@@ -2227,7 +2260,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="room-tag">南馆 一楼 · S114</div>
   <div class="art-title">雷卡米埃肖像胸像 · <em>Bust of Juliette Récamier</em></div>
   <div class="art-meta">约瑟夫·希纳尔（Joseph Chinard）· 约 1801–1802 · 赤陶</div>
-  <div class="tags"><span class="tag movement">新古典主义雕塑</span><span class="tag price">🗿 法国大革命后的名媛肖像</span></div>
+  <div class="tags"><span class="tag movement">新古典主义雕塑</span><span class="tag price">法国大革命后的名媛肖像</span></div>
   <div class="art-desc">茱莉叶·雷卡米埃是19世纪初巴黎沙龙文化的核心人物，她的肖像被多位艺术家描绘。希纳尔的这件赤陶胸像捕捉了她25岁时的优雅——发髻高挽、目光斜垂，是新古典主义雕塑的典范。</div>
   <div class="detail"><h4>深度解读</h4>
   <p>茱莉叶·雷卡米埃在同时代人的回忆录中无处不在——她是夏多布里昂的挚友和情人，是雅克-路易·大卫《雷卡米埃夫人》（1800）名画的主角，也是19世纪上半叶欧洲最受仰慕的女性之一。希纳尔的这座赤陶胸像制作于大卫为她作画后约一两年。</p>
@@ -2241,7 +2274,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="room-tag">北馆 二楼 · N201</div>
   <div class="art-title">圣路加 · <em>St. Luke</em></div>
   <div class="art-meta">西蒙·马蒂尼（Simone Martini）· 约1330年 · 蛋彩 · 金箔 · 木板</div>
-  <div class="tags"><span class="tag movement">锡耶纳哥特式</span><span class="tag price">✒️ 圣路加是画家行会的主保圣人</span></div>
+  <div class="tags"><span class="tag movement">锡耶纳哥特式</span><span class="tag price">圣路加是画家行会的主保圣人</span></div>
   <div class="art-desc">圣路加手执笔墨、低首凝视羊皮纸，周身环绕金色锦纹底板与哥特式建筑小龛——这是14世纪锡耶纳画派的典型语汇：用黄金构筑神圣，用优雅线条描绘人性。这件作品来自一组原本属于祭坛画的小尺寸圣徒像。</div>
   <div class="detail"><h4>深度解读</h4>
   <p>圣路加（St. Luke）被传统认为是新约《路加福音》的作者，相传他也曾为圣母玛利亚绘制肖像，因此被尊为画家行会的主保圣人。文艺复兴及之前的画家们常以他为题材，既是宗教献礼，也是行业自勉。</p>
@@ -2253,7 +2286,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="room-tag">北馆 二楼 · N202</div>
   <div class="art-title">潟湖狩猎 · <em>Hunting on the Lagoon</em></div>
   <div class="art-meta">维托雷·卡尔帕乔（Vittore Carpaccio）· 约1490–1495 · 油彩 · 木板</div>
-  <div class="tags"><span class="tag movement">威尼斯文艺复兴</span><span class="tag price">🦆 与威尼斯科雷尔博物馆藏《两位威尼斯贵妇》原属同一画</span></div>
+  <div class="tags"><span class="tag movement">威尼斯文艺复兴</span><span class="tag price">与威尼斯科雷尔博物馆藏《两位威尼斯贵妇》原属同一画</span></div>
   <div class="art-desc">渔民在潟湖里用弓弩猎水鸟——这是15世纪末威尼斯日常的一帧静默切片。但这幅画真正出名的，是它的下半身：科雷尔博物馆有一幅《两位威尼斯贵妇》（曾被罗斯金称为"世界上最美的画"），多年后学者才发现两者原本是同一木板的上下两段。</div>
   <div class="detail"><h4>深度解读</h4>
   <p>卡尔帕乔是15世纪威尼斯画派最重要的叙事画家之一，与贝里尼（Bellini）兄弟同时代。他擅长把宗教题材包装在威尼斯日常生活的场景里——背景里的运河、贡多拉、晾衣绳、烟囱，都比主角更生动。</p>
@@ -2265,7 +2298,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="room-tag">北馆 二楼 · N203</div>
   <div class="art-title">圣家族 · <em>The Holy Family</em></div>
   <div class="art-meta">扬·戈塞特（Jan Gossaert / Mabuse）· 约1507–1508 · 油彩 · 木板</div>
-  <div class="tags"><span class="tag movement">尼德兰文艺复兴</span><span class="tag price">🇮🇹 北方画家最早一批受意大利古典影响的</span></div>
+  <div class="tags"><span class="tag movement">尼德兰文艺复兴</span><span class="tag price">北方画家最早一批受意大利古典影响的</span></div>
   <div class="art-desc">戈塞特用尼德兰画派典型的细腻笔触描绘圣母圣子与约瑟夫，但人物的造型——尤其圣母衣袍的褶皱、圣子的人体比例——已能看见他刚从意大利学到的古典样式。</div>
   <div class="detail"><h4>深度解读</h4>
   <p>扬·戈塞特（约1478–1532）通常被认为是把意大利文艺复兴风格引入北方的关键人物。1508–1509年他随勃艮第大公菲利普赴罗马，亲眼看到古代雕塑残件与拉斐尔、米开朗琪罗等人的新作品，回到尼德兰后，他的画里开始出现明显的肌肉、阴影、人体姿态的对比——这在传统尼德兰画派里非常少见。</p>
@@ -2277,7 +2310,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="room-tag">北馆 二楼 · N204</div>
   <div class="art-title">圣母子与两位捐赠人 · <em>Madonna and Child with Two Donors</em></div>
   <div class="art-meta">洛伦佐·洛托（Lorenzo Lotto）· 约1525–1530 · 油彩 · 画布</div>
-  <div class="tags"><span class="tag movement">威尼斯文艺复兴</span><span class="tag price">🙏 委托画 · 把出资人画进画里</span></div>
+  <div class="tags"><span class="tag movement">威尼斯文艺复兴</span><span class="tag price">委托画 · 把出资人画进画里</span></div>
   <div class="art-desc">圣母怀抱圣婴，两位捐赠者（出资委托此画的世俗夫妻）跪在两侧，与圣母同框接受祝福——这是文艺复兴典型的"出资人肖像"（donor portrait）传统。洛托是与提香（Titian）同时代的威尼斯画家，但风格更内省、心理更细腻。</div>
   <div class="detail"><h4>深度解读</h4>
   <p>洛伦佐·洛托（1480–1556/57）一生颠沛流离，没有像提香那样定居威尼斯获得稳定的宫廷订单，反而长年在威尼托（Veneto）、马尔凯（Marche）小城工作，给地方贵族和教会画委托画。也因此他的人物更朴实、有人间烟火气，少了威尼斯画派常见的官方铺张。</p>
@@ -2289,7 +2322,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="room-tag">北馆 二楼 · N205</div>
   <div class="art-title">阿尔丰索·达瓦洛斯肖像 · <em>Portrait of Alfonso d'Avalos, Marquis of Vasto, in Armor with a Page</em></div>
   <div class="art-meta">提香（Titian / Tiziano Vecellio）· 约1533 · 油彩 · 画布</div>
-  <div class="tags"><span class="tag movement">威尼斯盛期文艺复兴</span><span class="tag price">⚔️ 提香最早的"全身武装贵族像"之一</span></div>
+  <div class="tags"><span class="tag movement">威尼斯盛期文艺复兴</span><span class="tag price">提香最早的"全身武装贵族像"之一</span></div>
   <div class="art-desc">提香为西班牙国王查理五世的将军阿尔丰索·达瓦洛斯（瓦斯托侯爵）所作的全身武装肖像，是欧洲后来三百年所有"将军 + 副官 + 全甲"肖像的范式之祖。侯爵手按军杖，身披全套米兰式盔甲，身侧站着一位手持头盔的少年侍从——画里每一个元素都在宣告权力的合法性。</div>
   <div class="detail"><h4>深度解读</h4>
   <p>提香（约1488/90–1576）是威尼斯画派的中流砥柱，也是欧洲第一位真正国际化的肖像画家——他的客户名单从威尼斯总督一路到神圣罗马帝国皇帝。这件画绘于他职业生涯的中期，刚开始接受哈布斯堡王朝大量的肖像委托。</p>
@@ -2325,10 +2358,13 @@ function openCard(cardId) {
   if (!card) return;
   const inner = document.getElementById('modal-inner');
   inner.innerHTML = card.outerHTML;
-  // Insert the read-aloud pill button right after the title so it's visible
-  // in the content flow (not floating on top of the painting image).
+  // Place the read-aloud pill AFTER the meta + tags block (i.e. right before the
+  // description text). Previously it was wedged between title and meta, which broke
+  // the natural "who/what/when" cluster.
+  const tagsEl = inner.querySelector('.tags');
   const titleEl = inner.querySelector('.art-title');
-  if (titleEl && !inner.querySelector('.art-read-btn')) {
+  const anchor = tagsEl || titleEl;
+  if (anchor && !inner.querySelector('.art-read-btn')) {
     const btn = document.createElement('button');
     btn.className = 'art-read-btn';
     btn.setAttribute('type', 'button');
@@ -2339,7 +2375,7 @@ function openCard(cardId) {
         '<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>' +
       '</svg>' +
       '<span>朗读全文</span>';
-    titleEl.insertAdjacentElement('afterend', btn);
+    anchor.insertAdjacentElement('afterend', btn);
   }
   document.getElementById('modal').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -3487,6 +3523,40 @@ function readAloud() {
       sections.forEach(function(s) { io.observe(s); });
     }
   }
+})();
+</script>
+
+<!-- ===== DEV: ?dev=mobile[=W] preview mode — forces mobile @media rules on at any viewport width
+     so the page can be screenshotted / inspected as if on a 390-wide phone. Harmless when absent. ===== -->
+<script>
+(function(){
+  var search = decodeURIComponent(location.search);
+  var m = search.match(/[?&]dev=mobile(?:[=:](\d+))?/);
+  if (!m) return;
+  var W = parseInt(m[1] || '390', 10);
+  // 1. Force every (max-width: 640 | 768) @media block to apply unconditionally.
+  for (var i = 0; i < document.styleSheets.length; i++) {
+    try {
+      var sheet = document.styleSheets[i];
+      var rules = sheet.cssRules || [];
+      for (var j = 0; j < rules.length; j++) {
+        var r = rules[j];
+        if (r instanceof CSSMediaRule && /max-width:\s*(640|768)/.test(r.conditionText)) {
+          r.media.mediaText = 'all';
+        }
+      }
+    } catch(e){}
+  }
+  // 2. Constrain body + fixed nav bars to W px, centered.
+  var s = document.createElement('style');
+  s.textContent = [
+    'html, body { max-width: ' + W + 'px !important; margin: 0 auto !important; overflow-x: hidden !important; }',
+    'body { outline: 1px solid #d8cdb4; outline-offset: -1px; }',
+    '.sticky-top, .action-bar { left: calc(50% - ' + (W/2) + 'px) !important; right: auto !important; width: ' + W + 'px !important; max-width: ' + W + 'px !important; }',
+    '.room-toast { max-width: ' + (W - 24) + 'px !important; }'
+  ].join('\n');
+  document.head.appendChild(s);
+  document.documentElement.dataset.devMobile = String(W);
 })();
 </script>
 
