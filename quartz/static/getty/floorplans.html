@@ -1,4 +1,55 @@
 <!DOCTYPE html>
+<!--
+================================================================================
+ARTWORK MAPPING TABLE — floorplans.html ↔ center-guide.html
+================================================================================
+This file (floorplans = "走·地图" 实景导航) shares modal card IDs with
+center-guide.html ("读·指南" 完整解读) for MOST artworks but not all. Long-form
+deep reads live ONLY in center-guide; this file's modals carry short blurbs
+and deep-link via "阅读完整解读 →" to center-guide.html#<cg-id>.
+
+✅ ID 直接对齐（24 件） — fp 和 cg 的 card-XX 是同一件作品：
+  fp-01 → cg-01  鸢尾花 (Van Gogh, W204)
+  fp-02 → cg-02  鲁昂大教堂·晨光 (Monet, W204)
+  fp-03 → cg-03  散步 (Renoir, W204)
+  fp-04 → cg-04  静物与苹果 (Cézanne, W204)
+  fp-05 → cg-05  让娜（春） (Manet, W205)
+  fp-06 → cg-06  基督进入布鲁塞尔 (Ensor, W101)
+  fp-16 → cg-16  东方三博士朝圣 (Mantegna, N202)
+  fp-17 → cg-17  教皇之梦 / 北欧绘画 (Rogier van der Weyden, N203)
+  fp-18 → cg-18  持斧枪者肖像 (Pontormo, N204)
+  fp-19 → cg-19  维纳斯与丘比特 (Lorenzo Lotto, N205)
+  fp-20 → cg-20  现代罗马—凡西诺广场 (Turner)   ← cg-only previously, fp pin pending
+  fp-21 → cg-21  彩饰手稿 (N101)
+  fp-22 → cg-22  奥格斯堡珍藏柜 (N102)
+  fp-23 → cg-23  神圣艺术 / 中世纪彩色玻璃 (N103)
+  fp-24 → cg-24  欧洲玻璃与陶瓷 (N104)
+  fp-25 → cg-25  爱之泉 (Boucher, S202)
+  fp-26 → cg-26  詹姆斯·克里斯蒂肖像 (Gainsborough, S204)
+  fp-27 → cg-27  圣地亚哥侯爵夫人肖像 (Goya, S205)
+  fp-28 → cg-28  摄政王镶板房 (Boulle, S108)
+  fp-29 → cg-29  洛可可镶板房 (Ledoux, S107)
+  fp-30 → cg-30  塞夫勒皇家瓷器 (Sèvres, S110)
+  fp-31 → cg-31  布歇皇家挂毯 (S102)
+  fp-32 → cg-32  新古典主义镶板房 (S116)
+  fp-33 → cg-33  雷卡米埃肖像胸像 (Chinard, S114)
+
+⚠️ ID 错位但同一件 — special-case in the deeplink mapping JS:
+  fp-34 → cg-15  圣路加 (Simone Martini, N201)
+
+❌ floorplans-only（cg 里没有这件 — fp modal 保留全文，不做深链）:
+  fp-15  圣母与圣徒三联画 (Bernardo Daddi, N201)
+  fp-35  潟湖狩猎 (Carpaccio, N202)
+  fp-36  圣家族 (Gossaert, N203)
+  fp-37  圣母子与两位捐赠人 (Lorenzo Lotto, N204)
+  fp-38  阿尔丰索·达瓦洛斯肖像 (Titian, N205)
+
+ℹ️ center-guide-only — 已在 cg 里有解读但 fp 还没挂 pin（后续可补）:
+  cg-07 新古典主义雕塑 · cg-08 烦躁的人 · cg-09 大青铜花瓶 · cg-10 摄影收藏
+  cg-11 大笑的伦勃朗 (东馆，今年关闭) · cg-12 劫夺欧罗巴 · cg-13 达娜厄
+  cg-14 帕拉维奇尼肖像 · cg-34 中央花园 · cg-35 Stark 雕塑园
+================================================================================
+-->
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -844,11 +895,46 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 .sticky-top { display: none; }
 .action-bar { display: none; }
 
+/* ===== MODE TOGGLE — shared with center-guide.html. Two pills at top of
+   the screen: 读·指南 ↔ 走·地图. Always reachable, 48px tall, .sticky-top
+   sits at top:48 to stack cleanly. ===== */
+.mode-toggle {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 110;
+  display: flex; gap: 6px; padding: 6px 10px;
+  padding-top: calc(6px + env(safe-area-inset-top));   /* mode-toggle absorbs the notch */
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+  min-height: 48px;
+  box-sizing: border-box;
+  align-items: stretch;
+}
+.mt-pill {
+  flex: 1; min-height: 40px;
+  padding: 6px 10px;
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem;
+  text-decoration: none;
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  background: rgba(184,146,58,0.08);
+  border: 1.5px solid transparent;
+  border-radius: 9px;
+  -webkit-tap-highlight-color: transparent;
+}
+.mt-pill .mt-icon { font-size: 1rem; line-height: 1; }
+.mt-pill:hover { color: var(--gold); background: rgba(184,146,58,0.15); }
+.mt-pill.active {
+  background: var(--gold); color: #fff; border-color: var(--gold);
+  box-shadow: 0 2px 6px rgba(184,146,58,0.35);
+}
+
 .sticky-top {
   position: fixed;
-  top: 0; left: 0; right: 0;
+  top: calc(48px + env(safe-area-inset-top));  /* sits below the mode-toggle, which absorbs the notch */
+  left: 0; right: 0;
   min-height: 60px;
-  padding-top: env(safe-area-inset-top);   /* clears iPhone notch */
   background: var(--bg);
   border-bottom: 1px solid var(--line);   /* solid — dashed felt unfinished */
   align-items: center;
@@ -1112,7 +1198,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 
 /* Mobile activation: show sticky bars, hide originals */
 @media (max-width: 768px) {
-  body { padding-top: calc(60px + env(safe-area-inset-top)); padding-bottom: 88px; }
+  body { padding-top: calc(108px + env(safe-area-inset-top)); padding-bottom: 88px; }   /* 48 mode-toggle + 60 sticky-top */
   .sticky-top { display: flex; }
   .action-bar { display: flex; }
   .page-header .back-link,
@@ -1124,9 +1210,14 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 </head>
 <body>
 
+<!-- ===== MODE TOGGLE — sticky two-pill switch (mirror of center-guide.html). ===== -->
+<nav class="mode-toggle" aria-label="模式切换">
+  <a class="mt-pill"        href="center-guide.html"><span class="mt-icon">📖</span>读 · 指南</a>
+  <a class="mt-pill active" href="floorplans.html" aria-current="page"><span class="mt-icon">📍</span>走 · 地图</a>
+</nav>
+
 <!-- ===== STICKY TOP (mobile nav) — floor switcher always reachable ===== -->
 <nav class="sticky-top" aria-label="楼层切换">
-  <a class="st-back" href="center-guide.html">← 指南</a>
   <a class="st-chip north active" href="#north-2f" data-floor="north-2f"><span class="stc-pav">北馆</span><span class="stc-lvl">2F</span></a>
   <a class="st-chip north"        href="#north-1f" data-floor="north-1f"><span class="stc-pav">北馆</span><span class="stc-lvl">1F</span></a>
   <a class="st-chip south"        href="#south-2f" data-floor="south-2f"><span class="stc-pav">南馆</span><span class="stc-lvl">2F</span></a>
