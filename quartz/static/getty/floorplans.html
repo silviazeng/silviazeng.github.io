@@ -60,29 +60,36 @@ and deep-link via "阅读完整解读 →" to center-guide.html#<cg-id>.
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,700;1,400;1,500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --ink: #2a2218;
-  --ink2: #4a3d2e;
-  --muted: #6f5a3c;  /* darkened from #8a7560 for outdoor / older-eye legibility */
-  --bg: #f9f5ea;
-  --bg2: #f1ead8;
-  --line: #d8cdb4;
-  --north: #2a5c30;
-  --west:  #1a4f8c;
-  --east:  #7a4010;
-  /* Legend categories (matches the on-site brochure):
-     paintings = light blue/lavender · sculpture & decorative arts = medium purple ·
-     changing exhibitions = orange · special exhibitions = red. */
-  --room-paintings:    #d7e0ec;
-  --room-decarts:      #c8c4d8;
-  --room-changing:     #f0d2a8;
-  --room-special:      #d86b48;
-  --north-lt: #e3ebdc;
-  --west-lt:  #deeaf8;
-  --east-lt:  #f8ead8;
-  --south: #7a1e14;
-  --south-lt: #f1d8d3;
-  --gold: #b8923a;
-  --gold-lt: #f5ecd2;
+  /* === SHARED PALETTE — kept identical between center-guide.html and
+     floorplans.html so the two pages feel like one product. === */
+  /* Surfaces */
+  --bg:        #f9f5ea;   /* warm cream */
+  --bg2:       #f1ead8;
+  --line:      #d8cdb4;
+  /* Text */
+  --ink:       #2a2218;
+  --ink2:      #4a3d2e;
+  --muted:     #6f5a3c;   /* darkened for outdoor / older-eye legibility */
+  /* Brand */
+  --gold:      #b8923a;
+  --gold-lt:   #f5ecd2;
+  /* Pavilion accents */
+  --west:      #1a4f8c;
+  --west-lt:   #deeaf8;
+  --east:      #7a4010;
+  --east-lt:   #f8ead8;
+  --north:     #2a5c30;
+  --north-lt:  #e3ebdc;
+  --south:     #7a1e14;
+  --south-lt:  #f1d8d3;
+  --outdoor:   #1e4a30;
+  --outdoor-lt:#d4eedd;
+  /* Room-type legend (used by floorplans rects; also defined here so both
+     pages share the same source of truth). */
+  --room-paintings: #d7e0ec;
+  --room-decarts:   #c8c4d8;
+  --room-changing:  #f0d2a8;
+  --room-special:   #d86b48;
 }
 html { font-size: 24px; }  /* default large for accessibility (was 20px) */
 * { box-sizing: border-box; }
