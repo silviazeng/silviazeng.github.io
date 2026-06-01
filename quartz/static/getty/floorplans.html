@@ -306,31 +306,38 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 }
 
 .loc-widget {
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  margin-top: 1rem; padding: 0.35rem 0.65rem;
-  background: var(--bg);
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  margin-top: 0.55rem; padding: 0.18rem 0.5rem;
+  background: rgba(0,0,0,0.03);
   border: 1px solid var(--line);
-  border-radius: 4px;
+  border-radius: 999px;
   font-size: 0.7rem;
   color: var(--ink2);
   font-family: 'Noto Sans SC', sans-serif;
+  max-width: 100%;
 }
-.loc-widget .loc-pin { display: inline-flex; align-items: center; color: var(--gold); }
-.loc-widget .loc-pin svg { width: 1.05em; height: 1.05em; display: block; }
-.loc-widget .loc-text { min-width: 130px; }
-.loc-widget .loc-toggle { display: flex; gap: 0.2rem; margin-left: 0.3rem; }
+.loc-widget .loc-pin { display: inline-flex; align-items: center; color: var(--gold); flex-shrink: 0; }
+.loc-widget .loc-pin svg { width: 0.95em; height: 0.95em; display: block; }
+.loc-widget .loc-text {
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.loc-widget .loc-toggle { display: flex; gap: 0.12rem; margin-left: 0.18rem; flex-shrink: 0; }
 .loc-btn {
   background: transparent;
   border: 1px solid var(--line);
-  border-radius: 3px;
-  padding: 0.15rem 0.55rem;
-  font-size: 0.62rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
+  border-radius: 999px;
+  padding: 0.08rem 0.45rem;
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
   color: var(--muted);
   cursor: pointer;
   font-family: inherit;
   transition: background .15s, border-color .15s, color .15s;
+  -webkit-tap-highlight-color: transparent;
 }
 .loc-btn.active { background: var(--north); color: #fff; border-color: var(--north); }
 .loc-btn:hover:not(.active) { border-color: var(--north); color: var(--north); }
@@ -871,7 +878,10 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   .page-title { font-size: 2rem; }
   /* Loc widget: no rigid min-width on the text — lets the row collapse to one line
      when the GPS resolves cleanly, instead of pre-reserving 130px slot for a “检测中…” state. */
-  .loc-widget { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; padding: 0.3rem 0.55rem; margin-top: 0.5rem; }
+  /* Mobile: keep loc-widget on a single line — short status text + compact buttons fit in 390px. */
+  .loc-widget { display: inline-flex; flex-wrap: nowrap; align-items: center; gap: 0.3rem; padding: 0.15rem 0.5rem; margin-top: 0.35rem; font-size: 0.65rem; max-width: calc(100% - 8vw); }
+  .loc-widget .loc-text { max-width: 8.5em; }
+  .loc-btn { padding: 0.06rem 0.4rem; font-size: 0.55rem; }
   /* Let the status text breathe by content first, only truncating when the buttons
      would get pushed off-row. Buttons themselves stay rigid (no shrink, no CJK wrap). */
   .loc-widget .loc-text { min-width: 0; flex: 0 1 auto; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -3034,28 +3044,28 @@ document.addEventListener('keydown', (e) => {
     btns.forEach(function(b) { b.classList.toggle('active', b.dataset.mode === mode); });
     if (mode === 'auto') {
       if (autoResult === 'north') {
-        textEl.textContent = '在盖蒂中心 · 北馆';
+        textEl.textContent = '在北馆';
         highlightPavilion('north');
       } else if (autoResult === 'south') {
-        textEl.textContent = '在盖蒂中心 · 南馆';
+        textEl.textContent = '在南馆';
         highlightPavilion('south');
       } else if (autoResult === 'far') {
-        textEl.textContent = '不在盖蒂中心（距 ' + Math.round(lastDistanceM) + 'm）';
+        textEl.textContent = '距馆 ' + Math.round(lastDistanceM) + 'm';
         highlightPavilion(null);
       } else if (autoResult === 'denied') {
-        textEl.textContent = '定位权限被拒，请用手动';
+        textEl.textContent = 'GPS 拒';
         highlightPavilion(null);
       } else if (autoResult === 'unavailable') {
-        textEl.textContent = '定位不可用';
+        textEl.textContent = 'GPS 不可用';
         highlightPavilion(null);
       } else {
         textEl.textContent = '检测中…';
       }
     } else if (mode === 'north') {
-      textEl.textContent = '手动：北馆';
+      textEl.textContent = '手动 · 北馆';
       highlightPavilion('north');
     } else if (mode === 'south') {
-      textEl.textContent = '手动：南馆';
+      textEl.textContent = '手动 · 南馆';
       highlightPavilion('south');
     }
   }
