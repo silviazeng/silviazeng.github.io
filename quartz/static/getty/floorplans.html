@@ -34,15 +34,13 @@ and deep-link via "阅读完整解读 →" to center-guide.html#<cg-id>.
   fp-32 → cg-32  新古典主义镶板房 (S116)
   fp-33 → cg-33  雷卡米埃肖像胸像 (Chinard, S114)
 
-⚠️ ID 错位但同一件 — special-case in the deeplink mapping JS:
+⚠️ ID 错位但同一件 — fp 卡 id 跟 cg 不同，但是是同一件作品：
   fp-34 → cg-15  圣路加 (Simone Martini, N201)
-
-❌ floorplans-only（cg 里没有这件 — fp modal 保留全文，不做深链）:
-  fp-15  圣母与圣徒三联画 (Bernardo Daddi, N201)
-  fp-35  潟湖狩猎 (Carpaccio, N202)
-  fp-36  圣家族 (Gossaert, N203)
-  fp-37  圣母子与两位捐赠人 (Lorenzo Lotto, N204)
-  fp-38  阿尔丰索·达瓦洛斯肖像 (Titian, N205)
+  fp-15 → cg-36  圣母与圣徒三联画 (Daddi, N201)       — ported to cg
+  fp-35 → cg-37  潟湖狩猎 (Carpaccio, N202)             — ported to cg
+  fp-36 → cg-38  圣家族 (Gossaert, N203)                — ported to cg
+  fp-37 → cg-39  圣母子与两位捐赠人 (Lotto, N204)       — ported to cg
+  fp-38 → cg-40  阿尔丰索·达瓦洛斯肖像 (Titian, N205)   — ported to cg
 
 ℹ️ center-guide-only — 已在 cg 里有解读但 fp 还没挂 pin（后续可补）:
   cg-07 新古典主义雕塑 · cg-08 烦躁的人 · cg-09 大青铜花瓶 · cg-10 摄影收藏
@@ -1023,6 +1021,13 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 .st-chip.south { border-left: 5px solid var(--south); }
 .st-chip.west  { border-left: 5px solid var(--west); }
 .st-chip.east  { border-left: 5px solid var(--east); }
+.st-chip.closed {
+  background: rgba(26,26,26,0.06);
+  color: var(--muted);
+  cursor: not-allowed;
+  opacity: 0.75;
+}
+.st-chip.east.closed { border-left-color: rgba(122,64,16,0.45); }
 .st-chip.active.north {
   background: var(--north-lt);
   border-color: var(--north);
@@ -1256,6 +1261,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <a class="st-chip south"        href="#south-1f" data-floor="south-1f"><span class="stc-pav">南馆</span><span class="stc-lvl">1F</span></a>
   <a class="st-chip west"         href="#west-2f"  data-floor="west-2f"><span class="stc-pav">西馆</span><span class="stc-lvl">2F</span></a>
   <a class="st-chip west"         href="#west-1f"  data-floor="west-1f"><span class="stc-pav">西馆</span><span class="stc-lvl">1F</span></a>
+  <span class="st-chip east closed" aria-disabled="true" title="东馆 2026 年起暂时关闭"><span class="stc-pav">东馆</span><span class="stc-lvl">🔒</span></span>
 </nav>
 
 <header class="page-header">
@@ -2540,10 +2546,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="art-meta">贝尔纳多·达迪（Bernardo Daddi）· 约1335年 · 蛋彩 · 金箔 · 木板</div>
   <div class="tags"><span class="tag movement">14世纪佛罗伦萨派</span><span class="tag price">盖蒂馆藏代表性 Trecento 三联画</span></div>
   <div class="art-desc">中央面板上的圣母身披深蓝色斗篷（由珍贵的青金石 ultramarine 研磨而成），手部探出大理石栏杆边缘，象征向凡间投下的怜悯。左侧为多明我会修士装束的圣多玛斯·阿奎那（Thomas Aquinas），手持代表自己著作的书卷；右侧为侧身转向圣母的圣保罗（Paul），手持殉道之剑。这是14世纪佛罗伦萨画派典型的小型礼拜三联画——为私人小礼拜堂而作。</div>
-  <div class="detail"><h4>深度解读</h4>
-  <p>贝尔纳多·达迪（约1280–1348）是乔托（Giotto）在佛罗伦萨工坊最重要的弟子之一。他继承了乔托对人物体积感和空间感的探索，同时融入了当时国际哥特式风潮中的优雅线条与丰富的装饰金底——可以看作乔托写实传统和锡耶纳哥特式装饰风格的折中。</p>
-  <p>有趣的细节：16世纪时，有人在底部大理石栏杆前的中央加绘了一个躺卧的婴儿基督（油画颜料覆盖于原作之上）。盖蒂博物馆收藏此作之后，文物修复人员通过 X 光与颜料分析判定那个婴儿是后世添加，与达迪原作并不属同一时期，遂将其去除——这也是为什么现在中央圣母怀中没有圣婴的原因。</p>
-  <p>N201 展室是北馆最古老的展厅，集中陈列1300–1400年间的意大利绘画，包括锡耶纳画派与佛罗伦萨画派的对话。这些作品多以蛋彩绘于木板、再覆以真金箔打底——制作工艺与北馆一楼的彩饰手稿一脉相承。</p></div>
+  <a class="read-full-btn" href="center-guide.html#card-36">阅读完整解读<span class="rfb-arrow">→</span></a>
 </div>
 
 <div class="artwork-card" id="card-16">
@@ -2745,9 +2748,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="art-meta">维托雷·卡尔帕乔（Vittore Carpaccio）· 约1490–1495 · 油彩 · 木板</div>
   <div class="tags"><span class="tag movement">威尼斯文艺复兴</span><span class="tag price">与威尼斯科雷尔博物馆藏《两位威尼斯贵妇》原属同一画</span></div>
   <div class="art-desc">渔民在潟湖里用弓弩猎水鸟——这是15世纪末威尼斯日常的一帧静默切片。但这幅画真正出名的，是它的下半身：科雷尔博物馆有一幅《两位威尼斯贵妇》（曾被罗斯金称为"世界上最美的画"），多年后学者才发现两者原本是同一木板的上下两段。</div>
-  <div class="detail"><h4>深度解读</h4>
-  <p>卡尔帕乔是15世纪威尼斯画派最重要的叙事画家之一，与贝里尼（Bellini）兄弟同时代。他擅长把宗教题材包装在威尼斯日常生活的场景里——背景里的运河、贡多拉、晾衣绳、烟囱，都比主角更生动。</p>
-  <p>《潟湖狩猎》的下半部曾长期独立存在，直到1963年学者将它与威尼斯的《两位威尼斯贵妇》并置——画里贵妇身后阳台栏杆上有一支百合的茎，茎的另一端正好出现在 Getty 这件作品的下边缘。两幅画从此被视为原本一体的木板（可能是一扇橱柜门）。一件双面画：背面（在 Getty 这块上）画的是模拟书信架（trompe-l'œil letter rack），早期错视画的代表作。</p></div>
+  <a class="read-full-btn" href="center-guide.html#card-37">阅读完整解读<span class="rfb-arrow">→</span></a>
 </div>
 
 <div class="artwork-card" id="card-36">
@@ -2757,9 +2758,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="art-meta">扬·戈塞特（Jan Gossaert / Mabuse）· 约1507–1508 · 油彩 · 木板</div>
   <div class="tags"><span class="tag movement">尼德兰文艺复兴</span><span class="tag price">北方画家最早一批受意大利古典影响的</span></div>
   <div class="art-desc">戈塞特用尼德兰画派典型的细腻笔触描绘圣母圣子与约瑟夫，但人物的造型——尤其圣母衣袍的褶皱、圣子的人体比例——已能看见他刚从意大利学到的古典样式。</div>
-  <div class="detail"><h4>深度解读</h4>
-  <p>扬·戈塞特（约1478–1532）通常被认为是把意大利文艺复兴风格引入北方的关键人物。1508–1509年他随勃艮第大公菲利普赴罗马，亲眼看到古代雕塑残件与拉斐尔、米开朗琪罗等人的新作品，回到尼德兰后，他的画里开始出现明显的肌肉、阴影、人体姿态的对比——这在传统尼德兰画派里非常少见。</p>
-  <p>这件《圣家族》大致绘于他动身去意大利前后。圣母的脸庞还保留北方画派的清纯，但约瑟夫粗壮的手臂、衣袍厚重的雕塑感，已经在向意大利风格转型。</p></div>
+  <a class="read-full-btn" href="center-guide.html#card-38">阅读完整解读<span class="rfb-arrow">→</span></a>
 </div>
 
 <div class="artwork-card" id="card-37">
@@ -2769,9 +2768,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="art-meta">洛伦佐·洛托（Lorenzo Lotto）· 约1525–1530 · 油彩 · 画布</div>
   <div class="tags"><span class="tag movement">威尼斯文艺复兴</span><span class="tag price">委托画 · 把出资人画进画里</span></div>
   <div class="art-desc">圣母怀抱圣婴，两位捐赠者（出资委托此画的世俗夫妻）跪在两侧，与圣母同框接受祝福——这是文艺复兴典型的"出资人肖像"（donor portrait）传统。洛托是与提香（Titian）同时代的威尼斯画家，但风格更内省、心理更细腻。</div>
-  <div class="detail"><h4>深度解读</h4>
-  <p>洛伦佐·洛托（1480–1556/57）一生颠沛流离，没有像提香那样定居威尼斯获得稳定的宫廷订单，反而长年在威尼托（Veneto）、马尔凯（Marche）小城工作，给地方贵族和教会画委托画。也因此他的人物更朴实、有人间烟火气，少了威尼斯画派常见的官方铺张。</p>
-  <p>这件画的两位捐赠者身份至今未明，但他们与圣母同处一个画面空间——这意味着他们花了大笔金钱让自己被永远"放进神圣场景里"，是文艺复兴宗教绘画里典型的私人订制结构。</p></div>
+  <a class="read-full-btn" href="center-guide.html#card-39">阅读完整解读<span class="rfb-arrow">→</span></a>
 </div>
 
 <div class="artwork-card" id="card-38">
@@ -2781,9 +2778,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="art-meta">提香（Titian / Tiziano Vecellio）· 约1533 · 油彩 · 画布</div>
   <div class="tags"><span class="tag movement">威尼斯盛期文艺复兴</span><span class="tag price">提香最早的"全身武装贵族像"之一</span></div>
   <div class="art-desc">提香为西班牙国王查理五世的将军阿尔丰索·达瓦洛斯（瓦斯托侯爵）所作的全身武装肖像，是欧洲后来三百年所有"将军 + 副官 + 全甲"肖像的范式之祖。侯爵手按军杖，身披全套米兰式盔甲，身侧站着一位手持头盔的少年侍从——画里每一个元素都在宣告权力的合法性。</div>
-  <div class="detail"><h4>深度解读</h4>
-  <p>提香（约1488/90–1576）是威尼斯画派的中流砥柱，也是欧洲第一位真正国际化的肖像画家——他的客户名单从威尼斯总督一路到神圣罗马帝国皇帝。这件画绘于他职业生涯的中期，刚开始接受哈布斯堡王朝大量的肖像委托。</p>
-  <p>阿尔丰索·达瓦洛斯（1502–1546）是查理五世帝国军队最重要的将领之一，参与了1527年的"罗马之劫"（Sack of Rome）。提香给他设计的姿态——一手按军杖、目光斜视画外、由侍从托举头盔——成为之后委拉斯凯兹（Velázquez）画西班牙王室子嗣、范戴克（Van Dyck）画查理一世的视觉模板。</p></div>
+  <a class="read-full-btn" href="center-guide.html#card-40">阅读完整解读<span class="rfb-arrow">→</span></a>
 </div>
 
 </div>
