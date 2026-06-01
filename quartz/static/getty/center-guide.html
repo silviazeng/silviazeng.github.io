@@ -650,13 +650,19 @@ footer strong { color: rgba(240,200,120,.6); }
   flex-shrink: 0;
 }
 .c-floor-title { font-size: .78rem; color: var(--muted); }
-.c-wrap { display: flex; align-items: center; gap: .2rem; }
+.c-wrap { display: block; }
 .c-track {
-  flex: 1; display: flex; gap: .45rem;
+  display: flex; gap: .6rem;
   overflow-x: auto; scroll-behavior: smooth;
   scrollbar-width: none; -ms-overflow-style: none;
-  padding: .1rem .02rem .4rem;
+  padding: .1rem .02rem .5rem;
+  /* Reveal half of the next thumb so the user knows to swipe right;
+     padding-right < thumb-width ensures the edge thumb is cut. */
+  padding-right: 4rem;
+  scroll-padding-right: 4rem;
+  scroll-snap-type: x proximity;
 }
+.c-thumb { scroll-snap-align: start; }
 .c-track::-webkit-scrollbar { display: none; }
 .c-thumb {
   flex-shrink: 0; width: 12.5rem;
@@ -697,16 +703,8 @@ footer strong { color: rgba(240,200,120,.6); }
   margin-top: .1rem; white-space: nowrap;
   overflow: hidden; text-overflow: ellipsis;
 }
-.c-btn {
-  flex-shrink: 0; width: 1.5rem; height: 1.5rem;
-  border-radius: 50%; border: 1px solid var(--line);
-  background: transparent; color: var(--muted);
-  font-size: 1.1rem; line-height: 1; cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  transition: color .15s, border-color .15s;
-  align-self: center;
-}
-.c-btn:hover { color: var(--ink); border-color: var(--ink); }
+/* .c-btn rules removed — carousels are swipe-only now; partial-card edge
+   reveal in .c-track signals there's more to the right. */
 #card-pool { display: none; }
 
 </style>
@@ -798,7 +796,6 @@ footer strong { color: rgba(240,200,120,.6); }
       <span class="c-floor-title">印象派与后印象派绘画</span>
     </div>
     <div class="c-wrap">
-      <button class="c-btn" onclick="cNav('ct1',-1)" aria-label="上一张">&#8249;</button>
       <div class="c-track" id="ct1">
       <div class="c-thumb" role="button" tabindex="0" data-card="card-01">
         <div class="c-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Irises-Vincent_van_Gogh.jpg/960px-Irises-Vincent_van_Gogh.jpg" alt="梵高《鸢尾花》1889年" loading="lazy"></div>
@@ -821,8 +818,7 @@ footer strong { color: rgba(240,200,120,.6); }
         <div class="c-info"><span class="c-num">05</span><div class="c-title-wrap"><span class="c-title">让娜（春）</span><span class="c-tag">印象派先驱</span></div></div>
       </div>
       </div>
-      <button class="c-btn" onclick="cNav('ct1',1)" aria-label="下一张">&#8250;</button>
-    </div>
+      </div>
   </div>
   <div class="c-section">
     <div class="c-head">
@@ -830,7 +826,6 @@ footer strong { color: rgba(240,200,120,.6); }
       <span class="c-floor-title">恩索尔 · 新古典主义雕塑 · 摄影中心</span>
     </div>
     <div class="c-wrap">
-      <button class="c-btn" onclick="cNav('ct2',-1)" aria-label="上一张">&#8249;</button>
       <div class="c-track" id="ct2">
       <div class="c-thumb" role="button" tabindex="0" data-card="card-06">
         <div class="c-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Christ%27s_Entry_Into_Brussels_in_1889.jpg/960px-Christ%27s_Entry_Into_Brussels_in_1889.jpg" alt="恩索尔《基督进入布鲁塞尔》1888年" loading="lazy"></div>
@@ -853,8 +848,7 @@ footer strong { color: rgba(240,200,120,.6); }
         <div class="c-info"><span class="c-num">07</span><div class="c-title-wrap"><span class="c-title">摄影收藏</span><span class="c-tag">摄影艺术</span></div></div>
       </div>
       </div>
-      <button class="c-btn" onclick="cNav('ct2',1)" aria-label="下一张">&#8250;</button>
-    </div>
+      </div>
   </div>
 
 </section>
@@ -876,7 +870,6 @@ footer strong { color: rgba(240,200,120,.6); }
       <span class="c-floor-title">荷兰黄金时代 · 法兰德斯 · 巴洛克</span>
     </div>
     <div class="c-wrap">
-      <button class="c-btn" onclick="cNav('ct3',-1)" aria-label="上一张">&#8249;</button>
       <div class="c-track" id="ct3">
       <div class="c-thumb" role="button" tabindex="0" data-card="card-11">
         <div class="c-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Rembrandt_laughing.jpg/960px-Rembrandt_laughing.jpg" alt="伦勃朗《大笑的伦勃朗》约1628年" loading="lazy"></div>
@@ -895,8 +888,7 @@ footer strong { color: rgba(240,200,120,.6); }
         <div class="c-info"><span class="c-num">11</span><div class="c-title-wrap"><span class="c-title">帕拉维奇尼肖像</span><span class="c-tag">巴洛克</span></div></div>
       </div>
       </div>
-      <button class="c-btn" onclick="cNav('ct3',1)" aria-label="下一张">&#8250;</button>
-    </div>
+      </div>
   </div>
 
 </section>
@@ -918,7 +910,6 @@ footer strong { color: rgba(240,200,120,.6); }
       <span class="c-floor-title">意大利 · 北欧绘画 · 文艺复兴全景（N201–N205）</span>
     </div>
     <div class="c-wrap">
-      <button class="c-btn" onclick="cNav('ct4',-1)" aria-label="上一张">&#8249;</button>
       <div class="c-track" id="ct4">
       <div class="c-thumb" role="button" tabindex="0" data-card="card-15">
         <div class="c-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Simone_Martini_-_St._Luke_-_82.PB.72_-_J._Paul_Getty_Museum.jpg/960px-Simone_Martini_-_St._Luke_-_82.PB.72_-_J._Paul_Getty_Museum.jpg" alt="西蒙·马蒂尼《圣路加》约1330年" loading="lazy"></div>
@@ -965,8 +956,7 @@ footer strong { color: rgba(240,200,120,.6); }
         <div class="c-info"><span class="c-num">40</span><div class="c-title-wrap"><span class="c-title">阿尔丰索·达瓦洛斯肖像</span><span class="c-tag">威尼斯盛期文艺复兴</span></div></div>
       </div>
       </div>
-      <button class="c-btn" onclick="cNav('ct4',1)" aria-label="下一张">&#8250;</button>
-    </div>
+      </div>
   </div>
   <div class="c-section">
     <div class="c-head">
@@ -974,7 +964,6 @@ footer strong { color: rgba(240,200,120,.6); }
       <span class="c-floor-title">彩饰手稿 · 中世纪装饰艺术 · 玻璃与陶瓷</span>
     </div>
     <div class="c-wrap">
-      <button class="c-btn" onclick="cNav('ct5',-1)" aria-label="上一张">&#8249;</button>
       <div class="c-track" id="ct5">
       <div class="c-thumb" role="button" tabindex="0" data-card="card-21">
         <div class="c-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Personnages_de_la_sc%C3%A8ne_de_Janvier_%28Fr%C3%A8res_Limbourg_%3F%29_-_Tr%C3%A8s_Riches_Heures_du_duc_de_Berry_%28f.1%29.jpg/960px-Personnages_de_la_sc%C3%A8ne_de_Janvier_%28Fr%C3%A8res_Limbourg_%3F%29_-_Tr%C3%A8s_Riches_Heures_du_duc_de_Berry_%28f.1%29.jpg" alt="贝里公爵时祷书·一月页" loading="lazy"></div>
@@ -993,8 +982,7 @@ footer strong { color: rgba(240,200,120,.6); }
         <div class="c-info"><span class="c-num">21</span><div class="c-title-wrap"><span class="c-title">欧洲玻璃与陶瓷</span><span class="c-tag">文艺复兴工艺</span></div></div>
       </div>
       </div>
-      <button class="c-btn" onclick="cNav('ct5',1)" aria-label="下一张">&#8250;</button>
-    </div>
+      </div>
   </div>
 
 </section>
@@ -1016,7 +1004,6 @@ footer strong { color: rgba(240,200,120,.6); }
       <span class="c-floor-title">18世纪欧洲绘画</span>
     </div>
     <div class="c-wrap">
-      <button class="c-btn" onclick="cNav('ct6',-1)" aria-label="上一张">&#8249;</button>
       <div class="c-track" id="ct6">
       <div class="c-thumb" role="button" tabindex="0" data-card="card-25">
         <div class="c-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Fran%C3%A7ois_Boucher_-_The_Fountain_of_Love_-_71.PA.37_-_J._Paul_Getty_Museum.jpg/960px-Fran%C3%A7ois_Boucher_-_The_Fountain_of_Love_-_71.PA.37_-_J._Paul_Getty_Museum.jpg" alt="布歇《爱之泉》约1748年" loading="lazy"></div>
@@ -1031,8 +1018,7 @@ footer strong { color: rgba(240,200,120,.6); }
         <div class="c-info"><span class="c-num">24</span><div class="c-title-wrap"><span class="c-title">圣地亚哥侯爵夫人肖像</span><span class="c-tag">新古典主义</span></div></div>
       </div>
       </div>
-      <button class="c-btn" onclick="cNav('ct6',1)" aria-label="下一张">&#8250;</button>
-    </div>
+      </div>
   </div>
   <div class="c-section">
     <div class="c-head">
@@ -1040,7 +1026,6 @@ footer strong { color: rgba(240,200,120,.6); }
       <span class="c-floor-title">法国装饰艺术 · 宫廷复原房间</span>
     </div>
     <div class="c-wrap">
-      <button class="c-btn" onclick="cNav('ct7',-1)" aria-label="上一张">&#8249;</button>
       <div class="c-track" id="ct7">
       <div class="c-thumb" role="button" tabindex="0" data-card="card-28">
         <div class="c-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Getty_Museum_Attributed_to_Andr%C3%A9-Charles_Boulle_1642_-_1732.jpg/960px-Getty_Museum_Attributed_to_Andr%C3%A9-Charles_Boulle_1642_-_1732.jpg" alt="Boulle Cabinet" loading="lazy"></div>
@@ -1067,8 +1052,7 @@ footer strong { color: rgba(240,200,120,.6); }
         <div class="c-info"><span class="c-num">30</span><div class="c-title-wrap"><span class="c-title">雷卡米埃肖像胸像</span><span class="c-tag">新古典主义雕塑</span></div></div>
       </div>
       </div>
-      <button class="c-btn" onclick="cNav('ct7',1)" aria-label="下一张">&#8250;</button>
-    </div>
+      </div>
   </div>
 
 
@@ -1098,7 +1082,6 @@ footer strong { color: rgba(240,200,120,.6); }
       <span class="c-floor-title"></span>
     </div>
     <div class="c-wrap">
-      <button class="c-btn" onclick="cNav('ct8',-1)" aria-label="上一张">&#8249;</button>
       <div class="c-track" id="ct8">
       <div class="c-thumb" role="button" tabindex="0" data-card="card-34">
         <div class="c-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Flickr_-_brewbooks_-_The_Central_Garden%2C_Getty_Center_%281%29.jpg/960px-Flickr_-_brewbooks_-_The_Central_Garden%2C_Getty_Center_%281%29.jpg" alt="中央花园" loading="lazy"></div>
@@ -1109,8 +1092,7 @@ footer strong { color: rgba(240,200,120,.6); }
         <div class="c-info"><span class="c-num">35</span><div class="c-title-wrap"><span class="c-title">Fran &amp; Ray Stark 雕塑园</span><span class="c-tag">现当代雕塑</span></div></div>
       </div>
       </div>
-      <button class="c-btn" onclick="cNav('ct8',1)" aria-label="下一张">&#8250;</button>
-    </div>
+      </div>
   </div>
 
 </section>

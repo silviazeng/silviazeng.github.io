@@ -252,57 +252,31 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 .pav-tab.north:hover { border-color: var(--north); background: var(--north-lt); color: var(--north); }
 .pav-tab.south:hover { border-color: var(--south); background: var(--south-lt); color: var(--south); }
 
-/* ===== Location widget (GPS + manual override) ===== */
-/* Room-type legend bar (color key for the floor plans) */
-.legend-bar {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem 1rem;
-  padding: 0.7rem 5vw;
-  background: var(--bg);
-  border-bottom: 1px solid var(--line);
-  font-family: 'Noto Sans SC', sans-serif;
-  font-size: 0.78rem;
-  color: var(--ink);
-}
-.legend-bar .lg-item { display: inline-flex; align-items: center; gap: 0.4rem; white-space: nowrap; }
-.legend-bar em { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--muted); font-size: 0.72rem; margin-left: 0.15rem; }
+/* read-full-btn deleted — the mode-toggle at the top is the single path to
+   center-guide for deep reads, no per-card duplicate CTA needed. */
 
-/* ===== "阅读完整解读" deeplink — sits where the .detail block used to live in
-   floorplan modal cards. Long-form deep reads now live ONLY in center-guide;
-   the floorplan modal carries the short summary + this CTA. ===== */
-.read-full-btn {
-  display: inline-flex; align-items: center; gap: 0.45rem;
-  margin: 1rem 0 0.4rem;
-  padding: 0.75rem 1.15rem;
-  min-height: 44px;
-  background: var(--gold);
-  color: #fff !important;
+/* ===== Compact inline legend per floor-head — replaces the page-top legend
+   bar so the color key sits right next to the plan that uses it. ===== */
+.legend-mini {
+  display: inline-flex; flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.85rem;
+  margin-top: 0.6rem;
   font-family: 'Noto Sans SC', sans-serif;
-  font-size: 0.98rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-decoration: none !important;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(184,146,58,0.35);
-  -webkit-tap-highlight-color: transparent;
+  font-size: 0.68rem;
+  color: var(--ink2);
 }
-.read-full-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(184,146,58,0.55); }
-.read-full-btn .rfb-arrow { font-size: 1.05rem; line-height: 1; }
-.read-full-btn .rfb-sub {
-  display: block; font-size: 0.72rem; font-weight: 500; opacity: 0.85; margin-top: 2px; letter-spacing: 0.02em;
-}
-.legend-bar .lg-swatch {
+.legend-mini .lgm-item { display: inline-flex; align-items: center; gap: 0.32rem; white-space: nowrap; }
+.legend-mini .lgm-swatch {
   display: inline-block;
-  width: 16px; height: 16px;
+  width: 13px; height: 13px;
   border-radius: 3px;
-  border: 1.5px solid #1a1a1a;
+  border: 1.2px solid #1a1a1a;
   flex: 0 0 auto;
 }
 @media (max-width: 640px) {
-  .legend-bar { padding: 0.55rem 4vw; font-size: 0.72rem; gap: 0.4rem 0.8rem; }
-  .legend-bar em { font-size: 0.66rem; }
-  .legend-bar .lg-swatch { width: 14px; height: 14px; }
+  .legend-mini { font-size: 0.62rem; gap: 0.3rem 0.7rem; }
+  .legend-mini .lgm-swatch { width: 11px; height: 11px; }
 }
 
 .loc-widget {
@@ -1297,13 +1271,8 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   </div>
 </header>
 
-<!-- ===== Room-type legend (per on-site brochure) ===== -->
-<div class="legend-bar" aria-label="展厅类别图例">
-  <span class="lg-item"><span class="lg-swatch" style="background: var(--room-paintings);"></span>绘画 <em>Paintings</em></span>
-  <span class="lg-item"><span class="lg-swatch" style="background: var(--room-decarts);"></span>雕塑与装饰艺术 <em>Sculpture &amp; Decorative Arts</em></span>
-  <span class="lg-item"><span class="lg-swatch" style="background: var(--room-changing);"></span>临展 <em>Changing Exhibitions</em></span>
-  <span class="lg-item"><span class="lg-swatch" style="background: var(--room-special);"></span>特展 <em>Special Exhibitions</em></span>
-</div>
+<!-- legend moved from page-top to per-floor inline (.floor-head .legend-mini)
+     so the color key sits next to the floor plan that uses it. -->
 
 <!-- ===== 北 二楼 ===== -->
 <section class="floor-section" id="north-2f">
@@ -1311,6 +1280,11 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
     <span class="floor-label">北馆 二楼 · 2F</span>
     <h2 class="floor-name">文艺复兴绘画全景</h2>
     <p class="floor-desc">从13世纪锡耶纳金底圣像，到尼德兰油画、矫饰主义与威尼斯诸家——一条400年欧洲绘画的纵深线。</p>
+    <div class="legend-mini" aria-label="展厅类别图例">
+      <span class="lgm-item"><span class="lgm-swatch" style="background:var(--room-paintings);"></span>绘画</span>
+      <span class="lgm-item"><span class="lgm-swatch" style="background:var(--room-decarts);"></span>装饰艺术</span>
+      <span class="lgm-item"><span class="lgm-swatch" style="background:var(--room-changing);"></span>临展</span>
+    </div>
   </div>
   <div class="floor-plan">
     <div class="floor-svg-wrap">
@@ -1449,7 +1423,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
         <g pointer-events="none">
           <line x1="435" y1="1030" x2="435" y2="1110" stroke="#1a1a1a" stroke-width="3"/>
           <polygon points="435,1122 425,1102 445,1102" fill="#1a1a1a"/>
-          <text x="435" y="1170" font-family="sans-serif" font-size="32" font-weight="700" fill="#1a1a1a" text-anchor="middle">East Pavilion</text>
+          <text x="435" y="1170" font-family="sans-serif" font-size="32" font-weight="700" fill="#1a1a1a" text-anchor="middle">东馆</text>
         </g>
 
         <!-- ===== ENTRANCE PAVILION arrow + vertical label
@@ -1458,7 +1432,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
         <g pointer-events="none">
           <polygon points="40,495 64,483 64,507" fill="#1a1a1a"/>
           <line x1="64" y1="495" x2="80" y2="495" stroke="#1a1a1a" stroke-width="4" stroke-linecap="butt"/>
-          <text x="50" y="660" font-family="sans-serif" font-size="32" font-weight="700" fill="#1a1a1a" text-anchor="middle" transform="rotate(-90, 50, 660)">Entrance Pavilion</text>
+          <text x="50" y="660" font-family="sans-serif" font-size="32" font-weight="700" fill="#1a1a1a" text-anchor="middle" transform="rotate(-90, 50, 660)">入口馆</text>
         </g>
 
         <!-- ===== Visited-room tints (translucent gold overlay on rooms you've been to) ===== -->
@@ -1566,6 +1540,11 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
     <span class="floor-label">北馆 一楼 · 1F</span>
     <h2 class="floor-name">彩饰手稿 · 中世纪装饰艺术</h2>
     <p class="floor-desc">低光展厅珍藏彩饰手稿、中世纪彩色玻璃、奥格斯堡珍藏柜与威尼斯丝线玻璃。</p>
+    <div class="legend-mini" aria-label="展厅类别图例">
+      <span class="lgm-item"><span class="lgm-swatch" style="background:var(--room-paintings);"></span>绘画</span>
+      <span class="lgm-item"><span class="lgm-swatch" style="background:var(--room-decarts);"></span>装饰艺术</span>
+      <span class="lgm-item"><span class="lgm-swatch" style="background:var(--room-changing);"></span>临展</span>
+    </div>
   </div>
   <div class="floor-plan">
     <div class="floor-svg-wrap">
@@ -1638,7 +1617,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
         <!-- ===== "NORTH ATRIUM" label ===== -->
         <g pointer-events="none">
           <text x="450" y="190" font-family="sans-serif" font-size="30" font-weight="500"
-                fill="#fff" text-anchor="middle" letter-spacing="3" opacity="0.85">NORTH ATRIUM</text>
+                fill="#fff" text-anchor="middle" letter-spacing="3" opacity="0.85">中庭</text>
         </g>
 
         <!-- ===== STAIRS (small, similar size to elevator, in the middle of atrium) ===== -->
@@ -1652,7 +1631,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
         <g pointer-events="none">
           <line x1="420" y1="420" x2="555" y2="420" stroke="#1a1a1a" stroke-width="3"/>
           <polygon points="566,420 548,412 548,428" fill="#1a1a1a"/>
-          <text x="400" y="460" font-family="sans-serif" font-size="26" font-weight="700" fill="#1a1a1a" text-anchor="start">Museum Entrance Hall</text>
+          <text x="400" y="460" font-family="sans-serif" font-size="26" font-weight="700" fill="#1a1a1a" text-anchor="start">入口大厅</text>
         </g>
 
         <!-- ===== ROOM NUMBER LABELS — normalized across all 4 floors so visual px at 390-wide viewport is ~16–17px. -->
@@ -1750,6 +1729,11 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
     <span class="floor-label">南馆 二楼 · 2F</span>
     <h2 class="floor-name">18世纪欧洲绘画</h2>
     <p class="floor-desc">布歇、庚斯博罗、戈雅——18世纪法国洛可可、英国乡绅肖像、西班牙宫廷绘画三种品味的并置。</p>
+    <div class="legend-mini" aria-label="展厅类别图例">
+      <span class="lgm-item"><span class="lgm-swatch" style="background:var(--room-paintings);"></span>绘画</span>
+      <span class="lgm-item"><span class="lgm-swatch" style="background:var(--room-decarts);"></span>装饰艺术</span>
+      <span class="lgm-item"><span class="lgm-swatch" style="background:var(--room-changing);"></span>临展</span>
+    </div>
   </div>
   <div class="floor-plan">
     <div class="floor-svg-wrap">
@@ -1815,14 +1799,14 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
         <!-- ===== "SOUTH ATRIUM" label (center, above stairs) ===== -->
         <g pointer-events="none">
           <text x="420" y="450" font-family="sans-serif" font-size="30" font-weight="500"
-                fill="#fff" text-anchor="middle" letter-spacing="3" opacity="0.85">SOUTH ATRIUM</text>
+                fill="#fff" text-anchor="middle" letter-spacing="3" opacity="0.85">中庭</text>
         </g>
 
         <!-- ===== EXIT ARROW + LABEL (West Pavilion, south through bottom of atrium) ===== -->
         <g pointer-events="none">
           <line x1="420" y1="800" x2="420" y2="850" stroke="#1a1a1a" stroke-width="3"/>
           <polygon points="420,862 410,842 430,842" fill="#1a1a1a"/>
-          <text x="420" y="888" font-family="sans-serif" font-size="32" font-weight="700" fill="#1a1a1a" text-anchor="middle">West Pavilion</text>
+          <text x="420" y="888" font-family="sans-serif" font-size="32" font-weight="700" fill="#1a1a1a" text-anchor="middle">西馆</text>
         </g>
 
         <!-- ===== ROOM NUMBER LABELS — normalized to ~16–17px visual at 390-wide. -->
@@ -1916,6 +1900,11 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
     <span class="floor-label">南馆 一楼 · 1F</span>
     <h2 class="floor-name">法国装饰艺术 · 宫廷复原房间</h2>
     <p class="floor-desc">多个完整复原的17–18世纪欧洲贵族房间——家具、墙板、地板、吊灯全是真品，仿佛凡尔赛时光倒流。</p>
+    <div class="legend-mini" aria-label="展厅类别图例">
+      <span class="lgm-item"><span class="lgm-swatch" style="background:var(--room-paintings);"></span>绘画</span>
+      <span class="lgm-item"><span class="lgm-swatch" style="background:var(--room-decarts);"></span>装饰艺术</span>
+      <span class="lgm-item"><span class="lgm-swatch" style="background:var(--room-changing);"></span>临展</span>
+    </div>
   </div>
   <div class="floor-plan">
     <div class="floor-svg-wrap">
@@ -2057,20 +2046,20 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
         <!-- ===== "SOUTH ATRIUM" label (bottom-center of the open area) ===== -->
         <g pointer-events="none">
           <text x="610" y="555" font-family="sans-serif" font-size="22" font-weight="500"
-                fill="#fff" text-anchor="middle" letter-spacing="3" opacity="0.85">SOUTH ATRIUM</text>
+                fill="#fff" text-anchor="middle" letter-spacing="3" opacity="0.85">中庭</text>
         </g>
         <!-- ===== "SOUTH HALL" label (vertical text along the east column gap) ===== -->
         <g pointer-events="none">
           <text x="910" y="440" font-family="sans-serif" font-size="18" font-weight="500"
                 fill="#1a1a1a" text-anchor="middle" letter-spacing="3" opacity="0.55"
-                transform="rotate(-90, 910, 440)">SOUTH HALL</text>
+                transform="rotate(-90, 910, 440)">南厅</text>
         </g>
 
         <!-- ===== EXIT ARROW (West Pavilion etc., south through bottom) ===== -->
         <g pointer-events="none">
           <line x1="240" y1="800" x2="240" y2="850" stroke="#1a1a1a" stroke-width="3"/>
           <polygon points="240,862 230,842 250,842" fill="#1a1a1a"/>
-          <text x="240" y="888" font-family="sans-serif" font-size="26" font-weight="700" fill="#1a1a1a" text-anchor="middle">West Pavilion</text>
+          <text x="240" y="888" font-family="sans-serif" font-size="26" font-weight="700" fill="#1a1a1a" text-anchor="middle">西馆</text>
         </g>
 
         <!-- ===== ROOM NUMBER LABELS — normalized to ~16–17px visual at 390-wide. -->
@@ -2198,6 +2187,11 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
     <span class="floor-label">西馆 二楼 · 2F</span>
     <h2 class="floor-name">印象派与后印象派</h2>
     <p class="floor-desc">梵高、莫奈、雷诺阿、塞尚、马奈——全馆人气最旺的一层，镇馆之宝《鸢尾花》就在 W204。</p>
+    <div class="legend-mini" aria-label="展厅类别图例">
+      <span class="lgm-item"><span class="lgm-swatch" style="background:var(--room-paintings);"></span>绘画</span>
+      <span class="lgm-item"><span class="lgm-swatch" style="background:var(--room-decarts);"></span>装饰艺术</span>
+      <span class="lgm-item"><span class="lgm-swatch" style="background:var(--room-changing);"></span>临展</span>
+    </div>
   </div>
   <div class="floor-plan">
     <div class="floor-svg-wrap">
@@ -2247,12 +2241,12 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 
         <!-- WEST ATRIUM label -->
         <g pointer-events="none">
-          <text x="420" y="80" font-family="sans-serif" font-size="20" font-weight="500" fill="#1a1a1a" text-anchor="middle" letter-spacing="3" opacity="0.65">WEST PAVILION · 2F</text>
+          <text x="420" y="80" font-family="sans-serif" font-size="20" font-weight="500" fill="#1a1a1a" text-anchor="middle" letter-spacing="3" opacity="0.65">西馆 · 二楼</text>
         </g>
 
         <!-- WEST TERRACE label (outside south wall, south exit zone) -->
         <g pointer-events="none">
-          <text x="420" y="620" font-family="sans-serif" font-size="22" font-weight="600" fill="#1a1a1a" text-anchor="middle" letter-spacing="2">WEST TERRACE</text>
+          <text x="420" y="620" font-family="sans-serif" font-size="22" font-weight="600" fill="#1a1a1a" text-anchor="middle" letter-spacing="2">西露台</text>
         </g>
 
         <!-- ROOM NUMBER LABELS -->
@@ -2336,6 +2330,11 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
     <span class="floor-label">西馆 一楼 · 1F</span>
     <h2 class="floor-name">恩索尔 · 新古典主义雕塑 · 摄影中心</h2>
     <p class="floor-desc">W101 镇室是恩索尔巨幅《基督进入布鲁塞尔》；走廊陈列梅塞施密特人物头像，另设摄影中心轮换展出。</p>
+    <div class="legend-mini" aria-label="展厅类别图例">
+      <span class="lgm-item"><span class="lgm-swatch" style="background:var(--room-paintings);"></span>绘画</span>
+      <span class="lgm-item"><span class="lgm-swatch" style="background:var(--room-decarts);"></span>装饰艺术</span>
+      <span class="lgm-item"><span class="lgm-swatch" style="background:var(--room-changing);"></span>临展</span>
+    </div>
   </div>
   <div class="floor-plan">
     <div class="floor-svg-wrap">
@@ -2390,7 +2389,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 
         <!-- WEST PAVILION 1F label -->
         <g pointer-events="none">
-          <text x="400" y="68" font-family="sans-serif" font-size="20" font-weight="500" fill="#1a1a1a" text-anchor="middle" letter-spacing="3" opacity="0.65">WEST PAVILION · 1F</text>
+          <text x="400" y="68" font-family="sans-serif" font-size="20" font-weight="500" fill="#1a1a1a" text-anchor="middle" letter-spacing="3" opacity="0.65">西馆 · 一楼</text>
         </g>
 
         <!-- ROOM NUMBER LABELS -->
@@ -2516,7 +2515,6 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="art-meta">文森特·梵高（Vincent van Gogh）· 1889年 · 油画 · 74.3 × 94.3 厘米</div>
   <div class="tags"><span class="tag movement">后印象派</span><span class="tag price">⭐ 镇馆之宝 · 1990年盖蒂购入</span></div>
   <div class="art-desc">1889年5月，梵高主动住进法国圣雷米精神病院，就在入院第一周，他走进院内花园，一气呵成地画下了这片鸢尾花。画面以高饱和的蓝紫色占据几乎全部空间，笔触奔放如书写，其中混有一朵孤独的白花。距他去世仅剩一年。</div>
-  <a class="read-full-btn" href="center-guide.html#card-01">阅读完整解读<span class="rfb-arrow">→</span></a>
 </div>
 
 <div class="artwork-card west" id="card-02">
@@ -2526,7 +2524,6 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="art-meta">克劳德·莫奈（Claude Monet）· 1894年 · 油画</div>
   <div class="tags"><span class="tag movement">印象派</span><span class="tag price">🏛 印象派光影系列</span></div>
   <div class="art-desc">同一主题画了三十余幅，此幅捕捉清晨石材表面那种柔和的玫瑰金质感。他曾说："我想捕捉的不是大教堂，而是笼罩在它周围的空气。"</div>
-  <a class="read-full-btn" href="center-guide.html#card-02">阅读完整解读<span class="rfb-arrow">→</span></a>
 </div>
 
 <div class="artwork-card west" id="card-03">
@@ -2536,7 +2533,6 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="art-meta">皮埃尔-奥古斯特·雷诺阿（Pierre-Auguste Renoir）· 1870年 · 油画</div>
   <div class="tags"><span class="tag movement">印象派</span><span class="tag price">🏛 印象派早期杰作</span></div>
   <div class="art-desc">光影透过树叶碎落在情侣身上，是雷诺阿充满生命感的早期杰作。完成时雷诺阿29岁，正处于印象主义风格形成的关键期。</div>
-  <a class="read-full-btn" href="center-guide.html#card-03">阅读完整解读<span class="rfb-arrow">→</span></a>
 </div>
 
 <div class="artwork-card west" id="card-04">
@@ -2546,7 +2542,6 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="art-meta">保罗·塞尚（Paul Cézanne）· 1893–94年 · 油画</div>
   <div class="tags"><span class="tag movement">后印象派</span><span class="tag price">🏛 现代主义起点</span></div>
   <div class="art-desc">几颗苹果毫无装饰地摆在桌上，却是西方艺术史上最具颠覆性的画作之一。塞尚破坏了传统透视法则，是立体主义的精神源头。</div>
-  <a class="read-full-btn" href="center-guide.html#card-04">阅读完整解读<span class="rfb-arrow">→</span></a>
 </div>
 
 <div class="artwork-card west" id="card-05">
@@ -2556,7 +2551,6 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="art-meta">爱德华·马奈（Édouard Manet）· 1881年 · 油画 · 74 × 51.5 厘米</div>
   <div class="tags"><span class="tag movement">印象派先驱</span><span class="tag price">💰 2012年拍卖 $6,510万</span></div>
   <div class="art-desc">马奈原计划以四季为题画一个系列，却只完成了这一幅"春"。画中让娜身着浅绿色春装、撑着白色阳伞，侧身望向画外，表情轻盈而疏离。她不再是神话人物，而是活生生的19世纪巴黎现代女性。</div>
-  <a class="read-full-btn" href="center-guide.html#card-05">阅读完整解读<span class="rfb-arrow">→</span></a>
 </div>
 
 <div class="artwork-card west" id="card-07">
@@ -2566,7 +2560,6 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="art-meta">约瑟夫·诺莱肯斯（Joseph Nollekens）· 1776年 · 大理石 · 高119cm（以朱诺像为核心的一组）</div>
   <div class="tags"><span class="tag movement">新古典主义</span><span class="tag price">🏛 盖蒂最重要的18世纪雕塑群</span></div>
   <div class="art-desc">W101–W102 走廊集中陈列18世纪英法意新古典主义大理石雕塑，以诺莱肯斯《朱诺》《维纳斯》《密涅瓦》三件神像为核心，是对古希腊神像传统的精准致敬。</div>
-  <a class="read-full-btn" href="center-guide.html#card-07">阅读完整解读<span class="rfb-arrow">→</span></a>
 </div>
 
 <div class="artwork-card west" id="card-08">
@@ -2576,7 +2569,6 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="art-meta">弗朗茨·克萨韦尔·梅塞施密特 · 约1771–1783 · 雪花石膏（alabaster）</div>
   <div class="tags"><span class="tag movement">前浪漫主义 · 怪诞</span><span class="tag price">艺术史最神秘的系列雕塑之一</span></div>
   <div class="art-desc">梅塞施密特一生 49 件"人物头像"中最有名的一件——眉头深皱、嘴唇抿紧，将极端压抑的瞬间凝固在雪花石膏里。这批头像后来被超现实主义者奉为"无意识表达"先驱。</div>
-  <a class="read-full-btn" href="center-guide.html#card-08">阅读完整解读<span class="rfb-arrow">→</span></a>
 </div>
 
 <div class="artwork-card west" id="card-09">
@@ -2586,7 +2578,6 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="art-meta">让-德西雷·林格尔·迪利扎克 · 1889年 · 青铜镀铜 · 高274cm · 重493kg</div>
   <div class="tags"><span class="tag movement">象征主义</span><span class="tag price">🏛 西馆体量最震撼的单件藏品</span></div>
   <div class="art-desc">274cm 高、近半吨重的巨型青铜花瓶，1889年巴黎世博会首展。器身满布象征主义浮雕——蛇、蜥蜴、女性裸体与植物藤蔓相互缠绕，诉说生命、死亡与欲望的永恒循环。</div>
-  <a class="read-full-btn" href="center-guide.html#card-09">阅读完整解读<span class="rfb-arrow">→</span></a>
 </div>
 
 <div class="artwork-card west" id="card-10">
@@ -2596,7 +2587,6 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="art-meta">1840s–今 · 银版、湿版、明胶银盐、彩色</div>
   <div class="tags"><span class="tag movement">摄影艺术</span><span class="tag price">🏛 全球最完整摄影史藏品之一</span></div>
   <div class="art-desc">从达盖尔银版（1839+）到当代，近200年摄影史轮换展出。亮点包括 Julia Margaret Cameron 维多利亚时代柔焦人像，每次到访所见均不同。</div>
-  <a class="read-full-btn" href="center-guide.html#card-10">阅读完整解读<span class="rfb-arrow">→</span></a>
 </div>
 
 <div class="artwork-card west" id="card-06">
@@ -2606,7 +2596,6 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="art-meta">詹姆斯·恩索尔（James Ensor）· 1888年 · 油画 · 258.5 × 430.5 厘米</div>
   <div class="tags"><span class="tag movement">象征主义 / 表现主义先驱</span><span class="tag price">🏛 西馆一楼最大画作</span></div>
   <div class="art-desc">画面旗帜上写着"VIVE LA SOCIALE"，基督骑驴进城却湮没在狂欢人群与骷髅面具中，是对社会虚伪与宗教形式主义的辛辣讽刺。宽逾四米，是盖蒂体量最大的单幅绘画之一。</div>
-  <a class="read-full-btn" href="center-guide.html#card-06">阅读完整解读<span class="rfb-arrow">→</span></a>
 </div>
 
 <div class="artwork-card" id="card-15">
@@ -2616,7 +2605,6 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="art-meta">贝尔纳多·达迪（Bernardo Daddi）· 约1335年 · 蛋彩 · 金箔 · 木板</div>
   <div class="tags"><span class="tag movement">14世纪佛罗伦萨派</span><span class="tag price">盖蒂馆藏代表性 Trecento 三联画</span></div>
   <div class="art-desc">中央面板上的圣母身披深蓝色斗篷（由珍贵的青金石 ultramarine 研磨而成），手部探出大理石栏杆边缘，象征向凡间投下的怜悯。左侧为多明我会修士装束的圣多玛斯·阿奎那（Thomas Aquinas），手持代表自己著作的书卷；右侧为侧身转向圣母的圣保罗（Paul），手持殉道之剑。这是14世纪佛罗伦萨画派典型的小型礼拜三联画——为私人小礼拜堂而作。</div>
-  <a class="read-full-btn" href="center-guide.html#card-36">阅读完整解读<span class="rfb-arrow">→</span></a>
 </div>
 
 <div class="artwork-card" id="card-16">
@@ -2626,7 +2614,6 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="art-meta">安德烈亚·曼泰尼亚（Andrea Mantegna）· 约1495–1505年 · 蛋彩 · 亚麻布</div>
   <div class="tags"><span class="tag movement">北意大利文艺复兴</span><span class="tag price">1985年以850万美元购入</span></div>
   <div class="art-desc">整件作品绘于亚麻布（而非通常的木板），这是曼泰尼亚晚期实验的特殊技法。画面将三博士从东方长途跋涉、向圣婴献礼的圣经场景，塑造成一部层叠繁复的视觉史诗：浓密人群、异域服饰与精细织物纹样填满画面。盖蒂1985年斥资850万美元购入，是馆内北意大利文艺复兴绘画的旗舰。</div>
-  <a class="read-full-btn" href="center-guide.html#card-16">阅读完整解读<span class="rfb-arrow">→</span></a>
 </div>
 
 <div class="artwork-card" id="card-17">
@@ -2636,7 +2623,6 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="art-meta">罗赫尔·范德韦登工作室 · 约1432–1435年 · 油彩 · 木板</div>
   <div class="tags"><span class="tag movement">弗拉芒原始主义</span><span class="tag price">15世纪尼德兰油画精品</span></div>
   <div class="art-desc">场景描绘教皇塞尔吉乌斯梦见圣胡贝特斯（St. Hubert）显灵的圣徒传说，但真正的主角是画面本身对"光与空间"的极致刻画。来自范德韦登工作室的这幅作品，展示了15世纪尼德兰画家独有的能力：室内光线如何折射，玻璃窗的半透明感，石材地面的冷光反射——这些在意大利画家还在用蛋彩的年代，尼德兰人已用油彩实现了真实视觉的完整再现。</div>
-  <a class="read-full-btn" href="center-guide.html#card-17">阅读完整解读<span class="rfb-arrow">→</span></a>
 </div>
 
 <div class="artwork-card" id="card-18">
@@ -2646,7 +2632,6 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="art-meta">蓬托莫（Jacopo Pontormo）· 约1528–1530年 · 油画</div>
   <div class="tags"><span class="tag movement">矫饰主义</span><span class="tag price">1989年购入 $3,520万（当时文艺复兴绘画拍卖纪录）</span></div>
   <div class="art-desc">画中人是一位年约16岁的佛罗伦萨少年，面容苍白，目光冷峻地正视观者，身着银色盔甲，手持斧枪。蓬托莫是意大利矫饰主义代表人物，那种刻意夸张的优雅与说不清道不明的疏离感，是16世纪宫廷肖像画的最高水准。盖蒂1989年以 3,520万美元 购入，三倍刷新了此前古画拍卖纪录。</div>
-  <a class="read-full-btn" href="center-guide.html#card-18">阅读完整解读<span class="rfb-arrow">→</span></a>
 </div>
 
 <div class="artwork-card" id="card-19">
@@ -2656,7 +2641,6 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="art-meta">洛伦佐·洛托（Lorenzo Lotto）· 约1520–1525年 · 油彩 · 画布</div>
   <div class="tags"><span class="tag movement">威尼斯文艺复兴</span><span class="tag price">文艺复兴婚礼画的稀见样本</span></div>
   <div class="art-desc">维纳斯半裸斜卧，头顶桃金娘花冠（爱情与婚姻的象征），小丘比特手持贝壳向她喷水——这是一幅悬挂于婚床上方的祝福画，祈愿新婚幸福与多子。洛托以轻快的笔触和金色暖调演绎古典神话，既有威尼斯式的感官愉悦，又带一丝威尼斯人特有的优雅幽默。</div>
-  <a class="read-full-btn" href="center-guide.html#card-19">阅读完整解读<span class="rfb-arrow">→</span></a>
 </div>
 
 <div class="artwork-card" id="card-20">
@@ -2666,7 +2650,6 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="art-meta">J.M.W. 透纳 · 1839年 · 油画 · 90.2 × 122 厘米</div>
   <div class="tags"><span class="tag movement">浪漫主义</span><span class="tag price">透纳晚期代表作</span></div>
   <div class="art-desc">透纳64岁时的晚期杰作。画面以淡金色烟霭笼罩古罗马论坛遗址，古代废墟与19世纪平凡的市集生活并置于同一画面，时间的流逝被光线溶解为无声的哲思。透纳"溶化一切于光中"的美学在此达到极致——你几乎分不清哪里是建筑，哪里是天空，哪里是幻觉。</div>
-  <a class="read-full-btn" href="center-guide.html#card-20">阅读完整解读<span class="rfb-arrow">→</span></a>
 </div>
 
 <div class="artwork-card" id="card-21">
@@ -2676,7 +2659,6 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="art-meta">8–16世纪 · 羊皮纸蛋彩画</div>
   <div class="tags"><span class="tag movement">中世纪艺术</span><span class="tag price">全美最重要的手稿收藏之一</span></div>
   <div class="art-desc">羊皮纸页面以金箔打底，青金石研磨的蓝、朱砂的红历经600年依旧饱满，是任何现代颜料无法复制的。代表作包括 Lorenzo Monaco《耶稣升天》首字母装饰页（1431年），以及多部15世纪法国贵族委托的时祷书（Book of Hours）——那是中世纪最私密、也最奢华的艺术委托形式。</div>
-  <a class="read-full-btn" href="center-guide.html#card-21">阅读完整解读<span class="rfb-arrow">→</span></a>
 </div>
 
 <div class="artwork-card" id="card-22">
@@ -2686,7 +2668,6 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="art-meta">德意志 · 约1630年 · 乌木、象牙、彩色石材镶嵌</div>
   <div class="tags"><span class="tag movement">文艺复兴 / 矫饰主义</span><span class="tag price">文艺复兴收藏文化的实物缩影</span></div>
   <div class="art-desc">"珍藏柜"（Kunstschrank）是文艺复兴时代德意志贵族的终极炫富工具——一件融合建筑、绘画、雕塑与器皿的复合艺术品。打开后展露出数十个暗格，每格摆放与主人知识品味相称的珍藏：古代钱币、宝石、小型铜像、精密仪器。盖蒂这件约建于1630年的奥格斯堡范本，以乌木框架、象牙浮雕镶板和大理石细件装饰，是北馆一楼最具冲击力的藏品之一。</div>
-  <a class="read-full-btn" href="center-guide.html#card-22">阅读完整解读<span class="rfb-arrow">→</span></a>
 </div>
 
 <div class="artwork-card" id="card-23">
@@ -2696,7 +2677,6 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="art-meta">1150–1600年 · 利摩日珐琅 · 铅条镶嵌彩色玻璃 · 象牙雕刻</div>
   <div class="tags"><span class="tag movement">罗马式 / 哥特式</span><span class="tag price">中世纪教堂原件</span></div>
   <div class="art-desc">这个展室把光线本身变成了展品：多扇13–16世纪彩色玻璃窗嵌入墙面，当日光透过铅条和着色玻璃投入，中世纪大教堂的神圣光学效果在此真实还原。利摩日珐琅（Limoges enamelwork）、象牙雕刻、镀金铜像，以及用于弥撒的圣器——共同构成中世纪欧洲教堂圣器室（treasury）的完整拼图。</div>
-  <a class="read-full-btn" href="center-guide.html#card-23">阅读完整解读<span class="rfb-arrow">→</span></a>
 </div>
 
 <div class="artwork-card" id="card-24">
@@ -2706,7 +2686,6 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="art-meta">1400–1700年 · 威尼斯穆拉诺丝线玻璃 · 马约利卡陶瓷</div>
   <div class="tags"><span class="tag movement">文艺复兴工艺</span><span class="tag price">从伊斯兰到威尼斯的技术传播链</span></div>
   <div class="art-desc">这个展室讲的是一段被玻璃和陶瓷记录下来的全球化故事。威尼斯工匠向中东穆斯林学习了玻璃吹制和金属着色技术，意大利陶工从伊斯兰釉陶借鉴了锡釉白底彩绘（马约利卡），最终影响了欧洲王室的餐桌器皿文化。盖蒂的"丝线玻璃"（filigrana）样品是15–16世纪穆拉诺岛大师的代表作：白色玻璃线条封入透明玻璃中，呈现精细编织效果。</div>
-  <a class="read-full-btn" href="center-guide.html#card-24">阅读完整解读<span class="rfb-arrow">→</span></a>
 </div>
 
 <div class="artwork-card south" id="card-25">
@@ -2716,7 +2695,6 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="art-meta">弗朗索瓦·布歇 · 约1748年 · 油画</div>
   <div class="tags"><span class="tag movement">洛可可</span><span class="tag price">路易十五御用画家</span></div>
   <div class="art-desc">粉嫩色调与柔软笔触是洛可可绘画的典型特征。布歇是路易十五宠妃蓬帕杜夫人的御用画家，她的品味深刻塑造了整个18世纪法国的视觉语言。</div>
-  <a class="read-full-btn" href="center-guide.html#card-25">阅读完整解读<span class="rfb-arrow">→</span></a>
 </div>
 
 <div class="artwork-card south" id="card-26">
@@ -2726,7 +2704,6 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="art-meta">托马斯·庚斯博罗 · 1778年 · 油画</div>
   <div class="tags"><span class="tag movement">浪漫主义前期</span><span class="tag price">克里斯蒂拍卖行创始人</span></div>
   <div class="art-desc">画中人正是克里斯蒂拍卖行的创始人詹姆斯·克里斯蒂。这幅肖像最终在克里斯蒂拍卖行上拍，由盖蒂购入——命运颇具戏剧性的一个循环。</div>
-  <a class="read-full-btn" href="center-guide.html#card-26">阅读完整解读<span class="rfb-arrow">→</span></a>
 </div>
 
 <div class="artwork-card south" id="card-27">
@@ -2736,7 +2713,6 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="art-meta">弗朗西斯科·戈雅 · 1804年 · 油画</div>
   <div class="tags"><span class="tag movement">新古典主义</span><span class="tag price">西班牙国王御用画家</span></div>
   <div class="art-desc">侯爵夫人以俯视姿态直视观者，黑色背景衬托出面部微妙的复杂表情。这不是歌功颂德的贵族肖像，而是一次对权力与个性的深刻凝视。</div>
-  <a class="read-full-btn" href="center-guide.html#card-27">阅读完整解读<span class="rfb-arrow">→</span></a>
 </div>
 
 <div class="artwork-card south" id="card-28">
@@ -2746,7 +2722,6 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="art-meta">原 Hôtel de Varengeville · 约 1670–1720 · 巴黎</div>
   <div class="tags"><span class="tag movement">路易十四 / 摄政王风格</span><span class="tag price">盖蒂亲自购入的镇馆内饰</span></div>
   <div class="art-desc">这是南馆最著名的展室：J·保罗·盖蒂本人于1938年将整套宫廷内饰从法国罗昂家族的巴黎公馆拆卸编号运来。护墙板、壁炉大理石镶嵌、天花板线脚，全是原件。房间呈现路易十四晚期至路易十五初期"摄政王风格"（Régence）的过渡美学——巴洛克的宏伟与洛可可的轻盈在此并存。</div>
-  <a class="read-full-btn" href="center-guide.html#card-28">阅读完整解读<span class="rfb-arrow">→</span></a>
 </div>
 
 <div class="artwork-card south" id="card-29">
@@ -2756,7 +2731,6 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="art-meta">设计：Claude-Nicolas Ledoux · 约 1730–1755 · 法国</div>
   <div class="tags"><span class="tag movement">洛可可</span><span class="tag price">克劳德·尼古拉·勒杜设计</span></div>
   <div class="art-desc">这间沙龙的护墙板由建筑师克劳德-尼古拉·勒杜（Claude-Nicolas Ledoux, 1736–1806）设计，是他早期洛可可风格的代表作。镶嵌板上的精细雕花——贝壳、涡卷、花束——以浅浮雕方式呈现，整体以乳白色和金色为主，构成典型的路易十五审美：轻盈、不对称、充满生命力的曲线。</div>
-  <a class="read-full-btn" href="center-guide.html#card-29">阅读完整解读<span class="rfb-arrow">→</span></a>
 </div>
 
 <div class="artwork-card south" id="card-30">
@@ -2766,7 +2740,6 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="art-meta">Charles-Nicolas Dodin 等 · 1745–1760 · 法国王室御窑</div>
   <div class="tags"><span class="tag movement">洛可可装饰艺术</span><span class="tag price">法国以外最重要收藏之一</span></div>
   <div class="art-desc">塞夫勒是路易十五设立的御用窑口，其"国王蓝"（bleu royal）与"蔷薇粉"（rose Pompadour）是18世纪陶瓷技术与审美的双重顶峰。盖蒂的核心藏品是一对"花船形"有盖香薰瓶，上绘宫廷人物场景。这种软质瓷（pâte tendre）比迈森硬质瓷更柔和，釉面有独特的蜡质光泽。</div>
-  <a class="read-full-btn" href="center-guide.html#card-30">阅读完整解读<span class="rfb-arrow">→</span></a>
 </div>
 
 <div class="artwork-card south" id="card-31">
@@ -2776,7 +2749,6 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="art-meta">原稿：弗朗索瓦·布歇 · 约 1737–1745 · 博韦皇家工厂织造</div>
   <div class="tags"><span class="tag movement">洛可可</span><span class="tag price">博韦皇家工厂顶级精品</span></div>
   <div class="art-desc">这套挂毯描绘古希腊神话《丘比特与普赛克》系列，原作由布歇绘制，由博韦皇家工厂（Manufacture royale de Beauvais）织造。挂毯不仅是装饰品——18世纪法国宫廷视之为最昂贵的艺术形式，价格往往超过油画。一面墙的挂毯耗时一年制成，金银线穿插其中，光线下熠熠生辉。</div>
-  <a class="read-full-btn" href="center-guide.html#card-31">阅读完整解读<span class="rfb-arrow">→</span></a>
 </div>
 
 <div class="artwork-card south" id="card-32">
@@ -2786,7 +2758,6 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="art-meta">路易十六风格 · 1765–1795 · 法国</div>
   <div class="tags"><span class="tag movement">新古典主义</span><span class="tag price">旧制度最后辉煌</span></div>
   <div class="art-desc">这间小型起居室（boudoir）代表了18世纪末法国从洛可可向新古典主义的转向：装饰更克制、对称、回归古希腊罗马的纯净线条。1789年法国大革命爆发，宫廷委托骤停，这套展室保存了革命前夕最后几年的宫廷装饰原件。</div>
-  <a class="read-full-btn" href="center-guide.html#card-32">阅读完整解读<span class="rfb-arrow">→</span></a>
 </div>
 
 <div class="artwork-card south" id="card-33">
@@ -2796,7 +2767,6 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="art-meta">约瑟夫·希纳尔（Joseph Chinard）· 约 1801–1802 · 赤陶</div>
   <div class="tags"><span class="tag movement">新古典主义雕塑</span><span class="tag price">法国大革命后的名媛肖像</span></div>
   <div class="art-desc">茱莉叶·雷卡米埃是19世纪初巴黎沙龙文化的核心人物，她的肖像被多位艺术家描绘。希纳尔的这件赤陶胸像捕捉了她25岁时的优雅——发髻高挽、目光斜垂，是新古典主义雕塑的典范。</div>
-  <a class="read-full-btn" href="center-guide.html#card-33">阅读完整解读<span class="rfb-arrow">→</span></a>
 </div>
 
 <!-- ===== Second exhibit per gallery (N201–N205) ===== -->
@@ -2808,7 +2778,6 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="art-meta">西蒙·马蒂尼（Simone Martini）· 约1330年 · 蛋彩 · 金箔 · 木板</div>
   <div class="tags"><span class="tag movement">锡耶纳哥特式</span><span class="tag price">圣路加是画家行会的主保圣人</span></div>
   <div class="art-desc">圣路加手执笔墨、低首凝视羊皮纸，周身环绕金色锦纹底板与哥特式建筑小龛——这是14世纪锡耶纳画派的典型语汇：用黄金构筑神圣，用优雅线条描绘人性。这件作品来自一组原本属于祭坛画的小尺寸圣徒像。</div>
-  <a class="read-full-btn" href="center-guide.html#card-15">阅读完整解读<span class="rfb-arrow">→</span></a>
 </div>
 
 <div class="artwork-card" id="card-35">
@@ -2818,7 +2787,6 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="art-meta">维托雷·卡尔帕乔（Vittore Carpaccio）· 约1490–1495 · 油彩 · 木板</div>
   <div class="tags"><span class="tag movement">威尼斯文艺复兴</span><span class="tag price">与威尼斯科雷尔博物馆藏《两位威尼斯贵妇》原属同一画</span></div>
   <div class="art-desc">渔民在潟湖里用弓弩猎水鸟——这是15世纪末威尼斯日常的一帧静默切片。但这幅画真正出名的，是它的下半身：科雷尔博物馆有一幅《两位威尼斯贵妇》（曾被罗斯金称为"世界上最美的画"），多年后学者才发现两者原本是同一木板的上下两段。</div>
-  <a class="read-full-btn" href="center-guide.html#card-37">阅读完整解读<span class="rfb-arrow">→</span></a>
 </div>
 
 <div class="artwork-card" id="card-36">
@@ -2828,7 +2796,6 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="art-meta">扬·戈塞特（Jan Gossaert / Mabuse）· 约1507–1508 · 油彩 · 木板</div>
   <div class="tags"><span class="tag movement">尼德兰文艺复兴</span><span class="tag price">北方画家最早一批受意大利古典影响的</span></div>
   <div class="art-desc">戈塞特用尼德兰画派典型的细腻笔触描绘圣母圣子与约瑟夫，但人物的造型——尤其圣母衣袍的褶皱、圣子的人体比例——已能看见他刚从意大利学到的古典样式。</div>
-  <a class="read-full-btn" href="center-guide.html#card-38">阅读完整解读<span class="rfb-arrow">→</span></a>
 </div>
 
 <div class="artwork-card" id="card-37">
@@ -2838,7 +2805,6 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="art-meta">洛伦佐·洛托（Lorenzo Lotto）· 约1525–1530 · 油彩 · 画布</div>
   <div class="tags"><span class="tag movement">威尼斯文艺复兴</span><span class="tag price">委托画 · 把出资人画进画里</span></div>
   <div class="art-desc">圣母怀抱圣婴，两位捐赠者（出资委托此画的世俗夫妻）跪在两侧，与圣母同框接受祝福——这是文艺复兴典型的"出资人肖像"（donor portrait）传统。洛托是与提香（Titian）同时代的威尼斯画家，但风格更内省、心理更细腻。</div>
-  <a class="read-full-btn" href="center-guide.html#card-39">阅读完整解读<span class="rfb-arrow">→</span></a>
 </div>
 
 <div class="artwork-card" id="card-38">
@@ -2848,7 +2814,6 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="art-meta">提香（Titian / Tiziano Vecellio）· 约1533 · 油彩 · 画布</div>
   <div class="tags"><span class="tag movement">威尼斯盛期文艺复兴</span><span class="tag price">提香最早的"全身武装贵族像"之一</span></div>
   <div class="art-desc">提香为西班牙国王查理五世的将军阿尔丰索·达瓦洛斯（瓦斯托侯爵）所作的全身武装肖像，是欧洲后来三百年所有"将军 + 副官 + 全甲"肖像的范式之祖。侯爵手按军杖，身披全套米兰式盔甲，身侧站着一位手持头盔的少年侍从——画里每一个元素都在宣告权力的合法性。</div>
-  <a class="read-full-btn" href="center-guide.html#card-40">阅读完整解读<span class="rfb-arrow">→</span></a>
 </div>
 
 </div>
@@ -3281,10 +3246,10 @@ function showRoomToast(room) {
         // Perpendicular unit vector (90° CCW of direction) for L/R offset.
         var px = -dy / dist;
         var py = dx / dist;
-        var perpOffset = 9;
+        var perpOffset = 18;
 
         // ~one footprint every 38 SVG units along the segment.
-        var stepLen = 38;
+        var stepLen = 76;
         var numSteps = Math.max(2, Math.round(dist / stepLen));
 
         for (var j = 0; j < numSteps; j++) {
@@ -3302,7 +3267,7 @@ function showRoomToast(room) {
           foot.setAttribute('class', 'footprint');
           foot.setAttribute('transform',
             'translate(' + fx.toFixed(1) + ',' + fy.toFixed(1) + ') ' +
-            'rotate(' + rot.toFixed(1) + ')'
+            'rotate(' + rot.toFixed(1) + ') scale(2)'
           );
           // Body: ball + arch + heel outline (toes-up natural orientation)
           var body = document.createElementNS(SVG_NS, 'path');
@@ -3462,8 +3427,8 @@ function showRoomToast(room) {
         var rot = Math.atan2(dy, dx) * 180 / Math.PI + 90;
         var px = -dy / dist;
         var py = dx / dist;
-        var perpOffset = 8;
-        var stepLen = 34;
+        var perpOffset = 16;
+        var stepLen = 68;
         var numSteps = Math.max(2, Math.round(dist / stepLen));
         for (var j = 0; j < numSteps; j++) {
           var t = (j + 0.5) / numSteps;
@@ -3476,7 +3441,7 @@ function showRoomToast(room) {
           foot.setAttribute('class', 'footprint');
           foot.setAttribute('transform',
             'translate(' + fx.toFixed(1) + ',' + fy.toFixed(1) + ') ' +
-            'rotate(' + rot.toFixed(1) + ')'
+            'rotate(' + rot.toFixed(1) + ') scale(2)'
           );
           var body = document.createElementNS(SVG_NS, 'path');
           body.setAttribute('d',
@@ -3616,8 +3581,8 @@ function showRoomToast(room) {
         var rot = Math.atan2(dy, dx) * 180 / Math.PI + 90;
         var px = -dy / dist;
         var py = dx / dist;
-        var perpOffset = 8;
-        var stepLen = 38;
+        var perpOffset = 16;
+        var stepLen = 76;
         var numSteps = Math.max(2, Math.round(dist / stepLen));
         for (var j = 0; j < numSteps; j++) {
           var t = (j + 0.5) / numSteps;
@@ -3630,7 +3595,7 @@ function showRoomToast(room) {
           foot.setAttribute('class', 'footprint');
           foot.setAttribute('transform',
             'translate(' + fx.toFixed(1) + ',' + fy.toFixed(1) + ') ' +
-            'rotate(' + rot.toFixed(1) + ')'
+            'rotate(' + rot.toFixed(1) + ') scale(2)'
           );
           var body = document.createElementNS(SVG_NS, 'path');
           body.setAttribute('d',
@@ -3766,8 +3731,8 @@ function showRoomToast(room) {
         var rot = Math.atan2(dy, dx) * 180 / Math.PI + 90;
         var px = -dy / dist;
         var py = dx / dist;
-        var perpOffset = 8;
-        var stepLen = 42;
+        var perpOffset = 16;
+        var stepLen = 84;
         var numSteps = Math.max(2, Math.round(dist / stepLen));
         for (var j = 0; j < numSteps; j++) {
           var t = (j + 0.5) / numSteps;
@@ -3780,7 +3745,7 @@ function showRoomToast(room) {
           foot.setAttribute('class', 'footprint');
           foot.setAttribute('transform',
             'translate(' + fx.toFixed(1) + ',' + fy.toFixed(1) + ') ' +
-            'rotate(' + rot.toFixed(1) + ')'
+            'rotate(' + rot.toFixed(1) + ') scale(2)'
           );
           var body = document.createElementNS(SVG_NS, 'path');
           body.setAttribute('d',
@@ -3880,7 +3845,7 @@ function showRoomToast(room) {
         if (dist < 1) continue;
         var rot = Math.atan2(dy, dx) * 180 / Math.PI + 90;
         var px = -dy/dist, py = dx/dist;
-        var stepLen = 38, numSteps = Math.max(2, Math.round(dist / stepLen));
+        var stepLen = 76, numSteps = Math.max(2, Math.round(dist / stepLen));
         for (var j = 0; j < numSteps; j++) {
           var t = (j + 0.5) / numSteps;
           var fx = a.x + dx*t, fy = a.y + dy*t;
@@ -3888,7 +3853,7 @@ function showRoomToast(room) {
           fx += px * 8 * side; fy += py * 8 * side;
           var foot = document.createElementNS(SVG_NS, 'g');
           foot.setAttribute('class', 'footprint');
-          foot.setAttribute('transform', 'translate(' + fx.toFixed(1) + ',' + fy.toFixed(1) + ') rotate(' + rot.toFixed(1) + ')');
+          foot.setAttribute('transform', 'translate(' + fx.toFixed(1) + ',' + fy.toFixed(1) + ') rotate(' + rot.toFixed(1) + ') scale(2)');
           var body = document.createElementNS(SVG_NS, 'path');
           body.setAttribute('d', 'M -5 -6 C -5 -11 5 -11 5 -6 C 5 -3 3 -1 3 1 C 3 3 4 5 4 7 C 4 11 -4 11 -4 7 C -4 5 -3 3 -3 1 C -3 -1 -5 -3 -5 -6 Z');
           foot.appendChild(body);
@@ -3982,7 +3947,7 @@ function showRoomToast(room) {
         if (dist < 1) continue;
         var rot = Math.atan2(dy, dx) * 180 / Math.PI + 90;
         var px = -dy/dist, py = dx/dist;
-        var stepLen = 36, numSteps = Math.max(2, Math.round(dist / stepLen));
+        var stepLen = 72, numSteps = Math.max(2, Math.round(dist / stepLen));
         for (var j = 0; j < numSteps; j++) {
           var t = (j + 0.5) / numSteps;
           var fx = a.x + dx*t, fy = a.y + dy*t;
@@ -3990,7 +3955,7 @@ function showRoomToast(room) {
           fx += px * 8 * side; fy += py * 8 * side;
           var foot = document.createElementNS(SVG_NS, 'g');
           foot.setAttribute('class', 'footprint');
-          foot.setAttribute('transform', 'translate(' + fx.toFixed(1) + ',' + fy.toFixed(1) + ') rotate(' + rot.toFixed(1) + ')');
+          foot.setAttribute('transform', 'translate(' + fx.toFixed(1) + ',' + fy.toFixed(1) + ') rotate(' + rot.toFixed(1) + ') scale(2)');
           var body = document.createElementNS(SVG_NS, 'path');
           body.setAttribute('d', 'M -5 -6 C -5 -11 5 -11 5 -6 C 5 -3 3 -1 3 1 C 3 3 4 5 4 7 C 4 11 -4 11 -4 7 C -4 5 -3 3 -3 1 C -3 -1 -5 -3 -5 -6 Z');
           foot.appendChild(body);
