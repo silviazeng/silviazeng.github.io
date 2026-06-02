@@ -2884,6 +2884,35 @@ function closeModal(e) {
   document.getElementById('modal').classList.remove('open');
   document.body.style.overflow = '';
 }
+
+// ─── Footprint silhouette ──────────────────────────────────────────────────
+// Lorc footprint icon (game-icons.net/lorc/originals/footprint.html, CC BY 3.0).
+// Original artwork is in a 512×512 viewBox with toes at top (~y=18) and heel at
+// bottom (~y=510); we scale it down to ~22 SVG-units and center at origin so
+// each footprint matches what the visit-tracker code expects (toes at -y).
+var LORC_FOOT_PATH = "M246.625 18.375c-11.817-.153-23.918 8.608-29.375 22.438-6.716 17.02-.85 35.28 13.094 40.78 13.943 5.502 30.69-3.822 37.406-20.843 6.716-17.02.85-35.28-13.094-40.78-2.614-1.033-5.304-1.56-8.03-1.595zm74.75 15.938c-10.97.006-22.743 6.024-30.78 16.874-12.25 16.534-11.2 38.06 2.342 48.094 13.544 10.035 34.44 4.754 46.688-11.78 12.25-16.534 11.2-38.06-2.344-48.094-4.654-3.45-10.16-5.097-15.905-5.093zm67.25 37.53c-10.336-.127-21.542 4.263-30.47 12.907-15.87 15.368-18.525 38.344-5.936 51.344 12.587 13 35.66 11.086 51.53-4.28 15.87-15.37 18.526-38.345 5.938-51.345-5.508-5.69-13.024-8.527-21.063-8.626zm-156.438 32.063c-22.51-.28-44.378 6.893-63.5 24C107.65 182.513 48.192 261.012 28.28 386.97 5.023 534.1 186.257 507.523 168.313 428.936c-22.922-100.387 34.13-141.11 108-124.156 32.838 7.54 66.54-4.9 86-40.436 23.402-42.733-7.428-106.817-62.875-139.625-21.61-12.79-44.74-20.534-67.25-20.814zM449.438 134c-10.52.022-21.654 2.82-32.093 8.625-27.837 15.48-40.15 46.51-27.47 69.313 12.682 22.802 45.54 28.73 73.376 13.25 27.837-15.48 40.118-46.51 27.438-69.313-7.926-14.252-23.717-21.91-41.25-21.875z";
+
+// Build one footprint <g> positioned at (fx,fy), rotated to direction of travel,
+// and mirrored for L/R foot via the `side` flag (1 = left foot, -1 = right).
+function createLorcFoot(fx, fy, rot, side) {
+  var SVG_NS = 'http://www.w3.org/2000/svg';
+  var foot = document.createElementNS(SVG_NS, 'g');
+  foot.setAttribute('class', 'footprint');
+  foot.setAttribute('transform',
+    'translate(' + fx.toFixed(1) + ',' + fy.toFixed(1) + ') ' +
+    'rotate(' + rot.toFixed(1) + ') scale(2)'
+  );
+  // Inner group scales Lorc's 512-unit path down to ~22 units and mirrors L/R.
+  var inner = document.createElementNS(SVG_NS, 'g');
+  var sx = (0.044 * side).toFixed(4);
+  inner.setAttribute('transform', 'scale(' + sx + ',0.044) translate(-247.5,-264)');
+  var path = document.createElementNS(SVG_NS, 'path');
+  path.setAttribute('d', LORC_FOOT_PATH);
+  inner.appendChild(path);
+  foot.appendChild(inner);
+  return foot;
+}
+
 // Art-pin interaction: short tap opens the modal; press-and-drag temporarily
 // pulls the pin aside (following the finger) so the user can see what's
 // underneath. Release snaps the pin back to its anchor with a spring.
@@ -3274,38 +3303,7 @@ function showRoomToast(room) {
           // Proper footprint: ball + arch + heel silhouette PLUS 5 toes in an arc
           // above the ball. Big toe on the inside, so feet mirror left/right based
           // on the perpendicular side variable. Whole group rotates to direction.
-          var foot = document.createElementNS(SVG_NS, 'g');
-          foot.setAttribute('class', 'footprint');
-          foot.setAttribute('transform',
-            'translate(' + fx.toFixed(1) + ',' + fy.toFixed(1) + ') ' +
-            'rotate(' + rot.toFixed(1) + ') scale(2)'
-          );
-          // Body: two oval pads (ball + heel) — arch is empty space between, like a real
-          // wet footprint on sand. More legible than a single tapered path.
-          var ball = document.createElementNS(SVG_NS, 'ellipse');
-          ball.setAttribute('cx', '0'); ball.setAttribute('cy', '-3');
-          ball.setAttribute('rx', '4.5'); ball.setAttribute('ry', '4');
-          foot.appendChild(ball);
-          var heel = document.createElementNS(SVG_NS, 'ellipse');
-          heel.setAttribute('cx', '0'); heel.setAttribute('cy', '6.5');
-          heel.setAttribute('rx', '3.2'); heel.setAttribute('ry', '3.8');
-          foot.appendChild(heel);
-          // 5 toes in an arc above the ball. Big toe is the biggest, on the
-          // inside (mirror per L/R foot via the `side` flag).
-          // toes laid out left→right when side===1 (so big toe is on the left);
-          // mirrored when side===-1 (big toe on the right).
-          var bigToeOnLeft = (side === 1);
-          var toes = bigToeOnLeft
-            ? [[-3.2, -8.5, 1.8], [-1.4, -10.2, 1.4], [0.3, -10.8, 1.2], [1.9, -10.4, 1.0], [3.2, -9.4, 0.85]]
-            : [[-3.2, -9.4, 0.85], [-1.9, -10.4, 1.0], [-0.3, -10.8, 1.2], [1.4, -10.2, 1.4], [3.2, -8.5, 1.8]];
-          for (var k = 0; k < 5; k++) {
-            var t = document.createElementNS(SVG_NS, 'circle');
-            t.setAttribute('cx', String(toes[k][0]));
-            t.setAttribute('cy', String(toes[k][1]));
-            t.setAttribute('r', String(toes[k][2]));
-            foot.appendChild(t);
-          }
-          feetGroup.appendChild(foot);
+          feetGroup.appendChild(createLorcFoot(fx, fy, rot, side));
         }
       }
     }
@@ -3446,34 +3444,7 @@ function showRoomToast(room) {
           var side = (j % 2 === 0) ? 1 : -1;
           fx += px * perpOffset * side;
           fy += py * perpOffset * side;
-          var foot = document.createElementNS(SVG_NS, 'g');
-          foot.setAttribute('class', 'footprint');
-          foot.setAttribute('transform',
-            'translate(' + fx.toFixed(1) + ',' + fy.toFixed(1) + ') ' +
-            'rotate(' + rot.toFixed(1) + ') scale(2)'
-          );
-          // Body: two oval pads (ball + heel) — arch is empty space between, like a real
-          // wet footprint on sand. More legible than a single tapered path.
-          var ball = document.createElementNS(SVG_NS, 'ellipse');
-          ball.setAttribute('cx', '0'); ball.setAttribute('cy', '-3');
-          ball.setAttribute('rx', '4.5'); ball.setAttribute('ry', '4');
-          foot.appendChild(ball);
-          var heel = document.createElementNS(SVG_NS, 'ellipse');
-          heel.setAttribute('cx', '0'); heel.setAttribute('cy', '6.5');
-          heel.setAttribute('rx', '3.2'); heel.setAttribute('ry', '3.8');
-          foot.appendChild(heel);
-          var bigToeOnLeft = (side === 1);
-          var toes = bigToeOnLeft
-            ? [[-3.2, -8.5, 1.8], [-1.4, -10.2, 1.4], [0.3, -10.8, 1.2], [1.9, -10.4, 1.0], [3.2, -9.4, 0.85]]
-            : [[-3.2, -9.4, 0.85], [-1.9, -10.4, 1.0], [-0.3, -10.8, 1.2], [1.4, -10.2, 1.4], [3.2, -8.5, 1.8]];
-          for (var k = 0; k < 5; k++) {
-            var toe = document.createElementNS(SVG_NS, 'circle');
-            toe.setAttribute('cx', String(toes[k][0]));
-            toe.setAttribute('cy', String(toes[k][1]));
-            toe.setAttribute('r',  String(toes[k][2]));
-            foot.appendChild(toe);
-          }
-          feetGroup.appendChild(foot);
+          feetGroup.appendChild(createLorcFoot(fx, fy, rot, side));
         }
       }
     }
@@ -3599,34 +3570,7 @@ function showRoomToast(room) {
           var side = (j % 2 === 0) ? 1 : -1;
           fx += px * perpOffset * side;
           fy += py * perpOffset * side;
-          var foot = document.createElementNS(SVG_NS, 'g');
-          foot.setAttribute('class', 'footprint');
-          foot.setAttribute('transform',
-            'translate(' + fx.toFixed(1) + ',' + fy.toFixed(1) + ') ' +
-            'rotate(' + rot.toFixed(1) + ') scale(2)'
-          );
-          // Body: two oval pads (ball + heel) — arch is empty space between, like a real
-          // wet footprint on sand. More legible than a single tapered path.
-          var ball = document.createElementNS(SVG_NS, 'ellipse');
-          ball.setAttribute('cx', '0'); ball.setAttribute('cy', '-3');
-          ball.setAttribute('rx', '4.5'); ball.setAttribute('ry', '4');
-          foot.appendChild(ball);
-          var heel = document.createElementNS(SVG_NS, 'ellipse');
-          heel.setAttribute('cx', '0'); heel.setAttribute('cy', '6.5');
-          heel.setAttribute('rx', '3.2'); heel.setAttribute('ry', '3.8');
-          foot.appendChild(heel);
-          var bigToeOnLeft = (side === 1);
-          var toes = bigToeOnLeft
-            ? [[-3.2, -8.5, 1.8], [-1.4, -10.2, 1.4], [0.3, -10.8, 1.2], [1.9, -10.4, 1.0], [3.2, -9.4, 0.85]]
-            : [[-3.2, -9.4, 0.85], [-1.9, -10.4, 1.0], [-0.3, -10.8, 1.2], [1.4, -10.2, 1.4], [3.2, -8.5, 1.8]];
-          for (var k = 0; k < 5; k++) {
-            var toe = document.createElementNS(SVG_NS, 'circle');
-            toe.setAttribute('cx', String(toes[k][0]));
-            toe.setAttribute('cy', String(toes[k][1]));
-            toe.setAttribute('r',  String(toes[k][2]));
-            foot.appendChild(toe);
-          }
-          feetGroup.appendChild(foot);
+          feetGroup.appendChild(createLorcFoot(fx, fy, rot, side));
         }
       }
     }
@@ -3754,34 +3698,7 @@ function showRoomToast(room) {
           var side = (j % 2 === 0) ? 1 : -1;
           fx += px * perpOffset * side;
           fy += py * perpOffset * side;
-          var foot = document.createElementNS(SVG_NS, 'g');
-          foot.setAttribute('class', 'footprint');
-          foot.setAttribute('transform',
-            'translate(' + fx.toFixed(1) + ',' + fy.toFixed(1) + ') ' +
-            'rotate(' + rot.toFixed(1) + ') scale(2)'
-          );
-          // Body: two oval pads (ball + heel) — arch is empty space between, like a real
-          // wet footprint on sand. More legible than a single tapered path.
-          var ball = document.createElementNS(SVG_NS, 'ellipse');
-          ball.setAttribute('cx', '0'); ball.setAttribute('cy', '-3');
-          ball.setAttribute('rx', '4.5'); ball.setAttribute('ry', '4');
-          foot.appendChild(ball);
-          var heel = document.createElementNS(SVG_NS, 'ellipse');
-          heel.setAttribute('cx', '0'); heel.setAttribute('cy', '6.5');
-          heel.setAttribute('rx', '3.2'); heel.setAttribute('ry', '3.8');
-          foot.appendChild(heel);
-          var bigToeOnLeft = (side === 1);
-          var toes = bigToeOnLeft
-            ? [[-3.2, -8.5, 1.8], [-1.4, -10.2, 1.4], [0.3, -10.8, 1.2], [1.9, -10.4, 1.0], [3.2, -9.4, 0.85]]
-            : [[-3.2, -9.4, 0.85], [-1.9, -10.4, 1.0], [-0.3, -10.8, 1.2], [1.4, -10.2, 1.4], [3.2, -8.5, 1.8]];
-          for (var k = 0; k < 5; k++) {
-            var toe = document.createElementNS(SVG_NS, 'circle');
-            toe.setAttribute('cx', String(toes[k][0]));
-            toe.setAttribute('cy', String(toes[k][1]));
-            toe.setAttribute('r',  String(toes[k][2]));
-            foot.appendChild(toe);
-          }
-          feetGroup.appendChild(foot);
+          feetGroup.appendChild(createLorcFoot(fx, fy, rot, side));
         }
       }
     }
@@ -3869,29 +3786,7 @@ function showRoomToast(room) {
           var fx = a.x + dx*t, fy = a.y + dy*t;
           var side = (j % 2 === 0) ? 1 : -1;
           fx += px * 8 * side; fy += py * 8 * side;
-          var foot = document.createElementNS(SVG_NS, 'g');
-          foot.setAttribute('class', 'footprint');
-          foot.setAttribute('transform', 'translate(' + fx.toFixed(1) + ',' + fy.toFixed(1) + ') rotate(' + rot.toFixed(1) + ') scale(2)');
-          // Body: two oval pads (ball + heel) — arch is empty space between, like a real
-          // wet footprint on sand. More legible than a single tapered path.
-          var ball = document.createElementNS(SVG_NS, 'ellipse');
-          ball.setAttribute('cx', '0'); ball.setAttribute('cy', '-3');
-          ball.setAttribute('rx', '4.5'); ball.setAttribute('ry', '4');
-          foot.appendChild(ball);
-          var heel = document.createElementNS(SVG_NS, 'ellipse');
-          heel.setAttribute('cx', '0'); heel.setAttribute('cy', '6.5');
-          heel.setAttribute('rx', '3.2'); heel.setAttribute('ry', '3.8');
-          foot.appendChild(heel);
-          var bigToeOnLeft = (side === 1);
-          var toes = bigToeOnLeft
-            ? [[-3.2, -8.5, 1.8], [-1.4, -10.2, 1.4], [0.3, -10.8, 1.2], [1.9, -10.4, 1.0], [3.2, -9.4, 0.85]]
-            : [[-3.2, -9.4, 0.85], [-1.9, -10.4, 1.0], [-0.3, -10.8, 1.2], [1.4, -10.2, 1.4], [3.2, -8.5, 1.8]];
-          for (var k = 0; k < 5; k++) {
-            var toe = document.createElementNS(SVG_NS, 'circle');
-            toe.setAttribute('cx', String(toes[k][0])); toe.setAttribute('cy', String(toes[k][1])); toe.setAttribute('r', String(toes[k][2]));
-            foot.appendChild(toe);
-          }
-          feetGroup.appendChild(foot);
+          feetGroup.appendChild(createLorcFoot(fx, fy, rot, side));
         }
       }
     }
@@ -3978,29 +3873,7 @@ function showRoomToast(room) {
           var fx = a.x + dx*t, fy = a.y + dy*t;
           var side = (j % 2 === 0) ? 1 : -1;
           fx += px * 8 * side; fy += py * 8 * side;
-          var foot = document.createElementNS(SVG_NS, 'g');
-          foot.setAttribute('class', 'footprint');
-          foot.setAttribute('transform', 'translate(' + fx.toFixed(1) + ',' + fy.toFixed(1) + ') rotate(' + rot.toFixed(1) + ') scale(2)');
-          // Body: two oval pads (ball + heel) — arch is empty space between, like a real
-          // wet footprint on sand. More legible than a single tapered path.
-          var ball = document.createElementNS(SVG_NS, 'ellipse');
-          ball.setAttribute('cx', '0'); ball.setAttribute('cy', '-3');
-          ball.setAttribute('rx', '4.5'); ball.setAttribute('ry', '4');
-          foot.appendChild(ball);
-          var heel = document.createElementNS(SVG_NS, 'ellipse');
-          heel.setAttribute('cx', '0'); heel.setAttribute('cy', '6.5');
-          heel.setAttribute('rx', '3.2'); heel.setAttribute('ry', '3.8');
-          foot.appendChild(heel);
-          var bigToeOnLeft = (side === 1);
-          var toes = bigToeOnLeft
-            ? [[-3.2, -8.5, 1.8], [-1.4, -10.2, 1.4], [0.3, -10.8, 1.2], [1.9, -10.4, 1.0], [3.2, -9.4, 0.85]]
-            : [[-3.2, -9.4, 0.85], [-1.9, -10.4, 1.0], [-0.3, -10.8, 1.2], [1.4, -10.2, 1.4], [3.2, -8.5, 1.8]];
-          for (var k = 0; k < 5; k++) {
-            var toe = document.createElementNS(SVG_NS, 'circle');
-            toe.setAttribute('cx', String(toes[k][0])); toe.setAttribute('cy', String(toes[k][1])); toe.setAttribute('r', String(toes[k][2]));
-            foot.appendChild(toe);
-          }
-          feetGroup.appendChild(foot);
+          feetGroup.appendChild(createLorcFoot(fx, fy, rot, side));
         }
       }
     }
