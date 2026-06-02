@@ -189,6 +189,17 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
    the Chinese theme phrase stays prominent and the line doesn't blow past the viewport.
    white-space: nowrap keeps the en-dash in "N101–N106" from acting as a soft break. */
 .floor-name em { font-size: 0.62em; font-weight: 500; letter-spacing: 0.01em; white-space: nowrap; }
+/* Small year/era tag inline after a theme term in floor-name */
+.floor-name .yr {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.55em;
+  font-weight: 500;
+  color: var(--gold);
+  letter-spacing: .03em;
+  vertical-align: 0.3em;
+  margin-left: 0.25em;
+  white-space: nowrap;
+}
 .floor-desc {
   color: var(--muted);
   font-size: 0.74rem;
@@ -1278,7 +1289,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 <section class="floor-section" id="north-2f">
   <div class="floor-head">
     <span class="floor-label">北馆 二楼 · 2F</span>
-    <h2 class="floor-name">文艺复兴绘画全景</h2>
+    <h2 class="floor-name">文艺复兴绘画全景 <span class="yr">1300–1600</span></h2>
     <p class="floor-desc">从13世纪锡耶纳金底圣像，到尼德兰油画、矫饰主义与威尼斯诸家——一条400年欧洲绘画的纵深线。</p>
     <div class="legend-mini" aria-label="展厅类别图例">
       <span class="lgm-item"><span class="lgm-swatch" style="background:var(--room-paintings);"></span>绘画</span>
@@ -1538,7 +1549,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 <section class="floor-section alt" id="north-1f">
   <div class="floor-head">
     <span class="floor-label">北馆 一楼 · 1F</span>
-    <h2 class="floor-name">彩饰手稿 · 中世纪装饰艺术</h2>
+    <h2 class="floor-name">彩饰手稿 · 中世纪装饰艺术 <span class="yr">9–15 世纪</span></h2>
     <p class="floor-desc">低光展厅珍藏彩饰手稿、中世纪彩色玻璃、奥格斯堡珍藏柜与威尼斯丝线玻璃。</p>
     <div class="legend-mini" aria-label="展厅类别图例">
       <span class="lgm-item"><span class="lgm-swatch" style="background:var(--room-paintings);"></span>绘画</span>
@@ -1727,7 +1738,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 <section class="floor-section south" id="south-2f">
   <div class="floor-head">
     <span class="floor-label">南馆 二楼 · 2F</span>
-    <h2 class="floor-name">18世纪欧洲绘画</h2>
+    <h2 class="floor-name">18 世纪欧洲绘画 <span class="yr">1700s</span></h2>
     <p class="floor-desc">布歇、庚斯博罗、戈雅——18世纪法国洛可可、英国乡绅肖像、西班牙宫廷绘画三种品味的并置。</p>
     <div class="legend-mini" aria-label="展厅类别图例">
       <span class="lgm-item"><span class="lgm-swatch" style="background:var(--room-paintings);"></span>绘画</span>
@@ -1898,7 +1909,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 <section class="floor-section south alt" id="south-1f">
   <div class="floor-head">
     <span class="floor-label">南馆 一楼 · 1F</span>
-    <h2 class="floor-name">法国装饰艺术 · 宫廷复原房间</h2>
+    <h2 class="floor-name">法国装饰艺术 · 宫廷复原房间 <span class="yr">17–18 世纪</span></h2>
     <p class="floor-desc">多个完整复原的17–18世纪欧洲贵族房间——家具、墙板、地板、吊灯全是真品，仿佛凡尔赛时光倒流。</p>
     <div class="legend-mini" aria-label="展厅类别图例">
       <span class="lgm-item"><span class="lgm-swatch" style="background:var(--room-paintings);"></span>绘画</span>
@@ -2185,7 +2196,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 <section class="floor-section west" id="west-2f">
   <div class="floor-head">
     <span class="floor-label">西馆 二楼 · 2F</span>
-    <h2 class="floor-name">印象派与后印象派</h2>
+    <h2 class="floor-name">印象派与后印象派 <span class="yr">1860–1900</span></h2>
     <p class="floor-desc">梵高、莫奈、雷诺阿、塞尚、马奈——全馆人气最旺的一层，镇馆之宝《鸢尾花》就在 W204。</p>
     <div class="legend-mini" aria-label="展厅类别图例">
       <span class="lgm-item"><span class="lgm-swatch" style="background:var(--room-paintings);"></span>绘画</span>
@@ -2328,7 +2339,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 <section class="floor-section west alt" id="west-1f">
   <div class="floor-head">
     <span class="floor-label">西馆 一楼 · 1F</span>
-    <h2 class="floor-name">恩索尔 · 新古典主义雕塑 · 摄影中心</h2>
+    <h2 class="floor-name">恩索尔 · 新古典主义雕塑 · 摄影中心 <span class="yr">19 世纪 · 摄影 1839 起</span></h2>
     <p class="floor-desc">W101 镇室是恩索尔巨幅《基督进入布鲁塞尔》；走廊陈列梅塞施密特人物头像，另设摄影中心轮换展出。</p>
     <div class="legend-mini" aria-label="展厅类别图例">
       <span class="lgm-item"><span class="lgm-swatch" style="background:var(--room-paintings);"></span>绘画</span>

@@ -287,6 +287,18 @@ body {
   color: var(--ink);
 }
 .pav-heading em { font-style: italic; }
+/* Small year/era tag inline after each main term in pav-heading */
+.pav-heading .yr {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.5em;
+  font-weight: 500;
+  font-style: normal;
+  color: var(--gold);
+  letter-spacing: .03em;
+  vertical-align: 0.32em;
+  margin-left: 0.25em;
+  white-space: nowrap;
+}
 /* ===== Cross-page deeplink: 进入楼层图 (per-pavilion) ===== */
 .to-map-btn {
   display: inline-flex; align-items: center; gap: 0.5rem;
@@ -785,7 +797,7 @@ footer strong { color: rgba(240,200,120,.6); }
     <div class="pav-badge" style="background:var(--west)">西</div>
     <div>
       <div class="pav-name" style="color:var(--west)">West Pavilion · 西馆</div>
-      <h2 class="pav-heading">印象派绘画 <em>&amp;</em> 摄影中心</h2>
+      <h2 class="pav-heading">印象派绘画 <span class="yr">1860–1900</span> <em>&amp;</em> 摄影中心 <span class="yr">1839 起</span></h2>
     </div>
   </div>
   <a class="to-map-btn" href="floorplans.html#west-2f"><span class="tmb-icon">📍</span>进入楼层图 · 西馆<span class="tmb-small">W201–W205 · W101–W107</span></a>
@@ -859,7 +871,7 @@ footer strong { color: rgba(240,200,120,.6); }
     <div class="pav-badge" style="background:var(--north)">北</div>
     <div>
       <div class="pav-name" style="color:var(--north)">North Pavilion · 北馆</div>
-      <h2 class="pav-heading">文艺复兴 <em>&amp;</em> 彩饰手稿</h2>
+      <h2 class="pav-heading">文艺复兴 <span class="yr">14–16 世纪</span> <em>&amp;</em> 彩饰手稿 <span class="yr">9–15 世纪</span></h2>
     </div>
   </div>
   <a class="to-map-btn" href="floorplans.html#north-2f"><span class="tmb-icon">📍</span>进入楼层图 · 北馆<span class="tmb-small">N201–N205 · N101–N106</span></a>
@@ -953,7 +965,7 @@ footer strong { color: rgba(240,200,120,.6); }
     <div class="pav-badge" style="background:var(--south)">南</div>
     <div>
       <div class="pav-name" style="color:var(--south)">South Pavilion · 南馆</div>
-      <h2 class="pav-heading">装饰艺术 <em>&amp;</em> 法国宫廷</h2>
+      <h2 class="pav-heading">装饰艺术 <span class="yr">17–18 世纪</span> <em>&amp;</em> 法国宫廷 <span class="yr">1660–1789</span></h2>
     </div>
   </div>
   <a class="to-map-btn" href="floorplans.html#south-2f"><span class="tmb-icon">📍</span>进入楼层图 · 南馆<span class="tmb-small">S201–S206 · S101–S116</span></a>
@@ -1032,7 +1044,7 @@ footer strong { color: rgba(240,200,120,.6); }
     <div class="pav-badge" style="background:var(--outdoor)">外</div>
     <div>
       <div class="pav-name" style="color:var(--outdoor)">Outdoor · 户外</div>
-      <h2 class="pav-heading">中央花园 <em>&amp;</em> 雕塑园</h2>
+      <h2 class="pav-heading">中央花园 <span class="yr">1997</span> <em>&amp;</em> 雕塑园 <span class="yr">20 世纪</span></h2>
     </div>
   </div>
   <p class="pav-intro">盖蒂的户外空间本身就是不可错过的艺术体验。Robert Irwin 设计的中央花园是一件随季节永远变化的活体艺术品，而散落园区各处的28座现当代雕塑则在建筑与山景之间构成开放的室外美术馆。</p>
@@ -1063,7 +1075,7 @@ footer strong { color: rgba(240,200,120,.6); }
     <div class="pav-badge" style="background:var(--east)">东</div>
     <div>
       <div class="pav-name" style="color:var(--east)">East Pavilion · 东馆</div>
-      <h2 class="pav-heading">荷兰黄金时代 <em>&amp;</em> 巴洛克</h2>
+      <h2 class="pav-heading">荷兰黄金时代 <span class="yr">17 世纪</span> <em>&amp;</em> 巴洛克 <span class="yr">1600–1750</span></h2>
     </div>
   </div>
   <a class="to-map-btn closed" aria-disabled="true" title="东馆 2026 年起暂时关闭"><span class="tmb-icon">🔒</span>东馆 · 2026 年起暂时关闭<span class="tmb-small">楼层图筹备中</span></a>
