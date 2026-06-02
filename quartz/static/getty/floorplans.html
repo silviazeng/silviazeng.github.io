@@ -2902,13 +2902,12 @@ function createLorcFoot(fx, fy, rot, side) {
     'translate(' + fx.toFixed(1) + ',' + fy.toFixed(1) + ') ' +
     'rotate(' + rot.toFixed(1) + ') scale(2)'
   );
-  // Inner group scales Lorc's 512-unit path down to ~22 units. Lorc's path is a
-  // RIGHT foot anatomically; the visit-tracker emits side=+1 for the perpendicular
-  // RIGHT of the path direction (where the right foot belongs), so no extra flip
-  // needed — sx = 0.044 * side gives big toes facing OUTWARD (slightly toe-out
-  // stylized look) instead of pigeon-toed inward.
+  // Inner group scales Lorc's 512-unit path down to ~22 units AND horizontally flips
+  // each individual foot about its own longitudinal centerline (negative sx). With
+  // this flip, big toes face OUTWARD (away from path centerline) on both feet — the
+  // stylized cartoon-trail look most users expect from footprint icons.
   var inner = document.createElementNS(SVG_NS, 'g');
-  var sx = (0.044 * side).toFixed(4);
+  var sx = (-0.044 * side).toFixed(4);
   inner.setAttribute('transform', 'scale(' + sx + ',0.044) translate(-247.5,-264)');
   var path = document.createElementNS(SVG_NS, 'path');
   path.setAttribute('d', LORC_FOOT_PATH);
