@@ -3271,15 +3271,9 @@ function showRoomToast(room) {
           );
           // Body: ball + arch + heel outline (toes-up natural orientation)
           var body = document.createElementNS(SVG_NS, 'path');
-          body.setAttribute('d',
-            'M -5 -6 ' +
-            'C -5 -11 5 -11 5 -6 ' +     // ball (top, widest)
-            'C 5 -3 3 -1 3 1 ' +          // narrows to arch
-            'C 3 3 4 5 4 7 ' +            // widens for heel
-            'C 4 11 -4 11 -4 7 ' +        // heel bottom
-            'C -4 5 -3 3 -3 1 ' +         // arch back up
-            'C -3 -1 -5 -3 -5 -6 Z'       // close
-          );
+          // Body: wide rounded ball (toes-end) → tapered arch → smaller rounded heel.
+          // Ball ~12 wide, arch ~6 wide, heel ~8 wide — anatomical taper.
+          body.setAttribute('d', 'M -5 -4 C -7 -7 -5 -10 0 -10 C 5 -10 7 -7 5 -4 C 4 -1 3 1 3 4 C 3 6 3.5 8 4 10 C 4 11 -4 11 -4 10 C -3.5 8 -3 6 -3 4 C -3 1 -4 -1 -5 -4 Z');
           foot.appendChild(body);
           // 5 toes in an arc above the ball. Big toe is the biggest, on the
           // inside (mirror per L/R foot via the `side` flag).
@@ -3287,8 +3281,8 @@ function showRoomToast(room) {
           // mirrored when side===-1 (big toe on the right).
           var bigToeOnLeft = (side === 1);
           var toes = bigToeOnLeft
-            ? [[-3.6, -11.6, 2.0], [-1.6, -13.4, 1.45], [0.4, -14.0, 1.3], [2.2, -13.5, 1.15], [3.7, -12.4, 1.0]]
-            : [[-3.7, -12.4, 1.0], [-2.2, -13.5, 1.15], [-0.4, -14.0, 1.3], [1.6, -13.4, 1.45], [3.6, -11.6, 2.0]];
+            ? [[-3.5, -10.6, 2.0], [-1.5, -12.4, 1.55], [0.3, -13.1, 1.35], [2.0, -12.5, 1.15], [3.4, -11.2, 1.0]]
+            : [[-3.4, -11.2, 1.0], [-2.0, -12.5, 1.15], [-0.3, -13.1, 1.35], [1.5, -12.4, 1.55], [3.5, -10.6, 2.0]];
           for (var k = 0; k < 5; k++) {
             var t = document.createElementNS(SVG_NS, 'circle');
             t.setAttribute('cx', String(toes[k][0]));
@@ -3444,20 +3438,13 @@ function showRoomToast(room) {
             'rotate(' + rot.toFixed(1) + ') scale(2)'
           );
           var body = document.createElementNS(SVG_NS, 'path');
-          body.setAttribute('d',
-            'M -5 -6 ' +
-            'C -5 -11 5 -11 5 -6 ' +
-            'C 5 -3 3 -1 3 1 ' +
-            'C 3 3 4 5 4 7 ' +
-            'C 4 11 -4 11 -4 7 ' +
-            'C -4 5 -3 3 -3 1 ' +
-            'C -3 -1 -5 -3 -5 -6 Z'
-          );
+          // Body: wide rounded ball (toes-end) → tapered arch → smaller rounded heel.
+          body.setAttribute('d', 'M -5 -4 C -7 -7 -5 -10 0 -10 C 5 -10 7 -7 5 -4 C 4 -1 3 1 3 4 C 3 6 3.5 8 4 10 C 4 11 -4 11 -4 10 C -3.5 8 -3 6 -3 4 C -3 1 -4 -1 -5 -4 Z');
           foot.appendChild(body);
           var bigToeOnLeft = (side === 1);
           var toes = bigToeOnLeft
-            ? [[-3.6, -11.6, 2.0], [-1.6, -13.4, 1.45], [0.4, -14.0, 1.3], [2.2, -13.5, 1.15], [3.7, -12.4, 1.0]]
-            : [[-3.7, -12.4, 1.0], [-2.2, -13.5, 1.15], [-0.4, -14.0, 1.3], [1.6, -13.4, 1.45], [3.6, -11.6, 2.0]];
+            ? [[-3.5, -10.6, 2.0], [-1.5, -12.4, 1.55], [0.3, -13.1, 1.35], [2.0, -12.5, 1.15], [3.4, -11.2, 1.0]]
+            : [[-3.4, -11.2, 1.0], [-2.0, -12.5, 1.15], [-0.3, -13.1, 1.35], [1.5, -12.4, 1.55], [3.5, -10.6, 2.0]];
           for (var k = 0; k < 5; k++) {
             var toe = document.createElementNS(SVG_NS, 'circle');
             toe.setAttribute('cx', String(toes[k][0]));
@@ -3599,13 +3586,13 @@ function showRoomToast(room) {
           );
           var body = document.createElementNS(SVG_NS, 'path');
           body.setAttribute('d',
-            'M -5 -6 C -5 -11 5 -11 5 -6 C 5 -3 3 -1 3 1 C 3 3 4 5 4 7 C 4 11 -4 11 -4 7 C -4 5 -3 3 -3 1 C -3 -1 -5 -3 -5 -6 Z'
+            'M -5 -4 C -7 -7 -5 -10 0 -10 C 5 -10 7 -7 5 -4 C 4 -1 3 1 3 4 C 3 6 3.5 8 4 10 C 4 11 -4 11 -4 10 C -3.5 8 -3 6 -3 4 C -3 1 -4 -1 -5 -4 Z'
           );
           foot.appendChild(body);
           var bigToeOnLeft = (side === 1);
           var toes = bigToeOnLeft
-            ? [[-3.6, -11.6, 2.0], [-1.6, -13.4, 1.45], [0.4, -14.0, 1.3], [2.2, -13.5, 1.15], [3.7, -12.4, 1.0]]
-            : [[-3.7, -12.4, 1.0], [-2.2, -13.5, 1.15], [-0.4, -14.0, 1.3], [1.6, -13.4, 1.45], [3.6, -11.6, 2.0]];
+            ? [[-3.5, -10.6, 2.0], [-1.5, -12.4, 1.55], [0.3, -13.1, 1.35], [2.0, -12.5, 1.15], [3.4, -11.2, 1.0]]
+            : [[-3.4, -11.2, 1.0], [-2.0, -12.5, 1.15], [-0.3, -13.1, 1.35], [1.5, -12.4, 1.55], [3.5, -10.6, 2.0]];
           for (var k = 0; k < 5; k++) {
             var toe = document.createElementNS(SVG_NS, 'circle');
             toe.setAttribute('cx', String(toes[k][0]));
@@ -3749,13 +3736,13 @@ function showRoomToast(room) {
           );
           var body = document.createElementNS(SVG_NS, 'path');
           body.setAttribute('d',
-            'M -5 -6 C -5 -11 5 -11 5 -6 C 5 -3 3 -1 3 1 C 3 3 4 5 4 7 C 4 11 -4 11 -4 7 C -4 5 -3 3 -3 1 C -3 -1 -5 -3 -5 -6 Z'
+            'M -5 -4 C -7 -7 -5 -10 0 -10 C 5 -10 7 -7 5 -4 C 4 -1 3 1 3 4 C 3 6 3.5 8 4 10 C 4 11 -4 11 -4 10 C -3.5 8 -3 6 -3 4 C -3 1 -4 -1 -5 -4 Z'
           );
           foot.appendChild(body);
           var bigToeOnLeft = (side === 1);
           var toes = bigToeOnLeft
-            ? [[-3.6, -11.6, 2.0], [-1.6, -13.4, 1.45], [0.4, -14.0, 1.3], [2.2, -13.5, 1.15], [3.7, -12.4, 1.0]]
-            : [[-3.7, -12.4, 1.0], [-2.2, -13.5, 1.15], [-0.4, -14.0, 1.3], [1.6, -13.4, 1.45], [3.6, -11.6, 2.0]];
+            ? [[-3.5, -10.6, 2.0], [-1.5, -12.4, 1.55], [0.3, -13.1, 1.35], [2.0, -12.5, 1.15], [3.4, -11.2, 1.0]]
+            : [[-3.4, -11.2, 1.0], [-2.0, -12.5, 1.15], [-0.3, -13.1, 1.35], [1.5, -12.4, 1.55], [3.5, -10.6, 2.0]];
           for (var k = 0; k < 5; k++) {
             var toe = document.createElementNS(SVG_NS, 'circle');
             toe.setAttribute('cx', String(toes[k][0]));
@@ -3855,12 +3842,12 @@ function showRoomToast(room) {
           foot.setAttribute('class', 'footprint');
           foot.setAttribute('transform', 'translate(' + fx.toFixed(1) + ',' + fy.toFixed(1) + ') rotate(' + rot.toFixed(1) + ') scale(2)');
           var body = document.createElementNS(SVG_NS, 'path');
-          body.setAttribute('d', 'M -5 -6 C -5 -11 5 -11 5 -6 C 5 -3 3 -1 3 1 C 3 3 4 5 4 7 C 4 11 -4 11 -4 7 C -4 5 -3 3 -3 1 C -3 -1 -5 -3 -5 -6 Z');
+          body.setAttribute('d', 'M -5 -4 C -7 -7 -5 -10 0 -10 C 5 -10 7 -7 5 -4 C 4 -1 3 1 3 4 C 3 6 3.5 8 4 10 C 4 11 -4 11 -4 10 C -3.5 8 -3 6 -3 4 C -3 1 -4 -1 -5 -4 Z');
           foot.appendChild(body);
           var bigToeOnLeft = (side === 1);
           var toes = bigToeOnLeft
-            ? [[-3.6, -11.6, 2.0], [-1.6, -13.4, 1.45], [0.4, -14.0, 1.3], [2.2, -13.5, 1.15], [3.7, -12.4, 1.0]]
-            : [[-3.7, -12.4, 1.0], [-2.2, -13.5, 1.15], [-0.4, -14.0, 1.3], [1.6, -13.4, 1.45], [3.6, -11.6, 2.0]];
+            ? [[-3.5, -10.6, 2.0], [-1.5, -12.4, 1.55], [0.3, -13.1, 1.35], [2.0, -12.5, 1.15], [3.4, -11.2, 1.0]]
+            : [[-3.4, -11.2, 1.0], [-2.0, -12.5, 1.15], [-0.3, -13.1, 1.35], [1.5, -12.4, 1.55], [3.5, -10.6, 2.0]];
           for (var k = 0; k < 5; k++) {
             var toe = document.createElementNS(SVG_NS, 'circle');
             toe.setAttribute('cx', String(toes[k][0])); toe.setAttribute('cy', String(toes[k][1])); toe.setAttribute('r', String(toes[k][2]));
@@ -3957,12 +3944,12 @@ function showRoomToast(room) {
           foot.setAttribute('class', 'footprint');
           foot.setAttribute('transform', 'translate(' + fx.toFixed(1) + ',' + fy.toFixed(1) + ') rotate(' + rot.toFixed(1) + ') scale(2)');
           var body = document.createElementNS(SVG_NS, 'path');
-          body.setAttribute('d', 'M -5 -6 C -5 -11 5 -11 5 -6 C 5 -3 3 -1 3 1 C 3 3 4 5 4 7 C 4 11 -4 11 -4 7 C -4 5 -3 3 -3 1 C -3 -1 -5 -3 -5 -6 Z');
+          body.setAttribute('d', 'M -5 -4 C -7 -7 -5 -10 0 -10 C 5 -10 7 -7 5 -4 C 4 -1 3 1 3 4 C 3 6 3.5 8 4 10 C 4 11 -4 11 -4 10 C -3.5 8 -3 6 -3 4 C -3 1 -4 -1 -5 -4 Z');
           foot.appendChild(body);
           var bigToeOnLeft = (side === 1);
           var toes = bigToeOnLeft
-            ? [[-3.6, -11.6, 2.0], [-1.6, -13.4, 1.45], [0.4, -14.0, 1.3], [2.2, -13.5, 1.15], [3.7, -12.4, 1.0]]
-            : [[-3.7, -12.4, 1.0], [-2.2, -13.5, 1.15], [-0.4, -14.0, 1.3], [1.6, -13.4, 1.45], [3.6, -11.6, 2.0]];
+            ? [[-3.5, -10.6, 2.0], [-1.5, -12.4, 1.55], [0.3, -13.1, 1.35], [2.0, -12.5, 1.15], [3.4, -11.2, 1.0]]
+            : [[-3.4, -11.2, 1.0], [-2.0, -12.5, 1.15], [-0.3, -13.1, 1.35], [1.5, -12.4, 1.55], [3.5, -10.6, 2.0]];
           for (var k = 0; k < 5; k++) {
             var toe = document.createElementNS(SVG_NS, 'circle');
             toe.setAttribute('cx', String(toes[k][0])); toe.setAttribute('cy', String(toes[k][1])); toe.setAttribute('r', String(toes[k][2]));
