@@ -2886,14 +2886,23 @@ function closeModal(e) {
 }
 
 // ─── Footprint silhouette ──────────────────────────────────────────────────
-// Lorc footprint icon (game-icons.net/lorc/originals/footprint.html, CC BY 3.0).
-// Original artwork is in a 512×512 viewBox with toes at top (~y=18) and heel at
-// bottom (~y=510); we scale it down to ~22 SVG-units and center at origin so
-// each footprint matches what the visit-tracker code expects (toes at -y).
-var LORC_FOOT_PATH = "M246.625 18.375c-11.817-.153-23.918 8.608-29.375 22.438-6.716 17.02-.85 35.28 13.094 40.78 13.943 5.502 30.69-3.822 37.406-20.843 6.716-17.02.85-35.28-13.094-40.78-2.614-1.033-5.304-1.56-8.03-1.595zm74.75 15.938c-10.97.006-22.743 6.024-30.78 16.874-12.25 16.534-11.2 38.06 2.342 48.094 13.544 10.035 34.44 4.754 46.688-11.78 12.25-16.534 11.2-38.06-2.344-48.094-4.654-3.45-10.16-5.097-15.905-5.093zm67.25 37.53c-10.336-.127-21.542 4.263-30.47 12.907-15.87 15.368-18.525 38.344-5.936 51.344 12.587 13 35.66 11.086 51.53-4.28 15.87-15.37 18.526-38.345 5.938-51.345-5.508-5.69-13.024-8.527-21.063-8.626zm-156.438 32.063c-22.51-.28-44.378 6.893-63.5 24C107.65 182.513 48.192 261.012 28.28 386.97 5.023 534.1 186.257 507.523 168.313 428.936c-22.922-100.387 34.13-141.11 108-124.156 32.838 7.54 66.54-4.9 86-40.436 23.402-42.733-7.428-106.817-62.875-139.625-21.61-12.79-44.74-20.534-67.25-20.814zM449.438 134c-10.52.022-21.654 2.82-32.093 8.625-27.837 15.48-40.15 46.51-27.47 69.313 12.682 22.802 45.54 28.73 73.376 13.25 27.837-15.48 40.118-46.51 27.438-69.313-7.926-14.252-23.717-21.91-41.25-21.875z";
+// "Right Footprint" by Benji Park (openclipart.org/detail/26274, Public Domain / CC0).
+// Six sub-paths: one teardrop sole at bottom + five graduated toes in an arc at top.
+// The visual style matches the iOS 👣 emoji — all toes face forward (in walking
+// direction), no weird side-protrusion big-toe like the previous Lorc icon had.
+// Original viewBox is 412×523. The source SVG wraps the paths in a matrix(-1,0,0,1,412,0)
+// flip — we mirror that as a nested <g> so the path data stays bit-identical to source.
+var FOOT_PATHS = [
+  'm257.87 274.39c79.17-8.33 65.87-131.13 2.09-164.58-42.26-22.161-99.31-21.193-137.5-6.25-72.44 28.35-91.669 64.58-102.09 135.42-10.413 70.83 24.49 258.2 108.34 279.16 75 18.75 103.94-17.6 95.83-52.08-8.33-35.42-49.41-81.29-52.08-112.5-6.25-72.92 85.41-79.17 85.41-79.17z',
+  'm398.94 101.5c-21.21 30.8-61.45 39.9-89.88 20.33-28.43-19.58-34.29-60.414-13.08-91.214s61.44-39.898 89.88-20.323c28.42 19.575 34.28 60.412 13.08 91.207z',
+  'm235.45 82.105c-18.15 3.09-35.28-8.655-38.28-26.236-2.99-17.581 8.59-44.006 26.74-47.096 18.15-3.092 35.29 8.655 38.28 26.236 3 17.581-8.59 44.005-26.74 47.096z',
+  'm176.6 69.41c-10.28 14.576-25.34 17.381-40.38 6.774-15.05-10.607-18.59-40.858-8.31-55.435 10.28-14.575 25.33-17.38 40.38-6.773s18.59 40.858 8.31 55.434z',
+  'm113.75 80.36c-3.16 15.209-18.957 24.79-35.293 21.4-16.336-3.392-29.616-26.456-26.459-41.665s18.958-24.79 35.293-21.399c16.339 3.391 29.619 26.455 26.459 41.664z',
+  'm47.389 102.14c9.291 13.86 7.525 31.32-3.943 39.01s-28.296 2.69-37.587-11.17c-9.29-13.86-7.524-31.323 3.944-39.011s28.296-2.688 37.586 11.171z'
+];
 
 // Build one footprint <g> positioned at (fx,fy), rotated to direction of travel,
-// and mirrored for L/R foot via the `side` flag (1 = left foot, -1 = right).
+// and mirrored for L/R foot via the `side` flag.
 function createLorcFoot(fx, fy, rot, side) {
   var SVG_NS = 'http://www.w3.org/2000/svg';
   var foot = document.createElementNS(SVG_NS, 'g');
@@ -2902,17 +2911,21 @@ function createLorcFoot(fx, fy, rot, side) {
     'translate(' + fx.toFixed(1) + ',' + fy.toFixed(1) + ') ' +
     'rotate(' + rot.toFixed(1) + ') scale(2)'
   );
-  // Inner group scales Lorc's 512-unit path down to ~22 units AND horizontally flips
-  // each individual foot about its own longitudinal centerline (negative sx). With
-  // this flip, big toes face OUTWARD (away from path centerline) on both feet — the
-  // stylized cartoon-trail look most users expect from footprint icons.
-  var inner = document.createElementNS(SVG_NS, 'g');
-  var sx = (-0.044 * side).toFixed(4);
-  inner.setAttribute('transform', 'scale(' + sx + ',0.044) translate(-247.5,-264)');
-  var path = document.createElementNS(SVG_NS, 'path');
-  path.setAttribute('d', LORC_FOOT_PATH);
-  inner.appendChild(path);
-  foot.appendChild(inner);
+  // Outer scaler: 412×523 viewBox → ~22 SVG units, centered at origin, mirrored L/R via sx sign.
+  var scaler = document.createElementNS(SVG_NS, 'g');
+  var sx = (0.042 * side).toFixed(4);
+  scaler.setAttribute('transform', 'scale(' + sx + ',0.042) translate(-206,-261.5)');
+  // Replicate the source SVG's matrix(-1,0,0,1,412,0) horizontal flip so the path
+  // data stays exactly as authored.
+  var mirror = document.createElementNS(SVG_NS, 'g');
+  mirror.setAttribute('transform', 'matrix(-1,0,0,1,412,0)');
+  for (var i = 0; i < FOOT_PATHS.length; i++) {
+    var p = document.createElementNS(SVG_NS, 'path');
+    p.setAttribute('d', FOOT_PATHS[i]);
+    mirror.appendChild(p);
+  }
+  scaler.appendChild(mirror);
+  foot.appendChild(scaler);
   return foot;
 }
 
