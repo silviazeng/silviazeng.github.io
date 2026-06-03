@@ -2950,6 +2950,8 @@ function createLorcFoot(fx, fy, rot, side) {
     var startX = 0, startY = 0;
     var dragging = false;
     var didDrag = false;     // flips true once a drag actually happened (used to suppress the click)
+    var pressed = false;     // true between pointerdown and pointerup/cancel; gates pointermove so
+                             // a desktop mouse hovering over the pin doesn't trigger a drag.
 
     function beginDrag() {
       if (dragging) return;
@@ -2983,6 +2985,7 @@ function createLorcFoot(fx, fy, rot, side) {
     });
 
     btn.addEventListener('pointerdown', function(e) {
+      pressed = true;
       startX = e.clientX;
       startY = e.clientY;
       clearTimeout(holdTimer);
@@ -2991,6 +2994,7 @@ function createLorcFoot(fx, fy, rot, side) {
     });
 
     btn.addEventListener('pointermove', function(e) {
+      if (!pressed) return;     // ignore hover-only movement (desktop mouse)
       var dx = e.clientX - startX;
       var dy = e.clientY - startY;
       if (!dragging) {
@@ -3008,6 +3012,7 @@ function createLorcFoot(fx, fy, rot, side) {
     });
 
     function release(e) {
+      pressed = false;
       clearTimeout(holdTimer);
       try { btn.releasePointerCapture(e.pointerId); } catch (err) {}
       endDrag();
