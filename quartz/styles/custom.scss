@@ -427,6 +427,9 @@ footer {
   gap: 14px;
   margin-top: 8px;
 }
+.tg-pillars-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
 
 .tg-pill {
   border: 1px solid var(--color-border);

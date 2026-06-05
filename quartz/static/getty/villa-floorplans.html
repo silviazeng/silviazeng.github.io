@@ -1,0 +1,2433 @@
+<!DOCTYPE html>
+<!--
+================================================================================
+ARTWORK MAPPING TABLE — villa-floorplans.html ↔ villa-guide.html
+================================================================================
+This file (villa-floorplans = "走·地图" 实景导航) shares card IDs with
+villa-guide.html ("读·指南" 完整解读). Long-form deep reads live ONLY in
+villa-guide; this file's modals carry short blurbs.
+
+✅ ID 直接对齐（20 件） — fp 和 guide 的 card-XX 是同一件作品：
+  card-01  胜利青年 · Victorious Youth (G108)
+  card-02  兰斯当赫拉克勒斯 (G108)
+  card-03  盖蒂青年立像 · Getty Kouros (G101)
+  card-04  竖琴演奏者 · Harp Player (G101)
+  card-05  涡形双耳壶 · Volute Krater (G103)
+  card-06  奥德修斯与独眼巨人 (G103)
+  card-07  赫克勒青铜小像 (G110)
+  card-08  青铜镜盖饰件 (G110)
+  card-09  康莫杜斯胸像 (G108)
+  card-10  泛雅典娜赛会奖瓶 (G103)
+  card-11  木乃伊肖像·女子 (G207)
+  card-12  孔雀壁画残片 (G207)
+  card-13  金桂冠 (G208)
+  card-14  蓝色棱纹玻璃碗 (G214)
+  card-15  抱竖琴少年酒杯 (G211)
+  card-16  马科尼亚娜石棺 (G203)
+  card-17  阿基里斯石棺 (G203)
+  card-18  外柱廊 · Outer Peristyle (户外)
+  card-19  内柱廊花园 (户外)
+  card-20  盖蒂别墅全貌 (户外)
+================================================================================
+-->
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>盖蒂别墅 · 展厅楼层导览图</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,700;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* === SHARED PALETTE — kept identical across all four Getty guide pages
+     (center-guide / floorplans / villa-guide / villa-floorplans). === */
+  /* Surfaces */
+  --bg:        #f9f5ea;
+  --bg2:       #f1ead8;
+  --line:      #d8cdb4;
+  /* Text */
+  --ink:       #2a2218;
+  --ink2:      #4a3d2e;
+  --muted:     #6f5a3c;
+  /* Brand */
+  --gold:      #b8923a;
+  --gold-lt:   #f5ecd2;
+  /* Section accents — Villa uses Level/Outdoor mapped to same CSS vars */
+  --west:      #1a4f8c;
+  --west-lt:   #deeaf8;
+  --east:      #7a4010;
+  --east-lt:   #f8ead8;
+  --north:     #2a5c30;
+  --north-lt:  #e3ebdc;
+  --south:     #7a1e14;
+  --south-lt:  #f1d8d3;
+  --outdoor:   #1e4a30;
+  --outdoor-lt:#d4eedd;
+  /* Room-type legend */
+  --room-paintings: #d7e0ec;
+  --room-decarts:   #c8c4d8;
+  --room-changing:  #f0d2a8;
+  --room-special:   #d86b48;
+}
+html { font-size: 24px; }
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 500; }
+.page-header {
+  padding: 3rem 5vw 2rem;
+  border-bottom: 2px solid var(--line);
+  background: var(--bg2);
+}
+.back-link {
+  display: inline-block;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  margin-bottom: 1.5rem;
+  transition: color .15s;
+}
+.back-link:hover { color: var(--west); }
+.page-eyebrow {
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  color: var(--west);
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+  font-weight: 700;
+}
+.page-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.6rem;
+  font-weight: 500;
+  margin: 0 0 .6rem 0;
+  color: var(--ink);
+  line-height: 1.1;
+}
+.page-title em { color: var(--west); }
+.page-desc {
+  color: var(--ink2);
+  font-size: 0.8rem;
+  max-width: 700px;
+  margin: 0;
+}
+
+.floor-section {
+  padding: 3rem 5vw 3.5rem;
+  border-bottom: 1px solid var(--line);
+  scroll-margin-top: 68px;
+}
+.floor-section.alt { background: var(--bg2); }
+.floor-head { margin-bottom: 1.4rem; }
+.floor-label {
+  display: inline-block;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  color: var(--west);
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+.floor-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.7rem;
+  font-weight: 500;
+  margin: 0;
+  color: var(--ink);
+}
+.floor-name em { font-size: 0.62em; font-weight: 500; letter-spacing: 0.01em; white-space: nowrap; }
+.floor-name .yr {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.55em;
+  font-weight: 500;
+  color: var(--gold);
+  letter-spacing: .03em;
+  vertical-align: 0.3em;
+  margin-left: 0.25em;
+  white-space: nowrap;
+}
+.floor-desc {
+  color: var(--muted);
+  font-size: 0.74rem;
+  margin: 0.3rem 0 0 0;
+}
+
+.floor-plan {
+  position: relative;
+  width: 100%;
+  max-width: 760px;
+  margin: 1rem auto 0;
+  background: var(--bg2);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 1rem;
+}
+.floor-section.alt .floor-plan { background: var(--bg); }
+
+.floor-svg-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  background: #f1ead8;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.5rem;
+}
+.floor-svg-wrap .signage-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.floor-svg-wrap .art-pin { width: 10%; border-width: 3.5px; }
+
+.legend-mini {
+  display: inline-flex; flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.85rem;
+  margin-top: 0.6rem;
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 0.68rem;
+  color: var(--ink2);
+}
+.legend-mini .lgm-item { display: inline-flex; align-items: center; gap: 0.32rem; white-space: nowrap; }
+.legend-mini .lgm-swatch {
+  display: inline-block;
+  width: 13px; height: 13px;
+  border-radius: 3px;
+  border: 1.2px solid #1a1a1a;
+  flex: 0 0 auto;
+}
+@media (max-width: 640px) {
+  .legend-mini { font-size: 0.62rem; gap: 0.3rem 0.7rem; }
+  .legend-mini .lgm-swatch { width: 11px; height: 11px; }
+}
+
+.loc-widget {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  margin-top: 0.55rem; padding: 0.18rem 0.5rem;
+  background: rgba(0,0,0,0.03);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 0.7rem;
+  color: var(--ink2);
+  font-family: 'Noto Sans SC', sans-serif;
+  max-width: 100%;
+}
+.loc-widget .loc-pin { display: inline-flex; align-items: center; color: var(--gold); flex-shrink: 0; }
+.loc-widget .loc-pin svg { width: 0.95em; height: 0.95em; display: block; }
+.loc-widget .loc-text {
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.loc-widget .loc-toggle { display: flex; gap: 0.12rem; margin-left: 0.18rem; flex-shrink: 0; }
+.loc-btn {
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.08rem 0.45rem;
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  cursor: pointer;
+  font-family: inherit;
+  transition: background .15s, border-color .15s, color .15s;
+  -webkit-tap-highlight-color: transparent;
+}
+.loc-btn.active { background: var(--west); color: #fff; border-color: var(--west); }
+.loc-btn:hover:not(.active) { border-color: var(--west); color: var(--west); }
+.floor-section.active-pavilion {
+  box-shadow: inset 5px 0 0 var(--gold);
+}
+
+/* ===== Visit tracking ===== */
+.room-tap { fill: transparent; pointer-events: all; cursor: pointer; transition: fill .15s; }
+.room-tap:hover { fill: rgba(184, 146, 58, 0.10); }
+.visit-badge { pointer-events: none; display: none; }
+.visit-badge.shown { display: block; }
+.room-tint { fill: rgba(184, 146, 58, 0); pointer-events: none; transition: fill 0.3s; }
+.room-tint.shown { fill: rgba(184, 146, 58, 0.13); }
+.footprint { fill: #b8923a; opacity: 0.88; }
+.footprint ellipse, .footprint circle { fill: #b8923a; }
+
+/* Room-theme toast */
+.room-toast {
+  position: fixed;
+  top: 1.4rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(-150%);
+  z-index: 10000;
+  max-width: 92vw;
+  padding: 0.85rem 1.3rem;
+  background: var(--west);
+  color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 8px 28px rgba(26, 79, 140, 0.4), 0 2px 8px rgba(0,0,0,0.15);
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 0.78rem;
+  text-align: center;
+  pointer-events: none;
+  opacity: 0;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.room-toast.shown {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+.room-toast .rt-num {
+  display: inline-block;
+  font-family: sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  background: rgba(255,255,255,0.18);
+  color: #fff;
+  padding: 0.18rem 0.55rem;
+  border-radius: 4px;
+  font-size: 0.82rem;
+}
+.room-toast .rt-theme {
+  color: #fff;
+  line-height: 1.4;
+}
+.room-toast .rt-theme em {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 500;
+  color: var(--gold-lt);
+}
+
+.current-marker { pointer-events: none; display: none; }
+.current-marker.shown { display: block; }
+.current-marker .pulse-ring {
+  fill: rgba(168, 62, 42, 0.28);
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: currentPulse 1.8s ease-out infinite;
+}
+@keyframes currentPulse {
+  0%   { transform: scale(0.85); opacity: 0.7; }
+  100% { transform: scale(1.7);  opacity: 0; }
+}
+
+.floor-section.level1 .floor-label { color: var(--west); }
+.floor-section.level1 .art-pin .pin-num { background: var(--west); }
+.floor-section.level2 .floor-label { color: var(--south); }
+.floor-section.level2 .art-pin .pin-num { background: var(--south); }
+
+/* ===== Floor legend ===== */
+.floor-legend {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 0.5rem;
+  margin: 1.4rem auto 0;
+  max-width: 720px;
+  padding: 0 0.5rem;
+  font-family: 'Noto Sans SC', sans-serif;
+}
+.legend-item {
+  padding: 0.55rem 0.9rem;
+  background: var(--bg);
+  border-left: 4px solid var(--west);
+  border-radius: 3px;
+  font-size: 0.74rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.legend-room {
+  font-family: sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--west);
+  font-size: 0.92rem;
+  white-space: nowrap;
+}
+.legend-theme {
+  color: var(--ink2);
+  font-size: 0.76rem;
+  line-height: 1.35;
+}
+.legend-theme em {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  color: var(--muted);
+}
+.floor-section.level2 .legend-item { border-left-color: var(--south); }
+.floor-section.level2 .legend-room { color: var(--south); }
+
+.floor-foot {
+  display: flex; justify-content: center; align-items: center; gap: 0.5rem;
+  margin-top: 1rem;
+  font-size: 0.7rem;
+  color: var(--muted);
+  letter-spacing: 0.12em;
+}
+.floor-foot::before, .floor-foot::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+  max-width: 60px;
+}
+
+.floor-exits {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.2rem;
+  justify-content: center;
+  margin: 0.9rem auto 0;
+  max-width: 720px;
+  padding: 0 0.5rem;
+  font-size: 0.78rem;
+  color: var(--ink2);
+  font-family: 'Noto Sans SC', sans-serif;
+}
+.floor-exits .exit-item { display: inline-flex; align-items: center; gap: 0.4rem; }
+.floor-exits .exit-arrow { font-size: 1.15rem; color: var(--west); font-weight: 700; line-height: 1; }
+.floor-exits strong { font-weight: 700; color: var(--ink); }
+
+/* ===== Art-pin interaction ===== */
+.art-pin {
+  position: absolute;
+  width: 14%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,.35);
+  --drag-x: 0px;
+  --drag-y: 0px;
+  transform: translate(-50%, -50%) translate(var(--drag-x), var(--drag-y));
+  cursor: pointer;
+  padding: 0;
+  background: #fff;
+  transition: transform .18s, box-shadow .18s;
+  z-index: 2;
+  touch-action: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.art-pin img {
+  pointer-events: none;
+  -webkit-user-drag: none;
+  user-select: none;
+  -webkit-user-select: none;
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+.art-pin:hover {
+  transform: translate(-50%, -50%) translate(var(--drag-x), var(--drag-y)) scale(1.18);
+  box-shadow: 0 4px 14px rgba(0,0,0,.45);
+  z-index: 3;
+}
+.art-pin.dragging {
+  transition: none !important;
+  z-index: 10;
+  box-shadow: 0 6px 20px rgba(0,0,0,.45);
+  cursor: grabbing;
+}
+.art-pin.dragging:hover {
+  transform: translate(-50%, -50%) translate(var(--drag-x), var(--drag-y));
+}
+.art-pin.snap-back {
+  transition: transform .28s cubic-bezier(.2, .8, .3, 1.1), box-shadow .28s ease;
+}
+.art-pin .pin-num {
+  position: absolute;
+  top: -6px; right: -6px;
+  width: 22px; height: 22px;
+  background: var(--west);
+  color: #fff;
+  border-radius: 50%;
+  font-size: 0.55rem;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  border: 2px solid #fff;
+}
+.floor-svg-wrap .art-pin .pin-num { display: none; }
+
+/* ===== Read-aloud button ===== */
+.art-read-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 0.4rem 1.6rem 1.1rem;
+  padding: 0.7rem 1.3rem;
+  background: var(--gold);
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  font-family: 'Noto Sans SC', sans-serif;
+  box-shadow: 0 2px 8px rgba(184, 146, 58, 0.40);
+  transition: background .15s, transform .12s, box-shadow .15s;
+}
+.art-read-btn:hover {
+  background: #a08130;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(184, 146, 58, 0.55);
+}
+.art-read-btn:active { transform: translateY(0); }
+.art-read-btn.playing {
+  background: var(--south);
+  box-shadow: 0 2px 8px rgba(122, 30, 20, 0.45);
+  animation: readPulse 1.6s ease-in-out infinite;
+}
+.art-read-btn .ar-svg {
+  width: 1.4em;
+  height: 1.4em;
+  flex-shrink: 0;
+  fill: currentColor;
+}
+@keyframes readPulse {
+  0%, 100% { box-shadow: 0 3px 10px rgba(122, 30, 20, 0.45); }
+  50%      { box-shadow: 0 3px 18px rgba(122, 30, 20, 0.75); }
+}
+
+/* ===== Outdoor section (text-only, no SVG) ===== */
+.outdoor-section {
+  padding: 2.5rem 5vw 3rem;
+  border-bottom: 1px solid var(--line);
+  scroll-margin-top: 68px;
+}
+.outdoor-section .floor-label { color: var(--outdoor); }
+.outdoor-desc {
+  color: var(--ink2);
+  font-size: 0.82rem;
+  line-height: 1.7;
+  max-width: 680px;
+  margin: 0.6rem 0 0 0;
+}
+
+/* ===== Modal ===== */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(20, 15, 8, 0.78);
+  z-index: 1000;
+  display: none;
+  align-items: flex-start;
+  justify-content: center;
+  overflow-y: auto;
+  padding: 2rem 1rem;
+  backdrop-filter: blur(4px);
+}
+.modal-overlay.open { display: flex; }
+.modal-content {
+  background: var(--bg);
+  max-width: 640px;
+  width: 100%;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,.5);
+}
+.modal-close {
+  position: absolute;
+  top: 8px; right: 8px;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.95);
+  border: none;
+  font-size: 1.55rem;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--ink);
+  z-index: 10;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 2px 10px rgba(0,0,0,.22);
+  -webkit-tap-highlight-color: transparent;
+}
+.modal-img { width: 100%; max-height: 360px; overflow: hidden; background: #1a1a1a; }
+.modal-img img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.modal-body { padding: 1.4rem 1.6rem 2rem; }
+.modal-room {
+  display: inline-block;
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  color: var(--west);
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+  text-transform: uppercase;
+}
+.modal-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.55rem;
+  font-weight: 500;
+  margin: 0 0 .5rem 0;
+  line-height: 1.2;
+}
+.modal-meta {
+  color: var(--muted);
+  font-size: 0.72rem;
+  margin-bottom: 0.9rem;
+  font-style: italic;
+}
+.modal-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.1rem; }
+.tag {
+  display: inline-block;
+  padding: 0.18rem 0.7rem;
+  border-radius: 3px;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+.tag.movement { background: var(--west-lt); color: var(--west); }
+.tag.price { background: var(--gold-lt); color: #846720; }
+.modal-desc {
+  color: var(--ink2);
+  font-size: 0.82rem;
+  line-height: 1.7;
+  margin-bottom: 1.1rem;
+}
+
+@media (max-width: 640px) {
+  html { font-size: 21px; }
+  .page-header { padding: 1rem 5vw 0.5rem; }
+  .page-title { font-size: 2rem; }
+  .loc-widget { display: inline-flex; flex-wrap: nowrap; align-items: center; gap: 0.3rem; padding: 0.15rem 0.5rem; margin-top: 0.35rem; font-size: 0.65rem; max-width: calc(100% - 8vw); }
+  .loc-widget .loc-text { max-width: 8.5em; }
+  .loc-btn { padding: 0.06rem 0.4rem; font-size: 0.55rem; }
+  .loc-widget .loc-text { min-width: 0; flex: 0 1 auto; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .loc-widget .loc-toggle { flex: 0 0 auto; }
+  .loc-widget .loc-btn { white-space: nowrap; flex-shrink: 0; min-width: 0; }
+  .floor-name { font-size: 1.5rem; line-height: 1.15; }
+  .page-title,
+  .floor-name { word-break: keep-all; overflow-wrap: break-word; }
+  .floor-section { padding: 1.25rem 0 2rem; }
+  .floor-head { padding: 0 4vw; }
+  .floor-foot { padding: 0 4vw; }
+  .floor-plan {
+    max-width: 100%;
+    padding: 0;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+  }
+  .floor-svg-wrap {
+    max-width: 100%;
+    padding: 0;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+  }
+  .art-pin { width: 16%; border-width: 2.5px; }
+  .floor-svg-wrap .art-pin { width: 12%; border-width: 3px; }
+  .art-pin .pin-num { width: 20px; height: 20px; font-size: 0.55rem; }
+  .modal-body { padding: 1.1rem 1.2rem 1.6rem; }
+  .modal-title { font-size: 1.3rem; }
+  .modal-img { max-height: 280px; }
+  .artwork-card .art-img { max-height: 280px !important; }
+  .artwork-card .art-meta { font-style: normal !important; }
+  .floor-legend { padding: 0 4vw; max-width: 100%; grid-template-columns: 1fr; gap: 0.4rem; }
+  .outdoor-section { padding: 1.5rem 4vw 2rem; }
+}
+
+/* ===== MOBILE NAV ===== */
+.sticky-top { display: none; }
+.action-bar { display: none; }
+
+.mode-toggle {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 110;
+  display: flex; gap: 6px; padding: 6px 10px;
+  padding-top: calc(6px + env(safe-area-inset-top));
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+  min-height: 48px;
+  box-sizing: border-box;
+  align-items: stretch;
+}
+.mt-pill {
+  flex: 1; min-height: 40px;
+  padding: 6px 10px;
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem;
+  text-decoration: none;
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  background: rgba(184,146,58,0.08);
+  border: 1.5px solid transparent;
+  border-radius: 9px;
+  -webkit-tap-highlight-color: transparent;
+}
+.mt-pill .mt-icon { font-size: 1rem; line-height: 1; }
+.mt-pill:hover { color: var(--gold); background: rgba(184,146,58,0.15); }
+.mt-pill.active {
+  background: var(--gold); color: #fff; border-color: var(--gold);
+  box-shadow: 0 2px 6px rgba(184,146,58,0.35);
+}
+
+.sticky-top {
+  position: fixed;
+  top: calc(48px + env(safe-area-inset-top));
+  left: 0; right: 0;
+  min-height: 60px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+  align-items: center;
+  gap: 0.45rem;
+  padding-left: 4vw;
+  padding-right: 4vw;
+  z-index: 80;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.sticky-top::-webkit-scrollbar { display: none; }
+
+.st-chip {
+  flex: 0 0 auto;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 60px;
+  height: 48px;
+  padding: 3px 7px;
+  border-radius: 11px;
+  background: #fff;
+  border: 2px solid rgba(26,26,26,.18);
+  font-weight: 700;
+  color: var(--ink);
+  text-decoration: none;
+  line-height: 1.05;
+  font-family: 'Noto Sans SC', sans-serif;
+  transition: border-color .15s, background .15s, color .15s;
+}
+.st-chip .stc-pav { font-size: 0.55rem; color: var(--muted); font-weight: 500; letter-spacing: 0.02em; }
+.st-chip .stc-lvl { font-size: 0.82rem; }
+.st-chip.west { border-left: 5px solid var(--west); }
+.st-chip.south { border-left: 5px solid var(--south); }
+.st-chip.outdoor { border-left: 5px solid var(--outdoor); }
+.st-chip.active.west {
+  background: var(--west-lt);
+  border-color: var(--west);
+  border-left-width: 5px;
+  color: var(--west);
+}
+.st-chip.active.south {
+  background: var(--south-lt);
+  border-color: var(--south);
+  border-left-width: 5px;
+  color: var(--south);
+}
+.st-chip.active.outdoor {
+  background: var(--outdoor-lt);
+  border-color: var(--outdoor);
+  border-left-width: 5px;
+  color: var(--outdoor);
+}
+
+/* Bottom action bar */
+.action-bar {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: 84px;
+  background: var(--bg);
+  border-top: 2px solid var(--gold);
+  box-shadow: 0 -4px 12px rgba(0,0,0,.08);
+  align-items: center;
+  justify-content: space-around;
+  padding: 4px 8px env(safe-area-inset-bottom);
+  z-index: 80;
+}
+.ab-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  background: none;
+  border: 0;
+  color: var(--ink);
+  font-family: 'Noto Sans SC', inherit;
+  font-weight: 600;
+  font-size: 0.72rem;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 14px;
+  min-width: 80px;
+  min-height: 72px;
+  transition: color .15s, opacity .15s;
+  -webkit-tap-highlight-color: transparent;
+}
+.ab-btn[disabled] {
+  cursor: not-allowed;
+  opacity: 0.35;
+  pointer-events: none;
+}
+.ab-btn[disabled] .ab-icon {
+  background: rgba(26,26,26,.06);
+  color: var(--muted);
+}
+.ab-btn .ab-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: rgba(184,146,58,.18);
+  color: var(--gold);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .15s, color .15s;
+}
+.ab-btn .ab-icon svg { width: 24px; height: 24px; display: block; }
+.ab-btn:hover { color: var(--west); }
+.ab-btn:hover .ab-icon { background: var(--west-lt); color: var(--west); }
+.ab-btn.active { color: var(--west); }
+.ab-btn.active .ab-icon { background: var(--west); color: #fff; }
+
+/* Art sheet */
+.art-sheet-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.5);
+  z-index: 89;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s;
+}
+.art-sheet-overlay.shown { opacity: 1; pointer-events: auto; }
+.art-sheet {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: 75vh;
+  background: var(--bg);
+  border-top-left-radius: 18px;
+  border-top-right-radius: 18px;
+  box-shadow: 0 -10px 30px rgba(0,0,0,.25);
+  transform: translateY(100%);
+  transition: transform .28s cubic-bezier(.2,.85,.4,1);
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+}
+.art-sheet.shown { transform: translateY(0); }
+.ash-handle {
+  width: 40px; height: 4px; background: rgba(26,26,26,.25);
+  border-radius: 4px; margin: 9px auto 6px;
+}
+.ash-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.2rem 1rem 0.7rem;
+  border-bottom: 1px solid var(--line);
+}
+.ash-head h3 {
+  margin: 0;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: var(--ink);
+}
+.ash-close {
+  background: none; border: 0;
+  color: var(--gold); font-size: 0.8rem; font-weight: 700;
+  cursor: pointer; padding: 0.4rem 0.7rem;
+  letter-spacing: 0.08em;
+  font-family: 'Noto Sans SC', sans-serif;
+}
+.ash-list {
+  flex: 1; overflow-y: auto;
+  padding: 0.4rem 0 1rem;
+  -webkit-overflow-scrolling: touch;
+}
+.ash-floor-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  color: var(--west);
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: 0.8rem 1.1rem 0.3rem;
+  background: rgba(184,146,58,.06);
+  font-family: 'Noto Sans SC', sans-serif;
+}
+.ash-floor-label.south { color: var(--south); }
+.ash-floor-label.outdoor { color: var(--outdoor); }
+.ash-item {
+  display: flex; align-items: center; gap: 0.6rem;
+  width: 100%; text-align: left;
+  background: none; border: 0;
+  border-bottom: 1px solid var(--line);
+  padding: 0.85rem 1.1rem;
+  color: var(--ink);
+  font-size: 0.78rem;
+  font-family: 'Noto Sans SC', sans-serif;
+  cursor: pointer;
+  font-weight: 500;
+  line-height: 1.35;
+  -webkit-tap-highlight-color: transparent;
+}
+.ash-item:hover { background: var(--bg2); }
+.ashi-room {
+  flex: 0 0 auto;
+  font-size: 0.6rem; color: var(--gold);
+  font-weight: 700; letter-spacing: 0.08em;
+  background: rgba(184,146,58,.12);
+  padding: 0.18rem 0.45rem;
+  border-radius: 3px;
+}
+.ashi-thumb {
+  flex: 0 0 auto;
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,.2);
+  background: var(--bg2);
+}
+.ashi-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.ashi-body .ashi-room { align-self: flex-start; }
+.ashi-title { line-height: 1.3; }
+
+@media (max-width: 768px) {
+  body { padding-top: calc(108px + env(safe-area-inset-top)); padding-bottom: 88px; }
+  .sticky-top { display: flex; }
+  .action-bar { display: flex; }
+  .page-header .back-link { display: none; }
+}
+
+#card-pool { display: none; }
+</style>
+</head>
+<body>
+
+<!-- ===== MODE TOGGLE ===== -->
+<nav class="mode-toggle" aria-label="模式切换">
+  <a class="mt-pill"        href="villa-guide.html"><span class="mt-icon">📖</span>读 · 指南</a>
+  <a class="mt-pill active" href="villa-floorplans.html" aria-current="page"><span class="mt-icon">📍</span>走 · 地图</a>
+</nav>
+
+<!-- ===== STICKY TOP (mobile nav) ===== -->
+<nav class="sticky-top" aria-label="楼层切换">
+  <a class="st-chip west active"  href="#level1"  data-floor="level1"><span class="stc-pav">别墅</span><span class="stc-lvl">1F</span></a>
+  <a class="st-chip south"        href="#level2"  data-floor="level2"><span class="stc-pav">别墅</span><span class="stc-lvl">2F</span></a>
+  <a class="st-chip outdoor"      href="#outdoor" data-floor="outdoor"><span class="stc-pav">别墅</span><span class="stc-lvl">花园</span></a>
+</nav>
+
+<header class="page-header">
+  <a href="villa-guide.html" class="back-link">← 返回完整指南</a>
+  <div class="loc-widget" id="locWidget">
+    <span class="loc-pin" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-7-7-7-12a7 7 0 0 1 14 0c0 5-7 12-7 12z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
+    <span class="loc-text" id="locText">检测中…</span>
+    <div class="loc-toggle">
+      <button class="loc-btn active" data-mode="auto">自动</button>
+      <button class="loc-btn" data-mode="level1">一楼</button>
+      <button class="loc-btn" data-mode="level2">二楼</button>
+    </div>
+  </div>
+</header>
+
+<!-- ===== 一楼 ===== -->
+<section class="floor-section level1" id="level1">
+  <div class="floor-head">
+    <span class="floor-label">别墅一楼 · Level 1</span>
+    <h2 class="floor-name">古希腊与罗马艺术 <span class="yr">公元前3000–公元400年</span></h2>
+    <p class="floor-desc">一楼围绕内柱廊花园展开——Gallery 108 赫拉克勒斯神殿集中镇馆雕塑，Gallery 103–106 展示希腊黑绘与红绘陶器，Gallery 110 为伊特鲁里亚专区。</p>
+    <div class="legend-mini" aria-label="展厅类别图例">
+      <span class="lgm-item"><span class="lgm-swatch" style="background:var(--room-paintings);"></span>展厅</span>
+      <span class="lgm-item"><span class="lgm-swatch" style="background:#ede4cf;"></span>中庭</span>
+      <span class="lgm-item"><span class="lgm-swatch" style="background:#bfa686;"></span>走廊</span>
+    </div>
+  </div>
+  <div class="floor-plan">
+    <div class="floor-svg-wrap">
+      <svg viewBox="20 20 920 800" xmlns="http://www.w3.org/2000/svg" class="signage-svg" preserveAspectRatio="xMidYMid meet">
+        <!-- Background -->
+        <rect width="1000" height="900" fill="#f5f0e0"/>
+
+        <!-- ===== AREA FILLS ===== -->
+        <!-- Gallery rooms -->
+        <rect x="60"  y="60"  width="260" height="220" fill="var(--room-paintings)"/>  <!-- G110 Etruscan -->
+        <rect x="500" y="60"  width="380" height="320" fill="var(--room-paintings)"/>  <!-- G108 Temple -->
+        <rect x="60"  y="380" width="260" height="200" fill="var(--room-paintings)"/>  <!-- G106 Pottery -->
+        <rect x="500" y="480" width="380" height="200" fill="var(--room-paintings)"/>  <!-- G103 Pottery -->
+        <rect x="220" y="680" width="280" height="100" fill="var(--room-paintings)"/>  <!-- G101 Entry -->
+
+        <!-- Corridors (beige) -->
+        <rect x="320" y="60"  width="180" height="100" fill="#bfa686"/>  <!-- top corridor -->
+        <rect x="60"  y="280" width="260" height="100" fill="#bfa686"/>  <!-- left corridor -->
+        <rect x="500" y="380" width="380" height="100" fill="#bfa686"/>  <!-- right corridor -->
+        <rect x="320" y="580" width="180" height="100" fill="#bfa686"/>  <!-- bottom corridor -->
+
+        <!-- Inner Peristyle Garden (cream courtyard) -->
+        <rect x="320" y="160" width="180" height="420" fill="#ede4cf"/>
+
+        <!-- ===== OUTER WALLS ===== -->
+        <g fill="none" stroke="#1a1a1a" stroke-width="5" stroke-linejoin="miter">
+          <!-- Top wall -->
+          <line x1="60"  y1="60"  x2="880" y2="60"/>
+          <!-- Right wall -->
+          <line x1="880" y1="60"  x2="880" y2="680"/>
+          <!-- Right-bottom step to G103 bottom -->
+          <line x1="880" y1="680" x2="500" y2="680"/>
+          <!-- Step down to corridor level -->
+          <line x1="500" y1="680" x2="500" y2="780"/>
+          <!-- Bottom wall right of entry -->
+          <line x1="500" y1="780" x2="380" y2="780"/>
+          <!-- Entry gap: x=330-380 -->
+          <!-- Bottom wall left of entry -->
+          <line x1="330" y1="780" x2="220" y2="780"/>
+          <!-- Step up from G101 to G106 -->
+          <line x1="220" y1="780" x2="220" y2="680"/>
+          <line x1="220" y1="680" x2="60"  y2="680"/>
+          <!-- Left wall bottom -->
+          <line x1="60"  y1="680" x2="60"  y2="580"/>
+          <!-- Left wall top -->
+          <line x1="60"  y1="580" x2="60"  y2="60"/>
+        </g>
+
+        <!-- ===== INTERNAL WALLS with door gaps ===== -->
+        <g fill="none" stroke="#1a1a1a" stroke-width="5" stroke-linecap="butt">
+          <!-- G110 bottom at y=280 (door at x=140-180) -->
+          <line x1="60"  y1="280" x2="140" y2="280"/>
+          <line x1="180" y1="280" x2="320" y2="280"/>
+
+          <!-- G106 top at y=380 (door at x=140-180) -->
+          <line x1="60"  y1="380" x2="140" y2="380"/>
+          <line x1="180" y1="380" x2="320" y2="380"/>
+
+          <!-- G110 right / top corridor left at x=320, y=60-160 (door at y=100-140) -->
+          <line x1="320" y1="60"  x2="320" y2="100"/>
+          <line x1="320" y1="140" x2="320" y2="160"/>
+
+          <!-- Courtyard left at x=320, y=160-580 (no doors, solid) -->
+          <line x1="320" y1="160" x2="320" y2="580"/>
+
+          <!-- G108 left / top corridor right at x=500, y=60-160 (door at y=100-140) -->
+          <line x1="500" y1="60"  x2="500" y2="100"/>
+          <line x1="500" y1="140" x2="500" y2="160"/>
+
+          <!-- Courtyard right at x=500, y=160-580 (no doors) -->
+          <line x1="500" y1="160" x2="500" y2="380"/>
+
+          <!-- G108 bottom at y=380 (door at x=640-680) -->
+          <line x1="500" y1="380" x2="640" y2="380"/>
+          <line x1="680" y1="380" x2="880" y2="380"/>
+
+          <!-- G103 top at y=480 (door at x=640-680) -->
+          <line x1="500" y1="480" x2="640" y2="480"/>
+          <line x1="680" y1="480" x2="880" y2="480"/>
+
+          <!-- Corridor right at x=500, y=480-580 -->
+          <line x1="500" y1="480" x2="500" y2="580"/>
+
+          <!-- G106 bottom at y=580 (solid with G101/corridor) -->
+          <line x1="60"  y1="580" x2="320" y2="580"/>
+
+          <!-- Bottom corridor bottom at y=680 -->
+          <line x1="320" y1="680" x2="500" y2="680"/>
+
+          <!-- G101 top wall (door at x=330-370) -->
+          <line x1="220" y1="680" x2="330" y2="680"/>
+          <line x1="370" y1="680" x2="500" y2="680"/>
+        </g>
+
+        <!-- ===== ROOM LABELS ===== -->
+        <g pointer-events="none" font-family="sans-serif" font-size="42" font-weight="500" fill="#1a1a1a">
+          <text x="305" y="105" text-anchor="end">G 110</text>
+          <text x="866" y="105" text-anchor="end">G 108</text>
+          <text x="305" y="425" text-anchor="end">G 106</text>
+          <text x="866" y="525" text-anchor="end">G 103</text>
+          <text x="486" y="725" text-anchor="end">G 101</text>
+        </g>
+
+        <!-- Courtyard label -->
+        <g pointer-events="none" font-family="sans-serif" font-size="26" font-weight="400" fill="#8c7a5a">
+          <text x="410" y="360" text-anchor="middle">内柱廊</text>
+          <text x="410" y="395" text-anchor="middle">花园</text>
+        </g>
+
+        <!-- ===== STAIRS + ELEVATOR (in bottom corridor) ===== -->
+        <g pointer-events="none">
+          <rect x="340" y="600" width="80" height="60" fill="#ffffff" stroke="#1a1a1a" stroke-width="3"/>
+          <path d="M 352 650 L 365 650 L 365 636 L 378 636 L 378 622 L 391 622 L 391 608 L 408 608" fill="none" stroke="#1a1a1a" stroke-width="2.5"/>
+        </g>
+
+        <!-- Entry arrow -->
+        <g pointer-events="none">
+          <line x1="355" y1="795" x2="355" y2="840" stroke="#1a1a1a" stroke-width="3"/>
+          <polygon points="355,850 345,835 365,835" fill="#1a1a1a"/>
+          <text x="355" y="880" font-family="sans-serif" font-size="28" font-weight="700" fill="#1a1a1a" text-anchor="middle">入口</text>
+        </g>
+
+        <!-- ===== Room tints ===== -->
+        <g class="room-tints" pointer-events="none">
+          <rect class="room-tint" data-room="G108" x="500" y="60"  width="380" height="320"/>
+          <rect class="room-tint" data-room="G110" x="60"  y="60"  width="260" height="220"/>
+          <rect class="room-tint" data-room="G106" x="60"  y="380" width="260" height="200"/>
+          <rect class="room-tint" data-room="G103" x="500" y="480" width="380" height="200"/>
+          <rect class="room-tint" data-room="G101" x="220" y="680" width="280" height="100"/>
+        </g>
+
+        <!-- ===== Footsteps ===== -->
+        <g class="footsteps" id="footsteps-l1" pointer-events="none"></g>
+
+        <!-- ===== Room tap targets ===== -->
+        <g class="room-taps">
+          <rect class="room-tap" data-room="G108" x="500" y="60"  width="380" height="320"/>
+          <rect class="room-tap" data-room="G110" x="60"  y="60"  width="260" height="220"/>
+          <rect class="room-tap" data-room="G106" x="60"  y="380" width="260" height="200"/>
+          <rect class="room-tap" data-room="G103" x="500" y="480" width="380" height="200"/>
+          <rect class="room-tap" data-room="G101" x="220" y="680" width="280" height="100"/>
+        </g>
+
+        <!-- ===== Current marker ===== -->
+        <g class="current-marker" id="currentMarkerL1">
+          <circle class="pulse-ring" r="22" />
+          <circle r="14" fill="#a83e2a" stroke="#fff" stroke-width="3"/>
+        </g>
+
+        <!-- ===== Visit badges ===== -->
+        <g class="visit-badges" font-family="sans-serif" font-size="17" font-weight="700">
+          <g class="visit-badge" data-room="G108" transform="translate(525, 85)">
+            <circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
+            <text y="6" text-anchor="middle" fill="#fff">1</text>
+          </g>
+          <g class="visit-badge" data-room="G110" transform="translate(85, 85)">
+            <circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
+            <text y="6" text-anchor="middle" fill="#fff">1</text>
+          </g>
+          <g class="visit-badge" data-room="G106" transform="translate(85, 405)">
+            <circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
+            <text y="6" text-anchor="middle" fill="#fff">1</text>
+          </g>
+          <g class="visit-badge" data-room="G103" transform="translate(525, 505)">
+            <circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
+            <text y="6" text-anchor="middle" fill="#fff">1</text>
+          </g>
+          <g class="visit-badge" data-room="G101" transform="translate(245, 705)">
+            <circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
+            <text y="6" text-anchor="middle" fill="#fff">1</text>
+          </g>
+        </g>
+      </svg>
+
+      <!-- Art pins -->
+      <button class="art-pin" data-card="card-01" style="left:65%;top:15%" title="胜利青年 · Victorious Youth · G108">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Getty_Villa_-_Victorious_Youth_01.JPG/800px-Getty_Villa_-_Victorious_Youth_01.JPG" alt="胜利青年">
+        <span class="pin-num">01</span>
+      </button>
+      <button class="art-pin" data-card="card-02" style="left:79%;top:22%" title="兰斯当赫拉克勒斯 · G108">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Lansdowne_Herakles_Getty_Museum.jpg/800px-Lansdowne_Herakles_Getty_Museum.jpg" alt="兰斯当赫拉克勒斯">
+        <span class="pin-num">02</span>
+      </button>
+      <button class="art-pin" data-card="card-09" style="left:89%;top:32%" title="康莫杜斯胸像 · G108">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Bust_of_Emperor_Commodus%2C_front_-_Getty_Museum_%2892.SA.48%29.jpg/800px-Bust_of_Emperor_Commodus%2C_front_-_Getty_Museum_%2892.SA.48%29.jpg" alt="康莫杜斯胸像">
+        <span class="pin-num">09</span>
+      </button>
+      <button class="art-pin" data-card="card-07" style="left:12%;top:11%" title="赫克勒青铜小像 · G110">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Getty_Villa_-_Collection_%285305267670%29.jpg/800px-Getty_Villa_-_Collection_%285305267670%29.jpg" alt="赫克勒青铜小像">
+        <span class="pin-num">07</span>
+      </button>
+      <button class="art-pin" data-card="card-08" style="left:24%;top:19%" title="青铜镜盖饰件 · G110">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Etruscan_Bronze_Mirror-Lid_Applique%2C_c._100_BC_%2810456881016%29.jpg/800px-Etruscan_Bronze_Mirror-Lid_Applique%2C_c._100_BC_%2810456881016%29.jpg" alt="青铜镜盖饰件">
+        <span class="pin-num">08</span>
+      </button>
+      <button class="art-pin" data-card="card-05" style="left:63%;top:62%" title="涡形双耳壶 · G103">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Greek_Volute_Krater_Mixing_Vessel_with_Mythological_Scenes%2C_Athens%2C_c._490_BC_%2810455244424%29.jpg/800px-Greek_Volute_Krater_Mixing_Vessel_with_Mythological_Scenes%2C_Athens%2C_c._490_BC_%2810455244424%29.jpg" alt="涡形双耳壶">
+        <span class="pin-num">05</span>
+      </button>
+      <button class="art-pin" data-card="card-06" style="left:78%;top:66%" title="奥德修斯与独眼巨人 · G103">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Greek_Krater_Mixing_Vessel_with_Odysseus_Escaping_from_Polyphemos%27s_Cave%2C_Athens%2C_550-500_BC_%2810455076956%29.jpg/800px-Greek_Krater_Mixing_Vessel_with_Odysseus_Escaping_from_Polyphemos%27s_Cave%2C_Athens%2C_550-500_BC_%2810455076956%29.jpg" alt="奥德修斯与独眼巨人">
+        <span class="pin-num">06</span>
+      </button>
+      <button class="art-pin" data-card="card-10" style="left:88%;top:61%" title="泛雅典娜赛会奖瓶 · G103">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Attic_panathenaic_amphora_with_lid_by_Marsyas_Painter%2C_side_A_-_Getty_Museum_%2879.AE.147%29.jpg/800px-Attic_panathenaic_amphora_with_lid_by_Marsyas_Painter%2C_side_A_-_Getty_Museum_%2879.AE.147%29.jpg" alt="泛雅典娜赛会奖瓶">
+        <span class="pin-num">10</span>
+      </button>
+      <button class="art-pin" data-card="card-03" style="left:29%;top:85%" title="盖蒂青年立像 · G101">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Kouros_-_Getty_Museum_%2885.AA.40%29.jpg/800px-Kouros_-_Getty_Museum_%2885.AA.40%29.jpg" alt="盖蒂青年立像">
+        <span class="pin-num">03</span>
+      </button>
+      <button class="art-pin" data-card="card-04" style="left:43%;top:85%" title="竖琴演奏者 · G101">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Getty_Villa_-_Harp_player_-_inv._85.AA.103.JPG/800px-Getty_Villa_-_Harp_player_-_inv._85.AA.103.JPG" alt="竖琴演奏者">
+        <span class="pin-num">04</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="floor-legend">
+    <div class="legend-item"><span class="legend-room">G 108</span><span class="legend-theme">赫拉克勒斯神殿 · <em>Temple of Heracles</em></span></div>
+    <div class="legend-item"><span class="legend-room">G 110</span><span class="legend-theme">伊特鲁里亚 · <em>Etruscan Art</em></span></div>
+    <div class="legend-item"><span class="legend-room">G 103</span><span class="legend-theme">希腊陶器 · <em>Greek Pottery</em></span></div>
+    <div class="legend-item"><span class="legend-room">G 106</span><span class="legend-theme">希腊陶器 · <em>Greek Pottery</em></span></div>
+    <div class="legend-item"><span class="legend-room">G 101</span><span class="legend-theme">古希腊与罗马 · <em>Greek &amp; Roman</em></span></div>
+  </div>
+
+  <div class="floor-exits">
+    <span class="exit-item"><span class="exit-arrow">↑</span> <strong>二楼</strong>：楼梯在走廊</span>
+    <span class="exit-item"><span class="exit-arrow">↓</span> <strong>入口</strong>：经外柱廊</span>
+  </div>
+  <div class="floor-foot">一楼 · Level 1</div>
+</section>
+
+<!-- ===== 二楼 ===== -->
+<section class="floor-section level2 alt" id="level2">
+  <div class="floor-head">
+    <span class="floor-label">别墅二楼 · Level 2</span>
+    <h2 class="floor-name">壁画 · 珠宝 · 玻璃 · 石棺 <span class="yr">公元前500–公元400年</span></h2>
+    <p class="floor-desc">二楼围绕内柱廊阳台——Gallery 207 展出法尤姆木乃伊肖像与壁画，Gallery 208 收藏希腊化黄金珠宝，Gallery 203 陈列罗马叙事浮雕石棺，Gallery 211–214 展示陶器与玻璃。</p>
+    <div class="legend-mini" aria-label="展厅类别图例">
+      <span class="lgm-item"><span class="lgm-swatch" style="background:var(--room-paintings);"></span>展厅</span>
+      <span class="lgm-item"><span class="lgm-swatch" style="background:#ede4cf;"></span>阳台</span>
+      <span class="lgm-item"><span class="lgm-swatch" style="background:#bfa686;"></span>走廊</span>
+    </div>
+  </div>
+  <div class="floor-plan">
+    <div class="floor-svg-wrap">
+      <svg viewBox="20 20 900 680" xmlns="http://www.w3.org/2000/svg" class="signage-svg" preserveAspectRatio="xMidYMid meet">
+        <!-- Background -->
+        <rect width="1000" height="800" fill="#f5f0e0"/>
+
+        <!-- ===== AREA FILLS ===== -->
+        <rect x="60"  y="60"  width="300" height="220" fill="var(--room-paintings)"/>  <!-- G207 Portraits -->
+        <rect x="60"  y="340" width="300" height="180" fill="var(--room-paintings)"/>  <!-- G208 Jewelry -->
+        <rect x="540" y="60"  width="340" height="280" fill="var(--room-paintings)"/>  <!-- G203 Sarcophagi -->
+        <rect x="540" y="400" width="170" height="200" fill="var(--room-paintings)"/>  <!-- G211 Ceramics -->
+        <rect x="710" y="400" width="170" height="200" fill="var(--room-paintings)"/>  <!-- G214 Glass -->
+
+        <!-- Corridors -->
+        <rect x="360" y="60"  width="180" height="60"  fill="#bfa686"/>
+        <rect x="60"  y="280" width="300" height="60"  fill="#bfa686"/>
+        <rect x="540" y="340" width="340" height="60"  fill="#bfa686"/>
+        <rect x="360" y="520" width="180" height="80"  fill="#bfa686"/>
+
+        <!-- Balcony / courtyard overlook (cream) -->
+        <rect x="360" y="120" width="180" height="400" fill="#ede4cf"/>
+
+        <!-- ===== OUTER WALLS ===== -->
+        <g fill="none" stroke="#1a1a1a" stroke-width="5" stroke-linejoin="miter">
+          <line x1="60"  y1="60"  x2="880" y2="60"/>
+          <line x1="880" y1="60"  x2="880" y2="600"/>
+          <line x1="880" y1="600" x2="540" y2="600"/>
+          <line x1="540" y1="600" x2="540" y2="600"/>
+          <line x1="540" y1="600" x2="360" y2="600"/>
+          <line x1="360" y1="600" x2="60"  y2="600"/>
+          <line x1="60"  y1="600" x2="60"  y2="60"/>
+        </g>
+
+        <!-- ===== INTERNAL WALLS ===== -->
+        <g fill="none" stroke="#1a1a1a" stroke-width="5" stroke-linecap="butt">
+          <!-- G207 bottom at y=280 (door at x=180-220) -->
+          <line x1="60"  y1="280" x2="180" y2="280"/>
+          <line x1="220" y1="280" x2="360" y2="280"/>
+
+          <!-- G208 top at y=340 (door at x=180-220) -->
+          <line x1="60"  y1="340" x2="180" y2="340"/>
+          <line x1="220" y1="340" x2="360" y2="340"/>
+
+          <!-- G207 right at x=360, y=60-120 (door at y=80-110) -->
+          <line x1="360" y1="60"  x2="360" y2="80"/>
+          <line x1="360" y1="110" x2="360" y2="120"/>
+
+          <!-- Balcony left at x=360, y=120-520 -->
+          <line x1="360" y1="120" x2="360" y2="520"/>
+
+          <!-- G208 bottom / corridor at y=520 -->
+          <line x1="60"  y1="520" x2="360" y2="520"/>
+
+          <!-- G203 left at x=540, y=60-120 (door at y=80-110) -->
+          <line x1="540" y1="60"  x2="540" y2="80"/>
+          <line x1="540" y1="110" x2="540" y2="120"/>
+
+          <!-- Balcony right at x=540, y=120-520 -->
+          <line x1="540" y1="120" x2="540" y2="340"/>
+
+          <!-- G203 bottom at y=340 (door at x=660-700) -->
+          <line x1="540" y1="340" x2="660" y2="340"/>
+          <line x1="700" y1="340" x2="880" y2="340"/>
+
+          <!-- G211/G214 top at y=400 (door at x=660-700) -->
+          <line x1="540" y1="400" x2="660" y2="400"/>
+          <line x1="700" y1="400" x2="880" y2="400"/>
+
+          <!-- G211/G214 divider at x=710, y=400-600 (door at y=480-520) -->
+          <line x1="710" y1="400" x2="710" y2="480"/>
+          <line x1="710" y1="520" x2="710" y2="600"/>
+
+          <!-- Corridor right at x=540, y=340-400 -->
+          <line x1="540" y1="400" x2="540" y2="520"/>
+          <!-- Corridor bottom -->
+          <line x1="360" y1="520" x2="540" y2="520"/>
+          <line x1="540" y1="520" x2="540" y2="600"/>
+        </g>
+
+        <!-- ===== ROOM LABELS ===== -->
+        <g pointer-events="none" font-family="sans-serif" font-size="42" font-weight="500" fill="#1a1a1a">
+          <text x="346" y="105" text-anchor="end">G 207</text>
+          <text x="346" y="385" text-anchor="end">G 208</text>
+          <text x="866" y="105" text-anchor="end">G 203</text>
+          <text x="696" y="445" text-anchor="end">G 211</text>
+          <text x="866" y="445" text-anchor="end">G 214</text>
+        </g>
+
+        <!-- Balcony label -->
+        <g pointer-events="none" font-family="sans-serif" font-size="24" font-weight="400" fill="#8c7a5a">
+          <text x="450" y="310" text-anchor="middle">阳台</text>
+          <text x="450" y="342" text-anchor="middle">俯瞰</text>
+        </g>
+
+        <!-- Stairs -->
+        <g pointer-events="none">
+          <rect x="380" y="540" width="80" height="50" fill="#ffffff" stroke="#1a1a1a" stroke-width="3"/>
+          <path d="M 390 582 L 403 582 L 403 570 L 416 570 L 416 558 L 429 558 L 429 548 L 450 548" fill="none" stroke="#1a1a1a" stroke-width="2.5"/>
+        </g>
+
+        <!-- ===== Room tints ===== -->
+        <g class="room-tints" pointer-events="none">
+          <rect class="room-tint" data-room="G207" x="60"  y="60"  width="300" height="220"/>
+          <rect class="room-tint" data-room="G208" x="60"  y="340" width="300" height="180"/>
+          <rect class="room-tint" data-room="G203" x="540" y="60"  width="340" height="280"/>
+          <rect class="room-tint" data-room="G211" x="540" y="400" width="170" height="200"/>
+          <rect class="room-tint" data-room="G214" x="710" y="400" width="170" height="200"/>
+        </g>
+
+        <!-- Footsteps -->
+        <g class="footsteps" id="footsteps-l2" pointer-events="none"></g>
+
+        <!-- Room tap targets -->
+        <g class="room-taps">
+          <rect class="room-tap" data-room="G207" x="60"  y="60"  width="300" height="220"/>
+          <rect class="room-tap" data-room="G208" x="60"  y="340" width="300" height="180"/>
+          <rect class="room-tap" data-room="G203" x="540" y="60"  width="340" height="280"/>
+          <rect class="room-tap" data-room="G211" x="540" y="400" width="170" height="200"/>
+          <rect class="room-tap" data-room="G214" x="710" y="400" width="170" height="200"/>
+        </g>
+
+        <!-- Current marker -->
+        <g class="current-marker" id="currentMarkerL2">
+          <circle class="pulse-ring" r="22" />
+          <circle r="14" fill="#a83e2a" stroke="#fff" stroke-width="3"/>
+        </g>
+
+        <!-- Visit badges -->
+        <g class="visit-badges" font-family="sans-serif" font-size="17" font-weight="700">
+          <g class="visit-badge" data-room="G207" transform="translate(85, 85)">
+            <circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
+            <text y="6" text-anchor="middle" fill="#fff">1</text>
+          </g>
+          <g class="visit-badge" data-room="G208" transform="translate(85, 365)">
+            <circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
+            <text y="6" text-anchor="middle" fill="#fff">1</text>
+          </g>
+          <g class="visit-badge" data-room="G203" transform="translate(565, 85)">
+            <circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
+            <text y="6" text-anchor="middle" fill="#fff">1</text>
+          </g>
+          <g class="visit-badge" data-room="G211" transform="translate(565, 425)">
+            <circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
+            <text y="6" text-anchor="middle" fill="#fff">1</text>
+          </g>
+          <g class="visit-badge" data-room="G214" transform="translate(735, 425)">
+            <circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
+            <text y="6" text-anchor="middle" fill="#fff">1</text>
+          </g>
+        </g>
+      </svg>
+
+      <!-- Art pins -->
+      <button class="art-pin" data-card="card-11" style="left:13%;top:15%" title="木乃伊肖像·女子 · G207">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Romano-Egyptian_Mummy_Portrait_of_a_Woman%2C_100-110_AD_%2810465225055%29.jpg/800px-Romano-Egyptian_Mummy_Portrait_of_a_Woman%2C_100-110_AD_%2810465225055%29.jpg" alt="木乃伊肖像·女子">
+        <span class="pin-num">11</span>
+      </button>
+      <button class="art-pin" data-card="card-12" style="left:25%;top:24%" title="孔雀壁画残片 · G207">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Wall_Fragment_with_a_Peacock_-_Google_Art_Project.jpg/800px-Wall_Fragment_with_a_Peacock_-_Google_Art_Project.jpg" alt="孔雀壁画残片">
+        <span class="pin-num">12</span>
+      </button>
+      <button class="art-pin" data-card="card-13" style="left:15%;top:56%" title="金桂冠 · G208">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Gold_Wreath_%2810457565366%29.jpg/800px-Gold_Wreath_%2810457565366%29.jpg" alt="金桂冠">
+        <span class="pin-num">13</span>
+      </button>
+      <button class="art-pin" data-card="card-16" style="left:67%;top:16%" title="马科尼亚娜石棺 · G203">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Sarcophagus_Maconiana_Severiana_Getty_Villa_83.AA.275.jpg/800px-Sarcophagus_Maconiana_Severiana_Getty_Villa_83.AA.275.jpg" alt="马科尼亚娜石棺">
+        <span class="pin-num">16</span>
+      </button>
+      <button class="art-pin" data-card="card-17" style="left:84%;top:28%" title="阿基里斯石棺 · G203">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Sarcophagus_with_the_life_of_Achilles%2C_front_-_Getty_Museum_%2895.AA.80%29.jpg/800px-Sarcophagus_with_the_life_of_Achilles%2C_front_-_Getty_Museum_%2895.AA.80%29.jpg" alt="阿基里斯石棺">
+        <span class="pin-num">17</span>
+      </button>
+      <button class="art-pin" data-card="card-15" style="left:64%;top:66%" title="抱竖琴少年酒杯 · G211">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Greek_Kylix_Wine_Cup_with_Boy_Holding_a_Lyre%2C_Athens%2C_c._480_BC_%2810465441573%29.jpg/800px-Greek_Kylix_Wine_Cup_with_Boy_Holding_a_Lyre%2C_Athens%2C_c._480_BC_%2810465441573%29.jpg" alt="抱竖琴少年酒杯">
+        <span class="pin-num">15</span>
+      </button>
+      <button class="art-pin" data-card="card-14" style="left:83%;top:66%" title="蓝色棱纹玻璃碗 · G214">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Blue_ribbed_bowl_with_white_trails%2C_front_profile_-_Getty_Museum_%282003.226%29.jpg/800px-Blue_ribbed_bowl_with_white_trails%2C_front_profile_-_Getty_Museum_%282003.226%29.jpg" alt="蓝色棱纹玻璃碗">
+        <span class="pin-num">14</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="floor-legend">
+    <div class="legend-item"><span class="legend-room">G 207</span><span class="legend-theme">古代绘画与肖像 · <em>Ancient Painting</em></span></div>
+    <div class="legend-item"><span class="legend-room">G 208</span><span class="legend-theme">珠宝与金器 · <em>Jewelry &amp; Gold</em></span></div>
+    <div class="legend-item"><span class="legend-room">G 203</span><span class="legend-theme">石棺 · <em>Sarcophagi</em></span></div>
+    <div class="legend-item"><span class="legend-room">G 211</span><span class="legend-theme">陶器 · <em>Ceramics</em></span></div>
+    <div class="legend-item"><span class="legend-room">G 214</span><span class="legend-theme">罗马玻璃 · <em>Roman Glass</em></span></div>
+  </div>
+
+  <div class="floor-exits">
+    <span class="exit-item"><span class="exit-arrow">↓</span> <strong>一楼</strong>：楼梯在走廊</span>
+    <span class="exit-item"><span class="exit-arrow">→</span> <strong>阳台</strong>：俯瞰内柱廊花园</span>
+  </div>
+  <div class="floor-foot">二楼 · Level 2</div>
+</section>
+
+<!-- ===== 户外 ===== -->
+<section class="outdoor-section" id="outdoor">
+  <div class="floor-head">
+    <span class="floor-label">户外 · Outdoor</span>
+    <h2 class="floor-name">外柱廊与花园 <span class="yr">1974年仿古罗马建成</span></h2>
+  </div>
+  <p class="outdoor-desc">盖蒂别墅本身即是一座仿古罗马建筑——按赫库兰尼姆"纸莎草别墅"（Villa dei Papiri）的18世纪考古图纸复建。外柱廊长约67米，中央倒影池两侧列柱对称排列；内柱廊花园种植月桂、橄榄和柏树。建筑即展品，不可错过。</p>
+</section>
+
+<!-- ===== ACTION BAR ===== -->
+<nav class="action-bar" aria-label="快捷操作">
+  <button class="ab-btn" id="abWhereAmI" title="跳到当前所在的楼层">
+    <span class="ab-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-7-7-7-12a7 7 0 0 1 14 0c0 5-7 12-7 12z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
+    <span>我在哪</span>
+  </button>
+  <button class="ab-btn" id="abArtList" title="本页所有画作列表">
+    <span class="ab-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="1.3" fill="currentColor" stroke="none"/><circle cx="5" cy="12" r="1.3" fill="currentColor" stroke="none"/><circle cx="5" cy="18" r="1.3" fill="currentColor" stroke="none"/><line x1="10" y1="6" x2="20" y2="6"/><line x1="10" y1="12" x2="20" y2="12"/><line x1="10" y1="18" x2="20" y2="18"/></svg></span>
+    <span>画作列表</span>
+  </button>
+  <button class="ab-btn" id="abClear" title="清空所有楼层的足迹" disabled>
+    <span class="ab-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 5l-1.5-1.5a2 2 0 0 0-2.83 0L4 15.17V20h4.83L20.5 8.33a2 2 0 0 0 0-2.83z"/><line x1="13.5" y1="6.5" x2="17.5" y2="10.5"/><line x1="8" y1="20" x2="22" y2="20"/></svg></span>
+    <span>清足迹</span>
+  </button>
+</nav>
+
+<!-- ===== ART LIST BOTTOM SHEET ===== -->
+<div class="art-sheet-overlay" id="artSheetOverlay" onclick="closeArtSheet()"></div>
+<div class="art-sheet" id="artSheet" role="dialog" aria-label="画作列表" aria-hidden="true">
+  <div class="ash-handle" aria-hidden="true"></div>
+  <div class="ash-head">
+    <h3>本页画作 · <span id="ashCount">0</span></h3>
+    <button class="ash-close" onclick="closeArtSheet()">关闭</button>
+  </div>
+  <div class="ash-list" id="ashList"></div>
+</div>
+
+<!-- ===== MODAL ===== -->
+<div class="room-toast" id="roomToast" role="status" aria-live="polite"></div>
+
+<div id="modal" class="modal-overlay" onclick="closeModal(event)">
+  <div class="modal-content" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal()" aria-label="关闭">×</button>
+    <div id="modal-inner"></div>
+  </div>
+</div>
+
+<!-- ===== CARD POOL ===== -->
+<div id="card-pool">
+
+<div class="artwork-card west" id="card-01">
+  <div class="art-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Getty_Villa_-_Victorious_Youth_01.JPG/800px-Getty_Villa_-_Victorious_Youth_01.JPG" alt="胜利青年"></div>
+  <div class="room-tag">一楼 · Gallery 108</div>
+  <div class="art-title">胜利青年 · <em>Victorious Youth</em></div>
+  <div class="art-meta">古希腊 · 公元前300–100年 · 青铜 · 高151.5厘米</div>
+  <div class="tags"><span class="tag movement">古希腊青铜</span><span class="tag price">⭐ 镇馆之宝 · 77.AB.30</span></div>
+  <div class="art-desc">全世界现存的古希腊大型青铜雕像不超过十二尊，这是其中之一。少年头戴橄榄花冠，1964年在亚得里亚海被意大利渔民打捞出水。盖蒂1977年购入，至今仍是文物返还争议的标志性案例。</div>
+</div>
+
+<div class="artwork-card west" id="card-02">
+  <div class="art-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Lansdowne_Herakles_Getty_Museum.jpg/800px-Lansdowne_Herakles_Getty_Museum.jpg" alt="兰斯当赫拉克勒斯"></div>
+  <div class="room-tag">一楼 · Gallery 108</div>
+  <div class="art-title">兰斯当赫拉克勒斯 · <em>Lansdowne Heracles</em></div>
+  <div class="art-meta">罗马仿希腊 · 约公元125年 · 大理石 · 高193.5厘米</div>
+  <div class="tags"><span class="tag movement">罗马仿希腊</span><span class="tag price">🏛 古典理想之美</span></div>
+  <div class="art-desc">哈德良皇帝别墅出土的大理石雕塑，以波利克莱托斯的希腊原作为范本。盖蒂1951年购入此像，是他亲自购入的第一件重量级古典藏品。</div>
+</div>
+
+<div class="artwork-card west" id="card-03">
+  <div class="art-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Kouros_-_Getty_Museum_%2885.AA.40%29.jpg/800px-Kouros_-_Getty_Museum_%2885.AA.40%29.jpg" alt="盖蒂青年立像"></div>
+  <div class="room-tag">一楼 · Gallery 101</div>
+  <div class="art-title">盖蒂青年立像 · <em>Getty Kouros</em></div>
+  <div class="art-meta">古希腊（或现代伪作）· 约公元前530年（或20世纪）· 大理石</div>
+  <div class="tags"><span class="tag movement">古风时期（存疑）</span><span class="tag price">🔍 真伪之谜</span></div>
+  <div class="art-desc">可能是公元前530年的真品，也可能是20世纪的精巧伪作——三十多年来争论不休。盖蒂博物馆至今将标签写为"希腊，约公元前530年，或现代伪作"。</div>
+</div>
+
+<div class="artwork-card west" id="card-04">
+  <div class="art-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Getty_Villa_-_Harp_player_-_inv._85.AA.103.JPG/800px-Getty_Villa_-_Harp_player_-_inv._85.AA.103.JPG" alt="竖琴演奏者"></div>
+  <div class="room-tag">一楼 · Gallery 101</div>
+  <div class="art-title">竖琴演奏者 · <em>Male Harp Player</em></div>
+  <div class="art-meta">基克拉迪文明 · 约公元前2700–2300年 · 大理石 · 高35.8厘米</div>
+  <div class="tags"><span class="tag movement">基克拉迪文明</span><span class="tag price">🏛 爱琴海最古老的乐手</span></div>
+  <div class="art-desc">距今约四千五百年。简洁的几何线条让它惊人地接近20世纪现代雕塑——亨利·摩尔和布朗库西都深受基克拉迪艺术影响。</div>
+</div>
+
+<div class="artwork-card west" id="card-05">
+  <div class="art-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Greek_Volute_Krater_Mixing_Vessel_with_Mythological_Scenes%2C_Athens%2C_c._490_BC_%2810455244424%29.jpg/800px-Greek_Volute_Krater_Mixing_Vessel_with_Mythological_Scenes%2C_Athens%2C_c._490_BC_%2810455244424%29.jpg" alt="涡形双耳壶"></div>
+  <div class="room-tag">一楼 · Gallery 103</div>
+  <div class="art-title">涡形双耳壶 · <em>Volute Krater</em></div>
+  <div class="art-meta">克莱奥弗拉德斯画家 · 约公元前490年 · 陶器 · 红绘</div>
+  <div class="tags"><span class="tag movement">阿提卡红绘</span><span class="tag price">🏛 古典陶艺巅峰</span></div>
+  <div class="art-desc">红绘技法是黑绘的反向操作：背景涂黑，人物留红。这种技法使画家能够表现更复杂的解剖细节，标志着公元前5世纪初雅典陶艺从装饰向叙事的关键转变。</div>
+</div>
+
+<div class="artwork-card west" id="card-06">
+  <div class="art-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Greek_Krater_Mixing_Vessel_with_Odysseus_Escaping_from_Polyphemos%27s_Cave%2C_Athens%2C_550-500_BC_%2810455076956%29.jpg/800px-Greek_Krater_Mixing_Vessel_with_Odysseus_Escaping_from_Polyphemos%27s_Cave%2C_Athens%2C_550-500_BC_%2810455076956%29.jpg" alt="奥德修斯与独眼巨人"></div>
+  <div class="room-tag">一楼 · Gallery 103</div>
+  <div class="art-title">奥德修斯与独眼巨人 · <em>Odysseus and Polyphemos</em></div>
+  <div class="art-meta">雅典 · 约公元前550–500年 · 陶器 · 黑绘</div>
+  <div class="tags"><span class="tag movement">阿提卡黑绘</span><span class="tag price">🏛 荷马史诗经典场景</span></div>
+  <div class="art-desc">画面描绘《奥德赛》最著名场景：奥德修斯将燃烧的橄榄木桩刺入独眼巨人的眼睛。黑绘技法以黑色泥浆在红色陶胎上描绘人物，再用尖刻刀刻出细节。</div>
+</div>
+
+<div class="artwork-card west" id="card-07">
+  <div class="art-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Getty_Villa_-_Collection_%285305267670%29.jpg/800px-Getty_Villa_-_Collection_%285305267670%29.jpg" alt="赫克勒青铜小像"></div>
+  <div class="room-tag">一楼 · Gallery 110</div>
+  <div class="art-title">赫克勒青铜小像 · <em>Votive Statuette of Hercle</em></div>
+  <div class="art-meta">伊特鲁里亚 · 约公元前325–275年 · 青铜</div>
+  <div class="tags"><span class="tag movement">伊特鲁里亚</span><span class="tag price">🏛 古意大利文明</span></div>
+  <div class="art-desc">"赫克勒"是赫拉克勒斯在伊特鲁里亚语中的名字。造型借鉴希腊英雄雕塑，但面部特征和肌肉处理带有明显的本土风格。伊特鲁里亚人是罗马人的前辈。</div>
+</div>
+
+<div class="artwork-card west" id="card-08">
+  <div class="art-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Etruscan_Bronze_Mirror-Lid_Applique%2C_c._100_BC_%2810456881016%29.jpg/800px-Etruscan_Bronze_Mirror-Lid_Applique%2C_c._100_BC_%2810456881016%29.jpg" alt="青铜镜盖饰件"></div>
+  <div class="room-tag">一楼 · Gallery 110</div>
+  <div class="art-title">青铜镜盖饰件 · <em>Bronze Mirror-Lid Appliqué</em></div>
+  <div class="art-meta">伊特鲁里亚 · 约公元前100年 · 青铜</div>
+  <div class="tags"><span class="tag movement">伊特鲁里亚</span><span class="tag price">🏛 精工细作的日用品</span></div>
+  <div class="art-desc">镜盖饰件刻画酒神狄俄尼索斯、爱神厄洛斯与一位基塔拉琴乐手。伊特鲁里亚青铜镜是古代地中海世界最精致的日用品之一。</div>
+</div>
+
+<div class="artwork-card west" id="card-09">
+  <div class="art-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Bust_of_Emperor_Commodus%2C_front_-_Getty_Museum_%2892.SA.48%29.jpg/800px-Bust_of_Emperor_Commodus%2C_front_-_Getty_Museum_%2892.SA.48%29.jpg" alt="康莫杜斯胸像"></div>
+  <div class="room-tag">一楼 · Gallery 108</div>
+  <div class="art-title">康莫杜斯胸像 · <em>Bust of Emperor Commodus</em></div>
+  <div class="art-meta">罗马帝国 · 约公元180–185年 · 大理石</div>
+  <div class="tags"><span class="tag movement">罗马帝国</span><span class="tag price">🏛 帝国晚期肖像</span></div>
+  <div class="art-desc">马可·奥勒留之子，罗马帝国由盛转衰的转折。精心卷曲的发型、深邃的眼窝，捕捉了他年轻时的面容。电影《角斗士》中的反派即以他为原型。</div>
+</div>
+
+<div class="artwork-card west" id="card-10">
+  <div class="art-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Attic_panathenaic_amphora_with_lid_by_Marsyas_Painter%2C_side_A_-_Getty_Museum_%2879.AE.147%29.jpg/800px-Attic_panathenaic_amphora_with_lid_by_Marsyas_Painter%2C_side_A_-_Getty_Museum_%2879.AE.147%29.jpg" alt="泛雅典娜赛会奖瓶"></div>
+  <div class="room-tag">一楼 · Gallery 103</div>
+  <div class="art-title">泛雅典娜赛会奖瓶 · <em>Panathenaic Prize Amphora</em></div>
+  <div class="art-meta">马尔绪阿斯画家 · 约公元前340年 · 陶器 · 黑绘</div>
+  <div class="tags"><span class="tag movement">阿提卡黑绘（晚期）</span><span class="tag price">🏛 古代奥运会奖品</span></div>
+  <div class="art-desc">泛雅典娜赛会每四年举行一次，获胜运动员获得装满橄榄油的陶瓶。一面绘有雅典娜女神，另一面绘有竞技场景。即使在红绘盛行的公元前4世纪，奖瓶仍坚持使用古老的黑绘传统。</div>
+</div>
+
+<div class="artwork-card south" id="card-11">
+  <div class="art-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Romano-Egyptian_Mummy_Portrait_of_a_Woman%2C_100-110_AD_%2810465225055%29.jpg/800px-Romano-Egyptian_Mummy_Portrait_of_a_Woman%2C_100-110_AD_%2810465225055%29.jpg" alt="木乃伊肖像·女子"></div>
+  <div class="room-tag">二楼 · Gallery 207</div>
+  <div class="art-title">木乃伊肖像·女子 · <em>Mummy Portrait of a Woman</em></div>
+  <div class="art-meta">罗马-埃及 · 约公元100–110年 · 蜡画</div>
+  <div class="tags"><span class="tag movement">罗马-埃及</span><span class="tag price">⭐ 古代世界最真实的面孔</span></div>
+  <div class="art-desc">热蜡混合颜料直接在薄木板上绘制，绑在木乃伊棺椁面部。这位女子面容清秀，戴着金耳环和项链——与今天的肖像照几乎没有本质区别。</div>
+</div>
+
+<div class="artwork-card south" id="card-12">
+  <div class="art-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Wall_Fragment_with_a_Peacock_-_Google_Art_Project.jpg/800px-Wall_Fragment_with_a_Peacock_-_Google_Art_Project.jpg" alt="孔雀壁画残片"></div>
+  <div class="room-tag">二楼 · Gallery 207</div>
+  <div class="art-title">孔雀壁画残片 · <em>Wall Fragment with a Peacock</em></div>
+  <div class="art-meta">罗马 · 约公元70年 · 湿壁画</div>
+  <div class="tags"><span class="tag movement">罗马壁画</span><span class="tag price">🏛 庞贝风格壁画</span></div>
+  <div class="art-desc">一只孔雀栖息在栏杆上，背景朱红——"第四风格"壁画典型范例。颜料直接涂在湿灰泥上，历经两千年仍保持鲜艳。年代约在维苏威火山喷发（公元79年）前后。</div>
+</div>
+
+<div class="artwork-card south" id="card-13">
+  <div class="art-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Gold_Wreath_%2810457565366%29.jpg/800px-Gold_Wreath_%2810457565366%29.jpg" alt="金桂冠"></div>
+  <div class="room-tag">二楼 · Gallery 208</div>
+  <div class="art-title">金桂冠 · <em>Gold Wreath</em></div>
+  <div class="art-meta">希腊化时期 · 金箔</div>
+  <div class="tags"><span class="tag movement">希腊化珠宝</span><span class="tag price">🏛 古代金匠巅峰</span></div>
+  <div class="art-desc">薄如纸片的金箔叶子逐一焊接在金丝骨架上。金桂冠既是运动竞技奖品，也是陪葬品——每片叶子都需单独锤打、刻线、焊接，是古代金匠工艺的巅峰。</div>
+</div>
+
+<div class="artwork-card south" id="card-14">
+  <div class="art-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Blue_ribbed_bowl_with_white_trails%2C_front_profile_-_Getty_Museum_%282003.226%29.jpg/800px-Blue_ribbed_bowl_with_white_trails%2C_front_profile_-_Getty_Museum_%282003.226%29.jpg" alt="蓝色棱纹玻璃碗"></div>
+  <div class="room-tag">二楼 · Gallery 214</div>
+  <div class="art-title">蓝色棱纹玻璃碗 · <em>Blue Ribbed Bowl</em></div>
+  <div class="art-meta">罗马 · 约公元前50–1年 · 铸造玻璃</div>
+  <div class="tags"><span class="tag movement">罗马玻璃</span><span class="tag price">🏛 吹制术之前的玻璃工艺</span></div>
+  <div class="art-desc">钴蓝色碗带乳白色拖丝装饰，制作于罗马玻璃吹制术发明之前——使用更古老的"铸造"技法。棱纹造型折射出不同深浅的蓝光。</div>
+</div>
+
+<div class="artwork-card south" id="card-15">
+  <div class="art-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Greek_Kylix_Wine_Cup_with_Boy_Holding_a_Lyre%2C_Athens%2C_c._480_BC_%2810465441573%29.jpg/800px-Greek_Kylix_Wine_Cup_with_Boy_Holding_a_Lyre%2C_Athens%2C_c._480_BC_%2810465441573%29.jpg" alt="抱竖琴少年酒杯"></div>
+  <div class="room-tag">二楼 · Gallery 211</div>
+  <div class="art-title">抱竖琴少年酒杯 · <em>Kylix with Boy Holding a Lyre</em></div>
+  <div class="art-meta">雅典 · 约公元前480年 · 陶器 · 红绘</div>
+  <div class="tags"><span class="tag movement">阿提卡红绘</span><span class="tag price">🏛 宴饮文化的精致器皿</span></div>
+  <div class="art-desc">Kylix是古希腊宴饮中最常用的浅底酒杯。杯底内侧（tondo）绘有圆形画——饮酒者喝完最后一口时画面显现，是社交惊喜。</div>
+</div>
+
+<div class="artwork-card south" id="card-16">
+  <div class="art-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Sarcophagus_Maconiana_Severiana_Getty_Villa_83.AA.275.jpg/800px-Sarcophagus_Maconiana_Severiana_Getty_Villa_83.AA.275.jpg" alt="马科尼亚娜石棺"></div>
+  <div class="room-tag">二楼 · Gallery 203</div>
+  <div class="art-title">马科尼亚娜石棺 · <em>Sarcophagus of Maconiana Severiana</em></div>
+  <div class="art-meta">罗马 · 约公元210–220年 · 大理石</div>
+  <div class="tags"><span class="tag movement">罗马帝国</span><span class="tag price">🏛 酒神叙事浮雕</span></div>
+  <div class="art-desc">正面满布浮雕，描绘酒神发现被忒修斯抛弃的阿里阿德涅——这个神话在罗马丧葬艺术中象征"死后的重生与欢乐"。铭文记录了墓主人马科尼亚娜·塞维利亚娜的名字。</div>
+</div>
+
+<div class="artwork-card south" id="card-17">
+  <div class="art-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Sarcophagus_with_the_life_of_Achilles%2C_front_-_Getty_Museum_%2895.AA.80%29.jpg/800px-Sarcophagus_with_the_life_of_Achilles%2C_front_-_Getty_Museum_%2895.AA.80%29.jpg" alt="阿基里斯石棺"></div>
+  <div class="room-tag">二楼 · Gallery 203</div>
+  <div class="art-title">阿基里斯石棺 · <em>Sarcophagus with the Life of Achilles</em></div>
+  <div class="art-meta">罗马 · 约公元180–220年 · 大理石</div>
+  <div class="tags"><span class="tag movement">罗马帝国</span><span class="tag price">🏛 英雄叙事浮雕</span></div>
+  <div class="art-desc">四面浮雕从左到右讲述阿基里斯一生——从母亲忒提斯藏匿他于女人堆中，到身披铠甲出征，再到英雄之死。用英雄一生类比墓主人的人生旅程。</div>
+</div>
+
+<div class="artwork-card" id="card-18">
+  <div class="art-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Getty_Villa_-_Outer_Peristyle.jpg/800px-Getty_Villa_-_Outer_Peristyle.jpg" alt="外柱廊"></div>
+  <div class="room-tag">户外</div>
+  <div class="art-title">外柱廊与倒影池 · <em>Outer Peristyle</em></div>
+  <div class="art-meta">仿赫库兰尼姆"纸莎草别墅" · 1974年建成</div>
+  <div class="tags"><span class="tag movement">古罗马建筑复建</span><span class="tag price">🏛 全球唯一完整复建的罗马别墅</span></div>
+  <div class="art-desc">外柱廊长220英尺，中央罗马式倒影池两侧列柱按18世纪考古图纸复原。J. Paul Getty 以赫库兰尼姆纸莎草别墅为蓝本建造此馆——建筑本身就是一件古代艺术的诠释。</div>
+</div>
+
+<div class="artwork-card" id="card-19">
+  <div class="art-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Getty_Villa_-_Inner_Peristyle_Garden_-_Malibu.jpg/800px-Getty_Villa_-_Inner_Peristyle_Garden_-_Malibu.jpg" alt="内柱廊花园"></div>
+  <div class="room-tag">户外</div>
+  <div class="art-title">内柱廊花园 · <em>Inner Peristyle Garden</em></div>
+  <div class="art-meta">仿罗马贵族中庭花园 · 1974年建成</div>
+  <div class="tags"><span class="tag movement">古罗马景观</span><span class="tag price">🏛 罗马中庭式庭院</span></div>
+  <div class="art-desc">四面环廊的中庭花园是罗马贵族住宅的核心空间。盖蒂别墅忠实再现了这种布局，种植的植物尽量选用古罗马时期有记载的品种。</div>
+</div>
+
+<div class="artwork-card" id="card-20">
+  <div class="art-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Pacific-Palisades-getty-villa-Aerial-from-west-August-2014.jpg/800px-Pacific-Palisades-getty-villa-Aerial-from-west-August-2014.jpg" alt="盖蒂别墅航拍"></div>
+  <div class="room-tag">户外</div>
+  <div class="art-title">盖蒂别墅全貌 · <em>Getty Villa</em></div>
+  <div class="art-meta">Pacific Palisades, CA · 1974年建成 · 2006年翻新重开</div>
+  <div class="tags"><span class="tag movement">博物馆建筑</span><span class="tag price">🏛 建筑即展品</span></div>
+  <div class="art-desc">从空中俯瞰，清晰呈现罗马别墅经典布局：中央倒影池、对称列柱、围合式庭院。坐落在太平洋海岸公路旁山坡上，面朝大海。</div>
+</div>
+
+</div>
+
+<style>
+.artwork-card .art-img { width: 100%; max-height: 360px; overflow: hidden; background: #1a1a1a; }
+.artwork-card .art-img img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.artwork-card .room-tag {
+  display: inline-block; font-size: 0.6rem; letter-spacing: 0.14em;
+  color: var(--west); font-weight: 700; margin: 1.4rem 1.6rem 0.6rem; text-transform: uppercase;
+}
+.artwork-card.south .room-tag { color: var(--south); }
+.artwork-card.south .tag.movement { background: var(--south-lt); color: var(--south); }
+.artwork-card.west  .tag.movement { background: var(--west-lt);  color: var(--west); }
+.artwork-card .art-title {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.55rem; font-weight: 500;
+  margin: 0 1.6rem .5rem; line-height: 1.2;
+}
+.artwork-card .art-meta { color: var(--muted); font-size: 0.72rem; margin: 0 1.6rem 0.9rem; font-style: italic; }
+.artwork-card .tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 0 1.6rem 1.1rem; }
+.artwork-card .art-desc { color: var(--ink2); font-size: 0.82rem; line-height: 1.7; margin: 0 1.6rem 1.1rem; }
+</style>
+
+<script>
+function openCard(cardId) {
+  var card = document.getElementById(cardId);
+  if (!card) return;
+  var inner = document.getElementById('modal-inner');
+  inner.innerHTML = card.outerHTML;
+  var tagsEl = inner.querySelector('.tags');
+  var titleEl = inner.querySelector('.art-title');
+  var anchor = tagsEl || titleEl;
+  if (anchor && !inner.querySelector('.art-read-btn')) {
+    var btn = document.createElement('button');
+    btn.className = 'art-read-btn';
+    btn.setAttribute('type', 'button');
+    btn.setAttribute('aria-label', '朗读这件展品');
+    btn.onclick = readAloud;
+    btn.innerHTML =
+      '<svg class="ar-svg" viewBox="0 0 24 24" aria-hidden="true">' +
+        '<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>' +
+      '</svg>' +
+      '<span>朗读全文</span>';
+    anchor.insertAdjacentElement('afterend', btn);
+  }
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(e) {
+  if (e && e.target !== e.currentTarget && !e.target.classList.contains('modal-close')) return;
+  document.getElementById('modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ─── Footprint silhouette ──────────────────────────────────────────────────
+// "Right Footprint" by Benji Park (openclipart.org/detail/26274, Public Domain / CC0).
+var FOOT_PATHS = [
+  'm257.87 274.39c79.17-8.33 65.87-131.13 2.09-164.58-42.26-22.161-99.31-21.193-137.5-6.25-72.44 28.35-91.669 64.58-102.09 135.42-10.413 70.83 24.49 258.2 108.34 279.16 75 18.75 103.94-17.6 95.83-52.08-8.33-35.42-49.41-81.29-52.08-112.5-6.25-72.92 85.41-79.17 85.41-79.17z',
+  'm398.94 101.5c-21.21 30.8-61.45 39.9-89.88 20.33-28.43-19.58-34.29-60.414-13.08-91.214s61.44-39.898 89.88-20.323c28.42 19.575 34.28 60.412 13.08 91.207z',
+  'm235.45 82.105c-18.15 3.09-35.28-8.655-38.28-26.236-2.99-17.581 8.59-44.006 26.74-47.096 18.15-3.092 35.29 8.655 38.28 26.236 3 17.581-8.59 44.005-26.74 47.096z',
+  'm176.6 69.41c-10.28 14.576-25.34 17.381-40.38 6.774-15.05-10.607-18.59-40.858-8.31-55.435 10.28-14.575 25.33-17.38 40.38-6.773s18.59 40.858 8.31 55.434z',
+  'm113.75 80.36c-3.16 15.209-18.957 24.79-35.293 21.4-16.336-3.392-29.616-26.456-26.459-41.665s18.958-24.79 35.293-21.399c16.339 3.391 29.619 26.455 26.459 41.664z',
+  'm47.389 102.14c9.291 13.86 7.525 31.32-3.943 39.01s-28.296 2.69-37.587-11.17c-9.29-13.86-7.524-31.323 3.944-39.011s28.296-2.688 37.586 11.171z'
+];
+
+function createLorcFoot(fx, fy, rot, side) {
+  var SVG_NS = 'http://www.w3.org/2000/svg';
+  var foot = document.createElementNS(SVG_NS, 'g');
+  foot.setAttribute('class', 'footprint');
+  foot.setAttribute('transform',
+    'translate(' + fx.toFixed(1) + ',' + fy.toFixed(1) + ') ' +
+    'rotate(' + rot.toFixed(1) + ') scale(2)'
+  );
+  var scaler = document.createElementNS(SVG_NS, 'g');
+  var sx = (0.042 * side).toFixed(4);
+  scaler.setAttribute('transform', 'scale(' + sx + ',0.042) translate(-206,-261.5)');
+  var mirror = document.createElementNS(SVG_NS, 'g');
+  mirror.setAttribute('transform', 'matrix(-1,0,0,1,412,0)');
+  for (var i = 0; i < FOOT_PATHS.length; i++) {
+    var p = document.createElementNS(SVG_NS, 'path');
+    p.setAttribute('d', FOOT_PATHS[i]);
+    mirror.appendChild(p);
+  }
+  scaler.appendChild(mirror);
+  foot.appendChild(scaler);
+  return foot;
+}
+
+// Art-pin drag/peek IIFE
+(function() {
+  var HOLD_MS = 220;
+  var MOVE_THRESHOLD = 6;
+  var SNAP_MS = 280;
+
+  document.querySelectorAll('.art-pin').forEach(function(btn) {
+    var innerImg = btn.querySelector('img');
+    if (innerImg) {
+      innerImg.draggable = false;
+      innerImg.addEventListener('dragstart', function(e) { e.preventDefault(); });
+    }
+    btn.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+
+    var holdTimer = null;
+    var startX = 0, startY = 0;
+    var dragging = false;
+    var didDrag = false;
+    var pressed = false;
+
+    function beginDrag() {
+      if (dragging) return;
+      dragging = true;
+      btn.classList.remove('snap-back');
+      btn.classList.add('dragging');
+    }
+
+    function endDrag() {
+      if (!dragging) return;
+      dragging = false;
+      didDrag = true;
+      btn.classList.remove('dragging');
+      btn.classList.add('snap-back');
+      btn.style.setProperty('--drag-x', '0px');
+      btn.style.setProperty('--drag-y', '0px');
+      setTimeout(function() {
+        btn.classList.remove('snap-back');
+        didDrag = false;
+      }, SNAP_MS);
+    }
+
+    btn.addEventListener('click', function(e) {
+      if (didDrag) {
+        e.preventDefault();
+        e.stopPropagation();
+        return;
+      }
+      openCard(btn.dataset.card);
+    });
+
+    btn.addEventListener('pointerdown', function(e) {
+      pressed = true;
+      startX = e.clientX;
+      startY = e.clientY;
+      clearTimeout(holdTimer);
+      try { btn.setPointerCapture(e.pointerId); } catch (err) {}
+      holdTimer = setTimeout(beginDrag, HOLD_MS);
+    });
+
+    btn.addEventListener('pointermove', function(e) {
+      if (!pressed) return;
+      var dx = e.clientX - startX;
+      var dy = e.clientY - startY;
+      if (!dragging) {
+        if (Math.abs(dx) > MOVE_THRESHOLD || Math.abs(dy) > MOVE_THRESHOLD) {
+          clearTimeout(holdTimer);
+          beginDrag();
+        } else {
+          return;
+        }
+      }
+      btn.style.setProperty('--drag-x', dx + 'px');
+      btn.style.setProperty('--drag-y', dy + 'px');
+    });
+
+    function release(e) {
+      pressed = false;
+      clearTimeout(holdTimer);
+      try { btn.releasePointerCapture(e.pointerId); } catch (err) {}
+      endDrag();
+    }
+    btn.addEventListener('pointerup', release);
+    btn.addEventListener('pointercancel', release);
+  });
+})();
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeModal({target: document.getElementById('modal'), currentTarget: document.getElementById('modal')});
+});
+
+/* ===== Location widget: GPS detect ===== */
+(function() {
+  var GETTY_LAT = 34.0451, GETTY_LON = -118.5650;
+  var GETTY_RADIUS_M = 300;
+
+  function haversine(lat1, lon1, lat2, lon2) {
+    var R = 6371000;
+    var toRad = function(d) { return d * Math.PI / 180; };
+    var dLat = toRad(lat2 - lat1), dLon = toRad(lon2 - lon1);
+    var a = Math.sin(dLat/2)*Math.sin(dLat/2) +
+            Math.cos(toRad(lat1))*Math.cos(toRad(lat2)) *
+            Math.sin(dLon/2)*Math.sin(dLon/2);
+    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  }
+
+  var widget = document.getElementById('locWidget');
+  var textEl = document.getElementById('locText');
+  if (!widget || !textEl) return;
+  var btns = widget.querySelectorAll('.loc-btn');
+
+  var mode = 'auto';
+  var autoResult = null;
+  var lastDistanceM = null;
+
+  function highlightLevel(lv) {
+    document.querySelectorAll('.floor-section').forEach(function(s) {
+      var match = (lv === 'level1' && s.id === 'level1') ||
+                  (lv === 'level2' && s.id === 'level2');
+      s.classList.toggle('active-pavilion', match);
+    });
+  }
+
+  function render() {
+    btns.forEach(function(b) { b.classList.toggle('active', b.dataset.mode === mode); });
+    if (mode === 'auto') {
+      if (autoResult === 'near') {
+        textEl.textContent = '在别墅附近';
+        highlightLevel('level1');
+      } else if (autoResult === 'far') {
+        textEl.textContent = '距馆 ' + Math.round(lastDistanceM) + 'm';
+        highlightLevel(null);
+      } else if (autoResult === 'denied') {
+        textEl.textContent = 'GPS 拒';
+        highlightLevel(null);
+      } else if (autoResult === 'unavailable') {
+        textEl.textContent = 'GPS 不可用';
+        highlightLevel(null);
+      } else {
+        textEl.textContent = '检测中…';
+      }
+    } else if (mode === 'level1') {
+      textEl.textContent = '手动 · 一楼';
+      highlightLevel('level1');
+    } else if (mode === 'level2') {
+      textEl.textContent = '手动 · 二楼';
+      highlightLevel('level2');
+    }
+  }
+
+  function detect() {
+    if (!('geolocation' in navigator)) {
+      autoResult = 'unavailable';
+      render();
+      return;
+    }
+    navigator.geolocation.getCurrentPosition(
+      function(pos) {
+        var lat = pos.coords.latitude, lon = pos.coords.longitude;
+        var distToGetty = haversine(lat, lon, GETTY_LAT, GETTY_LON);
+        lastDistanceM = distToGetty;
+        autoResult = (distToGetty > GETTY_RADIUS_M) ? 'far' : 'near';
+        render();
+      },
+      function(err) {
+        autoResult = (err.code === err.PERMISSION_DENIED) ? 'denied' : 'unavailable';
+        render();
+      },
+      { enableHighAccuracy: false, timeout: 8000, maximumAge: 60000 }
+    );
+  }
+
+  btns.forEach(function(b) {
+    b.addEventListener('click', function() {
+      mode = b.dataset.mode;
+      if (mode === 'auto') {
+        autoResult = null;
+        render();
+        detect();
+      } else {
+        render();
+      }
+    });
+  });
+
+  render();
+  detect();
+})();
+
+/* ===== ROOM_THEMES + toast ===== */
+var ROOM_THEMES = {
+  G108: '<span class="rt-num">G 108</span><span class="rt-theme">赫拉克勒斯神殿 · <em>Temple of Heracles</em></span>',
+  G110: '<span class="rt-num">G 110</span><span class="rt-theme">伊特鲁里亚 · <em>Etruscan Art</em></span>',
+  G103: '<span class="rt-num">G 103</span><span class="rt-theme">希腊陶器 · <em>Greek Pottery</em> · 红绘与黑绘</span>',
+  G106: '<span class="rt-num">G 106</span><span class="rt-theme">希腊陶器 · <em>Greek Pottery</em></span>',
+  G101: '<span class="rt-num">G 101</span><span class="rt-theme">古希腊与罗马 · <em>Greek &amp; Roman Art</em></span>',
+  G207: '<span class="rt-num">G 207</span><span class="rt-theme">古代绘画 · <em>Ancient Painting</em></span>',
+  G208: '<span class="rt-num">G 208</span><span class="rt-theme">珠宝与金器 · <em>Jewelry &amp; Gold</em></span>',
+  G203: '<span class="rt-num">G 203</span><span class="rt-theme">石棺 · <em>Sarcophagi</em></span>',
+  G211: '<span class="rt-num">G 211</span><span class="rt-theme">陶器 · <em>Ceramics</em></span>',
+  G214: '<span class="rt-num">G 214</span><span class="rt-theme">罗马玻璃 · <em>Roman Glass</em></span>'
+};
+var toastTimer = null;
+function showRoomToast(room) {
+  var toast = document.getElementById('roomToast');
+  if (!toast || !ROOM_THEMES[room]) return;
+  toast.innerHTML = ROOM_THEMES[room];
+  if (toast.classList.contains('shown')) {
+    toast.classList.remove('shown');
+    void toast.offsetWidth;
+  }
+  requestAnimationFrame(function() { toast.classList.add('shown'); });
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function() { toast.classList.remove('shown'); }, 3200);
+}
+
+/* ===== L1 visit tracker ===== */
+(function() {
+  var KEY = 'getty-villa-l1-visit-order';
+  var visitOrder;
+  try { visitOrder = JSON.parse(localStorage.getItem(KEY) || '[]') || []; }
+  catch (e) { visitOrder = []; }
+
+  var ROOM_CENTERS = {
+    G108: { x: 690, y: 220 },
+    G110: { x: 190, y: 170 },
+    G106: { x: 190, y: 480 },
+    G103: { x: 690, y: 580 },
+    G101: { x: 360, y: 730 }
+  };
+
+  function save() {
+    try { localStorage.setItem(KEY, JSON.stringify(visitOrder)); } catch (e) {}
+    document.dispatchEvent(new Event('footprints-changed'));
+  }
+
+  function recordVisit(room) {
+    var existingIndex = visitOrder.indexOf(room);
+    var lastIndex = visitOrder.length - 1;
+    if (existingIndex !== -1 && existingIndex === lastIndex) {
+      visitOrder.pop();
+    } else if (existingIndex !== -1) {
+      visitOrder = visitOrder.slice(0, existingIndex + 1);
+      showRoomToast(room);
+    } else {
+      visitOrder.push(room);
+      showRoomToast(room);
+    }
+    save();
+    render();
+  }
+
+  function clearAll() {
+    visitOrder = [];
+    save();
+    render();
+  }
+  document.addEventListener('clear-all-footprints', clearAll);
+
+  function render() {
+    var firstOrder = {};
+    var visitedSet = {};
+    visitOrder.forEach(function(room, i) {
+      if (!(room in firstOrder)) firstOrder[room] = i + 1;
+      visitedSet[room] = true;
+    });
+
+    document.querySelectorAll('#level1 .visit-badge').forEach(function(badge) {
+      var room = badge.dataset.room;
+      if (room in firstOrder) {
+        badge.classList.add('shown');
+        var t = badge.querySelector('text');
+        if (t) t.textContent = firstOrder[room];
+      } else {
+        badge.classList.remove('shown');
+      }
+    });
+
+    document.querySelectorAll('#level1 .room-tint').forEach(function(tint) {
+      tint.classList.toggle('shown', !!visitedSet[tint.dataset.room]);
+    });
+
+    var feetGroup = document.getElementById('footsteps-l1');
+    if (feetGroup) {
+      while (feetGroup.firstChild) feetGroup.removeChild(feetGroup.firstChild);
+      for (var i = 0; i < visitOrder.length - 1; i++) {
+        var a = ROOM_CENTERS[visitOrder[i]];
+        var b = ROOM_CENTERS[visitOrder[i + 1]];
+        if (!a || !b) continue;
+        var dx = b.x - a.x;
+        var dy = b.y - a.y;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 1) continue;
+        var rot = Math.atan2(dy, dx) * 180 / Math.PI + 90;
+        var px = -dy / dist;
+        var py = dx / dist;
+        var perpOffset = 18;
+        var stepLen = 76;
+        var numSteps = Math.max(2, Math.round(dist / stepLen));
+        for (var j = 0; j < numSteps; j++) {
+          var t = (j + 0.5) / numSteps;
+          var fx = a.x + dx * t;
+          var fy = a.y + dy * t;
+          var side = (j % 2 === 0) ? 1 : -1;
+          fx += px * perpOffset * side;
+          fy += py * perpOffset * side;
+          feetGroup.appendChild(createLorcFoot(fx, fy, rot, side));
+        }
+      }
+    }
+
+    var marker = document.getElementById('currentMarkerL1');
+    if (marker) {
+      if (visitOrder.length > 0) {
+        var lastRoom = visitOrder[visitOrder.length - 1];
+        var c = ROOM_CENTERS[lastRoom];
+        if (c) {
+          marker.setAttribute('transform', 'translate(' + c.x + ',' + c.y + ')');
+          marker.classList.add('shown');
+        }
+      } else {
+        marker.classList.remove('shown');
+      }
+    }
+  }
+
+  document.querySelectorAll('#level1 .room-tap').forEach(function(rect) {
+    rect.addEventListener('click', function() {
+      recordVisit(rect.dataset.room);
+    });
+  });
+
+  render();
+})();
+
+/* ===== L2 visit tracker ===== */
+(function() {
+  var KEY = 'getty-villa-l2-visit-order';
+  var visitOrder;
+  try { visitOrder = JSON.parse(localStorage.getItem(KEY) || '[]') || []; }
+  catch (e) { visitOrder = []; }
+
+  var ROOM_CENTERS = {
+    G207: { x: 210, y: 170 },
+    G208: { x: 210, y: 430 },
+    G203: { x: 710, y: 200 },
+    G211: { x: 625, y: 500 },
+    G214: { x: 795, y: 500 }
+  };
+
+  function save() {
+    try { localStorage.setItem(KEY, JSON.stringify(visitOrder)); } catch (e) {}
+    document.dispatchEvent(new Event('footprints-changed'));
+  }
+
+  function recordVisit(room) {
+    var existingIndex = visitOrder.indexOf(room);
+    var lastIndex = visitOrder.length - 1;
+    if (existingIndex !== -1 && existingIndex === lastIndex) {
+      visitOrder.pop();
+    } else if (existingIndex !== -1) {
+      visitOrder = visitOrder.slice(0, existingIndex + 1);
+      showRoomToast(room);
+    } else {
+      visitOrder.push(room);
+      showRoomToast(room);
+    }
+    save();
+    render();
+  }
+
+  function clearAll() {
+    visitOrder = [];
+    save();
+    render();
+  }
+  document.addEventListener('clear-all-footprints', clearAll);
+
+  function render() {
+    var firstOrder = {};
+    var visitedSet = {};
+    visitOrder.forEach(function(room, i) {
+      if (!(room in firstOrder)) firstOrder[room] = i + 1;
+      visitedSet[room] = true;
+    });
+
+    document.querySelectorAll('#level2 .visit-badge').forEach(function(badge) {
+      var room = badge.dataset.room;
+      if (room in firstOrder) {
+        badge.classList.add('shown');
+        var t = badge.querySelector('text');
+        if (t) t.textContent = firstOrder[room];
+      } else {
+        badge.classList.remove('shown');
+      }
+    });
+
+    document.querySelectorAll('#level2 .room-tint').forEach(function(tint) {
+      tint.classList.toggle('shown', !!visitedSet[tint.dataset.room]);
+    });
+
+    var feetGroup = document.getElementById('footsteps-l2');
+    if (feetGroup) {
+      while (feetGroup.firstChild) feetGroup.removeChild(feetGroup.firstChild);
+      for (var i = 0; i < visitOrder.length - 1; i++) {
+        var a = ROOM_CENTERS[visitOrder[i]];
+        var b = ROOM_CENTERS[visitOrder[i + 1]];
+        if (!a || !b) continue;
+        var dx = b.x - a.x;
+        var dy = b.y - a.y;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 1) continue;
+        var rot = Math.atan2(dy, dx) * 180 / Math.PI + 90;
+        var px = -dy / dist;
+        var py = dx / dist;
+        var perpOffset = 16;
+        var stepLen = 68;
+        var numSteps = Math.max(2, Math.round(dist / stepLen));
+        for (var j = 0; j < numSteps; j++) {
+          var t = (j + 0.5) / numSteps;
+          var fx = a.x + dx * t;
+          var fy = a.y + dy * t;
+          var side = (j % 2 === 0) ? 1 : -1;
+          fx += px * perpOffset * side;
+          fy += py * perpOffset * side;
+          feetGroup.appendChild(createLorcFoot(fx, fy, rot, side));
+        }
+      }
+    }
+
+    var marker = document.getElementById('currentMarkerL2');
+    if (marker) {
+      if (visitOrder.length > 0) {
+        var lastRoom = visitOrder[visitOrder.length - 1];
+        var c = ROOM_CENTERS[lastRoom];
+        if (c) {
+          marker.setAttribute('transform', 'translate(' + c.x + ',' + c.y + ')');
+          marker.classList.add('shown');
+        }
+      } else {
+        marker.classList.remove('shown');
+      }
+    }
+  }
+
+  document.querySelectorAll('#level2 .room-tap').forEach(function(rect) {
+    rect.addEventListener('click', function() {
+      recordVisit(rect.dataset.room);
+    });
+  });
+
+  render();
+})();
+
+/* ===== TTS read-aloud ===== */
+var speechActive = false;
+
+function getReadBtn() {
+  return document.querySelector('#modal-inner .art-read-btn');
+}
+var SPEAKER_SVG =
+  '<svg class="ar-svg" viewBox="0 0 24 24" aria-hidden="true">' +
+    '<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>' +
+  '</svg>';
+var PAUSE_SVG =
+  '<svg class="ar-svg" viewBox="0 0 24 24" aria-hidden="true">' +
+    '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>' +
+  '</svg>';
+
+function setReadBtnIdle(btn) {
+  if (!btn) btn = getReadBtn();
+  if (!btn) return;
+  btn.classList.remove('playing');
+  btn.innerHTML = SPEAKER_SVG + '<span>朗读全文</span>';
+}
+function setReadBtnPlaying(btn) {
+  if (!btn) btn = getReadBtn();
+  if (!btn) return;
+  btn.classList.add('playing');
+  btn.innerHTML = PAUSE_SVG + '<span>停止朗读</span>';
+}
+
+function readAloud() {
+  var btn = getReadBtn();
+  if (speechActive) {
+    try { window.speechSynthesis.cancel(); } catch (e) {}
+    speechActive = false;
+    setReadBtnIdle(btn);
+    return;
+  }
+  if (!('speechSynthesis' in window) || !('SpeechSynthesisUtterance' in window)) {
+    alert('您的浏览器不支持朗读功能。可以试试 Safari / Chrome 最新版。');
+    return;
+  }
+  var inner = document.getElementById('modal-inner');
+  if (!inner) return;
+  function txt(sel) {
+    var el = inner.querySelector(sel);
+    return el ? el.textContent.trim() : '';
+  }
+  var parts = [
+    txt('.art-title'),
+    txt('.art-meta'),
+    txt('.art-desc')
+  ].filter(function(s) { return s; });
+  var fullText = parts.join('。');
+  if (!fullText) return;
+
+  var u = new SpeechSynthesisUtterance(fullText);
+  u.lang = 'zh-CN';
+  u.rate = 0.95;
+  u.pitch = 1.0;
+  function stop() {
+    speechActive = false;
+    setReadBtnIdle();
+  }
+  u.onend = stop;
+  u.onerror = stop;
+  try {
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(u);
+    speechActive = true;
+    setReadBtnPlaying(btn);
+  } catch (e) {
+    stop();
+  }
+}
+
+(function() {
+  var origClose = window.closeModal;
+  if (typeof origClose !== 'function') return;
+  window.closeModal = function(e) {
+    if (speechActive) {
+      try { window.speechSynthesis.cancel(); } catch (err) {}
+      speechActive = false;
+      setReadBtnIdle();
+    }
+    return origClose(e);
+  };
+})();
+
+/* ===== Mobile nav ===== */
+(function() {
+  var clearBtn = document.getElementById('abClear');
+  function updateClearBtnState() {
+    if (!clearBtn) return;
+    var total = 0;
+    try { total += (JSON.parse(localStorage.getItem('getty-villa-l1-visit-order') || '[]') || []).length; } catch (e) {}
+    try { total += (JSON.parse(localStorage.getItem('getty-villa-l2-visit-order') || '[]') || []).length; } catch (e) {}
+    if (total === 0) clearBtn.setAttribute('disabled', '');
+    else clearBtn.removeAttribute('disabled');
+  }
+  if (clearBtn) {
+    clearBtn.addEventListener('click', function() {
+      document.dispatchEvent(new Event('clear-all-footprints'));
+    });
+    document.addEventListener('footprints-changed', updateClearBtnState);
+    updateClearBtnState();
+  }
+
+  var whereBtn = document.getElementById('abWhereAmI');
+  if (whereBtn) whereBtn.addEventListener('click', function() {
+    var mode = 'level1';
+    var activeBtn = document.querySelector('.loc-widget .loc-btn.active');
+    if (activeBtn) {
+      var m = activeBtn.getAttribute('data-mode');
+      if (m === 'level1' || m === 'level2') mode = m;
+      if (m === 'auto') {
+        var txt = (document.getElementById('locText') || {}).textContent || '';
+        if (/二楼/.test(txt)) mode = 'level2';
+      }
+    }
+    var target = document.getElementById(mode);
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  var listBtn = document.getElementById('abArtList');
+  var sheet = document.getElementById('artSheet');
+  var overlay = document.getElementById('artSheetOverlay');
+  var ashList = document.getElementById('ashList');
+  var ashCount = document.getElementById('ashCount');
+  var sheetBuilt = false;
+
+  function buildSheet() {
+    if (sheetBuilt) return;
+    sheetBuilt = true;
+    var sections = [
+      { id: 'level1',  label: '一楼 · G101–G110', cls: '' },
+      { id: 'level2',  label: '二楼 · G203–G214', cls: 'south' },
+      { id: 'outdoor', label: '户外 · Outdoor',    cls: 'outdoor' }
+    ];
+    var total = 0;
+    sections.forEach(function(s) {
+      var floor = document.getElementById(s.id);
+      var pins = floor ? floor.querySelectorAll('.art-pin') : [];
+      if (!pins.length && s.id !== 'outdoor') return;
+      var header = document.createElement('div');
+      header.className = 'ash-floor-label' + (s.cls ? ' ' + s.cls : '');
+      header.textContent = s.label;
+      ashList.appendChild(header);
+      if (pins.length) {
+        pins.forEach(function(pin) {
+          var titleAttr = pin.getAttribute('title') || '';
+          var parts = titleAttr.split(' · ');
+          var room = parts.length > 1 ? parts[parts.length - 1] : '';
+          var name = parts.length > 1 ? parts.slice(0, -1).join(' · ') : titleAttr;
+          var pinImg = pin.querySelector('img');
+          var thumbSrc = pinImg ? pinImg.getAttribute('src') : '';
+          var thumbAlt = pinImg ? (pinImg.getAttribute('alt') || name) : name;
+          var cardId = pin.getAttribute('data-card') || '';
+          var item = document.createElement('button');
+          item.className = 'ash-item';
+          var thumbHTML = thumbSrc
+            ? '<img class="ashi-thumb" data-card="' + cardId + '" src="' + thumbSrc + '" alt="' + thumbAlt.replace(/"/g, '&quot;') + '" loading="lazy">'
+            : '';
+          var roomHTML = room ? '<span class="ashi-room">' + room + '</span>' : '';
+          item.innerHTML = thumbHTML + '<span class="ashi-body">' + roomHTML + '<span class="ashi-title">' + name + '</span></span>';
+          item.addEventListener('click', function() {
+            closeArtSheet();
+            setTimeout(function() { pin.click(); }, 100);
+          });
+          ashList.appendChild(item);
+          total++;
+        });
+      }
+      if (s.id === 'outdoor') {
+        ['card-18', 'card-19', 'card-20'].forEach(function(cardId) {
+          var card = document.getElementById(cardId);
+          if (!card) return;
+          var title = card.querySelector('.art-title');
+          var img = card.querySelector('.art-img img');
+          var item = document.createElement('button');
+          item.className = 'ash-item';
+          var thumbHTML = img
+            ? '<img class="ashi-thumb" src="' + img.getAttribute('src') + '" alt="' + (img.getAttribute('alt') || '').replace(/"/g, '&quot;') + '" loading="lazy">'
+            : '';
+          item.innerHTML = thumbHTML + '<span class="ashi-body"><span class="ashi-room">户外</span><span class="ashi-title">' + (title ? title.textContent : '') + '</span></span>';
+          item.addEventListener('click', function() {
+            closeArtSheet();
+            setTimeout(function() { openCard(cardId); }, 100);
+          });
+          ashList.appendChild(item);
+          total++;
+        });
+      }
+    });
+    if (ashCount) ashCount.textContent = String(total);
+  }
+
+  window.closeArtSheet = function() {
+    if (!sheet) return;
+    sheet.classList.remove('shown');
+    if (overlay) overlay.classList.remove('shown');
+    sheet.setAttribute('aria-hidden', 'true');
+  };
+
+  if (listBtn && sheet && overlay) {
+    listBtn.addEventListener('click', function() {
+      buildSheet();
+      sheet.classList.add('shown');
+      overlay.classList.add('shown');
+      sheet.setAttribute('aria-hidden', 'false');
+    });
+  }
+
+  var chips = document.querySelectorAll('.st-chip');
+  if (chips.length && 'IntersectionObserver' in window) {
+    var sectionIds = ['level1', 'level2', 'outdoor'];
+    var sections = sectionIds
+      .map(function(id) { return document.getElementById(id); })
+      .filter(Boolean);
+    if (sections.length) {
+      var io = new IntersectionObserver(function(entries) {
+        var best = null;
+        entries.forEach(function(e) {
+          if (e.isIntersecting && (!best || e.intersectionRatio > best.intersectionRatio)) {
+            best = e;
+          }
+        });
+        if (best) {
+          var id = best.target.id;
+          chips.forEach(function(c) {
+            c.classList.toggle('active', c.getAttribute('data-floor') === id);
+          });
+          var activeChip = document.querySelector('.st-chip.active');
+          if (activeChip) activeChip.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        }
+      }, { rootMargin: '-30% 0px -55% 0px', threshold: [0, 0.25, 0.5, 0.75] });
+      sections.forEach(function(s) { io.observe(s); });
+    }
+  }
+})();
+</script>
+
+<!-- Dev mobile preview -->
+<script>
+(function(){
+  var search = decodeURIComponent(location.search);
+  var m = search.match(/[?&]dev=mobile(?:[=:](\d+))?/);
+  if (!m) return;
+  var W = parseInt(m[1] || '390', 10);
+  for (var i = 0; i < document.styleSheets.length; i++) {
+    try {
+      var sheet = document.styleSheets[i];
+      var rules = sheet.cssRules || [];
+      for (var j = 0; j < rules.length; j++) {
+        var r = rules[j];
+        if (r instanceof CSSMediaRule && /max-width:\s*(640|768)/.test(r.conditionText)) {
+          r.media.mediaText = 'all';
+        }
+      }
+    } catch(e){}
+  }
+  var s = document.createElement('style');
+  s.textContent = [
+    'html, body { max-width: ' + W + 'px !important; margin: 0 auto !important; overflow-x: hidden !important; }',
+    'body { outline: 1px solid #d8cdb4; outline-offset: -1px; }',
+    '.sticky-top, .action-bar { left: calc(50% - ' + (W/2) + 'px) !important; right: auto !important; width: ' + W + 'px !important; max-width: ' + W + 'px !important; }',
+    '.room-toast { max-width: ' + (W - 24) + 'px !important; }'
+  ].join('\n');
+  document.head.appendChild(s);
+  document.documentElement.dataset.devMobile = String(W);
+})();
+</script>
+
+</body>
+</html>

@@ -152,6 +152,29 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles, cfg }: QuartzComponent
               </a>
             </div>
           </section>
+
+          {/* Getty guides */}
+          <section class="tg-section">
+            <div class="tg-cmd tg-cmd-small">
+              <span class="tg-prompt">$</span>open getty/ <span class="tg-comment"># 中文观展指南</span>
+            </div>
+            <div class="tg-pillars tg-pillars-2">
+              <a class="tg-pill" href="/static/getty/center-guide.html">
+                <div class="tg-pill-head">Getty Center</div>
+                <div class="tg-pill-name">盖蒂中心 · 观展指南</div>
+                <div class="tg-pill-desc">
+                  阅读模式 + 楼层导航 · 60件必看藏品
+                </div>
+              </a>
+              <a class="tg-pill" href="/static/getty/villa-guide.html">
+                <div class="tg-pill-head">Getty Villa</div>
+                <div class="tg-pill-name">盖蒂别墅 · 观展指南</div>
+                <div class="tg-pill-desc">
+                  阅读模式 + 楼层导航 · 20件必看藏品
+                </div>
+              </a>
+            </div>
+          </section>
         </div>
 
         {/* RIGHT RAIL */}
