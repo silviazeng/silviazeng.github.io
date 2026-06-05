@@ -262,6 +262,8 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 }
 .pav-tab.north:hover { border-color: var(--north); background: var(--north-lt); color: var(--north); }
 .pav-tab.south:hover { border-color: var(--south); background: var(--south-lt); color: var(--south); }
+.pav-tab.west:hover  { border-color: var(--west);  background: var(--west-lt);  color: var(--west);  }
+.pav-tab.east { opacity: 0.55; cursor: not-allowed; pointer-events: none; }
 
 /* read-full-btn deleted — the mode-toggle at the top is the single path to
    center-guide for deep reads, no per-card duplicate CTA needed. */
@@ -1270,6 +1272,9 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
     <a class="pav-tab north" href="#north-1f">北馆 1F</a>
     <a class="pav-tab south" href="#south-2f">南馆 2F</a>
     <a class="pav-tab south" href="#south-1f">南馆 1F</a>
+    <a class="pav-tab west"  href="#west-2f">西馆 2F</a>
+    <a class="pav-tab west"  href="#west-1f">西馆 1F</a>
+    <span class="pav-tab east" title="东馆 2026 年起暂时关闭">东馆 🔒</span>
   </div>
   <div class="loc-widget" id="locWidget">
     <span class="loc-pin" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-7-7-7-12a7 7 0 0 1 14 0c0 5-7 12-7 12z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
