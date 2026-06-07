@@ -33,6 +33,8 @@ A **walk map** (走·地图): a floor plan for every level of every pavilion, ma
 
 Two touches I'm fond of: it notices when you're actually at the Getty, and it leaves a trail of footprints behind you as you walk, so you can see what you've covered. And everything is set in large type — it was made for eyes older than mine.
 
+It's a small thing, useful to a handful of people — and exactly the kind of [unquantifiable stuff](/Living-Reading) I like making most.
+
 Have a look — or better, bring it with you:
 
 <div style="display:flex;gap:0.75rem;flex-wrap:wrap;margin:1.75rem 0;">
