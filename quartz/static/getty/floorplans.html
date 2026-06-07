@@ -3108,6 +3108,9 @@ document.addEventListener('keydown', (e) => {
       } else if (autoResult === 'unavailable') {
         textEl.textContent = 'GPS 不可用';
         highlightPavilion(null);
+      } else if (autoResult === 'idle') {
+        textEl.textContent = '点"自动"定位';
+        highlightPavilion(null);
       } else {
         textEl.textContent = '检测中…';
       }
@@ -3161,8 +3164,25 @@ document.addEventListener('keydown', (e) => {
     });
   });
 
+  // Auto-detect ONLY when geolocation permission is ALREADY granted, so a plain
+  // page load / refresh never triggers the browser's permission prompt. If the
+  // permission is still 'prompt' (undecided) we show an idle state and wait for
+  // the user to tap 自动 (a user gesture) — the one and only time we prompt.
+  function maybeAutoDetect() {
+    if (!('geolocation' in navigator)) { autoResult = 'unavailable'; render(); return; }
+    if (navigator.permissions && navigator.permissions.query) {
+      navigator.permissions.query({ name: 'geolocation' }).then(function(status) {
+        if (status.state === 'granted') { detect(); }
+        else if (status.state === 'denied') { autoResult = 'denied'; render(); }
+        else { autoResult = 'idle'; render(); }   // 'prompt' → wait for a tap
+      }).catch(function() { autoResult = 'idle'; render(); });
+    } else {
+      autoResult = 'idle'; render();              // no Permissions API → wait for a tap
+    }
+  }
+
   render();
-  detect();
+  maybeAutoDetect();
 })();
 
 /* ===== Shared visit-tracking utilities (used by both floor trackers) ===== */
