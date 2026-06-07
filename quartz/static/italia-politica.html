@@ -1059,6 +1059,11 @@ const ENTITIES = {
   lucca:    { name: "Lucca",     full: "Republic of Lucca",       polity: "R", color: "#b8c098", labelColor: "#384810" },
   siena:    { name: "Siena",     full: "Republic of Siena",       polity: "R", color: "#cc9878", labelColor: "#722810" },
   commune:  { name: "Communes",  full: "Communes & City-States",  polity: "C", color: "#c0b094", labelColor: "#3a2814" },
+  // Prince-Bishopric of Trent — an Imperial ecclesiastical principality north
+  // of Venice, ruled by the Bishop of Trent as a sovereign vassal of the Holy
+  // Roman Emperor from 1027 to 1803. Distinct pale lilac (paler than Papal
+  // mauve) signals "another clerical state, but Imperial, not Roman".
+  trent:    { name: "Trent",     full: "Prince-Bishopric of Trent", polity: "P", color: "#c4a8c0", labelColor: "#3a2042" },
   various:  { name: "Various",   full: "Various local powers",    polity: "C", color: "#c8baa0", labelColor: "#4a3820" }
 };
 
@@ -1074,10 +1079,10 @@ const POLITY = {
 const SNAPSHOTS = [
   { year:1300, roman:"MCCC",
     event:"Late medieval communes; Aragon holds Sicily after the Vespers (1282).",
-    map:{ savoy:"savoy",milan:"milan",venice:"venice",genoa:"genoa",wEmilia:"commune",bologna:"commune",romagna:"papal",lucca:"lucca",florence:"florence",siena:"siena",papal:"papal",abruzzo:"naples",campania:"naples",apulia:"naples",south:"naples",este:"este",sicily:"aragon",sardinia:"various",trentino:"commune" } },
+    map:{ savoy:"savoy",milan:"milan",venice:"venice",genoa:"genoa",wEmilia:"commune",bologna:"commune",romagna:"papal",lucca:"lucca",florence:"florence",siena:"siena",papal:"papal",abruzzo:"naples",campania:"naples",apulia:"naples",south:"naples",este:"este",sicily:"aragon",sardinia:"various",trentino:"trent" } },
   { year:1380, roman:"MCCCLXXX",
     event:"Visconti Milan expands; Genoa weakens; Florence ascendant in Tuscany.",
-    map:{ savoy:"savoy",milan:"milan",venice:"venice",genoa:"genoa",wEmilia:"milan",bologna:"commune",romagna:"papal",lucca:"lucca",florence:"florence",siena:"siena",papal:"papal",abruzzo:"naples",campania:"naples",apulia:"naples",south:"naples",este:"este",sicily:"aragon",sardinia:"aragon",trentino:"commune" } },
+    map:{ savoy:"savoy",milan:"milan",venice:"venice",genoa:"genoa",wEmilia:"milan",bologna:"commune",romagna:"papal",lucca:"lucca",florence:"florence",siena:"siena",papal:"papal",abruzzo:"naples",campania:"naples",apulia:"naples",south:"naples",este:"este",sicily:"aragon",sardinia:"aragon",trentino:"trent" } },
   { year:1454, roman:"MCDLIV",
     event:"Peace of Lodi: balance among Milan, Venice, Florence, Papacy and Naples.",
     map:{ savoy:"savoy",milan:"milan",venice:"venice",genoa:"milan",wEmilia:"milan",bologna:"commune",romagna:"papal",lucca:"lucca",florence:"florence",siena:"siena",papal:"papal",abruzzo:"naples",campania:"naples",apulia:"naples",south:"naples",este:"este",sicily:"aragon",sardinia:"aragon",trentino:"venice" } },
@@ -1446,6 +1451,7 @@ const CITIES = [
       lucca:    [10.4, 43.95],
       siena:    [11.3, 42.9],
       commune:  [10.7, 44.55],
+      trent:    [11.5, 46.5],
       various:  [9.0, 40.0]
     };
     const clusters = clustersForSnapshot(snap);
@@ -1587,7 +1593,7 @@ const CITIES = [
     }
     const legend = document.getElementById("legend");
     legend.innerHTML = "";
-    const order = ["savoy","genoa","milan","venice","florence","tuscany","este","papal","naples","aragon","spain","lucca","siena","commune","various"];
+    const order = ["savoy","genoa","milan","venice","florence","tuscany","este","papal","trent","naples","aragon","spain","lucca","siena","commune","various"];
     for (const eid of order) {
       if (!legendIds.has(eid)) continue;
       const ent = ENTITIES[eid]; if (!ent) continue;
