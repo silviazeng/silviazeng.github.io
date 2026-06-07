@@ -1256,24 +1256,24 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 
 <!-- ===== STICKY TOP (mobile nav) — floor switcher always reachable ===== -->
 <nav class="sticky-top" aria-label="楼层切换">
-  <a class="st-chip north active" href="#north-2f" data-floor="north-2f"><span class="stc-pav">北馆</span><span class="stc-lvl">2F</span></a>
+  <a class="st-chip west active"  href="#west-2f"  data-floor="west-2f"><span class="stc-pav">西馆</span><span class="stc-lvl">2F</span></a>
+  <a class="st-chip west"         href="#west-1f"  data-floor="west-1f"><span class="stc-pav">西馆</span><span class="stc-lvl">1F</span></a>
+  <a class="st-chip north"        href="#north-2f" data-floor="north-2f"><span class="stc-pav">北馆</span><span class="stc-lvl">2F</span></a>
   <a class="st-chip north"        href="#north-1f" data-floor="north-1f"><span class="stc-pav">北馆</span><span class="stc-lvl">1F</span></a>
   <a class="st-chip south"        href="#south-2f" data-floor="south-2f"><span class="stc-pav">南馆</span><span class="stc-lvl">2F</span></a>
   <a class="st-chip south"        href="#south-1f" data-floor="south-1f"><span class="stc-pav">南馆</span><span class="stc-lvl">1F</span></a>
-  <a class="st-chip west"         href="#west-2f"  data-floor="west-2f"><span class="stc-pav">西馆</span><span class="stc-lvl">2F</span></a>
-  <a class="st-chip west"         href="#west-1f"  data-floor="west-1f"><span class="stc-pav">西馆</span><span class="stc-lvl">1F</span></a>
   <span class="st-chip east closed" aria-disabled="true" title="东馆 2026 年起暂时关闭"><span class="stc-pav">东馆</span><span class="stc-lvl">🔒</span></span>
 </nav>
 
 <header class="page-header">
   <a href="center-guide.html" class="back-link">← 返回完整指南</a>
   <div class="pav-tabs">
+    <a class="pav-tab west"  href="#west-2f">西馆 2F</a>
+    <a class="pav-tab west"  href="#west-1f">西馆 1F</a>
     <a class="pav-tab north" href="#north-2f">北馆 2F</a>
     <a class="pav-tab north" href="#north-1f">北馆 1F</a>
     <a class="pav-tab south" href="#south-2f">南馆 2F</a>
     <a class="pav-tab south" href="#south-1f">南馆 1F</a>
-    <a class="pav-tab west"  href="#west-2f">西馆 2F</a>
-    <a class="pav-tab west"  href="#west-1f">西馆 1F</a>
     <span class="pav-tab east" title="东馆 2026 年起暂时关闭">东馆 🔒</span>
   </div>
   <div class="loc-widget" id="locWidget">
@@ -1289,6 +1289,292 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 
 <!-- legend moved from page-top to per-floor inline (.floor-head .legend-mini)
      so the color key sits next to the floor plan that uses it. -->
+
+<!-- ===== 西 二楼 ===== -->
+<section class="floor-section west" id="west-2f">
+  <div class="floor-head">
+    <span class="floor-label">西馆 二楼 · 2F</span>
+    <h2 class="floor-name">印象派与后印象派 <span class="yr">1860–1900</span></h2>
+    <p class="floor-desc">梵高、莫奈、雷诺阿、塞尚、马奈——全馆人气最旺的一层，镇馆之宝《鸢尾花》就在 W204。</p>
+    <div class="legend-mini" aria-label="展厅类别图例">
+      <span class="lgm-item"><span class="lgm-swatch" style="background:var(--room-paintings);"></span>绘画</span>
+      <span class="lgm-item"><span class="lgm-swatch" style="background:var(--room-decarts);"></span>装饰艺术</span>
+      <span class="lgm-item"><span class="lgm-swatch" style="background:var(--room-changing);"></span>临展</span>
+    </div>
+  </div>
+  <div class="floor-plan">
+    <div class="floor-svg-wrap">
+      <svg viewBox="20 20 800 660" xmlns="http://www.w3.org/2000/svg" class="signage-svg" preserveAspectRatio="xMidYMid meet">
+        <!-- Background -->
+        <rect width="840" height="680" fill="#f5f0e0"/>
+
+        <!-- ===== AREA FILLS (per on-site overview map) =====
+             W2F has the impressionist hall (W204, where Van Gogh's Irises lives)
+             with smaller rooms around it. WEST TERRACE wraps the south side. -->
+        <rect x="60" y="80" width="720" height="500" fill="#bfa686"/>             <!-- atrium/circulation -->
+        <rect x="80"  y="100" width="180" height="160" fill="var(--room-paintings)"/>  <!-- W 201 -->
+        <rect x="260" y="100" width="200" height="160" fill="var(--room-paintings)"/>  <!-- W 202 -->
+        <rect x="460" y="100" width="200" height="160" fill="var(--room-paintings)"/>  <!-- W 203 -->
+        <rect x="260" y="260" width="400" height="240" fill="var(--room-paintings)"/>  <!-- W 204 (large impressionist hall) -->
+        <rect x="80"  y="260" width="180" height="240" fill="var(--room-paintings)"/>  <!-- W 205 -->
+
+        <!-- Outer building outline -->
+        <rect x="60" y="80" width="720" height="500" fill="none" stroke="#1a1a1a" stroke-width="5"/>
+
+        <!-- Internal walls (with door gaps) -->
+        <g fill="none" stroke="#1a1a1a" stroke-width="5">
+          <!-- W 201: right wall (door y=160-195); bottom wall (door x=145-180) -->
+          <line x1="260" y1="100" x2="260" y2="160"/>
+          <line x1="260" y1="195" x2="260" y2="260"/>
+          <line x1="80"  y1="260" x2="145" y2="260"/>
+          <line x1="180" y1="260" x2="260" y2="260"/>
+          <!-- W 202: right wall (door y=160-195) -->
+          <line x1="460" y1="100" x2="460" y2="160"/>
+          <line x1="460" y1="195" x2="460" y2="260"/>
+          <line x1="260" y1="260" x2="460" y2="260"/>
+          <!-- W 203: bottom wall (door x=540-575) -->
+          <line x1="460" y1="260" x2="540" y2="260"/>
+          <line x1="575" y1="260" x2="660" y2="260"/>
+          <line x1="660" y1="100" x2="660" y2="500"/>
+          <!-- W 204 / W 205 division -->
+          <line x1="260" y1="500" x2="660" y2="500"/>
+          <line x1="80"  y1="500" x2="260" y2="500"/>
+        </g>
+
+        <!-- Stairs (small, in top-right corner area) -->
+        <g pointer-events="none">
+          <rect x="680" y="100" width="80" height="80" fill="#ffffff" stroke="#1a1a1a" stroke-width="2.5"/>
+          <path d="M 690 165 L 706 165 L 706 150 L 722 150 L 722 135 L 738 135 L 738 120 L 754 120 L 754 105"
+                fill="none" stroke="#1a1a1a" stroke-width="2" stroke-linejoin="miter"/>
+        </g>
+
+        <!-- WEST ATRIUM label -->
+        <g pointer-events="none">
+          <text x="420" y="80" font-family="sans-serif" font-size="20" font-weight="500" fill="#1a1a1a" text-anchor="middle" letter-spacing="3" opacity="0.65">西馆 · 二楼</text>
+        </g>
+
+        <!-- WEST TERRACE label (outside south wall, south exit zone) -->
+        <g pointer-events="none">
+          <text x="420" y="620" font-family="sans-serif" font-size="22" font-weight="600" fill="#1a1a1a" text-anchor="middle" letter-spacing="2">西露台</text>
+        </g>
+
+        <!-- ROOM NUMBER LABELS -->
+        <g pointer-events="none" font-family="sans-serif" font-size="28" font-weight="500" fill="#1a1a1a">
+          <text x="252" y="132" text-anchor="end">W 201</text>
+          <text x="452" y="132" text-anchor="end">W 202</text>
+          <text x="652" y="132" text-anchor="end">W 203</text>
+          <text x="652" y="292" text-anchor="end">W 204</text>
+          <text x="252" y="292" text-anchor="end">W 205</text>
+        </g>
+
+        <!-- Visited-room tints -->
+        <g class="room-tints" pointer-events="none">
+          <rect class="room-tint" fill="transparent" data-room="W201" x="80"  y="100" width="180" height="160"/>
+          <rect class="room-tint" fill="transparent" data-room="W202" x="260" y="100" width="200" height="160"/>
+          <rect class="room-tint" fill="transparent" data-room="W203" x="460" y="100" width="200" height="160"/>
+          <rect class="room-tint" fill="transparent" data-room="W204" x="260" y="260" width="400" height="240"/>
+          <rect class="room-tint" fill="transparent" data-room="W205" x="80"  y="260" width="180" height="240"/>
+        </g>
+
+        <!-- Footsteps -->
+        <g class="footsteps" id="footsteps-w2f" pointer-events="none"></g>
+
+        <!-- Click targets -->
+        <g class="room-taps">
+          <rect class="room-tap" fill="transparent" data-room="W201" x="80"  y="100" width="180" height="160"/>
+          <rect class="room-tap" fill="transparent" data-room="W202" x="260" y="100" width="200" height="160"/>
+          <rect class="room-tap" fill="transparent" data-room="W203" x="460" y="100" width="200" height="160"/>
+          <rect class="room-tap" fill="transparent" data-room="W204" x="260" y="260" width="400" height="240"/>
+          <rect class="room-tap" fill="transparent" data-room="W205" x="80"  y="260" width="180" height="240"/>
+        </g>
+
+        <!-- Current-location pulsing marker -->
+        <g class="current-marker" id="currentMarkerW2F">
+          <circle class="pulse-ring" r="22" />
+          <circle r="14" fill="#a83e2a" stroke="#fff" stroke-width="3"/>
+        </g>
+
+        <!-- Visit badges -->
+        <g class="visit-badges" font-family="sans-serif" font-size="17" font-weight="700">
+          <g class="visit-badge" data-room="W201" transform="translate(105, 125)"><circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="6" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="W202" transform="translate(285, 125)"><circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="6" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="W203" transform="translate(485, 125)"><circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="6" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="W204" transform="translate(285, 285)"><circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="6" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="W205" transform="translate(105, 285)"><circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="6" text-anchor="middle" fill="#fff">1</text></g>
+        </g>
+      </svg>
+
+      <!-- Art pins (viewBox 20 20 800 660) -->
+      <button class="art-pin" data-card="card-01" style="left:55%;top:55%" title="Van Gogh · 鸢尾花 · W204">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Irises-Vincent_van_Gogh.jpg/960px-Irises-Vincent_van_Gogh.jpg" alt="鸢尾花">
+        <span class="pin-num">01</span>
+      </button>
+      <button class="art-pin" data-card="card-02" style="left:38%;top:50%" title="Monet · 鲁昂大教堂 · W204">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Monet_Rouen_Cathedral_painting_%2839819981983%29.jpg/960px-Monet_Rouen_Cathedral_painting_%2839819981983%29.jpg" alt="Rouen Cathedral">
+        <span class="pin-num">02</span>
+      </button>
+      <button class="art-pin" data-card="card-03" style="left:70%;top:62%" title="Renoir · 散步 · W204">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/La_Promenade%2C_by_Pierre-Auguste_Renoir%2C_edited.jpg/960px-La_Promenade%2C_by_Pierre-Auguste_Renoir%2C_edited.jpg" alt="La Promenade">
+        <span class="pin-num">03</span>
+      </button>
+      <button class="art-pin" data-card="card-04" style="left:50%;top:68%" title="Cézanne · 静物与苹果 · W204">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Paul_C%C3%A9zanne_-_Still_Life_with_Apples.jpg/960px-Paul_C%C3%A9zanne_-_Still_Life_with_Apples.jpg" alt="Still Life">
+        <span class="pin-num">04</span>
+      </button>
+      <button class="art-pin" data-card="card-05" style="left:18%;top:55%" title="Manet · 让娜（春）· W205">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/%C3%89douard_Manet_-_Jeanne_%28Spring%29.jpg/960px-%C3%89douard_Manet_-_Jeanne_%28Spring%29.jpg" alt="Jeanne (Spring)">
+        <span class="pin-num">05</span>
+      </button>
+      <button class="art-pin" data-card="card-09" style="left:72%;top:25%" title="Ringel d'Illzach · 大青铜花瓶 · W2F 弧面玻璃大厅">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Large_Bronze_Vase_at_Getty_Center%2C_Los_Angeles.jpg/960px-Large_Bronze_Vase_at_Getty_Center%2C_Los_Angeles.jpg" alt="大青铜花瓶">
+        <span class="pin-num">09</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 西 一楼 ===== -->
+<section class="floor-section west alt" id="west-1f">
+  <div class="floor-head">
+    <span class="floor-label">西馆 一楼 · 1F</span>
+    <h2 class="floor-name">恩索尔 · 新古典主义雕塑 · 摄影中心 <span class="yr">19 世纪 · 摄影 1839 起</span></h2>
+    <p class="floor-desc">W101 镇室是恩索尔巨幅《基督进入布鲁塞尔》；走廊陈列梅塞施密特人物头像，另设摄影中心轮换展出。</p>
+    <div class="legend-mini" aria-label="展厅类别图例">
+      <span class="lgm-item"><span class="lgm-swatch" style="background:var(--room-paintings);"></span>绘画</span>
+      <span class="lgm-item"><span class="lgm-swatch" style="background:var(--room-decarts);"></span>装饰艺术</span>
+      <span class="lgm-item"><span class="lgm-swatch" style="background:var(--room-changing);"></span>临展</span>
+    </div>
+  </div>
+  <div class="floor-plan">
+    <div class="floor-svg-wrap">
+      <svg viewBox="20 20 760 540" xmlns="http://www.w3.org/2000/svg" class="signage-svg" preserveAspectRatio="xMidYMid meet">
+        <!-- Background -->
+        <rect width="800" height="560" fill="#f5f0e0"/>
+
+        <!-- Atrium fill -->
+        <rect x="60" y="80" width="700" height="440" fill="#bfa686"/>
+
+        <!-- Rooms (simplified layout based on the overview map) -->
+        <rect x="80"  y="100" width="220" height="220" fill="var(--room-paintings)"/>  <!-- W 101 (large, Ensor hall) -->
+        <rect x="300" y="100" width="160" height="100" fill="var(--room-decarts)"/>    <!-- W 102 (sculpture / Messerschmidt) -->
+        <rect x="300" y="200" width="160" height="120" fill="var(--room-decarts)"/>    <!-- W 103 (sculpture) -->
+        <rect x="460" y="100" width="160" height="100" fill="var(--room-paintings)"/>  <!-- W 104 -->
+        <rect x="460" y="200" width="160" height="120" fill="var(--room-paintings)"/>  <!-- W 105 -->
+        <rect x="80"  y="320" width="220" height="180" fill="var(--room-paintings)"/>  <!-- W 106 -->
+        <rect x="300" y="320" width="320" height="180" fill="var(--room-paintings)"/>  <!-- W 107 -->
+
+        <!-- Outer building outline -->
+        <rect x="60" y="80" width="700" height="440" fill="none" stroke="#1a1a1a" stroke-width="5"/>
+
+        <!-- Internal walls -->
+        <g fill="none" stroke="#1a1a1a" stroke-width="5">
+          <!-- W 101: right wall (door y=180-215); bottom (door x=170-210) -->
+          <line x1="300" y1="100" x2="300" y2="180"/>
+          <line x1="300" y1="215" x2="300" y2="320"/>
+          <line x1="80"  y1="320" x2="170" y2="320"/>
+          <line x1="210" y1="320" x2="300" y2="320"/>
+          <!-- W 102 / W 103 division (horizontal y=200) -->
+          <line x1="300" y1="200" x2="460" y2="200"/>
+          <!-- W 102 / W 104 division (vertical x=460); door y=140-175 -->
+          <line x1="460" y1="100" x2="460" y2="140"/>
+          <line x1="460" y1="175" x2="460" y2="200"/>
+          <!-- W 104 / W 105 division (horizontal y=200) -->
+          <line x1="460" y1="200" x2="620" y2="200"/>
+          <!-- W 105 right wall -->
+          <line x1="620" y1="100" x2="620" y2="320"/>
+          <!-- W 103 / W 107 division (y=320) -->
+          <line x1="300" y1="320" x2="620" y2="320"/>
+          <!-- W 106 / W 107 division (x=300); door y=380-415 -->
+          <line x1="300" y1="320" x2="300" y2="380"/>
+          <line x1="300" y1="415" x2="300" y2="500"/>
+        </g>
+
+        <!-- Stairs (upper right) -->
+        <g pointer-events="none">
+          <rect x="640" y="100" width="70" height="70" fill="#ffffff" stroke="#1a1a1a" stroke-width="2.5"/>
+          <path d="M 650 160 L 664 160 L 664 146 L 678 146 L 678 132 L 692 132 L 692 118 L 706 118"
+                fill="none" stroke="#1a1a1a" stroke-width="2" stroke-linejoin="miter"/>
+        </g>
+
+        <!-- WEST PAVILION 1F label -->
+        <g pointer-events="none">
+          <text x="400" y="68" font-family="sans-serif" font-size="20" font-weight="500" fill="#1a1a1a" text-anchor="middle" letter-spacing="3" opacity="0.65">西馆 · 一楼</text>
+        </g>
+
+        <!-- ROOM NUMBER LABELS -->
+        <g pointer-events="none" font-family="sans-serif" font-size="24" font-weight="500" fill="#1a1a1a">
+          <text x="292" y="130" text-anchor="end">W 101</text>
+          <text x="452" y="130" text-anchor="end">W 102</text>
+          <text x="452" y="230" text-anchor="end">W 103</text>
+          <text x="612" y="130" text-anchor="end">W 104</text>
+          <text x="612" y="230" text-anchor="end">W 105</text>
+          <text x="292" y="350" text-anchor="end">W 106</text>
+          <text x="612" y="350" text-anchor="end">W 107</text>
+        </g>
+
+        <!-- Visited-room tints -->
+        <g class="room-tints" pointer-events="none">
+          <rect class="room-tint" fill="transparent" data-room="W101" x="80"  y="100" width="220" height="220"/>
+          <rect class="room-tint" fill="transparent" data-room="W102" x="300" y="100" width="160" height="100"/>
+          <rect class="room-tint" fill="transparent" data-room="W103" x="300" y="200" width="160" height="120"/>
+          <rect class="room-tint" fill="transparent" data-room="W104" x="460" y="100" width="160" height="100"/>
+          <rect class="room-tint" fill="transparent" data-room="W105" x="460" y="200" width="160" height="120"/>
+          <rect class="room-tint" fill="transparent" data-room="W106" x="80"  y="320" width="220" height="180"/>
+          <rect class="room-tint" fill="transparent" data-room="W107" x="300" y="320" width="320" height="180"/>
+        </g>
+
+        <!-- Footsteps -->
+        <g class="footsteps" id="footsteps-w1f" pointer-events="none"></g>
+
+        <!-- Click targets -->
+        <g class="room-taps">
+          <rect class="room-tap" fill="transparent" data-room="W101" x="80"  y="100" width="220" height="220"/>
+          <rect class="room-tap" fill="transparent" data-room="W102" x="300" y="100" width="160" height="100"/>
+          <rect class="room-tap" fill="transparent" data-room="W103" x="300" y="200" width="160" height="120"/>
+          <rect class="room-tap" fill="transparent" data-room="W104" x="460" y="100" width="160" height="100"/>
+          <rect class="room-tap" fill="transparent" data-room="W105" x="460" y="200" width="160" height="120"/>
+          <rect class="room-tap" fill="transparent" data-room="W106" x="80"  y="320" width="220" height="180"/>
+          <rect class="room-tap" fill="transparent" data-room="W107" x="300" y="320" width="320" height="180"/>
+        </g>
+
+        <!-- Current-location marker -->
+        <g class="current-marker" id="currentMarkerW1F">
+          <circle class="pulse-ring" r="22" />
+          <circle r="14" fill="#a83e2a" stroke="#fff" stroke-width="3"/>
+        </g>
+
+        <!-- Visit badges -->
+        <g class="visit-badges" font-family="sans-serif" font-size="15" font-weight="700">
+          <g class="visit-badge" data-room="W101" transform="translate(105, 125)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="W102" transform="translate(325, 125)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="W103" transform="translate(325, 225)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="W104" transform="translate(485, 125)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="W105" transform="translate(485, 225)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="W106" transform="translate(105, 345)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="W107" transform="translate(325, 345)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+        </g>
+      </svg>
+
+      <!-- Art pins -->
+      <button class="art-pin" data-card="card-06" style="left:23%;top:38%" title="Ensor · 基督进入布鲁塞尔 · W101">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Christ%27s_Entry_Into_Brussels_in_1889.jpg/960px-Christ%27s_Entry_Into_Brussels_in_1889.jpg" alt="Christ's Entry">
+        <span class="pin-num">06</span>
+      </button>
+      <button class="art-pin" data-card="card-07" style="left:32%;top:24%" title="Nollekens · 新古典主义雕塑 · W101–W102 走廊">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Juno_by_Joseph_Nollekens.jpg/960px-Juno_by_Joseph_Nollekens.jpg" alt="Juno">
+        <span class="pin-num">07</span>
+      </button>
+      <button class="art-pin" data-card="card-08" style="left:48%;top:23%" title="Messerschmidt · 烦躁的人 · W102">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/The_Vexed_Man_%28Franz_Xaver_Messerschmidt%29%2C_Getty_Center.jpg/960px-The_Vexed_Man_%28Franz_Xaver_Messerschmidt%29%2C_Getty_Center.jpg" alt="The Vexed Man">
+        <span class="pin-num">08</span>
+      </button>
+      <button class="art-pin" data-card="card-10" style="left:58%;top:74%" title="摄影中心 · 轮换 · W107">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Boulevard_du_Temple_by_Daguerre.jpg/960px-Boulevard_du_Temple_by_Daguerre.jpg" alt="Daguerre Boulevard du Temple">
+        <span class="pin-num">10</span>
+      </button>
+    </div>
+  </div>
+</section>
 
 <!-- ===== 北 二楼 ===== -->
 <section class="floor-section" id="north-2f">
@@ -2192,292 +2478,6 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
       <button class="art-pin" data-card="card-33" style="left:14%;top:64%" title="Chinard · 雷卡米埃肖像胸像 · S114">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Bust_of_Juliette_R%C3%A9camier_%281777_-_1849%29%2C_by_Joseph_Chinard_%28Getty_103RRS%29.jpg/960px-Bust_of_Juliette_R%C3%A9camier_%281777_-_1849%29%2C_by_Joseph_Chinard_%28Getty_103RRS%29.jpg" alt="Récamier Bust">
         <span class="pin-num">30</span>
-      </button>
-    </div>
-  </div>
-</section>
-
-<!-- ===== 西 二楼 ===== -->
-<section class="floor-section west" id="west-2f">
-  <div class="floor-head">
-    <span class="floor-label">西馆 二楼 · 2F</span>
-    <h2 class="floor-name">印象派与后印象派 <span class="yr">1860–1900</span></h2>
-    <p class="floor-desc">梵高、莫奈、雷诺阿、塞尚、马奈——全馆人气最旺的一层，镇馆之宝《鸢尾花》就在 W204。</p>
-    <div class="legend-mini" aria-label="展厅类别图例">
-      <span class="lgm-item"><span class="lgm-swatch" style="background:var(--room-paintings);"></span>绘画</span>
-      <span class="lgm-item"><span class="lgm-swatch" style="background:var(--room-decarts);"></span>装饰艺术</span>
-      <span class="lgm-item"><span class="lgm-swatch" style="background:var(--room-changing);"></span>临展</span>
-    </div>
-  </div>
-  <div class="floor-plan">
-    <div class="floor-svg-wrap">
-      <svg viewBox="20 20 800 660" xmlns="http://www.w3.org/2000/svg" class="signage-svg" preserveAspectRatio="xMidYMid meet">
-        <!-- Background -->
-        <rect width="840" height="680" fill="#f5f0e0"/>
-
-        <!-- ===== AREA FILLS (per on-site overview map) =====
-             W2F has the impressionist hall (W204, where Van Gogh's Irises lives)
-             with smaller rooms around it. WEST TERRACE wraps the south side. -->
-        <rect x="60" y="80" width="720" height="500" fill="#bfa686"/>             <!-- atrium/circulation -->
-        <rect x="80"  y="100" width="180" height="160" fill="var(--room-paintings)"/>  <!-- W 201 -->
-        <rect x="260" y="100" width="200" height="160" fill="var(--room-paintings)"/>  <!-- W 202 -->
-        <rect x="460" y="100" width="200" height="160" fill="var(--room-paintings)"/>  <!-- W 203 -->
-        <rect x="260" y="260" width="400" height="240" fill="var(--room-paintings)"/>  <!-- W 204 (large impressionist hall) -->
-        <rect x="80"  y="260" width="180" height="240" fill="var(--room-paintings)"/>  <!-- W 205 -->
-
-        <!-- Outer building outline -->
-        <rect x="60" y="80" width="720" height="500" fill="none" stroke="#1a1a1a" stroke-width="5"/>
-
-        <!-- Internal walls (with door gaps) -->
-        <g fill="none" stroke="#1a1a1a" stroke-width="5">
-          <!-- W 201: right wall (door y=160-195); bottom wall (door x=145-180) -->
-          <line x1="260" y1="100" x2="260" y2="160"/>
-          <line x1="260" y1="195" x2="260" y2="260"/>
-          <line x1="80"  y1="260" x2="145" y2="260"/>
-          <line x1="180" y1="260" x2="260" y2="260"/>
-          <!-- W 202: right wall (door y=160-195) -->
-          <line x1="460" y1="100" x2="460" y2="160"/>
-          <line x1="460" y1="195" x2="460" y2="260"/>
-          <line x1="260" y1="260" x2="460" y2="260"/>
-          <!-- W 203: bottom wall (door x=540-575) -->
-          <line x1="460" y1="260" x2="540" y2="260"/>
-          <line x1="575" y1="260" x2="660" y2="260"/>
-          <line x1="660" y1="100" x2="660" y2="500"/>
-          <!-- W 204 / W 205 division -->
-          <line x1="260" y1="500" x2="660" y2="500"/>
-          <line x1="80"  y1="500" x2="260" y2="500"/>
-        </g>
-
-        <!-- Stairs (small, in top-right corner area) -->
-        <g pointer-events="none">
-          <rect x="680" y="100" width="80" height="80" fill="#ffffff" stroke="#1a1a1a" stroke-width="2.5"/>
-          <path d="M 690 165 L 706 165 L 706 150 L 722 150 L 722 135 L 738 135 L 738 120 L 754 120 L 754 105"
-                fill="none" stroke="#1a1a1a" stroke-width="2" stroke-linejoin="miter"/>
-        </g>
-
-        <!-- WEST ATRIUM label -->
-        <g pointer-events="none">
-          <text x="420" y="80" font-family="sans-serif" font-size="20" font-weight="500" fill="#1a1a1a" text-anchor="middle" letter-spacing="3" opacity="0.65">西馆 · 二楼</text>
-        </g>
-
-        <!-- WEST TERRACE label (outside south wall, south exit zone) -->
-        <g pointer-events="none">
-          <text x="420" y="620" font-family="sans-serif" font-size="22" font-weight="600" fill="#1a1a1a" text-anchor="middle" letter-spacing="2">西露台</text>
-        </g>
-
-        <!-- ROOM NUMBER LABELS -->
-        <g pointer-events="none" font-family="sans-serif" font-size="28" font-weight="500" fill="#1a1a1a">
-          <text x="252" y="132" text-anchor="end">W 201</text>
-          <text x="452" y="132" text-anchor="end">W 202</text>
-          <text x="652" y="132" text-anchor="end">W 203</text>
-          <text x="652" y="292" text-anchor="end">W 204</text>
-          <text x="252" y="292" text-anchor="end">W 205</text>
-        </g>
-
-        <!-- Visited-room tints -->
-        <g class="room-tints" pointer-events="none">
-          <rect class="room-tint" fill="transparent" data-room="W201" x="80"  y="100" width="180" height="160"/>
-          <rect class="room-tint" fill="transparent" data-room="W202" x="260" y="100" width="200" height="160"/>
-          <rect class="room-tint" fill="transparent" data-room="W203" x="460" y="100" width="200" height="160"/>
-          <rect class="room-tint" fill="transparent" data-room="W204" x="260" y="260" width="400" height="240"/>
-          <rect class="room-tint" fill="transparent" data-room="W205" x="80"  y="260" width="180" height="240"/>
-        </g>
-
-        <!-- Footsteps -->
-        <g class="footsteps" id="footsteps-w2f" pointer-events="none"></g>
-
-        <!-- Click targets -->
-        <g class="room-taps">
-          <rect class="room-tap" fill="transparent" data-room="W201" x="80"  y="100" width="180" height="160"/>
-          <rect class="room-tap" fill="transparent" data-room="W202" x="260" y="100" width="200" height="160"/>
-          <rect class="room-tap" fill="transparent" data-room="W203" x="460" y="100" width="200" height="160"/>
-          <rect class="room-tap" fill="transparent" data-room="W204" x="260" y="260" width="400" height="240"/>
-          <rect class="room-tap" fill="transparent" data-room="W205" x="80"  y="260" width="180" height="240"/>
-        </g>
-
-        <!-- Current-location pulsing marker -->
-        <g class="current-marker" id="currentMarkerW2F">
-          <circle class="pulse-ring" r="22" />
-          <circle r="14" fill="#a83e2a" stroke="#fff" stroke-width="3"/>
-        </g>
-
-        <!-- Visit badges -->
-        <g class="visit-badges" font-family="sans-serif" font-size="17" font-weight="700">
-          <g class="visit-badge" data-room="W201" transform="translate(105, 125)"><circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="6" text-anchor="middle" fill="#fff">1</text></g>
-          <g class="visit-badge" data-room="W202" transform="translate(285, 125)"><circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="6" text-anchor="middle" fill="#fff">1</text></g>
-          <g class="visit-badge" data-room="W203" transform="translate(485, 125)"><circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="6" text-anchor="middle" fill="#fff">1</text></g>
-          <g class="visit-badge" data-room="W204" transform="translate(285, 285)"><circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="6" text-anchor="middle" fill="#fff">1</text></g>
-          <g class="visit-badge" data-room="W205" transform="translate(105, 285)"><circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="6" text-anchor="middle" fill="#fff">1</text></g>
-        </g>
-      </svg>
-
-      <!-- Art pins (viewBox 20 20 800 660) -->
-      <button class="art-pin" data-card="card-01" style="left:55%;top:55%" title="Van Gogh · 鸢尾花 · W204">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Irises-Vincent_van_Gogh.jpg/960px-Irises-Vincent_van_Gogh.jpg" alt="鸢尾花">
-        <span class="pin-num">01</span>
-      </button>
-      <button class="art-pin" data-card="card-02" style="left:38%;top:50%" title="Monet · 鲁昂大教堂 · W204">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Monet_Rouen_Cathedral_painting_%2839819981983%29.jpg/960px-Monet_Rouen_Cathedral_painting_%2839819981983%29.jpg" alt="Rouen Cathedral">
-        <span class="pin-num">02</span>
-      </button>
-      <button class="art-pin" data-card="card-03" style="left:70%;top:62%" title="Renoir · 散步 · W204">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/La_Promenade%2C_by_Pierre-Auguste_Renoir%2C_edited.jpg/960px-La_Promenade%2C_by_Pierre-Auguste_Renoir%2C_edited.jpg" alt="La Promenade">
-        <span class="pin-num">03</span>
-      </button>
-      <button class="art-pin" data-card="card-04" style="left:50%;top:68%" title="Cézanne · 静物与苹果 · W204">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Paul_C%C3%A9zanne_-_Still_Life_with_Apples.jpg/960px-Paul_C%C3%A9zanne_-_Still_Life_with_Apples.jpg" alt="Still Life">
-        <span class="pin-num">04</span>
-      </button>
-      <button class="art-pin" data-card="card-05" style="left:18%;top:55%" title="Manet · 让娜（春）· W205">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/%C3%89douard_Manet_-_Jeanne_%28Spring%29.jpg/960px-%C3%89douard_Manet_-_Jeanne_%28Spring%29.jpg" alt="Jeanne (Spring)">
-        <span class="pin-num">05</span>
-      </button>
-      <button class="art-pin" data-card="card-09" style="left:72%;top:25%" title="Ringel d'Illzach · 大青铜花瓶 · W2F 弧面玻璃大厅">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Large_Bronze_Vase_at_Getty_Center%2C_Los_Angeles.jpg/960px-Large_Bronze_Vase_at_Getty_Center%2C_Los_Angeles.jpg" alt="大青铜花瓶">
-        <span class="pin-num">09</span>
-      </button>
-    </div>
-  </div>
-</section>
-
-<!-- ===== 西 一楼 ===== -->
-<section class="floor-section west alt" id="west-1f">
-  <div class="floor-head">
-    <span class="floor-label">西馆 一楼 · 1F</span>
-    <h2 class="floor-name">恩索尔 · 新古典主义雕塑 · 摄影中心 <span class="yr">19 世纪 · 摄影 1839 起</span></h2>
-    <p class="floor-desc">W101 镇室是恩索尔巨幅《基督进入布鲁塞尔》；走廊陈列梅塞施密特人物头像，另设摄影中心轮换展出。</p>
-    <div class="legend-mini" aria-label="展厅类别图例">
-      <span class="lgm-item"><span class="lgm-swatch" style="background:var(--room-paintings);"></span>绘画</span>
-      <span class="lgm-item"><span class="lgm-swatch" style="background:var(--room-decarts);"></span>装饰艺术</span>
-      <span class="lgm-item"><span class="lgm-swatch" style="background:var(--room-changing);"></span>临展</span>
-    </div>
-  </div>
-  <div class="floor-plan">
-    <div class="floor-svg-wrap">
-      <svg viewBox="20 20 760 540" xmlns="http://www.w3.org/2000/svg" class="signage-svg" preserveAspectRatio="xMidYMid meet">
-        <!-- Background -->
-        <rect width="800" height="560" fill="#f5f0e0"/>
-
-        <!-- Atrium fill -->
-        <rect x="60" y="80" width="700" height="440" fill="#bfa686"/>
-
-        <!-- Rooms (simplified layout based on the overview map) -->
-        <rect x="80"  y="100" width="220" height="220" fill="var(--room-paintings)"/>  <!-- W 101 (large, Ensor hall) -->
-        <rect x="300" y="100" width="160" height="100" fill="var(--room-decarts)"/>    <!-- W 102 (sculpture / Messerschmidt) -->
-        <rect x="300" y="200" width="160" height="120" fill="var(--room-decarts)"/>    <!-- W 103 (sculpture) -->
-        <rect x="460" y="100" width="160" height="100" fill="var(--room-paintings)"/>  <!-- W 104 -->
-        <rect x="460" y="200" width="160" height="120" fill="var(--room-paintings)"/>  <!-- W 105 -->
-        <rect x="80"  y="320" width="220" height="180" fill="var(--room-paintings)"/>  <!-- W 106 -->
-        <rect x="300" y="320" width="320" height="180" fill="var(--room-paintings)"/>  <!-- W 107 -->
-
-        <!-- Outer building outline -->
-        <rect x="60" y="80" width="700" height="440" fill="none" stroke="#1a1a1a" stroke-width="5"/>
-
-        <!-- Internal walls -->
-        <g fill="none" stroke="#1a1a1a" stroke-width="5">
-          <!-- W 101: right wall (door y=180-215); bottom (door x=170-210) -->
-          <line x1="300" y1="100" x2="300" y2="180"/>
-          <line x1="300" y1="215" x2="300" y2="320"/>
-          <line x1="80"  y1="320" x2="170" y2="320"/>
-          <line x1="210" y1="320" x2="300" y2="320"/>
-          <!-- W 102 / W 103 division (horizontal y=200) -->
-          <line x1="300" y1="200" x2="460" y2="200"/>
-          <!-- W 102 / W 104 division (vertical x=460); door y=140-175 -->
-          <line x1="460" y1="100" x2="460" y2="140"/>
-          <line x1="460" y1="175" x2="460" y2="200"/>
-          <!-- W 104 / W 105 division (horizontal y=200) -->
-          <line x1="460" y1="200" x2="620" y2="200"/>
-          <!-- W 105 right wall -->
-          <line x1="620" y1="100" x2="620" y2="320"/>
-          <!-- W 103 / W 107 division (y=320) -->
-          <line x1="300" y1="320" x2="620" y2="320"/>
-          <!-- W 106 / W 107 division (x=300); door y=380-415 -->
-          <line x1="300" y1="320" x2="300" y2="380"/>
-          <line x1="300" y1="415" x2="300" y2="500"/>
-        </g>
-
-        <!-- Stairs (upper right) -->
-        <g pointer-events="none">
-          <rect x="640" y="100" width="70" height="70" fill="#ffffff" stroke="#1a1a1a" stroke-width="2.5"/>
-          <path d="M 650 160 L 664 160 L 664 146 L 678 146 L 678 132 L 692 132 L 692 118 L 706 118"
-                fill="none" stroke="#1a1a1a" stroke-width="2" stroke-linejoin="miter"/>
-        </g>
-
-        <!-- WEST PAVILION 1F label -->
-        <g pointer-events="none">
-          <text x="400" y="68" font-family="sans-serif" font-size="20" font-weight="500" fill="#1a1a1a" text-anchor="middle" letter-spacing="3" opacity="0.65">西馆 · 一楼</text>
-        </g>
-
-        <!-- ROOM NUMBER LABELS -->
-        <g pointer-events="none" font-family="sans-serif" font-size="24" font-weight="500" fill="#1a1a1a">
-          <text x="292" y="130" text-anchor="end">W 101</text>
-          <text x="452" y="130" text-anchor="end">W 102</text>
-          <text x="452" y="230" text-anchor="end">W 103</text>
-          <text x="612" y="130" text-anchor="end">W 104</text>
-          <text x="612" y="230" text-anchor="end">W 105</text>
-          <text x="292" y="350" text-anchor="end">W 106</text>
-          <text x="612" y="350" text-anchor="end">W 107</text>
-        </g>
-
-        <!-- Visited-room tints -->
-        <g class="room-tints" pointer-events="none">
-          <rect class="room-tint" fill="transparent" data-room="W101" x="80"  y="100" width="220" height="220"/>
-          <rect class="room-tint" fill="transparent" data-room="W102" x="300" y="100" width="160" height="100"/>
-          <rect class="room-tint" fill="transparent" data-room="W103" x="300" y="200" width="160" height="120"/>
-          <rect class="room-tint" fill="transparent" data-room="W104" x="460" y="100" width="160" height="100"/>
-          <rect class="room-tint" fill="transparent" data-room="W105" x="460" y="200" width="160" height="120"/>
-          <rect class="room-tint" fill="transparent" data-room="W106" x="80"  y="320" width="220" height="180"/>
-          <rect class="room-tint" fill="transparent" data-room="W107" x="300" y="320" width="320" height="180"/>
-        </g>
-
-        <!-- Footsteps -->
-        <g class="footsteps" id="footsteps-w1f" pointer-events="none"></g>
-
-        <!-- Click targets -->
-        <g class="room-taps">
-          <rect class="room-tap" fill="transparent" data-room="W101" x="80"  y="100" width="220" height="220"/>
-          <rect class="room-tap" fill="transparent" data-room="W102" x="300" y="100" width="160" height="100"/>
-          <rect class="room-tap" fill="transparent" data-room="W103" x="300" y="200" width="160" height="120"/>
-          <rect class="room-tap" fill="transparent" data-room="W104" x="460" y="100" width="160" height="100"/>
-          <rect class="room-tap" fill="transparent" data-room="W105" x="460" y="200" width="160" height="120"/>
-          <rect class="room-tap" fill="transparent" data-room="W106" x="80"  y="320" width="220" height="180"/>
-          <rect class="room-tap" fill="transparent" data-room="W107" x="300" y="320" width="320" height="180"/>
-        </g>
-
-        <!-- Current-location marker -->
-        <g class="current-marker" id="currentMarkerW1F">
-          <circle class="pulse-ring" r="22" />
-          <circle r="14" fill="#a83e2a" stroke="#fff" stroke-width="3"/>
-        </g>
-
-        <!-- Visit badges -->
-        <g class="visit-badges" font-family="sans-serif" font-size="15" font-weight="700">
-          <g class="visit-badge" data-room="W101" transform="translate(105, 125)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
-          <g class="visit-badge" data-room="W102" transform="translate(325, 125)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
-          <g class="visit-badge" data-room="W103" transform="translate(325, 225)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
-          <g class="visit-badge" data-room="W104" transform="translate(485, 125)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
-          <g class="visit-badge" data-room="W105" transform="translate(485, 225)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
-          <g class="visit-badge" data-room="W106" transform="translate(105, 345)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
-          <g class="visit-badge" data-room="W107" transform="translate(325, 345)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
-        </g>
-      </svg>
-
-      <!-- Art pins -->
-      <button class="art-pin" data-card="card-06" style="left:23%;top:38%" title="Ensor · 基督进入布鲁塞尔 · W101">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Christ%27s_Entry_Into_Brussels_in_1889.jpg/960px-Christ%27s_Entry_Into_Brussels_in_1889.jpg" alt="Christ's Entry">
-        <span class="pin-num">06</span>
-      </button>
-      <button class="art-pin" data-card="card-07" style="left:32%;top:24%" title="Nollekens · 新古典主义雕塑 · W101–W102 走廊">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Juno_by_Joseph_Nollekens.jpg/960px-Juno_by_Joseph_Nollekens.jpg" alt="Juno">
-        <span class="pin-num">07</span>
-      </button>
-      <button class="art-pin" data-card="card-08" style="left:48%;top:23%" title="Messerschmidt · 烦躁的人 · W102">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/The_Vexed_Man_%28Franz_Xaver_Messerschmidt%29%2C_Getty_Center.jpg/960px-The_Vexed_Man_%28Franz_Xaver_Messerschmidt%29%2C_Getty_Center.jpg" alt="The Vexed Man">
-        <span class="pin-num">08</span>
-      </button>
-      <button class="art-pin" data-card="card-10" style="left:58%;top:74%" title="摄影中心 · 轮换 · W107">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Boulevard_du_Temple_by_Daguerre.jpg/960px-Boulevard_du_Temple_by_Daguerre.jpg" alt="Daguerre Boulevard du Temple">
-        <span class="pin-num">10</span>
       </button>
     </div>
   </div>
@@ -4068,12 +4068,12 @@ function readAloud() {
     if (sheetBuilt) return;
     sheetBuilt = true;
     var sections = [
+      { id: 'west-2f',  label: '西馆 二楼 · W201–W205', cls: 'west' },
+      { id: 'west-1f',  label: '西馆 一楼 · W101–W107', cls: 'west' },
       { id: 'north-2f', label: '北馆 二楼 · N201–N205', cls: '' },
       { id: 'north-1f', label: '北馆 一楼 · N101–N106', cls: '' },
       { id: 'south-2f', label: '南馆 二楼 · S201–S206', cls: 'south' },
-      { id: 'south-1f', label: '南馆 一楼 · S101–S116', cls: 'south' },
-      { id: 'west-2f',  label: '西馆 二楼 · W201–W205', cls: 'west' },
-      { id: 'west-1f',  label: '西馆 一楼 · W101–W107', cls: 'west' }
+      { id: 'south-1f', label: '南馆 一楼 · S101–S116', cls: 'south' }
     ];
     var total = 0;
     sections.forEach(function(s) {
@@ -4134,7 +4134,7 @@ function readAloud() {
   // --- Sticky chip active-state follows scroll ---
   var chips = document.querySelectorAll('.st-chip');
   if (chips.length && 'IntersectionObserver' in window) {
-    var sectionIds = ['north-2f', 'north-1f', 'south-2f', 'south-1f', 'west-2f', 'west-1f'];
+    var sectionIds = ['west-2f', 'west-1f', 'north-2f', 'north-1f', 'south-2f', 'south-1f'];
     var sections = sectionIds
       .map(function(id) { return document.getElementById(id); })
       .filter(Boolean);
