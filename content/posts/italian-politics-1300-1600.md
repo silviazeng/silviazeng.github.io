@@ -23,41 +23,6 @@ I built this antique-style interactive map to make that fragmentation legible. D
 Hover any region for the controlling entity, polity type, and a short historical note. The pattern overlays distinguish Kingdoms (crosshatch), Duchies (stipple), Republics (diagonal lines), Papal lands (cross), and free Communes (dots). Black borders fade automatically wherever two adjacent zones share the same ruler — so you can see clusters merge as dynasties consolidate.
 
 <iframe id="italia-map-frame" src="/static/italia-politica.html" width="100%" scrolling="no" style="border:none;border-radius:8px;display:block;width:100%;height:900px;"></iframe>
-<script>
-(function () {
-  // Auto-fit the map iframe to its inner content so the blog post never shows
-  // an inner scrollbar. Same-origin (both at silviazeng.github.io), so we can
-  // read contentDocument directly. Re-measures on load, on inner-content
-  // resize, and on parent window resize (mobile rotation / browser resize).
-  var frame = document.getElementById('italia-map-frame');
-  if (!frame) return;
-
-  function fit() {
-    try {
-      var d = frame.contentDocument || (frame.contentWindow && frame.contentWindow.document);
-      if (!d) return;
-      var h = Math.max(
-        d.documentElement.scrollHeight,
-        d.body ? d.body.scrollHeight : 0
-      );
-      if (h > 0) frame.style.height = h + 'px';
-    } catch (e) { /* cross-origin or not ready yet */ }
-  }
-
-  frame.addEventListener('load', function () {
-    fit();
-    // Re-fit after fonts/images settle.
-    setTimeout(fit, 200);
-    setTimeout(fit, 800);
-    try {
-      var d = frame.contentDocument || frame.contentWindow.document;
-      if (window.ResizeObserver && d && d.documentElement) {
-        new ResizeObserver(fit).observe(d.documentElement);
-      }
-    } catch (e) {}
-  });
-  window.addEventListener('resize', fit);
-})();
-</script>
+<script src="/static/italia-map-resize.js"></script>
 
 A note on simplification: a thin band labeled "Ferrara" stands in for the entire Este territory (which historically also included Modena and Reggio); "Communes" is a catch-all for the patchwork of Bolognese signoria, Romagnol vicariates, and other small powers that defy easy single-color treatment. The Italy outline itself is hand-drawn rather than topojson-precise. It's a *cartographer's reconstruction*, not a survey — closer in spirit to a 16th-century Ortelius plate than a modern atlas.
