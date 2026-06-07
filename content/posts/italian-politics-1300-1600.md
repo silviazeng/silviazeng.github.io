@@ -26,14 +26,14 @@ Hover any region for the controlling entity, polity type, and a short historical
 <script src="/static/italia-map-resize.js"></script>
 
 <style>
+  /* All article block content shares the same outer width as the prose
+     column (68ch at Source Serif 4 16px ≈ 576px). Use a fixed pixel value
+     instead of 68ch on the union because the iframe inherits JetBrains Mono
+     from a Quartz rule, making its `ch` resolve to a different value. */
   article p, article ul, article ol, #italia-map-frame {
     box-sizing: border-box;
-    max-width: 68ch;
+    max-width: 576px;
   }
-  /* The iframe inherits a smaller font-size (13.5px) from a parent rule, so
-     its `ch` unit resolves smaller than the paragraph's. Lock to 16px so all
-     three columns line up to the same outer width. */
-  #italia-map-frame { font-size: 16px; }
 </style>
 
 A note on simplification: a thin band labeled "Ferrara" stands in for the entire Este territory (which historically also included Modena and Reggio); "Communes" is a catch-all for the patchwork of Bolognese signoria, Romagnol vicariates, and other small powers that defy easy single-color treatment. The Italy outline itself is hand-drawn rather than topojson-precise. It's a *cartographer's reconstruction*, not a survey — closer in spirit to a 16th-century Ortelius plate than a modern atlas.
