@@ -1,5 +1,5 @@
 ---
-title: "Italia Antiqua et Nova: 300 Years of Italian Political Control"
+title: "A Map of Italian Politics, 1300–1600"
 date: 2026-05-11
 tags:
   - history

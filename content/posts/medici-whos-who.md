@@ -16,4 +16,4 @@ Turns out fifteenth-century Florence had a lot of men with the same three names,
 
 ---
 
-**P.S.** Once you start tracking who's stabbing whom in Florence, you also want to know who's invading whom in *Italy*. I made a separate companion piece — an interactive antique-style map of political control across the peninsula from 1300 to 1600. You can drag a slider through seven snapshot years and watch Visconti Milan expand, Aragon take Sicily, Spain swallow the south, and the Medici turn Florence into a Grand Duchy: [Italia Antiqua et Nova →](/posts/italia-antiqua-et-nova)
+**P.S.** Once you start tracking who's stabbing whom in Florence, you also want to know who's invading whom in *Italy*. I made a separate companion piece — an interactive map of political control across the peninsula from 1300 to 1600. You can drag a slider through seven snapshot years and watch Visconti Milan expand, Aragon take Sicily, Spain swallow the south, and the Medici turn Florence into a Grand Duchy: [A Map of Italian Politics, 1300–1600 →](/posts/italian-politics-1300-1600)
