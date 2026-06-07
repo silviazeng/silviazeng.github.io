@@ -22,7 +22,7 @@ I built this antique-style interactive map to make that fragmentation legible. D
 
 Hover any region for the controlling entity, polity type, and a short historical note. The pattern overlays distinguish Kingdoms (crosshatch), Duchies (stipple), Republics (diagonal lines), Papal lands (cross), and free Communes (dots). Black borders fade automatically wherever two adjacent zones share the same ruler — so you can see clusters merge as dynasties consolidate.
 
-<iframe id="italia-map-frame" src="/static/italia-politica.html" width="100%" scrolling="no" style="border:none;border-radius:8px;display:block;width:100%;max-width:68ch;height:900px;margin:1rem 0;"></iframe>
+<iframe id="italia-map-frame" src="/static/italia-politica.html" width="100%" scrolling="no" style="border:none;border-radius:8px;display:block;width:100%;max-width:576px;height:900px;margin:1rem 0;"></iframe>
 <script src="/static/italia-map-resize.js"></script>
 
 <style>
