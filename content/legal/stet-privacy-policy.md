@@ -1,6 +1,7 @@
 ---
 title: "Stet — Privacy Policy"
 date: 2026-05-28
+noGraph: true
 tags:
   - legal
   - stet
