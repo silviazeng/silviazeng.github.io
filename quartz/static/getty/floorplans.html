@@ -250,7 +250,12 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 .signage-svg text.room-num.visited { fill: #ab9f88; font-weight: 500; }   /* already-visited rooms read as grey */
 .room-tint { display: none !important; }   /* visited-state now shown via the greyed room number */
 .visit-badge { display: none !important; }   /* retired: grey room number + footprints convey visited + order */
-.signage-svg .floor-photo { filter: sepia(.55) hue-rotate(-8deg) saturate(.65) brightness(1.08) contrast(.92); }
+/* West-2F plan base: the warm site tint is BAKED into west-2f-base.jpg, so there is
+   NO live CSS filter here (a filter on an SVG <image> rasterises at 1× CSS px and then
+   upscales on Retina → blur; baking keeps it pixel-sharp). To re-bake from the raw crop
+   img/west-2f-raw.jpg, apply this exact filter chain and re-export the JPEG:
+     sepia(.55) hue-rotate(-8deg) saturate(.65) brightness(1.08) contrast(.92)
+   The baked room interior is #f4f4f4 — the room-number cover rects are filled to match. */
 .floor-canvas .floor-bg.tinted {
   /* Convert Getty blue → cream/beige to match site theme (only for PDF crops) */
   filter: sepia(1) hue-rotate(-18deg) saturate(0.7) brightness(1.06) contrast(.95);
@@ -968,7 +973,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 
 .sticky-top {
   position: fixed;
-  top: calc(58px + env(safe-area-inset-top));  /* sits below the mode-toggle (real height ≈58px: 45px pills + 12px padding), not the old 48px guess that let the toggle overlap & clip the chips */
+  top: var(--mode-h, calc(58px + env(safe-area-inset-top)));  /* exact mode-toggle height, measured at runtime (incl. after the Noto webfont loads & grows the pills) so the chips never hide behind it */
   left: 0; right: 0;
   min-height: 60px;
   background: var(--bg);
@@ -1241,7 +1246,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 
 /* Mobile activation: show sticky bars, hide originals */
 @media (max-width: 768px) {
-  body { padding-top: calc(118px + env(safe-area-inset-top)); padding-bottom: 88px; }   /* 58 mode-toggle + 60 sticky-top */
+  body { padding-top: var(--top-stack-h, calc(118px + env(safe-area-inset-top))); padding-bottom: 88px; }   /* mode-toggle + sticky-top, measured at runtime (JS) */
   .sticky-top { display: flex; }
   .action-bar { display: flex; }
   .page-header .back-link,
@@ -1310,17 +1315,13 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   <div class="floor-plan">
     <div class="floor-svg-wrap">
       <svg viewBox="0 0 700 997" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="signage-svg" preserveAspectRatio="xMidYMid meet">
-        <!-- Official Getty Upper-Level plan crop (West Pavilion), tinted to the site palette -->
-        <!-- Official Getty Upper-Level plan crop (West Pavilion) as a tinted base.
-             Cover rects (inside the tinted group so they share the tint) blank out the
-             baked-in room numbers + the off-building garden/label clutter; our own small
-             room numbers are drawn on top. -->
-        <!-- The room-number cover-ups live INSIDE the tinted group with the photo's own
-             pre-tint room white (#fcfefd), so the filter tints them identically to the
-             rooms in EVERY browser — no cross-engine colour mismatch. -->
+        <!-- Official Getty Upper-Level plan crop (West Pavilion). The warm site tint is
+             BAKED into west-2f-base.jpg, so the image needs NO live CSS filter (which would
+             blur on Retina). Cover rects use the baked room fill #f4f4f4 to blank the
+             plan's printed room numbers; our own room numbers are drawn on top. -->
         <g class="floor-photo">
           <image href="img/west-2f-base.jpg" xlink:href="img/west-2f-base.jpg" x="0" y="0" width="700" height="997"/>
-          <g fill="#fcfefd">
+          <g fill="#f4f4f4">
             <rect x="64"  y="72"  width="132" height="60"/>
             <rect x="60"  y="236" width="132" height="60"/>
             <rect x="64"  y="392" width="136" height="64"/>
@@ -4219,6 +4220,31 @@ function showRoomToast(room) {
   document.addEventListener('footprints-changed', update);
   document.addEventListener('clear-all-footprints', function(){ setTimeout(update, 0); });
   update();
+})();
+
+/* ===== Top-nav height sync — pin the floor-chip bar exactly under the mode-toggle.
+   The mode-toggle's height is NOT constant: it grows a few px when the Noto Sans SC
+   webfont swaps in, and varies with the notch safe-area. A hard-coded 58px offset let
+   the toggle overlap & clip the chips. Measure it live and feed the real height into
+   --mode-h (chip-bar top) and --top-stack-h (body padding) instead. ===== */
+(function() {
+  var root = document.documentElement;
+  var mode = document.querySelector('.mode-toggle');
+  var sticky = document.querySelector('.sticky-top');
+  if (!mode) return;
+  function sync() {
+    var mh = Math.round(mode.getBoundingClientRect().height);
+    if (!mh) return;
+    root.style.setProperty('--mode-h', mh + 'px');
+    var sh = sticky ? Math.round(sticky.getBoundingClientRect().height) : 0;  // 0 on desktop (display:none) — body padding var is mobile-only
+    root.style.setProperty('--top-stack-h', (mh + sh) + 'px');
+  }
+  sync();
+  window.addEventListener('resize', sync);
+  window.addEventListener('orientationchange', sync);
+  window.addEventListener('load', sync);
+  if (document.fonts && document.fonts.ready) { document.fonts.ready.then(sync); }   // re-measure after the webfont grows the pills
+  if (window.ResizeObserver) { new ResizeObserver(sync).observe(mode); }
 })();
 
 /* ===== Modal read-aloud via Web Speech API (browser TTS) ===== */
