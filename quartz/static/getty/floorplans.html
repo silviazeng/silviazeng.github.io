@@ -246,6 +246,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 }
 .floor-svg-wrap .art-pin { width: 10%; border-width: 3.5px; }  /* default larger for accessibility */
 .floor-svg-wrap .art-pin .pin-num { display: none; }
+.signage-svg .floor-photo { filter: sepia(.55) hue-rotate(-8deg) saturate(.65) brightness(1.08) contrast(.92); }
 .floor-canvas .floor-bg.tinted {
   /* Convert Getty blue → cream/beige to match site theme (only for PDF crops) */
   filter: sepia(1) hue-rotate(-18deg) saturate(0.7) brightness(1.06) contrast(.95);
@@ -1304,135 +1305,69 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   </div>
   <div class="floor-plan">
     <div class="floor-svg-wrap">
-      <svg viewBox="150 160 680 1180" xmlns="http://www.w3.org/2000/svg" class="signage-svg" preserveAspectRatio="xMidYMid meet">
-        <!-- Background -->
-        <rect x="150" y="160" width="680" height="1180" fill="#f5f0e0"/>
-
-        <!-- ===== ROOMS — traced from the OFFICIAL Getty Upper-Level plan (West
-             Pavilion). Real shape: a narrow vertical stack W201 / W202 / W203 on the
-             left, the large W204 impressionist hall jutting to the right at the W203
-             level (Van Gogh's Irises, Monet, Renoir, Cézanne), a curved grand
-             staircase below, and the angled W205 room (Manet) at the bottom. -->
-        <rect x="188" y="195" width="172" height="172" fill="var(--room-paintings)"/>  <!-- W201 -->
-        <rect x="188" y="367" width="172" height="198" fill="var(--room-paintings)"/>  <!-- W202 -->
-        <rect x="188" y="565" width="172" height="195" fill="var(--room-paintings)"/>  <!-- W203 -->
-        <rect x="360" y="565" width="378" height="195" fill="var(--room-paintings)"/>  <!-- W204 impressionist hall -->
-        <polygon points="525,1085 740,1018 793,1238 578,1292" fill="var(--room-paintings)"/>  <!-- W205 (angled) -->
-
-        <!-- Curved grand staircase (lower-left, below W203) -->
-        <g pointer-events="none">
-          <path d="M 205 790 A 195 195 0 0 0 400 985 L 400 905 A 115 115 0 0 1 285 790 Z" fill="#e3dccb" stroke="#1a1a1a" stroke-width="3"/>
-          <g stroke="#1a1a1a" stroke-width="2">
-            <line x1="370" y1="901" x2="350" y2="978"/>
-            <line x1="342" y1="890" x2="302" y2="959"/>
-            <line x1="319" y1="871" x2="262" y2="928"/>
-            <line x1="300" y1="848" x2="231" y2="888"/>
-            <line x1="289" y1="820" x2="212" y2="841"/>
-          </g>
-        </g>
-
-        <!-- Outer walls of the W201–W204 block (one continuous perimeter) -->
-        <g fill="none" stroke="#1a1a1a" stroke-width="5">
-          <path d="M 188 195 L 360 195 L 360 565 L 738 565 L 738 760 L 188 760 Z"/>
-          <!-- W201 / W202 (y=367); door gap x[305,345] — offset toward the right per the actual plan -->
-          <line x1="188" y1="367" x2="305" y2="367"/>
-          <line x1="345" y1="367" x2="360" y2="367"/>
-          <!-- W202 / W203 (y=565); door gap x[305,345] — right-offset -->
-          <line x1="188" y1="565" x2="305" y2="565"/>
-          <line x1="345" y1="565" x2="360" y2="565"/>
-          <!-- W203 / W204 (x=360, y565-760); door gap y[630,670] -->
-          <line x1="360" y1="565" x2="360" y2="630"/>
-          <line x1="360" y1="670" x2="360" y2="760"/>
-        </g>
-        <!-- W205 perimeter -->
-        <polygon points="525,1085 740,1018 793,1238 578,1292" fill="none" stroke="#1a1a1a" stroke-width="5"/>
-
-        <!-- Title -->
-        <g pointer-events="none">
-          <text x="300" y="184" font-family="sans-serif" font-size="22" font-weight="500" fill="#1a1a1a" text-anchor="middle" letter-spacing="3" opacity="0.6">西馆 · 二楼</text>
-        </g>
-
-        <!-- WEST TERRACE label (toward Central Garden, lower-right) -->
-        <g pointer-events="none">
-          <text x="690" y="1322" font-family="sans-serif" font-size="24" font-weight="600" fill="#1a1a1a" text-anchor="middle" letter-spacing="2">西露台</text>
-        </g>
-
-        <!-- ROOM NUMBER LABELS -->
-        <g pointer-events="none" font-family="sans-serif" font-size="30" font-weight="500" fill="#1a1a1a">
-          <text x="345" y="232" text-anchor="end">W 201</text>
-          <text x="345" y="410" text-anchor="end">W 202</text>
-          <text x="345" y="608" text-anchor="end">W 203</text>
-          <text x="549" y="608" text-anchor="middle">W 204</text>
-          <text x="700" y="1185" text-anchor="end">W 205</text>
-        </g>
-
-        <!-- Visited-room tints -->
+      <svg viewBox="0 0 700 997" xmlns="http://www.w3.org/2000/svg" class="signage-svg" preserveAspectRatio="xMidYMid meet">
+        <!-- Official Getty Upper-Level plan crop (West Pavilion), tinted to the site palette -->
+        <image href="img/west-2f-base.jpg" x="0" y="0" width="700" height="997" class="floor-photo"/>
+        <!-- Visited-room tints (translucent gold over the photo's rooms) -->
         <g class="room-tints" pointer-events="none">
-          <rect class="room-tint" fill="transparent" data-room="W201" x="188" y="195" width="172" height="172"/>
-          <rect class="room-tint" fill="transparent" data-room="W202" x="188" y="367" width="172" height="198"/>
-          <rect class="room-tint" fill="transparent" data-room="W203" x="188" y="565" width="172" height="195"/>
-          <rect class="room-tint" fill="transparent" data-room="W204" x="360" y="565" width="378" height="195"/>
-          <polygon class="room-tint" fill="transparent" data-room="W205" points="525,1085 740,1018 793,1238 578,1292"/>
+          <rect class="room-tint" fill="transparent" data-room="W201" x="50" y="15"  width="175" height="165"/>
+          <rect class="room-tint" fill="transparent" data-room="W202" x="50" y="180" width="175" height="165"/>
+          <rect class="room-tint" fill="transparent" data-room="W203" x="50" y="345" width="175" height="175"/>
+          <rect class="room-tint" fill="transparent" data-room="W204" x="225" y="345" width="320" height="175"/>
+          <polygon class="room-tint" fill="transparent" data-room="W205" points="372,792 588,742 648,892 432,945"/>
         </g>
-
-        <!-- Footsteps -->
         <g class="footsteps" id="footsteps-w2f" pointer-events="none"></g>
-
         <!-- Click targets -->
         <g class="room-taps">
-          <rect class="room-tap" fill="transparent" data-room="W201" x="188" y="195" width="172" height="172"/>
-          <rect class="room-tap" fill="transparent" data-room="W202" x="188" y="367" width="172" height="198"/>
-          <rect class="room-tap" fill="transparent" data-room="W203" x="188" y="565" width="172" height="195"/>
-          <rect class="room-tap" fill="transparent" data-room="W204" x="360" y="565" width="378" height="195"/>
-          <polygon class="room-tap" fill="transparent" data-room="W205" points="525,1085 740,1018 793,1238 578,1292"/>
+          <rect class="room-tap" fill="transparent" data-room="W201" x="50" y="15"  width="175" height="165"/>
+          <rect class="room-tap" fill="transparent" data-room="W202" x="50" y="180" width="175" height="165"/>
+          <rect class="room-tap" fill="transparent" data-room="W203" x="50" y="345" width="175" height="175"/>
+          <rect class="room-tap" fill="transparent" data-room="W204" x="225" y="345" width="320" height="175"/>
+          <polygon class="room-tap" fill="transparent" data-room="W205" points="372,792 588,742 648,892 432,945"/>
         </g>
-
-        <!-- Current-location pulsing marker -->
         <g class="current-marker" id="currentMarkerW2F">
           <circle class="pulse-ring" r="22" />
           <circle r="14" fill="#a83e2a" stroke="#fff" stroke-width="3"/>
         </g>
-
-        <!-- Visit badges -->
-        <g class="visit-badges" font-family="sans-serif" font-size="20" font-weight="700">
-          <g class="visit-badge" data-room="W201" transform="translate(218, 228)"><circle r="18" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="6" text-anchor="middle" fill="#fff">1</text></g>
-          <g class="visit-badge" data-room="W202" transform="translate(218, 400)"><circle r="18" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="6" text-anchor="middle" fill="#fff">1</text></g>
-          <g class="visit-badge" data-room="W203" transform="translate(218, 598)"><circle r="18" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="6" text-anchor="middle" fill="#fff">1</text></g>
-          <g class="visit-badge" data-room="W204" transform="translate(398, 600)"><circle r="18" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="6" text-anchor="middle" fill="#fff">1</text></g>
-          <g class="visit-badge" data-room="W205" transform="translate(612, 1100)"><circle r="18" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="6" text-anchor="middle" fill="#fff">1</text></g>
+        <g class="visit-badges" font-family="sans-serif" font-size="17" font-weight="700">
+          <g class="visit-badge" data-room="W201" transform="translate(205,42)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="W202" transform="translate(205,207)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="W203" transform="translate(205,372)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="W204" transform="translate(515,372)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="W205" transform="translate(430,805)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
         </g>
       </svg>
 
       <!-- Art pins (viewBox 20 20 800 660) -->
-      <button class="art-pin" data-card="card-01" style="left:43%;top:40%" title="Van Gogh · 鸢尾花 · W204">
+      <button class="art-pin" data-card="card-01" style="left:41%;top:48%" title="Van Gogh · 鸢尾花 · W204">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Irises-Vincent_van_Gogh.jpg/960px-Irises-Vincent_van_Gogh.jpg" alt="鸢尾花">
         <span class="pin-num">01</span>
       </button>
-      <button class="art-pin" data-card="card-02" style="left:75%;top:40%" title="Monet · 鲁昂大教堂 · W204">
+      <button class="art-pin" data-card="card-02" style="left:67%;top:39%" title="Monet · 鲁昂大教堂 · W204">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Monet_Rouen_Cathedral_painting_%2839819981983%29.jpg/960px-Monet_Rouen_Cathedral_painting_%2839819981983%29.jpg" alt="Rouen Cathedral">
         <span class="pin-num">02</span>
       </button>
-      <button class="art-pin" data-card="card-03" style="left:43%;top:47%" title="Renoir · 散步 · W204">
+      <button class="art-pin" data-card="card-03" style="left:67%;top:48%" title="Renoir · 散步 · W204">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/La_Promenade%2C_by_Pierre-Auguste_Renoir%2C_edited.jpg/960px-La_Promenade%2C_by_Pierre-Auguste_Renoir%2C_edited.jpg" alt="La Promenade">
         <span class="pin-num">03</span>
       </button>
-      <button class="art-pin" data-card="card-04" style="left:75%;top:47%" title="Cézanne · 静物与苹果 · W204">
+      <button class="art-pin" data-card="card-04" style="left:43%;top:39%" title="Cézanne · 静物与苹果 · W204">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Paul_C%C3%A9zanne_-_Still_Life_with_Apples.jpg/960px-Paul_C%C3%A9zanne_-_Still_Life_with_Apples.jpg" alt="Still Life">
         <span class="pin-num">04</span>
       </button>
-      <button class="art-pin" data-card="card-63" style="left:74%;top:82%" title="Munch · 星夜 · W205">
+      <button class="art-pin" data-card="card-63" style="left:69%;top:82%" title="Munch · 星夜 · W205">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/%27Starry_Night%27_by_Edvard_Munch%2C_1893%2C_Getty_Center.JPG/960px-%27Starry_Night%27_by_Edvard_Munch%2C_1893%2C_Getty_Center.JPG" alt="星夜">
         <span class="pin-num">63</span>
       </button>
-      <button class="art-pin" data-card="card-62" style="left:21%;top:13%" title="Goya · 斗牛 · W201">
+      <button class="art-pin" data-card="card-62" style="left:19%;top:14%" title="Goya · 斗牛 · W201">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Bullfight%2C_Suerte_de_Varas_by_Francisco_de_Goya%2C_1824%2C_Getty_Center.JPG/960px-Bullfight%2C_Suerte_de_Varas_by_Francisco_de_Goya%2C_1824%2C_Getty_Center.JPG" alt="斗牛">
         <span class="pin-num">62</span>
       </button>
-      <button class="art-pin" data-card="card-41" style="left:18%;top:26%" title="Bouguereau · 少女抵御爱神 · W202">
+      <button class="art-pin" data-card="card-41" style="left:19%;top:30%" title="Bouguereau · 少女抵御爱神 · W202">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/A_Girl_Defending_Herself_against_Eros%2C_by_William-Adolphe_Bouguereau.jpg/960px-A_Girl_Defending_Herself_against_Eros%2C_by_William-Adolphe_Bouguereau.jpg" alt="少女抵御爱神">
         <span class="pin-num">41</span>
       </button>
-      <button class="art-pin" data-card="card-42" style="left:18%;top:43%" title="Millet · 扛锄的人 · W203">
+      <button class="art-pin" data-card="card-42" style="left:19%;top:47%" title="Millet · 扛锄的人 · W203">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Millet%2C_Jean-Fran%C3%A7ois_-_Man_with_a_Hoe_-_Google_Art_Project.jpg/960px-Millet%2C_Jean-Fran%C3%A7ois_-_Man_with_a_Hoe_-_Google_Art_Project.jpg" alt="扛锄的人">
         <span class="pin-num">42</span>
       </button>
@@ -4075,14 +4010,13 @@ function showRoomToast(room) {
   try { visitOrder = JSON.parse(localStorage.getItem(KEY) || '[]') || []; }
   catch (e) { visitOrder = []; }
 
-  // Room centers in the W2F SVG coord space (viewBox 150 160 680 1180), traced from
-  // the official plan: narrow W201/W202/W203 column, big W204 to the right, W205 angled below.
+  // Room centers in the W2F SVG coord space (viewBox 0 0 700 997, official photo base).
   var ROOM_CENTERS = {
-    W201: { x: 274, y: 281 },
-    W202: { x: 274, y: 466 },
-    W203: { x: 274, y: 662 },
-    W204: { x: 549, y: 662 },
-    W205: { x: 659, y: 1158 }
+    W201: { x: 137, y: 97 },
+    W202: { x: 137, y: 262 },
+    W203: { x: 137, y: 432 },
+    W204: { x: 385, y: 432 },
+    W205: { x: 510, y: 843 }
   };
 
   function save() {
