@@ -246,6 +246,10 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 }
 .floor-svg-wrap .art-pin { width: 10%; border-width: 3.5px; }  /* default larger for accessibility */
 .floor-svg-wrap .art-pin .pin-num { display: none; }
+.signage-svg text.room-num { transition: fill .2s ease; }
+.signage-svg text.room-num.visited { fill: #ab9f88; font-weight: 500; }   /* already-visited rooms read as grey */
+.room-tint { display: none !important; }   /* visited-state now shown via the greyed room number */
+.visit-badge { display: none !important; }   /* retired: grey room number + footprints convey visited + order */
 .signage-svg .floor-photo { filter: sepia(.55) hue-rotate(-8deg) saturate(.65) brightness(1.08) contrast(.92); }
 .floor-canvas .floor-bg.tinted {
   /* Convert Getty blue → cream/beige to match site theme (only for PDF crops) */
@@ -1352,28 +1356,28 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
         </g>
         <!-- our own room numbers (small, on top of the photo) -->
         <g class="room-nums" pointer-events="none" font-family="sans-serif" font-size="17" font-weight="700" fill="#1a1a1a">
-          <text x="58"  y="48" >W201</text>
-          <text x="58"  y="212">W202</text>
-          <text x="58"  y="376">W203</text>
-          <text x="385" y="362" text-anchor="middle">W204</text>
-          <text x="430" y="930">W205</text>
+          <text x="58"  y="48"  class="room-num" data-room="W201">W201</text>
+          <text x="58"  y="212" class="room-num" data-room="W202">W202</text>
+          <text x="58"  y="376" class="room-num" data-room="W203">W203</text>
+          <text x="385" y="362" text-anchor="middle" class="room-num" data-room="W204">W204</text>
+          <text x="430" y="930" class="room-num" data-room="W205">W205</text>
         </g>
       </svg>
 
       <!-- Art pins (viewBox 20 20 800 660) -->
-      <button class="art-pin" data-card="card-01" style="left:41%;top:48%" title="Van Gogh · 鸢尾花 · W204">
+      <button class="art-pin" data-card="card-01" style="left:72%;top:44%" title="Van Gogh · 鸢尾花 · W204">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Irises-Vincent_van_Gogh.jpg/960px-Irises-Vincent_van_Gogh.jpg" alt="鸢尾花">
         <span class="pin-num">01</span>
       </button>
-      <button class="art-pin" data-card="card-02" style="left:67%;top:39%" title="Monet · 鲁昂大教堂 · W204">
+      <button class="art-pin" data-card="card-02" style="left:45%;top:40%" title="Monet · 鲁昂大教堂 · W204">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Monet_Rouen_Cathedral_painting_%2839819981983%29.jpg/960px-Monet_Rouen_Cathedral_painting_%2839819981983%29.jpg" alt="Rouen Cathedral">
         <span class="pin-num">02</span>
       </button>
-      <button class="art-pin" data-card="card-03" style="left:67%;top:48%" title="Renoir · 散步 · W204">
+      <button class="art-pin" data-card="card-03" style="left:45%;top:49%" title="Renoir · 散步 · W204">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/La_Promenade%2C_by_Pierre-Auguste_Renoir%2C_edited.jpg/960px-La_Promenade%2C_by_Pierre-Auguste_Renoir%2C_edited.jpg" alt="La Promenade">
         <span class="pin-num">03</span>
       </button>
-      <button class="art-pin" data-card="card-04" style="left:43%;top:39%" title="Cézanne · 静物与苹果 · W204">
+      <button class="art-pin" data-card="card-04" style="left:58%;top:44%" title="Cézanne · 静物与苹果 · W204">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Paul_C%C3%A9zanne_-_Still_Life_with_Apples.jpg/960px-Paul_C%C3%A9zanne_-_Still_Life_with_Apples.jpg" alt="Still Life">
         <span class="pin-num">04</span>
       </button>
@@ -1486,13 +1490,13 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 
         <!-- ROOM NUMBER LABELS -->
         <g pointer-events="none" font-family="sans-serif" font-size="24" font-weight="500" fill="#1a1a1a">
-          <text x="700" y="105" text-anchor="end">W 101</text>
-          <text x="385" y="232" text-anchor="end">W 102</text>
-          <text x="705" y="232" text-anchor="end">W 103</text>
-          <text x="365" y="322" text-anchor="end">W 104</text>
-          <text x="385" y="412" text-anchor="end">W 105</text>
-          <text x="705" y="412" text-anchor="end">W 106</text>
-          <text x="505" y="505" text-anchor="end">W 107</text>
+          <text x="700" y="105" text-anchor="end" class="room-num" data-room="W101">W 101</text>
+          <text x="385" y="232" text-anchor="end" class="room-num" data-room="W102">W 102</text>
+          <text x="705" y="232" text-anchor="end" class="room-num" data-room="W103">W 103</text>
+          <text x="365" y="322" text-anchor="end" class="room-num" data-room="W104">W 104</text>
+          <text x="385" y="412" text-anchor="end" class="room-num" data-room="W105">W 105</text>
+          <text x="705" y="412" text-anchor="end" class="room-num" data-room="W106">W 106</text>
+          <text x="505" y="505" text-anchor="end" class="room-num" data-room="W107">W 107</text>
         </g>
 
         <!-- Visited-room tints -->
@@ -1694,11 +1698,11 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 
         <!-- ===== ROOM NUMBER LABELS — large enough for mobile after SVG scale-down ===== -->
         <g pointer-events="none" font-family="sans-serif" font-size="42" font-weight="500" fill="#1a1a1a">
-          <text x="546" y="218" text-anchor="end">N 203</text>
-          <text x="656" y="362" text-anchor="end">N 202</text>
-          <text x="956" y="362" text-anchor="end">N 204</text>
-          <text x="956" y="720" text-anchor="end">N 205</text>
-          <text x="366" y="580" text-anchor="end">N 201</text>
+          <text x="546" y="218" text-anchor="end" class="room-num" data-room="N203">N 203</text>
+          <text x="656" y="362" text-anchor="end" class="room-num" data-room="N202">N 202</text>
+          <text x="956" y="362" text-anchor="end" class="room-num" data-room="N204">N 204</text>
+          <text x="956" y="720" text-anchor="end" class="room-num" data-room="N205">N 205</text>
+          <text x="366" y="580" text-anchor="end" class="room-num" data-room="N201">N 201</text>
         </g>
 
         <!-- (Theme labels removed from the floor plan itself — the art-pin thumbnails
@@ -1937,12 +1941,12 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 
         <!-- ===== ROOM NUMBER LABELS — normalized across all 4 floors so visual px at 390-wide viewport is ~16–17px. -->
         <g pointer-events="none" font-family="sans-serif" font-size="35" font-weight="500" fill="#1a1a1a">
-          <text x="252" y="72"  text-anchor="end">N 105</text>
-          <text x="252" y="212" text-anchor="end">N 104</text>
-          <text x="252" y="372" text-anchor="end">N 103</text>
-          <text x="392" y="372" text-anchor="end">N 102</text>
-          <text x="572" y="212" text-anchor="end">N 106</text>
-          <text x="452" y="532" text-anchor="end">N 101</text>
+          <text x="252" y="72"  text-anchor="end" class="room-num" data-room="N105">N 105</text>
+          <text x="252" y="212" text-anchor="end" class="room-num" data-room="N104">N 104</text>
+          <text x="252" y="372" text-anchor="end" class="room-num" data-room="N103">N 103</text>
+          <text x="392" y="372" text-anchor="end" class="room-num" data-room="N102">N 102</text>
+          <text x="572" y="212" text-anchor="end" class="room-num" data-room="N106">N 106</text>
+          <text x="452" y="532" text-anchor="end" class="room-num" data-room="N101">N 101</text>
         </g>
 
         <!-- ===== Visited-room tints ===== -->
@@ -2120,12 +2124,12 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 
         <!-- ===== ROOM NUMBER LABELS — normalized to ~16–17px visual at 390-wide. -->
         <g pointer-events="none" font-family="sans-serif" font-size="38" font-weight="500" fill="#1a1a1a">
-          <text x="252" y="112" text-anchor="end">S 201</text>
-          <text x="512" y="112" text-anchor="end">S 202</text>
-          <text x="772" y="112" text-anchor="end">S 203</text>
-          <text x="772" y="332" text-anchor="end">S 204</text>
-          <text x="272" y="332" text-anchor="end">S 205</text>
-          <text x="552" y="612" text-anchor="end">S 206</text>
+          <text x="252" y="112" text-anchor="end" class="room-num" data-room="S201">S 201</text>
+          <text x="512" y="112" text-anchor="end" class="room-num" data-room="S202">S 202</text>
+          <text x="772" y="112" text-anchor="end" class="room-num" data-room="S203">S 203</text>
+          <text x="772" y="332" text-anchor="end" class="room-num" data-room="S204">S 204</text>
+          <text x="272" y="332" text-anchor="end" class="room-num" data-room="S205">S 205</text>
+          <text x="552" y="612" text-anchor="end" class="room-num" data-room="S206">S 206</text>
         </g>
 
         <!-- ===== Visited-room tints (translucent gold overlay on visited rooms) ===== -->
@@ -2385,22 +2389,22 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 
         <!-- ===== ROOM NUMBER LABELS — normalized to ~16–17px visual at 390-wide. -->
         <g pointer-events="none" font-family="sans-serif" font-size="38" font-weight="500" fill="#1a1a1a">
-          <text x="252"  y="108" text-anchor="end">S 101</text>
-          <text x="492"  y="108" text-anchor="end">S 102</text>
-          <text x="732"  y="108" text-anchor="end">S 103</text>
-          <text x="872"  y="108" text-anchor="end">S 104</text>
-          <text x="1132" y="228" text-anchor="end">S 105</text>
-          <text x="1132" y="348" text-anchor="end">S 106</text>
-          <text x="1132" y="468" text-anchor="end">S 107</text>
-          <text x="1132" y="588" text-anchor="end">S 108</text>
-          <text x="772"  y="288" text-anchor="end">S 109</text>
-          <text x="492"  y="288" text-anchor="end">S 111</text>
-          <text x="492"  y="408" text-anchor="end">S 110</text>
-          <text x="772"  y="508" text-anchor="end">S 112</text>
-          <text x="272"  y="308" text-anchor="end">S 116</text>
-          <text x="272"  y="528" text-anchor="end">S 114</text>
-          <text x="432"  y="708" text-anchor="end">S 115</text>
-          <text x="772"  y="668" text-anchor="end">S 113</text>
+          <text x="252"  y="108" text-anchor="end" class="room-num" data-room="S101">S 101</text>
+          <text x="492"  y="108" text-anchor="end" class="room-num" data-room="S102">S 102</text>
+          <text x="732"  y="108" text-anchor="end" class="room-num" data-room="S103">S 103</text>
+          <text x="872"  y="108" text-anchor="end" class="room-num" data-room="S104">S 104</text>
+          <text x="1132" y="228" text-anchor="end" class="room-num" data-room="S105">S 105</text>
+          <text x="1132" y="348" text-anchor="end" class="room-num" data-room="S106">S 106</text>
+          <text x="1132" y="468" text-anchor="end" class="room-num" data-room="S107">S 107</text>
+          <text x="1132" y="588" text-anchor="end" class="room-num" data-room="S108">S 108</text>
+          <text x="772"  y="288" text-anchor="end" class="room-num" data-room="S109">S 109</text>
+          <text x="492"  y="288" text-anchor="end" class="room-num" data-room="S111">S 111</text>
+          <text x="492"  y="408" text-anchor="end" class="room-num" data-room="S110">S 110</text>
+          <text x="772"  y="508" text-anchor="end" class="room-num" data-room="S112">S 112</text>
+          <text x="272"  y="308" text-anchor="end" class="room-num" data-room="S116">S 116</text>
+          <text x="272"  y="528" text-anchor="end" class="room-num" data-room="S114">S 114</text>
+          <text x="432"  y="708" text-anchor="end" class="room-num" data-room="S115">S 115</text>
+          <text x="772"  y="668" text-anchor="end" class="room-num" data-room="S113">S 113</text>
         </g>
 
         <!-- ===== Visited-room tints ===== -->
@@ -4199,6 +4203,23 @@ function showRoomToast(room) {
 })();
 
 /* (Large-text toggle removed — large is now the permanent default.) */
+
+/* ===== Visited rooms → grey out the room number (shared across all floors) ===== */
+(function() {
+  var FLOORS = ['n2f','n1f','s2f','s1f','w2f','w1f'];
+  function update() {
+    var visited = {};
+    FLOORS.forEach(function(k){
+      try { (JSON.parse(localStorage.getItem('getty-'+k+'-visit-order') || '[]') || []).forEach(function(r){ visited[r] = true; }); } catch(e){}
+    });
+    document.querySelectorAll('.signage-svg text.room-num').forEach(function(t){
+      t.classList.toggle('visited', !!visited[t.dataset.room]);
+    });
+  }
+  document.addEventListener('footprints-changed', update);
+  document.addEventListener('clear-all-footprints', function(){ setTimeout(update, 0); });
+  update();
+})();
 
 /* ===== Modal read-aloud via Web Speech API (browser TTS) ===== */
 var speechActive = false;
