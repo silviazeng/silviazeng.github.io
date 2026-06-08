@@ -23,6 +23,9 @@ const TAG_KIND: Record<string, TagKind> = {
   machiavelli: "hist",
   "the-prince": "hist",
   "renaissance-history": "hist",
+  art: "hist",
+  museums: "hist",
+  getty: "hist",
 }
 
 function tagKind(tag: string): TagKind {
