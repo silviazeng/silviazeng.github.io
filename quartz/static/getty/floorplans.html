@@ -1315,24 +1315,24 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
              Cover rects (inside the tinted group so they share the tint) blank out the
              baked-in room numbers + the off-building garden/label clutter; our own small
              room numbers are drawn on top. -->
+        <!-- The room-number cover-ups live INSIDE the tinted group with the photo's own
+             pre-tint room white (#fcfefd), so the filter tints them identically to the
+             rooms in EVERY browser — no cross-engine colour mismatch. -->
         <g class="floor-photo">
           <image href="img/west-2f-base.jpg" xlink:href="img/west-2f-base.jpg" x="0" y="0" width="700" height="997"/>
-        </g>
-        <!-- Cover-ups drawn ON TOP in the already-tinted colors (so they match without
-             relying on the group filter): warm cream over the baked room numbers; page
-             background over the off-building garden/WEST label and the edge whiskers. -->
-        <g pointer-events="none">
-          <g fill="#f4f4f4">
+          <g fill="#fcfefd">
             <rect x="64"  y="72"  width="132" height="60"/>
             <rect x="60"  y="236" width="132" height="60"/>
             <rect x="64"  y="392" width="136" height="64"/>
             <rect x="300" y="392" width="156" height="64"/>
             <rect x="404" y="818" width="148" height="64"/>
           </g>
-          <g fill="#f1ead8">
-            <rect x="582" y="0"   width="118" height="492"/>
-            <rect x="0"   y="876" width="232" height="130"/>
-          </g>
+        </g>
+        <!-- Off-building garden/WEST label + edge whiskers blanked to the wrap background
+             (a plain CSS colour, no filter involved → matches on every browser). -->
+        <g pointer-events="none" fill="#f1ead8">
+          <rect x="582" y="0"   width="118" height="492"/>
+          <rect x="0"   y="876" width="232" height="130"/>
         </g>
         <g class="footsteps" id="footsteps-w2f" pointer-events="none"></g>
         <!-- Click targets -->
