@@ -1307,14 +1307,28 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
     <div class="floor-svg-wrap">
       <svg viewBox="0 0 700 997" xmlns="http://www.w3.org/2000/svg" class="signage-svg" preserveAspectRatio="xMidYMid meet">
         <!-- Official Getty Upper-Level plan crop (West Pavilion), tinted to the site palette -->
-        <image href="img/west-2f-base.jpg" x="0" y="0" width="700" height="997" class="floor-photo"/>
-        <!-- Visited-room tints (translucent gold over the photo's rooms) -->
-        <g class="room-tints" pointer-events="none">
-          <rect class="room-tint" fill="transparent" data-room="W201" x="50" y="15"  width="175" height="165"/>
-          <rect class="room-tint" fill="transparent" data-room="W202" x="50" y="180" width="175" height="165"/>
-          <rect class="room-tint" fill="transparent" data-room="W203" x="50" y="345" width="175" height="175"/>
-          <rect class="room-tint" fill="transparent" data-room="W204" x="225" y="345" width="320" height="175"/>
-          <polygon class="room-tint" fill="transparent" data-room="W205" points="372,792 588,742 648,892 432,945"/>
+        <!-- Official Getty Upper-Level plan crop (West Pavilion) as a tinted base.
+             Cover rects (inside the tinted group so they share the tint) blank out the
+             baked-in room numbers + the off-building garden/label clutter; our own small
+             room numbers are drawn on top. -->
+        <g class="floor-photo">
+          <image href="img/west-2f-base.jpg" x="0" y="0" width="700" height="997"/>
+        </g>
+        <!-- Cover-ups drawn ON TOP in the already-tinted colors (so they match without
+             relying on the group filter): warm cream over the baked room numbers; page
+             background over the off-building garden/WEST label and the edge whiskers. -->
+        <g pointer-events="none">
+          <g fill="#f3ecd9">
+            <rect x="64"  y="72"  width="132" height="60"/>
+            <rect x="60"  y="236" width="132" height="60"/>
+            <rect x="64"  y="392" width="136" height="64"/>
+            <rect x="300" y="392" width="156" height="64"/>
+            <rect x="404" y="818" width="148" height="64"/>
+          </g>
+          <g fill="#f1ead8">
+            <rect x="582" y="0"   width="118" height="492"/>
+            <rect x="0"   y="876" width="232" height="130"/>
+          </g>
         </g>
         <g class="footsteps" id="footsteps-w2f" pointer-events="none"></g>
         <!-- Click targets -->
@@ -1335,6 +1349,14 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
           <g class="visit-badge" data-room="W203" transform="translate(205,372)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
           <g class="visit-badge" data-room="W204" transform="translate(515,372)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
           <g class="visit-badge" data-room="W205" transform="translate(430,805)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+        </g>
+        <!-- our own room numbers (small, on top of the photo) -->
+        <g class="room-nums" pointer-events="none" font-family="sans-serif" font-size="17" font-weight="700" fill="#1a1a1a">
+          <text x="58"  y="48" >W201</text>
+          <text x="58"  y="212">W202</text>
+          <text x="58"  y="376">W203</text>
+          <text x="385" y="362" text-anchor="middle">W204</text>
+          <text x="430" y="930">W205</text>
         </g>
       </svg>
 
