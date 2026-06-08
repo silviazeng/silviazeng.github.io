@@ -963,7 +963,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 
 .sticky-top {
   position: fixed;
-  top: calc(48px + env(safe-area-inset-top));  /* sits below the mode-toggle, which absorbs the notch */
+  top: calc(58px + env(safe-area-inset-top));  /* sits below the mode-toggle (real height ≈58px: 45px pills + 12px padding), not the old 48px guess that let the toggle overlap & clip the chips */
   left: 0; right: 0;
   min-height: 60px;
   background: var(--bg);
@@ -1236,7 +1236,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 
 /* Mobile activation: show sticky bars, hide originals */
 @media (max-width: 768px) {
-  body { padding-top: calc(108px + env(safe-area-inset-top)); padding-bottom: 88px; }   /* 48 mode-toggle + 60 sticky-top */
+  body { padding-top: calc(118px + env(safe-area-inset-top)); padding-bottom: 88px; }   /* 58 mode-toggle + 60 sticky-top */
   .sticky-top { display: flex; }
   .action-bar { display: flex; }
   .page-header .back-link,
