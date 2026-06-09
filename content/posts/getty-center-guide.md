@@ -38,11 +38,11 @@ It's a small thing, useful to a handful of people — and exactly the kind of un
 Have a look — or better, bring it with you:
 
 <div style="display:flex;gap:0.75rem;flex-wrap:wrap;margin:1.75rem 0;">
-  <a href="/static/getty/center-guide.html" style="flex:1 1 220px;padding:1.1rem 1.25rem;border-radius:12px;background:#1a4f8c;color:#f5ecd2;text-decoration:none;line-height:1.35;">
+  <a href="/static/getty/center-guide.html" data-router-ignore style="flex:1 1 220px;padding:1.1rem 1.25rem;border-radius:12px;background:#1a4f8c;color:#f5ecd2;text-decoration:none;line-height:1.35;">
     <span style="font-size:1.05rem;font-weight:700;">读·指南 →</span><br>
     <span style="font-size:0.82rem;opacity:0.85;">The read guide · ~30 must-see works, with prices</span>
   </a>
-  <a href="/static/getty/floorplans.html" style="flex:1 1 220px;padding:1.1rem 1.25rem;border-radius:12px;background:#b8923a;color:#2a2218;text-decoration:none;line-height:1.35;">
+  <a href="/static/getty/floorplans.html" data-router-ignore style="flex:1 1 220px;padding:1.1rem 1.25rem;border-radius:12px;background:#b8923a;color:#2a2218;text-decoration:none;line-height:1.35;">
     <span style="font-size:1.05rem;font-weight:700;">走·地图 →</span><br>
     <span style="font-size:0.82rem;opacity:0.85;">The walk map · find every piece, track your steps</span>
   </a>
