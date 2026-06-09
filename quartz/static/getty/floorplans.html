@@ -250,6 +250,10 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 .signage-svg text.room-num.visited { fill: #ab9f88; font-weight: 500; }   /* already-visited rooms read as grey */
 .room-tint { display: none !important; }   /* visited-state now shown via the greyed room number */
 .visit-badge { display: none !important; }   /* retired: grey room number + footprints convey visited + order */
+/* W205 is the only tilted room, so a flat rect cover floated mid-room and its edges
+   showed. This cover instead spans wall-to-wall (side edges hide in the black walls)
+   and is softly blurred so its top/bottom edges feather invisibly into the room. */
+.signage-svg .w205-cover { fill: #f5f5f5; filter: blur(2px); }
 /* West-2F plan base: the warm site tint is BAKED into west-2f-base.jpg, so there is
    NO live CSS filter here (a filter on an SVG <image> rasterises at 1× CSS px and then
    upscales on Retina → blur; baking keeps it pixel-sharp). To re-bake from the raw crop
@@ -1326,7 +1330,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
             <rect x="60"  y="236" width="132" height="60"/>
             <rect x="64"  y="392" width="136" height="64"/>
             <rect x="300" y="392" width="156" height="64"/>
-            <polygon points="400,811 540,811 540,860 419,860"/>
+            <polygon class="w205-cover" points="398,800 584,800 554,870 368,870"/>
           </g>
         </g>
         <!-- Off-building garden/WEST label + edge whiskers blanked to the wrap background
