@@ -1599,7 +1599,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   </div>
   <div class="floor-plan">
     <div class="floor-svg-wrap">
-      <svg viewBox="0 0 700 963" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="signage-svg" preserveAspectRatio="xMidYMid meet">
+      <svg viewBox="10 108 558 667" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="signage-svg" preserveAspectRatio="xMidYMid meet">
         <!-- Official Getty Upper-Level plan crop (North Pavilion). Warm tint BAKED into
              north-2f-base.jpg (same recipe as W2F), so no live CSS filter. Cover rects use
              the baked room fill #f4f4f4 to blank the printed room numbers; the museum-courtyard
@@ -1607,19 +1607,16 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
         <g class="floor-photo">
           <image href="img/north-2f-base.jpg?v=1" xlink:href="img/north-2f-base.jpg?v=1" x="0" y="0" width="700" height="963"/>
           <g fill="#f4f4f4">
-            <rect x="80"  y="252" width="98" height="42"/>   <!-- N205 -->
-            <rect x="424" y="388" width="98" height="42"/>   <!-- N201 -->
-            <rect x="80"  y="496" width="98" height="42"/>   <!-- N204 -->
-            <rect x="252" y="556" width="98" height="42"/>   <!-- N202 -->
-            <rect x="328" y="678" width="98" height="42"/>   <!-- N203 -->
+            <rect x="69"  y="252" width="107" height="46"/>   <!-- N205 baked number (exact bbox + margin) -->
+            <rect x="414" y="386" width="98"  height="46"/>   <!-- N201 -->
+            <rect x="69"  y="494" width="109" height="46"/>   <!-- N204 -->
+            <rect x="241" y="555" width="107" height="46"/>   <!-- N202 -->
+            <rect x="294" y="655" width="131" height="68"/>   <!-- N203 (number + stub below it) -->
+            <rect x="199" y="132" width="18"  height="124"/>  <!-- stray partition stub (corridor right of N205) -->
           </g>
         </g>
-        <!-- Museum-courtyard clutter (right strip + bottom strip + top) blanked to wrap bg -->
-        <g pointer-events="none" fill="#f1ead8">
-          <rect x="560" y="0"   width="140" height="963"/>
-          <rect x="0"   y="758" width="560" height="205"/>
-          <rect x="320" y="0"   width="240" height="118"/>
-        </g>
+        <!-- Courtyard, "MUSEUM COURTYARD" text and the top balcony fall OUTSIDE the tightened
+             viewBox (10 108 558 667), so no off-building cover rects are needed. -->
         <g class="footsteps" id="footsteps" pointer-events="none"></g>
         <g class="room-taps">
           <rect class="room-tap" fill="transparent" data-room="N205" x="30"  y="128" width="168" height="318"/>
@@ -1656,43 +1653,43 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
       </svg>
 
       <!-- Circular artwork pins overlaid on rooms (positions in % of the SVG box) -->
-      <button class="art-pin" data-card="card-15" style="left:61%;top:30%" title="Bernardo Daddi · 圣母与圣徒三联画 · N201">
+      <button class="art-pin" data-card="card-15" style="left:74.7%;top:27.1%" title="Bernardo Daddi · 圣母与圣徒三联画 · N201">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Bernardo_Daddi_-_The_Virgin_Mary_with_Saints_Thomas_Aquinas_and_Paul_-_93.PB.16_-_J._Paul_Getty_Museum.jpg/960px-Bernardo_Daddi_-_The_Virgin_Mary_with_Saints_Thomas_Aquinas_and_Paul_-_93.PB.16_-_J._Paul_Getty_Museum.jpg" alt="圣母与圣多玛斯·阿奎那、圣保罗三联画">
         <span class="pin-num">12</span>
       </button>
-      <button class="art-pin" data-card="card-16" style="left:36%;top:49%" title="Mantegna · 东方三博士朝圣 · N202">
+      <button class="art-pin" data-card="card-16" style="left:43.4%;top:54.6%" title="Mantegna · 东方三博士朝圣 · N202">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Andrea_Mantegna_-_Adoration_of_the_Magi_-_85.PA.417_-_J._Paul_Getty_Museum.jpg/960px-Andrea_Mantegna_-_Adoration_of_the_Magi_-_85.PA.417_-_J._Paul_Getty_Museum.jpg" alt="东方三博士朝圣">
         <span class="pin-num">13</span>
       </button>
-      <button class="art-pin" data-card="card-17" style="left:53%;top:72%" title="Rogier van der Weyden · 教皇之梦 · N203">
+      <button class="art-pin" data-card="card-17" style="left:64.7%;top:87.7%" title="Rogier van der Weyden · 教皇之梦 · N203">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Workshop_of_Rogier_van_der_Weyden_-_The_Dream_of_Pope_Sergius_-_72.PB.20_-_J._Paul_Getty_Museum.jpg/960px-Workshop_of_Rogier_van_der_Weyden_-_The_Dream_of_Pope_Sergius_-_72.PB.20_-_J._Paul_Getty_Museum.jpg" alt="教皇之梦">
         <span class="pin-num">14</span>
       </button>
-      <button class="art-pin" data-card="card-18" style="left:13%;top:56%" title="Pontormo · 持斧枪者肖像 · N204">
+      <button class="art-pin" data-card="card-18" style="left:14.5%;top:64.6%" title="Pontormo · 持斧枪者肖像 · N204">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Pontormo%2C_alabardiere%2C_forse_francesco_guardi%2C_1528-30.JPG/960px-Pontormo%2C_alabardiere%2C_forse_francesco_guardi%2C_1528-30.JPG" alt="持斧枪者肖像">
         <span class="pin-num">15</span>
       </button>
-      <button class="art-pin" data-card="card-19" style="left:13%;top:26%" title="Lorenzo Lotto · 维纳斯与丘比特 · N205">
+      <button class="art-pin" data-card="card-19" style="left:14.5%;top:21.3%" title="Lorenzo Lotto · 维纳斯与丘比特 · N205">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Lorenzo_Lotto_-_Venus_and_Cupid_%28c._1520%27s%29.jpg/960px-Lorenzo_Lotto_-_Venus_and_Cupid_%28c._1520%27s%29.jpg" alt="维纳斯与丘比特">
         <span class="pin-num">16</span>
       </button>
-      <button class="art-pin" data-card="card-34" style="left:67%;top:41%" title="Simone Martini · 圣路加 · N201">
+      <button class="art-pin" data-card="card-34" style="left:82.3%;top:43%" title="Simone Martini · 圣路加 · N201">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Simone_Martini_-_St._Luke_-_82.PB.72_-_J._Paul_Getty_Museum.jpg/960px-Simone_Martini_-_St._Luke_-_82.PB.72_-_J._Paul_Getty_Museum.jpg" alt="圣路加">
         <span class="pin-num">31</span>
       </button>
-      <button class="art-pin" data-card="card-35" style="left:43%;top:57%" title="Carpaccio · 潟湖狩猎 · N202">
+      <button class="art-pin" data-card="card-35" style="left:52.2%;top:66.1%" title="Carpaccio · 潟湖狩猎 · N202">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Vittore_Carpaccio_-_Hunting_on_the_Lagoon_%28recto%29%2C_Letter_Rack_%28verso%29_-_79.PB.72_-_J._Paul_Getty_Museum.jpg/960px-Vittore_Carpaccio_-_Hunting_on_the_Lagoon_%28recto%29%2C_Letter_Rack_%28verso%29_-_79.PB.72_-_J._Paul_Getty_Museum.jpg" alt="潟湖狩猎">
         <span class="pin-num">32</span>
       </button>
-      <button class="art-pin" data-card="card-36" style="left:64%;top:72%" title="Gossaert · 圣家族 · N203">
+      <button class="art-pin" data-card="card-36" style="left:78.5%;top:87.7%" title="Gossaert · 圣家族 · N203">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Jan_Gossaert_-_The_Holy_Family_-_71.PB.45_-_J._Paul_Getty_Museum.jpg/960px-Jan_Gossaert_-_The_Holy_Family_-_71.PB.45_-_J._Paul_Getty_Museum.jpg" alt="圣家族">
         <span class="pin-num">33</span>
       </button>
-      <button class="art-pin" data-card="card-37" style="left:20%;top:62%" title="Lotto · 圣母子与两位捐赠人 · N204">
+      <button class="art-pin" data-card="card-37" style="left:23.3%;top:73.3%" title="Lotto · 圣母子与两位捐赠人 · N204">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Lorenzo_Lotto_-_Madonna_and_Child_with_Two_Donors_-_77.PA.110_-_J._Paul_Getty_Museum.jpg/960px-Lorenzo_Lotto_-_Madonna_and_Child_with_Two_Donors_-_77.PA.110_-_J._Paul_Getty_Museum.jpg" alt="圣母子与两位捐赠人">
         <span class="pin-num">34</span>
       </button>
-      <button class="art-pin" data-card="card-38" style="left:20%;top:34%" title="Titian · 阿尔丰索·达瓦洛斯肖像 · N205">
+      <button class="art-pin" data-card="card-38" style="left:23.3%;top:32.8%" title="Titian · 阿尔丰索·达瓦洛斯肖像 · N205">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Titian_Portrait_of_Alfonso_d%27Avalos%2C_Marchese_del_Vasto%2C_in_Armor_with_a_Page_Getty_Museum.jpg/960px-Titian_Portrait_of_Alfonso_d%27Avalos%2C_Marchese_del_Vasto%2C_in_Armor_with_a_Page_Getty_Museum.jpg" alt="阿尔丰索·达瓦洛斯肖像">
         <span class="pin-num">35</span>
       </button>
