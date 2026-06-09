@@ -427,9 +427,6 @@ footer {
   gap: 14px;
   margin-top: 8px;
 }
-.tg-pillars-2 {
-  grid-template-columns: repeat(2, 1fr);
-}
 
 .tg-pill {
   border: 1px solid var(--color-border);
@@ -469,16 +466,88 @@ footer {
   font-family: var(--font-mono);
 }
 
+// ─── Lab (interactive artifacts) ─────────────────────────────────────────────
+// Twin of the posts feed: an `ls -lt` listing, but for things built rather than
+// written. New artifacts become rows here — they never spawn a new section.
+.tg-lab {
+  display: flex;
+  flex-direction: column;
+  margin-top: 8px;
+}
+
+.tg-lab-row {
+  display: grid;
+  grid-template-columns: 78px 1fr auto;
+  gap: 14px;
+  align-items: baseline;
+  padding: 11px 0;
+  border-bottom: 1px dotted var(--color-border-mid);
+  text-decoration: none !important;
+  color: inherit !important;
+  transition: background 0.15s ease;
+
+  &:last-child { border-bottom: none; }
+  &:hover {
+    background: rgba(122, 184, 122, 0.03);
+    .tg-lab-title { color: var(--color-text-bright); }
+    .tg-lab-open { color: var(--color-accent-light); }
+  }
+}
+
+.tg-lab-date {
+  color: var(--color-text-faint);
+  font-size: 11.5px;
+  font-family: var(--font-mono);
+}
+
+.tg-lab-title {
+  color: var(--color-text-bright);
+  font-size: 14px;
+  font-family: var(--font-mono);
+  transition: color 0.15s ease;
+}
+
+.tg-lab-mk {
+  margin-right: 7px;
+  color: var(--color-accent);
+}
+.tg-lab-row.k-hist .tg-lab-mk { color: var(--color-accent-coral-light); }
+.tg-lab-row.k-ai   .tg-lab-mk { color: var(--color-accent-amber); }
+
+.tg-lab-desc {
+  color: var(--color-text-muted);
+  font-family: var(--font-prose);
+  font-style: italic;
+  font-size: 12.5px;
+  margin-top: 3px;
+  line-height: 1.5;
+}
+
+.tg-lab-open {
+  color: var(--color-text-faint);
+  font-size: 11px;
+  white-space: nowrap;
+  transition: color 0.15s ease;
+}
+
 // ─── Right rail ──────────────────────────────────────────────────────────────
-// Rail is a flex column stretched to match the left column height.
-// Top group (graph/tags/workbench) is sticky during scroll;
-// Elsewhere is pinned to the rail's bottom so it aligns with the
-// bottom of the pillar row on the left at scroll-end.
+// Rail is a flex column stretched to match the left column height. The sticky
+// top group (graph/tags/workbench) lives inside a flex:1 "stick-zone" that fills
+// all space ABOVE Elsewhere. A sticky box can't leave its containing block, so
+// the zone bounds how far the group can slide on scroll — it stops just above
+// Elsewhere instead of overlapping it. Elsewhere is pinned to the rail's bottom
+// by the zone filling everything above it (this replaces the old margin-top:auto,
+// which let the sticky group collide with Elsewhere at scroll-end).
 .tg-rail {
   align-self: stretch;
   display: flex;
   flex-direction: column;
   position: relative;
+}
+
+.tg-rail-stickzone {
+  flex: 1 1 auto;
+  min-height: 0;
 }
 
 .tg-rail-inner {
@@ -488,10 +557,6 @@ footer {
   flex-direction: column;
   gap: 24px;
   margin-bottom: 24px;
-}
-
-.tg-rail > .tg-panel-tail {
-  margin-top: auto;
 }
 
 .tg-panel {
@@ -693,7 +758,7 @@ button:focus-visible {
   .tg-left > .tg-section:last-child { margin-top: 0; }
   .tg-rail { align-self: auto; }
   .tg-rail-inner { position: static; }
-  .tg-rail > .tg-panel-tail { margin-top: 0; }
+  .tg-rail-stickzone { flex: 0 1 auto; }
 }
 
 @media (max-width: 720px) {

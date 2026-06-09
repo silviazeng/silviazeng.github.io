@@ -67,6 +67,16 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles, cfg }: QuartzComponent
     { title: "Algebraic Geometry & Statistical Learning", author: "Watanabe", status: "slow read" },
   ]
 
+  // Interactive things I've built. New artifacts slot in here as rows —
+  // newest first — rather than each one spawning its own homepage section.
+  const lab = [
+    { date: "2026.06.07", kind: "hist", title: "Getty Center · 观展指南", desc: "阅读模式 + 楼层导航 · 60 件必看藏品 · 中文", href: "/static/getty/center-guide.html" },
+    { date: "2026.06.07", kind: "hist", title: "Getty Villa · 观展指南", desc: "阅读模式 + 楼层导航 · 20 件必看藏品 · 中文", href: "/static/getty/villa-guide.html" },
+    { date: "2026.05.11", kind: "hist", title: "A Map of Italian Politics, 1300–1600", desc: "Duchies, republics, papal states and kingdoms — who ruled what, and when.", href: "/static/italia-politica.html" },
+    { date: "2026.03.31", kind: "hist", title: "Medici: Who's Who", desc: "Who's who in Masters of Florence — and who keeps stabbing whom.", href: "/static/medici-guide.html" },
+    { date: "2022.02.04", kind: "ai", title: "Evolutionary Roadmap of Deep-Learning RecSys", desc: "A family tree of deep-learning recommender architectures.", href: "/static/recsys-roadmap.html" },
+  ]
+
   return (
     <div class="tg-home">
       <div class="tg-main">
@@ -156,32 +166,33 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles, cfg }: QuartzComponent
             </div>
           </section>
 
-          {/* Getty guides */}
+          {/* Lab — interactive things I've built (newest first) */}
           <section class="tg-section">
             <div class="tg-cmd tg-cmd-small">
-              <span class="tg-prompt">$</span>open getty/ <span class="tg-comment"># 中文观展指南</span>
+              <span class="tg-prompt">$</span>ls -lt lab/ <span class="tg-comment"># things I've built</span>
             </div>
-            <div class="tg-pillars tg-pillars-2">
-              <a class="tg-pill" href="/static/getty/center-guide.html">
-                <div class="tg-pill-head">Getty Center</div>
-                <div class="tg-pill-name">盖蒂中心 · 观展指南</div>
-                <div class="tg-pill-desc">
-                  阅读模式 + 楼层导航 · 60件必看藏品
-                </div>
-              </a>
-              <a class="tg-pill" href="/static/getty/villa-guide.html">
-                <div class="tg-pill-head">Getty Villa</div>
-                <div class="tg-pill-name">盖蒂别墅 · 观展指南</div>
-                <div class="tg-pill-desc">
-                  阅读模式 + 楼层导航 · 20件必看藏品
-                </div>
-              </a>
+            <div class="tg-lab">
+              {lab.map((row) => (
+                <a class={`tg-lab-row k-${row.kind}`} href={row.href}>
+                  <div class="tg-lab-date">{row.date}</div>
+                  <div class="tg-lab-main">
+                    <div class="tg-lab-title">
+                      <span class="tg-lab-mk">▸</span>
+                      {row.title}
+                    </div>
+                    <div class="tg-lab-desc">{row.desc}</div>
+                  </div>
+                  <div class="tg-lab-open">open ↗</div>
+                </a>
+              ))}
             </div>
           </section>
         </div>
 
         {/* RIGHT RAIL */}
         <aside class="tg-rail">
+          {/* stick-zone fills the rail above Elsewhere and confines the sticky group */}
+          <div class="tg-rail-stickzone">
           <div class="tg-rail-inner">
           <section class="tg-panel">
             <div class="tg-panel-head">
@@ -241,6 +252,7 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles, cfg }: QuartzComponent
               ))}
             </div>
           </section>
+          </div>
           </div>
 
           <section class="tg-panel tg-panel-tail">
