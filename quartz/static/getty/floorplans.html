@@ -1346,7 +1346,8 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
           <rect class="room-tap" fill="transparent" data-room="W202" x="50" y="180" width="175" height="165"/>
           <rect class="room-tap" fill="transparent" data-room="W203" x="50" y="345" width="175" height="175"/>
           <rect class="room-tap" fill="transparent" data-room="W204" x="225" y="345" width="320" height="175"/>
-          <polygon class="room-tap" fill="transparent" data-room="W205" points="388,754 445,738 535,774 588,776 584,800 562,850 542,900 521,949 363,880 376,850 385,830 393,800"/>
+          <!-- W205 is a rectangle rotated ~23deg to the building grid; tap target = that rotated rect (4 corners, perpendicular edges) so the hover highlight fills the room cleanly -->
+          <polygon class="room-tap" fill="transparent" data-room="W205" points="428,731 587,798 519,950 363,880"/>
         </g>
         <g class="current-marker" id="currentMarkerW2F">
           <circle class="pulse-ring" r="22" />
