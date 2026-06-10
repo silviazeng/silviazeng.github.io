@@ -556,9 +556,35 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 .art-pin[data-card="card-16"] img,
 .art-pin[data-card="card-17"] img,
 .art-pin[data-card="card-36"] img,
-.art-pin[data-card="card-38"] img {
+.art-pin[data-card="card-38"] img,
+.art-pin[data-card="card-63"] img {
   filter: brightness(1.22) contrast(1.10) saturate(1.05);
 }
+
+/* ===== Per-painting thumbnail focal crops (W2F) =====
+   object-fit:cover center-crops every pin, but several W2F paintings have their
+   subject off-center or too small for a phone-sized circle (the Goya bullfight
+   read as an empty sand arena, the Irises as leaf noise). object-position aims
+   the crop at the painting's subject; transform:scale zooms in around that same
+   point (transform-origin matches). Tuned per painting on a comparison board. */
+.art-pin[data-card="card-01"] img { object-position: 35% 33%; transform: scale(1.7);  transform-origin: 35% 33%; }  /* Irises — the bloom cluster */
+.art-pin[data-card="card-02"] img { object-position: 50% 76%; transform: scale(2.1);  transform-origin: 50% 76%; }  /* Monet — the dark portal arch */
+.art-pin[data-card="card-03"] img { object-position: 58% 28%; transform: scale(1.65); transform-origin: 58% 28%; }  /* Renoir — the couple's faces */
+.art-pin[data-card="card-04"] img { object-position: 47% 58%; transform: scale(1.55); transform-origin: 47% 58%; }  /* Cézanne — the apples */
+.art-pin[data-card="card-41"] img { object-position: 50% 20%; transform: scale(1.4);  transform-origin: 50% 20%; }  /* Bouguereau — both faces */
+.art-pin[data-card="card-42"] img { object-position: 48% 38%; transform: scale(1.45); transform-origin: 48% 38%; }  /* Millet — the resting man */
+.art-pin[data-card="card-62"] img { object-position: 44% 58%; transform: scale(2.0);  transform-origin: 44% 58%; }  /* Goya — picador + bull */
+.art-pin[data-card="card-63"] img { object-position: 50% 42%; transform: scale(1.35); transform-origin: 50% 42%; }  /* Munch — shore against night sky */
+/* The art-list thumbnails are the <img> itself (no clipping wrapper), so they get
+   the focal object-position only — no zoom. */
+.ashi-thumb[data-card="card-01"] { object-position: 35% 33%; }
+.ashi-thumb[data-card="card-02"] { object-position: 50% 76%; }
+.ashi-thumb[data-card="card-03"] { object-position: 58% 28%; }
+.ashi-thumb[data-card="card-04"] { object-position: 47% 58%; }
+.ashi-thumb[data-card="card-41"] { object-position: 50% 20%; }
+.ashi-thumb[data-card="card-42"] { object-position: 48% 38%; }
+.ashi-thumb[data-card="card-62"] { object-position: 44% 58%; }
+.ashi-thumb[data-card="card-63"] { object-position: 50% 42%; }
 
 /* (Large-text mode is now the DEFAULT — html font-size: 24px above, plus larger
    .floor-svg-wrap .art-pin width, plus enlarged SVG text size attributes inline.
@@ -649,6 +675,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   aspect-ratio: 1 / 1;
   border-radius: 50%;
   overflow: hidden;
+  -webkit-mask-image: -webkit-radial-gradient(white, black);  /* old iOS Safari: keep the circle clip on transformed (zoomed) child imgs */
   border: 3px solid #fff;
   box-shadow: 0 2px 8px rgba(0,0,0,.35);
   --drag-x: 0px;
@@ -1241,7 +1268,8 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 .ashi-thumb[data-card="card-16"],
 .ashi-thumb[data-card="card-17"],
 .ashi-thumb[data-card="card-36"],
-.ashi-thumb[data-card="card-38"] {
+.ashi-thumb[data-card="card-38"],
+.ashi-thumb[data-card="card-63"] {
   filter: brightness(1.18) contrast(1.05) saturate(1.05);
 }
 .ashi-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
@@ -1601,13 +1629,13 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
     <div class="floor-svg-wrap">
       <svg viewBox="10 108 558 667" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="signage-svg" preserveAspectRatio="xMidYMid meet">
         <!-- Official Getty upper-level plan crop (North Pavilion), warm tint baked in.
-             A mask shows the photo ONLY inside the gallery rectangles; the non-gallery public
-             areas (corridors, courtyard, balcony) are overlaid with parchment (#f1ead8) so the
-             galleries read white-on-parchment like W2F — and the corridor-side of each "double
-             wall" is hidden, leaving a single wall line. -->
-        <!-- Official Getty upper-level plan crop (North Pavilion), warm tint baked in.
-             Shown AS-IS — the only overlay is #f4f4f4 covers blanking the baked room numbers
-             so our own labels can sit on top. No other modification of the plan. -->
+             Shown AS-IS with two surgical overlays only:
+             1) #f4f4f4 rects blanking the baked room numbers (our labels sit on top);
+             2) public-area tint: the Getty plan draws this pavilion's entrance hall and
+                corridors in the SAME white as galleries, so (matching W2F, where non-gallery
+                space is naturally tan) those zones get a multiply-blend tint. #eee2d1 x the
+                white floor = exactly #e5d9c9, the plan's own courtyard tan — and multiply
+                keeps every wall/door line pure black. No reshaping, no covering. -->
         <g class="floor-photo">
           <image href="img/north-2f-base.jpg?v=1" xlink:href="img/north-2f-base.jpg?v=1" x="0" y="0" width="700" height="963"/>
           <g fill="#f4f4f4">
@@ -1615,7 +1643,20 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
             <rect x="414" y="386" width="98"  height="46"/>   <!-- N201 -->
             <rect x="69"  y="494" width="109" height="46"/>   <!-- N204 -->
             <rect x="241" y="555" width="107" height="46"/>   <!-- N202 -->
-            <rect x="298" y="660" width="130" height="58"/>   <!-- N203 -->
+            <rect x="298" y="660" width="130" height="66"/>   <!-- N203 (text bottoms at y719 + anti-aliasing — short covers left a dashed sliver) -->
+          </g>
+          <!-- Zones tile edge-to-edge WITHOUT overlap: two multiply layers would double-darken
+               into visible seam lines. Edges land on walls (black stays black under multiply). -->
+          <g fill="#eee2d1" style="mix-blend-mode:multiply" pointer-events="none">
+            <rect x="10"  y="108" width="345" height="22"/>   <!-- strip above N205 (balcony edge) -->
+            <rect x="10"  y="130" width="17"  height="645"/>  <!-- exterior sliver left of N205/N204, full height -->
+            <rect x="27"  y="746" width="169" height="29"/>   <!-- blank paper below courtyard, bottom-left -->
+            <rect x="208" y="130" width="172" height="180"/>  <!-- entrance hall (to the gray block's edge) -->
+            <rect x="308" y="310" width="70"  height="172"/>  <!-- corridor right of stair/elevator block -->
+            <rect x="355" y="486" width="207" height="22"/>   <!-- landing below N201 -->
+            <rect x="352" y="508" width="28"  height="149"/>  <!-- connector along N202's right wall -->
+            <rect x="380" y="508" width="90"  height="39"/>   <!-- landing above service block -->
+            <rect x="468" y="655" width="20"  height="92"/>   <!-- sliver right of N203 -->
           </g>
         </g>
         <g class="footsteps" id="footsteps" pointer-events="none"></g>
