@@ -1652,11 +1652,9 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
             <rect x="10"  y="130" width="17"  height="645"/>  <!-- exterior sliver left of N205/N204, full height -->
             <rect x="27"  y="746" width="169" height="29"/>   <!-- blank paper below courtyard, bottom-left -->
             <rect x="208" y="130" width="172" height="180"/>  <!-- entrance hall (to the gray block's edge) -->
-            <rect x="355" y="310" width="23"  height="176"/>  <!-- sliver between N201's wall and the gray block (the lane right of the stair block is N202 gallery space — stays white) -->
-            <rect x="355" y="486" width="207" height="22"/>   <!-- landing below N201 -->
-            <rect x="352" y="508" width="28"  height="149"/>  <!-- connector along N202's right wall -->
-            <rect x="380" y="508" width="90"  height="39"/>   <!-- landing above service block -->
-            <rect x="468" y="655" width="20"  height="92"/>   <!-- sliver right of N203 -->
+            <rect x="355" y="486" width="213" height="62"/>   <!-- landing below N201 — one piece, to the courtyard step (y548) and the frame edge -->
+            <rect x="358" y="548" width="22"  height="109"/>  <!-- corridor between N202's wall and the service block -->
+            <rect x="462" y="548" width="8"   height="109"/>  <!-- sliver between service block and the courtyard wall -->
           </g>
         </g>
         <g class="footsteps" id="footsteps" pointer-events="none"></g>
@@ -1686,16 +1684,18 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
           <rect class="room-tint" fill="transparent" data-room="N203" x="274" y="658" width="192" height="92"/>
         </g>
         <g class="room-nums" font-family="sans-serif" font-size="17" font-weight="700" fill="#1a1a1a">
-          <text x="38"  y="150" class="room-num" data-room="N205">N205</text>
-          <text x="38"  y="512" class="room-num" data-room="N204">N204</text>
-          <text x="365" y="344" class="room-num" data-room="N201">N201</text>
-          <text x="216" y="508" class="room-num" data-room="N202">N202</text>
-          <text x="276" y="683" class="room-num" data-room="N203">N203</text>
+          <!-- Labels sit where the plan's own printed numbers were (on the covers) —
+               Getty's designers already picked each room's natural label spot. -->
+          <text x="75"  y="284" class="room-num" data-room="N205">N205</text>
+          <text x="75"  y="526" class="room-num" data-room="N204">N204</text>
+          <text x="420" y="418" class="room-num" data-room="N201">N201</text>
+          <text x="247" y="587" class="room-num" data-room="N202">N202</text>
+          <text x="302" y="701" class="room-num" data-room="N203">N203</text>
         </g>
       </svg>
 
       <!-- Circular artwork pins overlaid on rooms (positions in % of the SVG box) -->
-      <button class="art-pin" data-card="card-15" style="left:74.4%;top:40%" title="Bernardo Daddi · 圣母与圣徒三联画 · N201">
+      <button class="art-pin" data-card="card-15" style="left:74.4%;top:38%" title="Bernardo Daddi · 圣母与圣徒三联画 · N201">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Bernardo_Daddi_-_The_Virgin_Mary_with_Saints_Thomas_Aquinas_and_Paul_-_93.PB.16_-_J._Paul_Getty_Museum.jpg/960px-Bernardo_Daddi_-_The_Virgin_Mary_with_Saints_Thomas_Aquinas_and_Paul_-_93.PB.16_-_J._Paul_Getty_Museum.jpg" alt="圣母与圣多玛斯·阿奎那、圣保罗三联画">
         <span class="pin-num">12</span>
       </button>
@@ -1703,23 +1703,23 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Andrea_Mantegna_-_Adoration_of_the_Magi_-_85.PA.417_-_J._Paul_Getty_Museum.jpg/960px-Andrea_Mantegna_-_Adoration_of_the_Magi_-_85.PA.417_-_J._Paul_Getty_Museum.jpg" alt="东方三博士朝圣">
         <span class="pin-num">13</span>
       </button>
-      <button class="art-pin" data-card="card-17" style="left:64.7%;top:87.7%" title="Rogier van der Weyden · 教皇之梦 · N203">
+      <button class="art-pin" data-card="card-17" style="left:66.5%;top:87.7%" title="Rogier van der Weyden · 教皇之梦 · N203">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Workshop_of_Rogier_van_der_Weyden_-_The_Dream_of_Pope_Sergius_-_72.PB.20_-_J._Paul_Getty_Museum.jpg/960px-Workshop_of_Rogier_van_der_Weyden_-_The_Dream_of_Pope_Sergius_-_72.PB.20_-_J._Paul_Getty_Museum.jpg" alt="教皇之梦">
         <span class="pin-num">14</span>
       </button>
-      <button class="art-pin" data-card="card-18" style="left:14.5%;top:64.6%" title="Pontormo · 持斧枪者肖像 · N204">
+      <button class="art-pin" data-card="card-18" style="left:14.5%;top:69%" title="Pontormo · 持斧枪者肖像 · N204">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Pontormo%2C_alabardiere%2C_forse_francesco_guardi%2C_1528-30.JPG/960px-Pontormo%2C_alabardiere%2C_forse_francesco_guardi%2C_1528-30.JPG" alt="持斧枪者肖像">
         <span class="pin-num">15</span>
       </button>
-      <button class="art-pin" data-card="card-19" style="left:14.5%;top:21.3%" title="Lorenzo Lotto · 维纳斯与丘比特 · N205">
+      <button class="art-pin" data-card="card-19" style="left:14.5%;top:17.5%" title="Lorenzo Lotto · 维纳斯与丘比特 · N205">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Lorenzo_Lotto_-_Venus_and_Cupid_%28c._1520%27s%29.jpg/960px-Lorenzo_Lotto_-_Venus_and_Cupid_%28c._1520%27s%29.jpg" alt="维纳斯与丘比特">
         <span class="pin-num">16</span>
       </button>
-      <button class="art-pin" data-card="card-34" style="left:82.4%;top:49.8%" title="Simone Martini · 圣路加 · N201">
+      <button class="art-pin" data-card="card-34" style="left:82.4%;top:52%" title="Simone Martini · 圣路加 · N201">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Simone_Martini_-_St._Luke_-_82.PB.72_-_J._Paul_Getty_Museum.jpg/960px-Simone_Martini_-_St._Luke_-_82.PB.72_-_J._Paul_Getty_Museum.jpg" alt="圣路加">
         <span class="pin-num">31</span>
       </button>
-      <button class="art-pin" data-card="card-35" style="left:52.2%;top:66.1%" title="Carpaccio · 潟湖狩猎 · N202">
+      <button class="art-pin" data-card="card-35" style="left:56%;top:64%" title="Carpaccio · 潟湖狩猎 · N202">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Vittore_Carpaccio_-_Hunting_on_the_Lagoon_%28recto%29%2C_Letter_Rack_%28verso%29_-_79.PB.72_-_J._Paul_Getty_Museum.jpg/960px-Vittore_Carpaccio_-_Hunting_on_the_Lagoon_%28recto%29%2C_Letter_Rack_%28verso%29_-_79.PB.72_-_J._Paul_Getty_Museum.jpg" alt="潟湖狩猎">
         <span class="pin-num">32</span>
       </button>
