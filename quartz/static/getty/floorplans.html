@@ -1605,23 +1605,17 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
              areas (corridors, courtyard, balcony) are overlaid with parchment (#f1ead8) so the
              galleries read white-on-parchment like W2F — and the corridor-side of each "double
              wall" is hidden, leaving a single wall line. -->
-        <defs>
-          <clipPath id="n2f-galleries">
-            <rect x="28"  y="126" width="180" height="532"/>  <!-- N205 + N204 (left column) -->
-            <rect x="354" y="128" width="206" height="364"/>  <!-- N201 -->
-            <rect x="203" y="310" width="155" height="347"/>  <!-- N202 -->
-            <rect x="268" y="652" width="206" height="100"/>  <!-- N203 -->
-          </clipPath>
-        </defs>
+        <!-- Official Getty upper-level plan crop (North Pavilion), warm tint baked in.
+             Shown AS-IS — the only overlay is #f4f4f4 covers blanking the baked room numbers
+             so our own labels can sit on top. No other modification of the plan. -->
         <g class="floor-photo">
-          <rect x="0" y="0" width="700" height="963" fill="#f1ead8"/>  <!-- parchment over all public areas -->
-          <image href="img/north-2f-base.jpg?v=1" xlink:href="img/north-2f-base.jpg?v=1" x="0" y="0" width="700" height="963" clip-path="url(#n2f-galleries)"/>
-          <g fill="#f4f4f4">  <!-- blank the baked room numbers inside the galleries -->
+          <image href="img/north-2f-base.jpg?v=1" xlink:href="img/north-2f-base.jpg?v=1" x="0" y="0" width="700" height="963"/>
+          <g fill="#f4f4f4">
             <rect x="69"  y="252" width="107" height="46"/>   <!-- N205 -->
             <rect x="414" y="386" width="98"  height="46"/>   <!-- N201 -->
             <rect x="69"  y="494" width="109" height="46"/>   <!-- N204 -->
             <rect x="241" y="555" width="107" height="46"/>   <!-- N202 -->
-            <rect x="298" y="658" width="130" height="66"/>   <!-- N203 -->
+            <rect x="298" y="660" width="130" height="58"/>   <!-- N203 -->
           </g>
         </g>
         <g class="footsteps" id="footsteps" pointer-events="none"></g>
