@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;1,400&family=Playfair+Display:wght@400;500&family=Source+Serif+4:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0f1210; --border:#2a2e2a; --border-mid:#202420;
+    --text:#d8d4c8; --dim:#a0a498; --muted:#8b9088; --faint:#6b7068; --bright:#ece8db;
+    --accent:#7ab87a; --accent-light:#a0d8a0; --amber:#c9a45a; --coral:#d89a9a;
+    --mono:'JetBrains Mono',ui-monospace,monospace; --disp:'Playfair Display',serif; --prose:'Source Serif 4',Georgia,serif;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:var(--mono);margin:0}
+  .wrap{max-width:680px;margin:0 auto;padding:40px 10px 90px}
+  .vlabel{font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:#7a8a6a;
+    border:1px solid #2f3a2a;background:#161a14;display:inline-block;padding:4px 10px;border-radius:3px;margin:0 0 4px}
+  .vnote{color:#6b7068;font-size:11.5px;margin:0 0 18px;font-style:italic;font-family:var(--prose)}
+  .rule{height:1px;background:var(--border);border:0;margin:50px 0;opacity:.5}
+  .cmd{font-size:12.5px;color:var(--accent);letter-spacing:.04em;padding:0 0 16px}
+  .prompt{color:var(--accent);margin-right:8px}
+  .comment{color:var(--faint);font-style:italic;font-family:var(--prose)}
+  .open{color:var(--faint);font-size:11px;white-space:nowrap}
+  .k-hist{color:var(--coral)} .k-ai{color:var(--amber)}
+
+  /* preview thumb with graceful fallback */
+  .thumb{position:relative;background:#15181a;border:1px solid var(--border);overflow:hidden;flex:none}
+  .thumb img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+  .thumb .ph{position:absolute;inset:0;display:none;align-items:center;justify-content:center;
+    font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);
+    background:repeating-linear-gradient(135deg,#15181a,#15181a 6px,#181c1a 6px,#181c1a 12px)}
+  .thumb.noimg .ph{display:flex}
+
+  /* ===== FORM A — current rows ===== */
+  .A-row{display:grid;grid-template-columns:74px 1fr auto;gap:14px;align-items:baseline;
+    padding:11px 0;border-bottom:1px dotted var(--border-mid)}
+  .A-row:last-child{border-bottom:0}
+  .A-date{color:var(--faint);font-size:11.5px}
+  .A-title{color:var(--bright);font-size:14px}
+  .A-mk{margin-right:7px}
+  .A-desc{color:var(--muted);font-family:var(--prose);font-style:italic;font-size:12.5px;margin-top:3px;line-height:1.5}
+
+  /* ===== FORM B — thumbnail rows ===== */
+  .B-row{display:grid;grid-template-columns:104px 1fr auto;gap:16px;align-items:center;
+    padding:13px 0;border-bottom:1px dotted var(--border-mid)}
+  .B-row:last-child{border-bottom:0}
+  .B-row .thumb{width:104px;height:66px}
+  .B-title{color:var(--bright);font-size:14px}
+  .B-mk{margin-right:7px}
+  .B-desc{color:var(--muted);font-family:var(--prose);font-style:italic;font-size:12.5px;margin-top:4px;line-height:1.45}
+  .B-meta{display:flex;flex-direction:column;align-items:flex-end;gap:5px}
+  .B-date{color:var(--faint);font-size:11px}
+
+  /* ===== FORM C — preview cards ===== */
+  .C-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  .C-card{border:1px solid var(--border);display:flex;flex-direction:column;text-decoration:none;color:inherit}
+  .C-card .thumb{width:100%;aspect-ratio:16/10}
+  .C-body{padding:12px 14px 14px;display:flex;flex-direction:column;flex:1}
+  .C-eyebrow{font-size:10px;letter-spacing:.11em;text-transform:uppercase;margin-bottom:7px}
+  .C-title{font-family:var(--disp);font-size:15.5px;color:var(--bright);font-weight:500;line-height:1.22;margin-bottom:6px;letter-spacing:-.01em}
+  .C-desc{font-size:11.5px;color:var(--muted);line-height:1.5;margin-bottom:12px}
+  .C-foot{margin-top:auto;display:flex;justify-content:space-between;align-items:baseline}
+  .C-date{color:var(--faint);font-size:10.5px}
+</style></head>
+<body><div class="wrap">
+
+  <div class="vlabel">Form A · current (rows)</div>
+  <div class="vnote">What you have now — clean, text-only, twin of the posts feed.</div>
+  <div class="cmd"><span class="prompt">$</span>ls -lt lab/ <span class="comment"># things I've built</span></div>
+  <div id="A"></div>
+
+  <hr class="rule">
+
+  <div class="vlabel">Form B · thumbnail rows</div>
+  <div class="vnote">Same scannable list, plus a small live preview of each artifact. Hybrid — keeps the terminal rhythm, adds a visual peek.</div>
+  <div class="cmd"><span class="prompt">$</span>ls -lt lab/ <span class="comment"># things I've built</span></div>
+  <div id="B"></div>
+
+  <hr class="rule">
+
+  <div class="vlabel">Form C · preview cards</div>
+  <div class="vnote">Gallery / portfolio feel — leads with the visuals. Most striking, but adds the only imagery on the page.</div>
+  <div class="cmd"><span class="prompt">$</span>ls -lt lab/ <span class="comment"># things I've built</span></div>
+  <div id="C" class="C-grid"></div>
+
+</div>
+<script>
+  const items = [
+    {date:"2026.06.07", kind:"hist", eyebrow:"Living & Reading", title:"Getty Center · 观展指南", desc:"阅读模式 + 楼层导航 · 60 件必看藏品 · 中文", thumb:"thumbs/getty-center.png"},
+    {date:"2026.06.07", kind:"hist", eyebrow:"Living & Reading", title:"Getty Villa · 观展指南", desc:"阅读模式 + 楼层导航 · 20 件必看藏品 · 中文", thumb:"thumbs/getty-villa.png"},
+    {date:"2026.05.11", kind:"hist", eyebrow:"History", title:"A Map of Italian Politics, 1300–1600", desc:"An interactive map of popes, city-states & dynasties.", thumb:"thumbs/italia.png"},
+    {date:"2026.03.31", kind:"hist", eyebrow:"History", title:"Medici: Who's Who", desc:"Who's who in Masters of Florence — and who keeps stabbing whom.", thumb:"thumbs/medici.png"},
+    {date:"2022.02.04", kind:"ai", eyebrow:"AI & Tech", title:"Evolutionary Roadmap of Deep-Learning RecSys", desc:"A family tree of deep-learning recommender architectures.", thumb:"thumbs/recsys.png"},
+  ];
+  const thumb = (src) => `<span class="thumb"><img src="${src}" alt="" onerror="this.parentNode.classList.add('noimg')"><span class="ph">preview</span></span>`;
+
+  document.getElementById('A').innerHTML = items.map(it => `
+    <div class="A-row">
+      <div class="A-date">${it.date}</div>
+      <div><div class="A-title"><span class="A-mk k-${it.kind}">▸</span>${it.title}</div>
+        <div class="A-desc">${it.desc}</div></div>
+      <div class="open">open ↗</div>
+    </div>`).join('');
+
+  document.getElementById('B').innerHTML = items.map(it => `
+    <div class="B-row">
+      ${thumb(it.thumb)}
+      <div><div class="B-title"><span class="B-mk k-${it.kind}">▸</span>${it.title}</div>
+        <div class="B-desc">${it.desc}</div></div>
+      <div class="B-meta"><div class="B-date">${it.date}</div><div class="open">open ↗</div></div>
+    </div>`).join('');
+
+  document.getElementById('C').innerHTML = items.map(it => `
+    <a class="C-card">
+      ${thumb(it.thumb)}
+      <div class="C-body">
+        <div class="C-eyebrow k-${it.kind}">${it.eyebrow}</div>
+        <div class="C-title">${it.title}</div>
+        <div class="C-desc">${it.desc}</div>
+        <div class="C-foot"><span class="open">open ↗</span><span class="C-date">${it.date}</span></div>
+      </div>
+    </a>`).join('');
+</script>
+</body></html>

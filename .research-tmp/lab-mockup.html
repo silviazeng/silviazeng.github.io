@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lab section — variants</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;1,400&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Source+Serif+4:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --color-bg:#0f1210;
+    --color-border:#2a2e2a; --color-border-mid:#202420; --color-border-hover:#3a4a3a;
+    --color-text:#d8d4c8; --color-text-dim:#a0a498; --color-text-muted:#8b9088;
+    --color-text-faint:#6b7068; --color-text-bright:#ece8db; --color-text-head:#ece8db;
+    --color-accent:#7ab87a; --color-accent-light:#a0d8a0;
+    --color-accent-amber:#c9a45a; --color-accent-amber-light:#d8c28a;
+    --color-accent-coral:#c96a6a; --color-accent-coral-light:#d89a9a;
+    --font-mono:'JetBrains Mono',ui-monospace,monospace;
+    --font-display:'Playfair Display',serif;
+    --font-prose:'Source Serif 4',Georgia,serif;
+    --k-hist:var(--color-accent-coral-light);
+    --k-ai:var(--color-accent-amber);
+  }
+  *{box-sizing:border-box;}
+  body{
+    background:var(--color-bg); color:var(--color-text);
+    font-family:var(--font-mono); margin:0;
+    -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+  }
+  .wrap{max-width:640px; margin:0 auto; padding:40px 8px 80px;}
+
+  /* variant chrome (NOT part of the site — just labels for comparison) */
+  .vlabel{
+    font-family:var(--font-mono); font-size:11px; letter-spacing:.12em;
+    text-transform:uppercase; color:#5f6b8c; border:1px solid #2b3350;
+    background:#141826; display:inline-block; padding:3px 9px; border-radius:3px;
+    margin:0 0 16px;
+  }
+  .vnote{ color:#566; font-size:11.5px; font-family:var(--font-mono); margin:6px 0 0; }
+  .rule{ height:1px; background:var(--color-border); border:0; margin:54px 0; opacity:.5;}
+
+  /* ── shared site primitives ───────────────────────────── */
+  .tg-cmd-small{ font-size:12.5px; color:var(--color-accent); letter-spacing:.04em; padding:0 0 14px; margin:0;}
+  .tg-prompt{ color:var(--color-accent); margin-right:8px; user-select:none;}
+  .tg-comment{ color:var(--color-text-faint); font-style:italic; font-family:var(--font-prose);}
+  .tg-section{ margin-bottom:34px;}
+
+  /* reference: posts feed (existing) */
+  .tg-post{ display:grid; grid-template-columns:92px 1fr; gap:18px; padding:16px 0; border-bottom:1px dashed var(--color-border-mid);}
+  .tg-post-date{ color:var(--color-text-faint); font-size:12px; padding-top:3px;}
+  .tg-post-title{ color:var(--color-text-bright); font-size:14.5px;}
+  .tg-post-mk{ color:var(--color-accent); margin-right:6px;}
+  .tg-post-desc{ color:var(--color-text-muted); font-size:13px; font-family:var(--font-prose); font-style:italic; margin-top:6px; line-height:1.55;}
+
+  /* reference: pillars (existing) */
+  .tg-pillars{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:8px;}
+  .tg-pill{ border:1px solid var(--color-border); padding:14px 16px;}
+  .tg-pill-head{ font-size:11px; color:var(--color-text-faint); letter-spacing:.08em; margin-bottom:6px; text-transform:uppercase;}
+  .tg-pill-name{ font-family:var(--font-display); font-size:17px; color:var(--color-text-bright); font-weight:500; margin-bottom:6px; letter-spacing:-.01em;}
+  .tg-pill-desc{ font-size:12px; color:var(--color-text-muted); line-height:1.5;}
+
+  /* ════════ VARIANT A — terminal listing (mono filename rows) ════════ */
+  .labA{ display:flex; flex-direction:column;}
+  .labA-row{ display:grid; grid-template-columns:78px 1fr auto; gap:14px; align-items:baseline;
+    padding:11px 0; border-bottom:1px dotted var(--color-border-mid);}
+  .labA-row:last-child{ border-bottom:0;}
+  .labA-date{ color:var(--color-text-faint); font-size:11.5px;}
+  .labA-title{ color:var(--color-text-bright); font-size:14px;}
+  .labA-mk{ margin-right:7px;}
+  .labA-mk.k-hist{ color:var(--k-hist);} .labA-mk.k-ai{ color:var(--k-ai);}
+  .labA-desc{ color:var(--color-text-muted); font-family:var(--font-prose); font-style:italic; font-size:12.5px; margin-top:3px; line-height:1.5;}
+  .labA-open{ color:var(--color-text-faint); font-size:11px; align-self:baseline; white-space:nowrap;}
+
+  /* ════════ VARIANT B — index cards (2-up grid) ════════ */
+  .labB{ display:grid; grid-template-columns:repeat(2,1fr); gap:12px;}
+  .labB-card{ border:1px solid var(--color-border); padding:14px 16px; display:flex; flex-direction:column;}
+  .labB-eyebrow{ font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; margin-bottom:8px;}
+  .labB-eyebrow.k-hist{ color:var(--k-hist);} .labB-eyebrow.k-ai{ color:var(--k-ai);}
+  .labB-title{ font-family:var(--font-display); font-size:16px; color:var(--color-text-bright); font-weight:500; line-height:1.25; margin-bottom:7px; letter-spacing:-.01em;}
+  .labB-desc{ font-size:12px; color:var(--color-text-muted); line-height:1.5; margin-top:auto;}
+  .labB-open{ color:var(--color-text-faint); font-size:11px; margin-top:12px;}
+
+  /* ════════ VARIANT C — annotated rows (accent tick + serif title) ════════ */
+  .labC{ display:flex; flex-direction:column; gap:2px;}
+  .labC-row{ display:grid; grid-template-columns:1fr auto; gap:14px; align-items:start;
+    padding:13px 0 13px 15px; border-left:2px solid transparent; border-bottom:1px dotted var(--color-border-mid);}
+  .labC-row:last-child{ border-bottom:0;}
+  .labC-row.k-hist{ border-left-color:rgba(216,154,154,.55);}
+  .labC-row.k-ai{ border-left-color:rgba(201,164,90,.6);}
+  .labC-eyebrow{ font-size:10px; letter-spacing:.11em; text-transform:uppercase; margin-bottom:5px; color:var(--color-text-faint);}
+  .labC-eyebrow.k-hist{ color:var(--k-hist);} .labC-eyebrow.k-ai{ color:var(--k-ai);}
+  .labC-title{ font-family:var(--font-display); font-size:16px; color:var(--color-text-bright); font-weight:500; line-height:1.2; letter-spacing:-.01em;}
+  .labC-desc{ font-size:12px; color:var(--color-text-muted); line-height:1.5; margin-top:5px; font-family:var(--font-prose); font-style:italic;}
+  .labC-open{ color:var(--color-text-faint); font-size:11px; padding-top:3px; white-space:nowrap;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ───── context reference (existing sections, for cohesion judgment) ───── -->
+  <div class="vlabel" style="color:#7a8a6a;border-color:#2f3a2a;background:#161a14;">context · your existing sections (unchanged)</div>
+
+  <section class="tg-section">
+    <div class="tg-cmd-small"><span class="tg-prompt">$</span>ls -lt posts/ <span class="tg-comment"># newest first</span></div>
+    <a class="tg-post"><div class="tg-post-date">2026.06.07</div><div><div class="tg-post-title"><span class="tg-post-mk">▸</span>A Getty Center Guide for Visiting Family</div><div class="tg-post-desc">A short list of what's actually worth seeing, mapped room by room…</div></div></a>
+    <a class="tg-post"><div class="tg-post-date">2026.05.11</div><div><div class="tg-post-title"><span class="tg-post-mk">▸</span>A Map of Italian Politics, 1300–1600</div><div class="tg-post-desc">Untangling the popes, city-states, and dynasties of the Renaissance…</div></div></a>
+  </section>
+
+  <section class="tg-section">
+    <div class="tg-cmd-small"><span class="tg-prompt">$</span>cat pillars.md</div>
+    <div class="tg-pillars">
+      <div class="tg-pill"><div class="tg-pill-head">§ AI &amp; Tech</div><div class="tg-pill-name">A taste for elegant structure.</div><div class="tg-pill-desc">Why it works, not whether it works.</div></div>
+      <div class="tg-pill"><div class="tg-pill-head">§ Work &amp; Career</div><div class="tg-pill-name">Patterns &amp; direction.</div><div class="tg-pill-desc">Back for patterns, forward for direction.</div></div>
+      <div class="tg-pill"><div class="tg-pill-head">§ Living &amp; Reading</div><div class="tg-pill-name">The unquantifiable stuff.</div><div class="tg-pill-desc">Reading, watching, noticing.</div></div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- ───── VARIANT A ───── -->
+  <div class="vlabel">Variant A · terminal listing</div>
+  <div class="vnote" style="margin:-8px 0 18px;">Mono filename-style rows, date column like posts, kind-colored ▸, “open ↗” affordance. Quietest — leans hard into the terminal metaphor; perfectly symmetric with <code>ls -lt posts/</code>.</div>
+  <section class="tg-section">
+    <div class="tg-cmd-small"><span class="tg-prompt">$</span>ls -lt lab/ <span class="tg-comment"># things I've built</span></div>
+    <div class="labA">
+      <div class="labA-row"><div class="labA-date">2026.06.07</div><div><div class="labA-title"><span class="labA-mk k-hist">▸</span>Getty Center · 观展指南</div><div class="labA-desc">阅读模式 + 楼层导航 · 60 件必看藏品 · 中文</div></div><div class="labA-open">open ↗</div></div>
+      <div class="labA-row"><div class="labA-date">2026.06.07</div><div><div class="labA-title"><span class="labA-mk k-hist">▸</span>Getty Villa · 观展指南</div><div class="labA-desc">阅读模式 + 楼层导航 · 20 件必看藏品 · 中文</div></div><div class="labA-open">open ↗</div></div>
+      <div class="labA-row"><div class="labA-date">2026.05.11</div><div><div class="labA-title"><span class="labA-mk k-hist">▸</span>A Map of Italian Politics, 1300–1600</div><div class="labA-desc">An interactive map of popes, city-states &amp; dynasties.</div></div><div class="labA-open">open ↗</div></div>
+      <div class="labA-row"><div class="labA-date">2026.03.31</div><div><div class="labA-title"><span class="labA-mk k-hist">▸</span>Medici: Who's Who</div><div class="labA-desc">An interactive guide to the family behind Florence.</div></div><div class="labA-open">open ↗</div></div>
+      <div class="labA-row"><div class="labA-date">2022.02.04</div><div><div class="labA-title"><span class="labA-mk k-ai">▸</span>Evolutionary Roadmap of DL RecSys</div><div class="labA-desc">The evolutionary tree of deep-learning recommenders.</div></div><div class="labA-open">open ↗</div></div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- ───── VARIANT B ───── -->
+  <div class="vlabel">Variant B · index cards</div>
+  <div class="vnote" style="margin:-8px 0 18px;">Reuses your pillar-card style, 2-up. Kind as a colored eyebrow, title in Playfair. Most visual presence — but five items go 2+2+1 (ragged last row).</div>
+  <section class="tg-section">
+    <div class="tg-cmd-small"><span class="tg-prompt">$</span>ls -lt lab/ <span class="tg-comment"># things I've built</span></div>
+    <div class="labB">
+      <div class="labB-card"><div class="labB-eyebrow k-hist">Living &amp; Reading</div><div class="labB-title">Getty Center · 观展指南</div><div class="labB-desc">阅读模式 + 楼层导航 · 60 件必看藏品 · 中文</div><div class="labB-open">open ↗</div></div>
+      <div class="labB-card"><div class="labB-eyebrow k-hist">Living &amp; Reading</div><div class="labB-title">Getty Villa · 观展指南</div><div class="labB-desc">阅读模式 + 楼层导航 · 20 件必看藏品 · 中文</div><div class="labB-open">open ↗</div></div>
+      <div class="labB-card"><div class="labB-eyebrow k-hist">History</div><div class="labB-title">A Map of Italian Politics, 1300–1600</div><div class="labB-desc">An interactive map of popes, city-states &amp; dynasties.</div><div class="labB-open">open ↗</div></div>
+      <div class="labB-card"><div class="labB-eyebrow k-hist">History</div><div class="labB-title">Medici: Who's Who</div><div class="labB-desc">An interactive guide to the family behind Florence.</div><div class="labB-open">open ↗</div></div>
+      <div class="labB-card"><div class="labB-eyebrow k-ai">AI &amp; Tech</div><div class="labB-title">Evolutionary Roadmap of DL RecSys</div><div class="labB-desc">The evolutionary tree of deep-learning recommenders.</div><div class="labB-open">open ↗</div></div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- ───── VARIANT C ───── -->
+  <div class="vlabel">Variant C · annotated rows</div>
+  <div class="vnote" style="margin:-8px 0 18px;">Rows with a kind-colored left tick, Playfair title, italic serif note, “open ↗”. A refined middle ground — more substance than A, less boxy than B; the colored ticks echo your pillars.</div>
+  <section class="tg-section">
+    <div class="tg-cmd-small"><span class="tg-prompt">$</span>ls -lt lab/ <span class="tg-comment"># things I've built</span></div>
+    <div class="labC">
+      <div class="labC-row k-hist"><div><div class="labC-eyebrow k-hist">Living &amp; Reading</div><div class="labC-title">Getty Center · 观展指南</div><div class="labC-desc">阅读模式 + 楼层导航 · 60 件必看藏品 · 中文</div></div><div class="labC-open">open ↗</div></div>
+      <div class="labC-row k-hist"><div><div class="labC-eyebrow k-hist">Living &amp; Reading</div><div class="labC-title">Getty Villa · 观展指南</div><div class="labC-desc">阅读模式 + 楼层导航 · 20 件必看藏品 · 中文</div></div><div class="labC-open">open ↗</div></div>
+      <div class="labC-row k-hist"><div><div class="labC-eyebrow k-hist">History</div><div class="labC-title">A Map of Italian Politics, 1300–1600</div><div class="labC-desc">An interactive map of popes, city-states &amp; dynasties.</div></div><div class="labC-open">open ↗</div></div>
+      <div class="labC-row k-hist"><div><div class="labC-eyebrow k-hist">History</div><div class="labC-title">Medici: Who's Who</div><div class="labC-desc">An interactive guide to the family behind Florence.</div></div><div class="labC-open">open ↗</div></div>
+      <div class="labC-row k-ai"><div><div class="labC-eyebrow k-ai">AI &amp; Tech</div><div class="labC-title">Evolutionary Roadmap of DL RecSys</div><div class="labC-desc">The evolutionary tree of deep-learning recommenders.</div></div><div class="labC-open">open ↗</div></div>
+    </div>
+  </section>
+
+</div>
+<script>
+  window.addEventListener('load', function () {
+    var set = function () { document.title = 'HEIGHT:' + document.documentElement.scrollHeight; };
+    if (document.fonts && document.fonts.ready) { document.fonts.ready.then(set); setTimeout(set, 800); }
+    else { set(); }
+  });
+</script>
+</body>
+</html>

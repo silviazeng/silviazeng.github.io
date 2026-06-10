@@ -67,14 +67,39 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles, cfg }: QuartzComponent
     { title: "Algebraic Geometry & Statistical Learning", author: "Watanabe", status: "slow read" },
   ]
 
-  // Interactive things I've built. New artifacts slot in here as rows —
-  // newest first — rather than each one spawning its own homepage section.
+  // Interactive things I've built. Each gets a hand-drawn box-drawing "terminal
+  // thumbnail" (art) hinting at what it is — text/terminal-native, no images.
   const lab = [
-    { date: "2026.06.07", kind: "hist", title: "Getty Center · 观展指南", desc: "阅读模式 + 楼层导航 · 60 件必看藏品 · 中文", href: "/static/getty/center-guide.html" },
-    { date: "2026.06.07", kind: "hist", title: "Getty Villa · 观展指南", desc: "阅读模式 + 楼层导航 · 20 件必看藏品 · 中文", href: "/static/getty/villa-guide.html" },
-    { date: "2026.05.11", kind: "hist", title: "A Map of Italian Politics, 1300–1600", desc: "Duchies, republics, papal states and kingdoms — who ruled what, and when.", href: "/static/italia-politica.html" },
-    { date: "2026.03.31", kind: "hist", title: "Medici: Who's Who", desc: "Who's who in Masters of Florence — and who keeps stabbing whom.", href: "/static/medici-guide.html" },
-    { date: "2022.02.04", kind: "ai", title: "Evolutionary Roadmap of Deep-Learning RecSys", desc: "A family tree of deep-learning recommender architectures.", href: "/static/recsys-roadmap.html" },
+    {
+      date: "2026.06.07", kind: "hist", type: "guide",
+      title: "Getty Center", desc: "A read-and-walk gallery guide, mapped room by room.",
+      href: "/static/getty/center-guide.html",
+      art: ["┌─┬─┬─┐", "│ │█│ │", "├─┼─┼─┤", "│ │ │█│", "└─┴─┴─┘"],
+    },
+    {
+      date: "2026.06.07", kind: "hist", type: "guide",
+      title: "Getty Villa", desc: "A read-and-walk guide to the Roman villa and its galleries.",
+      href: "/static/getty/villa-guide.html",
+      art: ["┌─────┐", "│ ┌─┐ │", "│ │░│ │", "│ └─┘ │", "└─────┘"],
+    },
+    {
+      date: "2026.05.11", kind: "hist", type: "map",
+      title: "A Map of Italian Politics, 1300–1600", desc: "Popes, city-states, and dynasties — untangled.",
+      href: "/static/italia-politica.html",
+      art: ["██▖", "▝██▖", "  ██", " ▗██▛▘", "▗▛▘"],
+    },
+    {
+      date: "2026.03.31", kind: "hist", type: "graph",
+      title: "Medici: Who's Who", desc: "Who's who in Masters of Florence — and who keeps stabbing whom.",
+      href: "/static/medici-guide.html",
+      art: ["●─┬─●", " \\│/ ", "  ●  ", " /│\\ ", "●─┴─●"],
+    },
+    {
+      date: "2022.02.04", kind: "ai", type: "dag",
+      title: "Evolutionary Roadmap of Deep-Learning RecSys", desc: "How deep-learning recommenders evolved — who borrowed what from whom.",
+      href: "/static/recsys-roadmap.html",
+      art: ["▫ ▫ ▫", "└─┬─┘", " ▐█▌", "┌─┴─┐", "▫ ▫ ▫"],
+    },
   ]
 
   return (
@@ -96,6 +121,61 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles, cfg }: QuartzComponent
               I'm more interested in why it works than whether it works.
               <span class="tg-caret" aria-hidden="true"></span>
             </p>
+          </section>
+
+          {/* MOCs — the three top-level maps of content */}
+          <section class="tg-section">
+            <div class="tg-cmd tg-cmd-small">
+              <span class="tg-prompt">$</span>ls MOC/ <span class="tg-comment"># maps of content</span>
+            </div>
+            <div class="tg-pillars">
+              <a class="tg-pill k-ai" href="/AI-Tech">
+                <div class="tg-pill-head">§ AI &amp; Tech</div>
+                <div class="tg-pill-name">A taste for elegant structure.</div>
+                <div class="tg-pill-desc">
+                  A tolerance for confusion, and no pressure to pretend otherwise. More interested in why it works than whether it works.
+                </div>
+              </a>
+              <a class="tg-pill k-career" href="/Work-Career">
+                <div class="tg-pill-head">§ Work &amp; Career</div>
+                <div class="tg-pill-name">Patterns &amp; direction.</div>
+                <div class="tg-pill-desc">
+                  Looking back for patterns, forward for direction.
+                </div>
+              </a>
+              <a class="tg-pill k-living" href="/Living-Reading">
+                <div class="tg-pill-head">§ Living &amp; Reading</div>
+                <div class="tg-pill-name">The unquantifiable stuff.</div>
+                <div class="tg-pill-desc">
+                  Reading, watching, noticing. Machiavelli, Range, Renaissance.
+                </div>
+              </a>
+            </div>
+          </section>
+
+          {/* Lab — interactive things I've built (newest first) */}
+          <section class="tg-section">
+            <div class="tg-cmd tg-cmd-small">
+              <span class="tg-prompt">$</span>ls -lt lab/ <span class="tg-comment"># things I've built</span>
+            </div>
+            <div class="tg-lab">
+              {lab.map((row) => (
+                <a class={`tg-lab-row k-${row.kind}`} href={row.href}>
+                  <pre class="tg-lab-art">{row.art.join("\n")}</pre>
+                  <div class="tg-lab-main">
+                    <div class="tg-lab-title">
+                      <span class="tg-lab-mk">▸</span>
+                      {row.title}
+                    </div>
+                    <div class="tg-lab-desc">{row.desc}</div>
+                    <div class="tg-lab-meta">
+                      <span class="tg-lab-type">{row.type}</span> · {row.date}
+                    </div>
+                  </div>
+                  <div class="tg-lab-open">open ↗</div>
+                </a>
+              ))}
+            </div>
           </section>
 
           {/* Posts list */}
@@ -133,58 +213,6 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles, cfg }: QuartzComponent
                   </a>
                 )
               })}
-            </div>
-          </section>
-
-          {/* Pillars */}
-          <section class="tg-section">
-            <div class="tg-cmd tg-cmd-small">
-              <span class="tg-prompt">$</span>cat pillars.md
-            </div>
-            <div class="tg-pillars">
-              <a class="tg-pill" href="/AI-Tech">
-                <div class="tg-pill-head">§ AI &amp; Tech</div>
-                <div class="tg-pill-name">A taste for elegant structure.</div>
-                <div class="tg-pill-desc">
-                  A tolerance for confusion, and no pressure to pretend otherwise. More interested in why it works than whether it works.
-                </div>
-              </a>
-              <a class="tg-pill" href="/Work-Career">
-                <div class="tg-pill-head">§ Work &amp; Career</div>
-                <div class="tg-pill-name">Patterns &amp; direction.</div>
-                <div class="tg-pill-desc">
-                  Looking back for patterns, forward for direction.
-                </div>
-              </a>
-              <a class="tg-pill" href="/Living-Reading">
-                <div class="tg-pill-head">§ Living &amp; Reading</div>
-                <div class="tg-pill-name">The unquantifiable stuff.</div>
-                <div class="tg-pill-desc">
-                  Reading, watching, noticing. Machiavelli, Range, Renaissance.
-                </div>
-              </a>
-            </div>
-          </section>
-
-          {/* Lab — interactive things I've built (newest first) */}
-          <section class="tg-section">
-            <div class="tg-cmd tg-cmd-small">
-              <span class="tg-prompt">$</span>ls -lt lab/ <span class="tg-comment"># things I've built</span>
-            </div>
-            <div class="tg-lab">
-              {lab.map((row) => (
-                <a class={`tg-lab-row k-${row.kind}`} href={row.href}>
-                  <div class="tg-lab-date">{row.date}</div>
-                  <div class="tg-lab-main">
-                    <div class="tg-lab-title">
-                      <span class="tg-lab-mk">▸</span>
-                      {row.title}
-                    </div>
-                    <div class="tg-lab-desc">{row.desc}</div>
-                  </div>
-                  <div class="tg-lab-open">open ↗</div>
-                </a>
-              ))}
             </div>
           </section>
         </div>

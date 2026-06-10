@@ -25,6 +25,9 @@
   --color-accent-amber-light: #d8c28a;
   --color-accent-coral:  #c96a6a;   // coral — history tags
   --color-accent-coral-light: #d89a9a;
+  --color-accent-rose:   #c98a8a;   // dusty rose — luminance-matched coral for large labels
+  --color-accent-lavender:       #9686c0;   // muted grey-lavender — history/living channel (kept below amber)
+  --color-accent-lavender-deep:  #7a66a8;   // deeper lavender for hover borders
   --color-accent-teal:   #7ab87a;
 
   --color-focus-ring:   rgba(122, 184, 122, 0.6);
@@ -417,7 +420,7 @@ footer {
   letter-spacing: 0;
 }
 .tg-tag-sm.tg-tag-ai   { color: var(--color-accent-amber); }
-.tg-tag-sm.tg-tag-hist { color: var(--color-accent-coral-light); }
+.tg-tag-sm.tg-tag-hist { color: var(--color-accent-lavender); }
 .tg-tag-sm.tg-tag-career { color: var(--color-accent); }
 
 // ─── Pillars ─────────────────────────────────────────────────────────────────
@@ -442,13 +445,18 @@ footer {
 }
 
 .tg-pill-head {
-  font-size: 11px;
-  color: var(--color-text-faint);
+  font-size: 12px;
+  color: var(--color-text-dim);
   letter-spacing: 0.08em;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
   font-family: var(--font-mono);
+  font-weight: 500;
   text-transform: uppercase;
 }
+// Theme-color each pillar's category label so it reads at a glance.
+.tg-pill.k-ai     .tg-pill-head { color: var(--color-accent-amber); }
+.tg-pill.k-career .tg-pill-head { color: var(--color-accent); }
+.tg-pill.k-living .tg-pill-head { color: var(--color-accent-lavender); }
 
 .tg-pill-name {
   font-family: var(--font-display);
@@ -467,8 +475,10 @@ footer {
 }
 
 // ─── Lab (interactive artifacts) ─────────────────────────────────────────────
-// Twin of the posts feed: an `ls -lt` listing, but for things built rather than
-// written. New artifacts become rows here — they never spawn a new section.
+// Each artifact gets a hand-drawn box-drawing "terminal thumbnail" — a tiny
+// monospace glyph of what it is (floor plan, map, graph, tree). Keeps the
+// section fully text/terminal-native while giving each piece a visual hook,
+// and sets it clearly apart from the posts feed.
 .tg-lab {
   display: flex;
   flex-direction: column;
@@ -477,10 +487,10 @@ footer {
 
 .tg-lab-row {
   display: grid;
-  grid-template-columns: 78px 1fr auto;
-  gap: 14px;
-  align-items: baseline;
-  padding: 11px 0;
+  grid-template-columns: auto 1fr auto;
+  gap: 20px;
+  align-items: center;
+  padding: 14px 0;
   border-bottom: 1px dotted var(--color-border-mid);
   text-decoration: none !important;
   color: inherit !important;
@@ -494,10 +504,15 @@ footer {
   }
 }
 
-.tg-lab-date {
-  color: var(--color-text-faint);
-  font-size: 11.5px;
+// the box-drawing "thumbnail"
+.tg-lab-art {
+  margin: 0;
   font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.2;
+  white-space: pre;
+  user-select: none;
+  color: var(--color-accent);
 }
 
 .tg-lab-title {
@@ -511,22 +526,36 @@ footer {
   margin-right: 7px;
   color: var(--color-accent);
 }
-.tg-lab-row.k-hist .tg-lab-mk { color: var(--color-accent-coral-light); }
-.tg-lab-row.k-ai   .tg-lab-mk { color: var(--color-accent-amber); }
 
 .tg-lab-desc {
   color: var(--color-text-muted);
   font-family: var(--font-prose);
   font-style: italic;
   font-size: 12.5px;
-  margin-top: 3px;
+  margin-top: 4px;
   line-height: 1.5;
 }
+
+.tg-lab-meta {
+  margin-top: 7px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-text-faint);
+}
+
+// kind colors drive the art glyph, the ▸ marker, and the type label
+.tg-lab-row.k-hist .tg-lab-art,
+.tg-lab-row.k-hist .tg-lab-mk,
+.tg-lab-row.k-hist .tg-lab-type { color: var(--color-accent-lavender); }
+.tg-lab-row.k-ai .tg-lab-art,
+.tg-lab-row.k-ai .tg-lab-mk,
+.tg-lab-row.k-ai .tg-lab-type { color: var(--color-accent-amber); }
 
 .tg-lab-open {
   color: var(--color-text-faint);
   font-size: 11px;
   white-space: nowrap;
+  align-self: center;
   transition: color 0.15s ease;
 }
 
@@ -679,10 +708,10 @@ footer {
     &:hover { background: rgba(201, 164, 90, 0.14); border-color: var(--color-accent-amber); }
   }
   &.tg-tag-hist {
-    color: var(--color-accent-coral-light) !important;
-    border-color: #3a2828;
-    background: rgba(201, 106, 106, 0.05);
-    &:hover { background: rgba(201, 106, 106, 0.14); border-color: var(--color-accent-coral); }
+    color: var(--color-accent-lavender) !important;
+    border-color: #2f283a;
+    background: rgba(154, 122, 201, 0.05);
+    &:hover { background: rgba(154, 122, 201, 0.14); border-color: var(--color-accent-lavender-deep); }
   }
 }
 
