@@ -245,6 +245,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   display: block;
 }
 .floor-svg-wrap .art-pin { width: 10%; border-width: 3.5px; }  /* default larger for accessibility */
+#south-1f .floor-svg-wrap .art-pin { width: 8%; border-width: 3px; }  /* S1F packs 16 small rooms — smaller pins so rooms stay readable */
 .floor-svg-wrap .art-pin .pin-num { display: none; }
 .signage-svg text.room-num { transition: fill .2s ease; }
 .signage-svg text.room-num.visited { fill: #ab9f88; font-weight: 500; }   /* already-visited rooms read as grey */
@@ -944,6 +945,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   }
   .art-pin { width: 16%; border-width: 2.5px; }
   .floor-svg-wrap .art-pin { width: 12%; border-width: 3px; }
+  #south-1f .floor-svg-wrap .art-pin { width: 9.5%; }
   .art-pin .pin-num { width: 20px; height: 20px; font-size: 0.55rem; }
   .modal-body { padding: 1.1rem 1.2rem 1.6rem; }
   .modal-title { font-size: 1.3rem; }
@@ -1687,182 +1689,86 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   </div>
   <div class="floor-plan">
     <div class="floor-svg-wrap">
-      <svg viewBox="20 20 800 640" xmlns="http://www.w3.org/2000/svg" class="signage-svg" preserveAspectRatio="xMidYMid meet">
-        <!-- Background -->
-        <rect width="840" height="660" fill="#f5f0e0"/>
-
-        <!-- ===== AREA FILLS =====
-             Per on-site signage:
-               - N106 sits in the top-right and is the SAME SIZE as N104 (180x160).
-                 Its bottom-left corner (400, 340) sits exactly on N102's top-right corner.
-               - The building's east wall ENDS at N106's east edge (x=580). There is
-                 NO building east of N106 — the area east of x=580 is outside.
-               - N101 is a 140x140 SQUARE in a south extension, below N102, offset right.
-        -->
-        <!-- Atrium fill follows the irregular outline -->
-        <path d="M 80,40 L 580,40 L 580,500 L 460,500 L 460,640 L 320,640 L 320,500 L 80,500 Z" fill="#bfa686"/>
-        <rect x="80"  y="40"  width="180" height="140" fill="var(--room-decarts)"/> <!-- N 105 -->
-        <rect x="80"  y="180" width="180" height="160" fill="var(--room-decarts)"/> <!-- N 104 -->
-        <rect x="80"  y="340" width="180" height="160" fill="var(--room-decarts)"/> <!-- N 103 -->
-        <rect x="260" y="340" width="140" height="160" fill="var(--room-decarts)"/> <!-- N 102 -->
-        <rect x="400" y="180" width="180" height="160" fill="var(--room-decarts)"/> <!-- N 106 (same size as N104; SW corner = N102 NE corner) -->
-        <rect x="320" y="500" width="140" height="140" fill="var(--room-decarts)"/> <!-- N 101 -->
-
-        <!-- Outer building outline -->
-        <path d="M 80,40 L 580,40 L 580,500 L 460,500 L 460,640 L 320,640 L 320,500 L 80,500 Z"
-              fill="none" stroke="#1a1a1a" stroke-width="5"/>
-
-        <!-- ===== INTERNAL WALLS ===== -->
-        <g fill="none" stroke="#1a1a1a" stroke-width="5">
-          <!-- N 105: right wall door y=95-130; bottom shared with N104 top, door at x=155-185 -->
-          <line x1="80"  y1="180" x2="155" y2="180"/>
-          <line x1="185" y1="180" x2="260" y2="180"/>
-          <line x1="260" y1="40"  x2="260" y2="95"/>
-          <line x1="260" y1="130" x2="260" y2="180"/>
-          <!-- N 104: right wall solid; bottom shared with N103 top, door at x=155-185 -->
-          <line x1="80"  y1="340" x2="155" y2="340"/>
-          <line x1="185" y1="340" x2="260" y2="340"/>
-          <line x1="260" y1="180" x2="260" y2="340"/>
-          <!-- N 103: top = N104 bottom (above); right shared with N102, door y=410-445 = N103↔N102 -->
-          <line x1="260" y1="340" x2="260" y2="410"/>
-          <line x1="260" y1="445" x2="260" y2="500"/>
-          <!-- N 102: top (y=340) solid; right wall (x=400) door y=405-435 to atrium;
-               bottom (y=500) has a door at x=370-400 leading DOWN into N101. -->
-          <line x1="260" y1="340" x2="400" y2="340"/>
-          <line x1="400" y1="340" x2="400" y2="405"/>
-          <line x1="400" y1="435" x2="400" y2="500"/>
-          <line x1="260" y1="500" x2="370" y2="500"/>   <!-- N102 bottom, left of door -->
-          <!-- N 101 top wall closes the rest of the extension top:
-               x=320-370 (left of door) + x=400-460 (right of door). -->
-          <line x1="320" y1="500" x2="370" y2="500"/>
-          <line x1="400" y1="500" x2="460" y2="500"/>
-          <!-- N 106 (x=400-580, y=180-340): top, bottom, left (door y=235-275 to atrium);
-               right wall (x=580) is part of the building exterior (drawn by outline path). -->
-          <line x1="400" y1="180" x2="580" y2="180"/>
-          <line x1="400" y1="340" x2="580" y2="340"/>
-          <line x1="400" y1="180" x2="400" y2="235"/>
-          <line x1="400" y1="275" x2="400" y2="340"/>
+      <svg viewBox="0 0 700 882" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="signage-svg" preserveAspectRatio="xMidYMid meet">
+        <!-- Official Getty plaza-level plan crop (North Pavilion), warm tint baked in.
+             Original plan as-is: #f4f4f4 covers over the printed room numbers; multiply
+             tint only on the frame-edge slivers outside the outer walls. -->
+        <g class="floor-photo">
+          <image href="img/north-1f-base.jpg?v=1" xlink:href="img/north-1f-base.jpg?v=1" x="0" y="0" width="700" height="882"/>
+          <g fill="#f4f4f4">
+            <rect x="68"  y="145" width="120" height="50"/>  <!-- N105 -->
+            <rect x="67"  y="360" width="122" height="50"/>  <!-- N104 -->
+            <rect x="68"  y="535" width="120" height="49"/>  <!-- N103 -->
+            <rect x="290" y="535" width="119" height="49"/>  <!-- N102 -->
+            <rect x="511" y="324" width="121" height="49"/>  <!-- N106 -->
+            <rect x="457" y="733" width="109" height="50"/>  <!-- N101 -->
+          </g>
+          <g fill="#eee2d1" style="mix-blend-mode:multiply" pointer-events="none">
+            <rect x="0"   y="0"  width="700" height="10"/>   <!-- walkway above the north wall -->
+            <rect x="0"   y="10" width="9"   height="872"/>  <!-- west sliver -->
+            <rect x="687" y="10" width="13"  height="670"/>  <!-- east sliver (to the courtyard edge) -->
+          </g>
         </g>
-
-        <!-- ===== ELEVATOR (small, tucked into the top-left of North Atrium) ===== -->
-        <g pointer-events="none">
-          <rect x="280" y="60" width="70" height="70" fill="#ffffff" stroke="#1a1a1a" stroke-width="2.5"/>
-          <line x1="300" y1="76" x2="300" y2="114" stroke="#1a1a1a" stroke-width="2"/>
-          <polygon points="300,120 293,108 307,108" fill="#1a1a1a"/>
-          <line x1="330" y1="114" x2="330" y2="76" stroke="#1a1a1a" stroke-width="2"/>
-          <polygon points="330,70 323,82 337,82" fill="#1a1a1a"/>
-        </g>
-
-        <!-- ===== "NORTH ATRIUM" label ===== -->
-        <g pointer-events="none">
-          <text x="450" y="190" font-family="sans-serif" font-size="30" font-weight="500"
-                fill="#fff" text-anchor="middle" letter-spacing="3" opacity="0.85">中庭</text>
-        </g>
-
-        <!-- ===== STAIRS (small, similar size to elevator, in the middle of atrium) ===== -->
-        <g pointer-events="none">
-          <rect x="310" y="240" width="80" height="80" fill="#ffffff" stroke="#1a1a1a" stroke-width="2.5"/>
-          <path d="M 320 312 L 332 312 L 332 300 L 344 300 L 344 288 L 356 288 L 356 276 L 368 276 L 368 264 L 380 264 L 380 252"
-                fill="none" stroke="#1a1a1a" stroke-width="2" stroke-linejoin="miter"/>
-        </g>
-
-        <!-- ===== MUSEUM ENTRANCE HALL exit arrow (east of N102 through atrium, then out east wall) ===== -->
-        <g pointer-events="none">
-          <line x1="420" y1="420" x2="555" y2="420" stroke="#1a1a1a" stroke-width="3"/>
-          <polygon points="566,420 548,412 548,428" fill="#1a1a1a"/>
-          <text x="400" y="460" font-family="sans-serif" font-size="26" font-weight="700" fill="#1a1a1a" text-anchor="start">入口大厅</text>
-        </g>
-
-        <!-- ===== ROOM NUMBER LABELS — normalized across all 4 floors so visual px at 390-wide viewport is ~16–17px. -->
-        <g pointer-events="none" font-family="sans-serif" font-size="35" font-weight="500" fill="#1a1a1a">
-          <text x="252" y="72"  text-anchor="end" class="room-num" data-room="N105">N 105</text>
-          <text x="252" y="212" text-anchor="end" class="room-num" data-room="N104">N 104</text>
-          <text x="252" y="372" text-anchor="end" class="room-num" data-room="N103">N 103</text>
-          <text x="392" y="372" text-anchor="end" class="room-num" data-room="N102">N 102</text>
-          <text x="572" y="212" text-anchor="end" class="room-num" data-room="N106">N 106</text>
-          <text x="452" y="532" text-anchor="end" class="room-num" data-room="N101">N 101</text>
-        </g>
-
-        <!-- ===== Visited-room tints ===== -->
-        <g class="room-tints" pointer-events="none">
-          <rect class="room-tint" fill="transparent" data-room="N101" x="320" y="500" width="140" height="140"/>
-          <rect class="room-tint" fill="transparent" data-room="N102" x="260" y="340" width="140" height="160"/>
-          <rect class="room-tint" fill="transparent" data-room="N103" x="80"  y="340" width="180" height="160"/>
-          <rect class="room-tint" fill="transparent" data-room="N104" x="80"  y="180" width="180" height="160"/>
-          <rect class="room-tint" fill="transparent" data-room="N105" x="80"  y="40"  width="180" height="140"/>
-          <rect class="room-tint" fill="transparent" data-room="N106" x="400" y="180" width="180" height="160"/>
-        </g>
-
-        <!-- ===== Visit-tracker click targets ===== -->
-        <g class="room-taps">
-          <rect class="room-tap" fill="transparent" data-room="N101" x="320" y="500" width="140" height="140"/>
-          <rect class="room-tap" fill="transparent" data-room="N102" x="260" y="340" width="140" height="160"/>
-          <rect class="room-tap" fill="transparent" data-room="N103" x="80"  y="340" width="180" height="160"/>
-          <rect class="room-tap" fill="transparent" data-room="N104" x="80"  y="180" width="180" height="160"/>
-          <rect class="room-tap" fill="transparent" data-room="N105" x="80"  y="40"  width="180" height="140"/>
-          <rect class="room-tap" fill="transparent" data-room="N106" x="400" y="180" width="180" height="160"/>
-        </g>
-
-        <!-- Footsteps (JS-generated) -->
         <g class="footsteps" id="footsteps-1f" pointer-events="none"></g>
-
-        <!-- "You are here NOW" pulsing red marker -->
+        <g class="room-taps">
+          <rect class="room-tap" fill="transparent" data-room="N105" x="11"  y="12"  width="226" height="302"/>
+          <rect class="room-tap" fill="transparent" data-room="N104" x="11"  y="316" width="226" height="134"/>
+          <rect class="room-tap" fill="transparent" data-room="N103" x="11"  y="452" width="226" height="228"/>
+          <rect class="room-tap" fill="transparent" data-room="N102" x="239" y="452" width="217" height="227"/>
+          <rect class="room-tap" fill="transparent" data-room="N106" x="457" y="240" width="227" height="209"/>
+          <rect class="room-tap" fill="transparent" data-room="N101" x="424" y="675" width="217" height="182"/>
+        </g>
         <g class="current-marker" id="currentMarker1F">
           <circle class="pulse-ring" r="22" />
           <circle r="14" fill="#a83e2a" stroke="#fff" stroke-width="3"/>
         </g>
-
-        <!-- Visit badges -->
         <g class="visit-badges" font-family="sans-serif" font-size="17" font-weight="700">
-          <g class="visit-badge" data-room="N105" transform="translate(100, 60)">
-            <circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
-            <text y="6" text-anchor="middle" fill="#fff">1</text>
-          </g>
-          <g class="visit-badge" data-room="N104" transform="translate(100, 200)">
-            <circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
-            <text y="6" text-anchor="middle" fill="#fff">1</text>
-          </g>
-          <g class="visit-badge" data-room="N103" transform="translate(100, 360)">
-            <circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
-            <text y="6" text-anchor="middle" fill="#fff">1</text>
-          </g>
-          <g class="visit-badge" data-room="N102" transform="translate(280, 360)">
-            <circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
-            <text y="6" text-anchor="middle" fill="#fff">1</text>
-          </g>
-          <g class="visit-badge" data-room="N106" transform="translate(425, 200)">
-            <circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
-            <text y="6" text-anchor="middle" fill="#fff">1</text>
-          </g>
-          <g class="visit-badge" data-room="N101" transform="translate(340, 520)">
-            <circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
-            <text y="6" text-anchor="middle" fill="#fff">1</text>
-          </g>
+          <g class="visit-badge" data-room="N105" transform="translate(29,30)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="N104" transform="translate(29,334)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="N103" transform="translate(29,470)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="N102" transform="translate(257,470)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="N106" transform="translate(475,258)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="N101" transform="translate(442,693)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+        </g>
+        <g class="room-tints" pointer-events="none">
+          <rect class="room-tint" fill="transparent" data-room="N105" x="11"  y="12"  width="226" height="302"/>
+          <rect class="room-tint" fill="transparent" data-room="N104" x="11"  y="316" width="226" height="134"/>
+          <rect class="room-tint" fill="transparent" data-room="N103" x="11"  y="452" width="226" height="228"/>
+          <rect class="room-tint" fill="transparent" data-room="N102" x="239" y="452" width="217" height="227"/>
+          <rect class="room-tint" fill="transparent" data-room="N106" x="457" y="240" width="227" height="209"/>
+          <rect class="room-tint" fill="transparent" data-room="N101" x="424" y="675" width="217" height="182"/>
+        </g>
+        <g class="room-nums" font-family="sans-serif" font-size="17" font-weight="700" fill="#1a1a1a">
+          <text x="19"  y="38"  class="room-num" data-room="N105">N105</text>
+          <text x="19"  y="342" class="room-num" data-room="N104">N104</text>
+          <text x="19"  y="478" class="room-num" data-room="N103">N103</text>
+          <text x="247" y="478" class="room-num" data-room="N102">N102</text>
+          <text x="465" y="266" class="room-num" data-room="N106">N106</text>
+          <text x="432" y="701" class="room-num" data-room="N101">N101</text>
         </g>
       </svg>
 
-      <!-- Circular artwork pins (positions in % of the 840×510 visible viewBox) -->
-      <button class="art-pin" data-card="card-21" style="left:46%;top:86%" title="彩饰手稿 N101">
+      <button class="art-pin" data-card="card-21" style="left:76%;top:90.7%" title="彩饰手稿 N101">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Personnages_de_la_sc%C3%A8ne_de_Janvier_%28Fr%C3%A8res_Limbourg_%3F%29_-_Tr%C3%A8s_Riches_Heures_du_duc_de_Berry_%28f.1%29.jpg/960px-Personnages_de_la_sc%C3%A8ne_de_Janvier_%28Fr%C3%A8res_Limbourg_%3F%29_-_Tr%C3%A8s_Riches_Heures_du_duc_de_Berry_%28f.1%29.jpg" alt="彩饰手稿">
         <span class="pin-num">18</span>
       </button>
-      <button class="art-pin" data-card="card-22" style="left:39%;top:63%" title="奥格斯堡珍藏柜 N102">
+      <button class="art-pin" data-card="card-22" style="left:49.3%;top:71.4%" title="奥格斯堡珍藏柜 N102">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Getty%2C_cabinet.JPG/960px-Getty%2C_cabinet.JPG" alt="奥格斯堡珍藏柜">
         <span class="pin-num">19</span>
       </button>
-      <button class="art-pin" data-card="card-23" style="left:19%;top:63%" title="中世纪彩色玻璃 N103">
+      <button class="art-pin" data-card="card-23" style="left:17.7%;top:71.4%" title="中世纪彩色玻璃 N103">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Getty_Center_-_Stained_glass_window_-_Housing_the_stranger_%281560-1570%29.JPG/960px-Getty_Center_-_Stained_glass_window_-_Housing_the_stranger_%281560-1570%29.JPG" alt="中世纪彩色玻璃">
         <span class="pin-num">20</span>
       </button>
-      <button class="art-pin" data-card="card-24" style="left:19%;top:38%" title="欧洲玻璃与陶瓷 N104">
+      <button class="art-pin" data-card="card-24" style="left:17.7%;top:46.3%" title="欧洲玻璃与陶瓷 N104">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Getty_Center_-_Filigrana_Beaker.JPG/960px-Getty_Center_-_Filigrana_Beaker.JPG" alt="欧洲玻璃与陶瓷">
         <span class="pin-num">21</span>
       </button>
-      <button class="art-pin" data-card="card-47" style="left:19%;top:14%" title="五旬节手稿 · N105">
+      <button class="art-pin" data-card="card-47" style="left:17.7%;top:28.9%" title="五旬节手稿 · N105">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Pentecost_-_Google_Art_Project.jpg/960px-Pentecost_-_Google_Art_Project.jpg" alt="五旬节">
         <span class="pin-num">47</span>
       </button>
-      <button class="art-pin" data-card="card-48" style="left:59%;top:38%" title="劫掠海伦大盘 · N106">
+      <button class="art-pin" data-card="card-48" style="left:81.4%;top:46.5%" title="劫掠海伦大盘 · N106">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Plate_with_the_Abduction_of_Helen.jpg/960px-Plate_with_the_Abduction_of_Helen.jpg" alt="劫掠海伦大盘">
         <span class="pin-num">48</span>
       </button>
@@ -1987,312 +1893,174 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   </div>
   <div class="floor-plan">
     <div class="floor-svg-wrap">
-      <svg viewBox="20 20 1200 880" xmlns="http://www.w3.org/2000/svg" class="signage-svg" preserveAspectRatio="xMidYMid meet">
-        <!-- Background -->
-        <rect width="1240" height="920" fill="#f5f0e0"/>
-
-        <!-- ===== AREA FILLS =====
-             Simplified layout. The on-site signage has an irregular outer shape with
-             two stair towers, a courtyard, "South Hall" running down the east side,
-             and 16 numbered rooms. This redraw clusters the rooms into a clean
-             rectangular block while preserving their approximate spatial relations:
-               NORTH row:    S101 (red, changing exhibitions) | S102 | S103 | S104
-               EAST column:  S105 / S106 / S107 / S108  (South Hall along right edge)
-               WEST column:  S116 / S114
-               CENTER row:   S111 | S109 (large) | S110 / S112
-               SOUTH band:   S115 | S113   (S114/S116 above)
-               Stairs:       upper-right (above S105) + lower-left (next to South Atrium)
-        -->
-        <rect x="60" y="80" width="1080" height="720" fill="#bfa686"/>  <!-- atrium fill -->
-
-        <!-- North row -->
-        <rect x="60"   y="80"  width="200" height="160" fill="var(--room-changing)"/>                            <!-- S 101 · Changing Exhibitions -->
-        <rect x="260"  y="80"  width="240" height="160" fill="var(--room-decarts)"/>                            <!-- S 102 -->
-        <rect x="500"  y="80"  width="240" height="160" fill="var(--room-decarts)"/>                            <!-- S 103 -->
-        <rect x="740"  y="80"  width="140" height="100" fill="var(--room-decarts)"/>                            <!-- S 104 -->
-
-        <!-- East column (rooms along right side of building) -->
-        <rect x="940"  y="200" width="200" height="120" fill="var(--room-decarts)"/>                            <!-- S 105 -->
-        <rect x="940"  y="320" width="200" height="120" fill="var(--room-decarts)"/>                            <!-- S 106 -->
-        <rect x="940"  y="440" width="200" height="120" fill="var(--room-decarts)"/>                            <!-- S 107 -->
-        <rect x="940"  y="560" width="200" height="120" fill="var(--room-decarts)"/>                            <!-- S 108 -->
-
-        <!-- Center cluster -->
-        <rect x="500"  y="260" width="280" height="220" fill="var(--room-decarts)"/>                            <!-- S 109 (big central room) -->
-        <rect x="340"  y="260" width="160" height="120" fill="var(--room-decarts)"/>                            <!-- S 111 -->
-        <rect x="340"  y="380" width="160" height="120" fill="var(--room-decarts)"/>                            <!-- S 110 -->
-        <rect x="500"  y="480" width="280" height="140" fill="var(--room-decarts)"/>                            <!-- S 112 -->
-
-        <!-- West + south-band rooms -->
-        <rect x="60"   y="280" width="220" height="220" fill="var(--room-decarts)"/>                            <!-- S 116 -->
-        <rect x="60"   y="500" width="220" height="160" fill="var(--room-decarts)"/>                            <!-- S 114 -->
-        <rect x="60"   y="680" width="380" height="120" fill="var(--room-decarts)"/>                            <!-- S 115 -->
-        <rect x="440"  y="640" width="340" height="160" fill="var(--room-decarts)"/>                            <!-- S 113 -->
-
-        <!-- Outer building outline (simplified to a single rectangle) -->
-        <rect x="60" y="80" width="1080" height="720" fill="none" stroke="#1a1a1a" stroke-width="5"/>
-
-        <!-- ===== INTERNAL WALLS (door gaps cut so visitors can enter from the atrium) ===== -->
-        <g fill="none" stroke="#1a1a1a" stroke-width="5">
-          <!-- S 101: right wall, bottom wall (door y=190-225) -->
-          <line x1="260" y1="80"  x2="260" y2="190"/>
-          <line x1="260" y1="225" x2="260" y2="240"/>
-          <line x1="60"  y1="240" x2="260" y2="240"/>
-          <!-- S 102: bottom (door x=360-400); left/right shared -->
-          <line x1="260" y1="240" x2="360" y2="240"/>
-          <line x1="400" y1="240" x2="500" y2="240"/>
-          <line x1="500" y1="80"  x2="500" y2="240"/>
-          <!-- S 103: bottom (door x=600-640) -->
-          <line x1="500" y1="240" x2="600" y2="240"/>
-          <line x1="640" y1="240" x2="740" y2="240"/>
-          <line x1="740" y1="80"  x2="740" y2="240"/>
-          <!-- S 104: bottom + left -->
-          <line x1="740" y1="180" x2="880" y2="180"/>
-          <line x1="880" y1="80"  x2="880" y2="180"/>
-          <!-- S 105: top + bottom + left (door y=255-290) -->
-          <line x1="940" y1="200" x2="1140" y2="200"/>
-          <line x1="940" y1="320" x2="1140" y2="320"/>
-          <line x1="940" y1="200" x2="940" y2="255"/>
-          <line x1="940" y1="290" x2="940" y2="320"/>
-          <!-- S 106: bottom + left (door y=375-410) -->
-          <line x1="940" y1="440" x2="1140" y2="440"/>
-          <line x1="940" y1="320" x2="940" y2="375"/>
-          <line x1="940" y1="410" x2="940" y2="440"/>
-          <!-- S 107: bottom + left (door y=495-530) -->
-          <line x1="940" y1="560" x2="1140" y2="560"/>
-          <line x1="940" y1="440" x2="940" y2="495"/>
-          <line x1="940" y1="530" x2="940" y2="560"/>
-          <!-- S 108: bottom + left (door y=615-650) -->
-          <line x1="940" y1="680" x2="1140" y2="680"/>
-          <line x1="940" y1="560" x2="940" y2="615"/>
-          <line x1="940" y1="650" x2="940" y2="680"/>
-          <!-- S 109: top, bottom, left (door y=355-395 on left side to atrium); right shared with atrium -->
-          <line x1="500" y1="260" x2="780" y2="260"/>
-          <line x1="500" y1="480" x2="780" y2="480"/>
-          <line x1="500" y1="260" x2="500" y2="355"/>
-          <line x1="500" y1="395" x2="500" y2="480"/>
-          <line x1="780" y1="260" x2="780" y2="480"/>
-          <!-- S 111: top + bottom + right (door x=420-460 on bottom) -->
-          <line x1="340" y1="260" x2="500" y2="260"/>
-          <line x1="340" y1="260" x2="340" y2="380"/>
-          <!-- S 110: top of 110 = bottom of 111 = same horizontal line at y=380, door x=420-460 -->
-          <line x1="340" y1="380" x2="420" y2="380"/>
-          <line x1="460" y1="380" x2="500" y2="380"/>
-          <!-- S 110: bottom + left (door y=435-470) -->
-          <line x1="340" y1="500" x2="500" y2="500"/>
-          <line x1="340" y1="380" x2="340" y2="435"/>
-          <line x1="340" y1="470" x2="340" y2="500"/>
-          <!-- S 112: top + bottom + left (door y=525-560 on left) -->
-          <line x1="500" y1="480" x2="500" y2="525"/>
-          <line x1="500" y1="560" x2="500" y2="620"/>
-          <line x1="500" y1="620" x2="780" y2="620"/>
-          <!-- S 116: top + bottom + right (door y=370-405 on right) -->
-          <line x1="60"  y1="280" x2="280" y2="280"/>
-          <line x1="280" y1="280" x2="280" y2="370"/>
-          <line x1="280" y1="405" x2="280" y2="500"/>
-          <line x1="60"  y1="500" x2="280" y2="500"/>
-          <!-- S 114: top, bottom, right (door y=565-600 on right) -->
-          <line x1="280" y1="500" x2="280" y2="565"/>
-          <line x1="280" y1="600" x2="280" y2="660"/>
-          <line x1="60"  y1="660" x2="280" y2="660"/>
-          <!-- S 115: top, right (door x=180-220 on top connecting to atrium) -->
-          <line x1="60"  y1="680" x2="180" y2="680"/>
-          <line x1="220" y1="680" x2="440" y2="680"/>
-          <line x1="440" y1="680" x2="440" y2="800"/>
-          <!-- S 113: top, left (door x=560-600 on top connecting up to atrium-corridor) -->
-          <line x1="440" y1="640" x2="560" y2="640"/>
-          <line x1="600" y1="640" x2="780" y2="640"/>
-          <line x1="440" y1="640" x2="440" y2="680"/>
-          <line x1="780" y1="640" x2="780" y2="800"/>
+      <svg viewBox="0 0 700 642" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="signage-svg" preserveAspectRatio="xMidYMid meet">
+        <!-- Official Getty plaza-level plan crop (South Pavilion, the largest floor:
+             16 tracked rooms + S104A + South Hall/Atrium). Warm tint baked in; shown
+             AS-IS with #f4f4f4 covers over the printed room numbers only. The "South
+             Hall" / "South Atrium" captions are the plan's own and stay. -->
+        <g class="floor-photo">
+          <image href="img/south-1f-base.jpg?v=1" xlink:href="img/south-1f-base.jpg?v=1" x="0" y="0" width="700" height="642"/>
+          <g fill="#f4f4f4">
+            <rect x="424" y="28"  width="52" height="28"/>  <!-- S113 -->
+            <rect x="523" y="30"  width="50" height="25"/>  <!-- S114 -->
+            <rect x="424" y="136" width="52" height="28"/>  <!-- S112 -->
+            <rect x="612" y="136" width="52" height="28"/>  <!-- S116 -->
+            <rect x="192" y="148" width="56" height="28"/>  <!-- S108 -->
+            <rect x="284" y="232" width="56" height="28"/>  <!-- S109 -->
+            <rect x="357" y="196" width="57" height="48"/>  <!-- S110 -->
+            <rect x="430" y="222" width="74" height="32"/>  <!-- S111 -->
+            <rect x="521" y="211" width="78" height="43"/>  <!-- S115 -->
+            <rect x="96"  y="252" width="56" height="28"/>  <!-- S107 -->
+            <rect x="192" y="320" width="56" height="28"/>  <!-- S104 -->
+            <rect x="96"  y="324" width="60" height="28"/>  <!-- S106 -->
+            <rect x="272" y="348" width="72" height="28"/>  <!-- S104A -->
+            <rect x="96"  y="392" width="56" height="28"/>  <!-- S105 -->
+            <rect x="192" y="560" width="56" height="28"/>  <!-- S103 -->
+            <rect x="288" y="560" width="60" height="28"/>  <!-- S102 -->
+            <rect x="432" y="560" width="52" height="28"/>  <!-- S101 -->
+          </g>
         </g>
-
-        <!-- ===== STAIRS (upper-right, between S104 and the east column) ===== -->
-        <g pointer-events="none">
-          <rect x="760" y="80"  width="120" height="100" fill="#ffffff" stroke="#1a1a1a" stroke-width="3"/>
-          <path d="M 772 165 L 790 165 L 790 150 L 808 150 L 808 135 L 826 135 L 826 120 L 844 120 L 844 105 L 862 105 L 862 90"
-                fill="none" stroke="#1a1a1a" stroke-width="2.5" stroke-linejoin="miter"/>
-        </g>
-
-        <!-- ===== STAIRS (lower-left, near south atrium exit) ===== -->
-        <g pointer-events="none">
-          <rect x="60"  y="720" width="100" height="80" fill="#ffffff" stroke="#1a1a1a" stroke-width="3"/>
-          <line x1="80"  y1="788" x2="80"  y2="734" stroke="#1a1a1a" stroke-width="2"/>
-          <polygon points="80,728 73,742 87,742" fill="#1a1a1a"/>
-          <line x1="120" y1="734" x2="120" y2="788" stroke="#1a1a1a" stroke-width="2"/>
-          <polygon points="120,794 113,780 127,780" fill="#1a1a1a"/>
-        </g>
-
-        <!-- ===== "SOUTH ATRIUM" label (bottom-center of the open area) ===== -->
-        <g pointer-events="none">
-          <text x="610" y="555" font-family="sans-serif" font-size="22" font-weight="500"
-                fill="#fff" text-anchor="middle" letter-spacing="3" opacity="0.85">中庭</text>
-        </g>
-        <!-- ===== "SOUTH HALL" label (vertical text along the east column gap) ===== -->
-        <g pointer-events="none">
-          <text x="910" y="440" font-family="sans-serif" font-size="18" font-weight="500"
-                fill="#1a1a1a" text-anchor="middle" letter-spacing="3" opacity="0.55"
-                transform="rotate(-90, 910, 440)">南厅</text>
-        </g>
-
-        <!-- ===== EXIT ARROW (West Pavilion etc., south through bottom) ===== -->
-        <g pointer-events="none">
-          <line x1="240" y1="800" x2="240" y2="850" stroke="#1a1a1a" stroke-width="3"/>
-          <polygon points="240,862 230,842 250,842" fill="#1a1a1a"/>
-          <text x="240" y="888" font-family="sans-serif" font-size="26" font-weight="700" fill="#1a1a1a" text-anchor="middle">西馆</text>
-        </g>
-
-        <!-- ===== ROOM NUMBER LABELS — normalized to ~16–17px visual at 390-wide. -->
-        <g pointer-events="none" font-family="sans-serif" font-size="38" font-weight="500" fill="#1a1a1a">
-          <text x="252"  y="108" text-anchor="end" class="room-num" data-room="S101">S 101</text>
-          <text x="492"  y="108" text-anchor="end" class="room-num" data-room="S102">S 102</text>
-          <text x="732"  y="108" text-anchor="end" class="room-num" data-room="S103">S 103</text>
-          <text x="872"  y="108" text-anchor="end" class="room-num" data-room="S104">S 104</text>
-          <text x="1132" y="228" text-anchor="end" class="room-num" data-room="S105">S 105</text>
-          <text x="1132" y="348" text-anchor="end" class="room-num" data-room="S106">S 106</text>
-          <text x="1132" y="468" text-anchor="end" class="room-num" data-room="S107">S 107</text>
-          <text x="1132" y="588" text-anchor="end" class="room-num" data-room="S108">S 108</text>
-          <text x="772"  y="288" text-anchor="end" class="room-num" data-room="S109">S 109</text>
-          <text x="492"  y="288" text-anchor="end" class="room-num" data-room="S111">S 111</text>
-          <text x="492"  y="408" text-anchor="end" class="room-num" data-room="S110">S 110</text>
-          <text x="772"  y="508" text-anchor="end" class="room-num" data-room="S112">S 112</text>
-          <text x="272"  y="308" text-anchor="end" class="room-num" data-room="S116">S 116</text>
-          <text x="272"  y="528" text-anchor="end" class="room-num" data-room="S114">S 114</text>
-          <text x="432"  y="708" text-anchor="end" class="room-num" data-room="S115">S 115</text>
-          <text x="772"  y="668" text-anchor="end" class="room-num" data-room="S113">S 113</text>
-        </g>
-
-        <!-- ===== Visited-room tints ===== -->
-        <g class="room-tints" pointer-events="none">
-          <rect class="room-tint" fill="transparent" data-room="S101" x="60"  y="80"  width="200" height="160"/>
-          <rect class="room-tint" fill="transparent" data-room="S102" x="260" y="80"  width="240" height="160"/>
-          <rect class="room-tint" fill="transparent" data-room="S103" x="500" y="80"  width="240" height="160"/>
-          <rect class="room-tint" fill="transparent" data-room="S104" x="740" y="80"  width="140" height="100"/>
-          <rect class="room-tint" fill="transparent" data-room="S105" x="940" y="200" width="200" height="120"/>
-          <rect class="room-tint" fill="transparent" data-room="S106" x="940" y="320" width="200" height="120"/>
-          <rect class="room-tint" fill="transparent" data-room="S107" x="940" y="440" width="200" height="120"/>
-          <rect class="room-tint" fill="transparent" data-room="S108" x="940" y="560" width="200" height="120"/>
-          <rect class="room-tint" fill="transparent" data-room="S109" x="500" y="260" width="280" height="220"/>
-          <rect class="room-tint" fill="transparent" data-room="S110" x="340" y="380" width="160" height="120"/>
-          <rect class="room-tint" fill="transparent" data-room="S111" x="340" y="260" width="160" height="120"/>
-          <rect class="room-tint" fill="transparent" data-room="S112" x="500" y="480" width="280" height="140"/>
-          <rect class="room-tint" fill="transparent" data-room="S113" x="440" y="640" width="340" height="160"/>
-          <rect class="room-tint" fill="transparent" data-room="S114" x="60"  y="500" width="220" height="160"/>
-          <rect class="room-tint" fill="transparent" data-room="S115" x="60"  y="680" width="380" height="120"/>
-          <rect class="room-tint" fill="transparent" data-room="S116" x="60"  y="280" width="220" height="220"/>
-        </g>
-
-        <!-- ===== Visit footsteps (generated by JS) ===== -->
         <g class="footsteps" id="footsteps-s1f" pointer-events="none"></g>
-
-        <!-- ===== Visit-tracker click targets ===== -->
         <g class="room-taps">
-          <rect class="room-tap" fill="transparent" data-room="S101" x="60"  y="80"  width="200" height="160"/>
-          <rect class="room-tap" fill="transparent" data-room="S102" x="260" y="80"  width="240" height="160"/>
-          <rect class="room-tap" fill="transparent" data-room="S103" x="500" y="80"  width="240" height="160"/>
-          <rect class="room-tap" fill="transparent" data-room="S104" x="740" y="80"  width="140" height="100"/>
-          <rect class="room-tap" fill="transparent" data-room="S105" x="940" y="200" width="200" height="120"/>
-          <rect class="room-tap" fill="transparent" data-room="S106" x="940" y="320" width="200" height="120"/>
-          <rect class="room-tap" fill="transparent" data-room="S107" x="940" y="440" width="200" height="120"/>
-          <rect class="room-tap" fill="transparent" data-room="S108" x="940" y="560" width="200" height="120"/>
-          <rect class="room-tap" fill="transparent" data-room="S109" x="500" y="260" width="280" height="220"/>
-          <rect class="room-tap" fill="transparent" data-room="S110" x="340" y="380" width="160" height="120"/>
-          <rect class="room-tap" fill="transparent" data-room="S111" x="340" y="260" width="160" height="120"/>
-          <rect class="room-tap" fill="transparent" data-room="S112" x="500" y="480" width="280" height="140"/>
-          <rect class="room-tap" fill="transparent" data-room="S113" x="440" y="640" width="340" height="160"/>
-          <rect class="room-tap" fill="transparent" data-room="S114" x="60"  y="500" width="220" height="160"/>
-          <rect class="room-tap" fill="transparent" data-room="S115" x="60"  y="680" width="380" height="120"/>
-          <rect class="room-tap" fill="transparent" data-room="S116" x="60"  y="280" width="220" height="220"/>
+          <rect class="room-tap" fill="transparent" data-room="S113" x="407" y="8" width="86" height="85"/>
+          <rect class="room-tap" fill="transparent" data-room="S114" x="493" y="8" width="108" height="85"/>
+          <rect class="room-tap" fill="transparent" data-room="S112" x="407" y="93" width="86" height="110"/>
+          <rect class="room-tap" fill="transparent" data-room="S116" x="595" y="118" width="84" height="68"/>
+          <rect class="room-tap" fill="transparent" data-room="S111" x="413" y="225" width="78" height="70"/>
+          <rect class="room-tap" fill="transparent" data-room="S115" x="491" y="225" width="104" height="70"/>
+          <rect class="room-tap" fill="transparent" data-room="S109" x="278" y="189" width="87" height="106"/>
+          <rect class="room-tap" fill="transparent" data-room="S110" x="365" y="200" width="45" height="95"/>
+          <rect class="room-tap" fill="transparent" data-room="S108" x="174" y="132" width="101" height="57"/>
+          <rect class="room-tap" fill="transparent" data-room="S107" x="76" y="222" width="95" height="84"/>
+          <rect class="room-tap" fill="transparent" data-room="S106" x="76" y="306" width="95" height="62"/>
+          <rect class="room-tap" fill="transparent" data-room="S105" x="76" y="368" width="95" height="79"/>
+          <rect class="room-tap" fill="transparent" data-room="S104" x="174" y="189" width="101" height="297"/>
+          <rect class="room-tap" fill="transparent" data-room="S103" x="174" y="528" width="101" height="79"/>
+          <rect class="room-tap" fill="transparent" data-room="S102" x="275" y="528" width="90" height="79"/>
+          <rect class="room-tap" fill="transparent" data-room="S101" x="410" y="528" width="95" height="79"/>
         </g>
-
-        <!-- ===== Pulsing red "you are here" marker ===== -->
         <g class="current-marker" id="currentMarkerS1F">
           <circle class="pulse-ring" r="22" />
           <circle r="14" fill="#a83e2a" stroke="#fff" stroke-width="3"/>
         </g>
-
-        <!-- ===== Visit badges ===== -->
         <g class="visit-badges" font-family="sans-serif" font-size="15" font-weight="700">
-          <g class="visit-badge" data-room="S101" transform="translate(85, 105)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
-          <g class="visit-badge" data-room="S102" transform="translate(285, 105)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
-          <g class="visit-badge" data-room="S103" transform="translate(525, 105)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
-          <g class="visit-badge" data-room="S104" transform="translate(765, 105)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
-          <g class="visit-badge" data-room="S105" transform="translate(965, 225)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
-          <g class="visit-badge" data-room="S106" transform="translate(965, 345)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
-          <g class="visit-badge" data-room="S107" transform="translate(965, 465)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
-          <g class="visit-badge" data-room="S108" transform="translate(965, 585)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
-          <g class="visit-badge" data-room="S109" transform="translate(525, 285)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
-          <g class="visit-badge" data-room="S110" transform="translate(365, 405)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
-          <g class="visit-badge" data-room="S111" transform="translate(365, 285)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
-          <g class="visit-badge" data-room="S112" transform="translate(525, 505)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
-          <g class="visit-badge" data-room="S113" transform="translate(465, 665)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
-          <g class="visit-badge" data-room="S114" transform="translate(85, 525)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
-          <g class="visit-badge" data-room="S115" transform="translate(85, 705)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
-          <g class="visit-badge" data-room="S116" transform="translate(85, 305)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="S113" transform="translate(421,22)"><circle r="13" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="S114" transform="translate(507,22)"><circle r="13" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="S112" transform="translate(421,107)"><circle r="13" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="S116" transform="translate(609,132)"><circle r="13" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="S111" transform="translate(427,239)"><circle r="13" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="S115" transform="translate(505,239)"><circle r="13" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="S109" transform="translate(292,203)"><circle r="13" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="S110" transform="translate(379,214)"><circle r="13" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="S108" transform="translate(188,146)"><circle r="13" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="S107" transform="translate(90,236)"><circle r="13" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="S106" transform="translate(90,320)"><circle r="13" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="S105" transform="translate(90,382)"><circle r="13" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="S104" transform="translate(188,203)"><circle r="13" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="S103" transform="translate(188,542)"><circle r="13" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="S102" transform="translate(289,542)"><circle r="13" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="S101" transform="translate(424,542)"><circle r="13" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+        </g>
+        <g class="room-tints" pointer-events="none">
+          <rect class="room-tint" fill="transparent" data-room="S113" x="407" y="8" width="86" height="85"/>
+          <rect class="room-tint" fill="transparent" data-room="S114" x="493" y="8" width="108" height="85"/>
+          <rect class="room-tint" fill="transparent" data-room="S112" x="407" y="93" width="86" height="110"/>
+          <rect class="room-tint" fill="transparent" data-room="S116" x="595" y="118" width="84" height="68"/>
+          <rect class="room-tint" fill="transparent" data-room="S111" x="413" y="225" width="78" height="70"/>
+          <rect class="room-tint" fill="transparent" data-room="S115" x="491" y="225" width="104" height="70"/>
+          <rect class="room-tint" fill="transparent" data-room="S109" x="278" y="189" width="87" height="106"/>
+          <rect class="room-tint" fill="transparent" data-room="S110" x="365" y="200" width="45" height="95"/>
+          <rect class="room-tint" fill="transparent" data-room="S108" x="174" y="132" width="101" height="57"/>
+          <rect class="room-tint" fill="transparent" data-room="S107" x="76" y="222" width="95" height="84"/>
+          <rect class="room-tint" fill="transparent" data-room="S106" x="76" y="306" width="95" height="62"/>
+          <rect class="room-tint" fill="transparent" data-room="S105" x="76" y="368" width="95" height="79"/>
+          <rect class="room-tint" fill="transparent" data-room="S104" x="174" y="189" width="101" height="297"/>
+          <rect class="room-tint" fill="transparent" data-room="S103" x="174" y="528" width="101" height="79"/>
+          <rect class="room-tint" fill="transparent" data-room="S102" x="275" y="528" width="90" height="79"/>
+          <rect class="room-tint" fill="transparent" data-room="S101" x="410" y="528" width="95" height="79"/>
+        </g>
+        <g class="room-nums" font-family="sans-serif" font-size="14" font-weight="700" fill="#1a1a1a">
+          <text x="413" y="24" class="room-num" data-room="S113">S113</text>
+          <text x="499" y="24" class="room-num" data-room="S114">S114</text>
+          <text x="413" y="109" class="room-num" data-room="S112">S112</text>
+          <text x="601" y="134" class="room-num" data-room="S116">S116</text>
+          <text x="419" y="241" class="room-num" data-room="S111">S111</text>
+          <text x="497" y="241" class="room-num" data-room="S115">S115</text>
+          <text x="284" y="205" class="room-num" data-room="S109">S109</text>
+          <text x="371" y="216" class="room-num" data-room="S110">S110</text>
+          <text x="180" y="148" class="room-num" data-room="S108">S108</text>
+          <text x="82" y="238" class="room-num" data-room="S107">S107</text>
+          <text x="82" y="322" class="room-num" data-room="S106">S106</text>
+          <text x="82" y="384" class="room-num" data-room="S105">S105</text>
+          <text x="180" y="205" class="room-num" data-room="S104">S104</text>
+          <text x="180" y="544" class="room-num" data-room="S103">S103</text>
+          <text x="281" y="544" class="room-num" data-room="S102">S102</text>
+          <text x="416" y="544" class="room-num" data-room="S101">S101</text>
+          <text x="281" y="366" class="room-num" data-room="S104A" font-size="12">S104A</text>
         </g>
       </svg>
 
-      <!-- Art pins overlaid on rooms (viewBox 20 20 1200 880) -->
-      <button class="art-pin" data-card="card-31" style="left:30%;top:18%" title="Boucher · 皇家挂毯 · S102">
+      <button class="art-pin" data-card="card-31" style="left:45.7%;top:89.1%" title="Boucher · 皇家挂毯 · S102">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/The_Toilette_of_Psyche_from_The_Story_of_Psyche_tapestry_series%2C_by_Fran%C3%A7ois_Boucher_%28Getty_103SC9%29.jpg/960px-The_Toilette_of_Psyche_from_The_Story_of_Psyche_tapestry_series%2C_by_Fran%C3%A7ois_Boucher_%28Getty_103SC9%29.jpg" alt="Boucher Tapestry">
         <span class="pin-num">28</span>
       </button>
-      <button class="art-pin" data-card="card-28" style="left:85%;top:68%" title="Boulle · 摄政王镶板房 · S108">
+      <button class="art-pin" data-card="card-28" style="left:34.3%;top:25.5%" title="Boulle · 摄政王镶板房 · S108">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Getty_Museum_Attributed_to_Andr%C3%A9-Charles_Boulle_1642_-_1732.jpg/960px-Getty_Museum_Attributed_to_Andr%C3%A9-Charles_Boulle_1642_-_1732.jpg" alt="Régence Room">
         <span class="pin-num">25</span>
       </button>
-      <button class="art-pin" data-card="card-29" style="left:85%;top:55%" title="Ledoux · 洛可可镶板房 · S107">
+      <button class="art-pin" data-card="card-29" style="left:17.7%;top:42.1%" title="Ledoux · 洛可可镶板房 · S107">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Paneled_Room_%28salon_de_compagnie%29%2C_by_Claude_Nicolas_Ledoux_%28Getty_107VRX%29.jpg/960px-Paneled_Room_%28salon_de_compagnie%29%2C_by_Claude_Nicolas_Ledoux_%28Getty_107VRX%29.jpg" alt="Rococo Room">
         <span class="pin-num">26</span>
       </button>
-      <button class="art-pin" data-card="card-30" style="left:35%;top:48%" title="Sèvres · 塞夫勒皇家瓷器 · S110">
+      <button class="art-pin" data-card="card-30" style="left:55.4%;top:40.5%" title="Sèvres · 塞夫勒皇家瓷器 · S110">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Lidded_Pot-pourri_Vase_%28vase_or_pot-pourri_vaisseau_%C3%A0_m%C3%A2t%2C_deuxi%C3%A8me_grandeur%29%2C_by_Charles-Nicolas_Dodin_%28Getty_103SFE%29.jpg/960px-Lidded_Pot-pourri_Vase_%28vase_or_pot-pourri_vaisseau_%C3%A0_m%C3%A2t%2C_deuxi%C3%A8me_grandeur%29%2C_by_Charles-Nicolas_Dodin_%28Getty_103SFE%29.jpg" alt="Sèvres">
         <span class="pin-num">27</span>
       </button>
-      <button class="art-pin" data-card="card-32" style="left:14%;top:42%" title="Boudoir · 新古典主义镶板房 · S116">
+      <button class="art-pin" data-card="card-32" style="left:91.4%;top:24.3%" title="Boudoir · 新古典主义镶板房 · S116">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/A_Boudoir_%28Louis_XVI._Period%29.jpg/960px-A_Boudoir_%28Louis_XVI._Period%29.jpg" alt="Neoclassical Room">
         <span class="pin-num">29</span>
       </button>
-      <button class="art-pin" data-card="card-33" style="left:14%;top:64%" title="Chinard · 雷卡米埃肖像胸像 · S114">
+      <button class="art-pin" data-card="card-33" style="left:78.6%;top:9.0%" title="Chinard · 雷卡米埃肖像胸像 · S114">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Bust_of_Juliette_R%C3%A9camier_%281777_-_1849%29%2C_by_Joseph_Chinard_%28Getty_103RRS%29.jpg/960px-Bust_of_Juliette_R%C3%A9camier_%281777_-_1849%29%2C_by_Joseph_Chinard_%28Getty_103RRS%29.jpg" alt="Récamier Bust">
         <span class="pin-num">30</span>
       </button>
-      <button class="art-pin" data-card="card-52" style="left:12%;top:16%" title="塞夫尔船形香盆 · S101">
+      <button class="art-pin" data-card="card-52" style="left:65.4%;top:89.1%" title="塞夫尔船形香盆 · S101">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Lidded_Pot-pourri_Vase_%28vase_or_pot-pourri_vaisseau_%C3%A0_m%C3%A2t%2C_deuxi%C3%A8me_grandeur%29%2C_by_Charles-Nicolas_Dodin_%28Getty_103SFE%29.jpg/960px-Lidded_Pot-pourri_Vase_%28vase_or_pot-pourri_vaisseau_%C3%A0_m%C3%A2t%2C_deuxi%C3%A8me_grandeur%29%2C_by_Charles-Nicolas_Dodin_%28Getty_103SFE%29.jpg" alt="船形香盆">
         <span class="pin-num">52</span>
       </button>
-      <button class="art-pin" data-card="card-53" style="left:50%;top:16%" title="布勒箱柜 · S103">
+      <button class="art-pin" data-card="card-53" style="left:32.0%;top:89.1%" title="布勒箱柜 · S103">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Getty_Museum_Attributed_to_Andr%C3%A9-Charles_Boulle_1642_-_1732.jpg/960px-Getty_Museum_Attributed_to_Andr%C3%A9-Charles_Boulle_1642_-_1732.jpg" alt="布勒箱柜">
         <span class="pin-num">53</span>
       </button>
-      <button class="art-pin" data-card="card-54" style="left:66%;top:13%" title="布勒立柜 · S104">
+      <button class="art-pin" data-card="card-54" style="left:32.0%;top:46.7%" title="布勒立柜 · S104">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/A_cabinet-on-stand_attributed_to_Andr%C3%A9-Charles_Boulle_at_the_Getty_Museum.jpg/960px-A_cabinet-on-stand_attributed_to_Andr%C3%A9-Charles_Boulle_at_the_Getty_Museum.jpg" alt="布勒立柜">
         <span class="pin-num">54</span>
       </button>
-      <button class="art-pin" data-card="card-55" style="left:85%;top:27%" title="布勒壁钟 · S105">
+      <button class="art-pin" data-card="card-55" style="left:17.7%;top:64.2%" title="布勒壁钟 · S105">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Getty_Museum_Wall_Clock_Andr%C3%A9-Charles_Boulle.jpg/960px-Getty_Museum_Wall_Clock_Andr%C3%A9-Charles_Boulle.jpg" alt="布勒壁钟">
         <span class="pin-num">55</span>
       </button>
-      <button class="art-pin" data-card="card-56" style="left:85%;top:41%" title="海豚香盆 · S106">
+      <button class="art-pin" data-card="card-56" style="left:20%;top:53.6%" title="海豚香盆 · S106">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Pair_of_Vases_%28pots-pourris_fontaine_or_pots-pourri_%C3%A0_dauphins%29%2C_by_Charles-Nicolas_Dodin_%28Getty_103SG8%29.jpg/960px-Pair_of_Vases_%28pots-pourris_fontaine_or_pots-pourri_%C3%A0_dauphins%29%2C_by_Charles-Nicolas_Dodin_%28Getty_103SG8%29.jpg" alt="海豚香盆">
         <span class="pin-num">56</span>
       </button>
-      <button class="art-pin" data-card="card-57" style="left:52%;top:40%" title="梅森瓶组 · S109">
+      <button class="art-pin" data-card="card-57" style="left:46.0%;top:38.9%" title="梅森瓶组 · S109">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Assembled_Set_of_Five_Vases%2C_by_Johann_Gregorius_H%C3%B6roldt_%28Getty_103SHT%29.jpg/960px-Assembled_Set_of_Five_Vases%2C_by_Johann_Gregorius_H%C3%B6roldt_%28Getty_103SHT%29.jpg" alt="梅森瓶组">
         <span class="pin-num">57</span>
       </button>
-      <button class="art-pin" data-card="card-58" style="left:33%;top:34%" title="茹贝尔五斗柜 · S111">
+      <button class="art-pin" data-card="card-58" style="left:65.0%;top:41.4%" title="茹贝尔五斗柜 · S111">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Commode%2C_by_Gilles_Joubert_%28Getty_103SC4%29.jpg/960px-Commode%2C_by_Gilles_Joubert_%28Getty_103SC4%29.jpg" alt="五斗柜">
         <span class="pin-num">58</span>
       </button>
-      <button class="art-pin" data-card="card-59" style="left:52%;top:60%" title="多米尼塞钟 · S112">
+      <button class="art-pin" data-card="card-59" style="left:64.3%;top:24.9%" title="多米尼塞钟 · S112">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Long-case_Musical_Clock%2C_by_Jean-Fran%C3%A7ois_Dominic%C3%A9_%28Getty_103SDQ%29.jpg/960px-Long-case_Musical_Clock%2C_by_Jean-Fran%C3%A7ois_Dominic%C3%A9_%28Getty_103SDQ%29.jpg" alt="音乐钟">
         <span class="pin-num">59</span>
       </button>
-      <button class="art-pin" data-card="card-60" style="left:49%;top:80%" title="塞夫尔珠饰对瓶 · S113">
+      <button class="art-pin" data-card="card-60" style="left:65.0%;top:9.0%" title="塞夫尔珠饰对瓶 · S113">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Pair_of_Vases_%28vases_Bolvry_%C3%A0_perles_or_vases_%C3%A0_cartels_Bolvry%29%2C_by_Vincent_Taillandier_%28Getty_103SMJ%29.jpg/960px-Pair_of_Vases_%28vases_Bolvry_%C3%A0_perles_or_vases_%C3%A0_cartels_Bolvry%29%2C_by_Vincent_Taillandier_%28Getty_103SMJ%29.jpg" alt="珠饰对瓶">
         <span class="pin-num">60</span>
       </button>
-      <button class="art-pin" data-card="card-61" style="left:19%;top:82%" title="罗恩特根钟 · S115">
+      <button class="art-pin" data-card="card-61" style="left:77.9%;top:41.4%" title="罗恩特根钟 · S115">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Long_Case_Musical_Clock_by_David_Roentgen_and_Peter_Kinzing%2C_Neuwied%2C_German%2C_1786_-_id_6730%2C_J._Paul_Getty_Museum.jpg/960px-Long_Case_Musical_Clock_by_David_Roentgen_and_Peter_Kinzing%2C_Neuwied%2C_German%2C_1786_-_id_6730%2C_J._Paul_Getty_Museum.jpg" alt="罗恩特根钟">
         <span class="pin-num">61</span>
       </button>
@@ -3415,14 +3183,14 @@ function showRoomToast(room) {
   try { visitOrder = JSON.parse(localStorage.getItem(KEY) || '[]') || []; }
   catch (e) { visitOrder = []; }
 
-  // Room centers in the N1F SVG coord space (viewBox 20 20 800 640)
+  // Room centers in the N1F SVG coord space (viewBox 0 0 700 882, photo base)
   var ROOM_CENTERS = {
-    N105: { x: 170, y: 110 },
-    N104: { x: 170, y: 260 },
-    N103: { x: 170, y: 420 },
-    N102: { x: 330, y: 420 },
-    N106: { x: 490, y: 260 },
-    N101: { x: 390, y: 570 }
+    N105: { x: 124, y: 160 },
+    N104: { x: 124, y: 383 },
+    N103: { x: 124, y: 565 },
+    N102: { x: 348, y: 565 },
+    N106: { x: 570, y: 345 },
+    N101: { x: 530, y: 765 }
   };
 
   function save() {
@@ -3662,24 +3430,24 @@ function showRoomToast(room) {
   try { visitOrder = JSON.parse(localStorage.getItem(KEY) || '[]') || []; }
   catch (e) { visitOrder = []; }
 
-  // Room centers in the S1F SVG coord space (viewBox 20 20 1200 880)
+  // Room centers in the S1F SVG coord space (viewBox 0 0 700 642, photo base)
   var ROOM_CENTERS = {
-    S101: { x: 160,  y: 160 },
-    S102: { x: 380,  y: 160 },
-    S103: { x: 620,  y: 160 },
-    S104: { x: 810,  y: 130 },
-    S105: { x: 1040, y: 260 },
-    S106: { x: 1040, y: 380 },
-    S107: { x: 1040, y: 500 },
-    S108: { x: 1040, y: 620 },
-    S109: { x: 640,  y: 370 },
-    S110: { x: 420,  y: 440 },
-    S111: { x: 420,  y: 320 },
-    S112: { x: 640,  y: 550 },
-    S113: { x: 610,  y: 720 },
-    S114: { x: 170,  y: 580 },
-    S115: { x: 250,  y: 740 },
-    S116: { x: 170,  y: 390 }
+    S101: { x: 458, y: 568 },
+    S102: { x: 320, y: 568 },
+    S103: { x: 224, y: 568 },
+    S104: { x: 224, y: 338 },
+    S105: { x: 124, y: 408 },
+    S106: { x: 124, y: 337 },
+    S107: { x: 124, y: 264 },
+    S108: { x: 224, y: 160 },
+    S109: { x: 322, y: 242 },
+    S110: { x: 388, y: 248 },
+    S111: { x: 452, y: 260 },
+    S112: { x: 450, y: 148 },
+    S113: { x: 450, y: 50 },
+    S114: { x: 547, y: 50 },
+    S115: { x: 543, y: 260 },
+    S116: { x: 637, y: 152 }
   };
 
   function save() {
