@@ -69,33 +69,35 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles, cfg }: QuartzComponent
 
   // Interactive things I've built. Each gets a hand-drawn box-drawing "terminal
   // thumbnail" (art) hinting at what it is — text/terminal-native, no images.
+  // `living: true` hides the date (kept in the data for the record / ordering) on
+  // pieces still being worked on; drop it once finished and the date shows.
   const lab = [
     {
-      date: "2026.06.07", kind: "hist", type: "guide",
+      date: "2026.06.07", living: true, kind: "hist", type: "guide",
       title: "Getty Center", desc: "A read-and-walk gallery guide, mapped room by room.",
       href: "/static/getty/center-guide.html",
       art: ["┌─┬─┬─┐", "│ │█│ │", "├─┼─┼─┤", "│ │ │█│", "└─┴─┴─┘"],
     },
     {
-      date: "2026.06.07", kind: "hist", type: "guide",
+      date: "2026.06.07", living: true, kind: "hist", type: "guide",
       title: "Getty Villa", desc: "A read-and-walk guide to the Roman villa and its galleries.",
       href: "/static/getty/villa-guide.html",
       art: ["┌─────┐", "│ ┌─┐ │", "│ │░│ │", "│ └─┘ │", "└─────┘"],
     },
     {
-      date: "2026.05.11", kind: "hist", type: "map",
+      date: "2026.05.11", living: true, kind: "hist", type: "map",
       title: "A Map of Italian Politics, 1300–1600", desc: "Popes, city-states, and dynasties — untangled.",
       href: "/static/italia-politica.html",
       art: ["██▖", "▝██▖", "  ██", " ▗██▛▘", "▗▛▘"],
     },
     {
-      date: "2026.03.31", kind: "hist", type: "graph",
+      date: "2026.03.31", living: true, kind: "hist", type: "graph",
       title: "Medici: Who's Who", desc: "Who's who in Masters of Florence — and who keeps stabbing whom.",
       href: "/static/medici-guide.html",
       art: ["●─┬─●", " \\│/ ", "  ●  ", " /│\\ ", "●─┴─●"],
     },
     {
-      date: "2022.02.04", kind: "ai", type: "dag",
+      date: "2022.02.04", living: true, kind: "ai", type: "dag",
       title: "Evolutionary Roadmap of Deep-Learning RecSys", desc: "How deep-learning recommenders evolved — who borrowed what from whom.",
       href: "/static/recsys-roadmap.html",
       art: ["▫ ▫ ▫", "└─┬─┘", " ▐█▌", "┌─┴─┐", "▫ ▫ ▫"],
@@ -168,11 +170,14 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles, cfg }: QuartzComponent
                       {row.title}
                     </div>
                     <div class="tg-lab-desc">{row.desc}</div>
-                    <div class="tg-lab-meta">
-                      <span class="tg-lab-type">{row.type}</span> · {row.date}
+                    <div class="tg-lab-foot">
+                      <span class="tg-lab-meta">
+                        <span class="tg-lab-type">{row.type}</span>
+                        {!row.living && <> · {row.date}</>}
+                      </span>
+                      <span class="tg-lab-open">↗</span>
                     </div>
                   </div>
-                  <div class="tg-lab-open">open ↗</div>
                 </a>
               ))}
             </div>
@@ -195,21 +200,22 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles, cfg }: QuartzComponent
                     class="tg-post"
                     href={resolveRelative(fileData.slug!, page.slug as FullSlug)}
                   >
-                    <div class="tg-post-date">{formatDate(d)}</div>
-                    <div class="tg-post-body">
-                      <div class="tg-post-title">
+                    <div class="tg-post-line">
+                      <span class="tg-post-title">
                         <span class="tg-post-mk">▸</span>
                         {title}
-                      </div>
-                      {desc && <div class="tg-post-desc">{desc}</div>}
-                      {pageTags.length > 0 && (
-                        <div class="tg-post-tags">
-                          {pageTags.map((t) => (
-                            <span class={`tg-tag-sm tg-tag-${tagKind(t) ?? "n"}`}>#{t}</span>
-                          ))}
-                        </div>
-                      )}
+                      </span>
+                      <span class="tg-leader"></span>
+                      <span class="tg-post-date">{formatDate(d)}</span>
                     </div>
+                    {desc && <div class="tg-post-desc">{desc}</div>}
+                    {pageTags.length > 0 && (
+                      <div class="tg-post-tags">
+                        {pageTags.map((t) => (
+                          <span class={`tg-tag-sm tg-tag-${tagKind(t) ?? "n"}`}>#{t}</span>
+                        ))}
+                      </div>
+                    )}
                   </a>
                 )
               })}
