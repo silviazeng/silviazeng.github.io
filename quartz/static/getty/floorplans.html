@@ -1947,168 +1947,88 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   </div>
   <div class="floor-plan">
     <div class="floor-svg-wrap">
-      <svg viewBox="20 20 880 880" xmlns="http://www.w3.org/2000/svg" class="signage-svg" preserveAspectRatio="xMidYMid meet">
-        <!-- Background -->
-        <rect width="920" height="920" fill="#f5f0e0"/>
-
-        <!-- ===== AREA FILLS =====
-             Layout (per on-site signage photo):
-               TOP row:   S201 (left) | S202 (mid, wider) | S203 (right, shorter)
-               LEFT col:  S205 (mid-left)
-               RIGHT col: S204 (mid-right)
-               BOTTOM:    S206 (wide; pastels & changing exhibitions — tinted red)
-               CENTER:    atrium with stairs at bottom-right and West-Pavilion exit south
-        -->
-        <rect x="60" y="80" width="720" height="720" fill="#bfa686"/>          <!-- atrium fill -->
-        <rect x="60"  y="80"  width="200" height="200" fill="var(--room-paintings)"/>        <!-- S 201 -->
-        <rect x="260" y="80"  width="260" height="200" fill="var(--room-paintings)"/>        <!-- S 202 -->
-        <rect x="520" y="80"  width="260" height="140" fill="var(--room-paintings)"/>        <!-- S 203 -->
-        <rect x="560" y="300" width="220" height="240" fill="var(--room-paintings)"/>        <!-- S 204 -->
-        <rect x="60"  y="300" width="220" height="260" fill="var(--room-paintings)"/>        <!-- S 205 -->
-        <rect x="60"  y="580" width="500" height="220" fill="var(--room-changing)"/>          <!-- S 206 · Pastels &amp; Watercolors · Changing Exhibitions -->
-
-        <!-- Outer building outline -->
-        <rect x="60" y="80" width="720" height="720" fill="none" stroke="#1a1a1a" stroke-width="5"/>
-
-        <!-- ===== INTERNAL WALLS (with door gaps to the atrium) ===== -->
-        <g fill="none" stroke="#1a1a1a" stroke-width="5">
-          <!-- S 201: right wall (door y=170-205); bottom wall solid -->
-          <line x1="60"  y1="280" x2="260" y2="280"/>
-          <line x1="260" y1="80"  x2="260" y2="170"/>
-          <line x1="260" y1="205" x2="260" y2="280"/>
-          <!-- S 202: bottom wall (door x=360-400); left/right shared with neighbors -->
-          <line x1="260" y1="280" x2="360" y2="280"/>
-          <line x1="400" y1="280" x2="520" y2="280"/>
-          <!-- S 203: bottom wall (door x=620-660); left shared with S202 (separating wall) -->
-          <line x1="520" y1="80"  x2="520" y2="220"/>
-          <line x1="520" y1="220" x2="620" y2="220"/>
-          <line x1="660" y1="220" x2="780" y2="220"/>
-          <!-- S 204: top + bottom + left walls; door on left wall y=395-430 to atrium -->
-          <line x1="560" y1="300" x2="780" y2="300"/>
-          <line x1="560" y1="540" x2="780" y2="540"/>
-          <line x1="560" y1="300" x2="560" y2="395"/>
-          <line x1="560" y1="430" x2="560" y2="540"/>
-          <!-- S 205: top + bottom + right walls; door on right wall y=415-450 to atrium -->
-          <line x1="60"  y1="300" x2="280" y2="300"/>
-          <line x1="60"  y1="560" x2="280" y2="560"/>
-          <line x1="280" y1="300" x2="280" y2="415"/>
-          <line x1="280" y1="450" x2="280" y2="560"/>
-          <!-- S 206: top wall (door x=280-320 to atrium); right wall separating from stairs corridor -->
-          <line x1="60"  y1="580" x2="280" y2="580"/>
-          <line x1="320" y1="580" x2="560" y2="580"/>
-          <line x1="560" y1="580" x2="560" y2="800"/>
+      <svg viewBox="0 0 700 716" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="signage-svg" preserveAspectRatio="xMidYMid meet">
+        <!-- Official Getty upper-level plan crop (South Pavilion), warm tint baked in.
+             Shown AS-IS: #f4f4f4 covers blank the printed room numbers (our labels sit
+             top-left in each room); multiply strips tint only the frame-edge slivers
+             outside the building's outer walls. Open floor stays as the plan drew it. -->
+        <g class="floor-photo">
+          <image href="img/south-2f-base.jpg?v=1" xlink:href="img/south-2f-base.jpg?v=1" x="0" y="0" width="700" height="716"/>
+          <g fill="#f4f4f4">
+            <rect x="47"  y="75"  width="127" height="50"/>   <!-- S203 -->
+            <rect x="290" y="75"  width="129" height="50"/>   <!-- S204 -->
+            <rect x="49"  y="330" width="127" height="50"/>   <!-- S202 -->
+            <rect x="526" y="330" width="128" height="50"/>   <!-- S206 -->
+            <rect x="73"  y="582" width="117" height="50"/>   <!-- S201 -->
+            <rect x="305" y="582" width="126" height="50"/>   <!-- S205 -->
+          </g>
+          <g fill="#eee2d1" style="mix-blend-mode:multiply" pointer-events="none">
+            <rect x="0"   y="0"   width="700" height="13"/>   <!-- above the north outer wall -->
+            <rect x="0"   y="13"  width="7"   height="703"/>  <!-- west of the outer wall -->
+            <rect x="690" y="13"  width="10"  height="703"/>  <!-- east frame sliver -->
+            <rect x="7"   y="701" width="683" height="15"/>   <!-- below the south outer wall -->
+          </g>
         </g>
-
-        <!-- ===== STAIRS (bottom-right, with zigzag + up arrow) ===== -->
-        <g pointer-events="none">
-          <rect x="600" y="620" width="140" height="140" fill="#ffffff" stroke="#1a1a1a" stroke-width="3"/>
-          <path d="M 615 745 L 635 745 L 635 725 L 655 725 L 655 705 L 675 705 L 675 685 L 695 685 L 695 665 L 715 665 L 715 645 L 735 645"
-                fill="none" stroke="#1a1a1a" stroke-width="2.5" stroke-linejoin="miter"/>
-        </g>
-
-        <!-- ===== "SOUTH ATRIUM" label (center, above stairs) ===== -->
-        <g pointer-events="none">
-          <text x="420" y="450" font-family="sans-serif" font-size="30" font-weight="500"
-                fill="#fff" text-anchor="middle" letter-spacing="3" opacity="0.85">中庭</text>
-        </g>
-
-        <!-- ===== EXIT ARROW + LABEL (West Pavilion, south through bottom of atrium) ===== -->
-        <g pointer-events="none">
-          <line x1="420" y1="800" x2="420" y2="850" stroke="#1a1a1a" stroke-width="3"/>
-          <polygon points="420,862 410,842 430,842" fill="#1a1a1a"/>
-          <text x="420" y="888" font-family="sans-serif" font-size="32" font-weight="700" fill="#1a1a1a" text-anchor="middle">西馆</text>
-        </g>
-
-        <!-- ===== ROOM NUMBER LABELS — normalized to ~16–17px visual at 390-wide. -->
-        <g pointer-events="none" font-family="sans-serif" font-size="38" font-weight="500" fill="#1a1a1a">
-          <text x="252" y="112" text-anchor="end" class="room-num" data-room="S201">S 201</text>
-          <text x="512" y="112" text-anchor="end" class="room-num" data-room="S202">S 202</text>
-          <text x="772" y="112" text-anchor="end" class="room-num" data-room="S203">S 203</text>
-          <text x="772" y="332" text-anchor="end" class="room-num" data-room="S204">S 204</text>
-          <text x="272" y="332" text-anchor="end" class="room-num" data-room="S205">S 205</text>
-          <text x="552" y="612" text-anchor="end" class="room-num" data-room="S206">S 206</text>
-        </g>
-
-        <!-- ===== Visited-room tints (translucent gold overlay on visited rooms) ===== -->
-        <g class="room-tints" pointer-events="none">
-          <rect class="room-tint" fill="transparent" data-room="S201" x="60"  y="80"  width="200" height="200"/>
-          <rect class="room-tint" fill="transparent" data-room="S202" x="260" y="80"  width="260" height="200"/>
-          <rect class="room-tint" fill="transparent" data-room="S203" x="520" y="80"  width="260" height="140"/>
-          <rect class="room-tint" fill="transparent" data-room="S204" x="560" y="300" width="220" height="240"/>
-          <rect class="room-tint" fill="transparent" data-room="S205" x="60"  y="300" width="220" height="260"/>
-          <rect class="room-tint" fill="transparent" data-room="S206" x="60"  y="580" width="500" height="220"/>
-        </g>
-
-        <!-- ===== Visit footsteps (generated by JS as rotated SVG groups) ===== -->
         <g class="footsteps" id="footsteps-s2f" pointer-events="none"></g>
-
-        <!-- ===== Visit-tracker click targets ===== -->
         <g class="room-taps">
-          <rect class="room-tap" fill="transparent" data-room="S201" x="60"  y="80"  width="200" height="200"/>
-          <rect class="room-tap" fill="transparent" data-room="S202" x="260" y="80"  width="260" height="200"/>
-          <rect class="room-tap" fill="transparent" data-room="S203" x="520" y="80"  width="260" height="140"/>
-          <rect class="room-tap" fill="transparent" data-room="S204" x="560" y="300" width="220" height="240"/>
-          <rect class="room-tap" fill="transparent" data-room="S205" x="60"  y="300" width="220" height="260"/>
-          <rect class="room-tap" fill="transparent" data-room="S206" x="60"  y="580" width="500" height="220"/>
+          <rect class="room-tap" fill="transparent" data-room="S203" x="9"   y="14"  width="214" height="170"/>
+          <rect class="room-tap" fill="transparent" data-room="S204" x="223" y="14"  width="232" height="170"/>
+          <rect class="room-tap" fill="transparent" data-room="S202" x="9"   y="185" width="213" height="344"/>
+          <rect class="room-tap" fill="transparent" data-room="S206" x="499" y="239" width="188" height="228"/>
+          <rect class="room-tap" fill="transparent" data-room="S201" x="9"   y="530" width="240" height="169"/>
+          <rect class="room-tap" fill="transparent" data-room="S205" x="250" y="530" width="196" height="169"/>
         </g>
-
-        <!-- ===== Pulsing red "you are here" marker at last visited room center ===== -->
         <g class="current-marker" id="currentMarkerS2F">
           <circle class="pulse-ring" r="22" />
           <circle r="14" fill="#a83e2a" stroke="#fff" stroke-width="3"/>
         </g>
-
-        <!-- ===== Visit badges ===== -->
         <g class="visit-badges" font-family="sans-serif" font-size="17" font-weight="700">
-          <g class="visit-badge" data-room="S201" transform="translate(85, 105)">
-            <circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
-            <text y="6" text-anchor="middle" fill="#fff">1</text>
-          </g>
-          <g class="visit-badge" data-room="S202" transform="translate(285, 105)">
-            <circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
-            <text y="6" text-anchor="middle" fill="#fff">1</text>
-          </g>
-          <g class="visit-badge" data-room="S203" transform="translate(545, 105)">
-            <circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
-            <text y="6" text-anchor="middle" fill="#fff">1</text>
-          </g>
-          <g class="visit-badge" data-room="S204" transform="translate(585, 325)">
-            <circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
-            <text y="6" text-anchor="middle" fill="#fff">1</text>
-          </g>
-          <g class="visit-badge" data-room="S205" transform="translate(85, 325)">
-            <circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
-            <text y="6" text-anchor="middle" fill="#fff">1</text>
-          </g>
-          <g class="visit-badge" data-room="S206" transform="translate(85, 605)">
-            <circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
-            <text y="6" text-anchor="middle" fill="#fff">1</text>
-          </g>
+          <g class="visit-badge" data-room="S203" transform="translate(34,34)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="S204" transform="translate(248,34)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="S202" transform="translate(34,205)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="S206" transform="translate(524,259)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="S201" transform="translate(34,550)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="S205" transform="translate(275,550)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+        </g>
+        <g class="room-tints" pointer-events="none">
+          <rect class="room-tint" fill="transparent" data-room="S203" x="9"   y="14"  width="214" height="170"/>
+          <rect class="room-tint" fill="transparent" data-room="S204" x="223" y="14"  width="232" height="170"/>
+          <rect class="room-tint" fill="transparent" data-room="S202" x="9"   y="185" width="213" height="344"/>
+          <rect class="room-tint" fill="transparent" data-room="S206" x="499" y="239" width="188" height="228"/>
+          <rect class="room-tint" fill="transparent" data-room="S201" x="9"   y="530" width="240" height="169"/>
+          <rect class="room-tint" fill="transparent" data-room="S205" x="250" y="530" width="196" height="169"/>
+        </g>
+        <g class="room-nums" font-family="sans-serif" font-size="17" font-weight="700" fill="#1a1a1a">
+          <text x="17"  y="38"  class="room-num" data-room="S203">S203</text>
+          <text x="231" y="38"  class="room-num" data-room="S204">S204</text>
+          <text x="17"  y="209" class="room-num" data-room="S202">S202</text>
+          <text x="507" y="263" class="room-num" data-room="S206">S206</text>
+          <text x="17"  y="554" class="room-num" data-room="S201">S201</text>
+          <text x="258" y="554" class="room-num" data-room="S205">S205</text>
         </g>
       </svg>
 
-      <!-- Art pins overlaid on rooms (viewBox 20 20 880 880; positions in % of that box) -->
-      <button class="art-pin" data-card="card-25" style="left:42%;top:18%" title="Boucher · 爱之泉 · S202">
+      <button class="art-pin" data-card="card-25" style="left:16.6%;top:61.5%" title="Boucher · 爱之泉 · S202">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Fran%C3%A7ois_Boucher_-_The_Fountain_of_Love_-_71.PA.37_-_J._Paul_Getty_Museum.jpg/960px-Fran%C3%A7ois_Boucher_-_The_Fountain_of_Love_-_71.PA.37_-_J._Paul_Getty_Museum.jpg" alt="爱之泉">
         <span class="pin-num">22</span>
       </button>
-      <button class="art-pin" data-card="card-26" style="left:74%;top:46%" title="Gainsborough · 詹姆斯·克里斯蒂肖像 · S204">
+      <button class="art-pin" data-card="card-26" style="left:48.4%;top:16.8%" title="Gainsborough · 詹姆斯·克里斯蒂肖像 · S204">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Thomas_Gainsborough_-_Portrait_of_James_Christie.jpg/960px-Thomas_Gainsborough_-_Portrait_of_James_Christie.jpg" alt="James Christie">
         <span class="pin-num">23</span>
       </button>
-      <button class="art-pin" data-card="card-27" style="left:18%;top:48%" title="Goya · 圣地亚哥侯爵夫人肖像 · S205">
+      <button class="art-pin" data-card="card-27" style="left:49.7%;top:90.8%" title="Goya · 圣地亚哥侯爵夫人肖像 · S205">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Portrait_of_the_Marquesa_de_Santiago_by_Francisco_de_Goya%2C_1804%2C_Getty_Center.JPG/960px-Portrait_of_the_Marquesa_de_Santiago_by_Francisco_de_Goya%2C_1804%2C_Getty_Center.JPG" alt="Marquesa">
         <span class="pin-num">24</span>
       </button>
-      <button class="art-pin" data-card="card-49" style="left:16%;top:18%" title="Fragonard 爱之泉 · S201">
+      <button class="art-pin" data-card="card-49" style="left:18.4%;top:90.8%" title="Fragonard 爱之泉 · S201">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/The_Fountain_of_Love_by_Jean-Honor%C3%A9_Fragonard%2C_Getty_Center.JPG/960px-The_Fountain_of_Love_by_Jean-Honor%C3%A9_Fragonard%2C_Getty_Center.JPG" alt="爱之泉">
         <span class="pin-num">49</span>
       </button>
-      <button class="art-pin" data-card="card-50" style="left:72%;top:15%" title="Greuze 洗衣女 · S203">
+      <button class="art-pin" data-card="card-50" style="left:16.6%;top:18.7%" title="Greuze 洗衣女 · S203">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/The_Laundress_by_Jean-Baptiste_Greuze%2C_1761%2C_Getty_Center.JPG/960px-The_Laundress_by_Jean-Baptiste_Greuze%2C_1761%2C_Getty_Center.JPG" alt="洗衣女">
         <span class="pin-num">50</span>
       </button>
-      <button class="art-pin" data-card="card-51" style="left:33%;top:76%" title="Liotard 七岁像 · S206">
+      <button class="art-pin" data-card="card-51" style="left:84.7%;top:57.3%" title="Liotard 七岁像 · S206">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Jean-%C3%89tienne_Liotard_-_Portrait_of_Maria_Frederike_van_Reede-Athlone_at_Seven_Years_of_Age.jpg/960px-Jean-%C3%89tienne_Liotard_-_Portrait_of_Maria_Frederike_van_Reede-Athlone_at_Seven_Years_of_Age.jpg" alt="七岁像">
         <span class="pin-num">51</span>
       </button>
@@ -3679,14 +3599,14 @@ function showRoomToast(room) {
   try { visitOrder = JSON.parse(localStorage.getItem(KEY) || '[]') || []; }
   catch (e) { visitOrder = []; }
 
-  // Room centers in the S2F SVG coord space (viewBox 20 20 880 880)
+  // Room centers in the S2F SVG coord space (viewBox 0 0 700 716, photo base)
   var ROOM_CENTERS = {
-    S201: { x: 160, y: 180 },
-    S202: { x: 390, y: 180 },
-    S203: { x: 650, y: 150 },
-    S204: { x: 670, y: 420 },
-    S205: { x: 170, y: 430 },
-    S206: { x: 310, y: 690 }
+    S201: { x: 129, y: 614 },
+    S202: { x: 115, y: 357 },
+    S203: { x: 116, y: 99 },
+    S204: { x: 339, y: 99 },
+    S205: { x: 348, y: 614 },
+    S206: { x: 593, y: 353 }
   };
 
   function save() {
