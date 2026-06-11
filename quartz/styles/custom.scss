@@ -254,6 +254,12 @@ footer {
   grid-template-columns: minmax(0, 1fr) 340px;
   gap: 48px;
   align-items: stretch;
+  // Cap + center the composition. Uncapped, the 1fr feed column grows past
+  // 1000px on wide screens — flinging post dates far right of their titles and
+  // leaving a dead band between the feed and the rail. ~852px feed uses the
+  // desktop width while still reading balanced; centering keeps margins symmetric.
+  max-width: 1240px;
+  margin-inline: auto;
 }
 
 .tg-left {
@@ -409,7 +415,9 @@ footer {
   font-style: italic;
   margin-top: 6px;
   line-height: 1.55;
-  max-width: 62ch;
+  // Fill the feed column so the summary lines up with the title row's right
+  // edge — the narrow prose measure left a gap now that the layout is wider.
+  // Bounded by the column itself (~852px at the 1240px composition cap).
 }
 
 .tg-post-tags {
@@ -515,19 +523,12 @@ footer {
   }
 }
 
-// tile body: title, description, then a meta line (type · date, open arrow).
+// tile body: a compact title line (title + folded-in type·date + open arrow)
+// with the description beneath it.
 .tg-lab-main {
   display: flex;
   flex-direction: column;
   min-width: 0;
-}
-
-.tg-lab-foot {
-  margin-top: 6px;
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 10px;
 }
 
 // the box-drawing "thumbnail"
@@ -550,7 +551,18 @@ footer {
   color: var(--color-text-bright);
   font-size: 14px;
   font-family: var(--font-mono);
+  line-height: 1.45;
   transition: color 0.15s ease;
+}
+
+// type (and date once an artifact is finished) folded into the title line —
+// small and dimmed so it reads as a tag on the title, not a separate row.
+.tg-lab-type {
+  margin-left: 8px;
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  color: var(--color-text-faint);
+  white-space: nowrap;
 }
 
 .tg-lab-mk {
@@ -567,22 +579,15 @@ footer {
   line-height: 1.5;
 }
 
-.tg-lab-meta {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--color-text-faint);
-  white-space: nowrap;
-}
-
-// kind colors drive the art glyph, the ▸ marker, and the type label
+// kind colors drive the art glyph and the ▸ marker
 .tg-lab-row.k-hist .tg-lab-art,
-.tg-lab-row.k-hist .tg-lab-mk,
-.tg-lab-row.k-hist .tg-lab-type { color: var(--color-accent-lavender); }
+.tg-lab-row.k-hist .tg-lab-mk { color: var(--color-accent-lavender); }
 .tg-lab-row.k-ai .tg-lab-art,
-.tg-lab-row.k-ai .tg-lab-mk,
-.tg-lab-row.k-ai .tg-lab-type { color: var(--color-accent-amber-light); }
+.tg-lab-row.k-ai .tg-lab-mk { color: var(--color-accent-amber-light); }
 
 .tg-lab-open {
+  margin-left: 6px;
+  font-size: 11px;
   color: var(--color-text-faint);
   transition: color 0.15s ease;
 }

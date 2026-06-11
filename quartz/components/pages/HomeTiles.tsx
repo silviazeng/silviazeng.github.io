@@ -168,15 +168,13 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles, cfg }: QuartzComponent
                     <div class="tg-lab-title">
                       <span class="tg-lab-mk">▸</span>
                       {row.title}
-                    </div>
-                    <div class="tg-lab-desc">{row.desc}</div>
-                    <div class="tg-lab-foot">
-                      <span class="tg-lab-meta">
-                        <span class="tg-lab-type">{row.type}</span>
+                      <span class="tg-lab-type">
+                        {row.type}
                         {!row.living && <> · {row.date}</>}
                       </span>
                       <span class="tg-lab-open">↗</span>
                     </div>
+                    <div class="tg-lab-desc">{row.desc}</div>
                   </div>
                 </a>
               ))}
