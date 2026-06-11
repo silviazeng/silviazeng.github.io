@@ -13,7 +13,7 @@ villa-guide; this file's modals carry short blurbs.
   card-03  盖蒂青年立像 · Getty Kouros (G101)
   card-04  竖琴演奏者 · Harp Player (G101)
   card-05  涡形双耳壶 · Volute Krater (G103)
-  card-06  奥德修斯与独眼巨人 (G103)
+  card-06  奥德修斯与独眼巨人 (G104)
   card-07  赫克勒青铜小像 (G110)
   card-08  青铜镜盖饰件 (G110)
   card-09  康莫杜斯胸像 (G108)
@@ -186,8 +186,9 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   height: auto;
   display: block;
 }
-/* .signage-svg .floor-photo — removed, no longer using image-based floor plans */
-.floor-svg-wrap .art-pin { width: 10%; border-width: 3.5px; }
+.signage-svg text.room-num { transition: fill .2s ease; }
+.signage-svg text.room-num.visited { fill: #ab9f88; font-weight: 500; }
+.floor-svg-wrap .art-pin { width: 8%; border-width: 3px; }
 
 .legend-mini {
   display: inline-flex; flex-wrap: wrap;
@@ -631,7 +632,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
     border-right: none;
   }
   .art-pin { width: 16%; border-width: 2.5px; }
-  .floor-svg-wrap .art-pin { width: 12%; border-width: 3px; }
+  .floor-svg-wrap .art-pin { width: 9.5%; border-width: 2.5px; }
   .art-pin .pin-num { width: 20px; height: 20px; font-size: 0.55rem; }
   .modal-body { padding: 1.1rem 1.2rem 1.6rem; }
   .modal-title { font-size: 1.3rem; }
@@ -944,222 +945,119 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
     <h2 class="floor-name">古希腊与罗马艺术 <span class="yr">公元前3000–公元400年</span></h2>
     <p class="floor-desc">一楼围绕内柱廊花园展开——Gallery 108 赫拉克勒斯神殿集中镇馆雕塑，Gallery 103–106 展示希腊黑绘与红绘陶器，Gallery 110 为伊特鲁里亚专区。</p>
     <div class="legend-mini" aria-label="展厅类别图例">
-      <span class="lgm-item"><span class="lgm-swatch" style="background:var(--room-paintings);"></span>展厅</span>
-      <span class="lgm-item"><span class="lgm-swatch" style="background:#ede4cf;"></span>中庭</span>
-      <span class="lgm-item"><span class="lgm-swatch" style="background:#bfa686;"></span>走廊</span>
+      <span class="lgm-item"><span class="lgm-swatch" style="background:#f5f5ed;"></span>展厅</span>
+      <span class="lgm-item"><span class="lgm-swatch" style="background:#f5f5f5;"></span>庭院·步道</span>
+      <span class="lgm-item"><span class="lgm-swatch" style="background:#8f8173;"></span>墙体·楼梯</span>
     </div>
   </div>
   <div class="floor-plan">
     <div class="floor-svg-wrap">
-      <svg viewBox="20 20 920 800" xmlns="http://www.w3.org/2000/svg" class="signage-svg" preserveAspectRatio="xMidYMid meet">
-        <!-- Background -->
-        <rect width="1000" height="900" fill="#f5f0e0"/>
-
-        <!-- ===== AREA FILLS ===== -->
-        <!-- Gallery rooms -->
-        <rect x="60"  y="60"  width="260" height="220" fill="var(--room-paintings)"/>  <!-- G110 Etruscan -->
-        <rect x="500" y="60"  width="380" height="320" fill="var(--room-paintings)"/>  <!-- G108 Temple -->
-        <rect x="60"  y="380" width="260" height="200" fill="var(--room-paintings)"/>  <!-- G106 Pottery -->
-        <rect x="500" y="480" width="380" height="200" fill="var(--room-paintings)"/>  <!-- G103 Pottery -->
-        <rect x="220" y="680" width="280" height="100" fill="var(--room-paintings)"/>  <!-- G101 Entry -->
-
-        <!-- Corridors (beige) -->
-        <rect x="320" y="60"  width="180" height="100" fill="#bfa686"/>  <!-- top corridor -->
-        <rect x="60"  y="280" width="260" height="100" fill="#bfa686"/>  <!-- left corridor -->
-        <rect x="500" y="380" width="380" height="100" fill="#bfa686"/>  <!-- right corridor -->
-        <rect x="320" y="580" width="180" height="100" fill="#bfa686"/>  <!-- bottom corridor -->
-
-        <!-- Inner Peristyle Garden (cream courtyard) -->
-        <rect x="320" y="160" width="180" height="420" fill="#ede4cf"/>
-
-        <!-- ===== OUTER WALLS ===== -->
-        <g fill="none" stroke="#1a1a1a" stroke-width="5" stroke-linejoin="miter">
-          <!-- Top wall -->
-          <line x1="60"  y1="60"  x2="880" y2="60"/>
-          <!-- Right wall -->
-          <line x1="880" y1="60"  x2="880" y2="680"/>
-          <!-- Right-bottom step to G103 bottom -->
-          <line x1="880" y1="680" x2="500" y2="680"/>
-          <!-- Step down to corridor level -->
-          <line x1="500" y1="680" x2="500" y2="780"/>
-          <!-- Bottom wall right of entry -->
-          <line x1="500" y1="780" x2="380" y2="780"/>
-          <!-- Entry gap: x=330-380 -->
-          <!-- Bottom wall left of entry -->
-          <line x1="330" y1="780" x2="220" y2="780"/>
-          <!-- Step up from G101 to G106 -->
-          <line x1="220" y1="780" x2="220" y2="680"/>
-          <line x1="220" y1="680" x2="60"  y2="680"/>
-          <!-- Left wall bottom -->
-          <line x1="60"  y1="680" x2="60"  y2="580"/>
-          <!-- Left wall top -->
-          <line x1="60"  y1="580" x2="60"  y2="60"/>
+      <svg viewBox="0 0 700 669" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="signage-svg" preserveAspectRatio="xMidYMid meet">
+        <!-- Official Getty Villa plan (2012 map, Floor 1 crop) with the warm tint BAKED in,
+             same pipeline as the Center plans. Raster pre-processed before baking: printed
+             room numbers removed, 2012 orange special-use fills normalized to the cream room
+             color, map-side callouts/icons cleared, and the G103|G104 partition (built in
+             the 2018 reinstall, on the 2023 official map) drawn in. Stair treads, colonnade
+             dots, pools and the EAST STAIR caption are the plan's own. -->
+        <g class="floor-photo">
+          <image href="img/villa-1f-base.jpg?v=1" xlink:href="img/villa-1f-base.jpg?v=1" x="0" y="0" width="700" height="669"/>
         </g>
 
-        <!-- ===== INTERNAL WALLS with door gaps ===== -->
-        <g fill="none" stroke="#1a1a1a" stroke-width="5" stroke-linecap="butt">
-          <!-- G110 bottom at y=280 (door at x=140-180) -->
-          <line x1="60"  y1="280" x2="140" y2="280"/>
-          <line x1="180" y1="280" x2="320" y2="280"/>
-
-          <!-- G106 top at y=380 (door at x=140-180) -->
-          <line x1="60"  y1="380" x2="140" y2="380"/>
-          <line x1="180" y1="380" x2="320" y2="380"/>
-
-          <!-- G110 right / top corridor left at x=320, y=60-160 (door at y=100-140) -->
-          <line x1="320" y1="60"  x2="320" y2="100"/>
-          <line x1="320" y1="140" x2="320" y2="160"/>
-
-          <!-- Courtyard left at x=320, y=160-580 (no doors, solid) -->
-          <line x1="320" y1="160" x2="320" y2="580"/>
-
-          <!-- G108 left / top corridor right at x=500, y=60-160 (door at y=100-140) -->
-          <line x1="500" y1="60"  x2="500" y2="100"/>
-          <line x1="500" y1="140" x2="500" y2="160"/>
-
-          <!-- Courtyard right at x=500, y=160-580 (no doors) -->
-          <line x1="500" y1="160" x2="500" y2="380"/>
-
-          <!-- G108 bottom at y=380 (door at x=640-680) -->
-          <line x1="500" y1="380" x2="640" y2="380"/>
-          <line x1="680" y1="380" x2="880" y2="380"/>
-
-          <!-- G103 top at y=480 (door at x=640-680) -->
-          <line x1="500" y1="480" x2="640" y2="480"/>
-          <line x1="680" y1="480" x2="880" y2="480"/>
-
-          <!-- Corridor right at x=500, y=480-580 -->
-          <line x1="500" y1="480" x2="500" y2="580"/>
-
-          <!-- G106 bottom at y=580 (solid with G101/corridor) -->
-          <line x1="60"  y1="580" x2="320" y2="580"/>
-
-          <!-- Bottom corridor bottom at y=680 -->
-          <line x1="320" y1="680" x2="500" y2="680"/>
-
-          <!-- G101 top wall (door at x=330-370) -->
-          <line x1="220" y1="680" x2="330" y2="680"/>
-          <line x1="370" y1="680" x2="500" y2="680"/>
-        </g>
-
-        <!-- ===== ROOM LABELS ===== -->
-        <g pointer-events="none" font-family="sans-serif" font-size="42" font-weight="500" fill="#1a1a1a">
-          <text x="305" y="105" text-anchor="end">G 110</text>
-          <text x="866" y="105" text-anchor="end">G 108</text>
-          <text x="305" y="425" text-anchor="end">G 106</text>
-          <text x="866" y="525" text-anchor="end">G 103</text>
-          <text x="486" y="725" text-anchor="end">G 101</text>
-        </g>
-
-        <!-- Courtyard label -->
-        <g pointer-events="none" font-family="sans-serif" font-size="26" font-weight="400" fill="#8c7a5a">
-          <text x="410" y="360" text-anchor="middle">内柱廊</text>
-          <text x="410" y="395" text-anchor="middle">花园</text>
-        </g>
-
-        <!-- ===== STAIRS + ELEVATOR (in bottom corridor) ===== -->
+        <!-- Entrance arrow (the map's own MUSEUM ENTRANCE callout sat outside the crop) -->
         <g pointer-events="none">
-          <rect x="340" y="600" width="80" height="60" fill="#ffffff" stroke="#1a1a1a" stroke-width="3"/>
-          <path d="M 352 650 L 365 650 L 365 636 L 378 636 L 378 622 L 391 622 L 391 608 L 408 608" fill="none" stroke="#1a1a1a" stroke-width="2.5"/>
+          <line x1="2" y1="293" x2="19" y2="293" stroke="#6b5b48" stroke-width="4"/>
+          <polygon points="29,293 17,286 17,300" fill="#6b5b48"/>
+          <text x="18" y="322" font-family="'Noto Sans SC', sans-serif" font-size="18" fill="#8a7e6a" text-anchor="middle">入口</text>
         </g>
 
-        <!-- Entry arrow -->
-        <g pointer-events="none">
-          <line x1="355" y1="795" x2="355" y2="840" stroke="#1a1a1a" stroke-width="3"/>
-          <polygon points="355,850 345,835 365,835" fill="#1a1a1a"/>
-          <text x="355" y="880" font-family="sans-serif" font-size="28" font-weight="700" fill="#1a1a1a" text-anchor="middle">入口</text>
+        <!-- Courtyard captions -->
+        <g pointer-events="none" font-family="'Noto Sans SC', sans-serif" fill="#8a7e6a">
+          <text x="424" y="205" font-size="20" text-anchor="middle">内柱廊花园</text>
+          <text x="188" y="266" font-size="18" text-anchor="middle">中庭</text>
         </g>
 
-        <!-- ===== Room tints ===== -->
-        <g class="room-tints" pointer-events="none">
-          <rect class="room-tint" data-room="G108" x="500" y="60"  width="380" height="320"/>
-          <rect class="room-tint" data-room="G110" x="60"  y="60"  width="260" height="220"/>
-          <rect class="room-tint" data-room="G106" x="60"  y="380" width="260" height="200"/>
-          <rect class="room-tint" data-room="G103" x="500" y="480" width="380" height="200"/>
-          <rect class="room-tint" data-room="G101" x="220" y="680" width="280" height="100"/>
-        </g>
-
-        <!-- ===== Footsteps ===== -->
         <g class="footsteps" id="footsteps-l1" pointer-events="none"></g>
 
-        <!-- ===== Room tap targets ===== -->
         <g class="room-taps">
-          <rect class="room-tap" data-room="G108" x="500" y="60"  width="380" height="320"/>
-          <rect class="room-tap" data-room="G110" x="60"  y="60"  width="260" height="220"/>
-          <rect class="room-tap" data-room="G106" x="60"  y="380" width="260" height="200"/>
-          <rect class="room-tap" data-room="G103" x="500" y="480" width="380" height="200"/>
-          <rect class="room-tap" data-room="G101" x="220" y="680" width="280" height="100"/>
+          <rect class="room-tap" fill="transparent" data-room="G101" x="34"  y="242" width="188" height="144"/>
+          <rect class="room-tap" fill="transparent" data-room="G103" x="34"  y="104" width="69"  height="88"/>
+          <rect class="room-tap" fill="transparent" data-room="G104" x="110" y="104" width="151" height="88"/>
+          <rect class="room-tap" fill="transparent" data-room="G106" x="270" y="34"  width="94"  height="57"/>
+          <rect class="room-tap" fill="transparent" data-room="G108" x="402" y="22"  width="75"  height="69"/>
+          <rect class="room-tap" fill="transparent" data-room="G110" x="600" y="135" width="75"  height="91"/>
         </g>
 
-        <!-- ===== Current marker ===== -->
         <g class="current-marker" id="currentMarkerL1">
           <circle class="pulse-ring" r="22" />
           <circle r="14" fill="#a83e2a" stroke="#fff" stroke-width="3"/>
         </g>
 
-        <!-- ===== Visit badges ===== -->
         <g class="visit-badges" font-family="sans-serif" font-size="17" font-weight="700">
-          <g class="visit-badge" data-room="G108" transform="translate(525, 85)">
-            <circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
-            <text y="6" text-anchor="middle" fill="#fff">1</text>
-          </g>
-          <g class="visit-badge" data-room="G110" transform="translate(85, 85)">
-            <circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
-            <text y="6" text-anchor="middle" fill="#fff">1</text>
-          </g>
-          <g class="visit-badge" data-room="G106" transform="translate(85, 405)">
-            <circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
-            <text y="6" text-anchor="middle" fill="#fff">1</text>
-          </g>
-          <g class="visit-badge" data-room="G103" transform="translate(525, 505)">
-            <circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
-            <text y="6" text-anchor="middle" fill="#fff">1</text>
-          </g>
-          <g class="visit-badge" data-room="G101" transform="translate(245, 705)">
-            <circle r="17" fill="#b8923a" stroke="#fff" stroke-width="2.5"/>
-            <text y="6" text-anchor="middle" fill="#fff">1</text>
-          </g>
+          <g class="visit-badge" data-room="G101" transform="translate(59,262)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="G103" transform="translate(59,124)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="G104" transform="translate(135,124)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="G106" transform="translate(295,54)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="G108" transform="translate(427,42)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="G110" transform="translate(625,155)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+        </g>
+
+        <g class="room-tints" pointer-events="none">
+          <rect class="room-tint" fill="transparent" data-room="G101" x="34"  y="242" width="188" height="144"/>
+          <rect class="room-tint" fill="transparent" data-room="G103" x="34"  y="104" width="69"  height="88"/>
+          <rect class="room-tint" fill="transparent" data-room="G104" x="110" y="104" width="151" height="88"/>
+          <rect class="room-tint" fill="transparent" data-room="G106" x="270" y="34"  width="94"  height="57"/>
+          <rect class="room-tint" fill="transparent" data-room="G108" x="402" y="22"  width="75"  height="69"/>
+          <rect class="room-tint" fill="transparent" data-room="G110" x="600" y="135" width="75"  height="91"/>
+        </g>
+
+        <g class="room-nums" pointer-events="none" font-family="sans-serif" font-size="17" font-weight="700" fill="#1a1a1a">
+          <text x="42"  y="266" class="room-num" data-room="G101">G101</text>
+          <text x="42"  y="128" class="room-num" data-room="G103">G103</text>
+          <text x="118" y="128" class="room-num" data-room="G104">G104</text>
+          <text x="278" y="58"  class="room-num" data-room="G106">G106</text>
+          <text x="404" y="14"  class="room-num" data-room="G108">G108</text>
+          <text x="608" y="159" class="room-num" data-room="G110">G110</text>
         </g>
       </svg>
 
       <!-- Art pins -->
-      <button class="art-pin" data-card="card-01" style="left:65%;top:15%" title="胜利青年 · Victorious Youth · G108">
+      <button class="art-pin" data-card="card-01" style="left:61.9%;top:10.8%" title="胜利青年 · Victorious Youth · G108">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Getty_Villa_-_Victorious_Youth_01.JPG/960px-Getty_Villa_-_Victorious_Youth_01.JPG" alt="胜利青年">
         <span class="pin-num">01</span>
       </button>
-      <button class="art-pin" data-card="card-02" style="left:79%;top:22%" title="兰斯当赫拉克勒斯 · G108">
+      <button class="art-pin" data-card="card-02" style="left:66.3%;top:6.9%" title="兰斯当赫拉克勒斯 · G108">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Lansdowne_Herakles_Getty_Museum.jpg/960px-Lansdowne_Herakles_Getty_Museum.jpg" alt="兰斯当赫拉克勒斯">
         <span class="pin-num">02</span>
       </button>
-      <button class="art-pin" data-card="card-09" style="left:89%;top:32%" title="康莫杜斯胸像 · G108">
+      <button class="art-pin" data-card="card-09" style="left:64.6%;top:13.2%" title="康莫杜斯胸像 · G108">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Bust_of_Emperor_Commodus%2C_front_-_Getty_Museum_%2892.SA.48%29.jpg/960px-Bust_of_Emperor_Commodus%2C_front_-_Getty_Museum_%2892.SA.48%29.jpg" alt="康莫杜斯胸像">
         <span class="pin-num">09</span>
       </button>
-      <button class="art-pin" data-card="card-07" style="left:12%;top:11%" title="赫克勒青铜小像 · G110">
+      <button class="art-pin" data-card="card-07" style="left:90%;top:29.9%" title="赫克勒青铜小像 · G110">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Getty_Villa_-_Collection_%285305267670%29.jpg/960px-Getty_Villa_-_Collection_%285305267670%29.jpg" alt="赫克勒青铜小像">
         <span class="pin-num">07</span>
       </button>
-      <button class="art-pin" data-card="card-08" style="left:24%;top:19%" title="青铜镜盖饰件 · G110">
+      <button class="art-pin" data-card="card-08" style="left:94%;top:33.2%" title="青铜镜盖饰件 · G110">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Etruscan_Bronze_Mirror-Lid_Applique%2C_c._100_BC_%2810456881016%29.jpg/960px-Etruscan_Bronze_Mirror-Lid_Applique%2C_c._100_BC_%2810456881016%29.jpg" alt="青铜镜盖饰件">
         <span class="pin-num">08</span>
       </button>
-      <button class="art-pin" data-card="card-05" style="left:63%;top:62%" title="涡形双耳壶 · G103">
+      <button class="art-pin" data-card="card-05" style="left:7.1%;top:23.6%" title="涡形双耳壶 · G103">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Greek_Volute_Krater_Mixing_Vessel_with_Mythological_Scenes%2C_Athens%2C_c._490_BC_%2810455244424%29.jpg/960px-Greek_Volute_Krater_Mixing_Vessel_with_Mythological_Scenes%2C_Athens%2C_c._490_BC_%2810455244424%29.jpg" alt="涡形双耳壶">
         <span class="pin-num">05</span>
       </button>
-      <button class="art-pin" data-card="card-06" style="left:78%;top:66%" title="奥德修斯与独眼巨人 · G103">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Greek_Krater_Mixing_Vessel_with_Odysseus_Escaping_from_Polyphemos%27s_Cave%2C_Athens%2C_550-500_BC_%2810455076956%29.jpg/960px-Greek_Krater_Mixing_Vessel_with_Odysseus_Escaping_from_Polyphemos%27s_Cave%2C_Athens%2C_550-500_BC_%2810455076956%29.jpg" alt="奥德修斯与独眼巨人">
-        <span class="pin-num">06</span>
-      </button>
-      <button class="art-pin" data-card="card-10" style="left:88%;top:61%" title="泛雅典娜赛会奖瓶 · G103">
+      <button class="art-pin" data-card="card-10" style="left:11.7%;top:27.5%" title="泛雅典娜赛会奖瓶 · G103">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Attic_panathenaic_amphora_with_lid_by_Marsyas_Painter%2C_side_A_-_Getty_Museum_%2879.AE.147%29.jpg/960px-Attic_panathenaic_amphora_with_lid_by_Marsyas_Painter%2C_side_A_-_Getty_Museum_%2879.AE.147%29.jpg" alt="泛雅典娜赛会奖瓶">
         <span class="pin-num">10</span>
       </button>
-      <button class="art-pin" data-card="card-03" style="left:29%;top:85%" title="盖蒂青年立像 · G101">
+      <button class="art-pin" data-card="card-06" style="left:27.9%;top:23.3%" title="奥德修斯与独眼巨人 · G104">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Greek_Krater_Mixing_Vessel_with_Odysseus_Escaping_from_Polyphemos%27s_Cave%2C_Athens%2C_550-500_BC_%2810455076956%29.jpg/960px-Greek_Krater_Mixing_Vessel_with_Odysseus_Escaping_from_Polyphemos%27s_Cave%2C_Athens%2C_550-500_BC_%2810455076956%29.jpg" alt="奥德修斯与独眼巨人">
+        <span class="pin-num">06</span>
+      </button>
+      <button class="art-pin" data-card="card-03" style="left:13.6%;top:44.8%" title="盖蒂青年立像 · G101">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Kouros_-_Getty_Museum_%2885.AA.40%29.jpg/960px-Kouros_-_Getty_Museum_%2885.AA.40%29.jpg" alt="盖蒂青年立像">
         <span class="pin-num">03</span>
       </button>
-      <button class="art-pin" data-card="card-04" style="left:43%;top:85%" title="竖琴演奏者 · G101">
+      <button class="art-pin" data-card="card-04" style="left:24.3%;top:51.1%" title="竖琴演奏者 · G101">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Getty_Villa_-_Harp_player_-_inv._85.AA.103.JPG/960px-Getty_Villa_-_Harp_player_-_inv._85.AA.103.JPG" alt="竖琴演奏者">
         <span class="pin-num">04</span>
       </button>
@@ -1170,6 +1068,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
     <div class="legend-item"><span class="legend-room">G 108</span><span class="legend-theme">赫拉克勒斯神殿 · <em>Temple of Heracles</em></span></div>
     <div class="legend-item"><span class="legend-room">G 110</span><span class="legend-theme">伊特鲁里亚 · <em>Etruscan Art</em></span></div>
     <div class="legend-item"><span class="legend-room">G 103</span><span class="legend-theme">希腊陶器 · <em>Greek Pottery</em></span></div>
+    <div class="legend-item"><span class="legend-room">G 104</span><span class="legend-theme">希腊陶器 · <em>Greek Pottery</em></span></div>
     <div class="legend-item"><span class="legend-room">G 106</span><span class="legend-theme">希腊陶器 · <em>Greek Pottery</em></span></div>
     <div class="legend-item"><span class="legend-room">G 101</span><span class="legend-theme">古希腊与罗马 · <em>Greek &amp; Roman</em></span></div>
   </div>
@@ -1188,176 +1087,95 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
     <h2 class="floor-name">壁画 · 珠宝 · 玻璃 · 石棺 <span class="yr">公元前500–公元400年</span></h2>
     <p class="floor-desc">二楼围绕内柱廊阳台——Gallery 207 展出法尤姆木乃伊肖像与壁画，Gallery 208 收藏希腊化黄金珠宝，Gallery 203 陈列罗马叙事浮雕石棺，Gallery 211–214 展示陶器与玻璃。</p>
     <div class="legend-mini" aria-label="展厅类别图例">
-      <span class="lgm-item"><span class="lgm-swatch" style="background:var(--room-paintings);"></span>展厅</span>
-      <span class="lgm-item"><span class="lgm-swatch" style="background:#ede4cf;"></span>阳台</span>
-      <span class="lgm-item"><span class="lgm-swatch" style="background:#bfa686;"></span>走廊</span>
+      <span class="lgm-item"><span class="lgm-swatch" style="background:#f5f5ed;"></span>展厅</span>
+      <span class="lgm-item"><span class="lgm-swatch" style="background:#f5f5f5;"></span>天井·步道</span>
+      <span class="lgm-item"><span class="lgm-swatch" style="background:#8f8173;"></span>墙体·楼梯</span>
     </div>
   </div>
   <div class="floor-plan">
     <div class="floor-svg-wrap">
-      <svg viewBox="20 20 920 800" xmlns="http://www.w3.org/2000/svg" class="signage-svg" preserveAspectRatio="xMidYMid meet">
-        <!-- Background -->
-        <rect width="1000" height="900" fill="#f5f0e0"/>
-
-        <!-- ===== AREA FILLS ===== -->
-        <!-- Key gallery rooms -->
-        <rect x="60"  y="60"  width="260" height="280" fill="var(--room-paintings)"/>  <!-- G207 Painting -->
-        <rect x="500" y="60"  width="380" height="240" fill="var(--room-paintings)"/>  <!-- G203 Sarcophagi -->
-        <rect x="60"  y="440" width="260" height="180" fill="var(--room-paintings)"/>  <!-- G208 Jewelry -->
-        <rect x="500" y="480" width="380" height="200" fill="var(--room-paintings)"/>  <!-- G214 Glass -->
-        <rect x="220" y="680" width="280" height="100" fill="var(--room-paintings)"/>  <!-- G211 Ceramics -->
-
-        <!-- Corridors -->
-        <rect x="320" y="60"  width="180" height="100" fill="#bfa686"/>  <!-- top corridor -->
-        <rect x="60"  y="340" width="260" height="100" fill="#bfa686"/>  <!-- left corridor -->
-        <rect x="500" y="300" width="380" height="180" fill="#bfa686"/>  <!-- right corridor / secondary -->
-        <rect x="320" y="580" width="180" height="100" fill="#bfa686"/>  <!-- bottom corridor -->
-
-        <!-- Inner Peristyle courtyard -->
-        <rect x="320" y="160" width="180" height="420" fill="#ede4cf"/>
-        <text x="410" y="370" font-family="'Noto Sans SC', sans-serif" font-size="22" fill="#8a7e6a" text-anchor="middle" pointer-events="none">内柱廊</text>
-        <text x="410" y="398" font-family="'Noto Sans SC', sans-serif" font-size="22" fill="#8a7e6a" text-anchor="middle" pointer-events="none">阳台</text>
-
-        <!-- ===== OUTER WALLS ===== -->
-        <g fill="none" stroke="#1a1a1a" stroke-width="5" stroke-linejoin="miter">
-          <line x1="60"  y1="60"  x2="880" y2="60"/>
-          <line x1="880" y1="60"  x2="880" y2="680"/>
-          <line x1="880" y1="680" x2="500" y2="680"/>
-          <line x1="500" y1="680" x2="500" y2="780"/>
-          <line x1="500" y1="780" x2="380" y2="780"/>
-          <line x1="330" y1="780" x2="220" y2="780"/>
-          <line x1="220" y1="780" x2="220" y2="680"/>
-          <line x1="220" y1="680" x2="60"  y2="680"/>
-          <line x1="60"  y1="680" x2="60"  y2="60"/>
+      <svg viewBox="0 0 700 669" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="signage-svg" preserveAspectRatio="xMidYMid meet">
+        <!-- Official Getty Villa plan (2012 map, Floor 2 crop), warm tint baked in — same
+             pipeline as Floor 1. Pre-processed: printed numbers removed, the 2012 blue
+             changing-exhibition fills and the GettyGuide-room red band normalized to the
+             cream room color, captions cleared. The two white voids are the plan's own:
+             the atrium skylight (west) and the Inner Peristyle opening (center). -->
+        <g class="floor-photo">
+          <image href="img/villa-2f-base.jpg?v=1" xlink:href="img/villa-2f-base.jpg?v=1" x="0" y="0" width="700" height="669"/>
         </g>
 
-        <!-- ===== INTERNAL WALLS with door gaps ===== -->
-        <g fill="none" stroke="#1a1a1a" stroke-width="5" stroke-linecap="butt">
-          <!-- G207 bottom at y=340 (door at x=140-180) -->
-          <line x1="60"  y1="340" x2="140" y2="340"/>
-          <line x1="180" y1="340" x2="320" y2="340"/>
-          <!-- G208 top at y=440 (door at x=140-180) -->
-          <line x1="60"  y1="440" x2="140" y2="440"/>
-          <line x1="180" y1="440" x2="320" y2="440"/>
-          <!-- G207/top-corr left at x=320, y=60-160 (door at y=100-140) -->
-          <line x1="320" y1="60"  x2="320" y2="100"/>
-          <line x1="320" y1="140" x2="320" y2="160"/>
-          <!-- Courtyard left at x=320 -->
-          <line x1="320" y1="160" x2="320" y2="580"/>
-          <!-- G203/top-corr right at x=500, y=60-160 (door at y=100-140) -->
-          <line x1="500" y1="60"  x2="500" y2="100"/>
-          <line x1="500" y1="140" x2="500" y2="160"/>
-          <!-- Courtyard right at x=500 -->
-          <line x1="500" y1="160" x2="500" y2="300"/>
-          <!-- G203 bottom at y=300 (door at x=640-680) -->
-          <line x1="500" y1="300" x2="640" y2="300"/>
-          <line x1="680" y1="300" x2="880" y2="300"/>
-          <!-- G214 top at y=480 (door at x=640-680) -->
-          <line x1="500" y1="480" x2="640" y2="480"/>
-          <line x1="680" y1="480" x2="880" y2="480"/>
-          <!-- Courtyard right continued -->
-          <line x1="500" y1="480" x2="500" y2="580"/>
-          <!-- Bottom corridor top at y=580 (door at x=370-430) -->
-          <line x1="320" y1="580" x2="370" y2="580"/>
-          <line x1="430" y1="580" x2="500" y2="580"/>
-          <!-- G208 bottom / corridor at y=620 -->
-          <line x1="60"  y1="620" x2="140" y2="620"/>
-          <line x1="180" y1="620" x2="220" y2="620"/>
-          <!-- G211 area: bottom corridor bottom at y=680 -->
-          <line x1="320" y1="680" x2="370" y2="680"/>
-          <line x1="430" y1="680" x2="500" y2="680"/>
+        <!-- Void captions -->
+        <g pointer-events="none" font-family="'Noto Sans SC', sans-serif" fill="#8a7e6a">
+          <text x="415" y="390" font-size="20" text-anchor="middle">内柱廊阳台</text>
+          <text x="137" y="260" font-size="18" text-anchor="middle">中庭天井</text>
         </g>
 
-        <!-- Door gap in bottom outer wall (entry to G211) -->
-        <!-- already has gap 330-380 in outer walls -->
-
-        <!-- ===== ROOM LABELS ===== -->
-        <g pointer-events="none" font-family="sans-serif" font-weight="700" fill="#1a1a1a" font-size="42">
-          <text x="190" y="215" text-anchor="middle">G 207</text>
-          <text x="690" y="195" text-anchor="middle">G 203</text>
-          <text x="190" y="545" text-anchor="middle">G 208</text>
-          <text x="690" y="595" text-anchor="middle">G 214</text>
-          <text x="360" y="745" text-anchor="middle">G 211</text>
-        </g>
-
-        <!-- ===== Room tints ===== -->
-        <g class="room-tints" pointer-events="none">
-          <rect class="room-tint" data-room="G207" x="60"  y="60"  width="260" height="280"/>
-          <rect class="room-tint" data-room="G203" x="500" y="60"  width="380" height="240"/>
-          <rect class="room-tint" data-room="G208" x="60"  y="440" width="260" height="180"/>
-          <rect class="room-tint" data-room="G214" x="500" y="480" width="380" height="200"/>
-          <rect class="room-tint" data-room="G211" x="220" y="680" width="280" height="100"/>
-        </g>
-
-        <!-- Footsteps -->
         <g class="footsteps" id="footsteps-l2" pointer-events="none"></g>
 
-        <!-- Room tap targets -->
         <g class="room-taps">
-          <rect class="room-tap" data-room="G207" x="60"  y="60"  width="260" height="280"/>
-          <rect class="room-tap" data-room="G203" x="500" y="60"  width="380" height="240"/>
-          <rect class="room-tap" data-room="G208" x="60"  y="440" width="260" height="180"/>
-          <rect class="room-tap" data-room="G214" x="500" y="480" width="380" height="200"/>
-          <rect class="room-tap" data-room="G211" x="220" y="680" width="280" height="100"/>
+          <rect class="room-tap" fill="transparent" data-room="G207" x="19"  y="109" width="230" height="121"/>
+          <rect class="room-tap" fill="transparent" data-room="G203" x="467" y="26"  width="121" height="153"/>
+          <rect class="room-tap" fill="transparent" data-room="G208" x="19"  y="269" width="48"  height="67"/>
+          <rect class="room-tap" fill="transparent" data-room="G211" x="259" y="467" width="128" height="112"/>
+          <rect class="room-tap" fill="transparent" data-room="G214" x="569" y="505" width="86"  height="74"/>
         </g>
 
-        <!-- Current marker -->
         <g class="current-marker" id="currentMarkerL2">
-          <circle class="pulse-ring" r="28" />
-          <circle r="18" fill="#a83e2a" stroke="#fff" stroke-width="4"/>
+          <circle class="pulse-ring" r="22" />
+          <circle r="14" fill="#a83e2a" stroke="#fff" stroke-width="3"/>
         </g>
 
-        <!-- Visit badges -->
-        <g class="visit-badges" font-family="sans-serif" font-size="22" font-weight="700">
-          <g class="visit-badge" data-room="G207" transform="translate(95, 90)">
-            <circle r="20" fill="#b8923a" stroke="#fff" stroke-width="3"/>
-            <text y="7" text-anchor="middle" fill="#fff">1</text>
-          </g>
-          <g class="visit-badge" data-room="G203" transform="translate(535, 90)">
-            <circle r="20" fill="#b8923a" stroke="#fff" stroke-width="3"/>
-            <text y="7" text-anchor="middle" fill="#fff">1</text>
-          </g>
-          <g class="visit-badge" data-room="G208" transform="translate(95, 470)">
-            <circle r="20" fill="#b8923a" stroke="#fff" stroke-width="3"/>
-            <text y="7" text-anchor="middle" fill="#fff">1</text>
-          </g>
-          <g class="visit-badge" data-room="G214" transform="translate(535, 510)">
-            <circle r="20" fill="#b8923a" stroke="#fff" stroke-width="3"/>
-            <text y="7" text-anchor="middle" fill="#fff">1</text>
-          </g>
-          <g class="visit-badge" data-room="G211" transform="translate(255, 710)">
-            <circle r="20" fill="#b8923a" stroke="#fff" stroke-width="3"/>
-            <text y="7" text-anchor="middle" fill="#fff">1</text>
-          </g>
+        <g class="visit-badges" font-family="sans-serif" font-size="17" font-weight="700">
+          <g class="visit-badge" data-room="G207" transform="translate(44,129)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="G203" transform="translate(492,46)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="G208" transform="translate(70,288)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="G211" transform="translate(284,487)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="G214" transform="translate(594,525)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+        </g>
+
+        <g class="room-tints" pointer-events="none">
+          <rect class="room-tint" fill="transparent" data-room="G207" x="19"  y="109" width="230" height="121"/>
+          <rect class="room-tint" fill="transparent" data-room="G203" x="467" y="26"  width="121" height="153"/>
+          <rect class="room-tint" fill="transparent" data-room="G208" x="19"  y="269" width="48"  height="67"/>
+          <rect class="room-tint" fill="transparent" data-room="G211" x="259" y="467" width="128" height="112"/>
+          <rect class="room-tint" fill="transparent" data-room="G214" x="569" y="505" width="86"  height="74"/>
+        </g>
+
+        <g class="room-nums" pointer-events="none" font-family="sans-serif" font-size="17" font-weight="700" fill="#1a1a1a">
+          <text x="27"  y="133" class="room-num" data-room="G207">G207</text>
+          <text x="475" y="50"  class="room-num" data-room="G203">G203</text>
+          <text x="80"  y="305" class="room-num" data-room="G208">G208</text>
+          <text x="267" y="491" class="room-num" data-room="G211">G211</text>
+          <text x="577" y="529" class="room-num" data-room="G214">G214</text>
         </g>
       </svg>
 
       <!-- Art pins -->
-      <button class="art-pin" data-card="card-11" style="left:10%;top:12%" title="木乃伊肖像·女子 · G207">
+      <button class="art-pin" data-card="card-11" style="left:14.3%;top:25.4%" title="木乃伊肖像·女子 · G207">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Romano-Egyptian_Mummy_Portrait_of_a_Woman%2C_100-110_AD_%2810465225055%29.jpg/960px-Romano-Egyptian_Mummy_Portrait_of_a_Woman%2C_100-110_AD_%2810465225055%29.jpg" alt="木乃伊肖像·女子">
         <span class="pin-num">11</span>
       </button>
-      <button class="art-pin" data-card="card-12" style="left:24%;top:22%" title="孔雀壁画残片 · G207">
+      <button class="art-pin" data-card="card-12" style="left:25.7%;top:26.9%" title="孔雀壁画残片 · G207">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Wall_Fragment_with_a_Peacock_-_Google_Art_Project.jpg/960px-Wall_Fragment_with_a_Peacock_-_Google_Art_Project.jpg" alt="孔雀壁画残片">
         <span class="pin-num">12</span>
       </button>
-      <button class="art-pin" data-card="card-13" style="left:10%;top:58%" title="金桂冠 · G208">
+      <button class="art-pin" data-card="card-13" style="left:5.7%;top:45.6%" title="金桂冠 · G208">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Gold_Wreath_%2810457565366%29.jpg/960px-Gold_Wreath_%2810457565366%29.jpg" alt="金桂冠">
         <span class="pin-num">13</span>
       </button>
-      <button class="art-pin" data-card="card-16" style="left:60%;top:12%" title="马科尼亚娜石棺 · G203">
+      <button class="art-pin" data-card="card-16" style="left:73.6%;top:13.5%" title="马科尼亚娜石棺 · G203">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Sarcophagus_Maconiana_Severiana_Getty_Villa_83.AA.275.jpg/960px-Sarcophagus_Maconiana_Severiana_Getty_Villa_83.AA.275.jpg" alt="马科尼亚娜石棺">
         <span class="pin-num">16</span>
       </button>
-      <button class="art-pin" data-card="card-17" style="left:80%;top:22%" title="阿基里斯石棺 · G203">
+      <button class="art-pin" data-card="card-17" style="left:78.9%;top:20.9%" title="阿基里斯石棺 · G203">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Sarcophagus_with_the_life_of_Achilles%2C_front_-_Getty_Museum_%2895.AA.80%29.jpg/960px-Sarcophagus_with_the_life_of_Achilles%2C_front_-_Getty_Museum_%2895.AA.80%29.jpg" alt="阿基里斯石棺">
         <span class="pin-num">17</span>
       </button>
-      <button class="art-pin" data-card="card-15" style="left:34%;top:86%" title="抱竖琴少年酒杯 · G211">
+      <button class="art-pin" data-card="card-15" style="left:46.1%;top:78.9%" title="抱竖琴少年酒杯 · G211">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Greek_Kylix_Wine_Cup_with_Boy_Holding_a_Lyre%2C_Athens%2C_c._480_BC_%2810465441573%29.jpg/960px-Greek_Kylix_Wine_Cup_with_Boy_Holding_a_Lyre%2C_Athens%2C_c._480_BC_%2810465441573%29.jpg" alt="抱竖琴少年酒杯">
         <span class="pin-num">15</span>
       </button>
-      <button class="art-pin" data-card="card-14" style="left:72%;top:66%" title="蓝色棱纹玻璃碗 · G214">
+      <button class="art-pin" data-card="card-14" style="left:89.7%;top:83.4%" title="蓝色棱纹玻璃碗 · G214">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Blue_ribbed_bowl_with_white_trails%2C_front_profile_-_Getty_Museum_%282003.226%29.jpg/960px-Blue_ribbed_bowl_with_white_trails%2C_front_profile_-_Getty_Museum_%282003.226%29.jpg" alt="蓝色棱纹玻璃碗">
         <span class="pin-num">14</span>
       </button>
@@ -1475,7 +1293,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 
 <div class="artwork-card west" id="card-06">
   <div class="art-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Greek_Krater_Mixing_Vessel_with_Odysseus_Escaping_from_Polyphemos%27s_Cave%2C_Athens%2C_550-500_BC_%2810455076956%29.jpg/960px-Greek_Krater_Mixing_Vessel_with_Odysseus_Escaping_from_Polyphemos%27s_Cave%2C_Athens%2C_550-500_BC_%2810455076956%29.jpg" alt="奥德修斯与独眼巨人"></div>
-  <div class="room-tag">一楼 · Gallery 103</div>
+  <div class="room-tag">一楼 · Gallery 104</div>
   <div class="art-title">奥德修斯与独眼巨人 · <em>Odysseus and Polyphemos</em></div>
   <div class="art-meta">雅典 · 约公元前550–500年 · 陶器 · 黑绘</div>
   <div class="tags"><span class="tag movement">阿提卡黑绘</span><span class="tag price">🏛 荷马史诗经典场景</span></div>
@@ -1886,6 +1704,7 @@ var ROOM_THEMES = {
   G108: '<span class="rt-num">G 108</span><span class="rt-theme">赫拉克勒斯神殿 · <em>Temple of Heracles</em></span>',
   G110: '<span class="rt-num">G 110</span><span class="rt-theme">伊特鲁里亚 · <em>Etruscan Art</em></span>',
   G103: '<span class="rt-num">G 103</span><span class="rt-theme">希腊陶器 · <em>Greek Pottery</em> · 红绘与黑绘</span>',
+  G104: '<span class="rt-num">G 104</span><span class="rt-theme">希腊陶器 · <em>Greek Pottery</em></span>',
   G106: '<span class="rt-num">G 106</span><span class="rt-theme">希腊陶器 · <em>Greek Pottery</em></span>',
   G101: '<span class="rt-num">G 101</span><span class="rt-theme">古希腊与罗马 · <em>Greek &amp; Roman Art</em></span>',
   G207: '<span class="rt-num">G 207</span><span class="rt-theme">古代绘画 · <em>Ancient Painting</em></span>',
@@ -1916,11 +1735,12 @@ function showRoomToast(room) {
   catch (e) { visitOrder = []; }
 
   var ROOM_CENTERS = {
-    G108: { x: 690, y: 220 },
-    G110: { x: 190, y: 170 },
-    G106: { x: 190, y: 480 },
-    G103: { x: 690, y: 580 },
-    G101: { x: 360, y: 730 }
+    G101: { x: 128, y: 314 },
+    G103: { x: 69,  y: 148 },
+    G104: { x: 185, y: 148 },
+    G106: { x: 317, y: 62 },
+    G108: { x: 439, y: 56 },
+    G110: { x: 637, y: 180 }
   };
 
   function save() {
@@ -1972,6 +1792,10 @@ function showRoomToast(room) {
 
     document.querySelectorAll('#level1 .room-tint').forEach(function(tint) {
       tint.classList.toggle('shown', !!visitedSet[tint.dataset.room]);
+    });
+
+    document.querySelectorAll('#level1 .room-num').forEach(function(n) {
+      n.classList.toggle('visited', !!visitedSet[n.dataset.room]);
     });
 
     var feetGroup = document.getElementById('footsteps-l1');
@@ -2035,11 +1859,11 @@ function showRoomToast(room) {
   catch (e) { visitOrder = []; }
 
   var ROOM_CENTERS = {
-    G207: { x: 190, y: 200 },
-    G203: { x: 690, y: 180 },
-    G208: { x: 190, y: 530 },
-    G214: { x: 690, y: 580 },
-    G211: { x: 360, y: 730 }
+    G207: { x: 134, y: 169 },
+    G203: { x: 527, y: 102 },
+    G208: { x: 43,  y: 302 },
+    G211: { x: 323, y: 522 },
+    G214: { x: 612, y: 542 }
   };
 
   function save() {
@@ -2091,6 +1915,10 @@ function showRoomToast(room) {
 
     document.querySelectorAll('#level2 .room-tint').forEach(function(tint) {
       tint.classList.toggle('shown', !!visitedSet[tint.dataset.room]);
+    });
+
+    document.querySelectorAll('#level2 .room-num').forEach(function(n) {
+      n.classList.toggle('visited', !!visitedSet[n.dataset.room]);
     });
 
     var feetGroup = document.getElementById('footsteps-l2');
