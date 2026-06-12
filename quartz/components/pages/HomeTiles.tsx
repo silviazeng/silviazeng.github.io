@@ -133,24 +133,15 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles, cfg }: QuartzComponent
             <div class="tg-pillars">
               <a class="tg-pill k-ai" href="/AI-Tech">
                 <div class="tg-pill-head">§ AI &amp; Tech</div>
-                <div class="tg-pill-name">A taste for elegant structure.</div>
-                <div class="tg-pill-desc">
-                  A tolerance for confusion, and no pressure to pretend otherwise. More interested in why it works than whether it works.
-                </div>
+                <div class="tg-pill-name">Why it works, not whether.</div>
               </a>
               <a class="tg-pill k-career" href="/Work-Career">
                 <div class="tg-pill-head">§ Work &amp; Career</div>
                 <div class="tg-pill-name">Patterns &amp; direction.</div>
-                <div class="tg-pill-desc">
-                  Looking back for patterns, forward for direction.
-                </div>
               </a>
               <a class="tg-pill k-living" href="/Living-Reading">
                 <div class="tg-pill-head">§ Living &amp; Reading</div>
                 <div class="tg-pill-name">The unquantifiable stuff.</div>
-                <div class="tg-pill-desc">
-                  Reading, watching, noticing. Machiavelli, Range, Renaissance.
-                </div>
               </a>
             </div>
           </section>
@@ -169,10 +160,9 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles, cfg }: QuartzComponent
                       <span class="tg-lab-mk">▸</span>
                       {row.title}
                       <span class="tg-lab-type">
-                        {row.type}
+                        · {row.type}
                         {!row.living && <> · {row.date}</>}
                       </span>
-                      <span class="tg-lab-open">↗</span>
                     </div>
                     <div class="tg-lab-desc">{row.desc}</div>
                   </div>
@@ -191,6 +181,7 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles, cfg }: QuartzComponent
                 const title = (page.frontmatter?.title as string) ?? page.slug
                 const rawDesc = (page.frontmatter?.description as string) ?? page.description ?? ""
                 const desc = rawDesc.trim()
+                const isQuote = /^["“]/u.test(desc)
                 const d = getDate(cfg, page)
                 const pageTags: string[] = (page.frontmatter?.tags as string[]) ?? []
                 return (
@@ -204,16 +195,16 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles, cfg }: QuartzComponent
                         {title}
                       </span>
                       <span class="tg-leader"></span>
+                      {pageTags.length > 0 && (
+                        <span class="tg-post-inline-tags">
+                          {pageTags.slice(0, 2).map((t) => (
+                            <span class={`tg-itag tg-itag-${tagKind(t) ?? "n"}`}>#{t}</span>
+                          ))}
+                        </span>
+                      )}
                       <span class="tg-post-date">{formatDate(d)}</span>
                     </div>
-                    {desc && <div class="tg-post-desc">{desc}</div>}
-                    {pageTags.length > 0 && (
-                      <div class="tg-post-tags">
-                        {pageTags.map((t) => (
-                          <span class={`tg-tag-sm tg-tag-${tagKind(t) ?? "n"}`}>#{t}</span>
-                        ))}
-                      </div>
-                    )}
+                    {desc && <div class={`tg-post-desc${isQuote ? " tg-post-desc-quote" : ""}`}>{desc}</div>}
                   </a>
                 )
               })}
@@ -258,13 +249,14 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles, cfg }: QuartzComponent
               <span class="tg-panel-n">{tags.length}</span>
             </div>
             <div class="tg-tagcloud">
-              {tags.map(({ tag, count }) => (
+              {tags.filter(({ count }) => count >= 2).map(({ tag, count }) => (
                 <a class={`tg-tag tg-tag-${tagKind(tag) ?? "n"}`} href={`/tags/${tag}`}>
                   #{tag.replace(/-/g, "-")}
                   <span class="tg-tag-c">{count}</span>
                 </a>
               ))}
             </div>
+            <a class="tg-tagcloud-all" href="/tags">all tags →</a>
           </section>
 
           <section class="tg-panel">

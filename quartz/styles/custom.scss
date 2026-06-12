@@ -284,7 +284,6 @@ footer {
 
 .tg-comment {
   color: var(--color-text-faint);
-  font-style: italic;
 }
 
 .tg-cmd {
@@ -294,11 +293,13 @@ footer {
 }
 
 .tg-cmd-small {
-  font-size: 12.5px;
-  color: var(--color-accent);
+  font-size: 16px;
+  color: var(--color-text);
   letter-spacing: 0.04em;
   padding: 0 0 14px;
   margin: 0;
+
+  .tg-comment { font-size: 13px; }
 }
 
 // ─── Hero ────────────────────────────────────────────────────────────────────
@@ -412,7 +413,6 @@ footer {
   color: var(--color-text-muted);
   font-size: 13px;
   font-family: var(--font-prose);
-  font-style: italic;
   margin-top: 6px;
   line-height: 1.55;
   // Fill the feed column so the summary lines up with the title row's right
@@ -420,25 +420,20 @@ footer {
   // Bounded by the column itself (~852px at the 1240px composition cap).
 }
 
-.tg-post-tags {
-  margin-top: 10px;
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-}
+.tg-post-desc-quote { font-style: italic; }
 
-.tg-tag-sm {
-  background: var(--color-surface-raised);
-  color: var(--color-text-dim);
-  padding: 1px 8px;
-  font-size: 11px;
-  border-radius: 2px;
+.tg-post-inline-tags {
+  display: inline-flex;
+  gap: 8px;
+  white-space: nowrap;
+  font-size: 11.5px;
   font-family: var(--font-mono);
-  letter-spacing: 0;
 }
-.tg-tag-sm.tg-tag-ai   { color: var(--color-accent-amber); }
-.tg-tag-sm.tg-tag-hist { color: var(--color-accent-lavender); }
-.tg-tag-sm.tg-tag-career { color: var(--color-accent); }
+.tg-itag        { color: var(--color-text-dim); }
+.tg-itag-n      { color: var(--color-text-dim); }
+.tg-itag-ai     { color: var(--color-accent-amber); }
+.tg-itag-hist   { color: var(--color-accent-lavender); }
+.tg-itag-career { color: var(--color-accent); }
 
 // ─── Pillars ─────────────────────────────────────────────────────────────────
 .tg-pillars {
@@ -477,18 +472,11 @@ footer {
 
 .tg-pill-name {
   font-family: var(--font-display);
-  font-size: 17px;
-  color: var(--color-text-bright);
+  font-size: 21px;
   font-weight: 500;
-  margin-bottom: 6px;
   letter-spacing: -0.01em;
-}
-
-.tg-pill-desc {
-  font-size: 12px;
-  color: var(--color-text-muted);
-  line-height: 1.5;
-  font-family: var(--font-mono);
+  line-height: 1.25;
+  color: var(--color-text-head);
 }
 
 // ─── Lab (interactive artifacts) ─────────────────────────────────────────────
@@ -519,7 +507,6 @@ footer {
   &:hover {
     background: rgba(122, 184, 122, 0.03);
     .tg-lab-title { color: var(--color-text-bright); }
-    .tg-lab-open { color: var(--color-accent-light); }
   }
 }
 
@@ -573,7 +560,6 @@ footer {
 .tg-lab-desc {
   color: var(--color-text-muted);
   font-family: var(--font-prose);
-  font-style: italic;
   font-size: 12.5px;
   margin-top: 4px;
   line-height: 1.5;
@@ -584,13 +570,6 @@ footer {
 .tg-lab-row.k-hist .tg-lab-mk { color: var(--color-accent-lavender); }
 .tg-lab-row.k-ai .tg-lab-art,
 .tg-lab-row.k-ai .tg-lab-mk { color: var(--color-accent-amber-light); }
-
-.tg-lab-open {
-  margin-left: 6px;
-  font-size: 11px;
-  color: var(--color-text-faint);
-  transition: color 0.15s ease;
-}
 
 // ─── Right rail ──────────────────────────────────────────────────────────────
 // Rail is a flex column stretched to match the left column height. The sticky
@@ -748,6 +727,17 @@ footer {
   }
 }
 
+.tg-tagcloud-all {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 12px;
+  font-family: var(--font-mono);
+  color: var(--color-text-faint) !important;
+  text-decoration: none !important;
+
+  &:hover { color: var(--color-accent-light) !important; }
+}
+
 // ─── Workbench (reading list) ────────────────────────────────────────────────
 .tg-workbench {
   display: flex;
@@ -833,6 +823,7 @@ button:focus-visible {
     gap: 4px;
   }
   .tg-post-date { padding-top: 0; }
+  .tg-post-inline-tags { display: none; }
 }
 
 @media (max-width: 800px) {
