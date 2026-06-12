@@ -1,6 +1,6 @@
 ---
 title: "Stet — Privacy Policy"
-date: 2026-06-09
+date: 2026-06-11
 noGraph: true
 tags:
   - legal
@@ -8,7 +8,7 @@ tags:
 ---
 
 **Effective date:** 2026-05-27
-**Last updated:** 2026-06-09
+**Last updated:** 2026-06-11
 
 This privacy policy describes how the **Stet** iOS app ("the app," "we," "our") handles your information. Stet is built by an individual developer and is currently a single-person project. We collect as little as possible and store almost everything on your device.
 
@@ -80,15 +80,17 @@ The events are:
 - `archetype_shifted` (with: previous and new archetype id)
 - `receipt_saved` (with: item count, total, currency code, whether it had a photo, edit mode)
 - `dashboard_viewed` / `patterns_viewed`
+- `paywall_viewed` / `paywall_dismissed` (with: dismissal reason)
+- `subscription_purchased` (with: product id, price) / `subscription_restored` (with: count of active subscriptions)
 
 Each event is tied only to your anonymous installation UUID. PostHog does **not** receive your Apple ID, email, name, photos, receipts, merchant names, individual item descriptions, or anything user-typed.
 
 Governed by PostHog's [Privacy Policy](https://posthog.com/privacy).
 
-**E. Google AdMob** (advertising) — Stet shows a single banner ad at the bottom of the Spending list, filled by Google AdMob.
+**E. Google AdMob** (advertising) — Stet shows at most two native ad placements, filled by Google AdMob: a card styled as a sponsored receipt inside the Spending list, and an occasional small sponsor stub below the remark that appears after you save a receipt (capped at once per day, and never on the day's first save).
 
-- The first time you reach the main app, iOS asks whether to allow tracking (**App Tracking Transparency**). **If you allow it,** AdMob may use your device's advertising identifier (IDFA) to show more relevant, personalized ads. **If you decline,** AdMob serves non-personalized ads instead — you still see a banner, just not tailored to you.
-- Either way, AdMob receives standard ad-request data (device type, OS version, coarse region) plus the contextual keywords Stet sends: the **merchant names currently visible in your Spending list** (used only to make the ad less random). It does **not** receive your name, email, Apple ID, receipt images, amounts, dates, or spending history.
+- The first time you reach the main app, iOS asks whether to allow tracking (**App Tracking Transparency**). **If you allow it,** AdMob may use your device's advertising identifier (IDFA) to show more relevant, personalized ads. **If you decline,** AdMob serves non-personalized ads instead — you still see the ads, just not tailored to you.
+- Either way, AdMob receives standard ad-request data (device type, OS version, coarse region) plus the contextual keywords Stet sends: **merchant names from your Spending list** for the list card, or the just-saved receipt's merchant name for the sponsor stub (used only to make the ad less random). It does **not** receive your name, email, Apple ID, receipt images, amounts, dates, or spending history.
 - **Pro subscribers see no ads** and trigger no ad requests.
 
 Governed by Google's [advertising terms](https://policies.google.com/technologies/ads) and [Privacy Policy](https://policies.google.com/privacy).
@@ -99,7 +101,7 @@ Beyond what's described in 2.2, we don't collect or send: push tokens, precise l
 
 Our analytics and crash reporting (PostHog + Sentry) use only an anonymous installation UUID — no IDFA, no Apple Advertising Identifier, no device fingerprint. The **only** component that may use the IDFA is AdMob, and only if you grant App Tracking Transparency (section 2.2 E).
 
-Stet shows one banner ad at the bottom of the Spending list. You can remove ads permanently with the in-app **Remove ads** purchase (Stet Pro).
+Stet shows only the two native ad placements described in 2.2 E. You can remove ads entirely with the in-app **Stet Pro** subscription (section 4).
 
 ---
 
@@ -117,7 +119,19 @@ We never ask for: contacts, location, calendar, reminders, health, or motion.
 
 ---
 
-## 4 · How long we keep your data
+## 4 · Subscriptions and payments
+
+Stet offers an optional auto-renewing subscription called **Stet Pro** (monthly or yearly) that removes ads. Pricing is shown inside the app and varies by country.
+
+- Payment is processed by Apple via the App Store, not by us.
+- Subscriptions auto-renew unless cancelled at least 24 hours before the end of the current period.
+- You can manage and cancel subscriptions in your iOS Settings → [Your Name] → Subscriptions, or via [Apple's subscription management page](https://apps.apple.com/account/subscriptions).
+- We receive a confirmation from Apple that you are a subscriber. We do not receive your credit card details or billing address.
+- If you cancel, your subscription stays active until the end of the current period, after which ads return.
+
+---
+
+## 5 · How long we keep your data
 
 Forever, or until you delete it. Receipts and archetype data stay on your device until:
 
@@ -131,7 +145,7 @@ We have no copies of your data on any server, because there is no server.
 
 ---
 
-## 5 · Your rights
+## 6 · Your rights
 
 Because your data lives only on your device, you already control all of it. You can:
 
@@ -144,13 +158,13 @@ If you want a copy of your data and the in-app tools aren't enough yet, write to
 
 ---
 
-## 6 · Children
+## 7 · Children
 
 Stet is not designed for or directed at children under 13. We do not knowingly collect data from children. If you're a parent and your child has used the app, uninstall it to wipe the data; there's nothing for us to delete on a server.
 
 ---
 
-## 7 · Security
+## 8 · Security
 
 We use Apple's standard on-device security: Keychain for credentials, Core Data + the iOS sandbox for receipts, HTTPS-only for the Gemini and DeepSeek API calls (enforced by Apple's ATS). We do not use any custom encryption layer beyond what iOS provides.
 
@@ -158,13 +172,13 @@ If your device is compromised, your local Stet data could be exposed. Use a pass
 
 ---
 
-## 8 · Changes to this policy
+## 9 · Changes to this policy
 
 If we change anything material — adding ads, adding analytics, adding a backend, changing third parties — we will update this page and bump the "Last updated" date at the top before the change ships in the app. For non-material changes (typo fixes, clarifications) we will update silently.
 
 ---
 
-## 9 · Contact
+## 10 · Contact
 
 Stet is built by Xinhong Zeng. For anything privacy-related (questions, requests, complaints, corrections), email **xuezh2008@gmail.com**.
 
