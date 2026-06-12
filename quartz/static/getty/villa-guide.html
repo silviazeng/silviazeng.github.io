@@ -11,36 +11,41 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  /* === SHARED PALETTE — kept identical across all four Getty guide pages
-     (center-guide / floorplans / villa-guide / villa-floorplans). === */
+  /* === VILLA PALETTE — bronze & verdigris on cool stone, deliberately
+     distinct from the warm cream+gold of the Center pages. === */
   /* Surfaces */
-  --bg:        #f9f5ea;
-  --bg2:       #f1ead8;
-  --line:      #d8cdb4;
+  --bg:        #6e3328;
+  --bg2:       #ece0c8;
+  --line:      #9a7a43;
   /* Text */
-  --ink:       #2a2218;
-  --ink2:      #4a3d2e;
-  --muted:     #6f5a3c;
+  --ink:       #2e2018;
+  --ink2:      #574031;
+  --muted:     #8a6f56;
   /* Brand */
-  --gold:      #b8923a;
-  --gold-lt:   #f5ecd2;
+  --gold:      #b5853c;
+  --gold-lt:   #f0e2c8;
   /* Section accents — Villa uses Level/Outdoor instead of Pavilion,
      but maps to the same CSS variables for consistency. */
-  --west:      #1a4f8c;
-  --west-lt:   #deeaf8;
-  --east:      #7a4010;
-  --east-lt:   #f8ead8;
-  --north:     #2a5c30;
-  --north-lt:  #e3ebdc;
-  --south:     #7a1e14;
-  --south-lt:  #f1d8d3;
-  --outdoor:   #1e4a30;
-  --outdoor-lt:#d4eedd;
+  --west:      #a23c2b;
+  --west-lt:   #f1d8cf;
+  --east:      #8a4a2a;
+  --east-lt:   #f0ddcf;
+  --north:     #5c6a33;
+  --north-lt:  #e6e9cf;
+  --south:     #7c2c33;
+  --south-lt:  #eed3d3;
+  --outdoor:   #5c6a33;
+  --outdoor-lt:#e6e9cf;
   /* Room-type legend */
   --room-paintings: #d7e0ec;
   --room-decarts:   #c8c4d8;
   --room-changing:  #f0d2a8;
   --room-special:   #d86b48;
+  --paper:     #f1e7d8;
+  --paper2:    #e9dcc7;
+  --paper-hi:  #faf4e8;
+  --on-red:    #f4e9d8;
+  --on-red-dim:#d9b791;
 }
 
 * { margin:0; padding:0; box-sizing:border-box; }
@@ -174,16 +179,16 @@ body {
   font-weight: 600;
   letter-spacing: 0.04em;
   color: var(--muted);
-  background: rgba(184,146,58,0.08);
+  background: rgba(181,133,60,0.08);
   border: 1.5px solid transparent;
   border-radius: 9px;
   -webkit-tap-highlight-color: transparent;
 }
 .mt-pill .mt-icon { font-size: 1rem; line-height: 1; }
-.mt-pill:hover { color: var(--gold); background: rgba(184,146,58,0.15); }
+.mt-pill:hover { color: var(--gold); background: rgba(181,133,60,0.15); }
 .mt-pill.active {
   background: var(--gold); color: #fff; border-color: var(--gold);
-  box-shadow: 0 2px 6px rgba(184,146,58,0.35);
+  box-shadow: 0 2px 6px rgba(181,133,60,0.35);
 }
 
 /* ===== STICKY NAV ===== */
@@ -274,13 +279,13 @@ body {
   letter-spacing: 0.05em;
   text-decoration: none !important;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(184,146,58,0.35);
+  box-shadow: 0 2px 8px rgba(181,133,60,0.35);
   transition: transform .15s ease, box-shadow .15s ease;
   -webkit-tap-highlight-color: transparent;
 }
 .to-map-btn:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 14px rgba(184,146,58,0.55);
+  box-shadow: 0 4px 14px rgba(181,133,60,0.55);
 }
 .to-map-btn .tmb-icon { font-size: 1.1rem; line-height: 1; }
 
@@ -604,6 +609,21 @@ footer strong { color: rgba(240,200,120,.6); }
   .card-body { padding: 1.2rem 1.4rem 1.6rem; }
 }
 
+
+/* ===== Pompeian red + paper — Villa identity (overrides shared chrome) ===== */
+.legend-link{ background: rgba(244,233,216,0.12); color: var(--on-red); }
+.mode-toggle{ background: var(--bg); border-bottom: 1px solid var(--line); }
+.mt-pill{ color: var(--on-red); background: rgba(244,233,216,0.10); }
+.mt-pill:hover{ color: #fff; background: rgba(244,233,216,0.18); }
+.mt-pill.active{ background: var(--gold); color: #3a2114; border-color: var(--gold); box-shadow: none; }
+.pav-nav{ background: var(--bg); border-bottom: 1px solid var(--line); }
+.pav-tab{ color: var(--on-red-dim); }
+.pav-tab:hover{ color: var(--on-red); }
+.pavilion{ background: var(--paper); color: var(--ink); margin: 14px 11px; border: 1px solid var(--line); border-radius: 16px; }
+.artwork-card{ background: var(--paper-hi); }
+.sub-list li{ background: var(--paper2); }
+.c-thumb{ background: var(--paper2); }
+.modal-box{ background: var(--paper-hi); }
 </style>
 </head>
 <body>
@@ -752,7 +772,7 @@ footer strong { color: rgba(240,200,120,.6); }
 </section>
 
 <!-- ======= 二楼 ======= -->
-<section class="pavilion" id="level2" style="background:var(--bg2)">
+<section class="pavilion" id="level2">
   <div class="pav-header" style="background:var(--south-lt); border-left:6px solid var(--south);">
     <div class="pav-badge" style="background:var(--south)">二</div>
     <div>

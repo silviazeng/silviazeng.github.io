@@ -40,35 +40,40 @@ villa-guide; this file's modals carry short blurbs.
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,700;1,400;1,500&display=swap" rel="stylesheet">
 <style>
 :root {
-  /* === SHARED PALETTE — kept identical across all four Getty guide pages
-     (center-guide / floorplans / villa-guide / villa-floorplans). === */
+  /* === VILLA PALETTE — bronze & verdigris on cool stone, deliberately
+     distinct from the warm cream+gold of the Center pages. === */
   /* Surfaces */
-  --bg:        #f9f5ea;
-  --bg2:       #f1ead8;
-  --line:      #d8cdb4;
+  --bg:        #6e3328;
+  --bg2:       #ece0c8;
+  --line:      #9a7a43;
   /* Text */
-  --ink:       #2a2218;
-  --ink2:      #4a3d2e;
-  --muted:     #6f5a3c;
+  --ink:       #2e2018;
+  --ink2:      #574031;
+  --muted:     #8a6f56;
   /* Brand */
-  --gold:      #b8923a;
-  --gold-lt:   #f5ecd2;
+  --gold:      #b5853c;
+  --gold-lt:   #f0e2c8;
   /* Section accents — Villa uses Level/Outdoor mapped to same CSS vars */
-  --west:      #1a4f8c;
-  --west-lt:   #deeaf8;
-  --east:      #7a4010;
-  --east-lt:   #f8ead8;
-  --north:     #2a5c30;
-  --north-lt:  #e3ebdc;
-  --south:     #7a1e14;
-  --south-lt:  #f1d8d3;
-  --outdoor:   #1e4a30;
-  --outdoor-lt:#d4eedd;
+  --west:      #a23c2b;
+  --west-lt:   #f1d8cf;
+  --east:      #8a4a2a;
+  --east-lt:   #f0ddcf;
+  --north:     #5c6a33;
+  --north-lt:  #e6e9cf;
+  --south:     #7c2c33;
+  --south-lt:  #eed3d3;
+  --outdoor:   #5c6a33;
+  --outdoor-lt:#e6e9cf;
   /* Room-type legend */
   --room-paintings: #d7e0ec;
   --room-decarts:   #c8c4d8;
   --room-changing:  #f0d2a8;
   --room-special:   #d86b48;
+  /* paper sheets + text on red */
+  --paper:     #f1e7d8;
+  --paper2:    #e9dcc7;
+  --on-red:    #f4e9d8;
+  --on-red-dim:#d9b791;
 }
 html { font-size: 24px; }
 * { box-sizing: border-box; }
@@ -259,8 +264,8 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 .visit-badge.shown { display: block; }
 .room-tint { fill: rgba(184, 146, 58, 0); pointer-events: none; transition: fill 0.3s; }
 .room-tint.shown { fill: rgba(184, 146, 58, 0.13); }
-.footprint { fill: #b8923a; opacity: 0.88; }
-.footprint ellipse, .footprint circle { fill: #b8923a; }
+.footprint { fill: #9a7a43; opacity: 0.88; }
+.footprint ellipse, .footprint circle { fill: #9a7a43; }
 
 /* Room-theme toast */
 .room-toast {
@@ -274,7 +279,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   background: var(--west);
   color: #fff;
   border-radius: 10px;
-  box-shadow: 0 8px 28px rgba(26, 79, 140, 0.4), 0 2px 8px rgba(0,0,0,0.15);
+  box-shadow: 0 8px 28px rgba(110, 51, 40, 0.45), 0 2px 8px rgba(0,0,0,0.15);
   font-family: 'Noto Sans SC', sans-serif;
   font-size: 0.78rem;
   text-align: center;
@@ -667,16 +672,16 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   font-weight: 600;
   letter-spacing: 0.04em;
   color: var(--muted);
-  background: rgba(184,146,58,0.08);
+  background: rgba(181,133,60,0.08);
   border: 1.5px solid transparent;
   border-radius: 9px;
   -webkit-tap-highlight-color: transparent;
 }
 .mt-pill .mt-icon { font-size: 1rem; line-height: 1; }
-.mt-pill:hover { color: var(--gold); background: rgba(184,146,58,0.15); }
+.mt-pill:hover { color: var(--gold); background: rgba(181,133,60,0.15); }
 .mt-pill.active {
   background: var(--gold); color: #fff; border-color: var(--gold);
-  box-shadow: 0 2px 6px rgba(184,146,58,0.35);
+  box-shadow: 0 2px 6px rgba(181,133,60,0.35);
 }
 
 .sticky-top {
@@ -786,7 +791,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   width: 46px;
   height: 46px;
   border-radius: 50%;
-  background: rgba(184,146,58,.18);
+  background: rgba(181,133,60,.18);
   color: var(--gold);
   display: inline-flex;
   align-items: center;
@@ -859,7 +864,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   text-transform: uppercase;
   font-weight: 700;
   padding: 0.8rem 1.1rem 0.3rem;
-  background: rgba(184,146,58,.06);
+  background: rgba(181,133,60,.06);
   font-family: 'Noto Sans SC', sans-serif;
 }
 .ash-floor-label.south { color: var(--south); }
@@ -883,7 +888,7 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
   flex: 0 0 auto;
   font-size: 0.6rem; color: var(--gold);
   font-weight: 700; letter-spacing: 0.08em;
-  background: rgba(184,146,58,.12);
+  background: rgba(181,133,60,.12);
   padding: 0.18rem 0.45rem;
   border-radius: 3px;
 }
@@ -908,6 +913,44 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
 }
 
 #card-pool { display: none; }
+
+/* ===== Pompeian red + paper — Villa identity (overrides shared chrome) ===== */
+.page-header{ background: var(--bg); border-bottom: 1px solid var(--line); }
+.page-header .page-title{ color: var(--on-red); }
+.page-header .page-title em, .page-header .page-eyebrow{ color: var(--gold); }
+.page-header .page-desc{ color: var(--on-red-dim); }
+.page-header .back-link{ color: var(--on-red-dim); }
+.page-header .back-link:hover{ color: var(--on-red); }
+.loc-widget{ background: rgba(244,233,216,0.10); border: 1px solid rgba(244,233,216,0.28); border-radius: 8px; color: var(--on-red); }
+.loc-widget .loc-text{ color: var(--on-red); }
+.loc-widget .loc-pin{ color: var(--gold); }
+.loc-btn{ color: var(--on-red-dim); border-color: rgba(244,233,216,0.32); }
+.loc-btn:hover:not(.active){ color: var(--on-red); border-color: var(--on-red); }
+.loc-btn.active{ background: var(--gold); border-color: var(--gold); color: #3a2114; }
+.floor-section{ background: var(--paper); color: var(--ink); margin: 14px 11px; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.floor-section.alt{ background: var(--paper); }
+.outdoor-section{ background: var(--paper); color: var(--ink); margin: 14px 11px; border: 1px solid var(--line); border-radius: 16px; }
+.floor-section .floor-plan, .floor-section.alt .floor-plan{ background: var(--paper2); border-color: var(--line); }
+.floor-svg-wrap{ background: var(--paper2); border-color: var(--line); }
+.mode-toggle{ background: var(--bg); border-bottom: 1px solid var(--line); }
+.mt-pill{ color: var(--on-red); background: rgba(244,233,216,0.10); }
+.mt-pill:hover{ color: #fff; background: rgba(244,233,216,0.18); }
+.mt-pill.active{ background: var(--gold); color: #3a2114; border-color: var(--gold); box-shadow: none; }
+.sticky-top{ background: var(--bg); border-bottom: 1px solid var(--line); }
+.st-chip{ background: var(--paper); border-color: rgba(46,32,24,0.20); color: var(--ink); }
+.st-chip .stc-pav{ color: var(--muted); }
+.action-bar{ background: var(--bg); border-top: 2px solid var(--gold); }
+.ab-btn{ color: var(--on-red-dim); }
+.ab-btn .ab-icon{ background: rgba(244,233,216,0.14); color: var(--on-red); }
+.ab-btn:hover{ color: var(--on-red); }
+.ab-btn:hover .ab-icon{ background: rgba(244,233,216,0.22); color: #fff; }
+.ab-btn.active{ color: var(--gold); }
+.ab-btn.active .ab-icon{ background: var(--gold); color: #3a2114; }
+.ab-btn[disabled] .ab-icon{ background: rgba(244,233,216,0.10); color: var(--on-red-dim); }
+.modal-content{ background: var(--paper); }
+.art-sheet{ background: var(--paper); }
+.ash-item:hover{ background: var(--paper2); }
+.ashi-thumb{ background: var(--paper2); }
 </style>
 </head>
 <body>
@@ -993,12 +1036,12 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
         </g>
 
         <g class="visit-badges" font-family="sans-serif" font-size="17" font-weight="700">
-          <g class="visit-badge" data-room="G101" transform="translate(59,262)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
-          <g class="visit-badge" data-room="G103" transform="translate(59,124)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
-          <g class="visit-badge" data-room="G104" transform="translate(135,124)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
-          <g class="visit-badge" data-room="G106" transform="translate(295,54)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
-          <g class="visit-badge" data-room="G108" transform="translate(427,42)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
-          <g class="visit-badge" data-room="G110" transform="translate(625,155)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="G101" transform="translate(59,262)"><circle r="15" fill="#9a7a43" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="G103" transform="translate(59,124)"><circle r="15" fill="#9a7a43" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="G104" transform="translate(135,124)"><circle r="15" fill="#9a7a43" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="G106" transform="translate(295,54)"><circle r="15" fill="#9a7a43" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="G108" transform="translate(427,42)"><circle r="15" fill="#9a7a43" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="G110" transform="translate(625,155)"><circle r="15" fill="#9a7a43" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
         </g>
 
         <g class="room-tints" pointer-events="none">
@@ -1126,11 +1169,11 @@ em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 
         </g>
 
         <g class="visit-badges" font-family="sans-serif" font-size="17" font-weight="700">
-          <g class="visit-badge" data-room="G207" transform="translate(44,129)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
-          <g class="visit-badge" data-room="G203" transform="translate(492,46)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
-          <g class="visit-badge" data-room="G208" transform="translate(70,288)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
-          <g class="visit-badge" data-room="G211" transform="translate(284,487)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
-          <g class="visit-badge" data-room="G214" transform="translate(594,525)"><circle r="15" fill="#b8923a" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="G207" transform="translate(44,129)"><circle r="15" fill="#9a7a43" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="G203" transform="translate(492,46)"><circle r="15" fill="#9a7a43" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="G208" transform="translate(70,288)"><circle r="15" fill="#9a7a43" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="G211" transform="translate(284,487)"><circle r="15" fill="#9a7a43" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
+          <g class="visit-badge" data-room="G214" transform="translate(594,525)"><circle r="15" fill="#9a7a43" stroke="#fff" stroke-width="2.5"/><text y="5" text-anchor="middle" fill="#fff">1</text></g>
         </g>
 
         <g class="room-tints" pointer-events="none">
