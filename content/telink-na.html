@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>赢下北美 · 泰凌微机会与打法</title>
+<style>
+  :root{
+    --ink:#1a2230; --muted:#5b6675; --line:#e2e6ec; --bg:#fbfaf7;
+    --accent:#c0392b; --accent2:#1f6f8b; --gold:#b8860b; --card:#ffffff;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:-apple-system,"PingFang SC","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink);background:#eceae4;line-height:1.5;-webkit-font-smoothing:antialiased}
+  .deck{scroll-snap-type:y mandatory;overflow-y:scroll;height:100vh}
+  .slide{scroll-snap-align:start;min-height:100vh;display:flex;flex-direction:column;justify-content:center;
+    padding:6vh 7vw;position:relative;background:var(--bg);border-bottom:1px solid #d8d5cd}
+  .slide::before{content:attr(data-n);position:absolute;top:4.5vh;right:7vw;font-size:12px;letter-spacing:.15em;
+    color:var(--muted);font-weight:600}
+  .kicker{font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:14px}
+  h1{font-size:clamp(30px,4.4vw,58px);line-height:1.1;font-weight:800;letter-spacing:-.01em}
+  h2{font-size:clamp(24px,3.1vw,40px);line-height:1.12;font-weight:800;letter-spacing:-.01em;margin-bottom:6px}
+  .sub{color:var(--muted);font-size:clamp(15px,1.5vw,19px);margin-top:14px;max-width:62ch}
+  .rule{width:64px;height:4px;background:var(--accent);margin:22px 0}
+  .grid{display:grid;gap:18px;margin-top:24px}
+  .g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:1fr 1fr 1fr}.g4{grid-template-columns:repeat(4,1fr)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 22px;
+    box-shadow:0 1px 2px rgba(20,30,50,.03)}
+  .card h3{font-size:14px;letter-spacing:.04em;color:var(--accent2);font-weight:700;margin-bottom:8px;text-transform:uppercase}
+  .card p{font-size:15px;color:#333c49}
+  .big{font-size:clamp(24px,2.8vw,34px);font-weight:800;letter-spacing:-.02em;line-height:1}
+  .big small{font-size:14px;font-weight:600;color:var(--muted);letter-spacing:0}
+  ul{list-style:none;margin-top:18px}
+  li{position:relative;padding-left:26px;margin:11px 0;font-size:clamp(15px,1.5vw,18px);max-width:66ch}
+  li::before{content:"";position:absolute;left:2px;top:.6em;width:8px;height:8px;background:var(--accent);border-radius:2px;transform:rotate(45deg)}
+  li b{color:var(--ink)}
+  table{width:100%;border-collapse:collapse;margin-top:22px;font-size:clamp(12px,1.3vw,15px);background:var(--card);
+    border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  th,td{padding:12px 15px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+  thead th{background:#1a2230;color:#fff;font-weight:700;letter-spacing:.02em}
+  thead th:first-child{background:#0f1620}
+  tbody tr:last-child td{border-bottom:none}
+  td:first-child{font-weight:700;color:var(--ink);white-space:nowrap}
+  .col-tl{color:var(--accent);font-weight:700}
+  .takeaway{margin-top:22px;padding:15px 20px;background:#f4ece1;border-left:4px solid var(--gold);border-radius:0 8px 8px 0;
+    font-size:clamp(15px,1.55vw,19px);color:#4a3d22;font-weight:600;max-width:74ch}
+  .takeaway b{color:#7a5e12}
+  .foot{position:absolute;bottom:3.4vh;left:7vw;right:7vw;font-size:11px;color:#98a0ac;border-top:1px solid var(--line);padding-top:8px;display:flex;justify-content:space-between;gap:10px}
+  .foot span{font-weight:700;color:var(--muted)}
+  .cover{background:linear-gradient(160deg,#12212e 0%,#1a2f3a 55%,#243b42 100%);color:#f4f2ec}
+  .cover .kicker{color:#e0a96d}
+  .cover h1{color:#fff;max-width:18ch}
+  .cover .sub{color:#c8d2d8}
+  .cover .rule{background:#e0a96d}
+  .cover .meta{margin-top:34px;font-size:15px;color:#9fb0b8;letter-spacing:.02em}
+  .cover .foot{color:#7d8f97;border-color:#2c4550}
+  .lead{font-size:clamp(17px,1.95vw,24px);color:#2a3442;max-width:60ch;margin-top:10px;line-height:1.45}
+  .hl{background:linear-gradient(transparent 60%,#f6e3b8 60%);padding:0 2px}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:34px;align-items:start;margin-top:20px}
+  .phase{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 22px}
+  .phase h3{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);font-weight:800;margin-bottom:4px}
+  .phase .when{font-size:12px;color:var(--muted);margin-bottom:12px}
+  .phase li{font-size:15px;margin:8px 0}
+  .note{font-size:13px;color:var(--muted);margin-top:14px;font-style:italic;max-width:70ch}
+  .nav{position:fixed;right:18px;bottom:16px;z-index:20;display:flex;gap:6px}
+  .nav button{width:34px;height:34px;border:1px solid #cfd4db;background:#fff;border-radius:8px;font-size:15px;cursor:pointer;color:var(--ink)}
+  .nav button:hover{background:var(--ink);color:#fff}
+  .hint{position:fixed;left:18px;bottom:18px;z-index:20;font-size:11px;color:#8a93a0}
+  @media print{
+    body,.deck{height:auto;overflow:visible}
+    .slide{min-height:0;height:100vh;page-break-after:always;border:none}
+    .nav,.hint{display:none}
+    @page{size:1280px 720px;margin:0}
+  }
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+  <!-- 1 COVER -->
+  <section class="slide cover" data-n="">
+    <div class="kicker">面试交流 · 一个局外人的观察</div>
+    <h1>赢下北美市场</h1>
+    <div class="rule"></div>
+    <p class="sub">泰凌的机会、竞争格局，与一套把"设计中标"变成"稳定订单"的打法</p>
+    <div class="meta">Silvia Zeng　·　应聘 北美市场（Marketing / Program Management）</div>
+    <div class="foot"><span>Telink Semiconductor · 688591</span><span>全部基于公开资料</span></div>
+  </section>
+
+  <!-- 2 THE PRIZE -->
+  <section class="slide" data-n="02">
+    <div class="kicker">为什么北美值得重投</div>
+    <h2>北美，是泰凌利润与确定性的高地</h2>
+    <div class="rule"></div>
+    <div class="grid g4">
+      <div class="card"><h3>更值钱</h3><div class="big">~57%<small> 境外毛利</small></div><p style="margin-top:8px">vs 境内 ~46% — 每一单更赚钱</p></div>
+      <div class="card"><h3>更稳</h3><div class="big">认证壁垒</div><p style="margin-top:8px">海外客户换供应商慢 → 进入即黏住</p></div>
+      <div class="card"><h3>已成规模</h3><div class="big">~42%<small> 营收来自境外</small></div><p style="margin-top:8px">增速 +43%，快于境内</p></div>
+      <div class="card"><h3>战略重心</h3><div class="big">向海外</div><p style="margin-top:8px">EdgeAI + 磐启微并购 + 港股</p></div>
+    </div>
+    <div class="takeaway">对公司而言，北美不是"多卖一点"，而是 <b>卖得更贵、更稳、更久</b> —— 所以值得把资源和最好的执行放在这里。</div>
+    <div class="foot"><span>来源：泰凌 2024 年报</span><span>公司视角</span></div>
+  </section>
+
+  <!-- 3 EXISTING FOOTHOLD -->
+  <section class="slide" data-n="03">
+    <div class="kicker">手里已有的牌</div>
+    <h2>进北美，泰凌不是从零开始</h2>
+    <div class="rule"></div>
+    <div class="grid g2">
+      <div class="card"><h3>已有的设计中标</h3><p><b>Google</b>（Android TV 参考遥控器，官方源码可查）· <b>Amazon</b>（Sidewalk 合格硅厂）· <b>Logitech</b>（外设，拆解可证）· JBL / Sony / Lenovo</p></div>
+      <div class="card"><h3>落地的实体与渠道</h3><p>硅谷 <b>Santa Clara 办公室</b> + 北美独立代理商网络（AEM / HARPER AND TWO / TAM 等覆盖各区）</p></div>
+      <div class="card"><h3>生态位置</h3><p><b>蓝牙 SIG 董事会中唯一的中国企业</b>；全球首个获<b>蓝牙 6.0 认证</b>的非手机芯片公司</p></div>
+      <div class="card"><h3>增长引擎</h3><p><b>TL-EdgeAI 端侧 AI 平台</b>已量产，兼容 Google LiteRT / TVM / TensorFlow / PyTorch</p></div>
+    </div>
+    <div class="takeaway">底子已经很硬 —— 真正的问题不是"能不能进"，而是 <b>如何更快地把这些优势，变成更多的设计中标</b>。</div>
+    <div class="foot"><span>来源：Google Android 源码 · Amazon Sidewalk · FCC/拆解 · 泰凌年报/官网</span><span>均公开可证实</span></div>
+  </section>
+
+  <!-- 4 COMPETITION -->
+  <section class="slide" data-n="04">
+    <div class="kicker">要赢，先看清坐标</div>
+    <h2>Nordic 是对手，Silicon Labs 是标杆</h2>
+    <div class="rule" style="margin:16px 0"></div>
+    <table>
+      <thead><tr><th></th><th class="col-tl">Telink 泰凌</th><th>Nordic（正面竞争）</th><th>Silicon Labs（对标愿景）</th></tr></thead>
+      <tbody>
+        <tr><td>定位</td><td class="col-tl">消费 BLE/2.4G · 性价比+齐全</td><td>消费 BLE 龙头（价值份额 ~43%）</td><td>多协议 · 偏工业/商用 · 高毛利</td></tr>
+        <tr><td>端侧 AI</td><td class="col-tl">TL-EdgeAI + TL721X</td><td>Axon NPU + 收购 Neuton.AI</td><td>首个带专用 AI 加速器的无线 SoC</td></tr>
+        <tr><td>毛利率</td><td class="col-tl">~48%</td><td>~51%</td><td>目标 56–58%</td></tr>
+        <tr><td>海外 GTM</td><td class="col-tl">大客户直销 + FAE + 代理商</td><td>直销 + 分销</td><td>直销/FAE 打 Tier-1，分销打长尾</td></tr>
+      </tbody>
+    </table>
+    <div class="takeaway"><b>打法：</b>短期，以性价比 + 产品齐全度 + 本地化交付，正面咬住 Nordic 的走量订单；长期，沿 Silicon Labs 的 portfolio 往更高价值走（CEO 本人出自 SiLabs）。</div>
+    <div class="foot"><span>来源：Omdia / DNB Markets · Silicon Labs 2025 Analyst Day</span><span>口径：价值份额</span></div>
+  </section>
+
+  <!-- 5 THE INSIGHT -->
+  <section class="slide" data-n="05">
+    <div class="kicker">真正的胜负手</div>
+    <h2>赢北美订单，卡的往往不是芯片</h2>
+    <div class="rule"></div>
+    <p class="lead">泰凌的芯片已经足够好、客户也足够大。真正拉慢获客的，是 <span class="hl">中国工厂 ↔ 北美客户之间那条"信息与信任"的通路</span>。</p>
+    <ul>
+      <li>海外客户要的是 <b>精准、稳定</b> 的产品与供货信息：documentation、规格稳定性、可兑现的交付承诺</li>
+      <li>中美之间"说话口径"不一致 → 拍胸脯承诺的产品，与实际能交付的，常隔 <b>12–18 个月</b></li>
+      <li>销售倾向"卖 future"、工厂倾向"含糊乐观" → 信任受损、认证周期被拖长</li>
+    </ul>
+    <div class="takeaway"><b>一句话：</b>好芯片 + 断掉的通路 = 慢获客。<b>补上这条通路，是杠杆最高的胜负手</b> —— 而且它不需要更强的芯片，需要更强的执行。</div>
+    <div class="foot"><span>综合行业惯例与公开访谈/研报</span><span>公司视角 · 洞察</span></div>
+  </section>
+
+  <!-- 6 THE PLAYBOOK -->
+  <section class="slide" data-n="06">
+    <div class="kicker">怎么打</div>
+    <h2>用 Program Management 把"通路"补上</h2>
+    <div class="rule"></div>
+    <div class="two">
+      <div class="phase"><h3>设计中标之前</h3><div class="when">Drive customers toward design-win</div>
+        <ul>
+          <li>为每个客户设定清晰目标与 finish line（"拿下 2026 的设计"）</li>
+          <li>管理 promotion / 沟通 / 样片交付，每次会议向目标 progressively 推进</li>
+          <li>把工厂能力翻译成客户听得懂、且能兑现的承诺</li>
+        </ul>
+      </div>
+      <div class="phase"><h3>设计中标之后</h3><div class="when">Plan production, keep the customer</div>
+        <ul>
+          <li>Forecast、备货、定价、质量、供货节奏（订单暴涨时的分批交付）</li>
+          <li>成为客户采购眼里"可信的信息源"</li>
+          <li>信任 → 拿下这个客户未来的所有订单</li>
+        </ul>
+      </div>
+    </div>
+    <div class="takeaway"><b>目标：</b>让销售对客户的每一个承诺，背后都有可交付的底气；<b>增量抓手</b> —— 用 EdgeAI 对现有大客户（遥控 / CGM / 音频）做向上加值。</div>
+    <div class="foot"><span>行业 program-management 通行做法</span><span>公司视角 · 打法</span></div>
+  </section>
+
+  <!-- 7 EDGE AI VECTOR -->
+  <section class="slide" data-n="07">
+    <div class="kicker">一条增量赛道</div>
+    <h2>端侧 AI：泰凌与全行业的下一步</h2>
+    <div class="rule"></div>
+    <p class="lead">全球大部分 AI 推理正在向设备端下沉 —— 更省电、省频谱、降本、隐私。这是无线 SoC 的新战场，三家都在抢。</p>
+    <div class="grid g3" style="margin-top:20px">
+      <div class="card"><h3 style="color:var(--accent)">Telink</h3><p>TL-EdgeAI + TL721X，兼容主流开源模型，端侧 AI 芯片已规模量产。</p></div>
+      <div class="card"><h3>Nordic</h3><p>Axon NPU（nRF54）+ 收购 TinyML 公司 Neuton.AI。</p></div>
+      <div class="card"><h3>Silicon Labs</h3><p>首个带专用 AI 加速器的无线 SoC；断路器案例用它替掉了竞品 MCU。</p></div>
+    </div>
+    <div class="takeaway"><b>对北美市场的意义：</b>把 EdgeAI 讲清楚、对上客户的真实需求（TWS 降噪 / 语音唤醒 / 健康监测），是<b>差异化获客</b>的抓手 —— 也是遥控/CGM 存量客户的升级机会。</div>
+    <div class="foot"><span>来源：Silicon Labs 2025 Analyst Day · 泰凌年报 · Nordic IR</span><span>公司视角 · 机会</span></div>
+  </section>
+
+  <!-- 8 WHERE I HELP (modest, last) -->
+  <section class="slide cover" data-n="08">
+    <div class="kicker">最后，说说我能帮上哪一段</div>
+    <h2 style="color:#fff;max-width:22ch">如果我在这个团队，<br>我想先补的是"通路"这一段</h2>
+    <div class="rule"></div>
+    <p class="sub" style="color:#d3dde2;max-width:64ch">我不是半导体人。但上面那条"中国工厂 ↔ 北美客户"的通路 —— 跨境执行、和高管/采购把复杂信息拧清楚、以及能和客户聊端侧 AI —— 恰好是我过去十来年一直在做的事。</p>
+    <div class="grid g3" style="margin-top:24px">
+      <div class="card" style="background:#16303a;border-color:#2c4550"><h3 style="color:#e0a96d">跨中美落地</h3><p style="color:#d3dde2">在快手拉齐中美两地团队；在 Indigo 把产品上市周期缩短 14%。</p></div>
+      <div class="card" style="background:#16303a;border-color:#2c4550"><h3 style="color:#e0a96d">高管/采购沟通</h3><p style="color:#d3dde2">中金 5 年、$50B+ 交易执行，习惯在复杂信息里对齐各方。</p></div>
+      <div class="card" style="background:#16303a;border-color:#2c4550"><h3 style="color:#e0a96d">端侧 AI 能对话</h3><p style="color:#d3dde2">VC 评估 100+ AI 项目 + 自学 ML —— 不是背 PPT。</p></div>
+    </div>
+    <p class="sub" style="color:#c8d2d8;margin-top:22px;max-width:66ch"><b style="color:#fff">诚实的 gap 与计划：</b>半导体 domain 我还要补 —— 我会用一贯的方法：前 90 天驻上海工厂 + 系统访谈，把产品与供应链摸透，再回来支持北美。</p>
+    <div class="foot"><span>Silvia Zeng · 泰凌微 北美市场岗</span><span>谢谢 · Thank you</span></div>
+  </section>
+
+</div>
+
+<div class="nav"><button onclick="move(-1)">↑</button><button onclick="move(1)">↓</button></div>
+<div class="hint">↑ / ↓ 或空格翻页 · 浏览器「打印 → 存为 PDF」即可导出</div>
+<script>
+  const slides=[...document.querySelectorAll('.slide')];let i=0;
+  function go(n){i=Math.max(0,Math.min(slides.length-1,n));slides[i].scrollIntoView({behavior:'smooth'});}
+  function move(d){go(i+d);}
+  addEventListener('keydown',e=>{
+    if(['ArrowDown','PageDown',' '].includes(e.key)){e.preventDefault();move(1);}
+    if(['ArrowUp','PageUp'].includes(e.key)){e.preventDefault();move(-1);}
+  });
+  const deck=document.getElementById('deck');
+  deck.addEventListener('scroll',()=>{i=Math.round(deck.scrollTop/innerHeight);},{passive:true});
+</script>
+</body>
+</html>
