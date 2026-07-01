@@ -294,8 +294,63 @@
     <div class="foot"><span>*现供应商为公开拆解/行业报道口径，非官方披露 · ✓来源：招股书客户名单/Google 源码</span><span>目标客户地图</span></div>
   </section>
 
-  <!-- 11 CLOSING SEQUENCE -->
+  <!-- 11 VALUE DELIVERY: CROSSING THE CHASM -->
   <section class="slide" data-n="11">
+    <div class="kicker">价值交付 · Crossing the Chasm——生态 Gap 的深层机制</div>
+    <h2>新品类在曲线左端诞生，而泰凌住在右端</h2>
+    <div class="rule" style="margin:8px 0"></div>
+    <svg viewBox="0 0 1000 400" role="img" aria-label="跨越鸿沟采用曲线">
+      <line x1="60" y1="330" x2="960" y2="330" stroke="#b7bcc4" stroke-width="2"/>
+      <!-- pre-chasm bump -->
+      <path d="M 90 328 C 200 328 280 300 380 235 L 380 330 Z" fill="#1f6f8b" opacity=".25"/>
+      <path d="M 90 328 C 200 328 280 300 380 235" fill="none" stroke="#1f6f8b" stroke-width="2.5"/>
+      <line x1="382" y1="225" x2="382" y2="330" stroke="#1a2230" stroke-width="2"/>
+      <!-- chasm -->
+      <text x="410" y="315" text-anchor="middle" font-size="13" font-weight="800" fill="#a5281b">鸿沟</text>
+      <!-- main bell -->
+      <line x1="438" y1="225" x2="438" y2="330" stroke="#1a2230" stroke-width="2"/>
+      <path d="M 438 328 C 520 300 560 120 660 105 C 770 95 830 250 940 322" fill="#c0392b" opacity=".14"/>
+      <path d="M 438 328 C 520 300 560 120 660 105 C 770 95 830 250 940 322" fill="none" stroke="#c0392b" stroke-width="2.5"/>
+      <!-- stage labels -->
+      <text x="180" y="60" text-anchor="middle" font-size="13.5" font-weight="700" fill="#1f6f8b">领先用户 · 早期采用者</text>
+      <text x="180" y="80" text-anchor="middle" font-size="11.5" fill="#33627a">开发者/创业公司在这里选型原型</text>
+      <text x="180" y="97" text-anchor="middle" font-size="11.5" font-weight="700" fill="#33627a">= Nordic/SiLabs 生态孵化区</text>
+      <text x="690" y="52" text-anchor="middle" font-size="13.5" font-weight="700" fill="#c0392b">早期大众 · 晚期大众 · 落后者</text>
+      <text x="690" y="72" text-anchor="middle" font-size="11.5" fill="#7c3a33">大 OEM，看成本/供应/交付确定性</text>
+      <text x="690" y="89" text-anchor="middle" font-size="11.5" font-weight="700" fill="#7c3a33">= 泰凌的根据地（遥控/键鼠/价签）</text>
+      <!-- bridge arrow -->
+      <defs><marker id="br" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#b8860b"/></marker></defs>
+      <path d="M 330 190 C 380 140 440 140 500 165" fill="none" stroke="#b8860b" stroke-width="2.6" stroke-dasharray="7 5" marker-end="url(#br)"/>
+      <text x="415" y="128" text-anchor="middle" font-size="12.5" font-weight="800" fill="#b8860b">泰凌的过桥机制：锚客户"整体产品"</text>
+      <text x="415" y="145" text-anchor="middle" font-size="11" fill="#8a6a12">平台方定义参考设计（Google RCU 模式）→ 大众 OEM 直接采用</text>
+      <text x="510" y="358" text-anchor="start" font-size="11" fill="#98a0ac">采用者数量 · Rogers/Moore 采用曲线</text>
+    </svg>
+    <div class="takeaway"><b>诊断：</b>明天的高价值设计（医疗、新 AIoT 品类）都在<b>左端</b>用最好用的 SDK 做原型，然后被转换成本锁死——泰凌缺席左端，等于每个新品类都<b>晚一个身位入场、只能拼成本</b>。<b>处方：</b>端侧 AI 现在正处鸿沟左侧——泰凌不必花五年复制 DevZone，它已验证的过桥方式是<b>与平台方共建"整体产品"</b>（Google 模式复制到 Amazon/运营商），再选一个滩头品类（智能语音遥控 / CGM）打穿。</div>
+    <div class="foot"><span>框架：Moore, Crossing the Chasm · 定位为定性判断</span><span>价值交付视角</span></div>
+  </section>
+
+  <!-- 12 VALUE CAPTURE: TEECE -->
+  <section class="slide" data-n="12">
+    <div class="kicker">价值捕获 · Teece 框架——收购进新市场，该买什么</div>
+    <h2>排他性弱的行业，赢家是互补资产的所有者</h2>
+    <div class="rule" style="margin:8px 0"></div>
+    <table>
+      <thead><tr><th style="width:16%">谁能赚走创新的钱？</th><th>互补资产<b>不</b>关键</th><th>互补资产<b>关键</b>（渠道/认证/生态/合格供应商资格）</th></tr></thead>
+      <tbody>
+        <tr><td>技术<b>难</b>排他<br>（标准化、易模仿）</td><td>拼速度与成本 —— <b>中国 BLE 内卷区</b>（遥控/键鼠走量段）</td><td class="col-tl"><b>互补资产所有者赢 → Go Vertical / 买资产</b><br>⟵ BLE 高价值段（医疗/工业/平台生态）正在此格</td></tr>
+        <tr><td>技术<b>可</b>排他<br>（专利/工艺独占）</td><td>Greenfield 自建即可</td><td>与资产方合作（co-vertical）；纯 License 输出<b>通常无效</b></td></tr>
+      </tbody>
+    </table>
+    <div class="grid g3" style="margin-top:14px">
+      <div class="card"><h3>为什么解释力强</h3><p>BLE 是<b>蓝牙 SIG 标准</b>行业：人人同一套协议，硅片必然趋同 → 排他性天生弱。这就是"硅片已同代、营收差 7 倍"的理论根源——<b>钱流向了 SDK 生态、认证资格、渠道这些互补资产</b>（Nordic 的 DevZone、SiLabs 的每年千余软件特性）。</p></div>
+      <div class="card" style="border-top:3px solid var(--accent)"><h3 style="color:var(--accent)">对收购扩张的指引</h3><p>按 Teece，进新市场的收购应<b>买互补资产，而非更多技术</b>：医疗 → 带认证与合格供应商资格的模组厂/设计公司；欧洲工业 → 有本地渠道与客户存量的 design house；平台层 → 软件/工具团队。磐启微补的是<b>产品广度</b>，下一步该补"资产"。</p></div>
+      <div class="card"><h3>自建 vs 合作 vs 收购</h3><p>走量段：已有 ODM 资产，<b>自建收割</b>；EdgeAI：借平台方资产 <b>co-vertical</b>（Google/Amazon 锚客户）；医疗/欧洲工业：资产专用性高、自建太慢，<b>收购/合资优先</b>。纯授权 IP 输出在本行业基本不成立。</p></div>
+    </div>
+    <div class="foot"><span>框架：Teece (1986), Profiting from Technological Innovation · 应用为定性判断</span><span>价值捕获视角 · M&amp;A 路线</span></div>
+  </section>
+
+  <!-- 13 CLOSING SEQUENCE -->
+  <section class="slide" data-n="13">
     <div class="kicker">优先级 · 按投入产出排序补 Gap</div>
     <h2>快变量 → 中变量 → 慢变量</h2>
     <div class="rule" style="margin:8px 0"></div>
@@ -311,8 +366,8 @@
     <div class="foot"><span>框架：Gap-closing sequence · 时间/投入为定性估计</span><span>快变量优先</span></div>
   </section>
 
-  <!-- 12 SWOT -->
-  <section class="slide" data-n="12">
+  <!-- 14 SWOT -->
+  <section class="slide" data-n="14">
     <div class="kicker">汇总 · 泰凌美欧市场 SWOT（以 Gap 视角重排）</div>
     <h2>方向已定，差距可拆，次序清楚</h2>
     <div class="rule" style="margin:8px 0"></div>
@@ -341,8 +396,8 @@
     <div class="foot"><span>框架：SWOT · 均基于公开信息</span><span>美欧视角</span></div>
   </section>
 
-  <!-- 13 CLOSE -->
-  <section class="slide cover" data-n="13">
+  <!-- 15 CLOSE -->
+  <section class="slide cover" data-n="15">
     <div class="kicker">收束 · 一页答案</div>
     <h2 style="color:#fff;max-width:26ch">Telink 的 Gap：不在硅片，在商业化的三层楼</h2>
     <div class="rule"></div>
