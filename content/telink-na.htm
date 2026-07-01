@@ -4,33 +4,33 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
-<title>北美低功耗无线 SoC · 竞争格局分析</title>
+<title>全球 BLE 竞争格局 · 北美与欧洲市场分析</title>
 <style>
   :root{--ink:#1a2230;--muted:#5b6675;--line:#e2e6ec;--bg:#fbfaf7;--accent:#c0392b;--accent2:#1f6f8b;--gold:#b8860b;--card:#fff;--soft:#f4ece1}
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
-  body{font-family:-apple-system,"PingFang SC","Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:#eceae4;line-height:1.48;-webkit-font-smoothing:antialiased}
+  body{font-family:-apple-system,"PingFang SC","Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:#eceae4;line-height:1.46;-webkit-font-smoothing:antialiased}
   .deck{scroll-snap-type:y mandatory;overflow-y:scroll;height:100vh}
-  .slide{scroll-snap-align:start;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:5.5vh 6vw;position:relative;background:var(--bg);border-bottom:1px solid #d8d5cd}
-  .slide::before{content:attr(data-n);position:absolute;top:4vh;right:6vw;font-size:11px;letter-spacing:.15em;color:var(--muted);font-weight:600}
-  .kicker{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:12px}
+  .slide{scroll-snap-align:start;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:5vh 6vw;position:relative;background:var(--bg);border-bottom:1px solid #d8d5cd}
+  .slide::before{content:attr(data-n);position:absolute;top:3.6vh;right:6vw;font-size:11px;letter-spacing:.15em;color:var(--muted);font-weight:600}
+  .kicker{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:10px}
   h1{font-size:clamp(28px,4.2vw,54px);line-height:1.08;font-weight:800;letter-spacing:-.01em}
-  h2{font-size:clamp(22px,2.9vw,38px);line-height:1.12;font-weight:800;letter-spacing:-.01em;margin-bottom:4px}
-  .sub{color:var(--muted);font-size:clamp(14px,1.5vw,19px);margin-top:12px;max-width:64ch}
-  .rule{width:60px;height:4px;background:var(--accent);margin:18px 0}
-  .grid{display:grid;gap:14px;margin-top:18px}
+  h2{font-size:clamp(21px,2.8vw,36px);line-height:1.12;font-weight:800;letter-spacing:-.01em;margin-bottom:4px}
+  .sub{color:var(--muted);font-size:clamp(14px,1.5vw,18px);margin-top:12px;max-width:66ch}
+  .rule{width:60px;height:4px;background:var(--accent);margin:14px 0}
+  .grid{display:grid;gap:13px;margin-top:16px}
   .g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:1fr 1fr 1fr}.g4{grid-template-columns:repeat(4,1fr)}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:16px 18px;box-shadow:0 1px 2px rgba(20,30,50,.03)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:15px 17px;box-shadow:0 1px 2px rgba(20,30,50,.03)}
   .card h3{font-size:13px;letter-spacing:.03em;color:var(--accent2);font-weight:700;margin-bottom:6px;text-transform:uppercase}
   .card p{font-size:14px;color:#333c49}
-  .big{font-size:clamp(22px,2.6vw,32px);font-weight:800;letter-spacing:-.02em;line-height:1}
-  .big small{font-size:13px;font-weight:600;color:var(--muted)}
-  ul{list-style:none;margin-top:14px}
-  li{position:relative;padding-left:24px;margin:9px 0;font-size:clamp(14px,1.45vw,17px);max-width:70ch}
-  li::before{content:"";position:absolute;left:2px;top:.6em;width:7px;height:7px;background:var(--accent);border-radius:2px;transform:rotate(45deg)}
+  .big{font-size:clamp(21px,2.5vw,30px);font-weight:800;letter-spacing:-.02em;line-height:1}
+  .big small{font-size:12px;font-weight:600;color:var(--muted)}
+  ul{list-style:none;margin-top:12px}
+  li{position:relative;padding-left:23px;margin:8px 0;font-size:clamp(13px,1.4vw,16px);max-width:72ch}
+  li::before{content:"";position:absolute;left:2px;top:.58em;width:7px;height:7px;background:var(--accent);border-radius:2px;transform:rotate(45deg)}
   li b{color:var(--ink)}
-  table{width:100%;border-collapse:collapse;margin-top:16px;font-size:clamp(11px,1.15vw,14px);background:var(--card);border:1px solid var(--line);border-radius:11px;overflow:hidden}
-  th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+  table{width:100%;border-collapse:collapse;margin-top:14px;font-size:clamp(11px,1.1vw,13.5px);background:var(--card);border:1px solid var(--line);border-radius:11px;overflow:hidden}
+  th,td{padding:8px 11px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
   thead th{background:#1a2230;color:#fff;font-weight:700}
   thead th:first-child{background:#0f1620}
   .th-tl{background:#7a241b!important}
@@ -38,31 +38,26 @@
   td:first-child{font-weight:700;color:var(--ink);white-space:nowrap}
   .col-tl{color:var(--accent);font-weight:700}
   tbody tr:nth-child(even){background:#faf7f2}
-  .takeaway{margin-top:18px;padding:13px 18px;background:var(--soft);border-left:4px solid var(--gold);border-radius:0 8px 8px 0;font-size:clamp(14px,1.5vw,18px);color:#4a3d22;font-weight:600;max-width:82ch}
+  .takeaway{margin-top:15px;padding:12px 17px;background:var(--soft);border-left:4px solid var(--gold);border-radius:0 8px 8px 0;font-size:clamp(13.5px,1.45vw,17px);color:#4a3d22;font-weight:600;max-width:86ch}
   .takeaway b{color:#7a5e12}
-  .foot{position:absolute;bottom:3vh;left:6vw;right:6vw;font-size:10.5px;color:#98a0ac;border-top:1px solid var(--line);padding-top:7px;display:flex;justify-content:space-between;gap:10px}
+  .foot{position:absolute;bottom:2.6vh;left:6vw;right:6vw;font-size:10.5px;color:#98a0ac;border-top:1px solid var(--line);padding-top:6px;display:flex;justify-content:space-between;gap:10px}
   .foot span{font-weight:700;color:var(--muted)}
   .cover{background:linear-gradient(160deg,#12212e 0%,#1a2f3a 55%,#243b42 100%);color:#f4f2ec}
-  .cover .kicker{color:#e0a96d}.cover h1{color:#fff;max-width:20ch}.cover .sub{color:#c8d2d8}.cover .rule{background:#e0a96d}
-  .cover .meta{margin-top:30px;font-size:14px;color:#9fb0b8}.cover .foot{color:#7d8f97;border-color:#2c4550}
-  .lead{font-size:clamp(16px,1.9vw,23px);color:#2a3442;max-width:62ch;margin-top:8px;line-height:1.42}
+  .cover .kicker{color:#e0a96d}.cover h1{color:#fff;max-width:22ch}.cover .sub{color:#c8d2d8}.cover .rule{background:#e0a96d}
+  .cover .meta{margin-top:28px;font-size:14px;color:#9fb0b8}.cover .foot{color:#7d8f97;border-color:#2c4550}
+  .lead{font-size:clamp(16px,1.85vw,22px);color:#2a3442;max-width:64ch;margin-top:6px;line-height:1.42}
   .hl{background:linear-gradient(transparent 60%,#f6e3b8 60%);padding:0 2px}
-  /* five forces */
-  .forces{display:grid;grid-template-columns:1fr 1.15fr 1fr;grid-template-rows:auto auto auto;gap:12px;margin-top:16px;align-items:stretch}
-  .force{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:13px 15px}
-  .force h4{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--accent2);font-weight:700;margin-bottom:4px;display:flex;justify-content:space-between;align-items:center}
-  .force p{font-size:13px;color:#3a4350}
-  .lvl{font-size:10px;font-weight:800;padding:2px 8px;border-radius:20px;letter-spacing:.03em}
-  .hi{background:#fbe3df;color:#a5281b}.mid{background:#fdf1dd;color:#a1701a}.lo{background:#e3f0ea;color:#1f6f52}
-  .center{background:#1a2230;color:#fff;display:flex;flex-direction:column;justify-content:center;text-align:center}
-  .center h4{color:#e0a96d;justify-content:center}.center p{color:#cfd6de}
-  .f-top{grid-column:2}.f-left{grid-column:1;grid-row:2}.f-mid{grid-column:2;grid-row:2}.f-right{grid-column:3;grid-row:2}.f-bot{grid-column:2;grid-row:3}
-  .note{font-size:12px;color:var(--muted);margin-top:12px;font-style:italic;max-width:80ch}
-  .swot{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
-  .swot .card h3{font-size:12px}
-  .swot li{font-size:13px;margin:6px 0;padding-left:20px}.swot li::before{width:6px;height:6px;top:.55em}
+  .quote{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:16px 18px;position:relative}
+  .quote::before{content:"“";position:absolute;top:2px;left:12px;font-size:44px;color:#e4cfa4;font-family:Georgia,serif;line-height:1}
+  .quote p{font-size:clamp(13.5px,1.4vw,16.5px);color:#2a3442;padding-left:26px;font-weight:600}
+  .quote .who{padding-left:26px;margin-top:10px;font-size:12px;color:var(--muted);font-weight:700}
+  .swot{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+  .swot li{font-size:13px;margin:5px 0;padding-left:19px}.swot li::before{width:6px;height:6px;top:.55em}
   .s-s{border-top:3px solid #1f6f52}.s-w{border-top:3px solid var(--accent)}.s-o{border-top:3px solid var(--accent2)}.s-t{border-top:3px solid var(--gold)}
+  .tier{display:flex;gap:12px;margin-top:14px;align-items:stretch}
+  .tier .card{flex:1}
   svg{width:100%;height:auto;display:block}
+  .note{font-size:12px;color:var(--muted);margin-top:10px;font-style:italic;max-width:84ch}
   .nav{position:fixed;right:16px;bottom:14px;z-index:20;display:flex;gap:6px}
   .nav button{width:32px;height:32px;border:1px solid #cfd4db;background:#fff;border-radius:8px;font-size:14px;cursor:pointer;color:var(--ink)}
   .nav button:hover{background:var(--ink);color:#fff}
@@ -75,12 +70,12 @@
 
   <!-- 1 COVER -->
   <section class="slide cover" data-n="">
-    <div class="kicker">竞争格局分析 · 咨询框架</div>
-    <h1>北美低功耗无线连接 SoC 市场</h1>
+    <div class="kicker">竞争格局分析 · 基于公开资料</div>
+    <h1>全球低功耗蓝牙(BLE)竞争格局<br>与北美·欧洲市场</h1>
     <div class="rule"></div>
-    <p class="sub">市场结构（波特五力）· 战略群定位（2×2）· 竞品基准对标 · 关键成功要素 · 泰凌的机会与差距</p>
-    <div class="meta">全部基于公开资料：上市公司年报/招股书 · 官网 · 官方源码/认证库 · Silicon Labs 2025 Analyst Day · 行业研报</div>
-    <div class="foot"><span>低功耗无线连接 SoC · 北美</span><span>Telink 688591 · Nordic · Silicon Labs · Espressif</span></div>
+    <p class="sub">供应商版图 · 行业内部人的竞争维度 · 战略定位图 · Telink vs Nordic / Silicon Labs / Qorvo portfolio 对标 · 美欧目标市场 · KSF 与启示</p>
+    <div class="meta">来源：上市公司年报/招股书 · CEO 公开专访 · Silicon Labs 2025 Analyst Day · Omdia/DNB/IoT Analytics · 官方认证库</div>
+    <div class="foot"><span>Low-Power Wireless SoC</span><span>Telink 688591 · Nordic · Silicon Labs · Qorvo · Espressif</span></div>
   </section>
 
   <!-- 2 EXEC SUMMARY -->
@@ -89,95 +84,101 @@
     <h2>三条核心判断</h2>
     <div class="rule"></div>
     <div class="grid g3">
-      <div class="card"><h3>① 市场：北美是价值高地</h3><p>低功耗蓝牙芯片全球市场 2024→2030 约 <b>$72 亿 → $142 亿</b>（~10% CAGR）。北美是 ASP 与毛利最高、客户最黏（认证壁垒）的区域 —— 同行龙头 <b>36% 营收来自美洲</b>。</p></div>
-      <div class="card"><h3>② 格局：两类对手</h3><p>泰凌在 <b>消费级 BLE/2.4G</b> 与 <b>Nordic</b> 正面竞争（Nordic 价值份额领先）；而 <b>Silicon Labs</b> 在多协议/工业高端另成一群 —— 是泰凌"向上生长"要跨越的战略群。</p></div>
-      <div class="card"><h3>③ 胜负手：软件+生态+AI</h3><p>硬件性能已趋同，北美设计中标的关键在 <b>参考设计、认证、开发者生态、本地支持与供应保障</b>，以及 <b>端侧 AI</b> 这条新赛道 —— 泰凌的机会与差距都在这里。</p></div>
+      <div class="card"><h3>① 格局：一超多强 + 中国走量</h3><p>Nordic 以 <b>~40% 价值份额</b>（BLE 营收 $8.9 亿，2024）稳居第一；西方大厂把 BLE 当 MCU 组合的一部分；<b>泰凌以出货量全球前三、中国第一</b>从走量端切入，是唯一进入全球头部供应链的中国厂。</p></div>
+      <div class="card"><h3>② 维度：产品 → 平台</h3><p>两位互为对手的 CEO（盛文军 / Matt Johnson）对竞争维度的判断<b>惊人一致</b>：长期胜负在 <b>平台与生态</b>，不在价格。四家毛利梯度（43→48→51→57%）恰沿这条轴排列。</p></div>
+      <div class="card"><h3>③ 市场：美欧结构不同</h3><p><b>美国</b>=消费生态（流媒体遥控/外设）+ 医疗溢价（CGM）；<b>欧洲</b>=工业 IoT、智能照明、电子价签(ESL)。泰凌现有抓手对口美国，欧洲需借 ESL/照明放大。</p></div>
     </div>
-    <div class="takeaway"><b>一句话：</b>泰凌在北美"进得去、但要更快赢单"—— 短期以性价比+齐全度咬住 Nordic，长期沿 Silicon Labs 的 portfolio 与 <b>edge AI</b> 往高价值走。</div>
-    <div class="foot"><span>来源：IoT Analytics · Silicon Labs 2025 Analyst Day · 泰凌 2024 年报</span><span>金字塔原则 · 答案在前</span></div>
+    <div class="takeaway"><b>一句话：</b>泰凌"进得了全球供应链，但价值份额仍低"——短期以性价比+齐全度咬住走量市场，长期按 CEO 宣示的路径<b>从产品公司升级为平台公司</b>（EdgeAI + 生态），这是提毛利、缩差距的唯一通路。</div>
+    <div class="foot"><span>金字塔原则 · 答案在前</span><span>细节见后页</span></div>
   </section>
 
-  <!-- 3 MARKET / NA ATTRACTIVENESS -->
+  <!-- 3 GLOBAL SUPPLIER LANDSCAPE (Q1) -->
   <section class="slide" data-n="03">
-    <div class="kicker">市场吸引力 · 为什么是北美</div>
-    <h2>北美 = 更贵、更稳、更黏</h2>
-    <div class="rule"></div>
-    <div class="grid g4">
-      <div class="card"><h3>市场规模</h3><div class="big">$142亿<small> 2030E</small></div><p style="margin-top:6px">蓝牙 IoT 芯片，~10% CAGR；2028 蓝牙设备 ~75 亿台/年</p></div>
-      <div class="card"><h3>价值集中</h3><div class="big">36%<small> 营收来自美洲</small></div><p style="margin-top:6px">同业龙头 Silicon Labs 最大区域即北美</p></div>
-      <div class="card"><h3>毛利溢价</h3><div class="big">~57%<small> vs ~46%</small></div><p style="margin-top:6px">泰凌境外毛利显著高于境内（高端多模占比高）</p></div>
-      <div class="card"><h3>客户黏性</h3><div class="big">认证壁垒</div><p style="margin-top:6px">一次设计导入 = 多年供货；换供应商需重认证</p></div>
-    </div>
-    <ul>
-      <li>需求侧驱动：<b>Matter/Thread</b>（2030 设备 &gt;50 亿台）、<b>端侧 AI</b>、<b>CGM 血糖仪</b>（~5 亿颗/年 by 2030）、TWS/可穿戴、电子价签</li>
-      <li>结构性红利：<b>国产替代 + 供应链去风险</b> —— 海外客户要"非中国备用产线"，反向利好有台系/多元代工的中国厂</li>
-    </ul>
-    <div class="foot"><span>来源：IoT Analytics · 蓝牙 SIG · CSA · Silicon Labs 2025 Analyst Day · 泰凌 2024 年报</span><span>行业估算</span></div>
-  </section>
-
-  <!-- 4 PORTER FIVE FORCES -->
-  <section class="slide" data-n="04">
-    <div class="kicker">市场结构 · 波特五力</div>
-    <h2>结构性竞争，但认证与生态奖励在位者</h2>
-    <div class="rule" style="margin:12px 0"></div>
-    <div class="forces">
-      <div class="force f-top"><h4>新进入者 <span class="lvl mid">中</span></h4><p>RF+混合信号 IP、协议栈、认证、生态构成高壁垒；但中国 fabless 在低端持续压低门槛。</p></div>
-      <div class="force f-left"><h4>供应商议价力 <span class="lvl mid">中</span></h4><p>依赖晶圆代工（台积电/中芯）、IP（Arm/Andes）、封测；产能周期性波动。</p></div>
-      <div class="force center f-mid"><h4>行业内竞争 <span class="lvl hi">高</span></h4><p>Nordic·SiLabs·TI·NXP·ST·Espressif·Realtek·恒玄 + 众多中国厂；价格战 + 设计中标争夺 + 协议快迭代。</p></div>
-      <div class="force f-right"><h4>买方议价力 <span class="lvl mid">中→高</span></h4><p>大 OEM（Google/Amazon/Logitech）集中、多源采购；但设计导入后转换成本高 → 事后议价力下降。</p></div>
-      <div class="force f-bot"><h4>替代品 <span class="lvl lo">低-中</span></h4><p>Wi-Fi/蜂窝分流部分场景、MCU 集成化；但 BLE/2.4G 在短距连接根深蒂固。</p></div>
-    </div>
-    <div class="takeaway"><b>启示：</b>这是一个"打进去难、被替换也难"的市场 —— <b>差异化不能只靠芯片，要靠软件/生态/edge-AI + 向上做高价值品类</b>，并用设计中标的黏性锁定长期收入。</div>
-    <div class="foot"><span>框架：Porter Five Forces · 基于公开竞争与供应链信息</span><span>市场结构</span></div>
-  </section>
-
-  <!-- 5 STRATEGIC GROUP MAP -->
-  <section class="slide" data-n="05">
-    <div class="kicker">战略群图 · Strategic Group Map</div>
-    <h2>两个坐标：产品广度 × 价值定位</h2>
-    <div class="rule" style="margin:10px 0"></div>
-    <svg viewBox="0 0 1000 540" role="img" aria-label="战略群定位图">
-      <!-- axes -->
-      <line x1="120" y1="490" x2="960" y2="490" stroke="#b7bcc4" stroke-width="2"/>
-      <line x1="120" y1="490" x2="120" y2="50" stroke="#b7bcc4" stroke-width="2"/>
-      <text x="540" y="525" text-anchor="middle" font-size="17" font-weight="700" fill="#5b6675">产品组合广度 →　窄(消费·单协议) ⋯ 宽(多协议·工业)</text>
-      <text x="52" y="270" text-anchor="middle" font-size="17" font-weight="700" fill="#5b6675" transform="rotate(-90 52 270)">价值定位 / ASP →　走量 ⋯ 溢价</text>
-      <!-- aspiration arrow Telink -> SiLabs zone -->
-      <defs><marker id="ah" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#c0392b"/></marker></defs>
-      <line x1="300" y1="405" x2="600" y2="220" stroke="#c0392b" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#ah)" opacity="0.7"/>
-      <text x="452" y="300" font-size="13" fill="#c0392b" font-style="italic" transform="rotate(-31 452 300)">泰凌的战略意图（EdgeAI + 并购向上）</text>
-      <!-- bubbles -->
-      <g font-family="sans-serif">
-        <circle cx="330" cy="430" r="34" fill="#98a0ac" opacity=".85"/><text x="330" y="435" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">乐鑫</text>
-        <circle cx="300" cy="405" r="42" fill="#c0392b"/><text x="300" y="403" text-anchor="middle" font-size="15" font-weight="800" fill="#fff">泰凌</text><text x="300" y="420" text-anchor="middle" font-size="10" fill="#fff">Telink</text>
-        <circle cx="560" cy="255" r="46" fill="#1f6f8b"/><text x="560" y="253" text-anchor="middle" font-size="15" font-weight="800" fill="#fff">Nordic</text><text x="560" y="270" text-anchor="middle" font-size="10" fill="#fff">BLE 龙头</text>
-        <circle cx="800" cy="150" r="50" fill="#b8860b"/><text x="800" y="148" text-anchor="middle" font-size="15" font-weight="800" fill="#fff">Silicon</text><text x="800" y="165" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">Labs</text>
-        <circle cx="885" cy="235" r="38" fill="#5b6675" opacity=".8"/><text x="885" y="232" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">NXP·TI</text><text x="885" y="247" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">·ST</text>
-      </g>
-    </svg>
-    <div class="takeaway"><b>读图：</b>泰凌与乐鑫同处"走量·消费"象限，正面对手是 <b>Nordic</b>（同为 BLE 纯玩家但更溢价）；<b>Silicon Labs / NXP / TI</b> 占据"宽·溢价"象限 —— 泰凌要靠 <b>edge AI + 磐启微收购(Sub-1G/蜂窝)</b> 往右上移动。</div>
-    <div class="foot"><span>框架：Strategic Group Map · 定位为定性判断，基于各家公开产品线与 ASP 特征</span><span>示意</span></div>
-  </section>
-
-  <!-- 6 BENCHMARK MATRIX -->
-  <section class="slide" data-n="06">
-    <div class="kicker">竞品基准对标 · Benchmark</div>
-    <h2>四家横评（公开口径）</h2>
+    <div class="kicker">问题一 · 全球 BLE 供应商有哪些，竞争态势如何</div>
+    <h2>四类玩家，四种打法</h2>
     <div class="rule" style="margin:10px 0"></div>
     <table>
-      <thead><tr><th>维度</th><th class="th-tl">Telink 泰凌</th><th>Nordic</th><th>Silicon Labs</th><th>Espressif 乐鑫</th></tr></thead>
+      <thead><tr><th>阵营</th><th>代表厂商</th><th>打法与位置</th><th>BLE 竞争态势</th></tr></thead>
       <tbody>
-        <tr><td>定位</td><td class="col-tl">消费 BLE/2.4G · 性价比</td><td>消费 BLE · 溢价龙头</td><td>多协议 · 工业/商用</td><td>Wi-Fi/BLE 组合 · 低价</td></tr>
-        <tr><td>BLE 地位</td><td class="col-tl">出货全球#3 / 中国#1</td><td>价值份额 ~43% #1</td><td>份额提升中</td><td>Wi-Fi MCU 主导</td></tr>
-        <tr><td>MCU 内核</td><td class="col-tl">RISC-V (Andes)</td><td>ARM Cortex-M</td><td>ARM Cortex-M (M55)</td><td>RISC-V / Xtensa</td></tr>
-        <tr><td>端侧 AI</td><td class="col-tl">TL-EdgeAI + TL721X</td><td>Axon NPU + Neuton.AI</td><td>首个专用 AI 加速器无线 SoC</td><td>ESP-DL 软件为主</td></tr>
-        <tr><td>毛利率</td><td class="col-tl">~48%</td><td>~51%</td><td>目标 56–58%</td><td>~43%</td></tr>
-        <tr><td>开发者生态</td><td class="col-tl">成长中</td><td>强（nRF Connect/Zephyr）</td><td>强（Simplicity Studio）</td><td>极强（社区/Arduino）</td></tr>
-        <tr><td>北美 GTM</td><td class="col-tl">小直销+FAE+代理商</td><td>直销+分销，生态成熟</td><td>直销/FAE 打 Tier-1</td><td>分销+社区自助</td></tr>
-        <tr><td>供应</td><td class="col-tl">Fabless 中芯/华润/台积电</td><td>Fabless（台积电）</td><td>Fabless 多 fab</td><td>Fabless（台积电）</td></tr>
+        <tr><td>价值份额霸主</td><td><b>Nordic</b>（挪威）</td><td>BLE 纯玩家，nRF52/53/54；开发者生态（DevZone/Zephyr）是护城河</td><td>~40% 价值份额多年第一；BLE 营收 $8.9 亿（2024）</td></tr>
+        <tr><td>西方大厂组合牌</td><td>TI · ST · NXP · Microchip · Renesas(Dialog) · Infineon(Cypress)</td><td>BLE 是 MCU/汽车/工业组合的一部分，非独立主业</td><td>份额分散；靠车规/工业渠道与客户绑定</td></tr>
+        <tr><td>多协议专家</td><td><b>Silicon Labs</b>（美）· <b>Qorvo</b>（美，ex-GreenPeak）</td><td>智能家居/工业多协议（Zigbee/Thread/Matter+BLE 并发）</td><td>SiLabs #1 in 15.4/SubGHz；Qorvo 聚焦遥控器与智能家居 niche</td></tr>
+        <tr><td>中国走量阵营</td><td class="col-tl"><b>泰凌</b> · 乐鑫 · 瑞昱 · 博通集成 · 汇顶 · Beken 等</td><td class="col-tl">性价比+快交付；国内卷价格，头部出海</td><td class="col-tl">泰凌出货量全球前三、中国第一，<b>唯一深入 Google/Amazon/Logitech 供应链</b></td></tr>
       </tbody>
     </table>
-    <div class="foot"><span>来源：四家官网/年报/IR · Silicon Labs 2025 Analyst Day · Omdia/DNB · CNX-Software</span><span>~ 为约数</span></div>
+    <div class="takeaway"><b>态势：</b>手机侧 BLE 被 Qualcomm/Broadcom 集成吸收（不在竞技场内）；IoT 侧呈"<b>Nordic 收价值、中国厂收量、大厂收组合、专家收 niche</b>"的分层均衡——打破均衡的两股力量是 <b>Matter 多协议化</b> 与 <b>端侧 AI</b>。</div>
+    <div class="foot"><span>来源：Nordic IR · Omdia/DNB（经招股书引用）· IoT Analytics（市场 $72→142 亿, 2024–2030）</span><span>价值份额 ≠ 出货量份额</span></div>
+  </section>
+
+  <!-- 4 INSIDER CONSENSUS -->
+  <section class="slide" data-n="04">
+    <div class="kicker">定维度 · 行业内部人怎么看竞争</div>
+    <h2>互为对手的两位 CEO，说了同一件事</h2>
+    <div class="rule"></div>
+    <div class="grid g3">
+      <div class="quote"><p>我们正处于从「产品公司」向「平台型公司」演进的阶段……核心竞争点在于<b>技术与生态</b>，我们几乎从不主动寻求仅通过价格竞争。……<b>平台化能力是长期竞争的关键</b>。</p><div class="who">盛文军 · 泰凌微总经理（科创板日报专访）</div></div>
+      <div class="quote"><p>我们每年在平台上新增 <b>1000+ 软件特性</b>……正是这种黏性与差异化，让我们拿到<b>相对竞争对手的溢价毛利</b>（premium gross margin）。</p><div class="who">Matt Johnson · Silicon Labs CEO（EE Times / Futurum 访谈）</div></div>
+      <div class="quote"><p>Nordic 长期占 <b>30–40% 价值份额</b>居首；长尾开发者选型看的是 <b>SDK、文档与社区</b>，而非裸芯片参数。</p><div class="who">卖方分析师（DNB 覆盖）与工程师社区（DevZone / Novel Bits 横评）</div></div>
+    </div>
+    <div class="takeaway"><b>四方收敛：</b>竞对 CEO、自家 CEO、分析师、工程师指向同一条轴——<b>价值捕获方式（按颗卖硅片 → 平台/软件溢价）</b>。这不是分析框架的选择，而是行业自己的心智模型 → 下页据此作图。</div>
+    <div class="foot"><span>来源：163/科创板日报专访 · EE Times · Futurum · techinvestments · Novel Bits</span><span>可逐条溯源</span></div>
+  </section>
+
+  <!-- 5 STRATEGIC MAP 2x2 -->
+  <section class="slide" data-n="05">
+    <div class="kicker">战略定位图 · 平台化 × 触达模式</div>
+    <h2>毛利差不在制程，在纵轴</h2>
+    <div class="rule" style="margin:8px 0"></div>
+    <svg viewBox="0 0 1000 520" role="img" aria-label="战略定位图">
+      <line x1="110" y1="470" x2="960" y2="470" stroke="#b7bcc4" stroke-width="2"/>
+      <line x1="110" y1="470" x2="110" y2="40" stroke="#b7bcc4" stroke-width="2"/>
+      <text x="535" y="505" text-anchor="middle" font-size="16" font-weight="700" fill="#5b6675">客户触达模式 →　高触达 · 大客户定制交付 ⋯⋯ 自助式 · 开发者生态</text>
+      <text x="46" y="255" text-anchor="middle" font-size="16" font-weight="700" fill="#5b6675" transform="rotate(-90 46 255)">价值捕获 →　按颗卖硅片 ⋯⋯ 平台/软件溢价</text>
+      <!-- quadrant labels -->
+      <text x="300" y="80" text-anchor="middle" font-size="13" fill="#b8860b" font-weight="700" opacity=".85">交钥匙平台（相对空白）</text>
+      <text x="770" y="80" text-anchor="middle" font-size="13" fill="#98a0ac" font-weight="700">开放平台生态（拥挤）</text>
+      <text x="300" y="450" text-anchor="middle" font-size="13" fill="#98a0ac" font-weight="700">定制代工式</text>
+      <text x="770" y="450" text-anchor="middle" font-size="13" fill="#98a0ac" font-weight="700">社区走量</text>
+      <!-- aspiration arrow -->
+      <defs><marker id="ah" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#c0392b"/></marker></defs>
+      <line x1="295" y1="360" x2="330" y2="150" stroke="#c0392b" stroke-width="2.4" stroke-dasharray="7 5" marker-end="url(#ah)" opacity="0.85"/>
+      <text x="255" y="235" font-size="12.5" fill="#c0392b" font-style="italic" transform="rotate(-80 255 235)"></text>
+      <text x="352" y="205" font-size="13" fill="#c0392b" font-weight="700">“产品公司 → 平台型公司”</text>
+      <text x="352" y="223" font-size="11.5" fill="#c0392b">— 盛文军宣示的演进方向（EdgeAI 交钥匙平台）</text>
+      <!-- bubbles -->
+      <g font-family="sans-serif">
+        <circle cx="295" cy="370" r="42" fill="#c0392b"/><text x="295" y="368" text-anchor="middle" font-size="15" font-weight="800" fill="#fff">泰凌</text><text x="295" y="385" text-anchor="middle" font-size="9.5" fill="#fff">Google RCU 定制模式</text>
+        <circle cx="790" cy="395" r="38" fill="#98a0ac"/><text x="790" y="393" text-anchor="middle" font-size="13" font-weight="800" fill="#fff">乐鑫</text><text x="790" y="408" text-anchor="middle" font-size="9.5" fill="#fff">社区+低价</text>
+        <circle cx="745" cy="205" r="44" fill="#1f6f8b"/><text x="745" y="203" text-anchor="middle" font-size="15" font-weight="800" fill="#fff">Nordic</text><text x="745" y="220" text-anchor="middle" font-size="9.5" fill="#fff">DevZone/Zephyr 生态</text>
+        <circle cx="590" cy="120" r="46" fill="#b8860b"/><text x="590" y="116" text-anchor="middle" font-size="14" font-weight="800" fill="#fff">Silicon Labs</text><text x="590" y="133" text-anchor="middle" font-size="9.5" fill="#fff">双触达+1000特性/年</text>
+        <circle cx="300" cy="185" r="34" fill="#6d5a86"/><text x="300" y="183" text-anchor="middle" font-size="12" font-weight="800" fill="#fff">Qorvo</text><text x="300" y="198" text-anchor="middle" font-size="9" fill="#fff">遥控/家居 niche</text>
+        <circle cx="565" cy="330" r="36" fill="#5b6675" opacity=".8"/><text x="565" y="328" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">TI·NXP·ST</text><text x="565" y="343" text-anchor="middle" font-size="9" fill="#fff">大厂组合牌</text>
+      </g>
+    </svg>
+    <div class="takeaway"><b>读图：</b>右上（开放生态+溢价）已被 Nordic/SiLabs 占据且拥挤；泰凌的现实路径不是照抄 Nordic，而是<b>沿左侧向上</b>——把已验证的"大客户定制交付"（Google RCU 模式）升级为「<b>交钥匙 EdgeAI 平台</b>」：为不想自养固件/ML 团队的 OEM 提供开箱即用的智能连接。毛利梯度（乐鑫43% → 泰凌48% → Nordic51% → SiLabs57%）沿纵轴排列，验证轴的解释力。</div>
+    <div class="foot"><span>定位为基于公开信息的定性判断 · 轴由第 4 页行业共识导出</span><span>示意图</span></div>
+  </section>
+
+  <!-- 6 PORTFOLIO BENCHMARK (Q2) -->
+  <section class="slide" data-n="06">
+    <div class="kicker">问题二 · Portfolio 对标</div>
+    <h2>Telink vs Nordic / Silicon Labs / Qorvo / 乐鑫</h2>
+    <div class="rule" style="margin:8px 0"></div>
+    <table>
+      <thead><tr><th>维度</th><th class="th-tl">Telink</th><th>Nordic</th><th>Silicon Labs</th><th>Qorvo (IoT)</th><th>Espressif</th></tr></thead>
+      <tbody>
+        <tr><td>BLE 旗舰</td><td class="col-tl">TLSR9 / TL721X</td><td>nRF54 系列</td><td>xG24/BG29 · Series 3</td><td>QPG6105</td><td>ESP32-C/H</td></tr>
+        <tr><td>协议广度</td><td class="col-tl">BLE/双模/Mesh/Zigbee/Thread/Matter/2.4G私有/音频</td><td>BLE 为主 +15.4/Wi-Fi(收购)</td><td>最全：15.4/SubGHz/Wi-Fi/Z-Wave/Matter</td><td>Zigbee/Thread/Matter/BLE 硬件并发</td><td>Wi-Fi 为主 + BLE/15.4</td></tr>
+        <tr><td>内核</td><td class="col-tl">RISC-V (Andes)</td><td>ARM Cortex-M</td><td>ARM (M55, 22nm)</td><td>ARM Cortex-M</td><td>RISC-V/Xtensa</td></tr>
+        <tr><td>端侧 AI</td><td class="col-tl">TL-EdgeAI 平台，已量产</td><td>Axon NPU + Neuton.AI</td><td>专用 AI 加速器（首家）</td><td>—</td><td>ESP-DL（软件）</td></tr>
+        <tr><td>强势场景</td><td class="col-tl">遥控器/键鼠/音频/ESL/CGM</td><td>可穿戴/医疗/电竞外设</td><td>智能家居 hub/照明/计量/ESL</td><td>机顶盒遥控/智能家居</td><td>DIY/长尾 IoT</td></tr>
+        <tr><td>生态工具</td><td class="col-tl">SDK+参考设计（turnkey）</td><td>nRF Connect/Zephyr/DevZone</td><td>Simplicity Studio +1000特性/年</td><td>QMatter SDK</td><td>ESP-IDF/Arduino 社区极强</td></tr>
+        <tr><td>毛利率</td><td class="col-tl">~48%</td><td>~51%</td><td>目标 56–58%</td><td>—（集团口径）</td><td>~43%</td></tr>
+        <tr><td>认证话语权</td><td class="col-tl">SIG 董事 · BT6.0 首证</td><td>SIG 核心成员</td><td>Matter 最大贡献者之一</td><td>CSA 成员</td><td>CSA 成员</td></tr>
+      </tbody>
+    </table>
+    <div class="takeaway"><b>关键读法：</b>与 Nordic 打「同场不同位」（它守价值高地，泰凌抢走量+定制）；与 <b>Qorvo 是遥控器赛道的正面相遇</b>（QPG 系 GreenPeak 血统、机顶盒遥控起家）——泰凌以 BLE 成本与软件定制对其多协议并发；协议齐全度上泰凌是<b>唯一接近 SiLabs 广度的中国厂</b>。</div>
+    <div class="foot"><span>来源：五家官网/datasheet · Qorvo QPG6105 产品页 · Silicon Labs 2025 Analyst Day · 年报</span><span>“—”=未公开/不适用</span></div>
   </section>
 
   <!-- 7 VS NORDIC -->
@@ -187,111 +188,136 @@
     <div class="rule"></div>
     <div class="grid g2">
       <div class="card" style="border-top:3px solid var(--accent)"><h3 style="color:var(--accent)">泰凌怎么赢</h3>
-        <ul style="margin-top:4px">
-          <li><b>成本 + 产品齐全度</b>：同价位 SKU 更全</li>
-          <li><b>定制化软件</b>集成能力获海外一线认可</li>
-          <li>已有 <b>Google / Amazon / Logitech</b> 设计中标</li>
-          <li>供应链<b>可覆盖中国+台系</b>，满足去风险需求</li>
+        <ul style="margin-top:2px">
+          <li><b>成本 + SKU 齐全度</b>：同价位产品线更宽</li>
+          <li><b>定制化软件交付</b>：Google RCU 参考设计进 Android 官方源码树</li>
+          <li>已有 <b>Google / Amazon(Sidewalk) / Logitech</b> 设计中标</li>
+          <li>供应链中国+台系双线，匹配去风险需求</li>
         </ul></div>
-      <div class="card" style="border-top:3px solid var(--accent2)"><h3 style="color:var(--accent2)">Nordic 强在哪</h3>
-        <ul style="margin-top:4px">
-          <li><b>价值份额 ~43%</b>、品牌 = BLE 行业标准</li>
-          <li>中高端/电竞线的<b>默认选择</b>（性能/抗干扰）</li>
-          <li><b>开发者生态成熟</b>（nRF Connect SDK / Zephyr）</li>
-          <li>已推 <b>Axon NPU</b> + 收购 Neuton.AI 抢 edge AI</li>
+      <div class="card" style="border-top:3px solid var(--accent2)"><h3 style="color:var(--accent2)">Nordic 凭什么守</h3>
+        <ul style="margin-top:2px">
+          <li><b>~40% 价值份额</b>，品牌≈BLE 行业标准</li>
+          <li>中高端（医疗/电竞）的默认选择</li>
+          <li><b>DevZone + Zephyr</b>：长尾开发者自助生态无人能及</li>
+          <li>edge AI 已卡位：Axon NPU + Neuton.AI</li>
         </ul></div>
     </div>
-    <div class="takeaway"><b>差异本质：</b>Nordic 靠<b>品牌+生态+性能</b>守高端，泰凌靠<b>性价比+齐全度+本地交付</b>抢走量与新客户。北美赢单，泰凌需补的是 <b>开发者生态与品牌认知</b>，而非芯片本身。</div>
-    <div class="foot"><span>来源：Nordic IR/官网 · 泰凌年报 · Google 源码/FCC 拆解 · Omdia/DNB</span><span>公开可证实</span></div>
+    <div class="takeaway"><b>本质：</b>Nordic 赢在<b>生态复利</b>（开发者今天的学习成本=明天的转换成本），泰凌赢在<b>定制交付效率</b>。北美走量市场（遥控/外设/价签）对生态依赖低、对成本与交付敏感——这正是泰凌能持续拿单的结构性原因。</div>
+    <div class="foot"><span>来源：Nordic IR/DevZone · Google Android 源码 · Amazon Sidewalk 文档 · 拆解报告</span><span>公开可证实</span></div>
   </section>
 
-  <!-- 8 VS SILICON LABS -->
+  <!-- 8 VS SILABS -->
   <section class="slide" data-n="08">
     <div class="kicker">深度对比 ② · 对标愿景</div>
-    <h2>Telink vs Silicon Labs：泰凌"想长成的样子"</h2>
+    <h2>Telink vs Silicon Labs：差的不是芯片，是"平台层"</h2>
     <div class="rule"></div>
     <div class="grid g2">
-      <div class="card"><h3>SiLabs 的位置（2025 Analyst Day）</h3>
-        <ul style="margin-top:4px">
-          <li>自称"embedded wireless <b>无可争议的领导者</b>"、最大纯玩家</li>
-          <li><b>58% 营收在工业&amp;商用</b>，#1 SubGHz、#1 15.4</li>
-          <li>产品到 <b>Series 3（22nm，AI 100 GOPS，Arm M55）</b></li>
-          <li>目标 <b>毛利 56–58% · 营收 20% CAGR</b>；靠并购扩 portfolio</li>
+      <div class="card"><h3>SiLabs 的高度（2025 Analyst Day）</h3>
+        <ul style="margin-top:2px">
+          <li><b>58% 营收在工业&amp;商用</b>；#1 SubGHz、#1 15.4</li>
+          <li>Series 3：22nm · AI 100 GOPS · PSA L4</li>
+          <li>财务模型：<b>20% CAGR · 毛利 56–58%</b>；$10B design-win 存量</li>
+          <li>靠八次并购拼出协议全图（Ember/Z-Wave/Redpine…）</li>
         </ul></div>
-      <div class="card" style="border-top:3px solid var(--accent)"><h3 style="color:var(--accent)">泰凌的差距与路径</h3>
-        <ul style="margin-top:4px">
-          <li>差距：<b>缺工业/商用广度</b>、毛利与制程更低、品牌更弱</li>
-          <li>路径①：<b>并购磐启微</b>（进 Sub-1G / 5G-A 蜂窝）</li>
-          <li>路径②：<b>TL-EdgeAI</b> 往"连接+算力"走</li>
-          <li>底牌：CEO 盛文军<b>本人出自 Silicon Labs</b></li>
+      <div class="card" style="border-top:3px solid var(--accent)"><h3 style="color:var(--accent)">泰凌的路径（已在走）</h3>
+        <ul style="margin-top:2px">
+          <li>并购<b>磐启微</b>：补 Sub-1G / 5G-A 蜂窝 → 复制"并购拼图"打法</li>
+          <li><b>TL-EdgeAI</b>：向"连接+算力"平台升级（CEO 亲自宣示）</li>
+          <li>筹划港股：为海外扩张与并购备资本</li>
+          <li>组织基因：CEO 盛文军<b>出自 Silicon Labs</b></li>
         </ul></div>
     </div>
-    <div class="takeaway"><b>差异本质：</b>SiLabs 是<b>宽度+高价值+工业</b>，泰凌是<b>消费+走量</b>。这不是同一擂台的输赢，而是泰凌的<b>成长天花板与方向</b> —— 沿 SiLabs 的 portfolio 逻辑向上，是 3–5 年的战略命题。</div>
-    <div class="foot"><span>来源：Silicon Labs 2025 Analyst Day · 泰凌 2026-01 收购报告书 / 年报 · 招股书高管履历</span><span>对标</span></div>
+    <div class="takeaway"><b>本质：</b>两家的毛利差（48% vs 57%）几乎全部来自 <b>平台层</b>（每年千余软件特性、工具链、认证服务的溢价与黏性）。泰凌对标 SiLabs 不是口号——<b>并购、EdgeAI、资本三步都在按它的成长剧本走</b>，差距是时间与执行，不是方向。</div>
+    <div class="foot"><span>来源：Silicon Labs 2025 Analyst Day · 泰凌 2026-01 收购报告书 · H 股公告 · 招股书履历</span><span>对标</span></div>
   </section>
 
-  <!-- 9 KSF -->
+  <!-- 9 US & EUROPE MARKETS (Q3) -->
   <section class="slide" data-n="09">
+    <div class="kicker">问题三 · BLE 在美国与欧洲的目标市场</div>
+    <h2>美国吃"生态+医疗"，欧洲吃"工业+零售"</h2>
+    <div class="rule" style="margin:8px 0"></div>
+    <div class="grid g2">
+      <div class="card" style="border-top:3px solid var(--accent2)"><h3 style="color:var(--accent2)">🇺🇸 美国 · BLE IC 约 $4.8 亿（2025E）</h3>
+        <ul style="margin-top:2px">
+          <li><b>流媒体遥控/TV 生态</b>：Google/Amazon 平台标配 BLE 语音遥控 —— <span class="hl">泰凌已卡位</span></li>
+          <li><b>医疗/CGM</b>：可穿戴医疗 $427→1683 亿(2024–30)，Dexcom/Abbott 带动 —— 溢价最高的 BLE 场景</li>
+          <li><b>PC/游戏外设</b>：Logitech 北美主销地 —— 泰凌已供货</li>
+          <li>智能家居(Matter)、资产追踪(Tile/Sidewalk 网络)</li>
+        </ul></div>
+      <div class="card" style="border-top:3px solid var(--gold)"><h3 style="color:var(--gold)">🇪🇺 欧洲 · BLE IC 约 $3.7 亿（2025E）</h3>
+        <ul style="margin-top:2px">
+          <li><b>工业 IoT</b>：德国工厂自动化/汽车（区域增速 ~10.5%）—— Nordic/SiLabs/大厂主场</li>
+          <li><b>电子价签 ESL</b>：法国 VusionGroup 引领全球零售改造 —— <span class="hl">泰凌经汉朔（全球 ESL 头部）已间接深入欧洲零售</span></li>
+          <li><b>智能照明</b>：Signify(Philips Hue)/IKEA 生态</li>
+          <li>助听/hearables（丹麦 GN/Demant）、连接医疗（法国）</li>
+        </ul></div>
+    </div>
+    <div class="takeaway"><b>启示：</b>泰凌的既有优势（遥控/外设/CGM/ESL）<b>与美国的生态型市场天然对口</b>；欧洲的工业腹地短期难攻，务实路径是 <b>ESL+照明+外设先立足，工业等平台化成熟后再进</b>。</div>
+    <div class="foot"><span>来源：Business Research Insights（US/EU 规模，估算口径）· FMI · Grand View（医疗）· 招股书客户名单（汉朔/罗技）</span><span>区域数据为行业估算</span></div>
+  </section>
+
+  <!-- 10 KSF -->
+  <section class="slide" data-n="10">
     <div class="kicker">关键成功要素 · KSF</div>
-    <h2>赢下北美设计中标，靠这六条</h2>
-    <div class="rule" style="margin:10px 0"></div>
+    <h2>赢下美欧设计中标，靠这六条</h2>
+    <div class="rule" style="margin:8px 0"></div>
     <table>
-      <thead><tr><th>关键成功要素</th><th class="th-tl">Telink</th><th>Nordic</th><th>Silicon Labs</th></tr></thead>
+      <thead><tr><th>关键成功要素</th><th class="th-tl">Telink</th><th>Nordic</th><th>Silicon Labs</th><th>Qorvo</th></tr></thead>
       <tbody>
-        <tr><td>参考设计 + 认证（BT/Matter/Thread/FCC）</td><td class="col-tl">强（SIG 董事·BT6.0 首证）</td><td>强</td><td>强（Matter 最大代码贡献者）</td></tr>
-        <tr><td>本地 FAE / 支持 / program management</td><td class="col-tl">建设中（硅谷+代理商）</td><td>成熟</td><td>成熟（长任期 RF 专家）</td></tr>
-        <tr><td>开发者生态 / 工具 / 社区</td><td class="col-tl">成长中</td><td>强</td><td>强</td></tr>
-        <tr><td>供应保障 / 非中国备线</td><td class="col-tl">中国+台系多元</td><td>台积电</td><td>多 fab</td></tr>
-        <tr><td>路线图 / 端侧 AI</td><td class="col-tl">TL-EdgeAI 已量产</td><td>Axon NPU</td><td>AI 加速器 + Series 3</td></tr>
-        <tr><td>文档 / 规格稳定性 / 信任</td><td class="col-tl">出海提升中</td><td>高</td><td>高</td></tr>
+        <tr><td>参考设计 + 认证（BT/Matter/FCC/CE）</td><td class="col-tl">强（SIG 董事·BT6.0 首证）</td><td>强</td><td>强（Matter 核心贡献者）</td><td>中（Matter 认证齐）</td></tr>
+        <tr><td>本地 FAE / 支持</td><td class="col-tl">建设中（硅谷+代理商网络）</td><td>成熟</td><td>成熟（长任期 RF 专家）</td><td>中（运营商渠道）</td></tr>
+        <tr><td>开发者生态 / 工具 / 社区</td><td class="col-tl">成长中</td><td>最强</td><td>强</td><td>弱</td></tr>
+        <tr><td>供应保障 / 多元产线</td><td class="col-tl">中国+台系双线</td><td>台积电</td><td>多 fab</td><td>自有+代工</td></tr>
+        <tr><td>端侧 AI 路线图</td><td class="col-tl">已量产（TL-EdgeAI）</td><td>NPU 已发布</td><td>加速器已出货</td><td>—</td></tr>
+        <tr><td>文档 / 规格稳定性 / 信任</td><td class="col-tl">出海补强中</td><td>高</td><td>高</td><td>高</td></tr>
       </tbody>
     </table>
-    <div class="takeaway"><b>启示：</b>泰凌的<b>硬件与认证已具竞争力</b>；北美赢单的真正短板集中在 <b>本地支持/program management、开发者生态、文档与信任</b> —— 这些是"执行与运营"问题，不是"芯片"问题。</div>
-    <div class="foot"><span>框架：Key Success Factors · 评级为基于公开信息的定性判断</span><span>KSF</span></div>
+    <div class="takeaway"><b>启示：</b>泰凌的硬件、认证、AI 路线图已具竞争力；真正的短板集中在 <b>本地支持、开发者生态、文档与信任</b>——全是"运营与执行"问题而非"芯片"问题，恰是投入产出比最高的补强点。</div>
+    <div class="foot"><span>框架：KSF · 评级为基于公开信息的定性判断</span><span>北美+欧洲视角</span></div>
   </section>
 
-  <!-- 10 SWOT -->
-  <section class="slide" data-n="10">
-    <div class="kicker">泰凌 · 北美市场 SWOT</div>
-    <h2>优势明确，短板在"运营与生态"</h2>
-    <div class="rule" style="margin:10px 0"></div>
+  <!-- 11 SWOT -->
+  <section class="slide" data-n="11">
+    <div class="kicker">泰凌 · 美欧市场 SWOT</div>
+    <h2>优势清晰，短板可补，方向已定</h2>
+    <div class="rule" style="margin:8px 0"></div>
     <div class="swot">
       <div class="card s-s"><h3 style="color:#1f6f52">S · 优势</h3><ul>
-        <li>消费 BLE/2.4G 性价比 + 产品齐全</li>
-        <li>已有 Google/Amazon/Logitech 设计中标</li>
-        <li>蓝牙 SIG 董事、BT 6.0 首证、EdgeAI 已量产</li>
-        <li>境外毛利更高（~57%），供应链多元</li></ul></div>
+        <li>性价比+SKU 齐全，唯一进全球头部供应链的中国 BLE 厂</li>
+        <li>Google/Amazon/Logitech/汉朔 设计中标在手</li>
+        <li>SIG 董事·BT6.0 首证；EdgeAI 已量产</li>
+        <li>境外毛利 ~57%，供应链双线</li></ul></div>
       <div class="card s-w"><h3 style="color:var(--accent)">W · 劣势</h3><ul>
-        <li>缺工业/商用广度，价值份额落后 Nordic</li>
-        <li>北美开发者生态 / 品牌认知偏弱</li>
-        <li>本地团队与支持体系仍在建设</li>
-        <li>RISC-V 生态成熟度不及 Arm 阵营</li></ul></div>
+        <li>价值份额与 Nordic 差距大（~40% vs 个位数）</li>
+        <li>开发者生态/品牌在美欧偏弱</li>
+        <li>平台层（工具/软件溢价）尚在起步</li>
+        <li>工业/商用广度不足</li></ul></div>
       <div class="card s-o"><h3 style="color:var(--accent2)">O · 机会</h3><ul>
-        <li>端侧 AI、Matter/Thread 新赛道</li>
-        <li>CGM/医疗、TWS、电子价签放量</li>
-        <li>国产替代 + 客户"非中国备线"需求</li>
-        <li>并购磐启微向广域/高价值扩张</li></ul></div>
+        <li>端侧 AI 重开牌局（交钥匙 EdgeAI 象限相对空白）</li>
+        <li>Matter/Thread、CGM、ESL 欧洲零售改造</li>
+        <li>客户多源化+去风险 → 第二供应商红利</li>
+        <li>磐启微并购打开广域连接</li></ul></div>
       <div class="card s-t"><h3 style="color:var(--gold)">T · 威胁</h3><ul>
-        <li>美中地缘 / 出口管制 / 关税</li>
-        <li>Nordic、SiLabs 生态与品牌壁垒</li>
+        <li>地缘/出口管制/关税不确定性</li>
+        <li>Nordic/SiLabs 生态壁垒随时间加深</li>
         <li>大客户集中度风险</li>
-        <li>其他中国 fabless 的价格竞争</li></ul></div>
+        <li>国内同行低价出海摊薄利润</li></ul></div>
     </div>
-    <div class="foot"><span>框架：SWOT · 均基于公开年报/官网/研报信息</span><span>北美视角</span></div>
+    <div class="foot"><span>框架：SWOT · 均基于公开信息</span><span>美欧视角</span></div>
   </section>
 
-  <!-- 11 IMPLICATIONS -->
-  <section class="slide cover" data-n="11">
+  <!-- 12 IMPLICATIONS -->
+  <section class="slide cover" data-n="12">
     <div class="kicker">战略启示 · Where to Play / How to Win</div>
-    <h2 style="color:#fff;max-width:22ch">泰凌在北美：进得去，关键是更快赢单、并向上生长</h2>
+    <h2 style="color:#fff;max-width:24ch">守走量 · 补运营 · 攻平台</h2>
     <div class="rule"></div>
-    <div class="grid g3" style="margin-top:22px">
-      <div class="card" style="background:#16303a;border-color:#2c4550"><h3 style="color:#e0a96d">守 · 咬住走量</h3><p style="color:#d3dde2">以性价比 + 齐全度 + 本地交付，在遥控/键鼠/TWS 正面咬住 Nordic 的量。</p></div>
-      <div class="card" style="background:#16303a;border-color:#2c4550"><h3 style="color:#e0a96d">补 · 生态与运营</h3><p style="color:#d3dde2">补开发者生态、本地 FAE / program management、文档与信任 —— 北美赢单的真正短板。</p></div>
-      <div class="card" style="background:#16303a;border-color:#2c4550"><h3 style="color:#e0a96d">攻 · 向上生长</h3><p style="color:#d3dde2">用 edge AI + 磐启微收购，沿 Silicon Labs 的 portfolio 逻辑往高价值品类走。</p></div>
+    <div class="grid g3" style="margin-top:20px">
+      <div class="card" style="background:#16303a;border-color:#2c4550"><h3 style="color:#e0a96d">守 · 走量基本盘</h3><p style="color:#d3dde2">以性价比+定制交付守住遥控/外设/ESL/CGM——美国生态型客户与欧洲零售是天然主场。</p></div>
+      <div class="card" style="background:#16303a;border-color:#2c4550"><h3 style="color:#e0a96d">补 · 运营与信任</h3><p style="color:#d3dde2">本地支持、文档、开发者体验——KSF 中投入产出比最高、也是美欧客户最敏感的三项。</p></div>
+      <div class="card" style="background:#16303a;border-color:#2c4550"><h3 style="color:#e0a96d">攻 · 交钥匙平台</h3><p style="color:#d3dde2">沿"产品→平台"轴向上：用 TL-EdgeAI 把定制交付升级为交钥匙智能平台，向 SiLabs 的毛利结构靠近。</p></div>
     </div>
-    <p class="sub" style="color:#c8d2d8;margin-top:22px;max-width:74ch">核心洞察：这个市场的胜负，<b style="color:#fff">硬件之外，取决于软件、生态、供应保障与端侧 AI</b>，以及能否把中国的产品与供应能力，可信地对接到北美客户。</p>
-    <div class="foot"><span>全部基于公开资料整理 · 框架：Five Forces / Strategic Group / KSF / SWOT</span><span>谢谢 · Thank you</span></div>
+    <p class="sub" style="color:#c8d2d8;margin-top:20px;max-width:76ch">这个行业的长期胜负，两位 CEO 已经给出同一个答案：<b style="color:#fff">平台与生态</b>。泰凌的差距不在方向，在执行的速度与在地能力。</p>
+    <div class="foot"><span>全部基于公开资料 · 框架：Landscape / 2×2 / Benchmark / KSF / SWOT</span><span>谢谢 · Thank you</span></div>
   </section>
 
 </div>
