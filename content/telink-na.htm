@@ -201,26 +201,52 @@
     <div class="kicker">定位 · Gap 在地图上的位置</div>
     <h2>纵轴就是 Gap：价值捕获 × 触达模式</h2>
     <div class="rule" style="margin:8px 0"></div>
-    <svg viewBox="0 0 1000 500" role="img" aria-label="战略定位图">
-      <line x1="110" y1="450" x2="960" y2="450" stroke="#b7bcc4" stroke-width="2"/>
-      <line x1="110" y1="450" x2="110" y2="40" stroke="#b7bcc4" stroke-width="2"/>
-      <text x="535" y="485" text-anchor="middle" font-size="15" font-weight="700" fill="#5b6675">客户触达模式 →　高触达 · 大客户定制交付 ⋯⋯ 自助式 · 开发者生态</text>
-      <text x="46" y="245" text-anchor="middle" font-size="15" font-weight="700" fill="#5b6675" transform="rotate(-90 46 245)">价值捕获 →　按颗卖硅片 ⋯⋯ 平台/软件溢价</text>
-      <text x="300" y="78" text-anchor="middle" font-size="13" fill="#b8860b" font-weight="700" opacity=".9">交钥匙平台（相对空白）</text>
-      <text x="770" y="78" text-anchor="middle" font-size="13" fill="#98a0ac" font-weight="700">开放平台生态（拥挤）</text>
-      <text x="300" y="432" text-anchor="middle" font-size="13" fill="#98a0ac" font-weight="700">定制代工式</text>
-      <text x="770" y="432" text-anchor="middle" font-size="13" fill="#98a0ac" font-weight="700">社区走量</text>
-      <defs><marker id="ah" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#c0392b"/></marker></defs>
-      <line x1="295" y1="345" x2="325" y2="150" stroke="#c0392b" stroke-width="2.4" stroke-dasharray="7 5" marker-end="url(#ah)" opacity="0.85"/>
-      <text x="345" y="196" font-size="13" fill="#c0392b" font-weight="700">“产品公司 → 平台型公司”</text>
-      <text x="345" y="214" font-size="11.5" fill="#c0392b">— CEO 宣示的演进方向（交钥匙 EdgeAI 平台）</text>
+    <svg viewBox="0 0 1000 575" role="img" aria-label="战略定位图">
+      <defs>
+        <marker id="axh" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto-start-reverse"><path d="M0,0 L7,3 L0,6 Z" fill="#5b6675"/></marker>
+        <marker id="ah" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#c0392b"/></marker>
+      </defs>
+      <!-- 绘图区 + 四象限浅色分区 -->
+      <rect x="150" y="55" width="790" height="420" fill="#ffffff" stroke="#d8dce2"/>
+      <rect x="150" y="55" width="395" height="210" fill="#b8860b" opacity="0.08"/>
+      <rect x="545" y="55" width="395" height="210" fill="#5b6675" opacity="0.06"/>
+      <rect x="150" y="265" width="395" height="210" fill="#5b6675" opacity="0.03"/>
+      <rect x="545" y="265" width="395" height="210" fill="#5b6675" opacity="0.06"/>
+      <line x1="545" y1="55" x2="545" y2="475" stroke="#b9c0c9" stroke-width="1.3" stroke-dasharray="5 5"/>
+      <line x1="150" y1="265" x2="940" y2="265" stroke="#b9c0c9" stroke-width="1.3" stroke-dasharray="5 5"/>
+      <!-- 左上白区强调框 -->
+      <rect x="156" y="61" width="383" height="198" fill="none" stroke="#b8860b" stroke-width="1.8" stroke-dasharray="7 5" rx="8"/>
+      <!-- 象限角标（每格=什么组合） -->
+      <text x="176" y="86" font-size="13.5" fill="#8a6a12" font-weight="800">① 交钥匙平台 —— 相对空白</text>
+      <text x="176" y="103" font-size="10.5" fill="#9a7a1a">定制交付 × 平台溢价</text>
+      <text x="918" y="86" text-anchor="end" font-size="13.5" fill="#5b6675" font-weight="800">② 开放平台生态 —— 拥挤</text>
+      <text x="918" y="103" text-anchor="end" font-size="10.5" fill="#7d8794">自助生态 × 平台溢价</text>
+      <text x="176" y="449" font-size="13.5" fill="#5b6675" font-weight="800">③ 定制代工</text>
+      <text x="176" y="466" font-size="10.5" fill="#7d8794">定制交付 × 按颗卖</text>
+      <text x="918" y="449" text-anchor="end" font-size="13.5" fill="#5b6675" font-weight="800">④ 社区走量</text>
+      <text x="918" y="466" text-anchor="end" font-size="10.5" fill="#7d8794">自助生态 × 按颗卖</text>
+      <!-- Y 轴：双向光谱 + 端点 -->
+      <line x1="118" y1="66" x2="118" y2="464" stroke="#5b6675" stroke-width="2" marker-start="url(#axh)" marker-end="url(#axh)"/>
+      <g transform="rotate(-90 118 265)"><rect x="62" y="252" width="112" height="26" rx="13" fill="#1a2230"/><text x="118" y="270" text-anchor="middle" font-size="13" font-weight="800" fill="#fff">价值捕获方式</text></g>
+      <text x="150" y="40" font-size="12.5" font-weight="700" fill="#33404e">↑ 高端：平台 / 软件溢价（软件、工具、生态都变成钱）</text>
+      <text x="150" y="496" font-size="12.5" font-weight="700" fill="#33404e">↓ 低端：按颗卖硅片（拼 BOM 价格）</text>
+      <!-- X 轴：双向光谱 + 端点 -->
+      <line x1="175" y1="522" x2="915" y2="522" stroke="#5b6675" stroke-width="2" marker-start="url(#axh)" marker-end="url(#axh)"/>
+      <rect x="467" y="509" width="156" height="26" rx="13" fill="#1a2230"/><text x="545" y="527" text-anchor="middle" font-size="13" font-weight="800" fill="#fff">客户触达模式</text>
+      <text x="175" y="556" font-size="12.5" font-weight="700" fill="#33404e">⟵ 高触达：大客户定制交付（FAE 驻场 · turnkey）</text>
+      <text x="915" y="556" text-anchor="end" font-size="12.5" font-weight="700" fill="#33404e">自助式：开发者生态（SDK · 社区）⟶</text>
+      <!-- 泰凌演进箭头 -->
+      <line x1="305" y1="340" x2="330" y2="215" stroke="#c0392b" stroke-width="2.4" stroke-dasharray="7 5" marker-end="url(#ah)" opacity="0.9"/>
+      <text x="352" y="252" font-size="13" fill="#c0392b" font-weight="700">"产品公司 → 平台型公司"</text>
+      <text x="352" y="270" font-size="11.5" fill="#c0392b">— CEO 宣示的演进方向（交钥匙 EdgeAI 平台）</text>
+      <!-- 气泡 -->
       <g font-family="sans-serif">
-        <circle cx="295" cy="355" r="42" fill="#c0392b"/><text x="295" y="353" text-anchor="middle" font-size="15" font-weight="800" fill="#fff">泰凌</text><text x="295" y="370" text-anchor="middle" font-size="9.5" fill="#fff">Google RCU 定制模式</text>
-        <circle cx="790" cy="380" r="38" fill="#98a0ac"/><text x="790" y="378" text-anchor="middle" font-size="13" font-weight="800" fill="#fff">乐鑫</text><text x="790" y="393" text-anchor="middle" font-size="9.5" fill="#fff">社区+低价</text>
-        <circle cx="745" cy="200" r="44" fill="#1f6f8b"/><text x="745" y="198" text-anchor="middle" font-size="15" font-weight="800" fill="#fff">Nordic</text><text x="745" y="215" text-anchor="middle" font-size="9.5" fill="#fff">DevZone/Zephyr</text>
-        <circle cx="590" cy="118" r="46" fill="#b8860b"/><text x="590" y="114" text-anchor="middle" font-size="14" font-weight="800" fill="#fff">Silicon Labs</text><text x="590" y="131" text-anchor="middle" font-size="9.5" fill="#fff">双触达+1000特性/年</text>
-        <circle cx="300" cy="180" r="34" fill="#6d5a86"/><text x="300" y="178" text-anchor="middle" font-size="12" font-weight="800" fill="#fff">Qorvo</text><text x="300" y="193" text-anchor="middle" font-size="9" fill="#fff">遥控/家居 niche</text>
-        <circle cx="565" cy="318" r="36" fill="#5b6675" opacity=".8"/><text x="565" y="316" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">TI·NXP·ST</text><text x="565" y="331" text-anchor="middle" font-size="9" fill="#fff">大厂组合牌</text>
+        <circle cx="330" cy="170" r="34" fill="#6d5a86"/><text x="330" y="168" text-anchor="middle" font-size="12" font-weight="800" fill="#fff">Qorvo</text><text x="330" y="183" text-anchor="middle" font-size="9" fill="#fff">遥控/家居 niche</text>
+        <circle cx="620" cy="118" r="46" fill="#b8860b"/><text x="620" y="114" text-anchor="middle" font-size="14" font-weight="800" fill="#fff">Silicon Labs</text><text x="620" y="131" text-anchor="middle" font-size="9.5" fill="#fff">双触达+1000特性/年</text>
+        <circle cx="770" cy="195" r="44" fill="#1f6f8b"/><text x="770" y="193" text-anchor="middle" font-size="15" font-weight="800" fill="#fff">Nordic</text><text x="770" y="210" text-anchor="middle" font-size="9.5" fill="#fff">DevZone/Zephyr</text>
+        <circle cx="585" cy="305" r="36" fill="#5b6675" opacity=".85"/><text x="585" y="303" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">TI·NXP·ST</text><text x="585" y="318" text-anchor="middle" font-size="9" fill="#fff">大厂组合牌</text>
+        <circle cx="300" cy="385" r="42" fill="#c0392b"/><text x="300" y="383" text-anchor="middle" font-size="15" font-weight="800" fill="#fff">泰凌</text><text x="300" y="400" text-anchor="middle" font-size="9.5" fill="#fff">Google RCU 定制模式</text>
+        <circle cx="810" cy="400" r="36" fill="#98a0ac"/><text x="810" y="398" text-anchor="middle" font-size="13" font-weight="800" fill="#fff">乐鑫</text><text x="810" y="413" text-anchor="middle" font-size="9.5" fill="#fff">社区+低价</text>
       </g>
     </svg>
     <div class="takeaway"><b>读图：</b>泰凌的 gap = 纵轴高度差。右上已拥挤（照抄 Nordic 生态打法胜率低）；现实路径是<b>沿左侧向上</b>——把已验证的定制交付升级为「交钥匙 EdgeAI 平台」，直取相对空白的左上象限。Qorvo 在左上的存在恰好证明该象限<b>可以住人、且有溢价</b>。</div>
