@@ -12,7 +12,8 @@
   body{font-family:-apple-system,"PingFang SC","Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:#eceae4;line-height:1.46;-webkit-font-smoothing:antialiased}
   .deck{scroll-snap-type:y mandatory;overflow-y:scroll;height:100vh}
   .slide{scroll-snap-align:start;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:5vh 6vw;position:relative;background:var(--bg);border-bottom:1px solid #d8d5cd}
-  .slide::before{content:attr(data-n);position:absolute;top:3.6vh;right:6vw;font-size:11px;letter-spacing:.15em;color:var(--muted);font-weight:600}
+  .slide::before{content:attr(data-n) " / 15";position:absolute;top:3.6vh;right:6vw;font-size:11px;letter-spacing:.15em;color:var(--muted);font-weight:600}
+  .cover::before{color:#9fb3bb}
   .kicker{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:10px}
   h1{font-size:clamp(28px,4.2vw,54px);line-height:1.08;font-weight:800;letter-spacing:-.01em}
   h2{font-size:clamp(21px,2.8vw,36px);line-height:1.12;font-weight:800;letter-spacing:-.01em;margin-bottom:4px}
@@ -68,13 +69,43 @@
   .nav button:hover{background:var(--ink);color:#fff}
   .hint{position:fixed;left:16px;bottom:16px;z-index:20;font-size:11px;color:#8a93a0}
   @media print{body,.deck{height:auto;overflow:visible}.slide{min-height:0;height:100vh;page-break-after:always;border:none}.nav,.hint{display:none}@page{size:1280px 720px;margin:0}}
+  /* ---- 手机适配：把桌面翻页 deck 变成正常竖向长文档 ---- */
+  @media (max-width:640px){
+    html{scroll-behavior:auto}
+    .deck{height:auto;overflow:visible;scroll-snap-type:none}
+    .slide{min-height:auto;justify-content:flex-start;padding:34px 18px 24px;scroll-snap-align:none}
+    .cover{min-height:86vh;justify-content:center}
+    .slide::before{top:12px;right:16px}
+    h1{font-size:29px}h2{font-size:21px}
+    .lead{font-size:16px}.sub{font-size:14.5px}
+    li{font-size:14px;max-width:none}
+    .takeaway{font-size:14px;max-width:none}
+    /* 所有多列布局堆成单列 */
+    .g2,.g3,.g4,.swot{grid-template-columns:1fr!important}
+    .grid{gap:11px;margin-top:14px}
+    /* 宽表 & SVG：横向滑动，不再压扁 */
+    .xs{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%;margin-top:14px}
+    .xs>table{min-width:600px;margin-top:0}
+    .xs>svg{min-width:640px}
+    table{font-size:12.5px}
+    th,td{padding:7px 9px}
+    /* 进度条：固定宽标签改为整行堆叠 */
+    .bar{flex-wrap:wrap}
+    .bar .lab{width:auto;flex:1 0 100%;text-align:left;margin-bottom:2px}
+    .bar .track{height:24px}
+    .bar .fill{font-size:11px}
+    /* 脚注从绝对定位改为正常流，避免与内容重叠 */
+    .foot{position:static;margin-top:16px;flex-direction:column;gap:3px;align-items:flex-start;border-top:1px solid var(--line);padding-top:8px}
+    /* 桌面才有意义的控件 */
+    .nav,.hint{display:none}
+  }
 </style>
 </head>
 <body>
 <div class="deck" id="deck">
 
   <!-- 1 COVER -->
-  <section class="slide cover" data-n="">
+  <section class="slide cover" data-n="01">
     <div class="kicker">行业分析 · 基于公开资料</div>
     <h1>20 亿颗之后：<br>从出货领先到价值领先</h1>
     <div class="rule"></div>
@@ -103,7 +134,7 @@
     <div class="kicker">背景 · 全球 BLE 供应商版图（问题一）</div>
     <h2>四类玩家里，泰凌的坐标</h2>
     <div class="rule" style="margin:10px 0"></div>
-    <table>
+    <div class="xs"><table>
       <thead><tr><th>阵营</th><th>代表厂商</th><th>打法</th><th>竞争态势</th></tr></thead>
       <tbody>
         <tr><td>价值份额霸主</td><td><b>Nordic</b>（挪威）</td><td>BLE 纯玩家；DevZone/Zephyr 开发者生态是护城河</td><td>2025 年新认证占 32%（≈竞对 3–4 倍）；FY2025 营收 $667.6M</td></tr>
@@ -111,7 +142,7 @@
         <tr><td>多协议专家</td><td><b>Silicon Labs</b> · <b>Qorvo</b>(ex-GreenPeak)</td><td>智能家居/工业多协议并发（Matter/Thread+BLE）</td><td>SiLabs FY2025 +34%、毛利 58.5%；Qorvo 已宣布并入 Skyworks（2027 初交割）</td></tr>
         <tr><td>中国走量阵营</td><td class="col-tl"><b>泰凌</b> · 乐鑫 · 瑞昱 · 汇顶 · Beken 等</td><td class="col-tl">性价比+快交付，国内卷、头部出海</td><td class="col-tl">泰凌出货量全球前三、中国第一；<b>唯一深入 Google/Amazon/Logitech 供应链的中国厂</b></td></tr>
       </tbody>
-    </table>
+    </table></div>
     <div class="takeaway"><b>态势一句话：</b>Nordic 收价值、中国厂收量、大厂收组合、专家收 niche——打破均衡的两股力量是 <b>Matter 多协议化</b>与<b>端侧 AI</b>。泰凌已经"进场"，问题是从"量的前三"走到"价值的前三"。</div>
     <div class="foot"><span>来源：Nordic IR · Omdia/DNB（经招股书引用）· IoT Analytics（市场 $72→142 亿，2024–30）</span><span>手机侧 BLE 被高通/博通集成，不在竞技场内</span></div>
   </section>
@@ -142,7 +173,7 @@
     <div class="kicker">拆解 · Gap 的驱动树</div>
     <h2>5 倍差距，逐层归因</h2>
     <div class="rule" style="margin:8px 0"></div>
-    <svg viewBox="0 0 1000 460" role="img" aria-label="gap驱动树">
+    <div class="xs"><svg viewBox="0 0 1000 460" role="img" aria-label="gap驱动树">
       <defs><marker id="tr" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#8a93a0"/></marker></defs>
       <!-- root -->
       <rect x="20" y="180" width="200" height="86" rx="10" fill="#1a2230"/>
@@ -178,7 +209,7 @@
       <text x="600" y="394" font-size="11.5" fill="#3a4350">文档/规格稳定/本地FAE/供应认知 → 决定受监管段的准入</text>
       <text x="600" y="410" font-size="11.5" fill="#3a4350">与设计中标速度。是运营执行问题，不是技术问题。</text>
       <text x="600" y="428" font-size="10.5" fill="#1f6f52" font-weight="700">补法：本地支持+文档+program mgmt——最快、最便宜（快变量）</text>
-    </svg>
+    </svg></div>
     <div class="foot"><span>框架：Driver Tree · 归因为公开数据基础上的定性判断</span><span>硅片差距已基本关闭（BT6.0 首证 · EdgeAI 量产）</span></div>
   </section>
 
@@ -201,7 +232,7 @@
     <div class="kicker">定位 · Gap 在地图上的位置</div>
     <h2>纵轴就是 Gap：价值捕获 × 触达模式</h2>
     <div class="rule" style="margin:8px 0"></div>
-    <svg viewBox="0 0 1000 575" role="img" aria-label="战略定位图">
+    <div class="xs"><svg viewBox="0 0 1000 575" role="img" aria-label="战略定位图">
       <defs>
         <marker id="axh" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto-start-reverse"><path d="M0,0 L7,3 L0,6 Z" fill="#5b6675"/></marker>
         <marker id="ah" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#c0392b"/></marker>
@@ -248,7 +279,7 @@
         <circle cx="300" cy="385" r="42" fill="#c0392b"/><text x="300" y="383" text-anchor="middle" font-size="15" font-weight="800" fill="#fff">泰凌</text><text x="300" y="400" text-anchor="middle" font-size="9.5" fill="#fff">Google RCU 定制模式</text>
         <circle cx="810" cy="400" r="36" fill="#98a0ac"/><text x="810" y="398" text-anchor="middle" font-size="13" font-weight="800" fill="#fff">乐鑫</text><text x="810" y="413" text-anchor="middle" font-size="9.5" fill="#fff">社区+低价</text>
       </g>
-    </svg>
+    </svg></div>
     <div class="takeaway"><b>读图：</b>泰凌的 gap = 纵轴高度差。右上已拥挤（照抄 Nordic 生态打法胜率低）；现实路径是<b>沿左侧向上</b>——把已验证的定制交付升级为「交钥匙 EdgeAI 平台」，直取相对空白的左上象限。Qorvo 在左上的存在恰好证明该象限<b>可以住人、且有溢价</b>。</div>
     <div class="foot"><span>轴由第 6 页行业共识导出 · 定位为定性判断</span><span>示意图</span></div>
   </section>
@@ -258,7 +289,7 @@
     <div class="kicker">对标 · Portfolio 横评（问题二）——每行标注是否构成 Gap</div>
     <h2>Telink vs Nordic / Silicon Labs / Qorvo / 乐鑫</h2>
     <div class="rule" style="margin:8px 0"></div>
-    <table>
+    <div class="xs"><table>
       <thead><tr><th>维度</th><th class="th-tl">Telink</th><th>Nordic</th><th>Silicon Labs</th><th>Qorvo (IoT)</th><th>乐鑫</th><th>Gap?</th></tr></thead>
       <tbody>
         <tr><td>BLE 旗舰</td><td class="col-tl">TLSR9 / TL721X</td><td>nRF54</td><td>xG24 · Series 3</td><td>QPG6105</td><td>ESP32-C/H</td><td><span class="tag-ok">已追平</span></td></tr>
@@ -270,7 +301,7 @@
         <tr><td>本地支持(美欧)</td><td class="col-tl">硅谷+代理商，建设中</td><td>成熟</td><td>成熟</td><td>成熟</td><td>弱</td><td><span class="tag-gap">信任 Gap ③</span></td></tr>
         <tr><td>认证话语权</td><td class="col-tl">SIG 董事 · BT6.0 首证</td><td>核心成员</td><td>Matter 主要贡献者</td><td>成员</td><td>成员</td><td><span class="tag-ok">已追平</span></td></tr>
       </tbody>
-    </table>
+    </table></div>
     <div class="takeaway"><b>一眼结论：</b>技术行全绿、商业行全红——<b>gap 是商业化层的，不是工程层的</b>。与 Qorvo 在遥控器正面相遇（GreenPeak 血统），泰凌以 BLE 成本+软件定制对其多协议并发。</div>
     <div class="foot"><span>来源：五家官网/datasheet · Qorvo QPG6105 · SiLabs 2025 Analyst Day · 年报</span><span>“—”=未公开/不适用</span></div>
   </section>
@@ -303,7 +334,7 @@
     <div class="kicker">重点 · 美欧目标客户地图——该敲谁的门，拿什么敲</div>
     <h2>从"已赢客户"向邻近扩张</h2>
     <div class="rule" style="margin:8px 0"></div>
-    <table>
+    <div class="xs"><table>
       <thead><tr><th>细分市场</th><th>目标客户（✓=已供货）</th><th>现主力供应商*</th><th>泰凌的敲门砖</th><th>优先级</th></tr></thead>
       <tbody>
         <tr><td>🇺🇸 流媒体遥控</td><td><b>Google ✓</b> · Amazon Fire TV · Roku · 运营商（经 UEI/Ohsung 等 ODM）</td><td>Infineon(旧款Fire TV拆解) · Realtek(Roku) · Qorvo(运营商，自述全覆盖)</td><td>Google 参考设计背书 + 语音方案 + 成本</td><td><span class="tag-ok">近期</span></td></tr>
@@ -315,7 +346,7 @@
         <tr><td>🇪🇺 助听/Auracast</td><td>GN(Jabra) · Demant · WS Audiology</td><td>高通/自研</td><td>LE Audio/Auracast + 音频产品线</td><td><span class="tag-gap">远期</span></td></tr>
         <tr><td>🇪🇺 工业 IoT</td><td>西门子系 · 楼宇自动化厂商</td><td>Nordic · SiLabs · ST</td><td>平台化成熟后进入（②补齐为前提）</td><td><span class="tag-gap">远期</span></td></tr>
       </tbody>
-    </table>
+    </table></div>
     <div class="takeaway"><b>打法逻辑：</b>不撒网——每个"近期"目标都与已赢客户共享<b>同一 ODM、同一应用故事或同一采购语言</b>（邻近扩张）；"中期"靠已验证案例敲受监管段；"远期"等平台层补齐。这张表就是北美市场团队的 pipeline 蓝图。</div>
     <div class="foot"><span>*现供应商为公开拆解/行业报道口径，非官方披露 · ✓来源：招股书客户名单/Google 源码</span><span>目标客户地图</span></div>
   </section>
@@ -325,7 +356,7 @@
     <div class="kicker">价值交付 · Crossing the Chasm——生态 Gap 的深层机制</div>
     <h2>新品类在曲线左端诞生，而泰凌住在右端</h2>
     <div class="rule" style="margin:8px 0"></div>
-    <svg viewBox="0 0 1000 400" role="img" aria-label="跨越鸿沟采用曲线">
+    <div class="xs"><svg viewBox="0 0 1000 400" role="img" aria-label="跨越鸿沟采用曲线">
       <line x1="60" y1="330" x2="960" y2="330" stroke="#b7bcc4" stroke-width="2"/>
       <!-- pre-chasm bump -->
       <path d="M 90 328 C 200 328 280 300 380 235 L 380 330 Z" fill="#1f6f8b" opacity=".25"/>
@@ -335,8 +366,8 @@
       <text x="410" y="315" text-anchor="middle" font-size="13" font-weight="800" fill="#a5281b">鸿沟</text>
       <!-- main bell -->
       <line x1="438" y1="225" x2="438" y2="330" stroke="#1a2230" stroke-width="2"/>
-      <path d="M 438 328 C 520 300 560 120 660 105 C 770 95 830 250 940 322" fill="#c0392b" opacity=".14"/>
-      <path d="M 438 328 C 520 300 560 120 660 105 C 770 95 830 250 940 322" fill="none" stroke="#c0392b" stroke-width="2.5"/>
+      <path d="M 438 235 C 520 205 575 118 660 106 C 745 118 830 250 940 322 L 940 330 L 438 330 Z" fill="#c0392b" opacity=".14"/>
+      <path d="M 438 235 C 520 205 575 118 660 106 C 745 118 830 250 940 322" fill="none" stroke="#c0392b" stroke-width="2.5"/>
       <!-- stage labels -->
       <text x="180" y="60" text-anchor="middle" font-size="13.5" font-weight="700" fill="#1f6f8b">领先用户 · 早期采用者</text>
       <text x="180" y="80" text-anchor="middle" font-size="11.5" fill="#33627a">开发者/创业公司在这里选型原型</text>
@@ -350,7 +381,7 @@
       <text x="415" y="128" text-anchor="middle" font-size="12.5" font-weight="800" fill="#b8860b">泰凌的过桥机制：锚客户"整体产品"</text>
       <text x="415" y="145" text-anchor="middle" font-size="11" fill="#8a6a12">平台方定义参考设计（Google RCU 模式）→ 大众 OEM 直接采用</text>
       <text x="510" y="358" text-anchor="start" font-size="11" fill="#98a0ac">采用者数量 · Rogers/Moore 采用曲线</text>
-    </svg>
+    </svg></div>
     <div class="takeaway"><b>诊断：</b>明天的高价值设计（医疗、新 AIoT 品类）都在<b>左端</b>用最好用的 SDK 做原型，然后被转换成本锁死——泰凌缺席左端，等于每个新品类都<b>晚一个身位入场、只能拼成本</b>。<b>处方：</b>端侧 AI 现在正处鸿沟左侧——泰凌不必花五年复制 DevZone，它已验证的过桥方式是<b>与平台方共建"整体产品"</b>（Google 模式复制到 Amazon/运营商），再选一个滩头品类（智能语音遥控 / CGM）打穿。</div>
     <div class="foot"><span>框架：Moore, Crossing the Chasm · 定位为定性判断</span><span>价值交付视角</span></div>
   </section>
@@ -360,13 +391,13 @@
     <div class="kicker">价值捕获 · Teece 框架——收购进新市场，该买什么</div>
     <h2>排他性弱的行业，赢家是互补资产的所有者</h2>
     <div class="rule" style="margin:8px 0"></div>
-    <table>
+    <div class="xs"><table>
       <thead><tr><th style="width:16%">谁能赚走创新的钱？</th><th>互补资产<b>不</b>关键</th><th>互补资产<b>关键</b>（渠道/认证/生态/合格供应商资格）</th></tr></thead>
       <tbody>
         <tr><td>技术<b>难</b>排他<br>（标准化、易模仿）</td><td>拼速度与成本 —— <b>中国 BLE 内卷区</b>（遥控/键鼠走量段）</td><td class="col-tl"><b>互补资产所有者赢 → Go Vertical / 买资产</b><br>⟵ BLE 高价值段（医疗/工业/平台生态）正在此格</td></tr>
         <tr><td>技术<b>可</b>排他<br>（专利/工艺独占）</td><td>Greenfield 自建即可</td><td>与资产方合作（co-vertical）；纯 License 输出<b>通常无效</b></td></tr>
       </tbody>
-    </table>
+    </table></div>
     <div class="grid g3" style="margin-top:14px">
       <div class="card"><h3>为什么解释力强</h3><p>BLE 是<b>蓝牙 SIG 标准</b>行业：人人同一套协议，硅片必然趋同 → 排他性天生弱。这就是"硅片已同代、营收差 5 倍"的理论根源——<b>钱流向了 SDK 生态、认证资格、渠道这些互补资产</b>（Nordic 的 DevZone、SiLabs 的每年千余软件特性）。</p></div>
       <div class="card" style="border-top:3px solid var(--accent)"><h3 style="color:var(--accent)">对收购扩张的指引</h3><p>按 Teece，进新市场的收购应<b>买互补资产，而非更多技术</b>（Nordic 示范：2025 连购 Neuton.AI 工具链与 $1.2 亿的 Memfault 云平台）：医疗 → 带认证与合格供应商资格的模组厂/设计公司；欧洲工业 → 有本地渠道与客户存量的 design house；平台层 → 软件/工具团队。<b>复盘磐启微</b>：按"你在买什么"，它买的是<b>技术/产品广度（Sub-1G）</b>，不是认证/渠道；且标的持续亏损、572% 增值靠"协同估值"、亏损标的对赌暗含 <b>earnout-trap 风险</b>。下一单应转向<b>买资产</b>。</p></div>
@@ -380,14 +411,14 @@
     <div class="kicker">优先级 · 按投入产出排序补 Gap</div>
     <h2>快变量 → 中变量 → 慢变量</h2>
     <div class="rule" style="margin:8px 0"></div>
-    <table>
+    <div class="xs"><table>
       <thead><tr><th>Gap</th><th>补什么</th><th>要多久</th><th>投入</th><th>对营收的杠杆</th></tr></thead>
       <tbody>
         <tr><td>③ 信任 Gap</td><td>本地支持/FAE、文档与规格稳定性、design-win 前后的 program management</td><td><b>快</b>（季度级）</td><td>低（人+流程）</td><td>直接加速现有 pipeline 转化——<b>先补</b></td></tr>
         <tr><td>② 平台 Gap</td><td>开发者体验（SDK/文档/工具）；把交钥匙 EdgeAI 做成可复制的平台产品</td><td><b>中</b>（1–2 年）</td><td>中（软件团队）</td><td>决定毛利天花板（48%→SiLabs 式 55%+ 的通路）</td></tr>
         <tr><td>① 组合 Gap</td><td>CGM/医疗放量、音频、工业试点；磐启微并购补广域</td><td><b>慢</b>（2–4 年）</td><td>高（研发+认证）</td><td>最大但最慢；②③补好后自然加速</td></tr>
       </tbody>
-    </table>
+    </table></div>
     <div class="takeaway"><b>关键洞察：</b>三层 gap 有依赖关系——<b>信任是平台的前提，平台是组合升级的前提</b>。顺序反了（先砸高端产品、不补支持与生态）就会重演"好芯片卖不进高价值段"。这也解释了为什么泰凌此刻在北美加投本地团队是对的一步棋。</div>
     <div class="foot"><span>框架：Gap-closing sequence · 时间/投入为定性估计</span><span>快变量优先</span></div>
   </section>
