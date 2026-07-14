@@ -111,53 +111,65 @@
     <div class="rule"></div>
     <p class="sub">短距/低功耗无线连接芯片（含 BLE、双模蓝牙、Zigbee/Thread/Matter、2.4G、无线音频……）——手机/设备的"边缘外设"</p>
     <div class="card">
-      <h3>无线连接芯片市场：核心盘还在长、增速在换挡，扩展盘接棒（多口径）</h3>
-      <svg viewBox="0 0 690 336" role="img" aria-label="上：市场规模按核心蓝牙与Wi-Fi扩展盘堆叠；下：年增速线，核心蓝牙从26%降到9.9%、Wi-Fi扩展盘17.3%接棒">
-  <!-- legend -->
-  <rect x="70" y="16" width="12" height="12" rx="2" fill="#2563a8"/><text x="88" y="26" font-size="11.5" fill="#5a6472">蓝牙 IoT 芯片（核心盘）</text>
-  <rect x="262" y="16" width="12" height="12" rx="2" fill="#b8860b"/><text x="280" y="26" font-size="11.5" fill="#5a6472">Wi-Fi 芯片（扩展盘）</text>
-  <text x="662" y="26" text-anchor="end" font-size="10.5" fill="#8a93a0">柱＝规模 $B（堆叠）｜ 线＝年增速 %</text>
-  <!-- TOP: stacked size columns -->
-  <line x1="98" y1="210" x2="642" y2="210" stroke="#c7ccd3" stroke-width="1.5"/>
+      <h3>蓝牙设备年出货量（十亿台 · SIG 官方逐年）——增速先落、再被新品类重新点火</h3>
+      <svg viewBox="0 0 690 300" role="img" aria-label="蓝牙设备年出货量逐年柱状图（2018-2025 及 2029 预测），标注同比：渗透冲刺后回落到 2-4%，新品类推动 2029 前重回约 11% 年增">
+  <rect x="70" y="14" width="12" height="12" rx="2" fill="#2563a8"/><text x="88" y="24" font-size="11.5" fill="#5a6472">官方通报（实际）</text>
+  <rect x="218" y="14" width="12" height="12" rx="2" fill="#c3d4e6" stroke="#7d9dc4" stroke-dasharray="4 2"/><text x="236" y="24" font-size="11.5" fill="#5a6472">预测 / *过渡值</text>
+  <text x="662" y="24" text-anchor="end" font-size="10.5" fill="#8a93a0">柱上％＝同比增速</text>
+  <line x1="60" y1="250" x2="660" y2="250" stroke="#c7ccd3" stroke-width="1.5"/>
+  <!-- era annotations -->
+  <text x="183" y="52" text-anchor="middle" font-size="11" font-weight="700" fill="#2f6a9e">渗透冲刺</text>
+  <text x="423" y="52" text-anchor="middle" font-size="11" font-weight="700" fill="#8a6d2f">平台期 · 核心场景饱和</text>
+  <text x="620" y="42" text-anchor="middle" font-size="11" font-weight="700" fill="#1f6f52">新品类重新提速</text>
+  <!-- 2018 -->
+  <rect x="71" y="162" width="44" height="88" fill="#2563a8"/>
+  <text x="93" y="180" text-anchor="middle" font-size="11" font-weight="800" fill="#fff">3.7</text>
+  <text x="93" y="266" text-anchor="middle" font-size="11" fill="#8a93a0">2018</text>
+  <!-- 2019 -->
+  <rect x="131" y="150" width="44" height="100" fill="#2563a8"/>
+  <text x="153" y="168" text-anchor="middle" font-size="11" font-weight="800" fill="#fff">4.2</text>
+  <text x="153" y="142" text-anchor="middle" font-size="11.5" font-weight="700" fill="#1f6f52">+14%</text>
+  <text x="153" y="266" text-anchor="middle" font-size="11" fill="#8a93a0">2019</text>
   <!-- 2020 -->
-  <rect x="98" y="187" width="84" height="23" fill="#2563a8"/>
-  <text x="140" y="180" text-anchor="middle" font-size="12.5" font-weight="800" fill="#1a2230">$2.9B</text>
-  <!-- 2024 -->
-  <rect x="328" y="152" width="84" height="58" fill="#2563a8"/>
-  <rect x="328" y="135" width="84" height="15" fill="#b8860b"/>
-  <text x="370" y="184" text-anchor="middle" font-size="11.5" font-weight="800" fill="#fff">$7.2B</text>
-  <text x="370" y="128" text-anchor="middle" font-size="12.5" font-weight="800" fill="#1a2230">$9.1B</text>
-  <!-- 2030 -->
-  <rect x="558" y="96" width="84" height="114" fill="#2563a8"/>
-  <rect x="558" y="55" width="84" height="39" fill="#b8860b"/>
-  <text x="600" y="178" text-anchor="middle" font-size="11.5" font-weight="800" fill="#fff">蓝牙 $14.2B</text>
-  <text x="600" y="79" text-anchor="middle" font-size="11" font-weight="800" fill="#fff">Wi-Fi $4.8B</text>
-  <text x="600" y="48" text-anchor="middle" font-size="12.5" font-weight="800" fill="#1a2230">$19.1B</text>
-  <!-- TOP x labels -->
-  <text x="140" y="226" text-anchor="middle" font-size="11" fill="#8a93a0">2020</text>
-  <text x="370" y="226" text-anchor="middle" font-size="11" fill="#8a93a0">2024</text>
-  <text x="600" y="226" text-anchor="middle" font-size="11" fill="#8a93a0">2030</text>
-  <!-- BOTTOM: growth-rate lines sharing time axis -->
-  <text x="70" y="252" font-size="11" font-weight="700" fill="#5a6472">年增速</text>
-  <line x1="98" y1="305" x2="642" y2="305" stroke="#e2e6ec" stroke-width="1"/>
-  <!-- core Bluetooth: 26% -> step down -> 9.9% -->
-  <path d="M140,257 H370 V287 H600" fill="none" stroke="#2563a8" stroke-width="3" stroke-linejoin="round"/>
-  <circle cx="140" cy="257" r="4" fill="#2563a8"/><circle cx="370" cy="257" r="4" fill="#2563a8"/><circle cx="600" cy="287" r="4" fill="#2563a8"/>
-  <text x="230" y="250" text-anchor="middle" font-size="14" font-weight="800" fill="#2563a8">核心 +26%/年</text>
-  <text x="512" y="301" text-anchor="middle" font-size="13" font-weight="800" fill="#2563a8">核心放缓到 +9.9%</text>
-  <!-- deceleration arrow at the step -->
-  <path d="M383,259 V283" fill="none" stroke="#b8622a" stroke-width="2"/>
-  <path d="M383,283 l-4,-7 M383,283 l4,-7" fill="none" stroke="#b8622a" stroke-width="2" stroke-linecap="round"/>
-  <text x="392" y="274" font-size="11" font-weight="700" fill="#b8622a">增速换挡</text>
-  <!-- Wi-Fi expansion 17.3% (dashed, faster) -->
-  <path d="M370,273 H600" fill="none" stroke="#b8860b" stroke-width="2.5" stroke-dasharray="6 3"/>
-  <text x="512" y="269" text-anchor="middle" font-size="12" font-weight="800" fill="#b8860b">Wi-Fi 扩展 +17.3% 接棒</text>
-  <!-- BOTTOM x labels -->
-  <text x="140" y="322" text-anchor="middle" font-size="11" fill="#8a93a0">2020</text>
-  <text x="370" y="322" text-anchor="middle" font-size="11" fill="#8a93a0">2024</text>
-  <text x="600" y="322" text-anchor="middle" font-size="11" fill="#8a93a0">2030</text>
+  <rect x="191" y="150" width="44" height="100" fill="#2563a8"/>
+  <text x="213" y="168" text-anchor="middle" font-size="11" font-weight="800" fill="#fff">4.2</text>
+  <text x="213" y="142" text-anchor="middle" font-size="11.5" font-weight="700" fill="#8a4a2f">0%</text>
+  <text x="213" y="266" text-anchor="middle" font-size="11" fill="#8a93a0">2020</text>
+  <!-- 2021 -->
+  <rect x="251" y="138" width="44" height="112" fill="#2563a8"/>
+  <text x="273" y="156" text-anchor="middle" font-size="11" font-weight="800" fill="#fff">4.7</text>
+  <text x="273" y="130" text-anchor="middle" font-size="11.5" font-weight="700" fill="#1f6f52">+12%</text>
+  <text x="273" y="266" text-anchor="middle" font-size="11" fill="#8a93a0">2021</text>
+  <!-- 2022 -->
+  <rect x="311" y="134" width="44" height="116" fill="#2563a8"/>
+  <text x="333" y="152" text-anchor="middle" font-size="11" font-weight="800" fill="#fff">4.9</text>
+  <text x="333" y="126" text-anchor="middle" font-size="11.5" font-weight="700" fill="#5a6472">+4%</text>
+  <text x="333" y="266" text-anchor="middle" font-size="11" fill="#8a93a0">2022</text>
+  <!-- 2023 -->
+  <rect x="371" y="131" width="44" height="119" fill="#2563a8"/>
+  <text x="393" y="149" text-anchor="middle" font-size="11" font-weight="800" fill="#fff">5.0</text>
+  <text x="393" y="123" text-anchor="middle" font-size="11.5" font-weight="700" fill="#5a6472">+2%</text>
+  <text x="393" y="266" text-anchor="middle" font-size="11" fill="#8a93a0">2023</text>
+  <!-- 2024* -->
+  <rect x="431" y="128" width="44" height="122" fill="#c3d4e6" stroke="#7d9dc4" stroke-width="1.5" stroke-dasharray="5 3"/>
+  <text x="453" y="146" text-anchor="middle" font-size="11" font-weight="800" fill="#33404e">5.2*</text>
+  <text x="453" y="120" text-anchor="middle" font-size="11.5" font-weight="700" fill="#5a6472">+3%</text>
+  <text x="453" y="266" text-anchor="middle" font-size="11" fill="#8a93a0">2024</text>
+  <!-- 2025F -->
+  <rect x="491" y="124" width="44" height="126" fill="#c3d4e6" stroke="#7d9dc4" stroke-width="1.5" stroke-dasharray="5 3"/>
+  <text x="513" y="142" text-anchor="middle" font-size="11" font-weight="800" fill="#33404e">5.3</text>
+  <text x="513" y="116" text-anchor="middle" font-size="11.5" font-weight="700" fill="#5a6472">+3%</text>
+  <text x="513" y="266" text-anchor="middle" font-size="11" fill="#8a93a0">2025F</text>
+  <!-- axis break -->
+  <text x="566" y="255" text-anchor="middle" font-size="14" fill="#8a93a0">⋯</text>
+  <!-- 2029F -->
+  <rect x="598" y="60" width="44" height="190" fill="#c3d4e6" stroke="#7d9dc4" stroke-width="1.5" stroke-dasharray="5 3"/>
+  <text x="620" y="78" text-anchor="middle" font-size="11" font-weight="800" fill="#33404e">8.0</text>
+  <text x="620" y="55" text-anchor="middle" font-size="11.5" font-weight="800" fill="#1f6f52">≈+11%/年</text>
+  <text x="620" y="266" text-anchor="middle" font-size="11" fill="#8a93a0">2029F</text>
+  <text x="360" y="290" text-anchor="middle" font-size="11" fill="#5a6472">同比先落（+14% → +2%），又被新品类点火（智能标签 / 价签 / LE Audio → 2029 前 ≈+11%/年）——增长引擎在换</text>
 </svg>
-      <p style="font-size:13.5px;color:#3a4350;margin-top:4px"><b>一张图看三件事：</b>① <b>核心盘（蓝牙 IoT 芯片）仍在长</b>，$72→142 亿；② 但<b>增速在换挡</b>——蓝牙年增速从 2020–24 的 26% 降到 2025–30 的 9.9%（下方蓝线明显下台阶，非线性坐标错觉，是数据源自己给的两段 CAGR）；③ <b>扩展盘接棒</b>——Wi-Fi 以 17.3% 反超核心蓝牙增速（金色虚线在蓝线之上）。其中 <b>BLE 是核心盘里增速最快的子集</b>（设备出货 +22%/年）。而 9.9% 基线并未计入端侧 AI——AI 是这条线之上的上行变量。</p>
+      <p style="font-size:13.5px;color:#3a4350;margin-top:4px"><b>量与钱，两条线一个结论：</b>①<b>量（上图，SIG 逐年官方数）</b>：渗透冲刺（+14%）→ 核心场景饱和后回落到 +2~4% → 智能标签/价签/LE Audio 等<b>新品类把年增重新拉回 ≈11%</b>；②<b>钱（IoT Analytics 芯片口径）</b>：$72→142 亿（2024→30），增速从渗透期 26% 回归 9.9%——量在提速、增速却更低，因为新品类单颗更便宜（摊薄 ASP）。<b>BLE 是其中增速最快的形态（+22%/年）</b>；且 9.9% 基线未计入端侧 AI——AI 是基线之上的上行变量。</p>
     </div>
     <div class="grid g3" style="margin-top:14px">
       <div class="card" style="border-top:3px solid #1f6f52"><h3 style="color:#1f6f52">最小口径 · BLE——泰凌基本盘</h3><p>蓝牙中唯一高增长形态：单模 LE 设备出货 <b>+22%/年</b>、2028 追平双模；双模仅 +2%、经典蓝牙 <b>−14%</b> 萎缩——蓝牙的增长几乎全由 LE 贡献（SIG）</p></div>
@@ -165,7 +177,7 @@
       <div class="card" style="border-top:3px solid var(--gold)"><h3 style="color:var(--gold)">大口径 · 当前版图可及盘</h3><p>蓝牙 + Wi-Fi 两块合计 <b>$91 亿 → $191 亿</b>（<b>~+13%/年</b>，其中 Wi-Fi 块 +17.3% 最快）；Zigbee/Thread/Matter、2.4G、Sub-1G/LPWAN（磐启微）另计其外——扩展方向增速高于基本盘</p></div>
     </div>
     <div class="takeaway"><b>放到所有行业里看：多数被 AI 替代，少数"造 AI 底座"的（算力·连接·传感）受益——本行业属后者。</b>连接是 AI 落地边缘的物理基础设施、软件替代不了；泰凌的可及盘随产品线扩大：从 BLE 基本盘（+22%）到全版图 ~$191 亿+（~13%），扩展方向快于存量。</div>
-    <div class="foot"><span>来源：IoT Analytics《Wireless IoT Connectivity Chipset Market Report 2025–2030》（2025.10，芯片口径：蓝牙 $72→142 亿、Wi-Fi $18.5→48.4 亿；*$2.9B(2020) 由 26% CAGR 回推）· Bluetooth SIG《2025 Market Update》（设备出货口径：LE/双模/经典分形态增速）· 泰凌年报/磐启微收购公告（产品线）</span><span>设备口径 ≠ 芯片口径，不可相乘</span></div>
+    <div class="foot"><span>来源：逐年台数拼自 Bluetooth SIG 历年《Market Update》官方通报（2019–2025 各版；2022 为 2023 版披露 CAGR 隐含基数、2024* 为相邻官方值间过渡值）· 美元口径为 IoT Analytics《Wireless IoT Connectivity Chipset Market Report 2025–2030》（蓝牙 $72→142 亿、Wi-Fi $18.5→48.4 亿及两段 CAGR）· 泰凌年报/磐启微收购公告（产品线）</span><span>设备口径 ≠ 芯片口径，不可相乘</span></div>
   </section>
 
   <!-- 2a PLAYERS: PRODUCT PORTFOLIO -->
