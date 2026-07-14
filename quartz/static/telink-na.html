@@ -115,9 +115,9 @@
       <div style="overflow-x:auto">
       <svg viewBox="0 0 690 410" style="display:block;min-width:672px;max-width:840px;margin:0 auto" role="img" aria-label="双面板图。上面板:蓝牙设备年出货量柱状图,2018 至 2025 及 2029 预测,等距时间轴,同比从 +14% 回落到 +2~4%,新品类推动 2029 前约每年 +11%;下面板:蓝牙 IoT 芯片美元市场四个锚点(2020 估算、2024、2025、2030 预测),对数刻度,增速从 26% 回归 9.9%">
   <!-- ===== 面板1 量:设备出货(十亿台),2018-2030 等距时间轴 ===== -->
-  <text x="54" y="24" font-size="12" font-weight="800" fill="#1a2230">① 量 · 蓝牙设备年出货量（十亿台 · SIG 官方 · 柱上％＝同比）</text>
-  <rect x="466" y="14" width="12" height="12" rx="2" fill="#2563a8"/><text x="484" y="24" font-size="10.5" fill="#5a6472">实际（官方）</text>
-  <rect x="584" y="14" width="12" height="12" rx="2" fill="#c3d4e6" stroke="#7d9dc4" stroke-dasharray="4 2"/><text x="602" y="24" font-size="10.5" fill="#5a6472">预测 / 估算*</text>
+  <text x="54" y="24" font-size="12" font-weight="800" fill="#1a2230">① 量 · 蓝牙设备年出货量（SIG 官方 · 柱上％＝同比）</text>
+  <rect x="402" y="14" width="12" height="12" rx="2" fill="#2563a8"/><text x="420" y="24" font-size="10.5" fill="#5a6472">实际（官方）</text>
+  <rect x="497" y="14" width="12" height="12" rx="2" fill="#c3d4e6" stroke="#7d9dc4" stroke-dasharray="4 2"/><text x="515" y="24" font-size="10.5" fill="#5a6472">预测 / 估算*</text><text x="676" y="24" text-anchor="end" font-size="10.5" fill="#8a93a0">单位：十亿台</text>
   <!-- 时代色带 -->
   <rect x="54" y="32" width="192" height="178" fill="#edf2f7"/>
   <rect x="246" y="32" width="192" height="178" fill="#f7f2e6"/>
@@ -179,8 +179,9 @@
   <text x="606" y="226" text-anchor="middle" font-size="11" fill="#8a93a0">2029F</text>
   <line x1="54" y1="210" x2="634" y2="210" stroke="#c7ccd3" stroke-width="1.5"/>
   <!-- ===== 面板2 钱:蓝牙 IoT 芯片市场($十亿),同一时间尺度,对数刻度 ===== -->
-  <text x="54" y="262" font-size="12" font-weight="800" fill="#1a2230">② 钱 · 蓝牙 IoT 芯片市场规模（$十亿 · IoT Analytics）</text>
-  <text x="676" y="377" text-anchor="end" font-size="10.5" fill="#8a93a0">对数刻度：斜率≈增速 · 空心点=估算/预测*</text>
+  <text x="54" y="262" font-size="12" font-weight="800" fill="#1a2230">② 钱 · 蓝牙 IoT 芯片市场规模（IoT Analytics）</text>
+  <text x="676" y="262" text-anchor="end" font-size="10.5" fill="#8a93a0">单位：$十亿 · 对数刻度</text>
+  <text x="676" y="377" text-anchor="end" font-size="10.5" fill="#8a93a0">斜率≈年增速 · 空心点＝估算/预测*</text>
   <line x1="174" y1="376" x2="366" y2="320" stroke="#b8860b" stroke-width="2"/>
   <line x1="414" y1="307" x2="654" y2="277" stroke="#c8a44b" stroke-width="2" stroke-dasharray="6 4"/>
   <text x="270" y="324" text-anchor="middle" font-size="11.5" font-weight="800" fill="#8a6d2f">+26%/年（2020–24）</text>
@@ -192,7 +193,7 @@
   <circle cx="414" cy="307" r="5" fill="#b8860b" stroke="#fff" stroke-width="2"/>
   <text x="414" y="291" text-anchor="middle" font-size="11" font-weight="800" fill="#33404e">$8.9B</text>
   <circle cx="654" cy="277" r="5" fill="#fff" stroke="#c8a44b" stroke-width="2" stroke-dasharray="3 2"/>
-  <text x="654" y="261" text-anchor="middle" font-size="11" font-weight="800" fill="#33404e">$14.2B</text>
+  <text x="654" y="298" text-anchor="middle" font-size="11" font-weight="800" fill="#33404e">$14.2B</text>
   <line x1="54" y1="386" x2="678" y2="386" stroke="#c7ccd3" stroke-width="1.5"/>
   <line x1="174" y1="386" x2="174" y2="391" stroke="#c7ccd3" stroke-width="1"/>
   <line x1="366" y1="386" x2="366" y2="391" stroke="#c7ccd3" stroke-width="1"/>
@@ -221,7 +222,8 @@
     <div class="kicker">② 谁在玩 · 产品版图</div>
     <h2>产品版图：覆盖在收敛，起点各不同</h2>
     <div class="rule" style="margin:14px 0"></div>
-    <table>
+    <div style="text-align:right;font-size:11px;color:#8a93a0;margin-top:14px">图例：● 主力/成熟产品线 · ◐ 有布局/新进入/伴侣方案 · ○ 无公开产品</div>
+    <table style="margin-top:8px">
       <thead><tr><th>产品线</th><th>Silicon Labs</th><th>Nordic</th><th>Espressif 乐鑫</th><th style="color:var(--accent)">Telink 泰凌</th></tr></thead>
       <tbody>
         <tr><td>BLE 单模 SoC</td><td>● BG 系列</td><td>● 主力（nRF52/54）</td><td>◐ 集成于 ESP32-C/H</td><td>● 主力 · 出货量全球前三</td></tr>
@@ -233,8 +235,9 @@
         <tr><td>端侧 AI（NPU / 工具链）</td><td>● MG26 AI/ML 加速 · 2025 战略主线</td><td>◐ 收购 Neuton.AI（软件）</td><td>◐ S3/P4 向量指令 + ESP-DL</td><td>● TL751X（NPU+DSP）已量产</td></tr>
       </tbody>
     </table>
+    <p style="font-size:11px;color:#8a93a0;margin-top:8px">来源：各家官网产品目录、年报、发布稿（泰凌 2025 年报：音频收入；Wi-Fi 6 多协议 SoC 2024 发布、已量产出货）· 截至 2026 年初公开信息</p>
     <div class="takeaway"><b>客观看：</b>四家的版图都在向"多协议 + Wi-Fi + 端侧 AI"收敛，差别在起点与主力盘——Nordic 自 BLE、Silicon Labs 自多协议平台、乐鑫自 Wi-Fi、泰凌自 BLE + 音频高量。泰凌协议覆盖较全、单价与生态深度取向不同——各有取舍，无关优劣。</div>
-    <div class="foot"><span>● 主力/成熟产品线 · ◐ 有布局/新进入/伴侣方案 · ○ 无公开产品 ｜ 来源：各家官网产品目录、年报、发布稿（泰凌 2025 年报：音频收入；Wi-Fi 6 多协议 SoC 2024 发布、已量产出货）</span><span>截至 2026 年初公开信息</span></div>
+    <div class="foot"><span>来源：见表下标注</span><span>截至 2026 年初公开信息</span></div>
   </section>
 
   <!-- 2b PLAYERS + FINANCIAL CHARACTERISTICS -->
@@ -242,6 +245,7 @@
     <div class="kicker">② 谁在玩 · 财务特征</div>
     <h2>几个主要玩家，占据不同位置</h2>
     <div class="rule" style="margin:16px 0"></div>
+    <div style="text-align:right;font-size:11px;color:#8a93a0">单位：营收 $亿 · 毛利率 %</div>
     <div class="pchart">
       <div class="phead"><span>玩家 · 定位</span><span>FY2025 营收（同刻度 $0–8 亿 · YoY 同比）</span><span>毛利率（40 ——— 60% 刻度）</span></div>
       <div class="prow" title="Silicon Labs：FY2025 营收 $7.85 亿（+34%）· 非GAAP 毛利率约 58%">
@@ -265,10 +269,11 @@
         <div class="pmg"><div class="mgaxis"><i class="mgdot" style="left:50%;background:#c0392b"></i></div><b>50%</b><small></small></div>
       </div>
     </div>
+    <p style="font-size:11px;color:#8a93a0;margin-top:8px">来源：四家 FY2025 年报/季报 · 人民币按 ≈7.2 折算 · 按营收排序</p>
     <p class="hp">直观参照：四家合计年营收 ≈ $19 亿——约为高通一年的 1/20，典型的"专业玩家"行业。</p>
     <p class="hp">同年净利对照（FY2025）：乐鑫 ¥4.98 亿（净利率 ~19%）· 泰凌 ¥1.27 亿（~13%）· Nordic $0.16 亿（~2%）· Silicon Labs GAAP 经营亏损 $0.71 亿——<b>毛利的高低与净利的高低并不同向</b>。</p>
     <div class="takeaway"><b>客观看：</b>各家占据不同位置——有的偏<b>相对高毛利</b>市场，有的偏<b>相对高量</b>市场。注意 <b>毛利 ≠ 净利</b>（重系统支持者的支持成本高），且<b>中美财报口径不完全可比</b>——盈利质量看净利与现金流更准。</div>
-    <div class="foot"><span>来源：四家 FY2025 年报/季报 · 人民币按 ≈7.2 折算 · 按营收排序</span><span>≈ 为约数</span></div>
+    <div class="foot"><span>来源：见图下标注</span><span>≈ 为约数</span></div>
   </section>
 
   <!-- 2c TELINK: SEGMENTS + REVENUE HISTORY -->
@@ -277,10 +282,10 @@
     <h2>泰凌：两条业务线，一条新曲线</h2>
     <div class="rule"></div>
     <div class="card" style="margin-top:14px">
-      <h3>历年营收（¥ 亿，按业务模块堆叠 · YoY 为总营收同比）</h3>
+      <h3>历年营收（按业务模块堆叠 · YoY 为总营收同比）</h3>
       <svg viewBox="0 0 690 300" role="img" aria-label="泰凌微 2020–2025 历年营收，按 IoT 连接芯片与无线音频芯片堆叠，标注同比增速">
   <rect x="60" y="18" width="12" height="12" rx="2" fill="#2563a8"/><text x="78" y="28" font-size="11.5" fill="#5a6472">IoT 连接芯片（含其他）</text>
-  <rect x="238" y="18" width="12" height="12" rx="2" fill="#b8860b"/><text x="256" y="28" font-size="11.5" fill="#5a6472">无线音频芯片（2020 未单独披露）</text>
+  <rect x="238" y="18" width="12" height="12" rx="2" fill="#b8860b"/><text x="256" y="28" font-size="11.5" fill="#5a6472">无线音频芯片（2020 未单独披露）</text><text x="560" y="28" text-anchor="end" font-size="10.5" fill="#8a93a0">单位：¥ 亿</text>
   <line x1="50" y1="252" x2="666" y2="252" stroke="#c7ccd3" stroke-width="1.5"/>
   <!-- 2020 -->
   <rect x="73" y="166" width="64" height="86" fill="#2563a8"/>
@@ -318,10 +323,11 @@
   <text x="615" y="269" text-anchor="middle" font-size="11" fill="#8a93a0">2025</text>
   <text x="358" y="292" text-anchor="middle" font-size="11" fill="#5a6472">2022–23 随半导体下行横盘 · 2024 起行业回暖 + 新品放量重新加速</text>
 </svg>
+      <p style="font-size:11px;color:#8a93a0;margin-top:6px">来源：泰凌微招股书（2020–22 营收）· 历年年报（2023–25 营收及分产品收入：音频 ¥0.11/0.38/0.47/0.76/1.15 亿）· 2025 年报业绩稿</p>
       <p style="font-size:13.5px;color:#3a4350;margin-top:4px"><b>业务模块：</b>① <b>IoT 连接芯片</b>（BLE / 双模蓝牙 / Zigbee·Thread·Matter / 2.4G / Wi-Fi，2025 年 ¥8.98 亿，+17%）为基本盘；② <b>无线音频芯片</b> 从 2021 年占比 1.7% 涨到 2025 年 <b>11.3%</b>（¥1.15 亿，+51%），年报称"新增长极"；③ <b>端侧 AI 芯片</b> 2025 年量产、Q2 单季销售额达千万元级（计入 IoT 芯片线）——节奏是"连接 → +音频 → +算力"。</p>
     </div>
     <div class="takeaway"><b>客观看：</b>营收结构仍以 IoT 连接芯片为主（~89%），但增速引擎在依次点火：音频五年翻十倍成第二曲线，端侧 AI 刚开始贡献收入——与第 ① 页"市场增长引擎切换"的方向一致。</div>
-    <div class="foot"><span>来源：泰凌微招股书（2020–22 营收）· 历年年报（2023–25 营收及分产品收入：音频 ¥0.11/0.38/0.47/0.76/1.15 亿）· 2025 年报业绩稿</span><span>人民币口径 · YoY 为总营收同比</span></div>
+    <div class="foot"><span>来源：见图下标注</span><span>人民币口径 · YoY 为总营收同比</span></div>
   </section>
 
   <!-- 3 STRATEGIES -->
@@ -354,8 +360,9 @@
         <tr><td>医疗 CGM</td><td>Dexcom · Abbott · Medtronic</td><td>Nordic 等</td><td>低（高价值）</td></tr>
       </tbody>
     </table>
+    <p style="font-size:11px;color:#8a93a0;margin-top:8px">来源：芯片玩家为公开拆解/行业报道口径 · 客户为各应用头部品牌</p>
     <div class="takeaway"><b>规律：</b><b>越价格敏感的应用</b>（遥控 / 外设 / 价签），越是泰凌<b>成本优势</b>最能发力的地方；医疗等<b>低敏感、高价值</b>的段，更依赖认证与本地支持，是后一步的事。</div>
-    <div class="foot"><span>芯片玩家为公开拆解/行业报道口径 · 客户为各应用头部品牌</span><span>按应用 × 头部玩家 × 价格敏感度</span></div>
+    <div class="foot"><span>来源：见表下标注</span><span>按应用 × 头部玩家 × 价格敏感度</span></div>
   </section>
 
   <!-- 5 HOW TELINK ENTERS US -->
