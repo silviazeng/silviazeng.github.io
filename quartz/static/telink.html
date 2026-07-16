@@ -266,7 +266,6 @@
       <marker id="arrow" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
         <path d="M0,0 L7,3 L0,6 Z" fill="#8a74c9"/>
       </marker>
-      <pattern id="hatchp" patternUnits="userSpaceOnUse" width="6" height="6"><path d="M0,6 L6,0" stroke="#b6bcc9" stroke-width="1.2"/></pattern>
     </defs>
 
     <!-- Left layer labels -->
@@ -381,12 +380,13 @@
 
     <!-- MATRIX header(表头带内)+ 4-state legend(形态与阶段分开) -->
     <text x="66" y="460" font-size="13" font-weight="700" fill="#ffffff">产品组合 · 射频覆盖对比</text>
-    <rect x="248" y="447" width="32" height="15" rx="7.5" fill="#fdf8ec" stroke="#c9a95d"/><text x="264" y="458" text-anchor="middle" font-size="9" font-weight="800" fill="#8d6c23">起家</text><text x="286" y="459" font-size="9.5" fill="#d6d8db">出身业务</text>
-    <rect x="356" y="449" width="12" height="12" rx="2" fill="#9b9fa5"/><text x="372" y="459" font-size="9.5" fill="#d6d8db">成熟独立 SoC</text>
-    <rect x="456" y="449" width="12" height="12" rx="2" fill="#dfe4f4" stroke="#9b9fa5"/><text x="472" y="459" font-size="9.5" fill="#d6d8db">新进入·已量产</text>
-    <rect x="562" y="449" width="12" height="12" rx="2" fill="#e9ebed" stroke="#8f9399" stroke-dasharray="4 2"/><text x="578" y="459" font-size="9.5" fill="#d6d8db">并入/伴侣/组件</text>
-    <rect x="676" y="449" width="12" height="12" rx="2" fill="url(#hatchp)" stroke="#8f9399" stroke-dasharray="2 3"/><text x="692" y="459" font-size="9.5" fill="#d6d8db">收购中/布局</text>
-    <text x="774" y="459" font-size="9.5" fill="#d6d8db">— 无</text>
+    <rect x="240" y="447" width="32" height="15" rx="7.5" fill="#fdf8ec" stroke="#c9a95d"/><text x="256" y="458" text-anchor="middle" font-size="9" font-weight="800" fill="#8d6c23">起家</text><text x="277" y="459" font-size="9.5" fill="#d6d8db">出身业务</text>
+    <rect x="340" y="449" width="12" height="12" rx="2" fill="#565b63" stroke="#878d96" stroke-width=".8"/><text x="356" y="459" font-size="9.5" fill="#d6d8db">成熟独立 SoC</text>
+    <rect x="438" y="449" width="12" height="12" rx="2" fill="#8b9099"/><text x="454" y="459" font-size="9.5" fill="#d6d8db">新进入·已量产</text>
+    <rect x="540" y="449" width="12" height="12" rx="2" fill="#c6cad0"/><text x="556" y="459" font-size="9.5" fill="#d6d8db">并入/伴侣/组件</text>
+    <rect x="648" y="449" width="12" height="12" rx="2" fill="#e9ebee"/><text x="664" y="459" font-size="9.5" fill="#d6d8db">收购中/布局</text>
+    <text x="726" y="459" font-size="9.5" fill="#d6d8db">— 无</text>
+    <text x="770" y="459" font-size="9" fill="#9da1a7">深→浅＝参与度｜泰凌行藏青同梯度</text>
 
     <g fill="none" stroke="#e3e5e9">
       <rect x="170" y="474" width="210" height="34" rx="2"/><rect x="405" y="474" width="210" height="34" rx="2"/><rect x="640" y="474" width="210" height="34" rx="2"/><rect x="875" y="474" width="80" height="34" rx="2"/>
@@ -399,20 +399,20 @@
     <g class="covrow" data-p="nordic">
       <text x="160" y="495" text-anchor="end" font-size="12.5" font-weight="700" fill="#4a4e54">Nordic</text>
       <g class="cell" data-p="nordic" data-tip="<b>Nordic × BLE:主力·起家线</b>nRF52 / nRF54 系列;94% 营收来自短距。<small>来源:Nordic 年报 / 官网</small>">
-        <rect x="170" y="474" width="210" height="34" rx="2" fill="#6e737a" stroke="#c9a95d" stroke-width="2"/>
+        <rect x="170" y="474" width="210" height="34" rx="2" fill="#565b63" stroke="#c9a95d" stroke-width="2"/>
         <rect x="176" y="483" width="32" height="15" rx="7.5" fill="#fdf8ec" stroke="#c9a95d"/><text x="192" y="494" text-anchor="middle" font-size="9" font-weight="800" fill="#8d6c23">起家</text>
         <text x="214" y="495" text-anchor="start" font-size="10.5" font-weight="700" fill="#ffffff">主力（nRF52/54）</text>
       </g>
       <g class="cell" data-p="nordic" data-tip="<b>Nordic × 802.15.4:成熟</b>多协议 SoC,支持 Thread / Matter。<small>来源:官网产品目录</small>">
-        <rect x="405" y="474" width="210" height="34" rx="2" fill="#6e737a"/>
+        <rect x="405" y="474" width="210" height="34" rx="2" fill="#565b63"/>
         <text x="510" y="495" text-anchor="middle" font-size="10.5" font-weight="700" fill="#ffffff">多协议</text>
       </g>
       <g class="cell" data-p="nordic" data-tip="<b>Nordic × Wi-Fi:伴侣方案</b>nRF70 系列为伴侣芯片,无独立 Wi-Fi SoC。<small>来源:官网产品目录</small>">
-        <rect x="640" y="474" width="210" height="34" rx="2" fill="#e9ebed" stroke="#8f9399" stroke-width="1.5" stroke-dasharray="5 3"/>
+        <rect x="640" y="474" width="210" height="34" rx="2" fill="#c6cad0"/>
         <text x="745" y="495" text-anchor="middle" font-size="10.5" font-weight="700" fill="#4a4e54">nRF70(伴侣芯片)</text>
       </g>
       <g class="cell" data-p="nordic" data-tip="<b>Nordic × WAN:成熟</b>蜂窝 IoT nRF91 系列(NB-IoT/LTE-M)· DECT NR+。<small>来源:官网产品目录</small>">
-        <rect x="875" y="474" width="80" height="34" rx="2" fill="#6e737a"/>
+        <rect x="875" y="474" width="80" height="34" rx="2" fill="#565b63"/>
         <text x="915" y="495" text-anchor="middle" font-size="9.5" font-weight="700" fill="#ffffff">蜂窝 nRF91</text>
       </g>
     </g>
@@ -422,20 +422,20 @@
       <text x="160" y="532" text-anchor="end" font-size="12.5" font-weight="700" fill="#4a4e54">Silicon Labs</text>
       <text x="160" y="545" text-anchor="end" font-size="9" fill="#9ca3af">TI 收购中(2026.2)</text>
       <g class="cell" data-p="silabs" data-tip="<b>Silicon Labs × BLE:成熟</b>BG 系列。<small>来源:官网产品目录</small>">
-        <rect x="170" y="514" width="210" height="34" rx="2" fill="#6e737a"/>
+        <rect x="170" y="514" width="210" height="34" rx="2" fill="#565b63"/>
         <text x="275" y="535" text-anchor="middle" font-size="10.5" font-weight="700" fill="#ffffff">BG 系列</text>
       </g>
       <g class="cell" data-p="silabs" data-tip="<b>Silicon Labs × 802.15.4:主力·起家线</b>多协议平台起家,Matter 标准主要贡献者。<small>来源:官网 / CSA 联盟</small>">
-        <rect x="405" y="514" width="210" height="34" rx="2" fill="#6e737a" stroke="#c9a95d" stroke-width="2"/>
+        <rect x="405" y="514" width="210" height="34" rx="2" fill="#565b63" stroke="#c9a95d" stroke-width="2"/>
         <rect x="411" y="523" width="32" height="15" rx="7.5" fill="#fdf8ec" stroke="#c9a95d"/><text x="427" y="534" text-anchor="middle" font-size="9" font-weight="800" fill="#8d6c23">起家</text>
         <text x="449" y="535" text-anchor="start" font-size="10.5" font-weight="700" fill="#ffffff">Matter 主要贡献者</text>
       </g>
       <g class="cell" data-p="silabs" data-tip="<b>Silicon Labs × Wi-Fi:成熟</b>SiWx917(Wi-Fi 6,低功耗取向)。<small>来源:官网产品目录</small>">
-        <rect x="640" y="514" width="210" height="34" rx="2" fill="#6e737a"/>
+        <rect x="640" y="514" width="210" height="34" rx="2" fill="#565b63"/>
         <text x="745" y="535" text-anchor="middle" font-size="10.5" font-weight="700" fill="#ffffff">SiWx917(Wi-Fi 6)</text>
       </g>
       <g class="cell" data-p="silabs" data-tip="<b>Silicon Labs × WAN:成熟</b>Sub-GHz 系列 · Z-Wave(独家生态,Sub-GHz 全栈)。<small>来源:官网产品目录</small>">
-        <rect x="875" y="514" width="80" height="34" rx="2" fill="#6e737a"/>
+        <rect x="875" y="514" width="80" height="34" rx="2" fill="#565b63"/>
         <text x="915" y="535" text-anchor="middle" font-size="9.5" font-weight="700" fill="#ffffff">Sub-GHz</text>
       </g>
     </g>
@@ -444,15 +444,15 @@
     <g class="covrow" data-p="esp">
       <text x="160" y="575" text-anchor="end" font-size="12.5" font-weight="700" fill="#4a4e54">Espressif 乐鑫</text>
       <g class="cell" data-p="esp" data-tip="<b>乐鑫 × BLE:成熟但并入式</b>BLE 集成于 ESP32-C/H 系列,非独立 BLE 产品线。<small>来源:官网产品目录</small>">
-        <rect x="170" y="554" width="210" height="34" rx="2" fill="#e9ebed" stroke="#8f9399" stroke-width="1.5" stroke-dasharray="5 3"/>
+        <rect x="170" y="554" width="210" height="34" rx="2" fill="#c6cad0"/>
         <text x="275" y="575" text-anchor="middle" font-size="10.5" font-weight="700" fill="#4a4e54">集成于 ESP32-C/H</text>
       </g>
       <g class="cell" data-p="esp" data-tip="<b>乐鑫 × 802.15.4:成熟</b>ESP32-H2 / C6,支持 Thread / Zigbee / Matter。<small>来源:官网产品目录</small>">
-        <rect x="405" y="554" width="210" height="34" rx="2" fill="#6e737a"/>
+        <rect x="405" y="554" width="210" height="34" rx="2" fill="#565b63"/>
         <text x="510" y="575" text-anchor="middle" font-size="10.5" font-weight="700" fill="#ffffff">H2 / C6 系列</text>
       </g>
       <g class="cell" data-p="esp" data-tip="<b>乐鑫 × Wi-Fi:主力·起家线</b>Wi-Fi SoC 起家,开发者社区大。<small>来源:官网 / 年报</small>">
-        <rect x="640" y="554" width="210" height="34" rx="2" fill="#6e737a" stroke="#c9a95d" stroke-width="2"/>
+        <rect x="640" y="554" width="210" height="34" rx="2" fill="#565b63" stroke="#c9a95d" stroke-width="2"/>
         <rect x="646" y="563" width="32" height="15" rx="7.5" fill="#fdf8ec" stroke="#c9a95d"/><text x="662" y="574" text-anchor="middle" font-size="9" font-weight="800" fill="#8d6c23">起家</text>
         <text x="684" y="575" text-anchor="start" font-size="10.5" font-weight="700" fill="#ffffff">主力（ESP32 系）</text>
       </g>
@@ -466,20 +466,20 @@
       <text x="160" y="615" text-anchor="end" font-size="12.5" font-weight="700" fill="#4a4e54">Qorvo</text>
       <text x="160" y="628" text-anchor="end" font-size="9" fill="#9ca3af">CSG 分部 · 主业 RF 前端</text>
       <g class="cell" data-p="qorvo" data-tip="<b>Qorvo × BLE:成熟但并入式</b>QPG 多协议 SoC 原生含 BLE(出货多年,主要用于配网),从未做独立 BLE SoC 竞品线——形态问题,非新进入。<small>来源:官网产品目录</small>">
-        <rect x="170" y="594" width="210" height="34" rx="2" fill="#e9ebed" stroke="#8f9399" stroke-width="1.5" stroke-dasharray="5 3"/>
+        <rect x="170" y="594" width="210" height="34" rx="2" fill="#c6cad0"/>
         <text x="275" y="615" text-anchor="middle" font-size="10.5" font-weight="700" fill="#4a4e54">并入多协议 SoC(QPG)</text>
       </g>
       <g class="cell" data-p="qorvo" data-tip="<b>Qorvo × 802.15.4:主力·连接起家线</b>GreenPeak(2004 年创立,RF4CE 遥控 SoC 出货以亿计)2016 年并入;QPG6105 / QPG7015M · Matter;遥控器市场传统霸主,十几年老玩家——与泰凌在电视/机顶盒遥控正面交锋。<small>来源:官网 / 10-K</small>">
-        <rect x="405" y="594" width="210" height="34" rx="2" fill="#6e737a" stroke="#c9a95d" stroke-width="2"/>
+        <rect x="405" y="594" width="210" height="34" rx="2" fill="#565b63" stroke="#c9a95d" stroke-width="2"/>
         <rect x="411" y="603" width="32" height="15" rx="7.5" fill="#fdf8ec" stroke="#c9a95d"/><text x="427" y="614" text-anchor="middle" font-size="9" font-weight="800" fill="#8d6c23">起家</text>
         <text x="449" y="615" text-anchor="start" font-size="10.5" font-weight="700" fill="#ffffff">GreenPeak 系·遥控强</text>
       </g>
       <g class="cell" data-p="qorvo" data-tip="<b>Qorvo × Wi-Fi:成熟但非 SoC</b>Wi-Fi FEM(前端模组)头部供应商,业务成熟且规模大——但形态是组件,不与 SoC 玩家同场竞争。<small>来源:10-K / 官网</small>">
-        <rect x="640" y="594" width="210" height="34" rx="2" fill="#e9ebed" stroke="#8f9399" stroke-width="1.5" stroke-dasharray="5 3"/>
+        <rect x="640" y="594" width="210" height="34" rx="2" fill="#c6cad0"/>
         <text x="745" y="615" text-anchor="middle" font-size="10.5" font-weight="700" fill="#4a4e54">仅 FEM 前端组件</text>
       </g>
       <g class="cell" data-p="qorvo" data-tip="<b>Qorvo × WAN:有布局</b>10-K 的 CSG 技术清单列示 cellular IoT;另有 UWB(Decawave)为本矩阵列外特色格。<small>来源:Qorvo 10-K</small>">
-        <rect x="875" y="594" width="80" height="34" rx="2" fill="url(#hatchp)" stroke="#8f9399" stroke-width="1.5" stroke-dasharray="2 3"/>
+        <rect x="875" y="594" width="80" height="34" rx="2" fill="#e9ebee"/>
         <text x="915" y="615" text-anchor="middle" font-size="9.5" font-weight="700" font-style="italic" fill="#4a4e54">蜂窝 IoT·布局</text>
       </g>
     </g>
@@ -500,12 +500,12 @@
         <text x="510" y="670" text-anchor="middle" font-size="9.5" fill="#c3cbe8">Zigbee / Thread / Matter</text>
       </g>
       <g class="cell" data-p="telink" data-tip="<b>泰凌 × Wi-Fi:新进入 · 独立 SoC 已量产</b>三射频 TLSR9118 / ML9118A(Wi-Fi 6 + BLE + 802.15.4),对标 ESP32-C6、NXP iW612。<small>来源:泰凌 2024 发布稿 / 年报</small>">
-        <rect x="640" y="638" width="210" height="42" rx="2" fill="#dfe4f4" stroke="#1b2a70" stroke-width="1.5"/>
-        <text x="745" y="655" text-anchor="middle" font-size="10.5" font-weight="700" fill="#131d4e">三射频 TLSR9118 已量产</text>
-        <text x="745" y="670" text-anchor="middle" font-size="9.5" fill="#3d4b8f">Wi-Fi 6 + BLE + 802.15.4</text>
+        <rect x="640" y="638" width="210" height="42" rx="2" fill="#4d5c9f"/>
+        <text x="745" y="655" text-anchor="middle" font-size="10.5" font-weight="700" fill="#ffffff">三射频 TLSR9118 已量产</text>
+        <text x="745" y="670" text-anchor="middle" font-size="9.5" fill="#dbe1f5">Wi-Fi 6 + BLE + 802.15.4</text>
       </g>
       <g class="cell" data-p="telink" data-tip="<b>泰凌 × WAN:收购中,未完成</b>拟发行股份+现金购买磐启微 100% 股权(Sub-1G / ChirpIoT):2025.11 公告、2026.1 定价 8.5 亿元、2026.2 上交所受理、2026.3 问询、2026.5 更新报告书——尚待上交所审核通过与证监会注册;自研无 Sub-GHz/蜂窝。<small>来源:泰凌公告 / 上交所</small>">
-        <rect x="875" y="638" width="80" height="42" rx="2" fill="url(#hatchp)" stroke="#1b2a70" stroke-width="1.5" stroke-dasharray="2 3"/>
+        <rect x="875" y="638" width="80" height="42" rx="2" fill="#e3e7f5"/>
         <text x="915" y="655" text-anchor="middle" font-size="9" font-weight="700" font-style="italic" fill="#131d4e">磐启微 Sub-1G</text>
         <text x="915" y="670" text-anchor="middle" font-size="8.5" font-style="italic" fill="#3d4b8f">（收购中）</text>
       </g>
