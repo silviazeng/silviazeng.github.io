@@ -88,6 +88,11 @@
     .prow{grid-template-columns:1fr;gap:8px}
     .pmg{max-width:280px}
   }
+  .pt-main{background:#e7ebf6;font-weight:400}
+  .pt-main b{font-weight:800}
+  .pt-plan{color:#5b6675;font-style:italic}
+  .pt-none{color:#b7bdc6;text-align:center;font-weight:700}
+  .origin{display:inline-block;font-size:10px;font-weight:800;color:#8d6c23;border:1px solid #c9a95d;border-radius:9px;padding:0 6px;margin-right:5px;font-style:normal;letter-spacing:.05em}
   @media print{body,.deck{height:auto;overflow:visible}.slide{min-height:0;height:100vh;page-break-after:always;border:none}.nav,.hint{display:none}@page{size:1280px 720px;margin:0}}
 </style>
 </head>
@@ -224,17 +229,17 @@
     <div class="kicker">② 谁在玩 · 产品版图</div>
     <h2>产品版图：覆盖在收敛，起点各不同</h2>
     <div class="rule" style="margin:14px 0"></div>
-    <div style="text-align:right;font-size:11px;color:#8a93a0;margin-top:14px">图例：● 主力/成熟产品线 · ◐ 有布局/新进入/伴侣方案 · ○ 无公开产品</div>
+    <div style="text-align:right;font-size:11px;color:#8a93a0;margin-top:14px">读法：<span style="background:#e7ebf6;padding:1px 7px;border-radius:3px"><b>主力</b></span> 底色加粗 ｜ 常规字＝有产品 ｜ <i style="color:#5b6675">斜体＝布局中（拟收购/软件先行）</i> ｜ <b style="color:#b7bdc6">—</b>＝无公开产品 ｜ <span class="origin">起家</span>＝该公司出身业务</div>
     <table style="margin-top:8px">
       <thead><tr><th>产品线</th><th>Silicon Labs</th><th>Nordic</th><th>Espressif 乐鑫</th><th style="color:var(--accent)">Telink 泰凌</th></tr></thead>
       <tbody>
-        <tr><td>BLE 单模 SoC</td><td>● BG 系列</td><td>● 主力（nRF52/54）</td><td>◐ 集成于 ESP32-C/H</td><td>● 主力 · 出货量全球前三</td></tr>
-        <tr><td>双模蓝牙 · 无线音频</td><td>○</td><td>◐ LE Audio（无经典蓝牙）</td><td>◐ 经典+BLE 双模</td><td>● 音频 SoC 收入 ¥1.15 亿（+51%）</td></tr>
-        <tr><td>Zigbee / Thread / Matter</td><td>● 主力 · Matter 主要贡献者</td><td>● 多协议</td><td>● H2/C6 系列</td><td>● 全栈认证</td></tr>
-        <tr><td>2.4G 私有（键鼠/遥控）</td><td>◐ FG 系列</td><td>● 传统强项</td><td>◐ ESP-NOW</td><td>● 大量出货</td></tr>
-        <tr><td>Wi-Fi</td><td>● SiWx917（Wi-Fi 6）</td><td>◐ nRF70 伴侣芯片</td><td>● 主力 · 起家业务</td><td>◐ Wi-Fi 6 多协议已量产（新进入）</td></tr>
-        <tr><td>广域（Sub-1G / LPWAN / 蜂窝）</td><td>● Sub-GHz · Z-Wave</td><td>● 蜂窝 IoT（nRF91）· DECT NR+</td><td>○</td><td>◐ 拟收购磐启微（8.5亿·审核中）：Sub-1G / ChirpIoT</td></tr>
-        <tr><td>端侧 AI（NPU / 工具链）</td><td>● MG26 AI/ML 加速 · 2025 战略主线</td><td>◐ 收购 Neuton.AI（软件）</td><td>◐ S3/P4 向量指令 + ESP-DL</td><td>● TL751X（NPU+DSP）已量产</td></tr>
+        <tr><td>BLE 单模 SoC</td><td>BG 系列</td><td class="pt-main"><span class="origin">起家</span><b>主力</b> · nRF52/54</td><td>集成于 ESP32-C/H</td><td class="pt-main"><span class="origin">起家</span><b>主力</b> · 出货量全球前三</td></tr>
+        <tr><td>双模蓝牙 · 无线音频</td><td class="pt-none">—</td><td>LE Audio（无经典蓝牙）</td><td>经典 + BLE 双模</td><td class="pt-main"><b>主力</b> · 音频收入 ¥1.15 亿（+51%）</td></tr>
+        <tr><td>Zigbee / Thread / Matter</td><td class="pt-main"><span class="origin">起家</span><b>主力</b> · Matter 主要贡献者</td><td>多协议</td><td>H2/C6 系列</td><td>全栈认证</td></tr>
+        <tr><td>2.4G 私有（键鼠/遥控）</td><td>FG 系列</td><td>传统强项</td><td>ESP-NOW（软协议）</td><td class="pt-main"><b>主力</b> · 大量出货</td></tr>
+        <tr><td>Wi-Fi</td><td>SiWx917（Wi-Fi 6）</td><td>nRF70 伴侣芯片（需外挂主控）</td><td class="pt-main"><span class="origin">起家</span><b>主力</b> · ESP32 系列</td><td>Wi-Fi 6 多协议已量产（2024 新进入）</td></tr>
+        <tr><td>广域（Sub-1G / LPWAN / 蜂窝）</td><td>Sub-GHz · Z-Wave</td><td>蜂窝 IoT（nRF91）· DECT NR+</td><td class="pt-none">—</td><td class="pt-plan">布局中 · 拟收购磐启微（8.5 亿 · 审核中）：Sub-1G / ChirpIoT</td></tr>
+        <tr><td>端侧 AI（NPU / 工具链）</td><td>MG26 加速 · 2025 战略主线</td><td class="pt-plan">布局中 · 收购 Neuton.AI（仅软件）</td><td>S3/P4 向量指令 + ESP-DL</td><td>TL751X（NPU+DSP）已量产</td></tr>
       </tbody>
     </table>
     <p style="font-size:11px;color:#8a93a0;margin-top:8px">来源：各家官网产品目录、年报、发布稿（泰凌 2025 年报：音频收入；Wi-Fi 6 多协议 SoC 2024 发布、已量产出货）· 截至 2026 年初公开信息</p>
