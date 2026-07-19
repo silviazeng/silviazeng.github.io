@@ -194,7 +194,7 @@
     <div class="ixwrap">
       
       <div class="scroller">
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 990 726" role="img" aria-label="分层架构图:射频层按 PAN、LAN、WAN 距离排列,LAN 段向上经协议栈汇聚到 Matter,WAN 段有自己的协议栈并汇聚于云侧协议;下方为五家厂商在 BLE、802.15.4、Wi-Fi、广域四列射频上的覆盖矩阵">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 726" role="img" aria-label="分层架构图:射频层按 PAN、LAN、WAN 距离排列,PAN 段含 BLE 与 2.4G 私有两列,LAN 段向上经协议栈汇聚到 Matter,WAN 段自成一列;下方为五家厂商在 BLE、2.4G 私有、802.15.4、Wi-Fi、广域五列射频上的覆盖矩阵">
     <defs>
       <marker id="arrow" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
         <path d="M0,0 L7,3 L0,6 Z" fill="#8a74c9"/>
@@ -213,17 +213,17 @@
 
     <!-- APPLICATION LAYER -->
     <g class="blk" data-col="app">
-      <rect x="515" y="60" width="335" height="100" rx="10" fill="#efecf8" stroke="#8a74c9" stroke-width="2"/>
-      <text x="683" y="92" text-anchor="middle" font-size="20" font-weight="700" fill="#4f3f96">Matter</text>
-      <text x="683" y="116" text-anchor="middle" font-size="12" fill="#63519f">家庭局域互操作标准 · 作用域=LAN</text>
-      <text x="683" y="140" text-anchor="middle" font-size="12" fill="#63519f">Matter over Thread　/　Matter over Wi-Fi</text>
+      <rect x="685" y="60" width="335" height="100" rx="10" fill="#efecf8" stroke="#8a74c9" stroke-width="2"/>
+      <text x="853" y="92" text-anchor="middle" font-size="20" font-weight="700" fill="#4f3f96">Matter</text>
+      <text x="853" y="116" text-anchor="middle" font-size="12" fill="#63519f">家庭局域互操作标准 · 作用域=LAN</text>
+      <text x="853" y="140" text-anchor="middle" font-size="12" fill="#63519f">Matter over Thread　/　Matter over Wi-Fi</text>
     </g>
     <g class="blk" data-col="wan">
-      <rect x="875" y="60" width="80" height="100" rx="10" fill="#e8eef5" stroke="#64748b" stroke-width="1.5"/>
-      <text x="915" y="94" text-anchor="middle" font-size="11" font-weight="700" fill="#334155">云侧协议</text>
-      <text x="915" y="112" text-anchor="middle" font-size="9.5" fill="#475569">MQTT / CoAP</text>
-      <text x="915" y="128" text-anchor="middle" font-size="9" fill="#64748b">各家云平台</text>
-      <text x="915" y="146" text-anchor="middle" font-size="9" fill="#94a3b8">非 Matter</text>
+      <rect x="1045" y="60" width="80" height="100" rx="10" fill="#e8eef5" stroke="#64748b" stroke-width="1.5"/>
+      <text x="1085" y="94" text-anchor="middle" font-size="11" font-weight="700" fill="#334155">云侧协议</text>
+      <text x="1085" y="112" text-anchor="middle" font-size="9.5" fill="#475569">MQTT / CoAP</text>
+      <text x="1085" y="128" text-anchor="middle" font-size="9" fill="#64748b">各家云平台</text>
+      <text x="1085" y="146" text-anchor="middle" font-size="9" fill="#94a3b8">非 Matter</text>
     </g>
 
     <!-- PROTOCOL LAYER -->
@@ -233,32 +233,37 @@
       <text x="275" y="270" text-anchor="middle" font-size="12" fill="#4d6693">/ Bluetooth Mesh</text>
       <text x="275" y="292" text-anchor="middle" font-size="11" fill="#64748b">非 IP</text>
     </g>
-    <g class="blk" data-col="z">
-      <rect x="405" y="210" width="100" height="95" rx="8" fill="#eef4f0" stroke="#7ea993" stroke-width="1.5"/>
-      <text x="455" y="252" text-anchor="middle" font-size="15" font-weight="700" fill="#3c614d">Zigbee</text>
-      <text x="455" y="274" text-anchor="middle" font-size="10.5" fill="#5f806d">私有栈 · 非 IP</text>
+    <g class="blk">
+      <rect x="405" y="210" width="145" height="95" rx="8" fill="#f1f2f4" stroke="#8a93a0" stroke-width="2"/>
+      <text x="477" y="250" text-anchor="middle" font-size="15" font-weight="700" fill="#4a4e54">2.4G 私有栈</text>
+      <text x="477" y="272" text-anchor="middle" font-size="11" fill="#6b727b">非 IP · 不互操作</text>
     </g>
     <g class="blk" data-col="z">
-      <rect x="515" y="210" width="100" height="95" rx="8" fill="#e1efe6" stroke="#43935f" stroke-width="1.5"/>
-      <text x="565" y="248" text-anchor="middle" font-size="15" font-weight="700" fill="#2b5c3d">Thread</text>
-      <text x="565" y="270" text-anchor="middle" font-size="10" fill="#3e7a52">IPv6 / 6LoWPAN</text>
-      <rect x="540" y="280" width="50" height="17" rx="8.5" fill="#edf5f0" stroke="#43935f" stroke-width="1"/>
-      <text x="565" y="292.5" text-anchor="middle" font-size="10" font-weight="700" fill="#356e48">IP</text>
+      <rect x="575" y="210" width="100" height="95" rx="8" fill="#eef4f0" stroke="#7ea993" stroke-width="1.5"/>
+      <text x="625" y="252" text-anchor="middle" font-size="15" font-weight="700" fill="#3c614d">Zigbee</text>
+      <text x="625" y="274" text-anchor="middle" font-size="10.5" fill="#5f806d">私有栈 · 非 IP</text>
+    </g>
+    <g class="blk" data-col="z">
+      <rect x="685" y="210" width="100" height="95" rx="8" fill="#e1efe6" stroke="#43935f" stroke-width="1.5"/>
+      <text x="735" y="248" text-anchor="middle" font-size="15" font-weight="700" fill="#2b5c3d">Thread</text>
+      <text x="735" y="270" text-anchor="middle" font-size="10" fill="#3e7a52">IPv6 / 6LoWPAN</text>
+      <rect x="710" y="280" width="50" height="17" rx="8.5" fill="#edf5f0" stroke="#43935f" stroke-width="1"/>
+      <text x="735" y="292.5" text-anchor="middle" font-size="10" font-weight="700" fill="#356e48">IP</text>
     </g>
     <g class="blk" data-col="wifi">
-      <rect x="640" y="210" width="210" height="95" rx="8" fill="#f7f0e1" stroke="#c99a3e" stroke-width="1.5"/>
-      <text x="745" y="252" text-anchor="middle" font-size="15" font-weight="700" fill="#6f5417">TCP / IP</text>
-      <text x="745" y="274" text-anchor="middle" font-size="12" fill="#8d6c23">（Wi-Fi 原生自带）</text>
-      <rect x="720" y="283" width="50" height="17" rx="8.5" fill="#edf5f0" stroke="#43935f" stroke-width="1"/>
-      <text x="745" y="295.5" text-anchor="middle" font-size="10" font-weight="700" fill="#356e48">IP</text>
+      <rect x="810" y="210" width="210" height="95" rx="8" fill="#f7f0e1" stroke="#c99a3e" stroke-width="1.5"/>
+      <text x="915" y="252" text-anchor="middle" font-size="15" font-weight="700" fill="#6f5417">TCP / IP</text>
+      <text x="915" y="274" text-anchor="middle" font-size="12" fill="#8d6c23">（Wi-Fi 原生自带）</text>
+      <rect x="890" y="283" width="50" height="17" rx="8.5" fill="#edf5f0" stroke="#43935f" stroke-width="1"/>
+      <text x="915" y="295.5" text-anchor="middle" font-size="10" font-weight="700" fill="#356e48">IP</text>
     </g>
     <g class="blk" data-col="wan">
-      <rect x="875" y="210" width="80" height="95" rx="8" fill="#e8eef5" stroke="#64748b" stroke-width="1.5"/>
-      <text x="915" y="240" text-anchor="middle" font-size="9.5" font-weight="700" fill="#334155">3GPP · IP</text>
-      <text x="915" y="258" text-anchor="middle" font-size="9.5" fill="#475569">LoRaWAN</text>
-      <text x="915" y="274" text-anchor="middle" font-size="9" fill="#475569">ChirpIoT 私有栈</text>
-      <rect x="890" y="282" width="50" height="15" rx="7.5" fill="#edf5f0" stroke="#43935f" stroke-width="1"/>
-      <text x="915" y="293" text-anchor="middle" font-size="9" font-weight="700" fill="#356e48">IP（蜂窝）</text>
+      <rect x="1045" y="210" width="80" height="95" rx="8" fill="#e8eef5" stroke="#64748b" stroke-width="1.5"/>
+      <text x="1085" y="240" text-anchor="middle" font-size="9.5" font-weight="700" fill="#334155">3GPP · IP</text>
+      <text x="1085" y="258" text-anchor="middle" font-size="9.5" fill="#475569">LoRaWAN</text>
+      <text x="1085" y="274" text-anchor="middle" font-size="9" fill="#475569">ChirpIoT 私有栈</text>
+      <rect x="1060" y="282" width="50" height="15" rx="7.5" fill="#edf5f0" stroke="#43935f" stroke-width="1"/>
+      <text x="1085" y="293" text-anchor="middle" font-size="9" font-weight="700" fill="#356e48">IP（蜂窝）</text>
     </g>
 
     <!-- RADIO LAYER -->
@@ -267,63 +272,68 @@
       <text x="275" y="372" text-anchor="middle" font-size="16" font-weight="700" fill="#2a446e">Bluetooth / BLE 射频</text>
       <text x="275" y="397" text-anchor="middle" font-size="10.5" fill="#546c99">低功耗·点对点（耳机·手环）</text>
     </g>
+    <g class="blk">
+      <rect x="405" y="333" width="145" height="82" rx="8" fill="#eff0f2" stroke="#8a93a0" stroke-width="2"/>
+      <text x="477" y="370" text-anchor="middle" font-size="16" font-weight="700" fill="#3a3f45">2.4G 私有射频</text>
+      <text x="477" y="391" text-anchor="middle" font-size="11" fill="#6b727b">非标准 · 点对点</text>
+    </g>
     <g class="blk" data-col="z">
-      <rect x="405" y="333" width="210" height="82" rx="8" fill="#e6f1ea" stroke="#43935f" stroke-width="2"/>
-      <text x="510" y="372" text-anchor="middle" font-size="16" font-weight="700" fill="#2b5c3d">IEEE 802.15.4 射频</text>
-      <text x="510" y="397" text-anchor="middle" font-size="10.5" fill="#48745a">低功耗·Mesh（门磁·开关）</text>
+      <rect x="575" y="333" width="210" height="82" rx="8" fill="#e6f1ea" stroke="#43935f" stroke-width="2"/>
+      <text x="680" y="372" text-anchor="middle" font-size="16" font-weight="700" fill="#2b5c3d">IEEE 802.15.4 射频</text>
+      <text x="680" y="397" text-anchor="middle" font-size="10.5" fill="#48745a">低功耗·Mesh（门磁·开关）</text>
     </g>
     <g class="blk" data-col="wifi">
-      <rect x="640" y="333" width="210" height="82" rx="8" fill="#f5ecda" stroke="#c99a3e" stroke-width="2"/>
-      <text x="745" y="372" text-anchor="middle" font-size="15" font-weight="700" fill="#6f5417">Wi-Fi 射频（802.11）</text>
-      <text x="745" y="397" text-anchor="middle" font-size="10.5" fill="#8d6c23">高带宽·市电（摄像头·网关）</text>
+      <rect x="810" y="333" width="210" height="82" rx="8" fill="#f5ecda" stroke="#c99a3e" stroke-width="2"/>
+      <text x="915" y="372" text-anchor="middle" font-size="15" font-weight="700" fill="#6f5417">Wi-Fi 射频（802.11）</text>
+      <text x="915" y="397" text-anchor="middle" font-size="10.5" fill="#8d6c23">高带宽·市电（摄像头·网关）</text>
     </g>
     <g class="blk" data-col="wan">
-      <rect x="875" y="333" width="80" height="82" rx="8" fill="#eef1f5" stroke="#64748b" stroke-width="2"/>
-      <text x="915" y="362" text-anchor="middle" font-size="11" font-weight="700" fill="#334155">广域射频</text>
-      <text x="915" y="381" text-anchor="middle" font-size="9.5" fill="#475569">Sub-GHz · 蜂窝</text>
-      <text x="915" y="398" text-anchor="middle" font-size="8.5" fill="#64748b">LoRa · NB-IoT/LTE-M</text>
+      <rect x="1045" y="333" width="80" height="82" rx="8" fill="#eef1f5" stroke="#64748b" stroke-width="2"/>
+      <text x="1085" y="362" text-anchor="middle" font-size="11" font-weight="700" fill="#334155">广域射频</text>
+      <text x="1085" y="381" text-anchor="middle" font-size="9.5" fill="#475569">Sub-GHz · 蜂窝</text>
+      <text x="1085" y="398" text-anchor="middle" font-size="8.5" fill="#64748b">LoRa · NB-IoT/LTE-M</text>
     </g>
 
     <!-- Connectors -->
     <line x1="275" y1="305" x2="275" y2="333" stroke="#94a3b8" stroke-width="2"/>
-    <line x1="455" y1="305" x2="455" y2="333" stroke="#94a3b8" stroke-width="2"/>
-    <line x1="565" y1="305" x2="565" y2="333" stroke="#94a3b8" stroke-width="2"/>
-    <line x1="745" y1="305" x2="745" y2="333" stroke="#94a3b8" stroke-width="2"/>
+    <line x1="625" y1="305" x2="625" y2="333" stroke="#94a3b8" stroke-width="2"/>
+    <line x1="735" y1="305" x2="735" y2="333" stroke="#94a3b8" stroke-width="2"/>
     <line x1="915" y1="305" x2="915" y2="333" stroke="#94a3b8" stroke-width="2"/>
-    <line x1="565" y1="160" x2="565" y2="210" stroke="#8a74c9" stroke-width="2"/>
-    <line x1="745" y1="160" x2="745" y2="210" stroke="#8a74c9" stroke-width="2"/>
-    <line x1="915" y1="160" x2="915" y2="210" stroke="#64748b" stroke-width="2"/>
-    <path d="M275,210 C 360,155 430,145 512,133" fill="none" stroke="#8a74c9" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#arrow)"/>
-    <circle cx="398" cy="156" r="10" fill="#8a74c9"/>
-    <text x="398" y="160" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">1</text>
-    <line x1="615" y1="257" x2="620" y2="257" stroke="#94a3b8" stroke-width="2"/>
-    <line x1="633" y1="257" x2="640" y2="257" stroke="#94a3b8" stroke-width="2"/>
-    <circle cx="627" cy="257" r="9" fill="#64748b"/>
-    <text x="627" y="261" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">2</text>
+    <line x1="1085" y1="305" x2="1085" y2="333" stroke="#94a3b8" stroke-width="2"/>
+    <line x1="735" y1="160" x2="735" y2="210" stroke="#8a74c9" stroke-width="2"/>
+    <line x1="915" y1="160" x2="915" y2="210" stroke="#8a74c9" stroke-width="2"/>
+    <line x1="1085" y1="160" x2="1085" y2="210" stroke="#64748b" stroke-width="2"/>
+    <path d="M275,205 C 380,150 520,135 682,130" fill="none" stroke="#8a74c9" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#arrow)"/>
+    <circle cx="450" cy="152" r="10" fill="#8a74c9"/>
+    <text x="450" y="156" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">1</text>
+    <line x1="785" y1="257" x2="790" y2="257" stroke="#94a3b8" stroke-width="2"/>
+    <line x1="803" y1="257" x2="810" y2="257" stroke="#94a3b8" stroke-width="2"/>
+    <circle cx="797" cy="257" r="9" fill="#64748b"/>
+    <text x="797" y="261" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">2</text>
 
     <!-- Distance axis tags -->
-    <text x="275" y="430" text-anchor="middle" font-size="9.5" font-weight="700" fill="#64748b">PAN · 米级</text>
-    <text x="627" y="430" text-anchor="middle" font-size="9.5" font-weight="700" fill="#64748b">LAN · 10–100 米（Matter 作用域）</text>
-    <text x="915" y="430" text-anchor="middle" font-size="9.5" font-weight="700" fill="#64748b">WAN · 公里级</text>
+    <text x="360" y="430" text-anchor="middle" font-size="9.5" font-weight="700" fill="#64748b">PAN · 米级</text>
+    <text x="797" y="430" text-anchor="middle" font-size="9.5" font-weight="700" fill="#64748b">LAN · 10–100 米（Matter 作用域）</text>
+    <text x="1085" y="430" text-anchor="middle" font-size="9.5" font-weight="700" fill="#64748b">WAN · 公里级</text>
 
     <!-- MATRIX zone(整体下移留白):数据表格区——深色表头带+灰底板+方角单元格,与上方架构图(圆角卡片)强区分 -->
     <g transform="translate(0,26)">
-    <rect x="54" y="438" width="915" height="256" fill="#f7f8fa" stroke="#e3e5e9" stroke-width="1"/>
+    <rect x="54" y="438" width="1085" height="256" fill="#f7f8fa" stroke="#e3e5e9" stroke-width="171"/>
 
     <!-- MATRIX header(表头带内)+ 4-state legend(形态与阶段分开) -->
     <text x="66" y="460" font-size="13" font-weight="700" fill="#33383f">产品组合 · 射频覆盖对比</text>
     <rect x="240" y="449" width="12" height="12" rx="2" fill="#23272e"/><text x="256" y="459" font-size="10.5" fill="#6b7280">起家·主力线</text>
     <rect x="330" y="449" width="12" height="12" rx="2" fill="#6b727b"/><text x="346" y="459" font-size="10.5" fill="#6b7280">成熟独立 SoC</text>
-    <rect x="428" y="449" width="12" height="12" rx="2" fill="#9ba1aa"/><text x="444" y="459" font-size="10.5" fill="#6b7280">新进入·已量产</text>
-    <rect x="530" y="449" width="12" height="12" rx="2" fill="#ccd0d6" stroke="#b9bdc4" stroke-width=".8"/><text x="546" y="459" font-size="10.5" fill="#6b7280">并入/伴侣/组件</text>
-    <rect x="638" y="449" width="12" height="12" rx="2" fill="#eceef1" stroke="#b9bdc4" stroke-width=".8"/><text x="654" y="459" font-size="10.5" fill="#6b7280">收购中/布局</text>
-    <text x="820" y="459" font-size="10.5" fill="#6b7280">空白＝无</text>
+    <rect x="598" y="449" width="12" height="12" rx="2" fill="#9ba1aa"/><text x="614" y="459" font-size="10.5" fill="#6b7280">新进入·已量产</text>
+    <rect x="700" y="449" width="12" height="12" rx="2" fill="#ccd0d6" stroke="#b9bdc4" stroke-width=".8"/><text x="716" y="459" font-size="10.5" fill="#6b7280">并入/伴侣/组件</text>
+    <rect x="808" y="449" width="12" height="12" rx="2" fill="#eceef1" stroke="#b9bdc4" stroke-width=".8"/><text x="824" y="459" font-size="10.5" fill="#6b7280">收购中/布局</text>
+    <text x="990" y="459" font-size="10.5" fill="#6b7280">空白＝无</text>
 
     <g fill="none" stroke="#e3e5e9">
-      <rect x="170" y="474" width="210" height="34" rx="2"/><rect x="405" y="474" width="210" height="34" rx="2"/><rect x="640" y="474" width="210" height="34" rx="2"/><rect x="875" y="474" width="80" height="34" rx="2"/>
-      <rect x="170" y="514" width="210" height="34" rx="2"/><rect x="405" y="514" width="210" height="34" rx="2"/><rect x="640" y="514" width="210" height="34" rx="2"/><rect x="875" y="514" width="80" height="34" rx="2"/>
-      <rect x="170" y="554" width="210" height="34" rx="2"/><rect x="405" y="554" width="210" height="34" rx="2"/><rect x="640" y="554" width="210" height="34" rx="2"/>
-      <rect x="170" y="594" width="210" height="34" rx="2"/><rect x="405" y="594" width="210" height="34" rx="2"/><rect x="640" y="594" width="210" height="34" rx="2"/><rect x="875" y="594" width="80" height="34" rx="2"/>
+      <rect x="170" y="474" width="210" height="34" rx="2"/><rect x="405" y="474" width="145" height="34" rx="2"/><rect x="575" y="474" width="210" height="34" rx="2"/><rect x="810" y="474" width="210" height="34" rx="2"/><rect x="1045" y="474" width="80" height="34" rx="2"/>
+      <rect x="170" y="514" width="210" height="34" rx="2"/><rect x="405" y="514" width="145" height="34" rx="2"/><rect x="575" y="514" width="210" height="34" rx="2"/><rect x="810" y="514" width="210" height="34" rx="2"/><rect x="1045" y="514" width="80" height="34" rx="2"/>
+      <rect x="170" y="554" width="210" height="34" rx="2"/><rect x="405" y="554" width="145" height="34" rx="2"/><rect x="575" y="554" width="210" height="34" rx="2"/><rect x="810" y="554" width="210" height="34" rx="2"/>
+      <rect x="170" y="594" width="210" height="34" rx="2"/><rect x="405" y="594" width="145" height="34" rx="2"/><rect x="575" y="594" width="210" height="34" rx="2"/><rect x="810" y="594" width="210" height="34" rx="2"/><rect x="1045" y="594" width="80" height="34" rx="2"/>
     </g>
 
     <!-- Row 1: Nordic -->
@@ -334,16 +344,20 @@
         <text x="275" y="495" text-anchor="middle" font-size="10.5" font-weight="700" fill="#ffffff">nRF52 / nRF54</text>
       </g>
       <g class="cell" data-p="nordic">
-        <rect x="405" y="474" width="210" height="34" rx="2" fill="#6b727b"/>
-        <text x="510" y="495" text-anchor="middle" font-size="10.5" font-weight="700" fill="#ffffff">多协议</text>
+        <rect x="405" y="474" width="145" height="34" rx="2" fill="#23272e"/>
+        <text x="477" y="495" text-anchor="middle" font-size="9.5" font-weight="700" fill="#ffffff">nRF24 系列 · ESB</text>
       </g>
       <g class="cell" data-p="nordic">
-        <rect x="640" y="474" width="210" height="34" rx="2" fill="#ccd0d6"/>
-        <text x="745" y="495" text-anchor="middle" font-size="10.5" font-weight="700" fill="#4a4e54">nRF70（伴侣芯片）</text>
+        <rect x="575" y="474" width="210" height="34" rx="2" fill="#6b727b"/>
+        <text x="680" y="495" text-anchor="middle" font-size="10.5" font-weight="700" fill="#ffffff">多协议</text>
       </g>
       <g class="cell" data-p="nordic">
-        <rect x="875" y="474" width="80" height="34" rx="2" fill="#6b727b"/>
-        <text x="915" y="495" text-anchor="middle" font-size="9.5" font-weight="700" fill="#ffffff">蜂窝 nRF91</text>
+        <rect x="810" y="474" width="210" height="34" rx="2" fill="#ccd0d6"/>
+        <text x="915" y="495" text-anchor="middle" font-size="10.5" font-weight="700" fill="#4a4e54">nRF70（伴侣芯片）</text>
+      </g>
+      <g class="cell" data-p="nordic">
+        <rect x="1045" y="474" width="80" height="34" rx="2" fill="#6b727b"/>
+        <text x="1085" y="495" text-anchor="middle" font-size="9.5" font-weight="700" fill="#ffffff">蜂窝 nRF91</text>
       </g>
     </g>
 
@@ -356,16 +370,20 @@
         <text x="275" y="535" text-anchor="middle" font-size="10.5" font-weight="700" fill="#ffffff">BG 系列</text>
       </g>
       <g class="cell" data-p="silabs">
-        <rect x="405" y="514" width="210" height="34" rx="2" fill="#23272e"/>
-        <text x="510" y="535" text-anchor="middle" font-size="10.5" font-weight="700" fill="#ffffff">Matter 主要贡献者</text>
+        <rect x="405" y="514" width="145" height="34" rx="2" fill="#6b727b"/>
+        <text x="477" y="535" text-anchor="middle" font-size="9.5" font-weight="700" fill="#ffffff">EFR32FG 专线</text>
       </g>
       <g class="cell" data-p="silabs">
-        <rect x="640" y="514" width="210" height="34" rx="2" fill="#6b727b"/>
-        <text x="745" y="535" text-anchor="middle" font-size="10.5" font-weight="700" fill="#ffffff">SiWx917（Wi-Fi 6）</text>
+        <rect x="575" y="514" width="210" height="34" rx="2" fill="#23272e"/>
+        <text x="680" y="535" text-anchor="middle" font-size="10.5" font-weight="700" fill="#ffffff">Matter 主要贡献者</text>
       </g>
       <g class="cell" data-p="silabs">
-        <rect x="875" y="514" width="80" height="34" rx="2" fill="#6b727b"/>
-        <text x="915" y="535" text-anchor="middle" font-size="9.5" font-weight="700" fill="#ffffff">Sub-GHz</text>
+        <rect x="810" y="514" width="210" height="34" rx="2" fill="#6b727b"/>
+        <text x="915" y="535" text-anchor="middle" font-size="10.5" font-weight="700" fill="#ffffff">SiWx917（Wi-Fi 6）</text>
+      </g>
+      <g class="cell" data-p="silabs">
+        <rect x="1045" y="514" width="80" height="34" rx="2" fill="#6b727b"/>
+        <text x="1085" y="535" text-anchor="middle" font-size="9.5" font-weight="700" fill="#ffffff">Sub-GHz</text>
       </g>
     </g>
 
@@ -377,12 +395,16 @@
         <text x="275" y="575" text-anchor="middle" font-size="10.5" font-weight="700" fill="#4a4e54">集成于 ESP32-C/H</text>
       </g>
       <g class="cell" data-p="esp">
-        <rect x="405" y="554" width="210" height="34" rx="2" fill="#6b727b"/>
-        <text x="510" y="575" text-anchor="middle" font-size="10.5" font-weight="700" fill="#ffffff">H2 / C6 系列</text>
+        <rect x="405" y="554" width="145" height="34" rx="2" fill="#ccd0d6"/>
+        <text x="477" y="575" text-anchor="middle" font-size="9.5" font-weight="700" fill="#4a4e54">ESP-NOW（走 Wi-Fi）</text>
       </g>
       <g class="cell" data-p="esp">
-        <rect x="640" y="554" width="210" height="34" rx="2" fill="#23272e"/>
-        <text x="745" y="575" text-anchor="middle" font-size="10.5" font-weight="700" fill="#ffffff">ESP32 系</text>
+        <rect x="575" y="554" width="210" height="34" rx="2" fill="#6b727b"/>
+        <text x="680" y="575" text-anchor="middle" font-size="10.5" font-weight="700" fill="#ffffff">H2 / C6 系列</text>
+      </g>
+      <g class="cell" data-p="esp">
+        <rect x="810" y="554" width="210" height="34" rx="2" fill="#23272e"/>
+        <text x="915" y="575" text-anchor="middle" font-size="10.5" font-weight="700" fill="#ffffff">ESP32 系</text>
       </g>
       
     </g>
@@ -396,22 +418,26 @@
         <text x="275" y="615" text-anchor="middle" font-size="10.5" font-weight="700" fill="#4a4e54">并入多协议 SoC（QPG）</text>
       </g>
       <g class="cell" data-p="qorvo">
-        <rect x="405" y="594" width="210" height="34" rx="2" fill="#23272e"/>
-        <text x="510" y="615" text-anchor="middle" font-size="10.5" font-weight="700" fill="#ffffff">GreenPeak 系 · 遥控强</text>
+        <rect x="405" y="594" width="145" height="34" rx="2" fill="#ccd0d6"/>
+        <text x="477" y="615" text-anchor="middle" font-size="9.5" font-weight="700" fill="#4a4e54">并入多协议 SoC</text>
       </g>
       <g class="cell" data-p="qorvo">
-        <rect x="640" y="594" width="210" height="34" rx="2" fill="#ccd0d6"/>
-        <text x="745" y="615" text-anchor="middle" font-size="10.5" font-weight="700" fill="#4a4e54">仅 FEM 前端组件</text>
+        <rect x="575" y="594" width="210" height="34" rx="2" fill="#23272e"/>
+        <text x="680" y="615" text-anchor="middle" font-size="10.5" font-weight="700" fill="#ffffff">GreenPeak 系 · 遥控强</text>
       </g>
       <g class="cell" data-p="qorvo">
-        <rect x="875" y="594" width="80" height="34" rx="2" fill="#eceef1"/>
-        <text x="915" y="615" text-anchor="middle" font-size="9.5" font-weight="700" font-style="italic" fill="#4a4e54">蜂窝 IoT·布局</text>
+        <rect x="810" y="594" width="210" height="34" rx="2" fill="#ccd0d6"/>
+        <text x="915" y="615" text-anchor="middle" font-size="10.5" font-weight="700" fill="#4a4e54">仅 FEM 前端组件</text>
+      </g>
+      <g class="cell" data-p="qorvo">
+        <rect x="1045" y="594" width="80" height="34" rx="2" fill="#eceef1"/>
+        <text x="1085" y="615" text-anchor="middle" font-size="9.5" font-weight="700" font-style="italic" fill="#4a4e54">蜂窝 IoT·布局</text>
       </g>
     </g>
 
     <!-- Row 5: Telink (highlighted) -->
     <g class="covrow" data-p="telink">
-      <rect x="58" y="632" width="905" height="54" rx="2" fill="#f4f6fc" stroke="#1b2a70" stroke-width="1"/>
+      <rect x="58" y="632" width="1075" height="54" rx="2" fill="#f4f6fc" stroke="#1b2a70" stroke-width="171"/>
       <text x="160" y="663" text-anchor="end" font-size="12.5" font-weight="800" fill="#1b2a70">Telink 泰凌</text>
       <g class="cell" data-p="telink">
         <rect x="170" y="638" width="210" height="42" rx="2" fill="#23272e"/>
@@ -419,19 +445,24 @@
         <text x="275" y="670" text-anchor="middle" font-size="9.5" fill="#c9ccd2">TLSR825x · 827x · TL321x</text>
       </g>
       <g class="cell" data-p="telink">
-        <rect x="405" y="638" width="210" height="42" rx="2" fill="#6b727b"/>
-        <text x="510" y="655" text-anchor="middle" font-size="10.5" font-weight="700" fill="#ffffff">全栈认证</text>
-        <text x="510" y="670" text-anchor="middle" font-size="9.5" fill="#dfe2e6">Zigbee / Thread / Matter</text>
+        <rect x="405" y="638" width="145" height="42" rx="2" fill="#23272e"/>
+        <text x="477" y="655" text-anchor="middle" font-size="10.5" font-weight="700" fill="#ffffff">三代量产</text>
+        <text x="477" y="670" text-anchor="middle" font-size="9" fill="#c9ccd2">占营收约 1/3</text>
       </g>
       <g class="cell" data-p="telink">
-        <rect x="640" y="638" width="210" height="42" rx="2" fill="#9ba1aa"/>
-        <text x="745" y="655" text-anchor="middle" font-size="10.5" font-weight="700" fill="#ffffff">三射频 TLSR9118 已量产</text>
-        <text x="745" y="670" text-anchor="middle" font-size="9.5" fill="#f0f1f4">Wi-Fi 6 + BLE + 802.15.4</text>
+        <rect x="575" y="638" width="210" height="42" rx="2" fill="#6b727b"/>
+        <text x="680" y="655" text-anchor="middle" font-size="10.5" font-weight="700" fill="#ffffff">全栈认证</text>
+        <text x="680" y="670" text-anchor="middle" font-size="9.5" fill="#dfe2e6">Zigbee / Thread / Matter</text>
       </g>
       <g class="cell" data-p="telink">
-        <rect x="875" y="638" width="80" height="42" rx="2" fill="#eceef1"/>
-        <text x="915" y="655" text-anchor="middle" font-size="9" font-weight="700" font-style="italic" fill="#4a4e54">磐启微 Sub-1G</text>
-        <text x="915" y="670" text-anchor="middle" font-size="8.5" font-style="italic" fill="#6b7280">（收购中）</text>
+        <rect x="810" y="638" width="210" height="42" rx="2" fill="#9ba1aa"/>
+        <text x="915" y="655" text-anchor="middle" font-size="10.5" font-weight="700" fill="#ffffff">三射频 TLSR9118 已量产</text>
+        <text x="915" y="670" text-anchor="middle" font-size="9.5" fill="#f0f1f4">Wi-Fi 6 + BLE + 802.15.4</text>
+      </g>
+      <g class="cell" data-p="telink">
+        <rect x="1045" y="638" width="80" height="42" rx="2" fill="#eceef1"/>
+        <text x="1085" y="655" text-anchor="middle" font-size="9" font-weight="700" font-style="italic" fill="#4a4e54">磐启微 Sub-1G</text>
+        <text x="1085" y="670" text-anchor="middle" font-size="8.5" font-style="italic" fill="#6b7280">（收购中）</text>
       </g>
     </g>
 
