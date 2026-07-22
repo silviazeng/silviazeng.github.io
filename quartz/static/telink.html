@@ -131,23 +131,6 @@
   .ctab tr.pri td{background:#eef0f8}.ctab tr.pri td:first-child{color:var(--accent)}
   .ctab .cu{color:#2a4db0;font-weight:700}.ctab .nt{color:#9aa0ab}
   .p01-mobile{display:none}
-  .p02-mobile{display:none}
-  .p02mtab{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden}
-  .p02mtab th,.p02mtab td{padding:8px 3px;text-align:center;border-bottom:1px solid var(--line)}
-  .p02mtab thead th{background:#1a2230;color:#fff;font-size:11px;font-weight:700}
-  .p02mtab td{font-size:16px;line-height:1}
-  .p02mtab td:first-child,.p02mtab th:first-child{text-align:left;font-weight:700;font-size:11.5px;padding-left:8px;white-space:nowrap}
-  .p02mtab tbody tr:nth-child(even){background:#faf7f2}
-  .p02mtab tr.pri td{background:#eef0f8}.p02mtab tr.pri td:first-child{color:var(--accent)}
-  .p02mtab .l1{color:#23272e}.p02mtab .l2{color:#5a616b}.p02mtab .l3{color:#7c8592}.p02mtab .l4{color:#b4b9c0}.p02mtab .l0{color:#d0d3d8}
-  .p02mleg{font-size:10px;color:#8a919b;margin-top:7px;line-height:1.6}.p02mleg b{font-style:normal}
-  .p02mh{font-size:11px;font-weight:700;letter-spacing:.04em;color:#8a919b;margin-bottom:7px}
-  .p02stack{border-radius:8px;overflow:hidden;border:1px solid var(--line)}
-  .p02layer{display:flex;gap:10px;align-items:baseline;padding:9px 12px;border-bottom:1px solid #e8eaef}
-  .p02layer:last-child{border-bottom:none}
-  .p02layer.l-app{background:#f1eff8}.p02layer.l-proto{background:#f5f6f8}.p02layer.l-radio{background:#eaf0f8}
-  .p02lname{flex:0 0 58px;font-size:11px;font-weight:800;color:var(--accent);line-height:1.35}
-  .p02litems{font-size:11.5px;color:#33404e;line-height:1.55}.p02litems b{color:#4f3f96}
   @media(max-width:820px){
     .ctab{font-size:11px}.ctab th,.ctab td{padding:5px 7px}
     .s06split{flex-direction:column}
@@ -159,7 +142,7 @@
     .takeaway{margin-top:20px}
     .grid{margin-top:20px}
   }
-  @media(max-width:600px){.p01-desktop{display:none}.p01-mobile{display:block}.p02-desktop{display:none}.p02-mobile{display:block}}
+  @media(max-width:600px){.p01-desktop{display:none}.p01-mobile{display:block}}
 </style>
 </head>
 <body>
@@ -251,7 +234,7 @@
     <h2>无线连接技术分层 × 五家覆盖对比</h2>
     <div class="rule" style="margin:14px 0"></div>
     <div class="ixwrap">
-      <div class="scroller p02-desktop">
+      <div class="scroller">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1345 726" role="img" aria-label="分层架构图:射频层按 PAN、LAN、WAN 作用域排列,PAN 段含 BLE 与 2.4G 私有两列,LAN 段向上经协议栈汇聚到 Matter,WAN 段自成一列;下方为五家厂商在 BLE、2.4G 私有、802.15.4、Wi-Fi、广域五列射频上的覆盖矩阵">
     <!-- Left layer labels -->
     <text x="26" y="110" transform="rotate(-90 26 110)" text-anchor="middle" font-size="13" font-weight="700" fill="#5a6472">应用层</text>
@@ -496,25 +479,6 @@
     </g>
   </svg>
   </div>
-    <div class="p02-mobile">
-    <div class="p02mh">技术分层（射频 → 协议栈 → 应用，自下而上）</div>
-    <div class="p02stack">
-      <div class="p02layer l-app"><span class="p02lname">应用层</span><span class="p02litems"><b>Matter</b>（over Thread / Wi-Fi）· 云侧 MQTT / CoAP</span></div>
-      <div class="p02layer l-proto"><span class="p02lname">协议栈层</span><span class="p02litems">Bluetooth（Mesh·非IP）· 2.4G 私有 · Zigbee · Thread（IPv6）· TCP/IP · 广域（3GPP/LoRa）</span></div>
-      <div class="p02layer l-radio"><span class="p02lname">射频物理层</span><span class="p02litems">BLE · 2.4G · 802.15.4 · Wi-Fi · 广域</span></div>
-    </div>
-    <div class="p02mh" style="margin-top:16px">五家覆盖对比</div>
-    <table class="p02mtab">
-    <thead><tr><th>厂商</th><th>BLE</th><th>2.4G</th><th>15.4</th><th>Wi-Fi</th><th>广域</th></tr></thead>
-    <tbody>
-    <tr><td>Nordic</td><td class="l1">●</td><td class="l1">●</td><td class="l2">◐</td><td class="l4">○</td><td class="l2">◐</td></tr>
-    <tr><td>Silicon Labs</td><td class="l2">◐</td><td class="l2">◐</td><td class="l1">●</td><td class="l2">◐</td><td class="l2">◐</td></tr>
-    <tr><td>Espressif 乐鑫</td><td class="l4">○</td><td class="l4">○</td><td class="l2">◐</td><td class="l1">●</td><td class="l0">—</td></tr>
-    <tr><td>Qorvo</td><td class="l4">○</td><td class="l4">○</td><td class="l1">●</td><td class="l4">○</td><td class="l4">○</td></tr>
-    <tr class="pri"><td>Telink 泰凌</td><td class="l1">●</td><td class="l1">●</td><td class="l2">◐</td><td class="l3">◑</td><td class="l4">○</td></tr>
-    </tbody></table>
-    <div class="p02mleg"><b>●</b> 起家/主力　<b>◐</b> 成熟 SoC　<b>◑</b> 新进·已认证　<b>○</b> 并入/伴侣/布局　— 无<br>15.4＝802.15.4（Zigbee/Thread）· 广域＝蜂窝/Sub-1G</div>
-    </div>
       <div style="font-size:11px;color:#9ca3af;margin-top:8px">来源：各家官网产品目录 / 年报 / 公告（截至 2026 年中）</div>
     </div>
   </section>
