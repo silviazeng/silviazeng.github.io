@@ -74,6 +74,8 @@
   .cover .sub a{color:inherit;text-decoration:none;border-bottom:1px solid transparent;padding-bottom:1px;transition:color .2s ease,border-color .2s ease}
   .cover .sub a:hover{color:#e6cf91;border-bottom-color:rgba(230,207,145,.55)}
   .cover .sub a:focus-visible{outline:2px solid #c9a961;outline-offset:2px;border-radius:2px}
+  /* 触屏无 hover：常驻金色+下划线,让四个板块一眼可点 */
+  @media (hover:none){.cover .sub a{color:#e6cf91;border-bottom-color:rgba(230,207,145,.5)}}
   .pcard-cta{display:inline-flex;align-items:center;gap:7px;color:#c9a961;font-size:12px;font-weight:700;letter-spacing:.14em}
   .pcard-arw{transition:transform .25s ease}
   .pcard:hover .pcard-arw{transform:translateX(4px)}
