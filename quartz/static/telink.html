@@ -71,6 +71,9 @@
   .pcard-body{display:flex;flex-direction:column;gap:4px;line-height:1.15}
   .pcard-name{color:#eef1f8;font-size:15px;font-weight:600;letter-spacing:.01em}
   .cmeta{margin-top:15px;color:#8189ad;font-size:12.5px;letter-spacing:.1em;position:relative;z-index:1}
+  .cover .sub a{color:inherit;text-decoration:none;border-bottom:1px solid transparent;padding-bottom:1px;transition:color .2s ease,border-color .2s ease}
+  .cover .sub a:hover{color:#e6cf91;border-bottom-color:rgba(230,207,145,.55)}
+  .cover .sub a:focus-visible{outline:2px solid #c9a961;outline-offset:2px;border-radius:2px}
   .pcard-cta{display:inline-flex;align-items:center;gap:7px;color:#c9a961;font-size:12px;font-weight:700;letter-spacing:.14em}
   .pcard-arw{transition:transform .25s ease}
   .pcard:hover .pcard-arw{transform:translateX(4px)}
@@ -167,7 +170,7 @@
   <!-- COVER -->
   <section class="slide cover" data-n="" id="cover">
     <h1><span class="seg">无线连接芯片：</span><span class="seg">北美市场扫描</span></h1>
-    <p class="sub"><span class="sdot"></span>市场规模及趋势 → 主要玩家及竞争策略 → 客群分布 → 泰凌扩张路径</p>
+    <p class="sub"><span class="sdot"></span><a href="#market">市场规模及趋势</a> → <a href="#players">主要玩家及竞争策略</a> → <a href="#segments">客群分布</a> → <a href="#path">泰凌扩张路径</a></p>
     <a class="pcard" href="#intro" aria-label="关于我：查看自我介绍">
       <span class="pcard-body">
         <span class="pcard-name">曾馨弘 Silvia Zeng</span>
@@ -178,7 +181,7 @@
   </section>
 
   <!-- 1 MARKET -->
-  <section class="slide" data-n="01">
+  <section class="slide" data-n="01" id="market">
   <div class="kicker">① 市场规模及趋势</div>
   <h2>蓝牙设备年出货量：49 亿台（2022）→ 81 亿台（2030）</h2>
   <div class="rule"></div>
@@ -250,7 +253,7 @@
 </section>
 
   <!-- 2b PLAYERS: TECH LAYERS x COVERAGE (static) -->
-  <section class="slide" data-n="02">
+  <section class="slide" data-n="02" id="players">
     <div class="kicker">② 主要玩家 · 技术产品覆盖</div>
     <h2>无线连接技术分层 × 主要公司产品覆盖对比</h2>
     <div class="rule" style="margin:14px 0"></div>
@@ -579,7 +582,7 @@
   </section>
 
   <!-- 4 TARGET APPS + CUSTOMERS -->
-  <section class="slide" data-n="05">
+  <section class="slide" data-n="05" id="segments">
     <div class="kicker">③ 客群分布</div>
     <h2>目标优先级：价格敏感度 × 泰凌产品匹配度 × 北美客户集中度</h2>
     <div class="rule" style="margin:12px 0"></div>
@@ -637,7 +640,7 @@
 </section>
 
   <!-- 5 HOW TELINK ENTERS US -->
-  <section class="slide" data-n="06">
+  <section class="slide" data-n="06" id="path">
     <div class="kicker">④ 泰凌北美扩张路径</div>
     <h2>一条可行的增长路径</h2>
     <div class="rule"></div>
