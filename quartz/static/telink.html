@@ -131,7 +131,7 @@
   .ctab tr.pri td{background:#eef0f8}.ctab tr.pri td:first-child{color:var(--accent)}
   .ctab .cu{color:#2a4db0;font-weight:700}.ctab .nt{color:#9aa0ab}
   /* P05：只放大 8 个气泡类目标签(每个标签是其 circle.vbub 的相邻 text),注释/坐标轴保持原小字号,避免拥挤;SVG 高度由 viewBox 固定,不影响页面布局 */
-  section[data-n="05"] circle.vbub + text{font-size:15px}
+  section[data-n="05"] circle.vbub + text{font-size:15px;transform:translateY(8px)}
   /* P05 内容较满(气泡图+表+更大 takeaway),收紧上下留白使其单屏/单页放得下 */
   section[data-n="05"]{padding-top:5vh;padding-bottom:3vh}
   .p01-mobile{display:none}
