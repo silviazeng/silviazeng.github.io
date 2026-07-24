@@ -76,6 +76,8 @@
   .cover .sub a:focus-visible{outline:2px solid #c9a961;outline-offset:2px;border-radius:2px}
   /* 触屏无 hover：常驻金色+下划线,让四个板块一眼可点 */
   @media (hover:none){.cover .sub a{color:#e6cf91;border-bottom-color:rgba(230,207,145,.5)}}
+  /* 手机端封面四个板块字号加大、行距松一点 */
+  @media (max-width:600px){.cover .sub{font-size:17.5px;line-height:1.75}}
   .pcard-cta{display:inline-flex;align-items:center;gap:7px;color:#c9a961;font-size:12px;font-weight:700;letter-spacing:.14em}
   .pcard-arw{transition:transform .25s ease}
   .pcard:hover .pcard-arw{transform:translateX(4px)}
@@ -173,10 +175,10 @@
   <section class="slide cover" data-n="" id="cover">
     <h1><span class="seg">无线连接芯片：</span><span class="seg">北美市场扫描</span></h1>
     <p class="sub"><span class="sdot"></span><a href="#market">市场规模及趋势</a> → <a href="#players">主要玩家及竞争策略</a> → <a href="#segments">客群分布</a> → <a href="#path">泰凌扩张路径</a></p>
-    <a class="pcard" href="#intro" aria-label="关于我：查看自我介绍">
+    <a class="pcard" href="#intro" aria-label="个人简介：查看自我介绍">
       <span class="pcard-body">
         <span class="pcard-name">曾馨弘 Silvia Zeng</span>
-        <span class="pcard-cta">关于我 <span class="pcard-arw">→</span></span>
+        <span class="pcard-cta">个人简介 <span class="pcard-arw">→</span></span>
       </span>
     </a>
     <p class="cmeta">2026.7</p>
