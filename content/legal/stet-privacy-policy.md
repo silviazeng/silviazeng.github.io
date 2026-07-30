@@ -8,11 +8,11 @@ tags:
 ---
 
 **Effective date:** 2026-05-27
-**Last updated:** 2026-06-11
+**Last updated:** 2026-07-29
 
 This privacy policy describes how the **Stet** iOS app ("the app," "we," "our") handles your information. Stet is built by an individual developer and is currently a single-person project. We collect as little as possible and store almost everything on your device.
 
-If you have a question that isn't answered here, write to **xuezh2008@gmail.com**.
+If you have a question that isn't answered here, write to **stet.money.app@gmail.com**.
 
 ---
 
@@ -87,10 +87,10 @@ Each event is tied only to your anonymous installation UUID. PostHog does **not*
 
 Governed by PostHog's [Privacy Policy](https://posthog.com/privacy).
 
-**E. Google AdMob** (advertising) — Stet shows at most two native ad placements, filled by Google AdMob: a card styled as a sponsored receipt inside the Spending list, and an occasional small sponsor stub below the remark that appears after you save a receipt (capped at once per day, and never on the day's first save).
+**E. Google AdMob** (advertising) — Stet shows two ad placements, both filled by Google AdMob: a card styled as a sponsored receipt inside the Spending list, and an opt-in video on the scan-allowance screen (once you have used up the month's free AI receipt reads, you can choose to watch a short video ad for a few more reads, or decline and wait for the monthly reset).
 
 - The first time you reach the main app, iOS asks whether to allow tracking (**App Tracking Transparency**). **If you allow it,** AdMob may use your device's advertising identifier (IDFA) to show more relevant, personalized ads. **If you decline,** AdMob serves non-personalized ads instead — you still see the ads, just not tailored to you.
-- Either way, AdMob receives standard ad-request data (device type, OS version, coarse region) plus the contextual keywords Stet sends: **merchant names from your Spending list** for the list card, or the just-saved receipt's merchant name for the sponsor stub (used only to make the ad less random). It does **not** receive your name, email, Apple ID, receipt images, amounts, dates, or spending history.
+- Either way, AdMob receives standard ad-request data (device type, OS version, coarse region). For the Spending-list card only, Stet additionally sends **merchant names from your Spending list** as contextual keywords (at most five, used only to make the ad less random). The video ad request carries no keywords at all. Neither request includes your name, email, Apple ID, receipt images, amounts, dates, or spending history.
 - **Pro subscribers see no ads** and trigger no ad requests.
 
 Governed by Google's [advertising terms](https://policies.google.com/technologies/ads) and [Privacy Policy](https://policies.google.com/privacy).
@@ -101,7 +101,7 @@ Beyond what's described in 2.2, we don't collect or send: push tokens, precise l
 
 Our analytics and crash reporting (PostHog + Sentry) use only an anonymous installation UUID — no IDFA, no Apple Advertising Identifier, no device fingerprint. The **only** component that may use the IDFA is AdMob, and only if you grant App Tracking Transparency (section 2.2 E).
 
-Stet shows only the two native ad placements described in 2.2 E. You can remove ads entirely with the in-app **Stet Pro** subscription (section 4).
+Stet shows only the two ad placements described in 2.2 E. You can remove ads entirely with the in-app **Stet Pro** subscription (section 4).
 
 ---
 
@@ -154,7 +154,7 @@ Because your data lives only on your device, you already control all of it. You 
 - Delete it (per-item or by uninstalling)
 - Export it — we are planning a CSV/PDF export feature; it's not in the current release.
 
-If you want a copy of your data and the in-app tools aren't enough yet, write to **xuezh2008@gmail.com** and we'll figure something out.
+If you want a copy of your data and the in-app tools aren't enough yet, write to **stet.money.app@gmail.com** and we'll figure something out.
 
 ---
 
@@ -180,7 +180,7 @@ If we change anything material — adding ads, adding analytics, adding a backen
 
 ## 10 · Contact
 
-Stet is built by Xinhong Zeng. For anything privacy-related (questions, requests, complaints, corrections), email **xuezh2008@gmail.com**.
+Stet is built by Xinhong Zeng. For anything privacy-related (questions, requests, complaints, corrections), email **stet.money.app@gmail.com**.
 
 ---
 
