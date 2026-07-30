@@ -91,7 +91,7 @@ Governed by PostHog's [Privacy Policy](https://posthog.com/privacy).
 
 - The first time you reach the main app, iOS asks whether to allow tracking (**App Tracking Transparency**). **If you allow it,** AdMob may use your device's advertising identifier (IDFA) to show more relevant, personalized ads. **If you decline,** AdMob serves non-personalized ads instead — you still see the ads, just not tailored to you.
 - Either way, AdMob receives standard ad-request data (device type, OS version, coarse region). For the Spending-list card only, Stet additionally sends **merchant names from your Spending list** as contextual keywords (at most five, used only to make the ad less random). The video ad request carries no keywords at all. Neither request includes your name, email, Apple ID, receipt images, amounts, dates, or spending history.
-- **Pro subscribers see no ads** and trigger no ad requests.
+- Once Stet Pro is available, **subscribers see no ads** and trigger no ad requests.
 
 Governed by Google's [advertising terms](https://policies.google.com/technologies/ads) and [Privacy Policy](https://policies.google.com/privacy).
 
@@ -101,7 +101,7 @@ Beyond what's described in 2.2, we don't collect or send: push tokens, precise l
 
 Our analytics and crash reporting (PostHog + Sentry) use only an anonymous installation UUID — no IDFA, no Apple Advertising Identifier, no device fingerprint. The **only** component that may use the IDFA is AdMob, and only if you grant App Tracking Transparency (section 2.2 E).
 
-Stet shows only the two ad placements described in 2.2 E. You can remove ads entirely with the in-app **Stet Pro** subscription (section 4).
+Stet shows only the two ad placements described in 2.2 E. Ads will also be removable with the **Stet Pro** subscription once it is available (section 4).
 
 ---
 
@@ -121,7 +121,7 @@ We never ask for: contacts, location, calendar, reminders, health, or motion.
 
 ## 4 · Subscriptions and payments
 
-Stet offers an optional auto-renewing subscription called **Stet Pro** (monthly or yearly) that removes ads. Pricing is shown inside the app and varies by country.
+**Stet Pro** is an optional auto-renewing subscription (monthly or yearly). **It is not available at launch.** When it does arrive, what it unlocks is cross-app integration across the Stet family — your Money data flowing into the sibling apps instead of you re-entering it — and having no ads comes along with it. Pricing will be shown inside the app and varies by country. The terms below apply once it is available.
 
 - Payment is processed by Apple via the App Store, not by us.
 - Subscriptions auto-renew unless cancelled at least 24 hours before the end of the current period.
