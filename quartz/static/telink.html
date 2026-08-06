@@ -6,14 +6,15 @@
 <meta name="robots" content="noindex, nofollow">
 <title>无线连接芯片：欧美市场扫描</title>
 <style>
-  :root{--ink:#161d29;--muted:#5b6675;--line:#e6e2d8;--bg:#faf8f3;--accent:#17245f;--accent2:#4a72b5;--gold:#8d6c23;--card:#fff;--soft:#f5eee2}
+  :root{--ink:#161d29;--muted:#5b6675;--line:#e6e2d8;--bg:#faf8f3;--accent:#17245f;--accent2:#4a72b5;--gold:#8d6c23;--gold-mark:#b0842a;--card:#fff;--soft:#f5eee2}
+  /* --gold 用于小字(11.5px kicker 等)，须 4.5:1 故只能取暗金；--gold-mark 是色块专用的亮金(3.2:1，够图形对比且真的像金色)，不要拿它写小字 */
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
   body{font-family:-apple-system,"PingFang SC","Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:#e4e1d8;line-height:1.5;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
   a{color:var(--accent2);text-decoration:none}a:hover{color:var(--accent)}
   .deck{scroll-snap-type:y mandatory;overflow-y:scroll;height:100vh}
   .slide{scroll-snap-align:start;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:7vh 8vw;position:relative;background:var(--bg);border-bottom:1px solid #d8d5cd}
-  .slide:not(.cover)::after{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--gold);opacity:.5}
+  .slide:not(.cover)::after{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--gold-mark);opacity:.8}
   .slide::before{content:attr(data-n);position:absolute;top:4.4vh;right:8vw;font-size:11px;letter-spacing:.3em;color:#b3ab9b;font-weight:700}
   .kicker{font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:16px}
   h1{font-size:clamp(30px,4.4vw,56px);line-height:1.12;font-weight:800;letter-spacing:-.01em}
@@ -41,8 +42,10 @@
   td:first-child{font-weight:700;color:var(--ink);white-space:nowrap}
   tbody tr:nth-child(even){background:#faf7f2}
   .tl{color:var(--accent);font-weight:700}
-  .takeaway{margin-top:28px;padding:17px 24px;background:linear-gradient(180deg,#f7f0e4,#f3ead9);border-left:4px solid var(--gold);border-radius:0 10px 10px 0;font-size:clamp(15px,1.6vw,19px);color:#4a3d22;font-weight:600;box-shadow:0 6px 16px -12px rgba(141,108,35,.5)}
-  .takeaway b{color:#7a5e12}
+  /* takeaway：底色压浅,金色才有对比余地(原来是金字画在金底上,同色系互相吞) */
+  .takeaway{margin-top:28px;padding:17px 24px;background:linear-gradient(180deg,#fdf9f1,#fbf5e9);border-left:5px solid var(--gold-mark);border-radius:0 10px 10px 0;font-size:clamp(15px,1.6vw,19px);color:#443b2c;font-weight:600;box-shadow:0 6px 16px -12px rgba(141,108,35,.5)}
+  /* 浅底上金色当文字色必然发浑(够对比就得压深成褐色,一深就不金了);故金色改做"标记"——重点词垫金色底纹,字身用最深墨色,强调靠深度+底纹两层,不再靠色相 */
+  .takeaway b{color:#241c0c;font-weight:800;background-image:linear-gradient(to top,rgba(176,132,42,.32) .38em,transparent .38em);padding:0 .06em}
   .foot{position:absolute;bottom:3.2vh;left:8vw;right:8vw;font-size:11px;color:#98a0ac;border-top:1px solid var(--line);padding-top:8px;display:flex;justify-content:space-between;gap:10px}
   .foot span{font-weight:400;color:#9ca3af}
   .cover{background:radial-gradient(120% 90% at 78% 8%,#22306f 0%,#131f56 42%,#0a1130 100%);color:#f4f2ec;overflow:hidden}
