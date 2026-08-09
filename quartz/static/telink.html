@@ -137,6 +137,8 @@
   .ixwrap #summary .src{display:block;font-size:10.5px;font-weight:400;color:#9ca3af;margin-top:4px}
   .card .src{font-size:11.5px;color:#9ca3af;font-weight:400}
   .ixwrap{margin-top:10px}
+  /* 原页面标题降级为图表标题：页面标题让位给结论,图表自己说明它画的是什么 */
+  .ixwrap .figtitle{max-width:1345px;margin:0 auto 7px;font-size:13px;font-weight:700;color:#5a6472;letter-spacing:.02em}
   @media print{body,.deck{height:auto;overflow:visible}.slide{min-height:0;height:100vh;page-break-after:always;border:none}.nav,.hint{display:none}@page{size:1280px 720px;margin:0}}
   .vbub{cursor:pointer;transition:opacity .12s}
   .s06wrap:hover .vbub{opacity:.72}
@@ -263,9 +265,10 @@
   <!-- 2b PLAYERS: TECH LAYERS x COVERAGE (static) -->
   <section class="slide" data-n="02" id="players">
     <div class="kicker">② 主要玩家 · 技术产品覆盖</div>
-    <h2>无线连接技术分层 × 主要公司产品覆盖对比</h2>
+    <h2>覆盖大致重合；按主力产品线看，与泰凌接近的只有一家</h2>
     <div class="rule" style="margin:14px 0"></div>
     <div class="ixwrap">
+      <div class="figtitle">无线连接技术分层 × 主要公司产品覆盖对比</div>
       <div class="scroller">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1345 726" role="img" aria-label="分层架构图:射频层按 PAN、LAN、WAN 作用域排列,PAN 段含 BLE 与 2.4G 私有两列,LAN 段向上经协议栈汇聚到 Matter,WAN 段自成一列;下方为五家厂商在 BLE、2.4G 私有、802.15.4、Wi-Fi、广域五列射频上的覆盖矩阵">
     <!-- Left layer labels -->
