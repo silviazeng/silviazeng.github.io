@@ -13,7 +13,9 @@
   body{font-family:-apple-system,"PingFang SC","Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:#e4e1d8;line-height:1.5;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
   a{color:var(--accent2);text-decoration:none}a:hover{color:var(--accent)}
   .deck{scroll-snap-type:y mandatory;overflow-y:scroll;height:100vh}
-  .slide{scroll-snap-align:start;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:7vh 8vw;position:relative;background:var(--bg);border-bottom:1px solid #d8d5cd}
+  .slide{scroll-snap-align:start;min-height:100vh;display:flex;flex-direction:column;justify-content:flex-start;padding:5.5vh 8vw 2.5vh;position:relative;background:var(--bg);border-bottom:1px solid #d8d5cd}
+  /* 内容页统一顶部对齐,使每页标题落在同一高度(翻页不跳);封面是标题页,保持垂直居中 */
+  .cover{justify-content:center}
   .slide:not(.cover)::after{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--gold-mark);opacity:.8}
   .slide::before{content:attr(data-n);position:absolute;top:4.4vh;right:8vw;font-size:11px;letter-spacing:.3em;color:#b3ab9b;font-weight:700}
   .kicker{font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:16px}
@@ -152,11 +154,7 @@
   tr.pri td:first-child{color:var(--accent)}
   /* P05：气泡类目标签(circle.vbub 的相邻 text)17px;轴/图例文字已在 SVG 内放大至 15-17px(2026-08-02);SVG 高度由 viewBox 固定,不影响页面布局 */
   section[data-n="05"] circle.vbub + text{font-size:17px;transform:translateY(8px)}
-  /* P05 内容较满(气泡图+表+更大 takeaway),收紧上下留白使其单屏/单页放得下 */
-  section[data-n="05"]{padding-top:5vh;padding-bottom:3vh}
-  /* P01 takeaway 加长后同样收紧留白,保证单屏/单页 */
-  section[data-n="01"]{padding-top:4vh;padding-bottom:2.5vh}
-  section[data-n="01"] .takeaway{margin-top:14px;padding:14px 22px}
+      section[data-n="01"] .takeaway{margin-top:14px;padding:14px 22px}
   section[data-n="01"] .card{margin-top:18px}
   /* 标题两行后再腾高度：图等比缩窄(高度随之下降),不影响字号 */
   section[data-n="01"] .p01-desktop{max-width:900px;margin:0 auto}
@@ -577,10 +575,10 @@
   <!-- 3 STRATEGIES -->
   <section class="slide" data-n="04">
     <div class="kicker">② 主要玩家 · 竞争策略</div>
-    <h2>各家的费用投向，落在各自打法依赖的环节</h2>
+    <h2>各家的费用投向，对应各自的竞争路径</h2>
     <div class="rule"></div>
     <table>
-      <thead><tr><th>公司</th><th>打法</th></tr></thead>
+      <thead><tr><th>公司</th><th>竞争策略</th></tr></thead>
       <tbody>
         <tr><td>Silicon Labs</td><td><b>多协议全栈</b>：自有协议栈与开发工具，芯片与预认证模组并行；营业费用率 67.2%（其中研发 45.0%）</td></tr>
         <tr><td>Nordic</td><td><b>单协议纵深 + 开发者入口</b>：BLE 为收入主体，nRF Connect SDK 与 DevZone 承接开发者，模组交由第三方；经营费用率约 42%（不含折旧摊销）</td></tr>
@@ -589,7 +587,7 @@
         <tr><td><span class="tl">泰凌</span></td><td><b>2.4G 多协议 + 头部客户直供</b>：BLE、Zigbee、Thread、Matter、私有 2.4G 在同一产品线内覆盖，主要以芯片形态交付；研发占营收 27.2%、销售费用率 7.7%</td></tr>
       </tbody>
     </table>
-    <div class="takeaway">Silicon Labs 在协议栈，Nordic 在开发者生态，Qorvo 在射频前端，乐鑫在社区与模组，<b>泰凌在产品线与客户交付</b>；泰凌 CEO 的公开表述是「从产品公司向平台型公司演进」。</div>
+    <div class="takeaway">费用投向决定各家能够服务的客户类型：<b>泰凌的投入集中于产品线与客户交付</b>，对应头部客户的直供模式；其 CEO 的公开表述是「从产品公司向平台型公司演进」。</div>
     <div class="foot"><span>来源：各家 FY2025 年报与季报、<a href="https://www.cls.cn/detail/2413821" target="_blank" rel="noopener">泰凌 CEO 专访</a></span></div>
   </section>
 
