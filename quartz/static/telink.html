@@ -169,6 +169,10 @@
     .grid{margin-top:20px}
   }
   @media(max-width:600px){.p01-desktop{display:none}.p01-mobile{display:block}}
+  /* 手机端:Nordic 条形占 84%,窄屏下贴在条形右端的标签会顶出屏幕;仅该行改为条形内右对齐(与 Silicon Labs 一致) */
+  @media(max-width:820px){
+    .nordic-lab{left:auto !important;right:calc(16% + 8px);color:#fff}
+  }
 </style>
 </head>
 <body>
@@ -551,7 +555,7 @@
       </div>
       <div class="prow" title="Nordic：FY2025 营收 $6.68 亿（+31%）；毛利率约 52%；净利 $0.16 亿（~2%）">
         <div class="pname"><i class="pdot" style="background:#6e737a"></i><div><b>Nordic</b></div></div>
-        <div class="ptrack"><div class="pfill" style="width:84%;background:#6e737a"></div><span class="pout" style="left:calc(84% + 8px)">$6.68 亿，+31% YoY</span></div>
+        <div class="ptrack"><div class="pfill" style="width:84%;background:#6e737a"></div><span class="pout nordic-lab" style="left:calc(84% + 8px)">$6.68 亿，+31% YoY</span></div>
         <div class="pmg" style="justify-content:flex-end"><div style="text-align:right"><b style="font-size:14px">毛利 52%</b><br><small style="font-size:11px;color:#3a4350;font-weight:700">净利 2%</small></div></div>
       </div>
       <div class="prow" title="Espressif 乐鑫：FY2025 营收 ¥25.6 亿 ≈ $3.60 亿（+28%）；毛利率约 47%；净利 ¥4.98 亿（~19%）">
