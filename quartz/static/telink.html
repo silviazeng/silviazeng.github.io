@@ -601,12 +601,12 @@
     <h2>目标应用扫描：价格敏感度 × 泰凌产品匹配度 × 客户集中度</h2>
     <div class="rule" style="margin:12px 0"></div>
     <div class="s06wrap" style="position:relative;max-width:705px;width:100%;margin:0 auto"><div style="overflow-x:auto">
-    <svg viewBox="0 0 960 640" style="display:block;width:100%;max-width:100%;font-family:inherit" role="img" aria-label="垂类目标应用图。横轴价格敏感度（左低右高），纵轴泰凌产品匹配度（下低上高），气泡深浅为欧美客户集中度（浅分散、深集中），气泡大小统一。电子价签 ESL、遥控、PC 外设、TWS 在右上理想区（价格敏感、匹配高）；智能标签（集中中）、商用追踪（集中低）在右中；照明安防、AR/VR、CGM 在左下——集中但价格不敏感、产品匹配低。">
+    <svg viewBox="0 0 960 640" style="display:block;width:100%;max-width:100%;font-family:inherit" role="img" aria-label="垂类目标应用图。横轴价格敏感度（左低右高），纵轴泰凌产品匹配度（下低上高），气泡深浅为客户集中度。电子价签、智能家居终端、智能遥控器、无线音频、PC 与游戏外设落在右上理想区；消费级追踪器在其下方；物流与资产追踪在左上（价格不主导选型但产品匹配中高）；可穿戴在中部；Wi-Fi 类消费终端在右下（价格敏感但产品不匹配）；商用照明与楼宇控制、医疗传感在左下。">
       <rect x="560" y="60" width="364" height="210" rx="12" fill="#e9eefb" opacity="0.6"/>
       <text x="916" y="82" text-anchor="end" font-size="15" font-style="italic" fill="#5566a8">理想区：价格敏感 × 高匹配</text>
       <line x1="110" y1="580" x2="924" y2="580" stroke="#c7ccd6" stroke-width="1.5"/>
       <line x1="110" y1="60" x2="110" y2="580" stroke="#c7ccd6" stroke-width="1.5"/>
-      <text x="118" y="48" font-size="15" fill="#8a93a0">气泡深浅 ＝ 客户集中度（欧美）</text>
+      <text x="118" y="48" font-size="15" fill="#8a93a0">气泡深浅＝客户集中度（欧美市场）</text>
       <circle cx="372" cy="43" r="7" fill="#b7bdd4"/><circle cx="394" cy="43" r="7" fill="#7581b0"/><circle cx="416" cy="43" r="7" fill="#46568f"/><circle cx="438" cy="43" r="7" fill="#17245f"/>
       <text x="452" y="48" font-size="15" fill="#8a93a0">分散 → 集中</text>
       <text x="116" y="626" text-anchor="start" font-size="16" font-weight="700" fill="#33404e">低</text>
@@ -615,49 +615,52 @@
       <text x="98" y="80" text-anchor="end" font-size="16" font-weight="700" fill="#33404e">高</text>
       <text x="98" y="578" text-anchor="end" font-size="16" font-weight="700" fill="#33404e">低</text>
       <text x="34" y="320" font-size="17" font-weight="700" fill="#33404e" transform="rotate(-90 34 320)">泰凌产品匹配度</text>
-      <circle class="vbub" tabindex="0" cx="860" cy="110" r="19" fill="#17245f" data-name="电子价签 ESL" data-sens="高" data-match="高（BLE/2.4G、低壁垒；已有 ESL 量产实绩）" data-conc="高（VusionGroup、Pricer、SoluM、汉朔主导；欧美零售商加速部署）" aria-label="电子价签 ESL：价格敏感高、泰凌产品匹配高、客户集中高，落理想区"></circle>
-      <text x="860" y="141" text-anchor="middle" font-size="12.5" font-weight="700" fill="#33404e">电子价签 ESL</text>
-      <circle class="vbub" tabindex="0" cx="778" cy="188" r="19" fill="#46568f" data-name="遥控 / 机顶盒" data-sens="高" data-match="高（BLE；已进入 Google TV 遥控）" data-conc="中–高（几大 TV 品牌 / 运营商）" aria-label="遥控/机顶盒：价格敏感高、产品匹配高、客户集中中高"></circle>
-      <text x="778" y="219" text-anchor="middle" font-size="12.5" font-weight="700" fill="#33404e">遥控 / 机顶盒</text>
-      <circle class="vbub" tabindex="0" cx="638" cy="132" r="19" fill="#7581b0" data-name="TWS 耳塞" data-sens="中–高" data-match="高（泰凌音频 SoC，营收占比升至 11.3%）" data-conc="中（Sony、JBL、Bose、Sennheiser、Jabra 等，较分散）" aria-label="TWS 耳塞：价格敏感中高、产品匹配高、客户集中中"></circle>
-      <text x="638" y="163" text-anchor="middle" font-size="12.5" font-weight="700" fill="#33404e">TWS 耳塞</text>
-      <circle class="vbub" tabindex="0" cx="690" cy="240" r="19" fill="#46568f" data-name="PC 外设（鼠标 / 键盘）" data-sens="中–高" data-match="高（BLE / 2.4G 私有为泰凌强项；罗技为既有客户）" data-conc="中–高（罗技份额领先，微软、Razer 等次之）" aria-label="PC 外设：价格敏感中高、产品匹配高、客户集中中高，落理想区"></circle>
-      <text x="690" y="271" text-anchor="middle" font-size="12.5" font-weight="700" fill="#33404e">PC 外设</text>
-      <circle class="vbub" tabindex="0" cx="828" cy="298" r="19" fill="#7581b0" data-name="智能标签" data-sens="高" data-match="中（简单 BLE 标签可切入，属新兴 ambient-IoT）" data-conc="中（Avery Dennison、Zebra）" aria-label="智能标签：价格敏感高、产品匹配中、客户集中中"></circle>
-      <text x="828" y="329" text-anchor="middle" font-size="12.5" font-weight="700" fill="#33404e">智能标签</text>
-      <circle class="vbub" tabindex="0" cx="622" cy="362" r="19" fill="#b7bdd4" data-name="商用追踪标签" data-sens="中–高" data-match="中（BLE 追踪）" data-conc="低（Tile、Chipolo，较分散）" aria-label="商用追踪标签：价格敏感中高、产品匹配中、客户集中低"></circle>
-      <text x="622" y="393" text-anchor="middle" font-size="12.5" font-weight="700" fill="#33404e">商用追踪标签</text>
-      <circle class="vbub" tabindex="0" cx="532" cy="452" r="19" fill="#17245f" data-name="商用照明 / HVAC / 安防" data-sens="中" data-match="低（需系统集成与认证）" data-conc="高（Signify、Honeywell、JCI、Siemens）" aria-label="商用照明安防：价格敏感中、产品匹配低、客户集中高"></circle>
-      <text x="532" y="483" text-anchor="middle" font-size="12.5" font-weight="700" fill="#33404e">照明 / HVAC / 安防</text>
-      <circle class="vbub" tabindex="0" cx="368" cy="532" r="19" fill="#17245f" data-name="AR / VR" data-sens="中–低" data-match="低（高带宽、专用，与泰凌产品线不匹配）" data-conc="高（Meta、Sony、Pico）" aria-label="AR/VR：价格敏感中低、产品匹配低、客户集中高"></circle>
-      <text x="368" y="563" text-anchor="middle" font-size="12.5" font-weight="700" fill="#33404e">AR / VR</text>
-      <circle class="vbub" tabindex="0" cx="252" cy="488" r="19" fill="#17245f" data-name="医疗 CGM" data-sens="低" data-match="低（需 FDA 认证；Nordic 已占据）" data-conc="高（Dexcom、Abbott 双寡头）" aria-label="医疗 CGM：价格敏感低、产品匹配低、客户集中高"></circle>
-      <text x="252" y="519" text-anchor="middle" font-size="12.5" font-weight="700" fill="#33404e">医疗 CGM</text>
+            <circle class="vbub" tabindex="0" cx="855" cy="105" r="19" fill="#17245f" data-name="电子价签 ESL" data-sens="高（零售商招标，按每标签 TCO 定价）" data-match="高（TLSR8359 典型应用首条为 Retail/logistics；汉朔为招股书具名客户）" data-conc="高（VusionGroup、Pricer、SoluM、汉朔）" aria-label="电子价签：价格敏感高、匹配高、集中高"></circle>
+      <text x="855" y="136" text-anchor="middle" font-size="12.5" font-weight="700" fill="#33404e">电子价签 ESL</text>
+      <circle class="vbub" tabindex="0" cx="790" cy="175" r="19" fill="#7581b0" data-name="智能家居终端" data-sens="高（方案商选型，亿级出货低单价）" data-match="高（官网 Applications 含 Smart Home，BT Mesh 单列产品线；绿米、欧瑞博、海尔）" data-conc="中（生态集中于 Amazon、Google、Apple，设备品牌分散）" aria-label="智能家居终端：价格敏感高、匹配高、集中中"></circle>
+      <text x="790" y="206" text-anchor="middle" font-size="12.5" font-weight="700" fill="#33404e">智能家居终端</text>
+      <circle class="vbub" tabindex="0" cx="720" cy="218" r="19" fill="#46568f" data-name="智能遥控器" data-sens="高（按机型年度询价，受生态认证名单约束）" data-match="高（官网 Remote Controls；TLSR8278 支持 RF4CE；已进入 Google TV 遥控）" data-conc="中–高（几大 TV 品牌与运营商）" aria-label="智能遥控器：价格敏感高、匹配高、集中中高"></circle>
+      <text x="720" y="249" text-anchor="middle" font-size="12.5" font-weight="700" fill="#33404e">智能遥控器</text>
+      <circle class="vbub" tabindex="0" cx="700" cy="135" r="19" fill="#7581b0" data-name="无线音频" data-sens="高（方案商主导选型，机型一年一换代）" data-match="高（TLSR9518 典型应用含无线耳机与耳塞；音频占营收 11.3%）" data-conc="中（Sony、JBL、Bose、Sennheiser 等，较分散）" aria-label="无线音频：价格敏感高、匹配高、集中中"></circle>
+      <text x="700" y="166" text-anchor="middle" font-size="12.5" font-weight="700" fill="#33404e">无线音频</text>
+      <circle class="vbub" tabindex="0" cx="620" cy="200" r="19" fill="#46568f" data-name="PC 与游戏外设" data-sens="中–高（量大且有年降，受私有协议栈与配对生态约束）" data-match="高（官网设 Human Input Devices 与 Wireless Gaming 分类；2.4G 私有协议为现有产品线；罗技）" data-conc="中–高（罗技份额领先）" aria-label="PC 与游戏外设：价格敏感中高、匹配高、集中中高"></circle>
+      <text x="620" y="231" text-anchor="middle" font-size="12.5" font-weight="700" fill="#33404e">PC 与游戏外设</text>
+      <circle class="vbub" tabindex="0" cx="600" cy="300" r="19" fill="#46568f" data-name="可穿戴" data-sens="中–高（ODM 与方案商比价）" data-match="中–高（TLSR9518 典型应用含智能手表、手环与增强现实眼镜）" data-conc="中–高（Apple、Samsung、Garmin 等）" aria-label="可穿戴：价格敏感中高、匹配中高、集中中高"></circle>
+      <text x="600" y="331" text-anchor="middle" font-size="12.5" font-weight="700" fill="#33404e">可穿戴</text>
+      <circle class="vbub" tabindex="0" cx="825" cy="300" r="19" fill="#7581b0" data-name="消费级追踪器" data-sens="高（零售价 20–30 美元，BOM 空间有限）" data-match="高（官网设苹果查找设备专页，FindMy 网络 SDK 基于 Apple ADK 开发并通过其自认证测试，TLSR92x、95x、827x 系列均支持；谷歌 Find Hub 侧尚未见到）" data-conc="中（Tile、Chipolo、Pebblebee 等；AirTag 用苹果自研芯片）" aria-label="消费级追踪器：价格敏感高、产品匹配高、客户集中中"></circle>
+      <text x="825" y="331" text-anchor="middle" font-size="12.5" font-weight="700" fill="#33404e">消费级追踪器</text>
+      <circle class="vbub" tabindex="0" cx="420" cy="280" r="19" fill="#7581b0" data-name="物流与资产追踪" data-sens="中–低（系统商卖部署与服务，按 TCO 采购而非单价）" data-match="中–高（TLSR8359 典型应用含 Retail/logistics 与 Beacon；Amazon Sidewalk 为北美独有的广域回传）" data-conc="中（Zebra、AirFinder 等系统商）" aria-label="物流与资产追踪：价格敏感中低、产品匹配中高、客户集中中"></circle>
+      <text x="420" y="311" text-anchor="middle" font-size="12.5" font-weight="700" fill="#33404e">物流与资产追踪</text>
+      <circle class="vbub" tabindex="0" cx="845" cy="500" r="19" fill="#b7bdd4" data-name="Wi-Fi 类消费终端" data-sens="高（几美元级终端，价格竞争充分）" data-match="低（泰凌 Wi-Fi 产品线目前为 TLSR9118，2.4GHz 单频，公开信息止于已获 WFA 认证，未见量产证据；该品类现以乐鑫、瑞昱为主）" data-conc="低（白牌众多，极分散）" aria-label="Wi-Fi 类消费终端：价格敏感高、匹配低、集中低"></circle>
+      <text x="845" y="531" text-anchor="middle" font-size="12.5" font-weight="700" fill="#33404e">Wi-Fi 类消费终端</text>
+      <circle class="vbub" tabindex="0" cx="450" cy="460" r="19" fill="#17245f" data-name="商用照明与楼宇控制" data-sens="中（有降本诉求，但认证与系统集成推高切换成本）" data-match="低（需 DALI、KNX、UL 认证与十年供货及企业级安全栈；现有供应以 Silicon Labs 为主）" data-conc="高（Signify、Honeywell、JCI、Siemens）" aria-label="商用照明与楼宇控制：价格敏感中、匹配低、集中高"></circle>
+      <text x="450" y="491" text-anchor="middle" font-size="12.5" font-weight="700" fill="#33404e">商用照明与楼宇控制</text>
+      <circle class="vbub" tabindex="0" cx="250" cy="520" r="19" fill="#17245f" data-name="医疗传感" data-sens="低（FDA 与 MDR 使换料需重新验证，价格不主导选型）" data-match="低（选型受 FDA、MDR 换料验证周期约束，泰凌无医疗器械料号与具名客户；现有供应长期以 Nordic 为主）" data-conc="高（Dexcom、Abbott 双寡头）" aria-label="医疗传感：价格敏感低、匹配低、集中高"></circle>
+      <text x="250" y="551" text-anchor="middle" font-size="12.5" font-weight="700" fill="#33404e">医疗传感</text>
     </svg>
     </div>
     <div class="s06tip" hidden></div>
     </div>
-  <div class="takeaway" style="margin-top:14px;padding:13px 20px">理想区（价格敏感 × 高匹配）内四类应用最契合：<b>电子价签 ESL</b>、<b>遥控 / 机顶盒</b>、<b>PC 外设</b>、<b>TWS 耳塞</b>，且客户集中度多为中高——少数头部客户即可形成规模。</div>
+  <div class="takeaway" style="margin-top:14px;padding:13px 20px">理想区（价格敏感 × 高匹配）内的五类同时满足两个条件：<b>电子价签</b>、<b>智能家居终端</b>、<b>智能遥控器</b>、<b>无线音频</b>、<b>PC 与游戏外设</b>。右下的 Wi-Fi 类消费终端价格敏感度同样高，但 Wi-Fi 不在泰凌现有量产范围内，故不计入。</div>
 </section>
 
   <!-- 5b REGIONS: NA / EUROPE -->
   <section class="slide" data-n="06" id="regions">
     <div class="kicker">③ 客群分布 · 北美与欧洲</div>
-    <h2>北美与欧洲：主要公司与既有客户</h2>
+    <h2>理想区五类在北美与欧洲的主要买家</h2>
     <div class="rule"></div>
     <table>
-      <thead><tr><th>品类</th><th>北美主要公司</th><th>欧洲主要公司</th></tr></thead>
+      <thead><tr><th>品类</th><th>北美市场主要供应商</th><th>欧洲市场主要供应商</th></tr></thead>
       <tbody>
-        <tr class="pri"><td>电子价签 ESL</td><td>VusionGroup、SoluM、Pricer</td><td><span class="cu">汉朔</span>、VusionGroup、Pricer</td></tr>
-        <tr><td>遥控 / 机顶盒</td><td><span class="cu">Google、Amazon</span>、Roku、Vizio、TCL、UEI</td><td>Sky、Deutsche Telekom、Vodafone 等运营商</td></tr>
-        <tr><td>PC 外设（鼠标 / 键盘）</td><td><span class="cu">罗技</span>、微软、HP、Razer</td><td><span class="cu">罗技</span>、Cherry</td></tr>
-        <tr><td>TWS / 无线音频</td><td><span class="cu">Sony、JBL</span>、Bose、Anker</td><td>Sennheiser、Jabra、Marshall</td></tr>
-        <tr><td>智能标签 / 商用追踪</td><td>Wiliot、Avery Dennison、Zebra、Tile</td><td>Chipolo 等，较分散</td></tr>
-        <tr><td>商用照明 / 安防</td><td>Honeywell、Johnson Controls</td><td>Signify、Siemens、Bosch、Assa Abloy</td></tr>
+        <tr><td>电子价签 ESL</td><td>VusionGroup、SoluM、Pricer</td><td><span class="cu">汉朔</span>、VusionGroup、Pricer</td></tr>
+        <tr><td>智能家居终端</td><td>Amazon、Google Nest、TP-Link、Lutron、Leviton</td><td>Signify（Philips Hue）、Bosch、Somfy、tado°</td></tr>
+        <tr><td>智能遥控器</td><td><span class="cu">Google、Amazon</span>、Roku、Vizio、TCL、UEI</td><td>Sky、Deutsche Telekom、Vodafone 等运营商</td></tr>
+        <tr><td>无线音频</td><td><span class="cu">Sony、JBL</span>、Bose、Anker</td><td>Sennheiser、Jabra、Marshall</td></tr>
+        <tr><td>PC 与游戏外设</td><td><span class="cu">罗技</span>、微软、HP、Razer</td><td><span class="cu">罗技</span>、Cherry</td></tr>
       </tbody>
     </table>
-    <div style="font-size:11px;color:#8a919b;margin-top:8px"><span style="color:#2a4db0;font-weight:700">蓝色加粗</span>＝泰凌现有客户（招股书、年报、CEO 专访等公开具名）</div>
-  <div class="takeaway">两地均已进入头部供应链：北美 <b>Google、Amazon</b>（遥控 / 机顶盒），欧洲 <b><a href="https://www.cls.cn/detail/2413821" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-underline-offset:2px;text-decoration-color:rgba(122,94,18,.5)">罗技</a></b>（PC 外设）、<b>汉朔</b>（电子价签，<a href="https://retail-optimiser.de/en/tesco-selects-hanshow-as-its-sole-esl-supplier/" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-underline-offset:2px;text-decoration-color:rgba(122,94,18,.5)">Tesco 独家供应商</a>）；未来增量可凭借这些头部客户的背书，在同品类客户中进一步拓展。</div>
+    <div style="font-size:11px;color:#8a919b;margin-top:8px"><span style="color:#2a4db0;font-weight:700">蓝色加粗</span>＝该品类中泰凌已公开具名的客户（招股书、年报、CEO 专访）。智能家居终端：泰凌公开具名客户集中在中国（小米、绿米、欧瑞博、海尔），欧美尚无公开具名客户。</div>
+  <div class="takeaway">北美已进入 <b>Google、Amazon</b>（遥控、机顶盒）与 <b>Sony、JBL</b>（无线音频）；欧洲已进入 <b><a href="https://www.cls.cn/detail/2413821" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-underline-offset:2px;text-decoration-color:rgba(122,94,18,.5)">罗技</a></b>（PC 与游戏外设），价签客户<b>汉朔</b>的方案已随其 <a href="https://retail-optimiser.de/en/tesco-selects-hanshow-as-its-sole-esl-supplier/" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-underline-offset:2px;text-decoration-color:rgba(122,94,18,.5)">Tesco 独家供应</a>部署到欧洲门店。智能家居终端是五类中欧美尚无具名客户的一类。</div>
 </section>
 
   <!-- 7 HOW TELINK GROWS IN US & EU -->
