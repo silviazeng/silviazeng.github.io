@@ -169,6 +169,12 @@
     .grid{margin-top:20px}
   }
   @media(max-width:600px){.p01-desktop{display:none}.p01-mobile{display:block}}
+  /* 手机端 P03：营收标签移到条形上方左对齐——长条(如 Nordic 84%)会把贴在条形右端的标签顶出屏幕 */
+  @media(max-width:820px){
+    .prow .ptrack{margin-top:17px}
+    .prow .pout{left:0 !important;top:-13px;transform:none;font-size:12px;color:#33404e}
+    .prow .pin{position:absolute;left:0;top:-13px;font-size:12px;color:#33404e;padding-right:0}
+  }
 </style>
 </head>
 <body>
