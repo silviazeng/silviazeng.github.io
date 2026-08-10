@@ -48,21 +48,17 @@
   .takeaway b{color:#241c0c;font-weight:800;background-image:linear-gradient(to top,rgba(176,132,42,.32) .38em,transparent .38em);padding:0 .06em}
   .foot{position:absolute;bottom:3.2vh;left:8vw;right:8vw;font-size:11px;color:#98a0ac;border-top:1px solid var(--line);padding-top:8px;display:flex;justify-content:space-between;gap:10px}
   .foot span{font-weight:400;color:#9ca3af}
-  /* 封面配色：底色压深去饱和(原 #22306f 偏亮偏艳),金色改香槟金 #c2a878(原 #c9a961 偏橙、在深蓝上显廉价),
-     标题改暖白 #f2efe8(纯白在深蓝上过硬);全屏只保留一处金色重音,其余统一为同一族蓝灰 */
-  .cover{background:radial-gradient(125% 95% at 76% 6%,#1a2447 0%,#0e1735 46%,#060a1c 100%);color:#f2efe8;overflow:hidden}
+  .cover{background:radial-gradient(120% 90% at 78% 8%,#22306f 0%,#131f56 42%,#0a1130 100%);color:#f4f2ec;overflow:hidden}
   .cover::before{display:none}
-  .cover .kicker{color:#c2a878;position:relative}
+  .cover .kicker{color:#c9a961;position:relative}
   .waves{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
   .cover h1{position:relative;z-index:1}.cover .kicker,.cover .sub,.cover .foot{z-index:1}
   .cover .tcolon{color:#d8bd74}
   .cover h1 .seg:first-child{position:relative}
-  .sdot{display:inline-block;width:5px;height:5px;border-radius:50%;background:#c2a878;margin-right:13px;vertical-align:middle;box-shadow:none}
-  /* 标题：字重 800→300。大字号上的粗体是廉价感的主要来源;细体 + 正字距 + 松行距 = 出版物式的从容 */
-  .cover h1{color:#f2efe8;position:relative;max-width:none;font-size:clamp(38px,6.2vw,78px);line-height:1.24;letter-spacing:.02em;font-weight:300}
-  .cover h1 .seg{display:block}
-  .cover .sub{color:#8f9cbd;position:relative;margin-top:34px;font-size:clamp(14.5px,1.6vw,19.5px);letter-spacing:.02em}
-  .cover .meta{margin-top:26px;font-size:14px;color:#9aa4c6;line-height:1.6;position:relative;z-index:1}.cover .foot{color:#6f7a99;border-color:#1e2a52;bottom:6vh}
+  .sdot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#c9a961;margin-right:12px;vertical-align:middle;box-shadow:0 0 0 4px rgba(201,169,97,.18)}
+  .cover h1{color:#fff;position:relative;max-width:none;font-size:clamp(36px,6vw,74px);line-height:1.1;letter-spacing:normal;font-weight:800}
+  .cover .sub{color:#c7cee6;position:relative;margin-top:30px;font-size:clamp(15px,1.7vw,21px)}
+  .cover .meta{margin-top:26px;font-size:14px;color:#9aa4c6;line-height:1.6;position:relative;z-index:1}.cover .foot{color:#8189ad;border-color:#33417a;bottom:6vh}
   .cover-rings{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.07}
   .cover-accent{width:60px;height:3px;background:#c9a961;border-radius:2px;margin:22px 0 2px;position:relative;z-index:1}
   .cover-players{color:#aeb6d6;font-size:clamp(13px,1.3vw,15.5px);margin-top:22px;position:relative;z-index:1}
@@ -72,20 +68,20 @@
   .nav button{width:34px;height:34px;border:1px solid #cfd4db;background:#fff;border-radius:8px;font-size:15px;cursor:pointer;color:var(--ink)}
   .nav button:hover{background:var(--ink);color:#fff}
   .hint{position:fixed;left:18px;bottom:18px;z-index:20;font-size:11px;color:#8a93a0}
-  .pcard{display:inline-flex;align-self:flex-start;align-items:center;margin-top:34px;padding:13px 24px;border-radius:14px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.12);position:relative;z-index:1;transition:background .25s ease,border-color .25s ease,transform .25s ease}
-  .pcard:hover{background:rgba(255,255,255,.07);border-color:rgba(194,168,120,.45);transform:translateY(-1px)}
-  .pcard:focus-visible{outline:2px solid #c2a878;outline-offset:3px}
+  .pcard{display:inline-flex;align-self:flex-start;align-items:center;margin-top:28px;padding:12px 22px;border-radius:14px;background:rgba(255,255,255,.045);border:1px solid rgba(201,169,97,.24);position:relative;z-index:1;transition:background .25s ease,border-color .25s ease,transform .25s ease}
+  .pcard:hover{background:rgba(255,255,255,.08);border-color:rgba(201,169,97,.52);transform:translateY(-1px)}
+  .pcard:focus-visible{outline:2px solid #c9a961;outline-offset:3px}
   .pcard-body{display:flex;flex-direction:column;gap:4px;line-height:1.15}
-  .pcard-name{color:#e6eaf5;font-size:15px;font-weight:500;letter-spacing:.03em}
-  .cmeta{margin-top:18px;color:#6f7a99;font-size:11.5px;letter-spacing:.22em;position:relative;z-index:1}
+  .pcard-name{color:#eef1f8;font-size:15px;font-weight:600;letter-spacing:.01em}
+  .cmeta{margin-top:15px;color:#8189ad;font-size:12.5px;letter-spacing:.1em;position:relative;z-index:1}
   .cover .sub a{color:inherit;text-decoration:none;white-space:nowrap;border-bottom:1px solid transparent;padding-bottom:1px;transition:color .2s ease,border-color .2s ease}
-  .cover .sub a:hover{color:#d8c49a;border-bottom-color:rgba(216,196,154,.5)}
-  .cover .sub a:focus-visible{outline:2px solid #c2a878;outline-offset:2px;border-radius:2px}
+  .cover .sub a:hover{color:#e6cf91;border-bottom-color:rgba(230,207,145,.55)}
+  .cover .sub a:focus-visible{outline:2px solid #c9a961;outline-offset:2px;border-radius:2px}
   /* 触屏无 hover：常驻金色+下划线,让四个板块一眼可点 */
-  @media (hover:none){.cover .sub a{color:#d8c49a;border-bottom-color:rgba(216,196,154,.45)}}
+  @media (hover:none){.cover .sub a{color:#e6cf91;border-bottom-color:rgba(230,207,145,.5)}}
   /* 手机端封面四个板块字号加大、行距松一点 */
   @media (max-width:600px){.cover .sub{font-size:17.5px;line-height:1.75}}
-  .pcard-cta{display:inline-flex;align-items:center;gap:7px;color:#c2a878;font-size:11.5px;font-weight:600;letter-spacing:.18em}
+  .pcard-cta{display:inline-flex;align-items:center;gap:7px;color:#c9a961;font-size:12px;font-weight:700;letter-spacing:.14em}
   .pcard-arw{transition:transform .25s ease}
   .pcard:hover .pcard-arw{transform:translateX(4px)}
   .p7top{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
