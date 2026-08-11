@@ -1,5 +1,5 @@
 ---
-title: "Stet Money · Support"
+title: "Stet Money Support"
 date: 2026-08-11
 noGraph: true
 tags:
