@@ -68,6 +68,38 @@
   .cover-players .cpl{color:#8189ad;font-weight:700;margin-right:12px;letter-spacing:.2em;font-size:.78em}
   .hp{font-size:12px;color:var(--muted);margin-top:14px;font-style:italic}
   .nav{position:fixed;right:18px;bottom:16px;z-index:20;display:flex;gap:6px}
+
+  /* ---- 桌面端:每页固定 1280×720 画布,整体等比缩放到窗口 ----
+     此前页高跟着窗口(min-height:100vh)、正文按像素排,窗口一高于 720px 多出来的高度就全落到底部,
+     内容看着缩在上半部。改成固定画布后,任何窗口尺寸下版面一致,并与「打印→存为 PDF」的 1280×720 逐像素相同。
+     缩放系数 --s 由页尾脚本按 min(窗口宽/1280, 窗口高/720) 计算。 */
+  @media (min-width:821px), print{
+    .slide{flex-direction:row;align-items:center;justify-content:center;padding:0;overflow:hidden}
+    .canvas{width:1280px;height:720px;flex:none;display:flex;flex-direction:column;
+            padding:36px 102px 18px;position:relative;
+            /* tan(atan2(a,b)) 取两个长度的无量纲比值——CSS 的 calc() 不允许长度相除,只能这样算 */
+            --fit-w:tan(atan2(100vw,1280px));--fit-h:tan(atan2(100vh,720px));
+            transform:scale(min(var(--fit-w),var(--fit-h)));transform-origin:center center}
+    .cover .canvas{justify-content:center}
+    /* 页码与左侧金条从 section 移到画布上,随画布一起缩放 */
+    .slide::before,.slide:not(.cover)::after{display:none}
+    .canvas::before{content:attr(data-n);position:absolute;top:39px;right:102px;font-size:11px;letter-spacing:.3em;color:#b3ab9b;font-weight:700}
+    .cover .canvas::before{display:none}
+    .slide:not(.cover) .canvas::after{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--gold-mark);opacity:.8}
+    .foot{bottom:23px;left:102px;right:102px}
+    .cover .foot{bottom:43px}
+    /* 画布宽固定,vw/vh 字号必须换成 1280 宽下的定值,否则字号随窗口变、画布不变 */
+    h1{font-size:56px}
+    h2{font-size:39.7px}
+    .sub{font-size:20px}
+    li{font-size:19px}
+    table{font-size:16px}
+    .big{font-size:38.4px}
+    .takeaway{font-size:19px}
+    .cover h1{font-size:74px}
+    .cover .sub{font-size:21px}
+    .cover-players{font-size:15.5px}
+  }
   .nav button{width:34px;height:34px;border:1px solid #cfd4db;background:#fff;border-radius:8px;font-size:15px;cursor:pointer;color:var(--ink)}
   .nav button:hover{background:var(--ink);color:#fff}
   .pcard{display:inline-flex;align-self:flex-start;align-items:center;margin-top:28px;padding:12px 22px;border-radius:14px;background:rgba(255,255,255,.045);border:1px solid rgba(201,169,97,.24);position:relative;z-index:1;transition:background .25s ease,border-color .25s ease,transform .25s ease}
@@ -126,6 +158,7 @@
     .phead{display:none}
     .prow{grid-template-columns:1fr;gap:8px}
     .pmg{max-width:280px}
+    .canvas{transform:none}
   }
   .pt-main{background:#e7ebf6;font-weight:400}
   .pt-main b{font-weight:800}
@@ -188,6 +221,7 @@
 
   <!-- COVER -->
   <section class="slide cover" data-n="" id="cover">
+  <div class="canvas" data-n="">
     <h1><span class="seg">无线连接芯片：</span><span class="seg">欧美市场扫描</span></h1>
     <p class="sub"><span class="sdot"></span><a href="#market">市场规模及趋势</a> → <a href="#players">主要玩家及竞争策略</a> → <a href="#segments">客群分布</a> → <a href="#path">泰凌潜在扩张路径</a></p>
     <a class="pcard" href="#intro" aria-label="个人简介：查看自我介绍">
@@ -197,10 +231,12 @@
       </span>
     </a>
     <p class="cmeta">2026.7</p>
+  </div>
   </section>
 
   <!-- 1 MARKET -->
   <section class="slide" data-n="01" id="market">
+  <div class="canvas" data-n="01">
   <div class="kicker">① 市场规模及趋势</div>
   <h2>主要增速引擎是周边设备和单模 BLE；EdgeAI 或能打开新空间</h2>
   <div class="rule"></div>
@@ -269,10 +305,12 @@
   </svg></div>
     <div style="font-size:11px;color:#9ca3af;margin-top:6px;padding-left:4%">来源：<a href="https://www.bluetooth.com/2025-market-update/" target="_blank" rel="noopener">Bluetooth SIG</a>、<a href="https://www.abiresearch.com/news-resources/chart-data/bluetooth-market-shipments-growth-outlook" target="_blank" rel="noopener">ABI Research</a></div></div></div>
   <div class="takeaway">蓝牙设备预计 2025–2030 年均增速约 <b>8.4%</b>。双模蓝牙，尤其平台设备已进入成熟期（预计年均增速约 2%）；未来整体增速主要由<b>周边设备</b>与<b>单模 BLE</b> 拉动。<b>端侧 AI</b> 可能进一步打开上升空间，值得持续关注与前瞻投入。</div>
-</section>
+  </div>
+  </section>
 
   <!-- 2b PLAYERS: TECH LAYERS x COVERAGE (static) -->
   <section class="slide" data-n="02" id="players">
+  <div class="canvas" data-n="02">
     <div class="kicker">② 主要玩家 · 技术产品覆盖</div>
     <h2>覆盖广度趋同，但主力产品线各有侧重</h2>
     <div class="rule" style="margin:14px 0"></div>
@@ -546,10 +584,12 @@
       <div style="font-size:11px;color:#9ca3af;margin-top:8px">注：应用层中仅 Matter 为跨生态（跨协议）互通标准；BLE（GATT）、Zigbee（ZCL）的应用层只在各自协议内有效，2.4G 私有则无公开标准应用层（虚线框）。</div>
       <div style="font-size:11px;color:#9ca3af;margin-top:4px">来源：各家官网、年报、招股书；BLE 出货量全球前三见招股书援引 Omdia 2020</div>
     </div>
+  </div>
   </section>
 
   <!-- 2b PLAYERS + FINANCIAL CHARACTERISTICS -->
   <section class="slide" data-n="03">
+  <div class="canvas" data-n="03">
     <div class="kicker">② 主要玩家 · 财务特征</div>
     <h2>规模与利润率不明显相关，各家费用投入策略各不相同</h2>
     <div class="rule" style="margin:16px 0"></div>
@@ -581,11 +621,13 @@
     
         <div class="takeaway">毛利、净利水平<b>并不随规模简单递增</b>，四家毛利水平相差有限（47–58%），拉开净利水平的是研发等<b>费用投入决策</b>。</div>
     <div class="foot"><span>来源：四家 FY2025 年报/季报（SiLabs、Nordic、乐鑫、泰凌）；人民币 ≈7.2 折算。Qorvo 连接业务约占其营收 12.7% 且经营亏损，非直接可比，故不列入财务对比</span><span>按营收排序</span></div>
+  </div>
   </section>
 
 
   <!-- 3 STRATEGIES -->
   <section class="slide" data-n="04">
+  <div class="canvas" data-n="04">
     <div class="kicker">② 主要玩家 · 竞争策略</div>
     <h2>各家的费用投向，对应各自的竞争路径</h2>
     <div class="rule"></div>
@@ -601,10 +643,12 @@
     </table>
     <div class="takeaway">费用投向对应各家的获客方式：以开源社区获客的，销售投入低；以自有协议栈与模组做全栈的，费用投入高。<b>泰凌研发占营收 27.2%、销售费用率 7.7%</b>，对应需要项目跟进的品牌与 ODM 客户。</div>
     <div class="foot"><span>来源：各家 FY2025 年报与季报、<a href="https://www.cls.cn/detail/2413821" target="_blank" rel="noopener">泰凌 CEO 专访</a></span></div>
+  </div>
   </section>
 
   <!-- 4 TARGET APPS + CUSTOMERS -->
   <section class="slide" data-n="05" id="segments">
+  <div class="canvas" data-n="05">
     <div class="kicker">③ 客群分布 · 目标应用</div>
     <h2>目标应用扫描：价格敏感度 × 泰凌产品匹配度 × 客户集中度</h2>
     <div class="rule" style="margin:12px 0"></div>
@@ -650,10 +694,12 @@
     <div class="s06tip" hidden></div>
     </div>
   <div class="takeaway" style="margin-top:14px;padding:13px 20px">理想区（价格敏感 × 高匹配）内的五类同时满足两个条件：<b>电子价签</b>、<b>智能家居终端</b>、<b>智能遥控器</b>、<b>无线音频</b>、<b>PC 与游戏外设</b>。</div>
-</section>
+  </div>
+  </section>
 
   <!-- 5b REGIONS: NA / EUROPE -->
   <section class="slide" data-n="06" id="regions">
+  <div class="canvas" data-n="06">
     <div class="kicker">③ 客群分布 · 北美与欧洲</div>
     <h2>理想区五类在北美与欧洲的主要客户</h2>
     <div class="rule"></div>
@@ -669,10 +715,12 @@
     </table>
     <div style="font-size:11px;color:#8a919b;margin-top:8px"><span style="color:#2a4db0;font-weight:700">蓝色加粗</span>＝该品类中泰凌已公开具名的客户（招股书、年报、CEO 专访）。智能家居终端：泰凌在该品类的公开具名客户集中在中国（小米、绿米、欧瑞博、海尔）。</div>
   <div class="takeaway">北美已进入 <b>Google、Amazon</b>（遥控、机顶盒）与 <b>Sony、JBL</b>（无线音频）；欧洲已进入 <b><a href="https://www.cls.cn/detail/2413821" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-underline-offset:2px;text-decoration-color:rgba(122,94,18,.5)">罗技</a></b>（PC 与游戏外设），价签客户<b>汉朔</b>的方案已随其 <a href="https://retail-optimiser.de/en/tesco-selects-hanshow-as-its-sole-esl-supplier/" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-underline-offset:2px;text-decoration-color:rgba(122,94,18,.5)">Tesco 独家供应</a>部署到欧洲门店。</div>
-</section>
+  </div>
+  </section>
 
   <!-- 7 HOW TELINK GROWS IN US & EU -->
   <section class="slide" data-n="07" id="path">
+  <div class="canvas" data-n="07">
     <div class="kicker">④ 泰凌欧美扩张路径</div>
     <h2>一条可行的增长路径</h2>
     <div class="rule"></div>
@@ -687,10 +735,12 @@
       <p style="font-size:17px;color:#2a3442;margin:26px 0 0">③ 再向高端市场延伸，<b>获取更高附加值</b></p>
       
     </div>
+  </div>
   </section>
 
   <!-- 8 SELF-INTRO -->
   <section class="slide" data-n="08" id="intro">
+  <div class="canvas" data-n="08">
     <div class="p7top"><div class="kicker">曾馨弘 Silvia Zeng</div><a class="backlink" href="#cover">← 返回封面</a></div>
     <div style="font-size:12.5px;letter-spacing:.12em;color:var(--gold);font-weight:700;margin-top:22px">我是谁 · WHO I AM</div>
     <p class="sub" style="margin-top:5px;font-size:15px;line-height:1.7;color:#2a3442">MIT Sloan MBA | 复旦大学财务管理<br>13 年中美两地从业经验，贯穿项目管理、运营分析、战略、金融等领域。</p>
@@ -700,6 +750,7 @@
       <li style="font-size:15px;line-height:1.6"><b>商业分析能力，赋能市场与销售</b><br>凭借在不同行业、业务场景中验证过的商业分析和量化能力，能协助团队梳理竞争格局、从客户视角解读商业价值，为市场定位和销售策略提供可落地的数据与洞见支持。</li>
       <li style="font-size:15px;line-height:1.6"><b>长期企业客户服务经验，能够体察共情销售团队</b><br>多年面向企业客户的投资银行经历，让我形成了严谨务实的工作习惯；对一线销售挑战有切身同理心，力求提供真正解决痛点的助力。</li>
     </ul>
+  </div>
   </section>
 
 </div>
@@ -721,10 +772,13 @@
         +'<div class="row"><span class="k">客户集中：</span>'+el.dataset.conc+'</div>';
       tip.hidden=false;
       var r=el.getBoundingClientRect(), w=wrap.getBoundingClientRect();
-      var left=r.left-w.left+r.width/2, top=r.top-w.top+r.height+8;
+      // 画布整体缩放后 getBoundingClientRect 返回的是屏幕像素,而 tip 的 left/top 走的是未缩放的
+      // 局部坐标,需要先除掉缩放系数(= 屏幕宽 / 布局宽),否则 tooltip 会偏离气泡
+      var k=wrap.offsetWidth?w.width/wrap.offsetWidth:1, ww=wrap.offsetWidth||w.width;
+      var left=(r.left-w.left+r.width/2)/k, top=(r.top-w.top+r.height)/k+8;
       tip.style.left=left+'px'; tip.style.top=top+'px';
       var tw=tip.offsetWidth;
-      if(left+tw/2>w.width) tip.style.left=(w.width-tw/2-4)+'px';
+      if(left+tw/2>ww) tip.style.left=(ww-tw/2-4)+'px';
       if(left-tw/2<0) tip.style.left=(tw/2+4)+'px';
     }
     function hide(){cur=null;tip.hidden=true;}
