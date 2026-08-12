@@ -13,10 +13,24 @@
   body{font-family:-apple-system,"PingFang SC","Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:#e4e1d8;line-height:1.5;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
   a{color:var(--accent2);text-decoration:none}a:hover{color:var(--accent)}
   .deck{scroll-snap-type:y mandatory;overflow-y:scroll;height:100vh}
-  .slide{scroll-snap-align:start;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:3vh 8vw;position:relative;background:var(--bg);border-bottom:1px solid #d8d5cd}
-  /* 内容垂直居中:空白均分到上下,避免内容缩在上半部 */
+  .slide{scroll-snap-align:start;min-height:100vh;display:flex;flex-direction:column;justify-content:flex-start;padding:5vh 8vw 2.5vh;position:relative;background:var(--bg);border-bottom:1px solid #d8d5cd}
+  /* 表头(kicker + h2)钉在顶部,使每页标题落在同一高度;其余正文用 auto 外边距在剩余空间内垂直居中,
+     这样底部不会空出一整块。封面是标题页,整体居中。 */
+  .cover{justify-content:center}
+  @media (min-width:821px){
+    .slide > .rule + *{margin-top:auto !important}
+    section[data-n="01"] > .takeaway,
+    section[data-n="02"] > .ixwrap,
+    section[data-n="03"] > .takeaway,
+    section[data-n="04"] > .takeaway,
+    section[data-n="05"] > .takeaway,
+    section[data-n="06"] > .takeaway,
+    section[data-n="07"] > .card{margin-bottom:auto !important}
+    section[data-n="08"] > .p7top + *{margin-top:auto !important}
+    section[data-n="08"] > ul{margin-bottom:auto !important}
+  }
   .slide:not(.cover)::after{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--gold-mark);opacity:.8}
-  .slide::before{content:attr(data-n);position:absolute;top:4.4vh;right:8vw;font-size:11px;letter-spacing:.3em;color:#b3ab9b;font-weight:700}
+  .slide::before{content:attr(data-n);position:absolute;top:5.4vh;right:8vw;font-size:11px;letter-spacing:.3em;color:#b3ab9b;font-weight:700}
   .kicker{font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:16px}
   h1{font-size:clamp(30px,4.4vw,56px);line-height:1.12;font-weight:800;letter-spacing:-.01em}
   h2{font-size:clamp(24px,3.1vw,40px);line-height:1.14;font-weight:800;letter-spacing:-.01em;margin-bottom:4px}
