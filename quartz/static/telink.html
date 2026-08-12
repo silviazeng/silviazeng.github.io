@@ -88,6 +88,8 @@
     .slide:not(.cover) .canvas::after{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--gold-mark);opacity:.8}
     .foot{bottom:23px;left:102px;right:102px}
     .cover .foot{bottom:43px}
+    /* 免责小字钉在画布左下角(与正文页脚注同一条左边线 102px),不占正文流、不推动居中的标题组 */
+    .cover .cdisc{position:absolute;left:102px;bottom:26px;margin:0;max-width:900px}
     /* 画布宽固定,vw/vh 字号必须换成 1280 宽下的定值,否则字号随窗口变、画布不变 */
     h1{font-size:56px}
     h2{font-size:38px;letter-spacing:-.02em}
@@ -233,7 +235,7 @@
       </span>
     </a>
     <p class="cmeta">2026.7</p>
-    <p class="cdisc">仅基于公开信息分析整理</p>
+    <p class="cdisc">全部内容仅基于公开信息（年报、招股书、行业报告、公开报道）分析整理，不含任何非公开信息</p>
   </div>
   </section>
 
