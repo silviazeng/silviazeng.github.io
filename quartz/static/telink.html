@@ -14,21 +14,8 @@
   a{color:var(--accent2);text-decoration:none}a:hover{color:var(--accent)}
   .deck{scroll-snap-type:y mandatory;overflow-y:scroll;height:100vh}
   .slide{scroll-snap-align:start;min-height:100vh;display:flex;flex-direction:column;justify-content:flex-start;padding:5vh 8vw 2.5vh;position:relative;background:var(--bg);border-bottom:1px solid #d8d5cd}
-  /* 表头(kicker + h2)钉在顶部,使每页标题落在同一高度;其余正文用 auto 外边距在剩余空间内垂直居中,
-     这样底部不会空出一整块。封面是标题页,整体居中。 */
+  /* 表头钉在顶部,每页标题落在同一高度,正文紧接标题往下排。封面是标题页,整体居中。 */
   .cover{justify-content:center}
-  @media (min-width:821px){
-    .slide > .rule + *{margin-top:auto !important}
-    section[data-n="01"] > .takeaway,
-    section[data-n="02"] > .ixwrap,
-    section[data-n="03"] > .takeaway,
-    section[data-n="04"] > .takeaway,
-    section[data-n="05"] > .takeaway,
-    section[data-n="06"] > .takeaway,
-    section[data-n="07"] > .card{margin-bottom:auto !important}
-    section[data-n="08"] > .p7top + *{margin-top:auto !important}
-    section[data-n="08"] > ul{margin-bottom:auto !important}
-  }
   .slide:not(.cover)::after{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--gold-mark);opacity:.8}
   .slide::before{content:attr(data-n);position:absolute;top:5.4vh;right:8vw;font-size:11px;letter-spacing:.3em;color:#b3ab9b;font-weight:700}
   .kicker{font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:16px}
@@ -187,13 +174,13 @@
     .nordic-lab{left:auto !important;right:calc(16% + 8px);color:#fff}
   }
   /* P06–P08 内容偏少,靠字号与间距撑满版面(避免内容缩在上半部) */
-  section[data-n="06"] td,section[data-n="06"] th{padding:16px 14px}
-  section[data-n="07"] .grid{gap:26px;margin-top:34px}
-  section[data-n="07"] .card{padding:28px 30px}
-  section[data-n="07"] .card p{font-size:17px;line-height:1.75}
-  section[data-n="08"] .sub{font-size:17px !important;line-height:1.85 !important}
-  section[data-n="08"] li{font-size:17px !important;line-height:1.75 !important;margin:20px 0}
-  section[data-n="08"] ul{margin-top:20px}
+  section[data-n="06"] td,section[data-n="06"] th{padding:21px 14px}
+  section[data-n="07"] .grid{gap:26px;margin-top:48px}
+  section[data-n="07"] .card{padding:36px 32px}
+  section[data-n="07"] .card p{font-size:17px;line-height:1.9}
+  section[data-n="08"] .sub{font-size:17px !important;line-height:2 !important}
+  section[data-n="08"] li{font-size:17px !important;line-height:1.9 !important;margin:30px 0}
+  section[data-n="08"] ul{margin-top:28px}
 </style>
 </head>
 <body>
@@ -693,11 +680,11 @@
       <div class="card" style="border-top:3px solid #2f6f47"><h3 style="color:#2f6f47">优势</h3><p><b>性价比</b>（高出货平台）——BLE 应用价格敏感，凭此更易<b>先立足</b>。</p></div>
       <div class="card" style="border-top:3px solid var(--accent)"><h3 style="color:var(--accent)">上探空间</h3><p>欧美<b>高端市场靠本地支持</b>与快速响应——这是泰凌形成规模、站稳之后的着力方向。</p></div>
     </div>
-    <div class="card" style="margin-top:26px">
+    <div class="card" style="margin-top:44px">
       <h3>务实增长次序</h3>
-      <p style="font-size:17px;color:#2a3442;margin:14px 0 0">① 在价格敏感应用上<b>先做出规模</b></p>
-      <p style="font-size:17px;color:#2a3442;margin:14px 0 0">② 在既有大客户上<b>做深本地服务</b></p>
-      <p style="font-size:17px;color:#2a3442;margin:14px 0 0">③ 再向高端市场延伸，<b>获取更高附加值</b></p>
+      <p style="font-size:17px;color:#2a3442;margin:26px 0 0">① 在价格敏感应用上<b>先做出规模</b></p>
+      <p style="font-size:17px;color:#2a3442;margin:26px 0 0">② 在既有大客户上<b>做深本地服务</b></p>
+      <p style="font-size:17px;color:#2a3442;margin:26px 0 0">③ 再向高端市场延伸，<b>获取更高附加值</b></p>
       
     </div>
   </section>
@@ -705,9 +692,9 @@
   <!-- 8 SELF-INTRO -->
   <section class="slide" data-n="08" id="intro">
     <div class="p7top"><div class="kicker">曾馨弘 Silvia Zeng</div><a class="backlink" href="#cover">← 返回封面</a></div>
-    <div style="font-size:12.5px;letter-spacing:.12em;color:var(--gold);font-weight:700;margin-top:10px">我是谁 · WHO I AM</div>
+    <div style="font-size:12.5px;letter-spacing:.12em;color:var(--gold);font-weight:700;margin-top:22px">我是谁 · WHO I AM</div>
     <p class="sub" style="margin-top:5px;font-size:15px;line-height:1.7;color:#2a3442">MIT Sloan MBA | 复旦大学财务管理<br>13 年中美两地从业经验，贯穿项目管理、运营分析、战略、金融等领域。</p>
-    <div style="font-size:12.5px;letter-spacing:.12em;color:var(--gold);font-weight:700;margin-top:24px">我能为泰凌提供 · WHAT I CAN OFFER</div>
+    <div style="font-size:12.5px;letter-spacing:.12em;color:var(--gold);font-weight:700;margin-top:38px">我能为泰凌提供 · WHAT I CAN OFFER</div>
     <ul style="margin-top:12px">
       <li style="font-size:15px;line-height:1.6"><b>跨境与跨职能项目管理，促进团队高效协作</b><br>具备在多元环境下驱动复杂项目的经验：曾在快手（协调中美团队）、腾讯（协调深港团队）、Indigo（跨事业部与职能流程标准化）、中金（协调客户与各中介机构团队）承担项目管理，通过流程与信息推动多个从零到一跨境跨职能项目落地。</li>
       <li style="font-size:15px;line-height:1.6"><b>商业分析能力，赋能市场与销售</b><br>凭借在不同行业、业务场景中验证过的商业分析和量化能力，能协助团队梳理竞争格局、从客户视角解读商业价值，为市场定位和销售策略提供可落地的数据与洞见支持。</li>
