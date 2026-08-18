@@ -842,3 +842,191 @@ button:focus-visible {
   }
   .tg-caret { animation: none !important; opacity: 1; }
 }
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Bilingual posts + hover glossary tooltips
+// Used by posts that wrap their body in <div class="tg-bi"> with two
+// <div class="tg-lang zh"> / <div class="tg-lang en"> siblings.
+// No JS: the language switch is two radios + sibling selectors, and the
+// tooltips are pure CSS with a dwell delay.
+// ─────────────────────────────────────────────────────────────────────────────
+
+// ─── Language switch ─────────────────────────────────────────────────────────
+.tg-bi > input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.tg-bi-switch {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: inline-flex;
+  gap: 0;
+  margin: 0 0 0.25rem;
+  padding: 2px;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  background: var(--color-surface-dark);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+
+  label {
+    padding: 3px 12px;
+    border-radius: 3px;
+    color: var(--color-text-faint);
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.15s ease, background 0.15s ease;
+
+    &:hover { color: var(--color-text-dim); }
+  }
+}
+
+// Some markdown pipelines wrap bare inline HTML in a <p>, so the radios are not
+// guaranteed to stay direct siblings. :has() on the wrapper is nesting-proof.
+// The `~` rules are kept as a fallback for the flat case.
+.tg-bi:has(#tg-lang-zh:checked) .tg-bi-switch label[for="tg-lang-zh"],
+.tg-bi:has(#tg-lang-en:checked) .tg-bi-switch label[for="tg-lang-en"],
+#tg-lang-zh:checked ~ .tg-bi-switch label[for="tg-lang-zh"],
+#tg-lang-en:checked ~ .tg-bi-switch label[for="tg-lang-en"] {
+  background: var(--color-surface-raised);
+  color: var(--color-accent);
+}
+
+// If the pipeline parked the radios inside their own paragraph, collapse it.
+.tg-bi > p:has(> input[type="radio"]) { display: none; }
+
+.tg-bi-hint {
+  margin: 0 0 1.75rem !important;
+  color: var(--color-text-faint);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.03em;
+}
+
+// The switch itself: show one language, hide the other.
+.tg-bi:has(#tg-lang-zh:checked) .tg-lang.en { display: none; }
+.tg-bi:has(#tg-lang-en:checked) .tg-lang.zh { display: none; }
+#tg-lang-zh:checked ~ .tg-lang.en { display: none; }
+#tg-lang-en:checked ~ .tg-lang.zh { display: none; }
+
+// Keyboard focus should be visible even though the radio is hidden.
+.tg-bi > input[type="radio"]:focus-visible ~ .tg-bi-switch {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+// ─── Glossary tooltips ───────────────────────────────────────────────────────
+.tg-tip {
+  position: relative;
+  border-bottom: 1px dotted var(--color-text-faint);
+  cursor: help;
+  outline: none;
+  transition: border-color 0.15s ease, color 0.15s ease;
+
+  &:hover,
+  &:focus-visible {
+    border-bottom-color: var(--color-accent);
+    color: var(--color-accent-light);
+  }
+
+  &:focus-visible { outline: 1px solid var(--color-focus-ring); outline-offset: 2px; }
+}
+
+.tg-tip-box {
+  position: absolute;
+  bottom: calc(100% + 9px);
+  left: 50%;
+  z-index: 40;
+
+  width: max-content;
+  max-width: min(360px, 82vw);
+  padding: 0.6rem 0.75rem;
+
+  border: 1px solid var(--color-border-hover);
+  border-radius: 5px;
+  background: var(--color-surface-raised);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.55);
+
+  font-family: var(--font-prose);
+  font-size: 12.5px;
+  font-style: normal;
+  line-height: 1.6;
+  letter-spacing: 0;
+  color: var(--color-text-dim);
+  text-align: left;
+  white-space: normal;
+  text-transform: none;
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, 4px);
+  transition:
+    opacity 0.16s ease,
+    transform 0.16s ease,
+    visibility 0s linear 0.16s;
+
+  b { color: var(--color-accent-light); font-weight: 500; }
+  i { color: var(--color-text-muted); }
+
+  // little pointer
+  &::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border: 5px solid transparent;
+    border-top-color: var(--color-border-hover);
+  }
+}
+
+// Dwell before it opens — this is the "hover and wait a beat" behaviour.
+.tg-tip:hover .tg-tip-box,
+.tg-tip:focus-visible .tg-tip-box,
+.tg-tip:focus-within .tg-tip-box {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+  transition:
+    opacity 0.18s ease 0.32s,
+    transform 0.18s ease 0.32s,
+    visibility 0s linear 0.32s;
+}
+
+// Near the start of a line the centred box would run off the left edge;
+// first-child terms in a table cell are the common case.
+td > .tg-tip:first-child .tg-tip-box,
+li > .tg-tip:first-child .tg-tip-box,
+p > .tg-tip:first-child .tg-tip-box {
+  left: 0;
+  transform: translate(0, 4px);
+  &::after { left: 18px; }
+}
+td > .tg-tip:first-child:hover .tg-tip-box,
+li > .tg-tip:first-child:hover .tg-tip-box,
+p > .tg-tip:first-child:hover .tg-tip-box,
+td > .tg-tip:first-child:focus-within .tg-tip-box,
+li > .tg-tip:first-child:focus-within .tg-tip-box,
+p > .tg-tip:first-child:focus-within .tg-tip-box {
+  transform: translate(0, 0);
+}
+
+// Tables in these posts carry a lot of tooltips; keep them legible.
+article table { font-size: 12.5px; }
+article table td, article table th { vertical-align: top; }
+
+@media print {
+  .tg-bi:has(#tg-lang-zh:checked) .tg-lang.en,
+  .tg-bi:has(#tg-lang-en:checked) .tg-lang.zh,
+  #tg-lang-zh:checked ~ .tg-lang.en,
+  #tg-lang-en:checked ~ .tg-lang.zh { display: block; }
+  .tg-tip-box { display: none; }
+  .tg-bi-switch { display: none; }
+}
