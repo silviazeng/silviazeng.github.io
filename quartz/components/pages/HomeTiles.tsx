@@ -146,31 +146,6 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles, cfg }: QuartzComponent
             </div>
           </section>
 
-          {/* Lab — interactive things I've built (newest first) */}
-          <section class="tg-section">
-            <div class="tg-cmd tg-cmd-small">
-              <span class="tg-prompt">$</span>ls -lt lab/ <span class="tg-comment"># things I've built</span>
-            </div>
-            <div class="tg-lab">
-              {lab.map((row) => (
-                <a class={`tg-lab-row k-${row.kind}`} href={row.href}>
-                  <pre class="tg-lab-art">{row.art.join("\n")}</pre>
-                  <div class="tg-lab-main">
-                    <div class="tg-lab-title">
-                      <span class="tg-lab-mk">▸</span>
-                      {row.title}
-                      <span class="tg-lab-type">
-                        · {row.type}
-                        {!row.living && <> · {row.date}</>}
-                      </span>
-                    </div>
-                    <div class="tg-lab-desc">{row.desc}</div>
-                  </div>
-                </a>
-              ))}
-            </div>
-          </section>
-
           {/* Posts list */}
           <section class="tg-section">
             <div class="tg-cmd tg-cmd-small">
@@ -208,6 +183,31 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles, cfg }: QuartzComponent
                   </a>
                 )
               })}
+            </div>
+          </section>
+
+          {/* Lab — interactive things I've built (newest first) */}
+          <section class="tg-section">
+            <div class="tg-cmd tg-cmd-small">
+              <span class="tg-prompt">$</span>ls -lt lab/ <span class="tg-comment"># things I've built</span>
+            </div>
+            <div class="tg-lab">
+              {lab.map((row) => (
+                <a class={`tg-lab-row k-${row.kind}`} href={row.href}>
+                  <pre class="tg-lab-art">{row.art.join("\n")}</pre>
+                  <div class="tg-lab-main">
+                    <div class="tg-lab-title">
+                      <span class="tg-lab-mk">▸</span>
+                      {row.title}
+                      <span class="tg-lab-type">
+                        · {row.type}
+                        {!row.living && <> · {row.date}</>}
+                      </span>
+                    </div>
+                    <div class="tg-lab-desc">{row.desc}</div>
+                  </div>
+                </a>
+              ))}
             </div>
           </section>
         </div>
