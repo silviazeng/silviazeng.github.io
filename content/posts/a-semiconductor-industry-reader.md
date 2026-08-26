@@ -2,11 +2,11 @@
 title: A semiconductor industry reader
 date: 2026-08-26
 tags:
-  - power
-  - learning
-  - history
+  - semiconductor
+  - tech
+  - industry
+  - geopolitics
   - interactive
-  - chinese
 description: "Three interactive pages on the chip industry — a short history told as five breakpoints, the geopolitics around TSMC told as chokepoints, and a clickable map of the whole value chain. Bilingual, with a hover note on every term."
 ---
 

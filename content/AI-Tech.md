@@ -3,6 +3,7 @@ title: AI & Tech
 tags: []
 moc-tags:
   - AI
+  - tech
 ---
 
 *A taste for elegant structure, a tolerance for confusion, and no pressure 
