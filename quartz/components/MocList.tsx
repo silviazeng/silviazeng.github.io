@@ -1,10 +1,13 @@
 import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "./types"
 import { PageList, byDateAndAlphabetical } from "./PageList"
+import { simplifySlug } from "../util/path"
 import style from "./styles/listPage.scss"
 
-// Auto-generated post list for MOC pages. A page opts in by declaring
-// `moc-tags` in its frontmatter; every post carrying any of those tags
-// (case-insensitive) is listed below the page body, newest first.
+// Safety net for MOC pages, not a replacement for curation. A page opts in by
+// declaring `moc-tags` in its frontmatter; this lists posts that carry any of
+// those tags (case-insensitive) but are NOT yet linked anywhere in the page
+// body — i.e. tagged but not yet placed on the map. Once every tagged post is
+// linked (or embedded) in the curated body, this renders nothing.
 const MocList: QuartzComponent = (props: QuartzComponentProps) => {
   const { fileData, allFiles, cfg } = props
   const raw = (fileData.frontmatter as Record<string, unknown> | undefined)?.["moc-tags"]
@@ -16,8 +19,10 @@ const MocList: QuartzComponent = (props: QuartzComponentProps) => {
   if (mocTags.length === 0) return null
 
   const wanted = new Set(mocTags.map((t) => t.toLowerCase()))
+  const placed = new Set(fileData.links ?? [])
   const pages = allFiles.filter((f) => {
     if (!(f.slug ?? "").startsWith("posts/")) return false
+    if (placed.has(simplifySlug(f.slug!))) return false
     const tags: string[] = (f.frontmatter?.tags as string[]) ?? []
     return tags.some((t) => wanted.has(t.toLowerCase()))
   })
@@ -26,8 +31,10 @@ const MocList: QuartzComponent = (props: QuartzComponentProps) => {
   return (
     <div class="moc-list">
       <p class="moc-list-cmd">
-        <span class="moc-list-prompt">$</span>ls -lt posts/ --tag=
-        {mocTags.join(",")} <span class="moc-list-comment"># {pages.length} found</span>
+        <span class="moc-list-prompt">$</span>ls posts/ --tag={mocTags.join(",")}{" "}
+        <span class="moc-list-comment">
+          # {pages.length} tagged but not yet placed on this map
+        </span>
       </p>
       <PageList {...props} allFiles={pages} sort={byDateAndAlphabetical(cfg)} />
     </div>

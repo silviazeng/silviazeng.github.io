@@ -19,3 +19,19 @@ I'm more interested in why it works than whether it works.*
 
 ## Loss Landscape Geometry
 *(coming soon)*
+
+## Recommendation Systems
+
+- [The Evolutionary Roadmap of Deep Learning RecSys](/posts/the-evolutionary-roadmap-of-deep-learning-recsys) a visual roadmap starting from basic DNN
+
+## The Industry
+
+- [A semiconductor industry reader](/posts/a-semiconductor-industry-reader) three interactive pages on where pricing power sits, and why it moves
+
+---
+
+## Adjacent Thoughts
+
+- [Medici's Answer to Building for Uncertainty](/posts/medici-answer-to-building-for-uncertainty) thoughts on how to survive the AI era
+- [What I Learned about Career in my 3 months ML Deep-dive](/posts/what-i-learned-about-career-in-ml) what the deep-dive taught me about work, not just ML
+- [The Training Problem of My Mental Model](/posts/the-training-problem-of-my-mental-model) my own learning, treated as a training problem
