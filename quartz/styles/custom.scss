@@ -36,10 +36,11 @@
   --font-display: var(--headerFont);     // Playfair Display — display
   --font-prose:   var(--bodyFont);       // Source Serif 4 — italic body & quotes
 
-  // Width of the prose column: 68ch at Source Serif 4 16px. Every block-level
-  // element in an article is capped to this, so the page has one left edge
-  // and one right edge.
-  --prose-width: 576px;
+  // Two-tier article layout. Prose reads at a book-like measure (~73ch at
+  // Source Serif 4 16px); media — figures, iframes, card rows — break out to
+  // the wide tier, centred, so pages don't collapse into one narrow strip.
+  --prose-width: 620px;
+  --wide-width: 880px;
 }
 
 body {
@@ -117,30 +118,33 @@ article p {
   strong { color: var(--color-accent-light) !important; }
 }
 
-// On article pages the whole content column — breadcrumbs, title, meta,
-// article body, and anything in afterBody — is one prose-width column,
-// centred between the page edge and the right rail. The homepage is excluded:
-// its tiles live inside .page-header and manage their own 1240px layout.
+// On article pages the content column is centred between the page edge and
+// the right rail. The column is wide-tier so media can breathe; the header
+// (breadcrumbs, title, meta) is capped at prose width so it aligns with the
+// text. The homepage is excluded: its tiles live inside .page-header and
+// manage their own 1240px layout.
 body:not([data-slug="index"]) .center > * {
   box-sizing: border-box;
-  max-width: var(--prose-width);
+  max-width: var(--wide-width);
   // !important to outrank the blanket `.page-header { margin: 0 !important }`
   // reset above.
   margin-left: auto !important;
   margin-right: auto !important;
 }
 
-// Every block a post can contain shares the prose column and starts on its
-// left edge, so figures, embeds and link-card rows line up with the text
-// instead of floating centred or running past it. A fixed px value (not
-// 68ch) because iframes inherit the mono font, which changes what `ch` means.
+body:not([data-slug="index"]) .center > .page-header,
+body:not([data-slug="index"]) .center > .moc-list {
+  max-width: var(--prose-width);
+}
+
+// Prose blocks read at the book measure, centred within the wide column;
+// media — figures, embeds, card rows — may fill the wide tier, also centred,
+// so wide exhibits overhang the text symmetrically. Fixed px values (not ch)
+// because iframes inherit the mono font, which changes what `ch` means.
 article > p,
 article > ul,
 article > ol,
 article > blockquote,
-article > figure,
-article > iframe,
-article > div,
 article > hr,
 article > h1,
 article > h2,
@@ -150,7 +154,17 @@ article > h5,
 article > h6 {
   box-sizing: border-box;
   max-width: var(--prose-width);
-  margin-left: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+article > figure,
+article > iframe,
+article > div,
+article > img {
+  box-sizing: border-box;
+  max-width: min(var(--wide-width), 100%);
+  margin-left: auto;
   margin-right: auto;
 }
 
