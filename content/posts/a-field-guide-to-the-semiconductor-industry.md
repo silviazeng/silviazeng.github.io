@@ -27,7 +27,7 @@ Each page is bilingual (中文 / EN), with a hover note on every term of art:
 </div>
 
 <figure style="max-width:880px;margin:1.75rem 0;">
-  <img src="/static/semis/img/map-diagram.png" alt="The value-chain map: EDA and IP license into chip design, equipment and HBM feed in from above, wafers flow rightward to packaging, systems and cloud, with an amber loop showing hyperscalers designing their own chips" style="width:100%;border-radius:12px;box-shadow:0 6px 24px rgba(0,0,0,0.35);display:block;">
+  <img src="/static/semis/img/map-diagram.png?v=en" alt="The value-chain map: EDA and IP license into chip design, equipment and HBM feed in from above, wafers flow rightward to packaging, systems and cloud, with an amber loop showing hyperscalers designing their own chips" style="width:100%;border-radius:12px;box-shadow:0 6px 24px rgba(0,0,0,0.35);display:block;">
   <figcaption style="font-size:0.82rem;color:#6f5a3c;text-align:center;margin-top:0.6rem;line-height:1.4;">The full map — wafers flow left to right; the amber dashed loop is the hyperscalers designing their own chips. Badges mark where each jurisdiction lands.</figcaption>
 </figure>
 
