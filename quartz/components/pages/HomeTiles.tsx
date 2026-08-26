@@ -133,7 +133,7 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles, cfg }: QuartzComponent
             <div class="tg-pillars">
               <a class="tg-pill k-ai" href="/AI-Tech">
                 <div class="tg-pill-head">§ AI &amp; Tech</div>
-                <div class="tg-pill-name">Why it works, not whether.</div>
+                <div class="tg-pill-name">Inside the black box.</div>
               </a>
               <a class="tg-pill k-career" href="/Work-Career">
                 <div class="tg-pill-head">§ Work &amp; Career</div>

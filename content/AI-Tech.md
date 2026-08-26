@@ -26,7 +26,7 @@ I'm more interested in why it works than whether it works.*
 
 ## The Industry
 
-- [A semiconductor industry reader](/posts/a-semiconductor-industry-reader) three interactive pages on where pricing power sits, and why it moves
+- [A Field Guide to the Semiconductor Industry](/posts/a-field-guide-to-the-semiconductor-industry) three interactive pages on where pricing power sits, and why it moves
 
 ---
 

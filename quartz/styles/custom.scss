@@ -35,6 +35,11 @@
   --font-mono:    var(--codeFont);       // JetBrains Mono — UI & code
   --font-display: var(--headerFont);     // Playfair Display — display
   --font-prose:   var(--bodyFont);       // Source Serif 4 — italic body & quotes
+
+  // Width of the prose column: 68ch at Source Serif 4 16px. Every block-level
+  // element in an article is capped to this, so the page has one left edge
+  // and one right edge.
+  --prose-width: 576px;
 }
 
 body {
@@ -107,9 +112,33 @@ article p {
   color: var(--color-text) !important;
   font-size: 16px !important;
   line-height: 1.75 !important;
-  max-width: 68ch;
+  max-width: var(--prose-width);
 
   strong { color: var(--color-accent-light) !important; }
+}
+
+// Every block a post can contain shares the prose column and starts on its
+// left edge, so figures, embeds and link-card rows line up with the text
+// instead of floating centred or running past it. A fixed px value (not
+// 68ch) because iframes inherit the mono font, which changes what `ch` means.
+article > p,
+article > ul,
+article > ol,
+article > blockquote,
+article > figure,
+article > iframe,
+article > div,
+article > hr,
+article > h1,
+article > h2,
+article > h3,
+article > h4,
+article > h5,
+article > h6 {
+  box-sizing: border-box;
+  max-width: var(--prose-width);
+  margin-left: 0;
+  margin-right: auto;
 }
 
 article li,
