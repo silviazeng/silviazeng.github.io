@@ -18,7 +18,7 @@ const config: QuartzConfig = {
     },
     locale: "en-US",
     baseUrl: "silviazeng.github.io",
-    ignorePatterns: ["private", "templates", ".obsidian"],
+    ignorePatterns: ["private", "templates", ".obsidian", "posts/_to_delete"],
     defaultDateType: "modified",
     theme: {
       fontOrigin: "googleFonts",

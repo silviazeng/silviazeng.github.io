@@ -1,6 +1,8 @@
 ---
 title: AI & Tech
 tags: []
+moc-tags:
+  - AI
 ---
 
 *A taste for elegant structure, a tolerance for confusion, and no pressure 
@@ -16,14 +18,3 @@ I'm more interested in why it works than whether it works.*
 
 ## Loss Landscape Geometry
 *(coming soon)*
-
-## Recommendation Systems
-
-- [The Evolutionary Roadmap of Deep Learning RecSys](/posts/the-evolutionary-roadmap-of-deep-learning-recsys) a visual roadmap starting from basic DNN
-
----
-
-## Adjacent Thoughts
-
-- [Medici's Answer to Building for Uncertainty](/posts/medici-answer-to-building-for-uncertainty) thoughts on how to survive the AI era
-
