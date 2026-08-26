@@ -117,6 +117,19 @@ article p {
   strong { color: var(--color-accent-light) !important; }
 }
 
+// On article pages the whole content column — breadcrumbs, title, meta,
+// article body, and anything in afterBody — is one prose-width column,
+// centred between the page edge and the right rail. The homepage is excluded:
+// its tiles live inside .page-header and manage their own 1240px layout.
+body:not([data-slug="index"]) .center > * {
+  box-sizing: border-box;
+  max-width: var(--prose-width);
+  // !important to outrank the blanket `.page-header { margin: 0 !important }`
+  // reset above.
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
 // Every block a post can contain shares the prose column and starts on its
 // left edge, so figures, embeds and link-card rows line up with the text
 // instead of floating centred or running past it. A fixed px value (not
