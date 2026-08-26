@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A Short History of the Semiconductor Industry: Five Breakpoints</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Source+Serif+4:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"><style>
+:root{
+  --color-bg:#0f1210; --color-surface:#141814; --color-surface-dark:#0b0d0b;
+  --color-surface-raised:#1a1e1a; --color-border:#2a2e2a; --color-border-mid:#202420;
+  --color-border-hover:#3a4a3a; --color-text:#d8d4c8; --color-text-dim:#a0a498;
+  --color-text-muted:#8b9088; --color-text-faint:#6b7068; --color-text-bright:#ece8db;
+  --color-accent:#7ab87a; --color-accent-light:#a0d8a0; --color-accent-amber:#c9a45a;
+  --color-focus-ring:rgba(122,184,122,.6);
+  --font-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --font-display:"Playfair Display",Georgia,serif;
+  --font-prose:"Source Serif 4","Songti SC",Georgia,serif;
+}
+*{box-sizing:border-box}
+body{background:var(--color-bg);color:var(--color-text);font-family:var(--font-mono);
+  font-size:13.5px;line-height:1.62;margin:0;padding:3rem 1.25rem 6rem;
+  -webkit-font-smoothing:antialiased}
+article{max-width:760px;margin:0 auto}
+h1.article-title{font-family:var(--font-mono);font-size:22px;font-weight:500;
+  color:var(--color-text-bright);letter-spacing:-.01em;margin:0 0 .35rem;line-height:1.35}
+.meta{color:var(--color-text-faint);font-size:11px;letter-spacing:.06em;
+  text-transform:uppercase;margin:0 0 2rem}
+h2{font-family:var(--font-mono);font-size:15px;font-weight:500;color:var(--color-accent);
+  margin:3rem 0 1rem;letter-spacing:-.005em}
+h2::before{content:"## ";color:var(--color-text-faint);font-weight:400}
+h3{font-family:var(--font-mono);font-size:13.5px;font-weight:500;
+  color:var(--color-text-bright);margin:2rem 0 .75rem}
+p{margin:0 0 1.15rem}
+strong{color:var(--color-text-bright);font-weight:500}
+em{font-family:var(--font-prose);font-style:italic;color:var(--color-text-muted)}
+a{color:var(--color-accent-light);text-decoration:none}
+a:hover{color:var(--color-text-bright)}
+ul,ol{padding-left:1.3rem;margin:0 0 1.15rem}
+li{margin:.3rem 0}
+hr{border:none;border-top:1px solid var(--color-border);margin:2.5rem 0}
+blockquote{margin:1.5rem 0;padding:.55rem 0 .55rem 1rem;
+  border-left:2px solid var(--color-border-hover);color:var(--color-text-dim);
+  font-family:var(--font-prose);font-style:italic}
+blockquote p{margin:0}
+code{font-family:var(--font-mono);font-size:12px;background:var(--color-surface-raised);
+  padding:1px 5px;border-radius:3px;color:var(--color-accent-light)}
+table{width:100%;border-collapse:collapse;margin:1.5rem 0;font-size:12px}
+th,td{border:1px solid var(--color-border);padding:.5rem .6rem;text-align:left;
+  vertical-align:top}
+th{background:var(--color-surface-dark);color:var(--color-text-dim);font-weight:500;
+  font-size:11px;letter-spacing:.04em;text-transform:uppercase}
+tbody tr:nth-child(even){background:rgba(255,255,255,.012)}
+
+/* ── language switch ───────────────────────────────────────────── */
+.tg-bi>input[type=radio]{position:absolute;opacity:0;width:0;height:0;pointer-events:none}
+.tg-bi-switch{position:sticky;top:0;z-index:20;display:inline-flex;margin:0 0 .25rem;
+  padding:2px;border:1px solid var(--color-border);border-radius:4px;
+  background:var(--color-surface-dark);font-size:11px;letter-spacing:.06em;
+  text-transform:uppercase}
+.tg-bi-switch label{padding:3px 12px;border-radius:3px;color:var(--color-text-faint);
+  cursor:pointer;user-select:none;transition:color .15s,background .15s}
+.tg-bi-switch label:hover{color:var(--color-text-dim)}
+.tg-bi:has(#tg-lang-zh:checked) .tg-bi-switch label[for=tg-lang-zh],
+.tg-bi:has(#tg-lang-en:checked) .tg-bi-switch label[for=tg-lang-en],
+#tg-lang-zh:checked~.tg-bi-switch label[for=tg-lang-zh],
+#tg-lang-en:checked~.tg-bi-switch label[for=tg-lang-en]{
+  background:var(--color-surface-raised);color:var(--color-accent)}
+.tg-bi>p:has(>input[type=radio]){display:none}
+.tg-bi-hint{margin:0 0 1.75rem!important;color:var(--color-text-faint);font-size:11px}
+.tg-bi:has(#tg-lang-zh:checked) .tg-lang.en{display:none}
+.tg-bi:has(#tg-lang-en:checked) .tg-lang.zh{display:none}
+#tg-lang-zh:checked~.tg-lang.en{display:none}
+#tg-lang-en:checked~.tg-lang.zh{display:none}
+
+/* ── glossary tooltips ─────────────────────────────────────────── */
+.tg-tip{position:relative;border-bottom:1px dotted var(--color-text-faint);
+  cursor:help;outline:none;transition:border-color .15s,color .15s}
+.tg-tip:hover,.tg-tip:focus-visible{border-bottom-color:var(--color-accent);
+  color:var(--color-accent-light)}
+.tg-tip-box{position:absolute;bottom:calc(100% + 9px);left:50%;z-index:40;
+  width:max-content;max-width:min(360px,82vw);padding:.6rem .75rem;
+  border:1px solid var(--color-border-hover);border-radius:5px;
+  background:var(--color-surface-raised);box-shadow:0 8px 28px rgba(0,0,0,.55);
+  font-family:var(--font-prose);font-size:12.5px;font-style:normal;line-height:1.6;
+  letter-spacing:0;color:var(--color-text-dim);text-align:left;white-space:normal;
+  text-transform:none;opacity:0;visibility:hidden;transform:translate(-50%,4px);
+  transition:opacity .16s,transform .16s,visibility 0s linear .16s}
+.tg-tip-box b{color:var(--color-accent-light);font-weight:500}
+.tg-tip-box i{color:var(--color-text-muted)}
+.tg-tip-box::after{content:"";position:absolute;top:100%;left:50%;margin-left:-5px;
+  border:5px solid transparent;border-top-color:var(--color-border-hover)}
+.tg-tip:hover .tg-tip-box,.tg-tip:focus-within .tg-tip-box{
+  opacity:1;visibility:visible;transform:translate(-50%,0);
+  transition:opacity .18s ease .32s,transform .18s ease .32s,visibility 0s linear .32s}
+td>.tg-tip:first-child .tg-tip-box,li>.tg-tip:first-child .tg-tip-box,
+p>.tg-tip:first-child .tg-tip-box{left:0;transform:translate(0,4px)}
+td>.tg-tip:first-child .tg-tip-box::after,li>.tg-tip:first-child .tg-tip-box::after,
+p>.tg-tip:first-child .tg-tip-box::after{left:18px}
+td>.tg-tip:first-child:hover .tg-tip-box,li>.tg-tip:first-child:hover .tg-tip-box,
+p>.tg-tip:first-child:hover .tg-tip-box,td>.tg-tip:first-child:focus-within .tg-tip-box,
+li>.tg-tip:first-child:focus-within .tg-tip-box,
+p>.tg-tip:first-child:focus-within .tg-tip-box{transform:translate(0,0)}
+.banner{border:1px dashed var(--color-border-hover);border-radius:5px;
+  padding:.6rem .8rem;margin:0 0 2rem;color:var(--color-text-faint);font-size:11px;
+  letter-spacing:.03em}
+</style></head>
+<body><article>
+<h1 class="article-title">A Short History of the Semiconductor Industry: Five Breakpoints</h1>
+<p class="meta">2026-08-17 · silviazeng.github.io</p>
+<div class="tg-bi">
+<p><input type="radio" name="tgbilang" id="tg-lang-zh" checked><input type="radio" name="tgbilang" id="tg-lang-en"></p>
+<div aria-label="language" class="tg-bi-switch" role="group"><label for="tg-lang-zh">中文</label><label for="tg-lang-en">EN</label></div>
+<p class="tg-bi-hint">悬停任意术语可看解释 · hover any term for a note</p>
+<div class="tg-lang zh">
+<p><em>这是一篇会持续扩写的笔记。数据截至 2026 年 8 月 17 日，标 ⚠️ 的是第三方估算。</em></p>
+<h2>写法说明</h2>
+<p>大部分半导体简史是发明年表：谁在哪一年做出了什么。那种写法读完记不住，因为发明本身不解释结构。</p>
+<p>这篇换一个问法：<strong>在每个阶段，钱和定价权在谁手上，以及它为什么会移动。</strong> 按这个标准，八十年里只有五个真正的断点。</p>
+<h2>断点一：从实验室到产业（1947–1971）</h2>
+<p>1947 年 12 月，贝尔实验室的 Bardeen 和 Brattain 在 <span class="tg-tip" tabindex="0">Shockley<span class="tg-tip-box"><b>威廉·肖克利（William Shockley）</b>。晶体管的共同发明人、1956 年诺贝尔奖得主。他的管理风格逼走了后来创立仙童的那八个人。</span></span> 领导下演示了第一个点接触晶体管。1954 年 <span class="tg-tip" tabindex="0">TI<span class="tg-tip-box"><b>德州仪器（Texas Instruments，TI）</b>。1930 年做地震勘探起家，1954 年进芯片；1958 年 Jack Kilby 在这里做出世界第一块集成电路。今天是全球最大的<b>模拟（analog）</b>芯片厂：约 8 万种目录型号、约 10 万家客户，没有任何单一客户占比超过个位数。<b>它活了 90 多年靠的是「撤退」</b>——退出 DRAM、退出军工电子、2012 年手机基带（OMAP）打不过高通就直接卖掉，每次都把钱调回模拟和嵌入式。这两块的特点是：一颗料号能卖几十年，旧产线折旧完还在赚钱，所以不需要每两年赌一次先进制程。</span></span> 率先商业化硅晶体管。1958 年 TI 的 <span class="tg-tip" tabindex="0">Kilby<span class="tg-tip-box"><b>杰克·基尔比（Jack Kilby）</b>。1958 年在德州仪器做出第一个集成电路，2000 年获诺贝尔奖。</span></span> 做出第一个集成电路，1959 年 <span class="tg-tip" tabindex="0">Fairchild<span class="tg-tip-box"><b>仙童半导体（Fairchild）</b>。1957 年由“八叛将”创立。它发明了平面工艺，随后又裂变出几十家公司，包括 Intel 和 AMD。</span></span> 的 <span class="tg-tip" tabindex="0">Noyce<span class="tg-tip-box"><b>罗伯特·诺伊斯（Noyce）</b>。1959 年在仙童发明平面工艺硅集成电路，1968 年共同创立 Intel。</span></span> 发明了平面工艺硅 IC——后者才是能量产的那个，是现代芯片的直接祖先。</p>
+<p>这一段真正重要的不是发明，而是 <strong>1957 年的"<span class="tg-tip" tabindex="0">八叛将<span class="tg-tip-box"><b>八叛将 / 八叛徒（the Traitorous Eight）</b>。1957 年集体从肖克利实验室辞职、创立仙童半导体的八名研究员。肖克利骂他们是叛徒，这个称呼就留下来了。</span></span>"</strong>。八个年轻人受不了 Shockley 的管理，集体辞职创立 Fairchild Semiconductor。Shockley 骂他们是叛徒，名字就留下了。八人里的 Noyce 和 Moore 在 1968 年又出走创立 Intel；<span class="tg-tip" tabindex="0">Jerry Sanders<span class="tg-tip-box"><b>Jerry Sanders</b>。AMD 创始人，任 CEO 至 2002 年。在那个创始人几乎清一色技术出身的年代，他出身<strong>销售</strong>——这一点在 AMD 早期的定位打法里看得很清楚。</span></span> 带七名 Fairchild 同事在 1969 年创立 <span class="tg-tip" tabindex="0">AMD<span class="tg-tip-box"><b>Advanced Micro Devices</b>，超威半导体。1969 年创立的美国无晶圆厂芯片设计公司，产品线含 CPU（Ryzen/EPYC）、GPU（Radeon/Instinct）、FPGA（收购赛灵思而来）以及主机半定制 SoC。</span></span>。</p>
+<p>Fairchild 后来"裂变"出几十家公司，多到有个专门的词叫 <strong><span class="tg-tip" tabindex="0">Fairchildren<span class="tg-tip-box"><b>Fairchildren（仙童子弟）</b>。对从仙童出走创业的众多公司的统称，Intel、AMD、National Semiconductor、Intersil 都在其中。</span></span></strong>。</p>
+<p><strong>硅谷"从大公司出走创业"的文化基因，是从一次人事冲突里长出来的。</strong> 这是第一个断点：技术从实验室转移到了一种可复制的组织形式。</p>
+<p>1965 年 Moore 提出<span class="tg-tip" tabindex="0">摩尔定律<span class="tg-tip-box"><b>摩尔定律（Moore's Law）</b>。戈登·摩尔 1965 年的观察：单芯片上的元件数以固定节奏翻番。它不是物理定律，而是对一种经济节奏的描述——然后整个产业围绕它组织了自己。</span></span>。要注意它不是物理定律，而是对一种<strong>经济节奏</strong>的描述——然后整个产业围绕这个描述组织了自己的资本开支、路线图和客户预期。它成真，很大程度上是因为所有人都决定让它成真。</p>
+<h2>断点二：IDM 时代与日美 DRAM 战争（1970s–1980s）</h2>
+<p>这一阶段的产业结构是 <span class="tg-tip" tabindex="0">IDM<span class="tg-tip-box"><b>Integrated Device Manufacturer</b>，整合元件制造商。设计、制造、封测、销售全部自己做的芯片公司。Intel、三星、TI 是 IDM；AMD 在 2009 年不再是。</span></span>：设计、制造、<span class="tg-tip" tabindex="0">封测<span class="tg-tip-box"><b>封测（packaging &amp; test）</b>。晶圆切成一颗颗裸片后，<b>封装</b>把裸片装进你能焊到电路板上的那个黑色小块，<b>测试</b>逐颗通电、把坏的挑掉。日月光、安靠这类公司做这个。如今 AI 芯片的真正瓶颈就卡在先进封装。</span></span>、销售全部内部完成。Intel、<span class="tg-tip" tabindex="0">TI<span class="tg-tip-box"><b>德州仪器（Texas Instruments，TI）</b>。1930 年做地震勘探起家，1954 年进芯片；1958 年 Jack Kilby 在这里做出世界第一块集成电路。今天是全球最大的<b>模拟（analog）</b>芯片厂：约 8 万种目录型号、约 10 万家客户，没有任何单一客户占比超过个位数。<b>它活了 90 多年靠的是「撤退」</b>——退出 DRAM、退出军工电子、2012 年手机基带（OMAP）打不过高通就直接卖掉，每次都把钱调回模拟和嵌入式。这两块的特点是：一颗料号能卖几十年，旧产线折旧完还在赚钱，所以不需要每两年赌一次先进制程。</span></span>、Motorola、NEC、东芝、日立都是 IDM。规模经济与工艺能力高度绑定。</p>
+<p>然后日本来了。在 <span class="tg-tip" tabindex="0">VLSI<span class="tg-tip-box"><b>VLSI 国家项目</b>。日本 1976–1980 年的国家级研究计划，让日本 DRAM 厂商在工艺上取得对美国的领先。</span></span> 国家项目（1976–1980）的支持下，日本厂商靠 <strong><span class="tg-tip" tabindex="0">yield<span class="tg-tip-box"><b>Yield</b>，良率。一片晶圆上能正常工作的芯片比例。一个工艺节点赚不赚钱，往往就差在这里。</span></span> 和质量</strong>在 <span class="tg-tip" tabindex="0">DRAM<span class="tg-tip-box"><b>Dynamic Random-Access Memory</b>，动态随机存取存储器。计算机的主内存，也是 1980 年代日本击败美国的那块商品化战场。</span></span> 上击溃美国。到 1980 年代中后期，日本占全球半导体销售额半数以上，NEC、东芝、日立一度包揽前三。1985 年 Intel 被迫退出 DRAM 转做微处理器——这就是 <span class="tg-tip" tabindex="0">Andy Grove<span class="tg-tip-box"><b>安迪·格鲁夫（Andy Grove）</b>。Intel CEO，用“战略转折点”一词描述 Intel 1985 年退出 DRAM 的决定。</span></span> 后来写的"战略转折点"。</p>
+<p>美国的回应是产业政策：1986 年美日半导体协议（设定日本国内市场的外国份额目标、约束倾销定价），1987 年成立 <span class="tg-tip" tabindex="0">SEMATECH<span class="tg-tip-box"><b>SEMATECH</b>。1987 年成立的美国政府与产业共同出资的制造技术联盟，用于回应日本在 DRAM 上的主导地位。</span></span>。加上<span class="tg-tip" tabindex="0">广场协议<span class="tg-tip-box"><b>广场协议（the Plaza Accord）</b>。1985 年的汇率协议，导致日元大幅升值，削弱了日本出口商的成本优势。</span></span>后的日元升值和 1990 年代日本资产泡沫破裂，日本份额在 90 年代持续下滑，韩国接手了 DRAM。</p>
+<p><strong>这是历史上第一次证明：半导体的领导权是国家产业政策的对象，而不只是市场竞争的结果。</strong> 今天的 <span class="tg-tip" tabindex="0">CHIPS Act<span class="tg-tip-box"><b>CHIPS 法案</b>。美国 2022 年通过的法律，为本土半导体制造与研发提供补贴。</span></span>、出口管制、欧盟与日本的补贴，都是这条线的延长。</p>
+<h2>断点三：大分工（1987–2000s）★</h2>
+<p>这是理解今天一切的关键断点。</p>
+<p>1987 年，<span class="tg-tip" tabindex="0">张忠谋<span class="tg-tip-box"><b>张忠谋（Morris Chang）</b>。1987 年创立台积电，发明了纯代工（pure-play foundry）模式。</span></span>在台湾工研院支持下创立 <span class="tg-tip" tabindex="0">TSMC<span class="tg-tip-box"><b>台积电（TSMC, Taiwan Semiconductor Manufacturing Company）</b>。张忠谋 1987 年创立，发明了纯代工模式，目前占全球晶圆代工市场约 72%。</span></span>，首创<strong>纯<span class="tg-tip" tabindex="0">代工<span class="tg-tip-box"><b>代工（foundry / contract manufacturing）</b>。在硅晶圆上把别人设计好的电路“印”出来。台积电、三星、中芯国际做的就是这个，它们不设计自己的产品。</span></span></strong>模式。它的核心不是技术，是一条承诺：<strong>自己不设计任何产品，因此永远不与客户竞争。</strong> 没有这条承诺，没人敢把版图交出去。</p>
+<p>结果是<strong>设计与制造的解耦</strong>。创业公司不再需要几十亿美元建 fab 才能做芯片。<span class="tg-tip" tabindex="0">Xilinx<span class="tg-tip-box"><b>赛灵思（Xilinx）</b>。FPGA 的开创者。AMD 2020 年宣布以约 350 亿美元全股票收购，2022 年完成时市值已达约 490 亿美元。现构成 AMD 的 Embedded 分部。</span></span>（1984）、高通（1985）、<span class="tg-tip" tabindex="0">Broadcom<span class="tg-tip-box"><b>博通（Broadcom）</b>。超大规模厂商定制 ASIC 的主要协同设计伙伴（Google TPU、OpenAI 的加速器）。与 Marvell 合计约占该市场 95%。</span></span>（1991）、英伟达（1993）——整个 <span class="tg-tip" tabindex="0">fabless<span class="tg-tip-box"><b>Fabless</b>，无晶圆厂模式。只做芯片设计、不自建晶圆厂，把制造外包给代工厂。AMD、英伟达、高通、泰凌微都是 fabless。</span></span> 生态是在这条裂缝上长出来的。</p>
+<p>1990 年 <span class="tg-tip" tabindex="0">ARM<span class="tg-tip-box"><b>ARM</b>。1990 年成立，自己不卖芯片，只授权 IP。这个模式是移动革命和今天自研芯片浪潮共同的制度基础。</span></span> 成立，把分工又推进一层：<strong>连芯片都不做，只授权 <span class="tg-tip" tabindex="0">IP<span class="tg-tip-box"><b>Intellectual Property block</b>，IP 核。一块可复用、已验证的电路设计（CPU 核、射频、内存控制器等），像乐高积木一样被放进芯片里。今天的芯片设计在很大程度上就是 IP 的组装。</span></span>。</strong> 于是每一家消费电子公司都能定制自己的 <span class="tg-tip" tabindex="0">SoC<span class="tg-tip-box"><b>System on Chip</b>，片上系统。把 CPU、GPU、内存控制器、射频、I/O 等原本分立的部件集成到同一颗芯片上。</span></span>。移动革命和今天的自研芯片浪潮，制度基础都在这里。</p>
+<p>至此产业形成四层栈：</p>
+<ol>
+<li><strong><span class="tg-tip" tabindex="0">EDA<span class="tg-tip-box"><b>Electronic Design Automation</b>，电子设计自动化。设计芯片所用的软件。整个产业栈的最底层是三家寡头（Synopsys、Cadence、Siemens EDA）。</span></span> 与 IP</strong>（<span class="tg-tip" tabindex="0">Synopsys<span class="tg-tip-box"><b>新思科技（Synopsys）</b>。全世界的芯片都用其软件设计的三家 EDA 厂商之一。</span></span>、<span class="tg-tip" tabindex="0">Cadence<span class="tg-tip-box"><b>楷登电子（Cadence）</b>。位于整个芯片设计栈底层的三家 EDA 厂商之一。</span></span>、ARM）</li>
+<li><strong>无<span class="tg-tip" tabindex="0">晶圆<span class="tg-tip-box"><b>晶圆（wafer）</b>。制造芯片所用的薄硅片，通常直径 300 毫米。代工厂按晶圆计价，不按芯片计价。</span></span>厂设计</strong>（英伟达、<span class="tg-tip" tabindex="0">AMD<span class="tg-tip-box"><b>Advanced Micro Devices</b>，超威半导体。1969 年创立的美国无晶圆厂芯片设计公司，产品线含 CPU（Ryzen/EPYC）、GPU（Radeon/Instinct）、FPGA（收购赛灵思而来）以及主机半定制 SoC。</span></span>、高通、苹果、泰凌微）</li>
+<li><strong>代工</strong>（TSMC、三星、中芯）</li>
+<li><strong><span class="tg-tip" tabindex="0">封测<span class="tg-tip-box"><b>封测（packaging &amp; test）</b>。晶圆切成一颗颗裸片后，<b>封装</b>把裸片装进你能焊到电路板上的那个黑色小块，<b>测试</b>逐颗通电、把坏的挑掉。日月光、安靠这类公司做这个。如今 AI 芯片的真正瓶颈就卡在先进封装。</span></span> + 上游设备与材料</strong>（<span class="tg-tip" tabindex="0">ASML<span class="tg-tip-box"><b>ASML</b>，阿斯麦。荷兰公司，EUV 光刻机的唯一供应商。可以说是整个产业中最集中的一个卡点。</span></span>、AMAT、日月光）</li>
+</ol>
+<p>AMD 在 2009 年剥离 <span class="tg-tip" tabindex="0">GlobalFoundries<span class="tg-tip-box"><b>GlobalFoundries</b>，格罗方德。AMD 在 2009 年借阿布扎比资本剥离出去的晶圆制造部门。它后来的工艺落后一度拖累 AMD，直到 AMD 把先进节点转给台积电。</span></span>，正是从第一层结构（<span class="tg-tip" tabindex="0">IDM<span class="tg-tip-box"><b>Integrated Device Manufacturer</b>，整合元件制造商。设计、制造、封测、销售全部自己做的芯片公司。Intel、三星、TI 是 IDM；AMD 在 2009 年不再是。</span></span>）迁移到第二层（fabless）的教科书案例，也是它十年后能借 TSMC 反超 Intel 的原因。反例是 Intel：坚守 IDM 直到 10nm 和 7nm 连续延期，丢掉工艺领导权，2021 年后才启动 IDM 2.0。</p>
+<p><strong>结构选择的回报周期是十年以上。这大概是这个行业最残酷的一点。</strong></p>
+<h2>断点四：需求侧的四次迁移</h2>
+<table>
+<thead>
+<tr>
+<th>时代</th>
+<th>起点</th>
+<th>主导者</th>
+<th>定价权在哪</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PC</td>
+<td>1981 IBM PC</td>
+<td><span class="tg-tip" tabindex="0">Wintel<span class="tg-tip-box"><b>Wintel</b>。定义了 PC 时代、并攫取了其中大部分利润的 Windows + Intel 双寡头。</span></span>，<span class="tg-tip" tabindex="0">AMD<span class="tg-tip-box"><b>Advanced Micro Devices</b>，超威半导体。1969 年创立的美国无晶圆厂芯片设计公司，产品线含 CPU（Ryzen/EPYC）、GPU（Radeon/Instinct）、FPGA（收购赛灵思而来）以及主机半定制 SoC。</span></span> 为挑战者</td>
+<td>指令集</td>
+</tr>
+<tr>
+<td>移动</td>
+<td>2007 iPhone</td>
+<td><span class="tg-tip" tabindex="0">ARM<span class="tg-tip-box"><b>ARM</b>。1990 年成立，自己不卖芯片，只授权 IP。这个模式是移动革命和今天自研芯片浪潮共同的制度基础。</span></span> 生态、高通、联发科、苹果</td>
+<td><span class="tg-tip" tabindex="0">IP<span class="tg-tip-box"><b>Intellectual Property block</b>，IP 核。一块可复用、已验证的电路设计（CPU 核、射频、内存控制器等），像乐高积木一样被放进芯片里。今天的芯片设计在很大程度上就是 IP 的组装。</span></span> 与系统整合</td>
+</tr>
+<tr>
+<td>云 / 数据中心</td>
+<td>2006 AWS 起</td>
+<td>Intel <span class="tg-tip" tabindex="0">Xeon<span class="tg-tip-box"><b>至强（Xeon）</b>。Intel 的服务器 CPU 产品线，在 AMD 的 EPYC 开始蚕食之前几乎独占数据中心。</span></span> → AMD <span class="tg-tip" tabindex="0">EPYC<span class="tg-tip-box"><b>EPYC</b>，霄龙。AMD 2017 年推出的服务器 CPU 产品线。到 2026 年 Q1，其 x86 服务器 CPU 营收份额达 46.2%，为历史新高。</span></span> 侵蚀</td>
+<td>少数客户的采购集中度</td>
+</tr>
+<tr>
+<td>AI</td>
+<td>2012 <span class="tg-tip" tabindex="0">AlexNet<span class="tg-tip-box"><b>AlexNet</b>。2012 年用 GPU 大幅赢下 ImageNet 竞赛的神经网络，通常被视为深度学习时代的起点。</span></span> → 2022 ChatGPT 加速</td>
+<td>英伟达主导</td>
+<td><strong>软件栈 + 互连 + <span class="tg-tip" tabindex="0">HBM<span class="tg-tip-box"><b>High Bandwidth Memory</b>，高带宽内存。垂直堆叠的 DRAM，紧贴处理器裸片放置。HBM 的容量与带宽已成为 AI 加速器的主要规格竞赛点。</span></span> 供应 + 先进封装产能</strong></td>
+</tr>
+</tbody>
+</table>
+<p>每一次迁移都换了定价权的位置。值得注意的是最后一栏的变化：<strong>AI 时代的定价权不在单颗芯片的性能上，而在你能不能交付一整套能跑的系统。</strong> 这解释了 AMD 为什么要花 49 亿美元买 <span class="tg-tip" tabindex="0">ZT Systems<span class="tg-tip-box"><b>ZT Systems</b>。机架级 AI 系统厂商，AMD 以 49 亿美元收购，2025 年 3 月完成。它让 AMD 能交付整机架，而不只是芯片。</span></span>——它买的不是技术，是"能交付整机架"这件事本身。</p>
+<h2>断点五：超大规模厂商自研（2015–今）</h2>
+<p>动机按重要性排：</p>
+<ol>
+<li><strong>把毛利内化。</strong> 英伟达数据中心毛利率长期在 70% 以上，超大规模厂商每买一块 GPU 都在向它输送毛利。</li>
+<li><strong>工作负载确定性。</strong> 自家推理负载高度同质、规模巨大，可以砍掉通用性换能效比。</li>
+<li><strong>供应安全。</strong> 摆脱单一供应商的分配权。</li>
+<li><strong>规模足够摊薄。</strong> 只有当你自己能消化几十万到上百万颗时，几亿美元的设计成本才算得过来。</li>
+</ol>
+<p>现状（2026）：Google <span class="tg-tip" tabindex="0">TPU<span class="tg-tip-box"><b>Tensor Processing Unit</b>。谷歌自研的 AI 加速器，2015 年起内部部署。是“全定制自研”的教科书案例。</span></span> v7 <span class="tg-tip" tabindex="0">Ironwood<span class="tg-tip-box"><b>Ironwood</b>。谷歌的 TPU v7。9,216 颗芯片组成的 pod 可达 42.5 EFLOPS FP8。</span></span>（9,216 芯片的 pod 达 42.5 <span class="tg-tip" tabindex="0">EFLOPS<span class="tg-tip-box"><b>ExaFLOPS</b>，每秒百亿亿次浮点运算。这个单位是 2022 年之后才变成日常用语的。</span></span> <span class="tg-tip" tabindex="0">FP8<span class="tg-tip-box"><b>8 位浮点（FP8, 8-bit floating point）</b>。目前大模型训练与推理的主力精度格式。</span></span>）、Amazon Trainium3（已部署超过 100 万颗 <span class="tg-tip" tabindex="0">Trainium<span class="tg-tip-box"><b>Trainium</b>。亚马逊自研的 AI 训练芯片，AWS 已部署超过 100 万颗。</span></span>）与 <span class="tg-tip" tabindex="0">Graviton<span class="tg-tip-box"><b>Graviton</b>。亚马逊自研的 ARM 服务器 CPU，如今已是 AWS 上很大一部分负载的默认选择。</span></span>、Microsoft <span class="tg-tip" tabindex="0">Maia<span class="tg-tip-box"><b>Maia</b>。微软自研的 AI 加速器；Maia 200（台积电 3nm）于 2026 年 1 月开始部署。</span></span> 200（<span class="tg-tip" tabindex="0">TSMC<span class="tg-tip-box"><b>台积电（TSMC, Taiwan Semiconductor Manufacturing Company）</b>。张忠谋 1987 年创立，发明了纯代工模式，目前占全球晶圆代工市场约 72%。</span></span> 3nm，2026 年 1 月部署）、Meta <span class="tg-tip" tabindex="0">MTIA<span class="tg-tip-box"><b>Meta Training and Inference Accelerator</b>。Meta 自研的 AI 芯片产品线。</span></span> 400/500 路线图、OpenAI 与 <span class="tg-tip" tabindex="0">Broadcom<span class="tg-tip-box"><b>博通（Broadcom）</b>。超大规模厂商定制 ASIC 的主要协同设计伙伴（Google TPU、OpenAI 的加速器）。与 Marvell 合计约占该市场 95%。</span></span> 签下 10GW 定制加速器协议。</p>
+<p>而承接这些的是 <strong>Broadcom 和 <span class="tg-tip" tabindex="0">Marvell<span class="tg-tip-box"><b>Marvell</b>。云端定制芯片的另一家主要 ASIC 设计服务提供商。</span></span></strong>，两家合计约占定制 <span class="tg-tip" tabindex="0">ASIC<span class="tg-tip-box"><b>Application-Specific Integrated Circuit</b>，专用集成电路。为某一个客户的某一个用途专门设计的芯片，与通用目录型号相对。</span></span> 协同设计市场 <strong>95%</strong>。定制 ASIC 预计占 2026 年 AI 芯片市场的 27.8%，同比增长 44.6%——对比商用 GPU 的 16.1%。</p>
+<p><strong>这是一次定价权的再分配，而不是技术路线之争。</strong></p>
+<h2>两个数字：为什么只有十几家公司玩得起</h2>
+<p><strong>第一个数字：设计成本。</strong> <span class="tg-tip" tabindex="0">IBS<span class="tg-tip-box"><b>International Business Strategies</b>。其分节点的芯片设计成本估算是业内的标准引用来源。</span></span> 估算，从零设计一颗大型 2nm 芯片约需 <strong>7.25 亿美元</strong>（这是"没有任何自有 <span class="tg-tip" tabindex="0">IP<span class="tg-tip-box"><b>Intellectual Property block</b>，IP 核。一块可复用、已验证的电路设计（CPU 核、射频、内存控制器等），像乐高积木一样被放进芯片里。今天的芯片设计在很大程度上就是 IP 的组装。</span></span>、一切从头做"的极端情形，成熟企业复用 IP 后低得多）。作为对照，<span class="tg-tip" tabindex="0">Marvell<span class="tg-tip-box"><b>Marvell</b>。云端定制芯片的另一家主要 ASIC 设计服务提供商。</span></span> 的 <span class="tg-tip" tabindex="0">ASIC<span class="tg-tip-box"><b>Application-Specific Integrated Circuit</b>，专用集成电路。为某一个客户的某一个用途专门设计的芯片，与通用目录型号相对。</span></span> 事业部负责人说过：仅仅做到<strong>一颗普通 7nm <span class="tg-tip" tabindex="0">SoC<span class="tg-tip-box"><b>System on Chip</b>，片上系统。把 CPU、GPU、内存控制器、射频、I/O 等原本分立的部件集成到同一颗芯片上。</span></span> 的首次 <span class="tg-tip" tabindex="0">tape-out<span class="tg-tip-box"><b>Tape-out</b>。设计数据（GDSII/OASIS）定稿、签核、交给代工厂的那个<b>时间点</b>。注意它是<b>事件</b>不是过程——tape out 完成只代表数据交出去了，不代表有能用的芯片。名字来自过去用磁带寄送数据。<i>中文常译作「流片」，但两者其实不是一回事</i>。</span></span></strong>，通常就要 5,000 万美元。</p>
+<p><strong>第二个数字：<span class="tg-tip" tabindex="0">wafer<span class="tg-tip-box"><b>晶圆（wafer）</b>。制造芯片所用的薄硅片，通常直径 300 毫米。代工厂按晶圆计价，而不是按芯片计价。</span></span> 成本。</strong> 2nm <span class="tg-tip" tabindex="0">晶圆<span class="tg-tip-box"><b>晶圆（wafer）</b>。制造芯片所用的薄硅片，通常直径 300 毫米。代工厂按晶圆计价，不按芯片计价。</span></span>价格业界预期在 ⚠️2.5 万–3 万美元一片。</p>
+<p>把这两个数字放在一起，结论就出来了：要摊平 7 亿美元的设计费加上每片 3 万美元的晶圆，一款芯片要么出货量极大，要么单价极高。<strong>全球有能力独立承担前沿节点大芯片的公司不超过十几家。</strong></p>
+<p><strong>先进节点的门槛不是技术，是资本。</strong> 这直接解释了产业的极端集中化。</p>
+<p><span class="tg-tip" tabindex="0">AMD<span class="tg-tip-box"><b>Advanced Micro Devices</b>，超威半导体。1969 年创立的美国无晶圆厂芯片设计公司，产品线含 CPU（Ryzen/EPYC）、GPU（Radeon/Instinct）、FPGA（收购赛灵思而来）以及主机半定制 SoC。</span></span> 的 <span class="tg-tip" tabindex="0">chiplet<span class="tg-tip-box"><b>Chiplet</b>，小芯片。把一颗大芯片拆成几颗小裸片，用高速互连拼起来。小裸片良率远高于大裸片，而且只有最需要密度的部分才用最贵的工艺。本质上是“用封装换掩模版摊销”。</span></span> 就是对这个约束的直接工程回应：<span class="tg-tip" tabindex="0">MI455X<span class="tg-tip-box"><b>Instinct MI455X</b>。AMD 2026 年的旗舰 AI GPU：约 3,200 亿晶体管，432GB HBM4，计算 die 用台积电 N2、I/O 用 N3P。</span></span> 只把 8 个计算 <span class="tg-tip" tabindex="0">die<span class="tg-tip-box"><b>Die</b>，裸片。从晶圆上切下来的一块硅。裸片越大成本越不成比例地高——因为一个缺陷会毁掉更大一块。</span></span> 放在 <span class="tg-tip" tabindex="0">TSMC<span class="tg-tip-box"><b>台积电（TSMC, Taiwan Semiconductor Manufacturing Company）</b>。张忠谋 1987 年创立，发明了纯代工模式，目前占全球晶圆代工市场约 72%。</span></span> <span class="tg-tip" tabindex="0">N2<span class="tg-tip-box"><b>台积电 N2（N2）</b>。台积电的 2 纳米级工艺节点，2025 年起量产。</span></span>，I/O、Fabric、Cache 留在 N3P。<strong>chiplet 的本质是"用封装换 <span class="tg-tip" tabindex="0">mask<span class="tg-tip-box"><b>掩模版（photomask，也叫光罩、reticle）</b>。一块石英板，上面镀铬做出<b>某一层</b>电路的图案；光透过它、经镜头缩小 4 倍投影到晶圆上。先进芯片有 60 多个光刻层，每层一张，合称一套 <b>mask set</b>：28nm 一套 &gt;100 万美元，7nm &gt;1000 万，3nm 推向 4000 万（SemiAnalysis）。贵在三处——图案要用电子束一点一点写、必须零缺陷（一个缺陷会在每片晶圆的每颗芯片上重复），以及 EUV 掩模是 Mo/Si 多层反射结构，光空白版+盒子+保护膜就占成本 50–60%。</span></span> 摊销"。</strong></p>
+<h2>真正的瓶颈在封装</h2>
+<p><span class="tg-tip" tabindex="0">TSMC<span class="tg-tip-box"><b>台积电（TSMC, Taiwan Semiconductor Manufacturing Company）</b>。张忠谋 1987 年创立，发明了纯代工模式，目前占全球晶圆代工市场约 72%。</span></span> 的 <span class="tg-tip" tabindex="0">CoWoS<span class="tg-tip-box"><b>Chip-on-Wafer-on-Substrate</b>。台积电的先进封装技术，把逻辑裸片和 HBM 堆栈接合到同一块中介层上。限制 AI 芯片产出的真正瓶颈是它的产能，而不是晶圆。</span></span> 产能：2025 年约 6.5–7.5 万片/月，2026 年扩到 12–13 万片/月。分配大致是⚠️英伟达 60%、<span class="tg-tip" tabindex="0">Broadcom<span class="tg-tip-box"><b>博通（Broadcom）</b>。超大规模厂商定制 ASIC 的主要协同设计伙伴（Google TPU、OpenAI 的加速器）。与 Marvell 合计约占该市场 95%。</span></span> 15%、<span class="tg-tip" tabindex="0">AMD<span class="tg-tip-box"><b>Advanced Micro Devices</b>，超威半导体。1969 年创立的美国无晶圆厂芯片设计公司，产品线含 CPU（Ryzen/EPYC）、GPU（Radeon/Instinct）、FPGA（收购赛灵思而来）以及主机半定制 SoC。</span></span> 11%。交期长达 <strong>52–78 周</strong>。</p>
+<p><strong>限制整个 AI 芯片供给的实际约束不是需求，也不是<span class="tg-tip" tabindex="0">晶圆<span class="tg-tip-box"><b>晶圆（wafer）</b>。制造芯片所用的薄硅片，通常直径 300 毫米。代工厂按晶圆计价，不按芯片计价。</span></span>，而是先进封装。</strong> 这是一个很少被非从业者注意到的事实。</p>
+<p><span class="tg-tip" tabindex="0">UCIe<span class="tg-tip-box"><b>Universal Chiplet Interconnect Express</b>。开放的 chiplet 互连标准（2022 年 1.0，2025 年 8 月 3.0），目标是让不同厂商的 chiplet 能互操作。但目前量产的 chiplet 几乎仍全部使用私有互连。</span></span> 标准（2022 年 1.0，2025 年 8 月 3.0，64 GT/s）想让不同厂商的 <span class="tg-tip" tabindex="0">chiplet<span class="tg-tip-box"><b>Chiplet</b>，小芯片。把一颗大芯片拆成几颗小裸片，用高速互连拼起来。小裸片良率远高于大裸片，而且只有最需要密度的部分才用最贵的工艺。本质上是“用封装换掩模版摊销”。</span></span> 像 <span class="tg-tip" tabindex="0">PCIe<span class="tg-tip-box"><b>PCIe</b>。扩展卡的标准高速接口。UCIe 的目标就是成为 chiplet 世界的 PCIe。</span></span> 板卡一样互操作。但目前量产的 chiplet 几乎全部仍是同一家公司的私有互连——AMD 的 <span class="tg-tip" tabindex="0">Infinity Fabric<span class="tg-tip-box"><b>Infinity Fabric</b>。AMD 私有的封装内互连总线，让多颗 chiplet 之间像一颗芯片一样通信。</span></span>、Intel 的 EMIB/Foveros、英伟达的 NV-HBI。<strong>开放的 chiplet 市场目前还是一个愿望。</strong></p>
+<h2>现在的规模</h2>
+<ul>
+<li><strong>2025 年全球半导体销售额 7,917 亿美元，同比 +25.6%</strong>，历史最高。逻辑 3,019 亿（+39.9%），存储 2,231 亿（+34.8%）。</li>
+<li><strong>2026 年预测约 1 万亿美元</strong>（<span class="tg-tip" tabindex="0">SIA<span class="tg-tip-box"><b>美国半导体行业协会（SIA, Semiconductor Industry Association）</b>。其月度与年度销售额数据是衡量行业规模的标准口径。</span></span> 引用 <span class="tg-tip" tabindex="0">WSTS<span class="tg-tip-box"><b>世界半导体贸易统计组织（WSTS, World Semiconductor Trade Statistics）</b>。其预测是衡量市场规模的标准参考。</span></span>）。从 5,000 亿（2021）到 1 万亿只用了五年；此前从 1,000 亿到 5,000 亿用了约二十五年。</li>
+<li><span class="tg-tip" tabindex="0">代工<span class="tg-tip-box"><b>代工（foundry / contract manufacturing）</b>。在硅晶圆上把别人设计好的电路“印”出来。台积电、三星、中芯国际做的就是这个，它们不设计自己的产品。</span></span>市场 2026 年 Q1 创纪录 479.5 亿美元，<span class="tg-tip" tabindex="0">TSMC<span class="tg-tip-box"><b>台积电（TSMC, Taiwan Semiconductor Manufacturing Company）</b>。张忠谋 1987 年创立，发明了纯代工模式，目前占全球晶圆代工市场约 72%。</span></span> 份额约 72%（<span class="tg-tip" tabindex="0">TrendForce<span class="tg-tip-box"><b>集邦咨询（TrendForce）</b>。台湾市场研究机构，其代工与存储份额数据被广泛引用。</span></span> 口径）。</li>
+<li>TSMC 2026 年 Q2 营收 402 亿美元（+36%），毛利率 67.7%，全年资本开支上调至 600–640 亿美元。</li>
+</ul>
+<p><strong>本轮周期和历史周期最大的差别：增长不再由手机和 PC 的单位出货驱动，而由少数超大规模厂商的资本开支驱动。</strong> 周期性风险因此从"消费需求"转移到了"少数客户的资本开支决策"——这是一种完全不同性质的风险，而且历史上没有先例可以参照。</p>
+<h2>地图之外：低功耗无线这条支线</h2>
+<p>上面整条主线——先进节点、<span class="tg-tip" tabindex="0">HBM<span class="tg-tip-box"><b>High Bandwidth Memory</b>，高带宽内存。垂直堆叠的 DRAM，紧贴处理器裸片放置。HBM 的容量与带宽已成为 AI 加速器的主要规格竞赛点。</span></span>、<span class="tg-tip" tabindex="0">CoWoS<span class="tg-tip-box"><b>Chip-on-Wafer-on-Substrate</b>。台积电的先进封装技术，把逻辑裸片和 HBM 堆栈接合到同一块中介层上。限制 AI 芯片产出的真正瓶颈是它的产能，而不是晶圆。</span></span>、<span class="tg-tip" tabindex="0">EFLOPS<span class="tg-tip-box"><b>ExaFLOPS</b>，每秒百亿亿次浮点运算。这个单位是 2022 年之后才变成日常用语的。</span></span>——和另一大类芯片几乎正交。</p>
+<p>以低功耗无线连接 <span class="tg-tip" tabindex="0">SoC<span class="tg-tip-box"><b>System on Chip</b>，片上系统。把 CPU、GPU、内存控制器、射频、I/O 等原本分立的部件集成到同一颗芯片上。</span></span> 为例（<span class="tg-tip" tabindex="0">BLE<span class="tg-tip-box"><b>Bluetooth Low Energy</b>，低功耗蓝牙。蓝牙自 4.0（2010）起分出的低功耗分支，让纽扣电池供电的设备（追踪器、传感器、智能家居开关）成为可能。</span></span>、<span class="tg-tip" tabindex="0">Zigbee<span class="tg-tip-box"><b>Zigbee</b>。低功耗 mesh 组网协议，广泛用于智能照明和楼宇自动化。</span></span>、<span class="tg-tip" tabindex="0">Thread<span class="tg-tip-box"><b>Thread</b>。基于 IPv6 的低功耗 mesh 协议，是大多数 Matter 智能家居设备的网络层。</span></span>、<span class="tg-tip" tabindex="0">Matter<span class="tg-tip-box"><b>Matter</b>。由苹果、谷歌、亚马逊、三星共同支持的跨厂商智能家居标准。拿到认证才是进入这些生态的入场券。</span></span> 这一层）：工艺节点在 55nm、40nm、22nm，不受先进节点的资本门槛和 CoWoS 产能约束。竞争维度是<strong>功耗、协议覆盖、认证、<span class="tg-tip" tabindex="0">SDK<span class="tg-tip-box"><b>Software Development Kit</b>，软件开发套件。芯片厂提供的代码、工具和参考设计，客户靠它把产品做出来。对标准品厂商来说，真正的“定制”大多发生在这一层。</span></span> 易用性、成本</strong>，不是算力。玩家是 <span class="tg-tip" tabindex="0">Nordic<span class="tg-tip-box"><b>Nordic Semiconductor</b>。挪威公司，十余年来一直是低功耗蓝牙 SoC 市场的领导者，也是泰凌微最主要的全球竞争对手。</span></span>、<span class="tg-tip" tabindex="0">TI<span class="tg-tip-box"><b>德州仪器（Texas Instruments，TI）</b>。1930 年做地震勘探起家，1954 年进芯片；1958 年 Jack Kilby 在这里做出世界第一块集成电路。今天是全球最大的<b>模拟（analog）</b>芯片厂：约 8 万种目录型号、约 10 万家客户，没有任何单一客户占比超过个位数。<b>它活了 90 多年靠的是「撤退」</b>——退出 DRAM、退出军工电子、2012 年手机基带（OMAP）打不过高通就直接卖掉，每次都把钱调回模拟和嵌入式。这两块的特点是：一颗料号能卖几十年，旧产线折旧完还在赚钱，所以不需要每两年赌一次先进制程。</span></span>、<span class="tg-tip" tabindex="0">Silicon Labs<span class="tg-tip-box"><b>Silicon Labs</b>，芯科科技。美国低功耗无线 SoC 厂商，在 Zigbee、Thread、Matter、Z-Wave 上很强。<b>正在被德州仪器（Texas Instruments）收购</b>：2026 年 2 月 4 日宣布，每股 231.00 美元全现金，企业价值约 75 亿美元，预计 2027 年上半年交割，前提是拿到<b>多国</b>监管批准。</span></span>、瑞萨，以及中国的泰凌微、<span class="tg-tip" tabindex="0">恒玄<span class="tg-tip-box"><b>恒玄科技（Bestechnic）</b>。中国无线音频 SoC 公司，2024 年营收 32.63 亿元，规模大于泰凌微。</span></span>、<span class="tg-tip" tabindex="0">乐鑫<span class="tg-tip-box"><b>乐鑫科技（Espressif）</b>。中国 Wi-Fi/BLE SoC 公司，以 ESP32 闻名，2024 年营收 20.07 亿元。</span></span>、中科蓝讯。</p>
+<p>单价在几毛到几美元之间，年出货以亿颗计。⚠️这类公司的毛利率反而经常高于 AI 时代的很多明星——泰凌微 2025 年毛利率 50.3%。</p>
+<p><strong>"半导体行业"其实是好几个共用词汇但不共用规律的行业。</strong> 用 AI 芯片的直觉去理解物联网芯片，几乎每一条都会错。这也是我下一篇想展开的地方。</p>
+<h2>待扩写</h2>
+<ul>
+<li>日本 1980s 的完整案例：产业政策、<span class="tg-tip" tabindex="0">良率<span class="tg-tip-box"><b>良率（yield）</b>。一片晶圆上能正常工作的芯片比例。它会随产品生命周期不断改善——这正是“合同里的逐年降价”并不必然吃掉毛利的原因。</span></span>文化、以及美国的回应到底起了多少作用</li>
+<li><span class="tg-tip" tabindex="0">ASML<span class="tg-tip-box"><b>ASML</b>，阿斯麦。荷兰公司，EUV 光刻机的唯一供应商。可以说是整个产业中最集中的一个卡点。</span></span> 与 <span class="tg-tip" tabindex="0">EUV<span class="tg-tip-box"><b>极紫外光刻（EUV）</b>。波长 13.5 纳米的曝光技术，先进节点的必需品。全世界只有 ASML 造得出这种机器。</span></span>：一个单点垄断如何形成</li>
+<li>存储器周期为什么和逻辑芯片周期不同步</li>
+<li>中国的路径：从<span class="tg-tip" tabindex="0">代工<span class="tg-tip-box"><b>代工（foundry / contract manufacturing）</b>。在硅晶圆上把别人设计好的电路“印”出来。台积电、三星、中芯国际做的就是这个，它们不设计自己的产品。</span></span>替代到 <span class="tg-tip" tabindex="0">RISC-V<span class="tg-tip-box"><b>RISC-V</b>。开放、免授权费的指令集架构。对中国芯片公司而言，它同时省掉了 ARM 的授权费和一层地缘政治依赖。</span></span></li>
+<li>低功耗无线赛道的竞争结构（单开一篇）</li>
+</ul>
+</div>
+<div class="tg-lang en">
+<p><em>A living note; I expect to keep extending it. Figures as of 17 August 2026; ⚠️ marks third-party estimates.</em></p>
+<h2>How this is written</h2>
+<p>Most short histories of semiconductors are invention timelines: who made what, when. They're hard to retain, because inventions don't explain structure.</p>
+<p>This one asks a different question: <strong>at each stage, who held the money and the pricing power, and why did it move?</strong> By that standard, eighty years contain only five real breakpoints.</p>
+<h2>Breakpoint 1: From lab to industry (1947–1971)</h2>
+<p>December 1947: Bardeen and Brattain, under <span class="tg-tip" tabindex="0">Shockley<span class="tg-tip-box"><b>William Shockley</b> — co-inventor of the transistor and 1956 Nobel laureate, whose management style drove out the eight people who founded Fairchild.</span></span> at Bell Labs, demonstrate the first point-contact transistor. 1954: <span class="tg-tip" tabindex="0">TI<span class="tg-tip-box"><b>Texas Instruments (TI)</b> — founded 1930 as a seismic-survey outfit, in chips since 1954. Jack Kilby built the first integrated circuit here in 1958. Today it is the world's largest <b>analog</b> chipmaker: ~80,000 catalog parts, ~100,000 customers, no single customer above a few percent. It survived 90+ years by <i>retreating</i> — it exited DRAM, exited defence electronics, sold its mobile-baseband business (OMAP) in 2012 after losing to Qualcomm, and each time redeployed the cash into analog and embedded, where parts sell for decades and old fabs stay profitable.</span></span> commercializes the silicon transistor. 1958: <span class="tg-tip" tabindex="0">Kilby<span class="tg-tip-box"><b>Jack Kilby</b> — built the first integrated circuit at TI in 1958; Nobel Prize 2000.</span></span> at TI builds the first integrated circuit; 1959: <span class="tg-tip" tabindex="0">Noyce<span class="tg-tip-box"><b>Robert Noyce</b> — invented the planar silicon IC at Fairchild in 1959, then co-founded Intel in 1968.</span></span> at <span class="tg-tip" tabindex="0">Fairchild<span class="tg-tip-box"><b>Fairchild Semiconductor</b> — founded 1957 by the Traitorous Eight. It invented the planar process and then spun out dozens of companies, including Intel and AMD.</span></span> invents the planar silicon IC — the manufacturable one, and the direct ancestor of every chip since.</p>
+<p>But the thing that actually mattered here wasn't an invention. It was <strong>the <span class="tg-tip" tabindex="0">Traitorous Eight<span class="tg-tip-box"><b>The Traitorous Eight</b> — the eight researchers who quit Shockley's lab in 1957 to found Fairchild Semiconductor. Shockley called them traitors; the name stuck.</span></span> of 1957</strong>. Eight young researchers, unable to tolerate Shockley's management, resigned together and founded Fairchild Semiconductor. Shockley called them traitors, and the name stuck.</p>
+<p>Two of the eight — Noyce and Moore — left again in 1968 to found Intel. <span class="tg-tip" tabindex="0">Jerry Sanders<span class="tg-tip-box"><b>Jerry Sanders</b> — AMD's founder and CEO until 2002. Unusually for the era, he came from sales, not engineering — which shows in AMD's early positioning.</span></span> left Fairchild with seven colleagues in 1969 to found <span class="tg-tip" tabindex="0">AMD<span class="tg-tip-box"><b>Advanced Micro Devices</b> — US fabless chip designer founded 1969. CPUs (Ryzen/EPYC), GPUs (Radeon/Instinct), FPGAs (via Xilinx), and semi-custom SoCs for game consoles.</span></span>. Fairchild spun off so many companies that they have their own collective noun: <strong><span class="tg-tip" tabindex="0">Fairchildren<span class="tg-tip-box"><b>Fairchildren</b> — the collective name for the many companies founded by Fairchild alumni. Intel, AMD, National Semiconductor and Intersil are among them.</span></span></strong>.</p>
+<p><strong>Silicon Valley's founding cultural gene — leave the big company, start your own — grew out of a personnel dispute.</strong> That's the first breakpoint: the technology moved out of the lab and into a repeatable organizational form.</p>
+<p><span class="tg-tip" tabindex="0">Moore's Law<span class="tg-tip-box"><b>Moore's Law</b> — Gordon Moore's 1965 observation that components per chip double at a regular cadence. A description of an economic pace, not a law of physics.</span></span> arrives in 1965. Worth remembering that it is not a law of physics but a description of an <strong>economic cadence</strong> — around which the entire industry then organized its capex, roadmaps and customer expectations. It came true in large part because everyone decided it would.</p>
+<h2>Breakpoint 2: The IDM era and the US–Japan DRAM war (1970s–1980s)</h2>
+<p>The structure here is the <span class="tg-tip" tabindex="0">IDM<span class="tg-tip-box"><b>Integrated Device Manufacturer</b> — a company that designs, manufactures, packages, tests and sells its own chips end to end. Intel, Samsung and TI are IDMs; AMD stopped being one in 2009.</span></span>: design, fab, packaging, test and sales all in-house. Intel, <span class="tg-tip" tabindex="0">TI<span class="tg-tip-box"><b>Texas Instruments (TI)</b> — founded 1930 as a seismic-survey outfit, in chips since 1954. Jack Kilby built the first integrated circuit here in 1958. Today it is the world's largest <b>analog</b> chipmaker: ~80,000 catalog parts, ~100,000 customers, no single customer above a few percent. It survived 90+ years by <i>retreating</i> — it exited DRAM, exited defence electronics, sold its mobile-baseband business (OMAP) in 2012 after losing to Qualcomm, and each time redeployed the cash into analog and embedded, where parts sell for decades and old fabs stay profitable.</span></span>, Motorola, NEC, Toshiba, Hitachi. Scale economics welded to process capability.</p>
+<p>Then Japan arrived. Backed by the national <span class="tg-tip" tabindex="0">VLSI<span class="tg-tip-box"><b>The VLSI Project</b> — Japan's 1976–1980 national research programme that gave its DRAM makers the process lead over the US.</span></span> project (1976–1980), Japanese makers beat the US in <span class="tg-tip" tabindex="0">DRAM<span class="tg-tip-box"><b>Dynamic Random-Access Memory</b> — the main working memory of computers, and the commodity battlefield on which Japan beat the US in the 1980s.</span></span> on <strong><span class="tg-tip" tabindex="0">yield<span class="tg-tip-box"><b>Yield</b> — the share of chips on a wafer that actually work. The difference between a profitable node and an unprofitable one.</span></span> and quality</strong>. By the late 1980s Japan held more than half of global semiconductor sales, with NEC, Toshiba and Hitachi occupying the top three positions. Intel was forced out of DRAM in 1985 and pivoted to microprocessors — the episode <span class="tg-tip" tabindex="0">Andy Grove<span class="tg-tip-box"><b>Andy Grove</b> — Intel CEO who coined "strategic inflection point" to describe Intel's 1985 exit from DRAM.</span></span> later canonized as a "strategic inflection point."</p>
+<p>The American response was industrial policy: the 1986 US–Japan Semiconductor Agreement (foreign-share targets inside Japan, constraints on dumping) and <span class="tg-tip" tabindex="0">SEMATECH<span class="tg-tip-box"><b>SEMATECH</b> — the 1987 US government-industry manufacturing consortium formed in response to Japan's DRAM dominance.</span></span> in 1987. Add the post-Plaza yen appreciation and Japan's asset-bubble collapse, and Japanese share eroded through the 1990s while Korea took DRAM.</p>
+<p><strong>This is the first proof that semiconductor leadership is an object of national industrial policy, not merely an outcome of market competition.</strong> The <span class="tg-tip" tabindex="0">CHIPS Act<span class="tg-tip-box"><b>CHIPS and Science Act</b> — the 2022 US law providing subsidies for domestic semiconductor manufacturing and R&amp;D.</span></span>, export controls, and EU and Japanese subsidies today are all continuations of that same line.</p>
+<h2>Breakpoint 3: The great disaggregation (1987–2000s) ★</h2>
+<p>This is the breakpoint that explains everything about today.</p>
+<p>In 1987, <span class="tg-tip" tabindex="0">Morris Chang<span class="tg-tip-box"><b>Morris Chang</b> — founded TSMC in 1987 and invented the pure-play foundry model.</span></span> founded <span class="tg-tip" tabindex="0">TSMC<span class="tg-tip-box"><b>Taiwan Semiconductor Manufacturing Company</b> — founded 1987 by Morris Chang, the company that invented pure-play foundry and now holds roughly 72% of the global foundry market.</span></span> with backing from Taiwan's ITRI, inventing the <strong>pure-play <span class="tg-tip" tabindex="0">foundry<span class="tg-tip-box"><b>Foundry</b> — a contract chip manufacturer. A <i>pure-play</i> foundry (TSMC) designs no products of its own, so it never competes with its customers — that promise is what made the model work.</span></span></strong>. The core of it wasn't technology — it was a promise: <strong>we design no products of our own, therefore we will never compete with you.</strong> Without that promise, nobody hands over their layout.</p>
+<p>The result was the <strong>decoupling of design from manufacturing</strong>. A startup no longer needed billions in fab capital to make a chip. <span class="tg-tip" tabindex="0">Xilinx<span class="tg-tip-box"><b>Xilinx</b> — the FPGA pioneer AMD bought in an all-stock deal announced at ~$35B in 2020 and closed at ~$49B in 2022. Now AMD's Embedded segment.</span></span> (1984), Qualcomm (1985), <span class="tg-tip" tabindex="0">Broadcom<span class="tg-tip-box"><b>Broadcom</b> — the dominant custom-ASIC co-design partner for hyperscalers (Google TPU, OpenAI's accelerator). With Marvell it holds roughly 95% of that market.</span></span> (1991), NVIDIA (1993) — the whole <span class="tg-tip" tabindex="0">fabless<span class="tg-tip-box"><b>Fabless</b> — a chip company that designs chips but owns no fabs, outsourcing manufacturing to a foundry. AMD, NVIDIA, Qualcomm and Telink are all fabless.</span></span> ecosystem grew out of that crack.</p>
+<p><span class="tg-tip" tabindex="0">ARM<span class="tg-tip-box"><b>ARM</b> — founded 1990; it sells no chips, only IP licences. That model is the institutional basis of both the mobile revolution and today's in-house silicon wave.</span></span>, founded 1990, pushed the division one layer further: <strong>make no chips at all, license only <span class="tg-tip" tabindex="0">IP<span class="tg-tip-box"><b>Intellectual Property block</b> — a reusable, pre-verified circuit design (a CPU core, a radio, a memory controller) that gets dropped into a chip like a Lego brick. Chip design today is mostly IP assembly.</span></span>.</strong> Suddenly every consumer electronics company could have its own <span class="tg-tip" tabindex="0">SoC<span class="tg-tip-box"><b>System on Chip</b> — a single chip that integrates CPU, GPU, memory controllers, radios and I/O that would otherwise be separate components on a board.</span></span>. The mobile revolution and today's in-house silicon wave rest on the same institutional foundation.</p>
+<p>The industry settles into four layers:</p>
+<ol>
+<li><strong><span class="tg-tip" tabindex="0">EDA<span class="tg-tip-box"><b>Electronic Design Automation</b> — the software used to design chips. A three-company oligopoly (Synopsys, Cadence, Siemens EDA) sits at the base of the whole stack.</span></span> and IP</strong> (<span class="tg-tip" tabindex="0">Synopsys<span class="tg-tip-box"><b>Synopsys</b> — one of the three EDA vendors whose software every chip in the world is designed with.</span></span>, <span class="tg-tip" tabindex="0">Cadence<span class="tg-tip-box"><b>Cadence</b> — one of the three EDA vendors at the base of the entire chip design stack.</span></span>, ARM)</li>
+<li><strong>Fabless design</strong> (NVIDIA, <span class="tg-tip" tabindex="0">AMD<span class="tg-tip-box"><b>Advanced Micro Devices</b> — US fabless chip designer founded 1969. CPUs (Ryzen/EPYC), GPUs (Radeon/Instinct), FPGAs (via Xilinx), and semi-custom SoCs for game consoles.</span></span>, Qualcomm, Apple, Telink)</li>
+<li><strong>Foundry</strong> (TSMC, Samsung, <span class="tg-tip" tabindex="0">SMIC<span class="tg-tip-box"><b>SMIC</b> — China's largest foundry.</span></span>)</li>
+<li><strong>Packaging and test, plus upstream equipment and materials</strong> (<span class="tg-tip" tabindex="0">ASML<span class="tg-tip-box"><b>ASML</b> — the Dutch company that is the sole supplier of EUV lithography machines. Arguably the single most concentrated chokepoint in the entire industry.</span></span>, AMAT, ASE)</li>
+</ol>
+<p>AMD spinning off <span class="tg-tip" tabindex="0">GlobalFoundries<span class="tg-tip-box"><b>GlobalFoundries</b> — the fab business AMD spun off in 2009 with Abu Dhabi funding. Its process delays later constrained AMD until AMD moved leading-edge work to TSMC.</span></span> in 2009 is the textbook case of migrating from layer-1 structure (<span class="tg-tip" tabindex="0">IDM<span class="tg-tip-box"><b>Integrated Device Manufacturer</b> — a company that designs, manufactures, packages, tests and sells its own chips end to end. Intel, Samsung and TI are IDMs; AMD stopped being one in 2009.</span></span>) to layer-2 (fabless) — and the reason it could out-execute Intel via TSMC a decade later. Intel is the counterexample: it held the IDM line through the 10nm and 7nm delays, lost process leadership, and only started IDM 2.0 after 2021.</p>
+<p><strong>Structural choices pay out on a ten-year horizon. That may be the cruellest fact about this industry.</strong></p>
+<h2>Breakpoint 4: Four migrations on the demand side</h2>
+<table>
+<thead>
+<tr>
+<th>Era</th>
+<th>Start</th>
+<th>Who led</th>
+<th>Where pricing power sat</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PC</td>
+<td>1981 IBM PC</td>
+<td><span class="tg-tip" tabindex="0">Wintel<span class="tg-tip-box"><b>Wintel</b> — the Windows + Intel duopoly that defined the PC era and captured most of its profit.</span></span>, with <span class="tg-tip" tabindex="0">AMD<span class="tg-tip-box"><b>Advanced Micro Devices</b> — US fabless chip designer founded 1969. CPUs (Ryzen/EPYC), GPUs (Radeon/Instinct), FPGAs (via Xilinx), and semi-custom SoCs for game consoles.</span></span> as challenger</td>
+<td>The instruction set</td>
+</tr>
+<tr>
+<td>Mobile</td>
+<td>2007 iPhone</td>
+<td><span class="tg-tip" tabindex="0">ARM<span class="tg-tip-box"><b>ARM</b> — founded 1990; it sells no chips, only IP licences. That model is the institutional basis of both the mobile revolution and today's in-house silicon wave.</span></span> ecosystem, Qualcomm, MediaTek, Apple</td>
+<td><span class="tg-tip" tabindex="0">IP<span class="tg-tip-box"><b>Intellectual Property block</b> — a reusable, pre-verified circuit design (a CPU core, a radio, a memory controller) that gets dropped into a chip like a Lego brick. Chip design today is mostly IP assembly.</span></span> and system integration</td>
+</tr>
+<tr>
+<td>Cloud / data center</td>
+<td>2006 AWS onward</td>
+<td>Intel <span class="tg-tip" tabindex="0">Xeon<span class="tg-tip-box"><b>Xeon</b> — Intel's server CPU line, which held near-total share of the data center until AMD's EPYC began taking it.</span></span> → eroded by AMD <span class="tg-tip" tabindex="0">EPYC<span class="tg-tip-box"><b>EPYC</b> — AMD's server CPU line, launched 2017. By Q1 2026 it held 46.2% of x86 server CPU revenue, an all-time high.</span></span></td>
+<td>Buyer concentration</td>
+</tr>
+<tr>
+<td>AI</td>
+<td>2012 <span class="tg-tip" tabindex="0">AlexNet<span class="tg-tip-box"><b>AlexNet</b> — the 2012 neural network that won ImageNet by a wide margin using GPUs, generally treated as the start of the deep learning era.</span></span> → 2022 ChatGPT</td>
+<td>NVIDIA</td>
+<td><strong>Software stack + interconnect + <span class="tg-tip" tabindex="0">HBM<span class="tg-tip-box"><b>High Bandwidth Memory</b> — DRAM stacked vertically and placed next to the processor die. Capacity and bandwidth of HBM is now the main spec race in AI accelerators.</span></span> supply + advanced packaging capacity</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Each migration relocated pricing power. Note what happens in the last row: <strong>in the AI era, pricing power is not in the performance of a single chip but in whether you can deliver a whole working system.</strong> That's why AMD paid $4.9B for <span class="tg-tip" tabindex="0">ZT Systems<span class="tg-tip-box"><b>ZT Systems</b> — rack-scale AI system builder AMD acquired for $4.9B, closed March 2025. It gave AMD the ability to ship whole racks, not just chips.</span></span> — it wasn't buying technology, it was buying the ability to ship a rack.</p>
+<h2>Breakpoint 5: Hyperscalers go in-house (2015–now)</h2>
+<p>Motivations, in order of weight:</p>
+<ol>
+<li><strong>Internalize the margin.</strong> NVIDIA's data center gross margin has run above 70%; every GPU a hyperscaler buys transfers margin to NVIDIA.</li>
+<li><strong>Workload certainty.</strong> In-house inference is homogeneous and enormous, so you can trade generality for perf-per-watt.</li>
+<li><strong>Supply security.</strong> Escape a single vendor's allocation power.</li>
+<li><strong>Enough scale to amortize.</strong> Hundreds of millions in design cost only pencils out if you can absorb hundreds of thousands to millions of units yourself.</li>
+</ol>
+<p>Where it stands in 2026: Google <span class="tg-tip" tabindex="0">TPU<span class="tg-tip-box"><b>Tensor Processing Unit</b> — Google's in-house AI accelerator, deployed internally since 2015. The canonical example of full-custom silicon.</span></span> v7 <span class="tg-tip" tabindex="0">Ironwood<span class="tg-tip-box"><b>Ironwood</b> — Google's TPU v7. A 9,216-chip pod reaches 42.5 EFLOPS of FP8.</span></span> (a 9,216-chip pod at 42.5 <span class="tg-tip" tabindex="0">EFLOPS<span class="tg-tip-box"><b>ExaFLOPS</b> — 10<sup>18</sup> floating point operations per second. A unit that only became conversational after 2022.</span></span> <span class="tg-tip" tabindex="0">FP8<span class="tg-tip-box"><b>8-bit floating point</b> — the current workhorse precision for large-model training and inference.</span></span>); Amazon's Trainium3 and <span class="tg-tip" tabindex="0">Graviton<span class="tg-tip-box"><b>Graviton</b> — Amazon's in-house ARM server CPU, now the default for much of AWS.</span></span> (over a million <span class="tg-tip" tabindex="0">Trainium<span class="tg-tip-box"><b>Trainium</b> — Amazon's in-house AI training chip; AWS has deployed over a million of them.</span></span> deployed); Microsoft <span class="tg-tip" tabindex="0">Maia<span class="tg-tip-box"><b>Maia</b> — Microsoft's in-house AI accelerator; Maia 200 (TSMC 3nm) began deployment in Jan 2026.</span></span> 200 (<span class="tg-tip" tabindex="0">TSMC<span class="tg-tip-box"><b>Taiwan Semiconductor Manufacturing Company</b> — founded 1987 by Morris Chang, the company that invented pure-play foundry and now holds roughly 72% of the global foundry market.</span></span> 3nm, deployed January 2026); Meta's <span class="tg-tip" tabindex="0">MTIA<span class="tg-tip-box"><b>Meta Training and Inference Accelerator</b> — Meta's in-house AI silicon line.</span></span> 400/500 roadmap; OpenAI's 10GW custom accelerator agreement with <span class="tg-tip" tabindex="0">Broadcom<span class="tg-tip-box"><b>Broadcom</b> — the dominant custom-ASIC co-design partner for hyperscalers (Google TPU, OpenAI's accelerator). With Marvell it holds roughly 95% of that market.</span></span>.</p>
+<p>And the companies actually building them — <strong>Broadcom and <span class="tg-tip" tabindex="0">Marvell<span class="tg-tip-box"><b>Marvell</b> — the other major custom-ASIC design services provider for cloud silicon.</span></span></strong> — hold roughly <strong>95%</strong> of the custom-<span class="tg-tip" tabindex="0">ASIC<span class="tg-tip-box"><b>Application-Specific Integrated Circuit</b> — a chip built for one customer's one purpose, as opposed to a general-purpose catalog part.</span></span> co-design market between them. Custom ASICs are projected at 27.8% of the 2026 AI chip market, growing 44.6% year over year against 16.1% for merchant GPUs.</p>
+<p><strong>This is a redistribution of pricing power, not a technology argument.</strong></p>
+<h2>Two numbers: why only about a dozen companies can play</h2>
+<p><strong>Number one: design cost.</strong> <span class="tg-tip" tabindex="0">IBS<span class="tg-tip-box"><b>International Business Strategies</b> — the consultancy whose per-node chip design cost estimates are the industry's standard citation.</span></span> estimates a large 2nm chip designed from scratch runs about <strong>$725M</strong> (that's the extreme case with no reusable in-house <span class="tg-tip" tabindex="0">IP<span class="tg-tip-box"><b>Intellectual Property block</b> — a reusable, pre-verified circuit design (a CPU core, a radio, a memory controller) that gets dropped into a chip like a Lego brick. Chip design today is mostly IP assembly.</span></span>; an established company reusing blocks pays far less). For calibration, <span class="tg-tip" tabindex="0">Marvell<span class="tg-tip-box"><b>Marvell</b> — the other major custom-ASIC design services provider for cloud silicon.</span></span>'s <span class="tg-tip" tabindex="0">ASIC<span class="tg-tip-box"><b>Application-Specific Integrated Circuit</b> — a chip built for one customer's one purpose, as opposed to a general-purpose catalog part.</span></span> GM has said that merely reaching <strong>first <span class="tg-tip" tabindex="0">tape-out<span class="tg-tip-box"><b>Tape-out</b> — the milestone where the design database (GDSII/OASIS) is finalized, signed off and handed to the foundry. It is an <i>event</i>, not a process: taping out means the data left the building, not that working chips exist. Named for the magnetic tapes the data used to ship on.</span></span> on an ordinary 7nm <span class="tg-tip" tabindex="0">SoC<span class="tg-tip-box"><b>System on Chip</b> — a single chip that integrates CPU, GPU, memory controllers, radios and I/O that would otherwise be separate components on a board.</span></span></strong> typically costs $50M.</p>
+<p><strong>Number two: <span class="tg-tip" tabindex="0">wafer<span class="tg-tip-box"><b>Wafer</b> — the thin disc of silicon on which chips are fabricated, typically 300mm across. Foundries price by the wafer, not by the chip.</span></span> cost.</strong> 2nm wafers are expected to price at ⚠️$25,000–30,000 each.</p>
+<p>Put the two together and the conclusion writes itself: to amortize $725M of design plus $30K wafers, a chip needs either enormous volume or an enormous price. <strong>Fewer than fifteen companies on Earth can independently carry a large leading-node chip.</strong></p>
+<p><strong>The barrier at the leading edge is capital, not capability.</strong> That is the direct cause of the industry's extreme concentration.</p>
+<p><span class="tg-tip" tabindex="0">AMD<span class="tg-tip-box"><b>Advanced Micro Devices</b> — US fabless chip designer founded 1969. CPUs (Ryzen/EPYC), GPUs (Radeon/Instinct), FPGAs (via Xilinx), and semi-custom SoCs for game consoles.</span></span>'s <span class="tg-tip" tabindex="0">chiplet<span class="tg-tip-box"><b>Chiplet</b> — splitting one big chip into several small dies connected by high-speed links. Small dies yield far better, and only the parts that need the most expensive node have to be on it. Essentially: trading packaging complexity for mask-cost amortization.</span></span> strategy is the engineering answer to exactly this constraint: on <span class="tg-tip" tabindex="0">MI455X<span class="tg-tip-box"><b>Instinct MI455X</b> — AMD's 2026 flagship AI GPU: ~320B transistors, 432GB HBM4, compute dies on TSMC N2 and I/O on N3P.</span></span> only the eight compute dies sit on <span class="tg-tip" tabindex="0">TSMC<span class="tg-tip-box"><b>Taiwan Semiconductor Manufacturing Company</b> — founded 1987 by Morris Chang, the company that invented pure-play foundry and now holds roughly 72% of the global foundry market.</span></span> <span class="tg-tip" tabindex="0">N2<span class="tg-tip-box"><b>TSMC N2</b> — TSMC's 2-nanometre-class process node, in production from 2025.</span></span>, while I/O, fabric and cache stay on N3P. <strong>A chiplet is fundamentally a trade of packaging complexity for <span class="tg-tip" tabindex="0">mask<span class="tg-tip-box"><b>Photomask</b> — a quartz plate carrying a chrome pattern for <i>one</i> layer of the chip; light projects it onto the wafer at 4× reduction. A leading-edge chip needs 60+ litho layers, so a full <b>mask set</b> runs &gt;$1M at 28nm, &gt;$10M at 7nm and toward $40M at 3nm (SemiAnalysis). Expensive because the pattern is written by e-beam one shot at a time, must be defect-free (one defect repeats on every die of every wafer), and EUV masks are reflective Mo/Si multilayers whose blank+pod+pellicle alone are 50–60% of cost.</span></span> amortization.</strong></p>
+<h2>The real bottleneck is packaging</h2>
+<p><span class="tg-tip" tabindex="0">TSMC<span class="tg-tip-box"><b>Taiwan Semiconductor Manufacturing Company</b> — founded 1987 by Morris Chang, the company that invented pure-play foundry and now holds roughly 72% of the global foundry market.</span></span>'s <span class="tg-tip" tabindex="0">CoWoS<span class="tg-tip-box"><b>Chip-on-Wafer-on-Substrate</b> — TSMC's advanced packaging technology that bonds logic dies and HBM stacks onto one interposer. Its capacity, not wafer supply, is the real bottleneck on AI chip output.</span></span> capacity: roughly 65–75k wafers/month in 2025, expanding to 120–130k/month in 2026. Allocation runs approximately ⚠️60% NVIDIA, 15% <span class="tg-tip" tabindex="0">Broadcom<span class="tg-tip-box"><b>Broadcom</b> — the dominant custom-ASIC co-design partner for hyperscalers (Google TPU, OpenAI's accelerator). With Marvell it holds roughly 95% of that market.</span></span>, 11% <span class="tg-tip" tabindex="0">AMD<span class="tg-tip-box"><b>Advanced Micro Devices</b> — US fabless chip designer founded 1969. CPUs (Ryzen/EPYC), GPUs (Radeon/Instinct), FPGAs (via Xilinx), and semi-custom SoCs for game consoles.</span></span>. Lead times are <strong>52–78 weeks</strong>.</p>
+<p><strong>The binding constraint on AI chip supply is not demand and not wafers — it's advanced packaging.</strong> Very few people outside the industry track this.</p>
+<p><span class="tg-tip" tabindex="0">UCIe<span class="tg-tip-box"><b>Universal Chiplet Interconnect Express</b> — an open standard (1.0 in 2022, 3.0 in Aug 2025) meant to let chiplets from different vendors interoperate. In practice almost all shipping chiplets still use proprietary links.</span></span> (1.0 in 2022, 3.0 at 64 GT/s in August 2025) aims to let chiplets from different vendors interoperate the way <span class="tg-tip" tabindex="0">PCIe<span class="tg-tip-box"><b>Peripheral Component Interconnect Express</b> — the standard high-speed interface for expansion cards. UCIe aims to be the PCIe of chiplets.</span></span> cards do. In practice essentially every shipping <span class="tg-tip" tabindex="0">chiplet<span class="tg-tip-box"><b>Chiplet</b> — splitting one big chip into several small dies connected by high-speed links. Small dies yield far better, and only the parts that need the most expensive node have to be on it. Essentially: trading packaging complexity for mask-cost amortization.</span></span> still uses a proprietary link — AMD's <span class="tg-tip" tabindex="0">Infinity Fabric<span class="tg-tip-box"><b>Infinity Fabric</b> — AMD's proprietary on-package interconnect that lets chiplets talk to each other as if they were one chip.</span></span>, Intel's EMIB/Foveros, NVIDIA's NV-HBI. <strong>An open chiplet market remains an aspiration.</strong></p>
+<h2>Where the industry stands</h2>
+<ul>
+<li><strong>2025 global semiconductor sales: $791.7B, up 25.6%</strong> — an all-time record. Logic $301.9B (+39.9%), memory $223.1B (+34.8%).</li>
+<li><strong>2026 forecast: around $1 trillion</strong> (<span class="tg-tip" tabindex="0">SIA<span class="tg-tip-box"><b>Semiconductor Industry Association</b> — the US trade body whose monthly and annual sales figures are the standard measure of industry size.</span></span> citing <span class="tg-tip" tabindex="0">WSTS<span class="tg-tip-box"><b>World Semiconductor Trade Statistics</b> — the industry body whose forecasts are the standard reference for market size.</span></span>). From $500B in 2021 to $1T took five years; getting from $100B to $500B took about twenty-five.</li>
+<li>Q1 2026 <span class="tg-tip" tabindex="0">foundry<span class="tg-tip-box"><b>Foundry</b> — a contract chip manufacturer. A <i>pure-play</i> foundry (TSMC) designs no products of its own, so it never competes with its customers — that promise is what made the model work.</span></span> revenue hit a record $47.95B, with <span class="tg-tip" tabindex="0">TSMC<span class="tg-tip-box"><b>Taiwan Semiconductor Manufacturing Company</b> — founded 1987 by Morris Chang, the company that invented pure-play foundry and now holds roughly 72% of the global foundry market.</span></span> at roughly 72% share (<span class="tg-tip" tabindex="0">TrendForce<span class="tg-tip-box"><b>TrendForce</b> — Taiwanese market research firm widely cited for foundry and memory share data.</span></span>).</li>
+<li>TSMC Q2 2026: $40.2B revenue (+36%), 67.7% gross margin, full-year capex raised to $60–64B.</li>
+</ul>
+<p><strong>The defining difference between this cycle and every previous one: growth is no longer driven by unit shipments of phones and PCs, but by the capex decisions of a handful of hyperscalers.</strong> Cyclical risk has moved from "consumer demand" to "a few customers' capital budgets" — a different kind of risk entirely, and one with no historical precedent to reason from.</p>
+<h2>Off the map: the low-power wireless branch</h2>
+<p>Everything above — leading nodes, <span class="tg-tip" tabindex="0">HBM<span class="tg-tip-box"><b>High Bandwidth Memory</b> — DRAM stacked vertically and placed next to the processor die. Capacity and bandwidth of HBM is now the main spec race in AI accelerators.</span></span>, <span class="tg-tip" tabindex="0">CoWoS<span class="tg-tip-box"><b>Chip-on-Wafer-on-Substrate</b> — TSMC's advanced packaging technology that bonds logic dies and HBM stacks onto one interposer. Its capacity, not wafer supply, is the real bottleneck on AI chip output.</span></span>, exaflops — is nearly orthogonal to another large category of chips.</p>
+<p>Take low-power wireless connectivity SoCs (the <span class="tg-tip" tabindex="0">BLE<span class="tg-tip-box"><b>Bluetooth Low Energy</b> — the low-power branch of Bluetooth (since 4.0, 2010) that made coin-cell devices — trackers, sensors, smart-home switches — practical.</span></span> / <span class="tg-tip" tabindex="0">Zigbee<span class="tg-tip-box"><b>Zigbee</b> — a low-power mesh networking protocol widely used in smart lighting and building automation.</span></span> / <span class="tg-tip" tabindex="0">Thread<span class="tg-tip-box"><b>Thread</b> — an IPv6-based low-power mesh protocol, the network layer under most Matter smart-home devices.</span></span> / <span class="tg-tip" tabindex="0">Matter<span class="tg-tip-box"><b>Matter</b> — the cross-vendor smart-home standard backed by Apple, Google, Amazon and Samsung. Certification is the entry ticket to those ecosystems.</span></span> layer). Process nodes are 55nm, 40nm, 22nm; no leading-edge capital barrier, no CoWoS constraint. The competitive axes are <strong>power, protocol coverage, certification, <span class="tg-tip" tabindex="0">SDK<span class="tg-tip-box"><b>Software Development Kit</b> — the code, tools and reference designs a chip vendor ships so customers can actually build products. For standard-product vendors this is where most of the real "customization" happens.</span></span> usability and cost</strong> — not compute. The players are <span class="tg-tip" tabindex="0">Nordic<span class="tg-tip-box"><b>Nordic Semiconductor</b> — the Norwegian company that has led the Bluetooth Low Energy SoC market for over a decade; Telink's primary global competitor.</span></span>, <span class="tg-tip" tabindex="0">TI<span class="tg-tip-box"><b>Texas Instruments (TI)</b> — founded 1930 as a seismic-survey outfit, in chips since 1954. Jack Kilby built the first integrated circuit here in 1958. Today it is the world's largest <b>analog</b> chipmaker: ~80,000 catalog parts, ~100,000 customers, no single customer above a few percent. It survived 90+ years by <i>retreating</i> — it exited DRAM, exited defence electronics, sold its mobile-baseband business (OMAP) in 2012 after losing to Qualcomm, and each time redeployed the cash into analog and embedded, where parts sell for decades and old fabs stay profitable.</span></span>, <span class="tg-tip" tabindex="0">Silicon Labs<span class="tg-tip-box"><b>Silicon Labs</b> — US supplier of low-power wireless SoCs, strong in Zigbee, Thread, Matter and Z-Wave. <b>Being acquired by Texas Instruments</b>: announced 4 Feb 2026, $231.00 per share all-cash, ~$7.5bn enterprise value, expected to close in H1 2027 subject to multi-jurisdiction regulatory clearance.</span></span>, Renesas, and in China Telink, Bestechnic, Espressif and Bluetrum.</p>
+<p>Unit prices run from a few cents to a few dollars; annual volumes run in the hundreds of millions of units. ⚠️Gross margins in this corner are frequently <em>higher</em> than those of AI-era headline names — Telink posted 50.3% in 2025.</p>
+<p><strong>"The semiconductor industry" is actually several industries that share a vocabulary but not a set of rules.</strong> Reasoning about IoT chips with AI-chip intuitions gets almost every step wrong. That's what I want to open up next.</p>
+<h2>To extend</h2>
+<ul>
+<li>The full 1980s Japan case: industrial policy, <span class="tg-tip" tabindex="0">yield<span class="tg-tip-box"><b>Yield</b> — the share of chips on a wafer that actually work. The difference between a profitable node and an unprofitable one.</span></span> culture, and how much the American response actually did</li>
+<li><span class="tg-tip" tabindex="0">ASML<span class="tg-tip-box"><b>ASML</b> — the Dutch company that is the sole supplier of EUV lithography machines. Arguably the single most concentrated chokepoint in the entire industry.</span></span> and <span class="tg-tip" tabindex="0">EUV<span class="tg-tip-box"><b>Extreme Ultraviolet lithography</b> — the 13.5nm-wavelength printing technology required for leading-edge nodes. Only ASML makes the machines.</span></span>: how a single-point monopoly forms</li>
+<li>Why the memory cycle doesn't sync with the logic cycle</li>
+<li>China's path: from <span class="tg-tip" tabindex="0">foundry<span class="tg-tip-box"><b>Foundry</b> — a contract chip manufacturer. A <i>pure-play</i> foundry (TSMC) designs no products of its own, so it never competes with its customers — that promise is what made the model work.</span></span> substitution to <span class="tg-tip" tabindex="0">RISC-V<span class="tg-tip-box"><b>RISC-V</b> — an open, royalty-free instruction set architecture. For a Chinese chip company it removes both ARM licence fees and a geopolitical dependency.</span></span></li>
+<li>The competitive structure of low-power wireless (its own post)</li>
+</ul>
+</div>
+</div>
+</article></body></html>
