@@ -36,10 +36,9 @@
   --font-display: var(--headerFont);     // Playfair Display — display
   --font-prose:   var(--bodyFont);       // Source Serif 4 — italic body & quotes
 
-  // Two-tier article layout. Prose reads at a book-like measure (~73ch at
-  // Source Serif 4 16px); media — figures, iframes, card rows — break out to
-  // the wide tier, centred, so pages don't collapse into one narrow strip.
-  --prose-width: 620px;
+  // Article pages are one constant-width frame; text, lists, media all fill
+  // it. One width, one left edge — no inner "reading column" tier (it read
+  // as a narrow strip against the frame).
   --wide-width: 880px;
 }
 
@@ -113,7 +112,6 @@ article p {
   color: var(--color-text) !important;
   font-size: 16px !important;
   line-height: 1.75 !important;
-  max-width: var(--prose-width);
 
   strong { color: var(--color-accent-light) !important; }
 }
@@ -138,33 +136,12 @@ body:not([data-slug="index"]) .center {
   margin-right: auto !important;
 }
 
-// Prose blocks keep the book measure on the frame's left edge; media —
-// figures, embeds, card rows — may fill the frame. Fixed px values (not ch)
-// because iframes inherit the mono font, which changes what `ch` means.
-article > p,
-article > ul,
-article > ol,
-article > blockquote,
-article > hr,
-article > h1,
-article > h2,
-article > h3,
-article > h4,
-article > h5,
-article > h6,
+// Everything in an article fills the frame from its left edge; max-width
+// only stops embeds and images from overflowing it.
+article > *,
 .moc-list {
   box-sizing: border-box;
-  max-width: var(--prose-width);
-  margin-left: 0;
-  margin-right: auto;
-}
-
-article > figure,
-article > iframe,
-article > div,
-article > img {
-  box-sizing: border-box;
-  max-width: min(var(--wide-width), 100%);
+  max-width: 100%;
   margin-left: 0;
   margin-right: auto;
 }
