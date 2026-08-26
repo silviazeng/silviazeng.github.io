@@ -46,7 +46,7 @@ body {
   background: var(--color-bg) !important;
   color: var(--color-text);
   font-family: var(--font-mono) !important;
-  font-size: 13.5px;
+  font-size: 14px;
   line-height: 1.55;
 }
 
@@ -84,7 +84,7 @@ article a {
 h1.article-title {
   font-family: var(--font-mono) !important;
   font-style: normal !important;
-  font-size: 24px !important;
+  font-size: 27px !important;
   font-weight: 500 !important;
   letter-spacing: 0 !important;
   line-height: 1.3 !important;
@@ -102,7 +102,7 @@ h1, h2:not(.page-title), h3, h4, h5, h6 {
 
 .content-meta {
   color: var(--color-text-faint) !important;
-  font-size: 12.5px !important;
+  font-size: 13.5px !important;
   font-family: var(--font-mono) !important;
   letter-spacing: 0.02em;
 }
@@ -110,7 +110,7 @@ h1, h2:not(.page-title), h3, h4, h5, h6 {
 article p {
   font-family: var(--font-prose) !important;
   color: var(--color-text) !important;
-  font-size: 16px !important;
+  font-size: 19px !important;
   line-height: 1.75 !important;
 
   strong { color: var(--color-accent-light) !important; }
@@ -151,7 +151,7 @@ article ol,
 article ul {
   font-family: var(--font-prose);
   color: var(--color-text);
-  font-size: 16px;
+  font-size: 19px;
   line-height: 1.75;
 }
 
@@ -211,7 +211,7 @@ article blockquote {
   opacity: 1 !important;
   margin: 0 0 12px !important;
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 13px;
 }
 .breadcrumb-element a { color: var(--color-text-muted) !important;
   &:hover { color: var(--color-accent-light) !important; } }
@@ -224,7 +224,7 @@ article blockquote {
   background: rgba(122, 184, 122, 0.04) !important;
   border: 1px solid #2a3a2a !important;
   border-radius: 3px !important;
-  font-size: 12px !important;
+  font-size: 12.5px !important;
   font-family: var(--font-mono) !important;
   color: var(--color-accent-light) !important;
   padding: 2px 10px !important;
@@ -279,7 +279,7 @@ footer {
 .tg-home {
   font-family: var(--font-mono);
   color: var(--color-text);
-  font-size: 13.5px;
+  font-size: 14px;
   line-height: 1.55;
 }
 
@@ -367,7 +367,7 @@ footer {
 .tg-sub {
   color: var(--color-text-dim) !important;
   max-width: 58ch;
-  font-size: 16px !important;
+  font-size: 17px !important;
   line-height: 1.6 !important;
   font-family: var(--font-prose) !important;
   font-style: italic;
@@ -433,7 +433,7 @@ footer {
 
 .tg-post-title {
   color: var(--color-text-bright) !important;
-  font-size: 14.5px;
+  font-size: 15.5px;
   font-family: var(--font-mono);
   transition: color 0.15s ease;
 }
@@ -445,7 +445,7 @@ footer {
 
 .tg-post-desc {
   color: var(--color-text-muted);
-  font-size: 13px;
+  font-size: 14px;
   font-family: var(--font-prose);
   margin-top: 6px;
   line-height: 1.55;
@@ -570,7 +570,7 @@ footer {
 
 .tg-lab-title {
   color: var(--color-text-bright);
-  font-size: 14px;
+  font-size: 15px;
   font-family: var(--font-mono);
   line-height: 1.45;
   transition: color 0.15s ease;
@@ -594,7 +594,7 @@ footer {
 .tg-lab-desc {
   color: var(--color-text-muted);
   font-family: var(--font-prose);
-  font-size: 12.5px;
+  font-size: 13.5px;
   margin-top: 4px;
   line-height: 1.5;
 }
@@ -795,7 +795,7 @@ footer {
   color: var(--color-text-bright);
   font-family: var(--font-prose);
   font-style: italic;
-  font-size: 14px;
+  font-size: 14.5px;
 }
 
 .tg-wb-author {
@@ -848,8 +848,12 @@ button:focus-visible {
 }
 
 @media (max-width: 720px) {
+  // Phones are read closer to the eye — step prose back down (research band:
+  // ~16-18px mobile vs 18-20px desktop).
+  article p { font-size: 17px !important; }
+  article li, article ol, article ul { font-size: 17px; }
   .tg-h1 { font-size: 30px; }
-  .tg-sub { font-size: 15px !important; }
+  .tg-sub { font-size: 16px !important; }
   .tg-pillars { grid-template-columns: 1fr; }
   .tg-lab { grid-template-columns: 1fr; }
   .tg-post {
@@ -1053,7 +1057,7 @@ p > .tg-tip:first-child:focus-within .tg-tip-box {
 }
 
 // Tables in these posts carry a lot of tooltips; keep them legible.
-article table { font-size: 12.5px; }
+article table { font-size: 14.5px; }
 article table td, article table th { vertical-align: top; }
 
 @media print {
