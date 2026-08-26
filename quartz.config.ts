@@ -31,15 +31,17 @@ const config: QuartzConfig = {
       },
       colors: {
         lightMode: {
-          light: "#faf8f8",
-          lightgray: "#e5e5e5",
-          gray: "#b8b8b8",
-          darkgray: "#4e4e4e",
-          dark: "#2b2b2b",
-          secondary: "#284b63",
-          tertiary: "#84a59d",
-          highlight: "rgba(143, 159, 169, 0.15)",
-          textHighlight: "#fff23688",
+          // Daylight — warm paper companion to the Terminal Garden dark theme
+          // (token sheet from the "Ever Branching Light Mode" design canvas).
+          light: "#f7f3e7",
+          lightgray: "#ded6c0",
+          gray: "#b5ac93",
+          darkgray: "#565b52",
+          dark: "#1a1d19",
+          secondary: "#2e6b30",
+          tertiary: "#4c8a4c",
+          highlight: "rgba(46, 107, 48, 0.08)",
+          textHighlight: "rgba(125, 92, 21, 0.22)",
         },
         darkMode: {
           light: "#0f1210",

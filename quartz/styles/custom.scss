@@ -40,6 +40,69 @@
   // it. One width, one left edge — no inner "reading column" tier (it read
   // as a narrow strip against the frame).
   --wide-width: 880px;
+
+  // Tinted washes & chrome that must swap with the theme (kept as tokens so
+  // the light block below is a pure token redefinition).
+  --tint-accent-03: rgba(122, 184, 122, 0.03);
+  --tint-accent-04: rgba(122, 184, 122, 0.04);
+  --tint-accent-14: rgba(122, 184, 122, 0.14);
+  --tint-amber-05:  rgba(201, 164, 90, 0.05);
+  --tint-amber-14:  rgba(201, 164, 90, 0.14);
+  --tint-lav-05:    rgba(154, 122, 201, 0.05);
+  --tint-lav-14:    rgba(154, 122, 201, 0.14);
+  --chip-border-green: #2a3a2a;
+  --chip-border-amber: #3a3220;
+  --chip-border-lav:   #2f283a;
+  --glow-graph: rgba(122, 184, 122, 0.05);
+  --shadow-pop: rgba(0, 0, 0, 0.55);
+}
+
+// ─── Daylight theme (light mode) ──────────────────────────────────────────────
+// Token sheet from the "Ever Branching Light Mode" design canvas: warm paper
+// ground, same inks family, accents deepened for AA contrast on cream.
+// saved-theme is set before first paint by the toggle script in PageTitle.
+:root[saved-theme="light"] {
+  --color-bg:           #f7f3e7;
+  --color-surface:      #f1ebdc;
+  --color-surface-dark: #ede5d0;
+  --color-surface-raised: #ece4d0;
+
+  --color-border:       #cfc6ac;
+  --color-border-mid:   #ded6c0;
+  --color-border-hover: #a9bfa4;
+
+  --color-text:         #2a2e28;
+  --color-text-dim:     #565b52;
+  --color-text-muted:   #5f6459;
+  --color-text-faint:   #676c62;
+  --color-text-bright:  #1a1d19;
+  --color-text-head:    #1a1d19;
+
+  --color-accent:        #2e6b30;
+  --color-accent-light:  #2e6b30;
+  --color-accent-mid:    #4c8a4c;
+  --color-accent-amber:  #7d5c15;
+  --color-accent-amber-light: #8a671a;
+  --color-accent-coral:  #a84545;
+  --color-accent-coral-light: #994040;
+  --color-accent-lavender:       #5f5390;
+  --color-accent-lavender-deep:  #544a85;
+  --color-accent-teal:   #2e6b30;
+
+  --color-focus-ring:   rgba(46, 107, 48, 0.5);
+
+  --tint-accent-03: rgba(46, 107, 48, 0.05);
+  --tint-accent-04: rgba(46, 107, 48, 0.06);
+  --tint-accent-14: rgba(46, 107, 48, 0.14);
+  --tint-amber-05:  rgba(125, 92, 21, 0.07);
+  --tint-amber-14:  rgba(125, 92, 21, 0.16);
+  --tint-lav-05:    rgba(95, 83, 144, 0.07);
+  --tint-lav-14:    rgba(95, 83, 144, 0.16);
+  --chip-border-green: #a9bfa4;
+  --chip-border-amber: #d3c49a;
+  --chip-border-lav:   #c3bcd8;
+  --glow-graph: rgba(46, 107, 48, 0.07);
+  --shadow-pop: rgba(60, 52, 30, 0.25);
 }
 
 body {
@@ -221,8 +284,8 @@ article blockquote {
 .tag-link {
   display: inline-flex !important;
   align-items: center !important;
-  background: rgba(122, 184, 122, 0.04) !important;
-  border: 1px solid #2a3a2a !important;
+  background: var(--tint-accent-04) !important;
+  border: 1px solid var(--chip-border-green) !important;
   border-radius: 3px !important;
   font-size: 12.5px !important;
   font-family: var(--font-mono) !important;
@@ -404,7 +467,7 @@ footer {
   transition: background 0.15s ease;
 
   &:hover {
-    background: rgba(122, 184, 122, 0.03);
+    background: var(--tint-accent-03);
     .tg-post-mk { color: var(--color-accent-light); }
     .tg-post-title { color: var(--color-text-bright) !important; }
   }
@@ -486,7 +549,7 @@ footer {
 
   &:hover {
     border-color: var(--color-border-hover);
-    background: rgba(122, 184, 122, 0.03);
+    background: var(--tint-accent-03);
   }
 }
 
@@ -539,7 +602,7 @@ footer {
   transition: background 0.15s ease;
 
   &:hover {
-    background: rgba(122, 184, 122, 0.03);
+    background: var(--tint-accent-03);
     .tg-lab-title { color: var(--color-text-bright); }
   }
 }
@@ -663,7 +726,7 @@ footer {
 .tg-panel-graph {
   height: 240px;
   position: relative;
-  background: radial-gradient(ellipse at center, rgba(122, 184, 122, 0.05), transparent 70%);
+  background: radial-gradient(ellipse at center, var(--glow-graph), transparent 70%);
 
   .graph-outer {
     height: 100%;
@@ -730,15 +793,15 @@ footer {
   padding: 3px 10px;
   font-size: 12px;
   font-family: var(--font-mono);
-  border: 1px solid #2a3a2a;
+  border: 1px solid var(--chip-border-green);
   color: var(--color-accent-light) !important;
-  background: rgba(122, 184, 122, 0.04);
+  background: var(--tint-accent-04);
   border-radius: 3px;
   text-decoration: none !important;
   transition: background 0.15s ease, border-color 0.15s ease;
 
   &:hover {
-    background: rgba(122, 184, 122, 0.14);
+    background: var(--tint-accent-14);
     border-color: var(--color-accent);
   }
 
@@ -749,15 +812,15 @@ footer {
 
   &.tg-tag-ai {
     color: var(--color-accent-amber-light) !important;
-    border-color: #3a3220;
-    background: rgba(201, 164, 90, 0.05);
-    &:hover { background: rgba(201, 164, 90, 0.14); border-color: var(--color-accent-amber); }
+    border-color: var(--chip-border-amber);
+    background: var(--tint-amber-05);
+    &:hover { background: var(--tint-amber-14); border-color: var(--color-accent-amber); }
   }
   &.tg-tag-hist {
     color: var(--color-accent-lavender) !important;
-    border-color: #2f283a;
-    background: rgba(154, 122, 201, 0.05);
-    &:hover { background: rgba(154, 122, 201, 0.14); border-color: var(--color-accent-lavender-deep); }
+    border-color: var(--chip-border-lav);
+    background: var(--tint-lav-05);
+    &:hover { background: var(--tint-lav-14); border-color: var(--color-accent-lavender-deep); }
   }
 }
 
@@ -990,7 +1053,7 @@ button:focus-visible {
   border: 1px solid var(--color-border-hover);
   border-radius: 5px;
   background: var(--color-surface-raised);
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.55);
+  box-shadow: 0 8px 28px var(--shadow-pop);
 
   font-family: var(--font-prose);
   font-size: 12.5px;

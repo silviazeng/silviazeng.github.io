@@ -1,6 +1,8 @@
 import { pathToRoot } from "../util/path"
 import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "./types"
 import { classNames } from "../util/lang"
+// @ts-ignore
+import darkmodeScript from "./scripts/darkmode.inline"
 
 const PageTitle: QuartzComponent = ({ fileData, displayClass }: QuartzComponentProps) => {
   const baseDir = pathToRoot(fileData.slug!)
@@ -29,6 +31,10 @@ const PageTitle: QuartzComponent = ({ fileData, displayClass }: QuartzComponentP
         <div class="tg-nav-sp" />
         <a class="tg-link tg-link-dim" href="https://github.com/silviazeng/silviazeng.github.io">/source</a>
         <a class="tg-link tg-link-dim" href={`${baseDir}/index.xml`}>rss</a>
+        <button class="darkmode tg-theme-toggle" aria-label="toggle light/dark theme">
+          <span class="tt-dark">[dark ●]</span>
+          <span class="tt-light">[light ○]</span>
+        </button>
       </nav>
     </div>
   )
@@ -116,6 +122,22 @@ PageTitle.css = `
   flex: 1;
 }
 
+.tg-theme-toggle {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: var(--codeFont);
+  font-size: 12.5px;
+  color: var(--darkgray);
+  opacity: 0.7;
+  transition: color 0.15s ease, opacity 0.15s ease;
+}
+.tg-theme-toggle:hover { color: var(--dark); opacity: 1; }
+.tg-theme-toggle .tt-light { display: none; }
+:root[saved-theme="light"] .tg-theme-toggle .tt-light { display: inline; }
+:root[saved-theme="light"] .tg-theme-toggle .tt-dark { display: none; }
+
 @media (max-width: 640px) {
   .tg-chrome { margin: 0 0 22px; }
   .tg-top { padding: 6px 0 14px; }
@@ -124,5 +146,7 @@ PageTitle.css = `
   .tg-nav-sp { display: none; }
 }
 `
+
+PageTitle.beforeDOMLoaded = darkmodeScript
 
 export default (() => PageTitle) satisfies QuartzComponentConstructor
