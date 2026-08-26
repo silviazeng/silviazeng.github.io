@@ -118,28 +118,28 @@ article p {
   strong { color: var(--color-accent-light) !important; }
 }
 
-// On article pages the content column is centred between the page edge and
-// the right rail. The column is wide-tier so media can breathe; the header
-// (breadcrumbs, title, meta) is capped at prose width so it aligns with the
-// text. The homepage is excluded: its tiles live inside .page-header and
-// manage their own 1240px layout.
-body:not([data-slug="index"]) .center > * {
+// On article pages the whole content column — site banner, nav, breadcrumbs,
+// title, article, afterBody — is ONE frame at wide-tier width, centred
+// between the page edge and the right rail. Everything inside shares the
+// frame's left edge: prose reads at the book measure, media may run to the
+// full frame. The homepage is excluded: its tiles live inside .page-header
+// and manage their own 1240px layout.
+body:not([data-slug="index"]) .center {
   box-sizing: border-box;
-  max-width: var(--wide-width);
-  // !important to outrank the blanket `.page-header { margin: 0 !important }`
-  // reset above.
+  // !important: Quartz base targets `.page > #quartz-body .center` (an ID
+  // selector we can't outrank cleanly) and sets min-width: 100%, which would
+  // outrank max-width anyway.
+  min-width: 0 !important;
+  // A constant frame: every article page is exactly wide-tier (viewport
+  // permitting), so the banner and rules don't change width page to page.
+  width: min(var(--wide-width), 100%) !important;
+  max-width: var(--wide-width) !important;
   margin-left: auto !important;
   margin-right: auto !important;
 }
 
-body:not([data-slug="index"]) .center > .page-header,
-body:not([data-slug="index"]) .center > .moc-list {
-  max-width: var(--prose-width);
-}
-
-// Prose blocks read at the book measure, centred within the wide column;
-// media — figures, embeds, card rows — may fill the wide tier, also centred,
-// so wide exhibits overhang the text symmetrically. Fixed px values (not ch)
+// Prose blocks keep the book measure on the frame's left edge; media —
+// figures, embeds, card rows — may fill the frame. Fixed px values (not ch)
 // because iframes inherit the mono font, which changes what `ch` means.
 article > p,
 article > ul,
@@ -151,10 +151,11 @@ article > h2,
 article > h3,
 article > h4,
 article > h5,
-article > h6 {
+article > h6,
+.moc-list {
   box-sizing: border-box;
   max-width: var(--prose-width);
-  margin-left: auto;
+  margin-left: 0;
   margin-right: auto;
 }
 
@@ -164,7 +165,7 @@ article > div,
 article > img {
   box-sizing: border-box;
   max-width: min(var(--wide-width), 100%);
-  margin-left: auto;
+  margin-left: 0;
   margin-right: auto;
 }
 
