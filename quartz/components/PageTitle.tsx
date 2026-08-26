@@ -59,7 +59,7 @@ PageTitle.css = `
 
 .tg-logo {
   font-family: var(--codeFont);
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 500;
   color: var(--dark) !important;
   text-decoration: none !important;
@@ -78,7 +78,7 @@ PageTitle.css = `
 }
 
 .tg-meta {
-  font-size: 12px;
+  font-size: 12.5px;
   color: var(--darkgray);
   opacity: 0.78;
 }
@@ -87,7 +87,7 @@ PageTitle.css = `
   display: flex;
   gap: 24px;
   padding: 18px 0 20px;
-  font-size: 12.5px;
+  font-size: 13.5px;
   color: var(--darkgray);
   border-bottom: 1px dashed var(--gray);
   flex-wrap: wrap;
@@ -128,7 +128,7 @@ PageTitle.css = `
   padding: 0;
   cursor: pointer;
   font-family: var(--codeFont);
-  font-size: 12.5px;
+  font-size: 13.5px;
   color: var(--darkgray);
   opacity: 0.7;
   transition: color 0.15s ease, opacity 0.15s ease;

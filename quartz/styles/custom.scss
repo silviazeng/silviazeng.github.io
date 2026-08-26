@@ -109,7 +109,7 @@ body {
   background: var(--color-bg) !important;
   color: var(--color-text);
   font-family: var(--font-mono) !important;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.55;
 }
 
@@ -147,7 +147,7 @@ article a {
 h1.article-title {
   font-family: var(--font-mono) !important;
   font-style: normal !important;
-  font-size: 27px !important;
+  font-size: 28px !important;
   font-weight: 500 !important;
   letter-spacing: 0 !important;
   line-height: 1.3 !important;
@@ -165,7 +165,7 @@ h1, h2:not(.page-title), h3, h4, h5, h6 {
 
 .content-meta {
   color: var(--color-text-faint) !important;
-  font-size: 13.5px !important;
+  font-size: 14px !important;
   font-family: var(--font-mono) !important;
   letter-spacing: 0.02em;
 }
@@ -173,7 +173,7 @@ h1, h2:not(.page-title), h3, h4, h5, h6 {
 article p {
   font-family: var(--font-prose) !important;
   color: var(--color-text) !important;
-  font-size: 19px !important;
+  font-size: 20px !important;
   line-height: 1.75 !important;
 
   strong { color: var(--color-accent-light) !important; }
@@ -214,7 +214,7 @@ article ol,
 article ul {
   font-family: var(--font-prose);
   color: var(--color-text);
-  font-size: 19px;
+  font-size: 20px;
   line-height: 1.75;
 }
 
@@ -246,7 +246,7 @@ article blockquote {
     color: var(--color-text-muted) !important;
     text-decoration: none !important;
     font-family: var(--font-mono);
-    font-size: 12.5px;
+    font-size: 13.5px;
     &:hover { color: var(--color-accent-light) !important; }
   }
   li.active > a { color: var(--color-accent-light) !important; }
@@ -264,7 +264,7 @@ article blockquote {
 .backlinks a {
   color: var(--color-accent-light) !important;
   font-family: var(--font-mono);
-  font-size: 12.5px;
+  font-size: 13.5px;
   &:hover { color: var(--color-text-bright) !important; }
 }
 
@@ -274,7 +274,7 @@ article blockquote {
   opacity: 1 !important;
   margin: 0 0 12px !important;
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: 13.5px;
 }
 .breadcrumb-element a { color: var(--color-text-muted) !important;
   &:hover { color: var(--color-accent-light) !important; } }
@@ -287,7 +287,7 @@ article blockquote {
   background: var(--tint-accent-04) !important;
   border: 1px solid var(--chip-border-green) !important;
   border-radius: 3px !important;
-  font-size: 12.5px !important;
+  font-size: 13px !important;
   font-family: var(--font-mono) !important;
   color: var(--color-accent-light) !important;
   padding: 2px 10px !important;
@@ -342,7 +342,7 @@ footer {
 .tg-home {
   font-family: var(--font-mono);
   color: var(--color-text);
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.55;
 }
 
@@ -384,7 +384,7 @@ footer {
 }
 
 .tg-cmd {
-  font-size: 12.5px;
+  font-size: 13.5px;
   color: var(--color-text-dim);
   margin-bottom: 20px;
 }
@@ -430,7 +430,7 @@ footer {
 .tg-sub {
   color: var(--color-text-dim) !important;
   max-width: 58ch;
-  font-size: 17px !important;
+  font-size: 18px !important;
   line-height: 1.6 !important;
   font-family: var(--font-prose) !important;
   font-style: italic;
@@ -496,7 +496,7 @@ footer {
 
 .tg-post-title {
   color: var(--color-text-bright) !important;
-  font-size: 15.5px;
+  font-size: 16.5px;
   font-family: var(--font-mono);
   transition: color 0.15s ease;
 }
@@ -508,7 +508,7 @@ footer {
 
 .tg-post-desc {
   color: var(--color-text-muted);
-  font-size: 14px;
+  font-size: 14.5px;
   font-family: var(--font-prose);
   margin-top: 6px;
   line-height: 1.55;
@@ -569,7 +569,7 @@ footer {
 
 .tg-pill-name {
   font-family: var(--font-display);
-  font-size: 21px;
+  font-size: 22px;
   font-weight: 500;
   letter-spacing: -0.01em;
   line-height: 1.25;
@@ -633,7 +633,7 @@ footer {
 
 .tg-lab-title {
   color: var(--color-text-bright);
-  font-size: 15px;
+  font-size: 15.5px;
   font-family: var(--font-mono);
   line-height: 1.45;
   transition: color 0.15s ease;
@@ -657,7 +657,7 @@ footer {
 .tg-lab-desc {
   color: var(--color-text-muted);
   font-family: var(--font-prose);
-  font-size: 13.5px;
+  font-size: 14px;
   margin-top: 4px;
   line-height: 1.5;
 }
@@ -858,7 +858,7 @@ footer {
   color: var(--color-text-bright);
   font-family: var(--font-prose);
   font-style: italic;
-  font-size: 14.5px;
+  font-size: 15px;
 }
 
 .tg-wb-author {
@@ -1130,4 +1130,35 @@ article table td, article table th { vertical-align: top; }
   #tg-lang-en:checked ~ .tg-lang.zh { display: block; }
   .tg-tip-box { display: none; }
   .tg-bi-switch { display: none; }
+}
+
+// ─── Exhibit link-cards inside posts ─────────────────────────────────────────
+// The global `article a` color rule is !important, so card text colors must be
+// !important too (inline colors were silently overridden — unreadable in light
+// mode). Dark: deep tinted slabs (the original look). Light: paper cards in
+// the same channels. Getty cards keep their brand colors in both themes.
+article .x-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 1.25rem 0;
+}
+article a.x-card {
+  flex: 1 1 220px;
+  padding: 1.1rem 1.25rem;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  line-height: 1.4;
+  text-decoration: none !important;
+}
+article a.x-card .x-desc { font-size: 0.85rem; opacity: 0.85; }
+article a.x-card.xc-green { background: #1c2b1c; color: #a0d8a0 !important; }
+article a.x-card.xc-amber { background: #2b241c; color: #e2c98a !important; }
+article a.x-card.xc-blue  { background: #1c242b; color: #9cc3e0 !important; }
+article a.x-card.xc-getty-blue { background: #1a4f8c; color: #f5ecd2 !important; line-height: 1.35; }
+article a.x-card.xc-getty-gold { background: #b8923a; color: #2a2218 !important; line-height: 1.35; }
+:root[saved-theme="light"] {
+  article a.x-card.xc-green { background: #eaf0df; border-color: #a9bfa4; color: #275c29 !important; }
+  article a.x-card.xc-amber { background: #f3ecd6; border-color: #d3c49a; color: #6f5213 !important; }
+  article a.x-card.xc-blue  { background: #e2eaf1; border-color: #a9bdd0; color: #2b567a !important; }
 }
