@@ -2,7 +2,7 @@
 title: A semiconductor industry reader
 date: 2026-08-26
 tags:
-  - AI
+  - power
   - learning
   - history
   - interactive
