@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh"><head><meta charset="utf-8">
+<html lang="zh"><head><meta charset="utf-8"><script>(function(){var t;try{t=localStorage.getItem("theme")}catch(e){}if(!t)t=(window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches)?"light":"dark";document.documentElement.setAttribute("saved-theme",t)})()</script>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>The Geopolitics of TSMC: Chokepoints, Not Chips</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Source+Serif+4:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"><style>
 
 :root{
+  --zebra:rgba(255,255,255,.012); --shadow-pop:rgba(0,0,0,.55); --tint-amber:rgba(201,164,90,.05);
   --color-bg:#0f1210; --color-surface:#141814; --color-surface-dark:#0b0d0b;
   --color-surface-raised:#1a1e1a; --color-border:#2a2e2a; --color-border-mid:#202420;
   --color-border-hover:#3a4a3a; --color-text:#d8d4c8; --color-text-dim:#a0a498;
@@ -47,7 +48,7 @@ th,td{border:1px solid var(--color-border);padding:.5rem .6rem;text-align:left;
   vertical-align:top}
 th{background:var(--color-surface-dark);color:var(--color-text-dim);font-weight:500;
   font-size:11px;letter-spacing:.04em;text-transform:uppercase}
-tbody tr:nth-child(even){background:rgba(255,255,255,.012)}
+tbody tr:nth-child(even){background:var(--zebra)}
 
 /* ── language switch ───────────────────────────────────────────── */
 .tg-bi>input[type=radio]{position:absolute;opacity:0;width:0;height:0;pointer-events:none}
@@ -78,7 +79,7 @@ tbody tr:nth-child(even){background:rgba(255,255,255,.012)}
 .tg-tip-box{position:absolute;bottom:calc(100% + 9px);left:50%;z-index:40;
   width:max-content;max-width:min(360px,82vw);padding:.6rem .75rem;
   border:1px solid var(--color-border-hover);border-radius:5px;
-  background:var(--color-surface-raised);box-shadow:0 8px 28px rgba(0,0,0,.55);
+  background:var(--color-surface-raised);box-shadow:0 8px 28px var(--shadow-pop);
   font-family:var(--font-prose);font-size:12.5px;font-style:normal;line-height:1.6;
   letter-spacing:0;color:var(--color-text-dim);text-align:left;white-space:normal;
   text-transform:none;opacity:0;visibility:hidden;transform:translate(-50%,4px);
@@ -101,12 +102,28 @@ p>.tg-tip:first-child:focus-within .tg-tip-box{transform:translate(0,0)}
 .banner{border:1px dashed var(--color-border-hover);border-radius:5px;
   padding:.6rem .8rem;margin:0 0 2rem;color:var(--color-text-faint);font-size:11px;
   letter-spacing:.03em}
+
+/* ── Daylight (light mode) — follows the blog's saved-theme / system ── */
+:root[saved-theme="light"]{
+  --color-bg:#f7f3e7; --color-surface:#f1ebdc; --color-surface-dark:#ede5d0;
+  --color-surface-raised:#ece4d0; --color-border:#cfc6ac; --color-border-mid:#ded6c0;
+  --color-border-hover:#a9bfa4; --color-text:#2a2e28; --color-text-dim:#565b52;
+  --color-text-muted:#5f6459; --color-text-faint:#676c62; --color-text-bright:#1a1d19;
+  --color-accent:#2e6b30; --color-accent-light:#2e6b30; --color-accent-amber:#7d5c15;
+  --color-focus-ring:rgba(46,107,48,.5);
+  --zebra:rgba(0,0,0,.025); --shadow-pop:rgba(60,52,30,.25); --tint-amber:rgba(125,92,21,.07);
+}
+.tg-theme-btn{background:none;border:none;cursor:pointer;font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;color:var(--color-text-faint);padding:3px 10px;border-radius:3px}
+.tg-theme-btn:hover{color:var(--color-text-dim)}
+.tg-theme-btn .tt-l{display:none}
+:root[saved-theme="light"] .tg-theme-btn .tt-l{display:inline}
+:root[saved-theme="light"] .tg-theme-btn .tt-d{display:none}
 </style></head><body><article>
 <h1 class="article-title">The Geopolitics of TSMC: Chokepoints, Not Chips</h1>
 <p class="meta">2026-08-21 · silviazeng.github.io · 续《Five Breakpoints》</p>
 <div class="tg-bi">
 <p><input type="radio" name="tgbilang" id="tg-lang-zh" checked><input type="radio" name="tgbilang" id="tg-lang-en"></p>
-<div aria-label="language" class="tg-bi-switch" role="group"><label for="tg-lang-zh">中文</label><label for="tg-lang-en">EN</label></div>
+<div aria-label="language" class="tg-bi-switch" role="group"><label for="tg-lang-zh">中文</label><label for="tg-lang-en">EN</label><button class="tg-theme-btn" aria-label="toggle light/dark" onclick="var r=document.documentElement,t=r.getAttribute('saved-theme')==='dark'?'light':'dark';r.setAttribute('saved-theme',t);try{localStorage.setItem('theme',t)}catch(e){}"><span class="tt-d">dark ●</span><span class="tt-l">light ○</span></button></div>
 <p class="tg-bi-hint">悬停任意术语可看解释 · hover any term for a note</p>
 <div class="tg-lang zh">
 <p><em>这是《半导体行业简史：五个断点》的续篇，同样会持续扩写。数据截至 2026 年 8 月 21 日，标 ⚠️ 的是第三方估算或单一信源，需要打折读。</em></p>

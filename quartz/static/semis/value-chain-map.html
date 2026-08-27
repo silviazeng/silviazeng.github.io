@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh"><head><meta charset="utf-8">
+<html lang="zh"><head><meta charset="utf-8"><script>(function(){var t;try{t=localStorage.getItem("theme")}catch(e){}if(!t)t=(window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches)?"light":"dark";document.documentElement.setAttribute("saved-theme",t)})()</script>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Semiconductor Value Chain: The Full Map</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Source+Serif+4:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"><style>
 
 :root{
+  --zebra:rgba(255,255,255,.012); --shadow-pop:rgba(0,0,0,.55); --tint-amber:rgba(201,164,90,.05);
   --color-bg:#0f1210; --color-surface:#141814; --color-surface-dark:#0b0d0b;
   --color-surface-raised:#1a1e1a; --color-border:#2a2e2a; --color-border-mid:#202420;
   --color-border-hover:#3a4a3a; --color-text:#d8d4c8; --color-text-dim:#a0a498;
@@ -47,7 +48,7 @@ th,td{border:1px solid var(--color-border);padding:.5rem .6rem;text-align:left;
   vertical-align:top}
 th{background:var(--color-surface-dark);color:var(--color-text-dim);font-weight:500;
   font-size:11px;letter-spacing:.04em;text-transform:uppercase}
-tbody tr:nth-child(even){background:rgba(255,255,255,.012)}
+tbody tr:nth-child(even){background:var(--zebra)}
 
 /* ── language switch ───────────────────────────────────────────── */
 .tg-bi>input[type=radio]{position:absolute;opacity:0;width:0;height:0;pointer-events:none}
@@ -78,7 +79,7 @@ tbody tr:nth-child(even){background:rgba(255,255,255,.012)}
 .tg-tip-box{position:absolute;bottom:calc(100% + 9px);left:50%;z-index:40;
   width:max-content;max-width:min(360px,82vw);padding:.6rem .75rem;
   border:1px solid var(--color-border-hover);border-radius:5px;
-  background:var(--color-surface-raised);box-shadow:0 8px 28px rgba(0,0,0,.55);
+  background:var(--color-surface-raised);box-shadow:0 8px 28px var(--shadow-pop);
   font-family:var(--font-prose);font-size:12.5px;font-style:normal;line-height:1.6;
   letter-spacing:0;color:var(--color-text-dim);text-align:left;white-space:normal;
   text-transform:none;opacity:0;visibility:hidden;transform:translate(-50%,4px);
@@ -107,6 +108,10 @@ p>.tg-tip:first-child:focus-within .tg-tip-box{transform:translate(0,0)}
   --r-us:#7ab87a; --r-tw:#c9a45a; --r-cn:#d4886e; --r-kr:#7fa6cc;
   --r-jp:#a294cf; --r-eu:#63bdae; --r-nl:#63bdae; --r-gl:#8b9088;
 }
+:root[saved-theme="light"]{
+  --r-us:#2e6b30; --r-tw:#7d5c15; --r-cn:#a8543a; --r-kr:#3d6a94;
+  --r-jp:#64549c; --r-eu:#2f7a6d; --r-nl:#2f7a6d; --r-gl:#5f6459;
+}
 .legend{display:flex;flex-wrap:wrap;gap:.4rem;margin:0 0 .6rem}
 .legend .b-us{color:var(--r-us)} .legend .b-tw{color:var(--r-tw)}
 .legend .b-cn{color:var(--r-cn)} .legend .b-kr{color:var(--r-kr)}
@@ -130,7 +135,7 @@ p>.tg-tip:first-child:focus-within .tg-tip-box{transform:translate(0,0)}
 .gov-us{color:var(--r-us)} .gov-cn{color:var(--r-cn)} .gov-tw{color:var(--r-tw)}
 .st-kicker{color:var(--color-text-muted);margin:.1rem 0 .9rem;
   font-family:var(--font-prose);line-height:1.55}
-.choke{border-left:2px solid var(--color-accent-amber);background:rgba(201,164,90,.05);
+.choke{border-left:2px solid var(--color-accent-amber);background:var(--tint-amber);
   padding:.5rem .75rem;margin:0 0 1rem;line-height:1.6}
 .choke b{color:var(--color-accent-amber);font-weight:500}
 .choke span{color:var(--color-text-dim);font-family:var(--font-prose)}
@@ -300,6 +305,22 @@ h1.article-title{font-size:26px}
 #mapwrap:has(#r-jp:checked) .fig .sr-jp,
 #mapwrap:has(#r-eu:checked) .fig .sr-eu,
 #mapwrap:has(#r-gl:checked) .fig .sr-gl{color:var(--color-text-bright)}
+
+/* ── Daylight (light mode) — follows the blog's saved-theme / system ── */
+:root[saved-theme="light"]{
+  --color-bg:#f7f3e7; --color-surface:#f1ebdc; --color-surface-dark:#ede5d0;
+  --color-surface-raised:#ece4d0; --color-border:#cfc6ac; --color-border-mid:#ded6c0;
+  --color-border-hover:#a9bfa4; --color-text:#2a2e28; --color-text-dim:#565b52;
+  --color-text-muted:#5f6459; --color-text-faint:#676c62; --color-text-bright:#1a1d19;
+  --color-accent:#2e6b30; --color-accent-light:#2e6b30; --color-accent-amber:#7d5c15;
+  --color-focus-ring:rgba(46,107,48,.5);
+  --zebra:rgba(0,0,0,.025); --shadow-pop:rgba(60,52,30,.25); --tint-amber:rgba(125,92,21,.07);
+}
+.tg-theme-btn{background:none;border:none;cursor:pointer;font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;color:var(--color-text-faint);padding:3px 10px;border-radius:3px}
+.tg-theme-btn:hover{color:var(--color-text-dim)}
+.tg-theme-btn .tt-l{display:none}
+:root[saved-theme="light"] .tg-theme-btn .tt-l{display:inline}
+:root[saved-theme="light"] .tg-theme-btn .tt-d{display:none}
 </style></head><body><article>
 <h1 class="article-title">半导体产业链全图 · Semiconductor Value Chain: The Full Map</h1>
 <p class="meta">2026-08-21 · silviazeng.github.io</p>
@@ -307,7 +328,7 @@ h1.article-title{font-size:26px}
 <p><input type="radio" name="tgbilang" id="tg-lang-zh" checked><input type="radio" name="tgbilang" id="tg-lang-en"></p>
 <div id="mapwrap"><input type="radio" name="regsel" id="r-all" checked><input type="radio" name="regsel" id="r-us"><input type="radio" name="regsel" id="r-tw"><input type="radio" name="regsel" id="r-cn"><input type="radio" name="regsel" id="r-kr"><input type="radio" name="regsel" id="r-jp"><input type="radio" name="regsel" id="r-eu"><input type="radio" name="regsel" id="r-gl"><div class="ctrlbar">
 <div class="ctrl-group"><span class="ctrl-lab">Language</span>
-<div aria-label="language" class="tg-bi-switch" role="group"><label for="tg-lang-zh">中文</label><label for="tg-lang-en">EN</label></div></div>
+<div aria-label="language" class="tg-bi-switch" role="group"><label for="tg-lang-zh">中文</label><label for="tg-lang-en">EN</label><button class="tg-theme-btn" aria-label="toggle light/dark" onclick="var r=document.documentElement,t=r.getAttribute('saved-theme')==='dark'?'light':'dark';r.setAttribute('saved-theme',t);try{localStorage.setItem('theme',t)}catch(e){}"><span class="tt-d">dark ●</span><span class="tt-l">light ○</span></button></div></div>
 <div class="ctrl-group"><span class="ctrl-lab"><span class="tg-lang zh">地区筛选</span><span class="tg-lang en">Region filter</span></span><div class="legend"><label class="b-all" for="r-all"><span class="tg-lang zh">全部</span><span class="tg-lang en">All</span></label><label class="b-us" for="r-us"><span class="tg-lang zh">美国</span><span class="tg-lang en">US</span></label><label class="b-tw" for="r-tw"><span class="tg-lang zh">台湾</span><span class="tg-lang en">Taiwan</span></label><label class="b-cn" for="r-cn"><span class="tg-lang zh">中国大陆</span><span class="tg-lang en">China</span></label><label class="b-kr" for="r-kr"><span class="tg-lang zh">韩国</span><span class="tg-lang en">Korea</span></label><label class="b-jp" for="r-jp"><span class="tg-lang zh">日本</span><span class="tg-lang en">Japan</span></label><label class="b-eu" for="r-eu"><span class="tg-lang zh">欧洲</span><span class="tg-lang en">Europe</span></label><label class="b-gl" for="r-gl"><span class="tg-lang zh">跨国/标准</span><span class="tg-lang en">Global/Standards</span></label></div></div>
 </div>
 <p class="hint"><span class="tg-lang zh">悬停任意玩家或环节可看解释；颜色 = 总部所在地，点「地区筛选」只看某一地区；<b>US / CN / TW</b> 角标 = 该层受哪套管辖权约束。</span><span class="tg-lang en">Hover any player or stage for a note. Color = HQ region — use the region filter to isolate one. <b>US / CN / TW</b> badges mark which jurisdiction binds each layer.</span></p>

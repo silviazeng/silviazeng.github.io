@@ -1162,3 +1162,9 @@ article a.x-card.xc-getty-gold { background: #b8923a; color: #2a2218 !important;
   article a.x-card.xc-amber { background: #f3ecd6; border-color: #d3c49a; color: #6f5213 !important; }
   article a.x-card.xc-blue  { background: #e2eaf1; border-color: #a9bdd0; color: #2b567a !important; }
 }
+
+// Theme-paired images: posts may ship a dark and a light capture of the same
+// exhibit; only the one matching the current theme renders.
+article img.only-light { display: none !important; }
+:root[saved-theme="light"] article img.only-dark { display: none !important; }
+:root[saved-theme="light"] article img.only-light { display: block !important; }
