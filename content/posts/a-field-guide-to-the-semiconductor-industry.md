@@ -7,20 +7,12 @@ tags:
   - industry
   - geopolitics
   - interactive
-description: "Why I went down the semiconductor rabbit hole, and the three interactive pages that came out of it: a history told as five breakpoints, the geopolitics around TSMC told as chokepoints, and a clickable map of the whole value chain."
+description: "Why I went down the semiconductor rabbit hole, and the first interactive page that came out of it: a clickable map of the whole value chain."
 ---
 
 Recently work pulled me toward the semiconductor industry, and I found my picture of it was a pile of headlines — EUV, CoWoS, export controls, one indispensable company in Taiwan. I wanted the structure underneath: how the industry got its shape, where the money and pricing power sit, and how deeply the players depend on one another. So I have been writing it down as a series of interactive pages, because half of what I needed turned out to be a map rather than an essay.
 
-Each page is bilingual (中文 / EN), with a hover note on every term of art:
-
 <div class="x-cards">
-  <a href="/static/semis/five-breakpoints.html" data-router-ignore class="x-card xc-green">
-    <strong>Five Breakpoints</strong><br><span class="x-desc">A short history of the semiconductor industry, told by where the money and pricing power moved.</span>
-  </a>
-  <a href="/static/semis/tsmc-geopolitics.html" data-router-ignore class="x-card xc-amber">
-    <strong>Chokepoints, Not Chips</strong><br><span class="x-desc">The geopolitics around TSMC: how the industry's chokepoints came to be, how they are shifting, and what they cost everyone.</span>
-  </a>
   <a href="/static/semis/value-chain-map.html" data-router-ignore class="x-card xc-blue">
     <strong>The Full Map</strong><br><span class="x-desc">Every layer of the value chain and who plays where — filter by region, hover any player.</span>
   </a>

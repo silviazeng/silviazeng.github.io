@@ -17,23 +17,17 @@ I felt spent, defeated, and lost; I had been through self-doubt, self-blame, and
 
 For my dear readers that don’t know Gradient Descent([wiki link](https://en.wikipedia.org/wiki/Gradient_descent)), all you need to know is it’s an algorithm used to achieve optimization through iterative steps. And it works like this, ideally:
 
-Press enter or click to view image in full size
-
 ![](https://miro.medium.com/v2/resize:fit:700/1*-Yc9Ma5b9y4-Ybaq9F1eKw.png)
 
 (source:wiki) You thought your career would be like a smooth path running to the center
 
 You thought you would happily walk downhill (yes, in Gradient Descent, an optimization object is typically to minimize a function), one step across a contour line: got in a great college, then a prestigious investment bank, survived the top MBA program, and secured an exciting job… However, the reality was more like this squiggly path:
 
-Press enter or click to view image in full size
-
 ![](https://miro.medium.com/v2/resize:fit:700/1*OVsVpidoZXZ3owFafBhC_g.png)
 
 (source: Andrew Ng, Machine Learning) Sometimes you felt you are randomly walking downhill and uphill
 
 To make things worse, you are not even converging, or converging to a suboptimal point that you couldn’t get out:
-
-Press enter or click to view image in full size
 
 ![](https://miro.medium.com/v2/resize:fit:700/1*JcESS5LasB-yvuS8-eSXPg.png)
 
@@ -56,8 +50,6 @@ When you find yourself in a random walk, and you doubt that you are in the middl
 Any type of change requires courage, and could entail pain. Moving from my hometown to Shanghai requires just a tiny drop of courage, but moving across the globe and changing career tracks require more and it did entail pain. I could be on the wrong path going further from my optimization object, I could be just in the middle of a squiggly path to the destination. But if I stop the iterations and sit on my current spot, I would never find out which is true.
 
 **3) Two ways to improve your optimization: more data, tweak the model**
-
-Press enter or click to view image in full size
 
 ![](https://miro.medium.com/v2/resize:fit:700/1*jLbXI85U8t9Aj9MbcVyOmg.png)
 
