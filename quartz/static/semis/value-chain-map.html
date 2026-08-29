@@ -317,33 +317,23 @@ h1.article-title{font-size:26px}
   --zebra:rgba(0,0,0,.025); --shadow-pop:rgba(60,52,30,.25); --tint-amber:rgba(125,92,21,.07);
 }
 
-/* ── mobile: tooltip becomes a bottom sheet ── */
+/* ── mobile: tooltip stays by the card, but spans the row so it can't be clipped ── */
 @media (max-width: 740px){
-  /* a transformed ancestor would trap position:fixed — remove it */
-  .chip:hover,.chip:focus-visible{transform:none}
-  .tg-tip-box,
-  .chip .tg-tip-box,
-  .govcard .tg-tip-box,
-  .fig .tg-tip .tg-tip-box,
-  .fig .tipL .tg-tip-box,
-  .fig .tipR .tg-tip-box{
-    position:fixed;inset:auto 10px 12px 10px;
-    width:auto;max-width:none;
-    transform:translateY(10px);
-    font-size:15.5px;line-height:1.62;padding:.9rem 1rem;
-    border-radius:9px;box-shadow:0 -10px 36px var(--shadow-pop);
-    max-height:52vh;overflow-y:auto;z-index:200}
-  .tg-tip-box::after{display:none}
-  .tg-tip:hover .tg-tip-box,.tg-tip:focus-within .tg-tip-box,
-  .chip:hover .tg-tip-box,.chip:focus-within .tg-tip-box,
-  .govcard:hover .tg-tip-box,.govcard:focus-within .tg-tip-box,
-  .fig .tg-tip:hover .tg-tip-box,.fig .tg-tip:focus-within .tg-tip-box,
-  .fig .tipL:hover .tg-tip-box,.fig .tipL:focus-within .tg-tip-box,
-  .fig .tipR:hover .tg-tip-box,.fig .tipR:focus-within .tg-tip-box{
-    transform:translateY(0);
-    transition:opacity .14s ease,transform .16s ease,visibility 0s}
-  .fig{padding-left:.75rem;padding-right:.75rem}
-  .fgrid{min-width:940px}
+  /* anchor a chip's tooltip to its row, not to the chip, so it never
+     starts at a right-hand edge and run off screen */
+  .chips{position:relative}
+  .chip{position:static}
+  .chip .tg-tip-box{left:0;right:0;top:calc(100% + 8px);
+    width:auto;max-width:none;transform:translateY(-4px)}
+  .chip:hover .tg-tip-box,.chip:focus-within .tg-tip-box{transform:translateY(0)}
+  .chip .tg-tip-box::after{left:24px}
+  /* jurisdiction cards are already full width in one column */
+  .govcard .tg-tip-box{left:0;right:0;width:auto;max-width:none;
+    transform:translateY(-4px)}
+  .govcard:hover .tg-tip-box,.govcard:focus-within .tg-tip-box{transform:translateY(0)}
+  /* inside the scrolling diagram, keep them narrow enough to sit on the canvas */
+  .fig .tg-tip-box{max-width:min(330px,78vw)}
+  .tg-tip-box{font-size:15px;padding:.8rem .9rem}
 }
 </style></head><body><article>
 <h1 class="article-title">半导体产业链全图 · Semiconductor Value Chain: The Full Map</h1>
