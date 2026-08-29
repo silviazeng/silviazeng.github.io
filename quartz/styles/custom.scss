@@ -792,16 +792,18 @@ footer {
   padding: 3px 10px;
   font-size: 12px;
   font-family: var(--font-mono);
-  border: 1px solid var(--chip-border-green);
+  // Quiet chrome: one neutral hairline for every chip; the channel lives in
+  // the text color alone. Tinted backgrounds x 4 hues read as confetti.
+  border: 1px solid var(--color-border-mid);
   color: var(--color-accent-light) !important;
-  background: var(--tint-accent-04);
+  background: transparent;
   border-radius: 3px;
   text-decoration: none !important;
   transition: background 0.15s ease, border-color 0.15s ease;
 
   &:hover {
     background: var(--tint-accent-14);
-    border-color: var(--color-accent);
+    border-color: var(--color-border-hover);
   }
 
   .tg-tag-c {
@@ -811,15 +813,11 @@ footer {
 
   &.tg-tag-ai {
     color: var(--color-accent-amber-light) !important;
-    border-color: var(--chip-border-amber);
-    background: var(--tint-amber-05);
-    &:hover { background: var(--tint-amber-14); border-color: var(--color-accent-amber); }
+    &:hover { background: var(--tint-amber-14); }
   }
   &.tg-tag-hist {
     color: var(--color-accent-lavender) !important;
-    border-color: var(--chip-border-lav);
-    background: var(--tint-lav-05);
-    &:hover { background: var(--tint-lav-14); border-color: var(--color-accent-lavender-deep); }
+    &:hover { background: var(--tint-lav-14); }
   }
 }
 
