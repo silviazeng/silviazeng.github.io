@@ -33,4 +33,4 @@ I'm more interested in why it works than whether it works.*
 
 ## Semiconductors
 
-- [A Field Guide to the Semiconductor Industry](/posts/a-field-guide-to-the-semiconductor-industry) three interactive pages on where pricing power sits, and why it moves
+- [A Field Guide to the Semiconductor Industry](/posts/a-field-guide-to-the-semiconductor-industry) an interactive map of the value chain, and where the pricing power sits
