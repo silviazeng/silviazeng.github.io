@@ -406,9 +406,15 @@ footer {
 
 .tg-h1 {
   font-family: var(--font-display) !important;
-  font-size: 42px;
+  // Fluid display size. 42px was set when this was three lines; at two it
+  // filled only 72% of the column and read as timid. 50px fills ~86% — the
+  // line reaches for the measure without crowding it. Fluid because the left
+  // column collapses from 852px to 670px around a 1100px viewport, where any
+  // fixed size above ~42px wraps the second line. Floor matches the mobile
+  // override below.
+  font-size: clamp(30px, calc(2.9vw + 6px), 50px);
   font-weight: 400 !important;
-  line-height: 1.1;
+  line-height: 1.08;
   letter-spacing: -0.015em;
   margin: 0 0 20px;
   color: var(--color-text-head) !important;
@@ -903,6 +909,9 @@ button:focus-visible {
   .tg-rail { align-self: auto; }
   .tg-rail-inner { position: static; }
   .tg-rail-stickzone { flex: 0 1 auto; }
+  // The rail is gone here, so the hero gets the full column back — steeper
+  // curve, otherwise the viewport-based size shrinks just as the measure widens.
+  .tg-h1 { font-size: clamp(30px, 5vw, 46px); }
 }
 
 @media (max-width: 720px) {
@@ -910,7 +919,6 @@ button:focus-visible {
   // ~16-18px mobile vs 18-20px desktop).
   article p { font-size: 17px !important; }
   article li, article ol, article ul { font-size: 17px; }
-  .tg-h1 { font-size: 30px; }
   .tg-sub { font-size: 16px !important; }
   .tg-pillars { grid-template-columns: 1fr; }
   .tg-lab { grid-template-columns: 1fr; }
