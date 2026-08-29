@@ -425,7 +425,9 @@ footer {
   font-weight: 400 !important;
   line-height: 1.08;
   letter-spacing: -0.015em;
-  margin: 0 0 20px;
+  // 20px under a 50px display line is 0.4x its size; the phone gives its 36px
+  // hero 0.61x. Match the proportion so the statement isn't glued to its sub.
+  margin: 0 0 30px;
   color: var(--color-text-head) !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

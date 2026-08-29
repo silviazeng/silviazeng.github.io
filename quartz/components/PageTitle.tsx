@@ -51,7 +51,8 @@ PageTitle.css = `
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  padding: 8px 0 20px;
+  /* 8px left the wordmark against the browser chrome, same as the phone did. */
+  padding: 26px 0 20px;
   border-bottom: 1px dashed var(--gray);
   gap: 16px;
   flex-wrap: wrap;
