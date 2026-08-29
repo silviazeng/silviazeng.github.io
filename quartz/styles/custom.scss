@@ -962,15 +962,18 @@ button:focus-visible {
     line-height: 1.12;
     // Negative tracking that helps at 50px starts closing counters at 36px.
     letter-spacing: -0.01em;
-    margin: 0 0 14px;
   }
   .tg-sub { font-size: 17px !important; line-height: 1.5 !important; }
-  .tg-hero { margin-bottom: 24px; }
-  // 56px between sections is 8% of a phone screen per gap.
-  .tg-section { margin-bottom: 32px; }
+  // Air over fold. These were tuned to lift posts above the fold, which made
+  // the top of the page feel packed; the statement, its subtitle and each
+  // section label now get room to sit apart.
+  .tg-h1 { margin-bottom: 22px; }
+  .tg-hero { margin-bottom: 44px; }
+  .tg-section { margin-bottom: 44px; }
   .tg-cmd-small {
     font-size: 14.5px;
-    padding: 0 0 10px;
+    // A label glued 8px to its own list reads as one lump with it.
+    padding: 0 0 16px;
     .tg-comment { font-size: 11.5px; }
   }
   .tg-pill { padding: 9px 12px; }

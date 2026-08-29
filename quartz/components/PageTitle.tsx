@@ -149,8 +149,10 @@ PageTitle.css = `
 }
 
 @media (max-width: 640px) {
-  .tg-chrome { margin: 0 0 22px; }
-  .tg-top { padding: 6px 0 14px; }
+  /* This margin is the air above the hero — 22px sat it right under the rule. */
+  .tg-chrome { margin: 0 0 36px; }
+  /* 6px left the wordmark jammed against the browser chrome. */
+  .tg-top { padding: 20px 0 16px; }
   .tg-meta { font-size: 11px; }
   .tg-nav { gap: 14px 18px; padding: 12px 0 14px; font-size: 12px; }
   .tg-nav-sp { display: none; }
