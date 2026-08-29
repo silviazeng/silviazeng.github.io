@@ -24,7 +24,9 @@ I'm more interested in why it works than whether it works.*
 
 - [The Evolutionary Roadmap of Deep Learning RecSys](/posts/the-evolutionary-roadmap-of-deep-learning-recsys) a visual roadmap starting from basic DNN
 
-## The Industry
+---
+
+## Semiconductors
 
 - [A Field Guide to the Semiconductor Industry](/posts/a-field-guide-to-the-semiconductor-industry) three interactive pages on where pricing power sits, and why it moves
 
