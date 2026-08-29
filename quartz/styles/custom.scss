@@ -482,7 +482,8 @@ footer {
 .tg-leader {
   flex: 1 1 auto;
   min-width: 24px;
-  border-bottom: 1px dotted var(--color-border);
+  border-bottom: 1px dotted var(--color-border-mid);
+  opacity: 0.7;
   transform: translateY(-4px);
 }
 
@@ -511,9 +512,12 @@ footer {
   font-family: var(--font-prose);
   margin-top: 6px;
   line-height: 1.55;
-  // Fill the feed column so the summary lines up with the title row's right
-  // edge — the narrow prose measure left a gap now that the layout is wider.
-  // Bounded by the column itself (~852px at the 1240px composition cap).
+  // Uniform two-line summaries keep the feed's rhythm even; long excerpts
+  // otherwise balloon a row to 3+ lines and the list stops scanning.
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .tg-post-desc-quote { font-style: italic; }
