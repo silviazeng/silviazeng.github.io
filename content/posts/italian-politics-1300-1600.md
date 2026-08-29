@@ -7,6 +7,7 @@ tags:
   - maps
   - italy
   - interactive
+description: "Drag the slider and watch a patchwork of city-states consolidate into six powers."
 ---
 
 The Italian peninsula between 1300 and 1600 wasn't really one country. It was a shifting patchwork of duchies, republics, papal states and kingdoms — each with its own currency, army, dialect, and grudges. In any given decade, a handful of dynasties were maneuvering for advantage: the Visconti and later Sforza in Milan, the Medici in Florence, the Doges in Venice, the Popes in Rome, the Aragonese (later Spanish Habsburgs) in the south.

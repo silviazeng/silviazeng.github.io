@@ -7,7 +7,7 @@ tags:
   - industry
   - geopolitics
   - interactive
-description: "Why I went down the semiconductor rabbit hole, and the first interactive page that came out of it: a clickable map of the whole value chain."
+description: "Eighty years of the chip industry, told as five shifts in who holds the pricing power."
 ---
 
 Recently work pulled me toward the semiconductor industry, and I found my picture of it was a pile of headlines — EUV, CoWoS, export controls, one indispensable company in Taiwan. I wanted the structure underneath: how the industry got its shape, where the money and pricing power sit, and how deeply the players depend on one another. So I have been writing it down as a series of interactive pages, because half of what I needed turned out to be a map rather than an essay.

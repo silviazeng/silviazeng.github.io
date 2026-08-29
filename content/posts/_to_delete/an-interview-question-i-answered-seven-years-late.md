@@ -1,5 +1,5 @@
 ---
-title: '"Why Are You So Direct?"'
+title: An Interview Question I Answered Seven Years Late
 date: 2026-08-18
 tags:
   - career
@@ -7,7 +7,6 @@ tags:
   - corporate
   - power
   - culture
-description: "An interview question I answered too fast, and the rest of the answer seven years late."
 ---
 
 Seven years ago I was interviewed by a Frenchman working in the US. He said he had assumed Chinese people communicated in a roundabout way, and asked why I came across as so direct.

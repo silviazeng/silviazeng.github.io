@@ -924,7 +924,20 @@ button:focus-visible {
   article p { font-size: 17px !important; }
   article li, article ol, article ul { font-size: 17px; }
   .tg-sub { font-size: 16px !important; }
-  .tg-pillars { grid-template-columns: 1fr; }
+  // The $ whoami line is an ornament; on a phone it costs a row above the fold.
+  .tg-hero .tg-cmd { display: none; }
+  .tg-hero { margin-bottom: 36px; }
+  // Pillars lose their card chrome and become a compact list — three boxed
+  // cards cost 273px before a single post title was visible.
+  .tg-pillars { grid-template-columns: 1fr; gap: 0; }
+  .tg-pill {
+    border: none;
+    border-bottom: 1px solid var(--color-border);
+    padding: 10px 0;
+    &:hover { background: transparent; }
+  }
+  .tg-pill-head { font-size: 17px; margin-bottom: 1px; }
+  .tg-pill-name { font-size: 13.5px; }
   .tg-lab { grid-template-columns: 1fr; }
   .tg-post {
     grid-template-columns: 1fr;

@@ -6,7 +6,7 @@ moc-tags:
   - tech
 ---
 
-*A taste for elegant structure, a tolerance for unmapped terrain.   
+*A taste for elegant structure, an itch for unmapped terrain.   
 I'm more interested in why it works than whether it works.*
 
 ---

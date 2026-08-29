@@ -6,7 +6,7 @@ tags:
   - singular-learning-theory
   - loss-landscape
 date: 2026-04-15
-description: "Reading notes on Watanabe's singular learning theory — why a network's true complexity is geometry, not parameter count."
+description: "Why a network's true complexity is its geometry, not its parameter count."
 ---
 
  *"Knowledge to be discovered corresponds to a singularity." — Sumio Watanabe*   ^31c4c9

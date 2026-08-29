@@ -27,7 +27,7 @@ const PageTitle: QuartzComponent = ({ fileData, displayClass }: QuartzComponentP
         <a class={isActive("AI-Tech") ? "tg-link tg-active" : "tg-link"} href={`${baseDir}/AI-Tech`}>ai-tech</a>
         <a class={isActive("Work-Career") ? "tg-link tg-active" : "tg-link"} href={`${baseDir}/Work-Career`}>work-career</a>
         <a class={isActive("Living-Reading") ? "tg-link tg-active" : "tg-link"} href={`${baseDir}/Living-Reading`}>living-reading</a>
-        <a class={isActive("tags") ? "tg-link tg-active" : "tg-link"} href={`${baseDir}/tags`}>tags</a>
+        <a class={isActive("tags") ? "tg-link tg-link-tags tg-active" : "tg-link tg-link-tags"} href={`${baseDir}/tags`}>tags</a>
         <div class="tg-nav-sp" />
         <a class="tg-link tg-link-dim" href="https://github.com/silviazeng/silviazeng.github.io">/source</a>
         <a class="tg-link tg-link-dim" href={`${baseDir}/index.xml`}>rss</a>
@@ -137,6 +137,18 @@ PageTitle.css = `
 .tg-theme-toggle .tt-light { display: none; }
 :root[saved-theme="light"] .tg-theme-toggle .tt-light { display: inline; }
 :root[saved-theme="light"] .tg-theme-toggle .tt-dark { display: none; }
+
+@media (max-width: 720px) {
+  /* The meta strip is decoration, and on a phone it costs its own line. */
+  .tg-meta { display: none; }
+  /* tags / source / rss are footer-grade; the theme toggle follows the
+     system setting on mobile. Leaves one line of section links. */
+  .tg-link-tags,
+  .tg-link-dim,
+  .tg-theme-toggle,
+  .tg-nav-sp { display: none; }
+  .tg-nav { padding: 12px 0 14px; }
+}
 
 @media (max-width: 640px) {
   .tg-chrome { margin: 0 0 22px; }

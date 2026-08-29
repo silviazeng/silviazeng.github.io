@@ -7,6 +7,7 @@ tags:
   - machiavelli
   - the-prince
   - renaissance-history
+description: "The guide I wish I'd had on episode one — who's who, and who keeps stabbing whom."
 ---
 
 I started reading Machiavelli. One thing led to another — now I'm three episodes into Medici: Masters of Florence and have no idea who just stabbed whom.
