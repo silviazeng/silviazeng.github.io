@@ -230,7 +230,7 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles, cfg }: QuartzComponent
               <div class="graph-outer">
                 <div
                   class="graph-container"
-                  data-cfg='{"drag":true,"zoom":true,"depth":-1,"scale":1.0,"repelForce":0.8,"centerForce":0.25,"linkDistance":50,"fontSize":0.75,"opacityScale":1,"showTags":true,"removeTags":[],"focusOnHover":false,"enableRadial":false}'
+                  data-cfg='{"drag":true,"zoom":true,"depth":-1,"scale":1.0,"repelForce":0.8,"centerForce":0.25,"linkDistance":50,"fontSize":0.68,"opacityScale":3,"showTags":false,"removeTags":[],"focusOnHover":true,"enableRadial":false}'
                 ></div>
                 <span class="tg-graph-count">{allFiles.length} nodes</span>
               </div>
