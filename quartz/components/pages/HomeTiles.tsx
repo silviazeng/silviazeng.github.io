@@ -230,14 +230,14 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles, cfg }: QuartzComponent
               <div class="graph-outer">
                 <div
                   class="graph-container"
-                  data-cfg='{"drag":true,"zoom":true,"depth":-1,"scale":1.0,"repelForce":0.8,"centerForce":0.25,"linkDistance":50,"fontSize":0.68,"opacityScale":3,"showTags":false,"removeTags":[],"focusOnHover":true,"enableRadial":false}'
+                  data-cfg='{"drag":true,"zoom":true,"depth":-1,"scale":1.0,"repelForce":0.8,"centerForce":0.25,"linkDistance":50,"fontSize":0.68,"opacityScale":1,"showTags":false,"removeTags":[],"focusOnHover":true,"enableRadial":false}'
                 ></div>
                 <span class="tg-graph-count">{allFiles.length} nodes</span>
               </div>
               <div class="global-graph-outer">
                 <div
                   class="global-graph-container"
-                  data-cfg='{"drag":true,"zoom":true,"depth":-1,"scale":0.9,"repelForce":0.5,"centerForce":0.2,"linkDistance":30,"fontSize":0.6,"opacityScale":1,"showTags":true,"removeTags":[],"focusOnHover":true,"enableRadial":true}'
+                  data-cfg='{"drag":true,"zoom":true,"depth":-1,"scale":0.9,"repelForce":0.5,"centerForce":0.2,"linkDistance":30,"fontSize":0.6,"opacityScale":3,"showTags":true,"removeTags":[],"focusOnHover":true,"enableRadial":true}'
                 ></div>
               </div>
             </div>
