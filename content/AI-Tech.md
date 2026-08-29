@@ -6,8 +6,7 @@ moc-tags:
   - tech
 ---
 
-*A taste for elegant structure, a tolerance for confusion, and no pressure 
-to pretend otherwise.   
+*A taste for elegant structure, a tolerance for the unresolved.   
 I'm more interested in why it works than whether it works.*
 
 ---
