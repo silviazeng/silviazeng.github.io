@@ -116,7 +116,7 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles, cfg }: QuartzComponent
             </div>
             <h1 class="tg-h1">
               A taste for elegant <span class="tg-accent">structure</span>,<br />
-              a tolerance for the unresolved.
+              a tolerance for the unmapped.
             </h1>
             <p class="tg-sub">
               I'm more interested in why it works than whether it works.

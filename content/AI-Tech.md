@@ -6,7 +6,7 @@ moc-tags:
   - tech
 ---
 
-*A taste for elegant structure, a tolerance for the unresolved.   
+*A taste for elegant structure, a tolerance for the unmapped.   
 I'm more interested in why it works than whether it works.*
 
 ---
