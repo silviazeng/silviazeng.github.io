@@ -235,7 +235,7 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles, cfg }: QuartzComponent
                   class="graph-container"
                   data-cfg='{"drag":true,"zoom":true,"depth":-1,"scale":1.0,"repelForce":0.8,"centerForce":0.25,"linkDistance":50,"fontSize":0.68,"opacityScale":1,"showTags":false,"removeTags":[],"focusOnHover":true,"enableRadial":false}'
                 ></div>
-                <span class="tg-graph-count">{allFiles.length} nodes</span>
+                <span class="tg-graph-count">{posts.length} notes</span>
               </div>
               <div class="global-graph-outer">
                 <div
@@ -249,7 +249,7 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles, cfg }: QuartzComponent
           <section class="tg-panel">
             <div class="tg-panel-head">
               <span>Browse by Tag</span>
-              <span class="tg-panel-n">{tags.length}</span>
+              <span class="tg-panel-n">{tags.filter(({ count }) => count >= 2).length} / {tags.length}</span>
             </div>
             <div class="tg-tagcloud">
               {tags.filter(({ count }) => count >= 2).map(({ tag, count }) => (
