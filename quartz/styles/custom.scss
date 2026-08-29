@@ -672,18 +672,17 @@ footer {
 .tg-lab-row.k-ai .tg-lab-mk { color: var(--color-accent-amber-light); }
 
 // ─── Right rail ──────────────────────────────────────────────────────────────
-// Rail is a flex column stretched to match the left column height. The sticky
-// top group (graph/tags/workbench) lives inside a flex:1 "stick-zone" that fills
-// all space ABOVE Elsewhere. A sticky box can't leave its containing block, so
-// the zone bounds how far the group can slide on scroll — it stops just above
-// Elsewhere instead of overlapping it. Elsewhere is pinned to the rail's bottom
-// by the zone filling everything above it (this replaces the old margin-top:auto,
-// which let the sticky group collide with Elsewhere at scroll-end).
+// Rail panels stack from the top and the whole rail follows the reader: the
+// rail itself is the sticky element, so the panel group slides with scroll
+// without needing a spacer to bound it. (The earlier stick-zone spacer bounded
+// the sticky group by filling the space above Elsewhere, but it also opened a
+// hollow gap whenever the two columns' natural heights diverged.)
 .tg-rail {
-  align-self: stretch;
+  align-self: start;
+  position: sticky;
+  top: 24px;
   display: flex;
   flex-direction: column;
-  position: relative;
 }
 
 .tg-rail-stickzone {
@@ -692,12 +691,10 @@ footer {
 }
 
 .tg-rail-inner {
-  position: sticky;
-  top: 24px;
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  margin-bottom: 24px;
+  gap: 32px;
+  margin-bottom: 32px;
 }
 
 .tg-panel {
