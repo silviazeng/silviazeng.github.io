@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <title>Ever Branching</title>
+  <!--
+    Terminal Garden mark — a 45° circuit trace that branches, terminating in
+    diamond via pads (the schematic idiom for a test point).
+
+    Geometry lives on a 64-unit grid. Butt caps + mitred joins keep the technical
+    reading at large sizes; at 16px the form necessarily reads as a sprout, which
+    is the same half of the metaphor from the other direction.
+
+    Colour is lightMode.tertiary (#4c8a4c) — the one green in the palette that
+    clears 3:1 against BOTH a white and a dark browser tab bar. A favicon is a
+    single static asset and cannot respond to the theme, so it has to hold both.
+  -->
+  <g fill="none" stroke="#4c8a4c" stroke-width="6.5" stroke-linecap="butt" stroke-linejoin="miter">
+    <path d="M30 52 V32 L19 21"/>
+    <path d="M30 43 L44 29"/>
+  </g>
+  <path d="M19 11 L29 21 L19 31 L9 21 Z" fill="#4c8a4c"/>
+  <path d="M44 19 L54 29 L44 39 L34 29 Z" fill="#4c8a4c"/>
+</svg>
