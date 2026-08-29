@@ -1,6 +1,7 @@
 ---
 title: What I Learned about Career in my 3 months ML Deep-dive
 date: 2021-11-19
+description: "Three months inside ML, written for people still figuring out their futures — what the deep-dive taught me about work."
 tags:
   - career
   - AI
