@@ -141,13 +141,11 @@ PageTitle.css = `
 @media (max-width: 720px) {
   /* The meta strip is decoration, and on a phone it costs its own line. */
   .tg-meta { display: none; }
-  /* tags / source / rss are footer-grade; the theme toggle follows the
-     system setting on mobile. Leaves one line of section links. */
-  .tg-link-tags,
-  .tg-link-dim,
-  .tg-theme-toggle,
-  .tg-nav-sp { display: none; }
-  .tg-nav { padding: 12px 0 14px; }
+  /* The whole nav goes on a phone. On the homepage the three MOC tiles
+     carry the same sections a screen below, and index is the page you are
+     on; elsewhere the logo goes home and breadcrumbs place you. It cost a
+     wrapped row of mostly-duplicate links above the fold. */
+  .tg-nav { display: none; }
 }
 
 @media (max-width: 640px) {
