@@ -169,7 +169,6 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles, cfg }: QuartzComponent
                         <span class="tg-post-mk">▸</span>
                         {title}
                       </span>
-                      <span class="tg-leader"></span>
                       {pageTags.length > 0 && (
                         <span class="tg-post-inline-tags">
                           {pageTags.slice(0, 2).map((t) => (
@@ -177,6 +176,10 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles, cfg }: QuartzComponent
                           ))}
                         </span>
                       )}
+                      {/* Leader sits last so every row's dots terminate at the
+                          same x — the date column. Behind variable-width tags
+                          it ended in ten different places. */}
+                      <span class="tg-leader"></span>
                       <span class="tg-post-date">{formatDate(d)}</span>
                     </div>
                     {desc && <div class={`tg-post-desc${isQuote ? " tg-post-desc-quote" : ""}`}>{desc}</div>}
