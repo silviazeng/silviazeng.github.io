@@ -6,7 +6,7 @@ tags:
   - AI
   - uncertainty
   - machine-learning
-description: "Three months inside ML, written for people still figuring out their futures."
+description: "I spent three months inside ML, and learned more about work than about models."
 ---
 — To people still struggling to figure out their futures like I am_
 

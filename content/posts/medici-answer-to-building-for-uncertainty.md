@@ -8,7 +8,7 @@ tags:
   - history
   - machiavelli
   - uncertainty
-description: "Twice I watched externalities erase good work. The Medici had a structural answer."
+description: "Twice I watched externalities erase good work; the Medici had a structural answer."
 ---
 Ten years ago, everyone on our team was holding their breath. Months of work, almost there. Then a regulatory change came overnight and wiped it all out. No warning. Just: the rules changed.
 

@@ -6,7 +6,7 @@ tags:
   - AI
   - learning
   - reading
-description: "My own learning treated as a training problem — expressivity against simplicity."
+description: "I treated my own learning as a training problem, trading expressivity for simplicity."
 ---
 *Note in 2026:  [[singular-learning-theory|Sumio Watanabe’s SLT]] provides a more nuanced way of looking at the balance between expressivity (more parameters) and simplicity (fewer parameters).*
 

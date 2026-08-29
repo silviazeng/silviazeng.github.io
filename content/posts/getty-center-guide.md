@@ -8,7 +8,7 @@ tags:
   - los-angeles
   - interactive
   - chinese
-description: "What's actually worth seeing, where it hangs, and what the museum paid for it."
+description: "I built my family a guide to what's worth seeing, and what the museum paid for it."
 ---
 
 My parents visit L.A. now and then, and lately the aunts and uncles too. The Getty Center is always on the list — and none of them read English well enough to get much from it. That's the gap I wanted to close.

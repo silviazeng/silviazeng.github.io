@@ -915,7 +915,10 @@ button:focus-visible {
   .tg-rail-stickzone { flex: 0 1 auto; }
   // The rail is gone here, so the hero gets the full column back — steeper
   // curve, otherwise the viewport-based size shrinks just as the measure widens.
-  .tg-h1 { font-size: clamp(30px, 5vw, 46px); }
+  // The 30px floor was too big for a phone: it pushed "terrain." onto a third
+  // line, splitting it from "unmapped". 6.9vw keeps each clause on one line
+  // from 320px up, so mobile reads as the same two-line statement as desktop.
+  .tg-h1 { font-size: clamp(22px, 6.9vw, 46px); }
 }
 
 @media (max-width: 720px) {
@@ -927,15 +930,10 @@ button:focus-visible {
   // The $ whoami line is an ornament; on a phone it costs a row above the fold.
   .tg-hero .tg-cmd { display: none; }
   .tg-hero { margin-bottom: 36px; }
-  // Pillars lose their card chrome and become a compact list — three boxed
-  // cards cost 273px before a single post title was visible.
-  .tg-pillars { grid-template-columns: 1fr; gap: 0; }
-  .tg-pill {
-    border: none;
-    border-bottom: 1px solid var(--color-border);
-    padding: 10px 0;
-    &:hover { background: transparent; }
-  }
+  // Tiles stay tiles on mobile — just tighter, so three of them cost less
+  // than a screen before the first post title.
+  .tg-pillars { grid-template-columns: 1fr; gap: 8px; }
+  .tg-pill { padding: 10px 13px; }
   .tg-pill-head { font-size: 17px; margin-bottom: 1px; }
   .tg-pill-name { font-size: 13.5px; }
   .tg-lab { grid-template-columns: 1fr; }

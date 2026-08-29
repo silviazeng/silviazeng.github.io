@@ -6,7 +6,7 @@ tags:
   - recommendation-systems
   - deep-learning
   - machine-learning
-description: "A family tree of recommender architectures — who inherited what from whom."
+description: "Recommender architectures form a family tree, and each model borrows from the last."
 ---
 
 *A family tree of deep learning recommender architectures — each model inherits, combines, or refactors ideas from the ones before it.*

@@ -7,7 +7,7 @@ tags:
   - corporate
   - power
   - culture
-description: "An interview question I answered too fast, and the rest of the answer seven years late."
+description: "An interviewer asked why I was so direct, and I answered the easy half of it."
 ---
 
 Seven years ago I was interviewed by a Frenchman working in the US. He said he had assumed Chinese people communicated in a roundabout way, and asked why I came across as so direct.
