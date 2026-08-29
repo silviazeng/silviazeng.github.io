@@ -365,10 +365,9 @@ footer {
   min-width: 0;
 }
 
-// Pillars are the last section — pin to bottom of the left column so its
-// bottom edge aligns with the rail's Elsewhere panel at scroll-end.
+// Last section flows naturally; bottom-pinning created a large elastic gap
+// whenever the columns' natural heights diverged, which read as clutter.
 .tg-left > .tg-section:last-child {
-  margin-top: auto;
   margin-bottom: 0;
 }
 
@@ -684,7 +683,7 @@ footer {
 }
 
 .tg-rail-stickzone {
-  flex: 1 1 auto;
+  flex: 0 0 auto;
   min-height: 0;
 }
 
