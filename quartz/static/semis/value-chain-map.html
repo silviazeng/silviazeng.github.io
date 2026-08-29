@@ -316,6 +316,35 @@ h1.article-title{font-size:26px}
   --color-focus-ring:rgba(46,107,48,.5);
   --zebra:rgba(0,0,0,.025); --shadow-pop:rgba(60,52,30,.25); --tint-amber:rgba(125,92,21,.07);
 }
+
+/* ── mobile: tooltip becomes a bottom sheet ── */
+@media (max-width: 740px){
+  /* a transformed ancestor would trap position:fixed — remove it */
+  .chip:hover,.chip:focus-visible{transform:none}
+  .tg-tip-box,
+  .chip .tg-tip-box,
+  .govcard .tg-tip-box,
+  .fig .tg-tip .tg-tip-box,
+  .fig .tipL .tg-tip-box,
+  .fig .tipR .tg-tip-box{
+    position:fixed;inset:auto 10px 12px 10px;
+    width:auto;max-width:none;
+    transform:translateY(10px);
+    font-size:15.5px;line-height:1.62;padding:.9rem 1rem;
+    border-radius:9px;box-shadow:0 -10px 36px var(--shadow-pop);
+    max-height:52vh;overflow-y:auto;z-index:200}
+  .tg-tip-box::after{display:none}
+  .tg-tip:hover .tg-tip-box,.tg-tip:focus-within .tg-tip-box,
+  .chip:hover .tg-tip-box,.chip:focus-within .tg-tip-box,
+  .govcard:hover .tg-tip-box,.govcard:focus-within .tg-tip-box,
+  .fig .tg-tip:hover .tg-tip-box,.fig .tg-tip:focus-within .tg-tip-box,
+  .fig .tipL:hover .tg-tip-box,.fig .tipL:focus-within .tg-tip-box,
+  .fig .tipR:hover .tg-tip-box,.fig .tipR:focus-within .tg-tip-box{
+    transform:translateY(0);
+    transition:opacity .14s ease,transform .16s ease,visibility 0s}
+  .fig{padding-left:.75rem;padding-right:.75rem}
+  .fgrid{min-width:940px}
+}
 </style></head><body><article>
 <h1 class="article-title">半导体产业链全图 · Semiconductor Value Chain: The Full Map</h1>
 <p class="meta">2026-08-21 · silviazeng.github.io</p>
@@ -326,7 +355,7 @@ h1.article-title{font-size:26px}
 <div aria-label="language" class="tg-bi-switch" role="group"><label for="tg-lang-zh">中文</label><label for="tg-lang-en">EN</label></div></div>
 <div class="ctrl-group"><span class="ctrl-lab"><span class="tg-lang zh">地区筛选</span><span class="tg-lang en">Region filter</span></span><div class="legend"><label class="b-all" for="r-all"><span class="tg-lang zh">全部</span><span class="tg-lang en">All</span></label><label class="b-us" for="r-us"><span class="tg-lang zh">美国</span><span class="tg-lang en">US</span></label><label class="b-tw" for="r-tw"><span class="tg-lang zh">台湾</span><span class="tg-lang en">Taiwan</span></label><label class="b-cn" for="r-cn"><span class="tg-lang zh">中国大陆</span><span class="tg-lang en">China</span></label><label class="b-kr" for="r-kr"><span class="tg-lang zh">韩国</span><span class="tg-lang en">Korea</span></label><label class="b-jp" for="r-jp"><span class="tg-lang zh">日本</span><span class="tg-lang en">Japan</span></label><label class="b-eu" for="r-eu"><span class="tg-lang zh">欧洲</span><span class="tg-lang en">Europe</span></label><label class="b-gl" for="r-gl"><span class="tg-lang zh">跨国/标准</span><span class="tg-lang en">Global/Standards</span></label></div></div>
 </div>
-<p class="hint"><span class="tg-lang zh">悬停任意玩家或环节可看解释；颜色 = 总部所在地，点「地区筛选」只看某一地区；<b>US / CN / TW</b> 角标 = 该层受哪套管辖权约束。</span><span class="tg-lang en">Hover any player or stage for a note. Color = HQ region — use the region filter to isolate one. <b>US / CN / TW</b> badges mark which jurisdiction binds each layer.</span></p>
+<p class="hint"><span class="tg-lang zh">悬停或点按任意玩家、环节可看解释；颜色 = 总部所在地，点「地区筛选」只看某一地区；<b>US / CN / TW</b> 角标 = 该层受哪套管辖权约束。</span><span class="tg-lang en">Hover or tap any player or stage for a note. Color = HQ region — use the region filter to isolate one. <b>US / CN / TW</b> badges mark which jurisdiction binds each layer.</span></p>
 <figure class="fig"><div class="fgrid"><div class="flane" style="grid-row:1;grid-column:1/-1"><span class="tg-lang zh">主线 · 先进制程链（AI · 服务器 · 手机）—— 断点一到五都发生在这条线上</span><span class="tg-lang en">Main line · the leading-edge chain (AI · servers · phones) — breakpoints one through five all happen here</span></div>
 <div class="fbox" style="grid-row:2;grid-column:5"><span class="ftag"><span class="fpill fp-us tg-tip" tabindex="0">US<span class="tg-tip-box"><span class="tg-lang zh"><b>美国出口管制落点</b>。BIS 许可 + 实体清单。管的是「你能不能造出来」——工具、软件、IP、HBM，全部在上游。</span><span class="tg-lang en"><b>Where US export control lands.</b> BIS licensing plus the Entity List. It governs whether you can build at all — tools, software, IP, HBM: all upstream.</span></span></span><span class="fpill fp-cn tg-tip" tabindex="0"><span class="tg-lang zh">CN 稀土</span><span class="tg-lang en">CN minerals</span><span class="tg-tip-box"><span class="tg-lang zh"><b>镓、锗、锑</b>。半导体和光电器件的关键原料。中国 2023 年起实施出口许可，2024 年 12 月 3 日宣布对美国「原则上不予许可」——直接对应前一天美国的实体清单大扩容。2025 年 11 月改为许可制并暂停至 2026 年 11 月 27 日，但军事用户禁令保留。<br><br><b>0.1% 微量规则</b>。中国商务部 2025 年 10 月 9 日第 61/62 号公告的核心：只要一件外国制造的产品里含有价值占比 0.1% 以上的中国原产稀土，出口就需要中国的许可证。<b>这是中国版的 FDP 规则</b>——同样的域外管辖逻辑，方向相反。</span><span class="tg-lang en"><b>Gallium, germanium, antimony</b> — critical inputs for semiconductors and optoelectronics. China imposed licensing from 2023 and on 3 December 2024 announced exports to the US would 'in principle' not be permitted — one day after the largest US Entity List expansion. Converted back to licensing in November 2025 and suspended until 27 November 2026, though the military end-user ban remains.<br><br><b>The 0.1% de minimis rule</b> — the core of China's MOFCOM Notices 61/62 of 9 October 2025: any foreign-made good containing Chinese-origin rare earths worth 0.1% or more of its value requires a Chinese export licence. <b>This is China's FDP rule</b> — the same extraterritorial logic, pointed the other way.</span></span></span></span><span class="ft"><span class="tg-tip " tabindex="0"><span class="tg-lang zh">设备 · 材料</span><span class="tg-lang en">Equipment · Materials</span><span class="tg-tip-box"><span class="tg-lang zh"><b>设备 · 材料</b>。造芯片用的机器和原料，集中度比下游任何一层都高：EUV 只有 ASML 一家，其光源来自美国 Cymer、镜头来自德国蔡司。稀土和镓锗锑的精炼环节 80% 以上在中国。</span><span class="tg-lang en"><b>Equipment & materials</b> — more concentrated than anything downstream: one EUV maker (ASML), whose source is American (Cymer) and optics German (Zeiss). China refines 80%+ of rare earths and Ga/Ge/Sb.</span></span></span></span><span class="fp"><span class="sr sr-eu">ASML</span> · <span class="sr sr-us">AMAT</span> · <span class="sr sr-us">Lam</span> · <span class="sr sr-jp">TEL</span><br><span class="sr sr-jp"><span class="tg-lang zh">信越</span><span class="tg-lang en">Shin-Etsu</span></span> · <span class="sr sr-jp">SUMCO</span> · <span class="sr sr-jp">JSR</span><br><span class="sr sr-cn"><span class="tg-lang zh">稀土 · 镓锗锑</span><span class="tg-lang en">rare earths · Ga/Ge/Sb</span></span></span></div>
 <div class="fbox" style="grid-row:2;grid-column:7"><span class="ftag"><span class="fpill fp-us tg-tip" tabindex="0">US<span class="tg-tip-box"><span class="tg-lang zh"><b>美国出口管制落点</b>。BIS 许可 + 实体清单。管的是「你能不能造出来」——工具、软件、IP、HBM，全部在上游。</span><span class="tg-lang en"><b>Where US export control lands.</b> BIS licensing plus the Entity List. It governs whether you can build at all — tools, software, IP, HBM: all upstream.</span></span></span></span><span class="ft"><span class="tg-tip " tabindex="0"><span class="tg-lang zh">存储 · HBM</span><span class="tg-lang en">Memory · HBM</span><span class="tg-tip-box"><span class="tg-lang zh"><b>HBM（High Bandwidth Memory，高带宽内存）</b>。垂直堆叠的 DRAM，紧贴处理器裸片放置。AI 加速器的主要规格竞赛点，全球只有 SK 海力士、三星、美光三家能量产。2024 年 12 月起被列入美国出口管制，<b>这是目前限制华为昇腾出货量的真正瓶颈——不是逻辑晶圆</b>。</span><span class="tg-lang en"><b>HBM (High Bandwidth Memory)</b> — vertically stacked DRAM placed against the processor die. Only SK hynix, Samsung and Micron produce it at volume. Export-controlled by the US since December 2024, and <b>the actual binding constraint on Huawei's Ascend shipments — not logic wafers</b>.</span></span></span></span><span class="fp"><span class="sr sr-kr"><span class="tg-lang zh">SK 海力士</span><span class="tg-lang en">SK hynix</span></span> · <span class="sr sr-kr"><span class="tg-lang zh">三星</span><span class="tg-lang en">Samsung</span></span> · <span class="sr sr-us"><span class="tg-lang zh">美光</span><span class="tg-lang en">Micron</span></span><br><span class="sr sr-cn"><span class="tg-lang zh">长鑫</span><span class="tg-lang en">CXMT</span></span> · <span class="sr sr-cn"><span class="tg-lang zh">长江存储</span><span class="tg-lang en">YMTC</span></span></span></div>
