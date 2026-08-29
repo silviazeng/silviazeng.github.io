@@ -12,7 +12,9 @@ const PageTitle: QuartzComponent = ({ fileData, displayClass }: QuartzComponentP
     if (target === "tags") return slug === "tags" || slug.startsWith("tags/")
     return slug === target || slug.startsWith(`${target}/`)
   }
-  const buildDate = new Date().toISOString().slice(0, 10).replace(/-/g, ".")
+  // Local calendar day, not UTC: an evening build used to stamp tomorrow.
+  const d = new Date()
+  const buildDate = `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, "0")}.${String(d.getDate()).padStart(2, "0")}`
 
   return (
     <div class={classNames(displayClass, "tg-chrome")}>

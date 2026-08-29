@@ -112,7 +112,7 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles, cfg }: QuartzComponent
           {/* Hero */}
           <section class="tg-hero">
             <div class="tg-cmd">
-              <span class="tg-prompt">$</span>whoami <span class="tg-comment"># {formatDate(new Date())}</span>
+              <span class="tg-prompt">$</span>whoami
             </div>
             <h1 class="tg-h1">
               <span class="tg-clause">A taste for elegant <span class="tg-accent">structure</span>,</span>
