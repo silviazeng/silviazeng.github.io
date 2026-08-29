@@ -365,8 +365,8 @@ footer {
   min-width: 0;
 }
 
-// Last section flows naturally; bottom-pinning created a large elastic gap
-// whenever the columns' natural heights diverged, which read as clutter.
+// The feed's last section (Lab) flows naturally. Bottom-pinning it opened a
+// large elastic gap whenever the columns' natural heights diverged.
 .tg-left > .tg-section:last-child {
   margin-bottom: 0;
 }
@@ -683,11 +683,6 @@ footer {
   top: 24px;
   display: flex;
   flex-direction: column;
-}
-
-.tg-rail-stickzone {
-  flex: 0 0 auto;
-  min-height: 0;
 }
 
 .tg-rail-inner {

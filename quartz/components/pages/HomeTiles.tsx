@@ -217,8 +217,6 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles, cfg }: QuartzComponent
 
         {/* RIGHT RAIL */}
         <aside class="tg-rail">
-          {/* stick-zone fills the rail above Elsewhere and confines the sticky group */}
-          <div class="tg-rail-stickzone">
           <div class="tg-rail-inner">
           <section class="tg-panel">
             <div class="tg-panel-head">
@@ -280,9 +278,8 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles, cfg }: QuartzComponent
             </div>
           </section>
           </div>
-          </div>
 
-          <section class="tg-panel tg-panel-tail">
+          <section class="tg-panel">
             <div class="tg-panel-head">
               <span>Elsewhere</span>
             </div>
