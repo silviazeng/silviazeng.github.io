@@ -518,10 +518,9 @@ footer {
   font-family: var(--font-prose);
   margin-top: 6px;
   line-height: 1.55;
-  // The deck ran the full 852px column — up to 118 characters a line, well
-  // past the 45-75 reading band, and it out-massed the title it belongs to.
-  // 62ch lands near Bringhurst's 66.
-  max-width: 62ch;
+  // Full column width: the deck's right edge has to agree with the title
+  // row's. The 118-character lines came from the auto-excerpts, and those
+  // are gone — the authored decks are short enough not to need a cap.
   color: var(--color-text-faint);
   // Still clamped: a deck is a deck, not a paragraph.
   display: -webkit-box;
@@ -530,16 +529,6 @@ footer {
   overflow: hidden;
 }
 
-// Year subheads chunk the feed into groups of 3-4 rows.
-.tg-year {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  color: var(--color-text-faint);
-  margin: 30px 0 6px;
-
-  &:first-child { margin-top: 0; }
-}
 
 .tg-post-desc-quote { font-style: italic; }
 
@@ -715,12 +704,9 @@ footer {
   margin-bottom: 32px;
 }
 
-// Hairline over dashed box: the rail held four dashed rectangles while the
-// denser feed had no rules at all — chrome heaviest where content was thinnest.
 .tg-panel {
-  border: none;
-  border-top: 1px solid var(--color-border);
-  padding: 14px 0 0;
+  border: 1px dashed var(--color-border);
+  padding: 16px 18px;
   background: transparent;
 }
 
