@@ -522,9 +522,9 @@ footer {
   // row's. The 118-character lines came from the auto-excerpts, and those
   // are gone — the authored decks are short enough not to need a cap.
   color: var(--color-text-faint);
-  // Still clamped: a deck is a deck, not a paragraph.
+  // One line, always: a deck is a deck, not a paragraph.
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }

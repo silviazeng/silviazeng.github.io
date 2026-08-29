@@ -1,5 +1,5 @@
 ---
-title: "A Getty Center Guide for Visiting Family"
+title: "A Getty Center Guide"
 date: 2026-06-07
 tags:
   - art
