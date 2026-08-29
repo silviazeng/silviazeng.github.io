@@ -317,21 +317,21 @@ h1.article-title{font-size:26px}
   --zebra:rgba(0,0,0,.025); --shadow-pop:rgba(60,52,30,.25); --tint-amber:rgba(125,92,21,.07);
 }
 
-/* ── mobile: tooltip stays by the card, but spans the row so it can't be clipped ── */
+/* ── mobile: keep the tooltip by its row, and above later cards ── */
 @media (max-width: 740px){
-  /* anchor a chip's tooltip to its row, not to the chip, so it never
-     starts at a right-hand edge and run off screen */
+  /* a transform on the touched card creates a stacking context that traps
+     the tooltip's z-index — later cards would then paint over it */
+  .chip:hover,.chip:focus-visible,.chip:focus-within{transform:none}
+  /* anchor to the row, not the card, so it never starts at a right edge */
   .chips{position:relative}
   .chip{position:static}
   .chip .tg-tip-box{left:0;right:0;top:calc(100% + 8px);
-    width:auto;max-width:none;transform:translateY(-4px)}
+    width:auto;max-width:none;transform:translateY(-4px);z-index:60}
   .chip:hover .tg-tip-box,.chip:focus-within .tg-tip-box{transform:translateY(0)}
-  .chip .tg-tip-box::after{left:24px}
-  /* jurisdiction cards are already full width in one column */
+  .chip .tg-tip-box::after{display:none}
   .govcard .tg-tip-box{left:0;right:0;width:auto;max-width:none;
-    transform:translateY(-4px)}
+    transform:translateY(-4px);z-index:60}
   .govcard:hover .tg-tip-box,.govcard:focus-within .tg-tip-box{transform:translateY(0)}
-  /* inside the scrolling diagram, keep them narrow enough to sit on the canvas */
   .fig .tg-tip-box{max-width:min(330px,78vw)}
   .tg-tip-box{font-size:15px;padding:.8rem .9rem}
 }
