@@ -115,8 +115,8 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles, cfg }: QuartzComponent
               <span class="tg-prompt">$</span>whoami <span class="tg-comment"># {formatDate(new Date())}</span>
             </div>
             <h1 class="tg-h1">
-              A taste for elegant <span class="tg-accent">structure</span>,<br />
-              an itch for unmapped terrain.
+              <span class="tg-clause">A taste for elegant <span class="tg-accent">structure</span>,</span>
+              <span class="tg-clause">an itch for <span class="tg-nb">unmapped terrain.</span></span>
             </h1>
             <p class="tg-sub">
               I'm more interested in why it works than whether it works.
