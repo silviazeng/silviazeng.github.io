@@ -151,14 +151,24 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles, cfg }: QuartzComponent
               <span class="tg-prompt">$</span>ls -lt posts/ <span class="tg-comment"># newest first</span>
             </div>
             <div class="tg-posts">
-              {posts.map((page) => {
+              {posts.map((page, i) => {
                 const title = (page.frontmatter?.title as string) ?? page.slug
-                const rawDesc = (page.frontmatter?.description as string) ?? page.description ?? ""
+                // Authored decks only. Quartz's Description plugin slices the
+                // first 150 characters of body prose, which has no shape and no
+                // ending — ten of those read as texture, not as a list.
+                const rawDesc = (page.frontmatter?.description as string) ?? ""
                 const desc = rawDesc.trim()
                 const isQuote = /^["“]/u.test(desc)
                 const d = getDate(cfg, page)
                 const pageTags: string[] = (page.frontmatter?.tags as string[]) ?? []
+                // Chronological grouping supplies the rhythm that per-row rules
+                // would otherwise have to — ten flat rows read as one block.
+                const year = d?.getFullYear()
+                const prevYear = i > 0 ? getDate(cfg, posts[i - 1])?.getFullYear() : undefined
+                const startsYear = year !== undefined && year !== prevYear
                 return (
+                  <>
+                  {startsYear && <div class="tg-year">{year}</div>}
                   <a
                     class="tg-post"
                     href={resolveRelative(fileData.slug!, page.slug as FullSlug)}
@@ -183,6 +193,7 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles, cfg }: QuartzComponent
                     </div>
                     {desc && <div class={`tg-post-desc${isQuote ? " tg-post-desc-quote" : ""}`}>{desc}</div>}
                   </a>
+                  </>
                 )
               })}
             </div>
@@ -276,7 +287,6 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles, cfg }: QuartzComponent
               ))}
             </div>
           </section>
-          </div>
 
           <section class="tg-panel">
             <div class="tg-panel-head">
@@ -291,6 +301,7 @@ const HomeTiles: QuartzComponent = ({ fileData, allFiles, cfg }: QuartzComponent
               </a>
             </div>
           </section>
+          </div>
         </aside>
       </div>
     </div>
