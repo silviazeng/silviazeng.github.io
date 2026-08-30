@@ -335,6 +335,13 @@ h1.article-title{font-size:26px}
   .fig .tg-tip-box{max-width:min(330px,78vw)}
   .tg-tip-box{font-size:15px;padding:.8rem .9rem}
 }
+
+/* ── touch: a tap sets :hover and the browser never takes it back, so make
+   focus the only trigger — that one the blur handler below can release ── */
+@media (hover:none){
+  .tg-tip:hover .tg-tip-box{opacity:0;visibility:hidden}
+  .tg-tip:focus-within .tg-tip-box{opacity:1;visibility:visible}
+}
 </style></head><body><article>
 <h1 class="article-title">半导体产业链全图 · Semiconductor Value Chain: The Full Map</h1>
 <p class="meta">2026-08-21 · silviazeng.github.io</p>
@@ -428,4 +435,17 @@ h1.article-title{font-size:26px}
 </section>
 </div>
 </div>
-</article></body></html>
+</article>
+<script>
+/* Tooltips open on :focus-within. Tapping dead space focuses nothing, so on
+   touch the focus never leaves and the tooltip stays up — release it here. */
+document.addEventListener("pointerdown",function(e){
+  var open=document.activeElement;
+  if(open&&open.classList&&open.classList.contains("tg-tip")&&!open.contains(e.target))open.blur();
+},true);
+document.addEventListener("keydown",function(e){
+  var open=document.activeElement;
+  if(e.key==="Escape"&&open&&open.classList&&open.classList.contains("tg-tip"))open.blur();
+});
+</script>
+</body></html>
