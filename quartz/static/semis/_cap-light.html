@@ -514,4 +514,19 @@ document.addEventListener("keydown",function(e){
   if(e.key==="Escape"&&open&&open.classList&&open.classList.contains("tg-tip"))open.blur();
 });
 </script>
+<script>
+window.addEventListener("load",function(){
+  document.documentElement.setAttribute("saved-theme","light");
+  var en=document.getElementById("tg-lang-en"); if(en) en.checked=true;
+  var fig=document.querySelector("figure.fig"), node=fig;
+  while(node && node!==document.body){
+    var p=node.parentNode;
+    [].slice.call(p.children).forEach(function(c){ if(c!==node) c.style.display="none"; });
+    p.style.maxWidth="none"; p.style.width="auto"; p.style.margin="0"; p.style.padding="0"; node=p;
+  }
+  document.body.style.cssText="margin:0;padding:18px;width:1356px;box-sizing:border-box;background:var(--color-bg)";
+  fig.style.cssText="margin:0;width:auto";
+  requestAnimationFrame(function(){ document.title="1356x"+Math.ceil(document.body.getBoundingClientRect().height); });
+});
+</script>
 </body></html>
