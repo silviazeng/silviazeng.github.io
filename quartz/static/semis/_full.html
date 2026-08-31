@@ -247,10 +247,7 @@ h1.article-title{font-size:30px}
 /* ── HTML flow diagram ── */
 .fig{margin:0 0 2.4rem;padding:1.1rem 1rem .7rem;position:relative;border:1px solid var(--color-border);
   border-radius:6px;background:var(--color-surface-dark);overflow-x:auto}
-@media(min-width:1180px){
-  .fig{width:min(1320px, calc(100vw - 48px));
-    margin-left:calc((100% - min(1320px, 100vw - 48px)) / 2)}
-.fig{overflow:visible}}
+@media(min-width:1180px){.fig{overflow:visible}}
 .fgrid{display:grid;min-width:1060px;
   grid-template-columns:1fr 68px 1fr 68px 1fr 68px 1fr 68px 1fr 68px 1fr;
   gap:10px 0;align-items:stretch}
@@ -350,11 +347,6 @@ h1.article-title{font-size:30px}
 /* the nudge below keeps a tip inside the viewport; the pointer shifts back so
    it still aims at what was hovered */
 .tg-tip-box::after{transform:translateX(calc(-1 * var(--nudge, 0px)))}
-
-/* Chinese runs break between any two characters by default, which turned
-   「三星」into「三 星」as soon as a cell got tight. Keep tokens whole; the
-   slashes and spaces still give the line somewhere to break. */
-.fig .sr,.fig .ft,.fig .fsub,.fig .fcon,.chip-n{word-break:keep-all}
 </style></head><body><article>
 <h1 class="article-title">半导体产业链全图 — Semiconductor Value Chain: The Full Map</h1>
 <p class="meta">2026-08-21 / silviazeng.github.io</p>
@@ -495,6 +487,12 @@ function tgFit(tip){
 document.addEventListener("keydown",function(e){
   var open=document.activeElement;
   if(e.key==="Escape"&&open&&open.classList&&open.classList.contains("tg-tip"))open.blur();
+});
+</script>
+<script>
+window.addEventListener("load",function(){
+  document.documentElement.setAttribute("saved-theme","dark");
+  requestAnimationFrame(function(){ document.title="H"+Math.ceil(document.documentElement.scrollHeight); });
 });
 </script>
 </body></html>
