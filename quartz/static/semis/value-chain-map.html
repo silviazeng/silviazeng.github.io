@@ -215,7 +215,11 @@ h1.article-title{font-size:30px}
 .govhead{font-size:14.5px;letter-spacing:.09em;text-transform:uppercase;
   color:var(--color-text-faint);margin:0 0 .5rem}
 /* legend as pure-CSS filter */
-#mapwrap>input[type=radio]{position:absolute;opacity:0;width:0;height:0;pointer-events:none}
+/* the radios sit at the top of #mapwrap so the sibling selectors reach the map and
+   the cards; their labels are down in the filter bar. Focusing an absolutely
+   positioned input scrolls it into view — i.e. back to the top of the page.
+   Fixed keeps the box inside the viewport, so there is nothing to scroll to. */
+#mapwrap>input[type=radio]{position:fixed;top:0;left:0;opacity:0;width:0;height:0;pointer-events:none}
 .legend label{font-family:var(--font-mono);font-size:15px;letter-spacing:.05em;
   padding:5px 13px;border:1px solid var(--color-border);border-radius:3px;
   background:var(--color-surface-dark);color:var(--color-text-faint);cursor:pointer;
@@ -295,13 +299,7 @@ h1.article-title{font-size:30px}
 #mapwrap:has(#r-cn:checked) .fig .sr:not(.sr-cn),
 #mapwrap:has(#r-kr:checked) .fig .sr:not(.sr-kr),
 #mapwrap:has(#r-jp:checked) .fig .sr:not(.sr-jp),
-#mapwrap:has(#r-eu:checked) .fig .sr:not(.sr-eu),
-#mapwrap:has(#r-us:checked) .fig .sr-us,
-#mapwrap:has(#r-tw:checked) .fig .sr-tw,
-#mapwrap:has(#r-cn:checked) .fig .sr-cn,
-#mapwrap:has(#r-kr:checked) .fig .sr-kr,
-#mapwrap:has(#r-jp:checked) .fig .sr-jp,
-#mapwrap:has(#r-eu:checked) .fig .sr-eu,
+#mapwrap:has(#r-eu:checked) .fig .sr:not(.sr-eu){opacity:.35}
 
 /* ── mobile: keep the tooltip by its row, and above later cards ── */
 @media (max-width: 740px){
@@ -333,6 +331,13 @@ h1.article-title{font-size:30px}
   --zebra:rgba(0,0,0,.025); --shadow-pop:rgba(60,52,30,.25); --tint-amber:rgba(125,92,21,.07);
   --rule:#7a6a4a; --rule-bg:rgba(122,106,74,.07);
   --hot:#a8543a; --hot-bg:rgba(168,84,58,.08);
+}
+
+/* ── touch: a tap sets :hover and the browser never takes it back, so make
+   focus the only trigger — that one the blur handler below can release ── */
+@media (hover:none){
+  .tg-tip:hover .tg-tip-box{opacity:0;visibility:hidden}
+  .tg-tip:focus-within .tg-tip-box{opacity:1;visibility:visible}
 }
 </style></head><body><article>
 <h1 class="article-title">半导体产业链全图 — Semiconductor Value Chain: The Full Map</h1>
@@ -445,4 +450,16 @@ h1.article-title{font-size:30px}
 </section>
 </div>
 </div>
-</article></body></html>
+</article><script>
+/* Tooltips open on :focus-within. Tapping dead space focuses nothing, so on
+   touch the focus never leaves and the tooltip stays up — release it here. */
+document.addEventListener("pointerdown",function(e){
+  var open=document.activeElement;
+  if(open&&open.classList&&open.classList.contains("tg-tip")&&!open.contains(e.target))open.blur();
+},true);
+document.addEventListener("keydown",function(e){
+  var open=document.activeElement;
+  if(e.key==="Escape"&&open&&open.classList&&open.classList.contains("tg-tip"))open.blur();
+});
+</script>
+</body></html>
