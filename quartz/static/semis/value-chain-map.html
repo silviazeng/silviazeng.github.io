@@ -76,7 +76,7 @@ tbody tr:nth-child(even){background:var(--zebra)}
   cursor:help;outline:none;transition:border-color .15s,color .15s}
 .tg-tip:hover,.tg-tip:focus-visible{border-bottom-color:var(--color-accent);
   color:var(--color-accent-light)}
-.tg-tip-box{position:absolute;bottom:calc(100% + 9px);left:50%;z-index:40;
+.tg-tip-box{position:absolute;bottom:calc(100% + 9px);left:50%;z-index:60;
   width:max-content;max-width:min(360px,82vw);padding:.6rem .75rem;
   border:1px solid var(--color-border-hover);border-radius:5px;
   background:var(--color-surface-raised);box-shadow:0 8px 28px var(--shadow-pop);
@@ -287,8 +287,13 @@ h1.article-title{font-size:26px}
 .fig .tipR .tg-tip-box::after{left:auto;right:18px;margin-left:0}
 .fig figcaption{font-size:13px;color:var(--color-text-dim);margin:.9rem .2rem 0;
   line-height:1.65}
-.fig figcaption .capline{display:block}
-.fig figcaption .capline+.capline{margin-top:.2rem}
+.fig figcaption .capline{display:flex;align-items:center;gap:.55rem}
+.fig figcaption .capline+.capline{margin-top:.3rem}
+.fig figcaption .sw{flex:0 0 auto;width:26px;height:11px;box-sizing:border-box}
+.fig figcaption .sw-loop{border:1.5px dashed var(--color-accent-amber);border-top:none;
+  border-radius:0 0 6px 6px}
+.fig figcaption .sw-hot{border:1.5px solid var(--hot);border-radius:4px;height:15px}
+.fig figcaption .fpill{cursor:default}
 #mapwrap:has(#r-us:checked) .fig .sr:not(.sr-us),
 #mapwrap:has(#r-tw:checked) .fig .sr:not(.sr-tw),
 #mapwrap:has(#r-cn:checked) .fig .sr:not(.sr-cn),
@@ -311,11 +316,11 @@ h1.article-title{font-size:26px}
   .chips{position:relative}
   .chip{position:static}
   .chip .tg-tip-box{left:0;right:0;top:calc(100% + 8px);
-    width:auto;max-width:none;transform:translateY(-4px);z-index:60}
+    width:auto;max-width:none;transform:translateY(-4px)}
   .chip:hover .tg-tip-box,.chip:focus-within .tg-tip-box{transform:translateY(0)}
   .chip .tg-tip-box::after{display:none}
   .govcard .tg-tip-box{left:0;right:0;width:auto;max-width:none;
-    transform:translateY(-4px);z-index:60}
+    transform:translateY(-4px)}
   .govcard:hover .tg-tip-box,.govcard:focus-within .tg-tip-box{transform:translateY(0)}
   .fig .tg-tip-box{max-width:min(330px,78vw)}
   .tg-tip-box{font-size:15px;padding:.8rem .9rem}
@@ -368,7 +373,7 @@ h1.article-title{font-size:26px}
 <div class="fcon" style="grid-row:7;grid-column:8"><span class="tg-tip " tabindex="0"><span class="tg-lang zh">芯片</span><span class="tg-lang en">chips</span><span class="tg-tip-box"><span class="tg-lang zh">封好、测完、挑掉坏品之后的成品芯片。</span><span class="tg-lang en">Finished chips: packaged, tested, bad parts culled.</span></span></span><span class="ar">⟶</span></div>
 <div class="fbox dashed" style="grid-row:7;grid-column:9"><span class="ft"><span class="tg-tip " tabindex="0"><span class="tg-lang zh">认证与生态</span><span class="tg-lang en">Certification</span><span class="tg-tip-box"><span class="tg-lang zh"><b>认证与生态</b>。芯片厂控制不了的一道门：Bluetooth SIG、Matter、Find My、各国无线电核准决定「什么算能用的设备」。<b>这道门是这条赛道定价权不在芯片厂手上的原因。</b></span><span class="tg-lang en"><b>Certification & ecosystems</b> — a gate the chip vendor does not control: Bluetooth SIG, Matter, Find My and radio approvals decide what counts as a working device. <b>This gate is why pricing power on this branch does not sit with chip makers.</b></span></span></span></span><span class="fp"><span class="sr sr-gl">SIG / Matter / Find My</span></span></div>
 <div class="fcon" style="grid-row:7;grid-column:10"><span class="tg-tip " tabindex="0"><span class="tg-lang zh">进生态</span><span class="tg-lang en">certify</span><span class="tg-tip-box"><span class="tg-lang zh">过了认证才能进 Apple / Google / Amazon 的生态。进不去，芯片再好也卖不动。</span><span class="tg-lang en">Certification is the ticket into the Apple / Google / Amazon ecosystems. Without it, a better chip still does not sell.</span></span></span><span class="ar">⟶</span></div>
-<div class="fbox" style="grid-row:7;grid-column:11"><span class="ft"><span class="tg-tip tipR " tabindex="0"><span class="tg-lang zh">终端</span><span class="tg-lang en">Devices</span><span class="tg-tip-box"><span class="tg-lang zh"><b>终端</b>。智能家居、穿戴、音频。一颗芯片几毛到几美元，一辆车、一间屋子里有几十上百颗。</span><span class="tg-lang en"><b>End devices</b> — smart home, wearables, audio. Cents to dollars per chip; dozens to hundreds per car or household.</span></span></span></span><span class="fp"><span class="tg-lang zh">智能家居、穿戴、音频</span><span class="tg-lang en">smart home, wearables, audio</span></span></div></div><figcaption><span class="capline"><span class="tg-lang zh">琥珀色虚线为云厂商绕过芯片设计的自研回路，详见 06。</span><span class="tg-lang en">The amber dashed loop is the hyperscalers' in-house path around chip design, set out in 06.</span></span><span class="capline"><span class="tg-lang zh">⚖ 标注约束该环节的具体规则。</span><span class="tg-lang en">A ⚖ mark names the rule binding that stage.</span></span><span class="capline"><span class="tg-lang zh">红框标注当前真正限制出货的环节。</span><span class="tg-lang en">A red border marks the stages that currently cap shipments.</span></span></figcaption></figure>
+<div class="fbox" style="grid-row:7;grid-column:11"><span class="ft"><span class="tg-tip tipR " tabindex="0"><span class="tg-lang zh">终端</span><span class="tg-lang en">Devices</span><span class="tg-tip-box"><span class="tg-lang zh"><b>终端</b>。智能家居、穿戴、音频。一颗芯片几毛到几美元，一辆车、一间屋子里有几十上百颗。</span><span class="tg-lang en"><b>End devices</b> — smart home, wearables, audio. Cents to dollars per chip; dozens to hundreds per car or household.</span></span></span></span><span class="fp"><span class="tg-lang zh">智能家居、穿戴、音频</span><span class="tg-lang en">smart home, wearables, audio</span></span></div></div><figcaption><span class="capline"><i class="sw sw-loop"></i><span class="tg-lang zh">云厂商绕过芯片设计的自研回路，详见 06。</span><span class="tg-lang en">Hyperscalers' in-house path around chip design, set out in 06.</span></span><span class="capline"><span class="fpill">⚖</span><span class="tg-lang zh">约束该环节的具体规则。</span><span class="tg-lang en">The rule binding that stage.</span></span><span class="capline"><i class="sw sw-hot"></i><span class="tg-lang zh">当前真正限制出货的环节。</span><span class="tg-lang en">The stages that currently cap shipments.</span></span></figcaption></figure>
 <p class="govhead"><span class="tg-lang zh">三套管辖权——悬停看规则细节</span><span class="tg-lang en">Three jurisdictions — hover for the rules</span></p>
 <div class="govwrap"><div class="govcard g-us tg-tip" tabindex="0"><b>美国管辖 / US jurisdiction</b><em><span class="tg-lang zh">EDA / 设备 / 先进逻辑 / HBM</span><span class="tg-lang en">EDA / tools / leading-edge logic / HBM</span></em><span class="tg-tip-box"><span class="tg-lang zh"><b>FDP 规则 + 实体清单 + BIS 许可</b>。只要一件外国制造的产品是用美国技术「直接生产」的，美国就主张管辖权——不论它在哪造。这才是台积电受美国法律约束的原因。2022 年 10 月 7 日的规则设定了 16/14nm 逻辑、18nm DRAM、128 层 NAND 的门槛；2024 年 12 月又把 FDP 扩展到设备本身。</span><span class="tg-lang en"><b>FDP rule + Entity List + BIS licensing.</b> If a foreign-made item is the direct product of US technology, Washington claims jurisdiction — wherever it was made. That, not its customer list, is why TSMC is bound by US law. The 7 Oct 2022 rule set thresholds at 16/14nm logic, 18nm DRAM, 128-layer NAND; Dec 2024 extended FDP to equipment itself.</span></span></div><div class="govcard g-cn tg-tip" tabindex="0"><b>中国管辖 / China jurisdiction</b><em><span class="tg-lang zh">稀土 / 镓锗锑 / 最终用途</span><span class="tg-lang en">rare earths / Ga-Ge-Sb / end-use</span></em><span class="tg-tip-box"><span class="tg-lang zh"><b>0.1% 微量规则 + 两用物项管制</b>。2025 年 10 月 9 日商务部第 61/62 号公告：外国制造的商品只要含 0.1% 以上中国原产稀土，出口就需中国许可。<b>结构上与美国 FDP 规则同构。</b>釜山会晤后暂停至 2026 年 11 月 10 日。</span><span class="tg-lang en"><b>The 0.1% de minimis rule + dual-use controls.</b> MOFCOM Notices 61/62 of 9 Oct 2025: any foreign-made good with ≥0.1% Chinese-origin rare-earth content needs a Chinese export licence. <b>Structurally isomorphic to the US FDP rule.</b> Suspended after Busan until 10 Nov 2026.</span></span></div><div class="govcard g-tw tg-tip" tabindex="0"><b>台湾管辖 / Taiwan jurisdiction</b><em><span class="tg-lang zh">代工出海 / 制程外移</span><span class="tg-lang en">overseas fabs / node migration</span></em><span class="tg-tip-box"><span class="tg-lang zh"><b>N-1 原则 + 产创条例第 22 条</b>。海外制程至少落后本土一代。<b>从来不是成文禁令，而是通过投资审查行使的裁量性规范</b>，2025 年 1 月 11 日被经济部长公开松绑，此后持续放宽。</span><span class="tg-lang en"><b>The N-1 rule + Article 22 review.</b> Overseas nodes must trail home by a generation. <b>Never a codified ban — a discretionary norm applied through investment review</b>, publicly relaxed by the economics minister on 11 Jan 2025 and loosened since.</span></span></div></div>
 <div class="filterbar"><span class="ctrl-lab"><span class="tg-lang zh">地区筛选</span><span class="tg-lang en">Region filter</span></span><div class="legend"><label class="b-all" for="r-all"><span class="tg-lang zh">全部</span><span class="tg-lang en">All</span></label><label class="b-us" for="r-us"><span class="tg-lang zh">美国</span><span class="tg-lang en">US</span></label><label class="b-tw" for="r-tw"><span class="tg-lang zh">台湾</span><span class="tg-lang en">Taiwan</span></label><label class="b-cn" for="r-cn"><span class="tg-lang zh">中国大陆</span><span class="tg-lang en">China</span></label><label class="b-kr" for="r-kr"><span class="tg-lang zh">韩国</span><span class="tg-lang en">Korea</span></label><label class="b-jp" for="r-jp"><span class="tg-lang zh">日本</span><span class="tg-lang en">Japan</span></label><label class="b-eu" for="r-eu"><span class="tg-lang zh">欧洲</span><span class="tg-lang en">Europe</span></label></div></div>
