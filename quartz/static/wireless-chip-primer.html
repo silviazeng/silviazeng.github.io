@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>无线芯片零基础入门 · 十一级台阶</title>
+<style>
+:root{
+  color-scheme: light;
+  --surface:#fcfcfb; --paper:#f4f3ef;
+  --ink:#0b0b0b; --ink2:#4a4945; --ink3:#8a887f;
+  --line:#e3e1da; --soft:#f7f5f0;
+  --accent:#2a78d6; --gold:#8d6c23; --warm:#eb6834; --green:#0f8f63;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:-apple-system,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",Roboto,sans-serif;line-height:1.75;-webkit-font-smoothing:antialiased}
+.sheet{max-width:820px;margin:20px auto;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:34px 40px 44px;box-shadow:0 2px 14px rgba(20,30,50,.06)}
+header{border-bottom:2px solid var(--ink);padding-bottom:16px;margin-bottom:6px}
+h1{margin:0;font-size:25px;font-weight:800;letter-spacing:-.01em}
+.lede{margin:10px 0 0;font-size:14px;color:var(--ink2)}
+.toc{background:var(--soft);border:1px solid var(--line);border-radius:11px;padding:14px 20px;margin:22px 0 8px;font-size:13.5px}
+.toc b{display:block;font-size:12px;letter-spacing:.08em;color:var(--gold);margin-bottom:7px}
+.toc a{color:var(--accent);text-decoration:none;display:inline-block;margin:2px 16px 2px 0;white-space:nowrap}
+.toc a:hover{text-decoration:underline}
+.step{margin-top:38px;scroll-margin-top:16px}
+.step h2{font-size:19px;font-weight:800;margin:0 0 4px;letter-spacing:-.01em;display:flex;gap:11px;align-items:baseline}
+.num{flex:none;width:27px;height:27px;border-radius:50%;background:var(--ink);color:#fff;font-size:13px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;line-height:1}
+.q{font-size:13px;color:var(--ink3);margin:0 0 12px 38px;font-style:italic}
+.step p{margin:11px 0;font-size:15px}
+.step ul{margin:11px 0;padding-left:22px;font-size:15px}
+.step li{margin:6px 0}
+b,strong{color:var(--ink);font-weight:700}
+figure{margin:22px 0;padding:16px 14px 10px;background:var(--soft);border:1px solid var(--line);border-radius:11px}
+figure svg{width:100%;height:auto;display:block;color:var(--ink2)}
+figcaption{font-size:12.5px;color:var(--ink3);text-align:center;margin-top:10px;line-height:1.6}
+.next{margin-top:16px;padding:10px 15px;background:rgba(141,108,35,.08);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;font-size:14px;color:#5b4a2a}
+.next b{color:#5b4a2a}
+.box{margin:16px 0;padding:12px 16px;border:1px solid var(--line);border-radius:10px;background:#fff;font-size:14px}
+.box h3{margin:0 0 6px;font-size:13.5px;font-weight:800;color:var(--accent)}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin:14px 0;background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+th,td{padding:7px 11px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:#f1efe9;font-size:12.5px;font-weight:800}
+tr:last-child td{border-bottom:none}
+code{background:#f1efe9;border-radius:4px;padding:1px 5px;font-family:ui-monospace,Menlo,monospace;font-size:.88em}
+.coda{margin-top:42px;padding-top:22px;border-top:2px solid var(--ink)}
+footer{margin-top:30px;padding-top:12px;border-top:1px solid var(--line);font-size:11.5px;color:var(--ink3);text-align:center;line-height:1.7}
+@media(max-width:700px){.sheet{padding:22px 18px 30px}.toc a{display:block;margin:3px 0}}
+@media print{body{background:#fff}.sheet{max-width:none;margin:0;border:none;box-shadow:none;padding:0}.step{break-inside:avoid}figure{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+<header>
+  <h1>无线芯片零基础入门</h1>
+  <p class="lede">十一级台阶，每级两分钟。每一级只回答一个问题，答案会自然引出下一个问题——走完就能看懂产品线为什么长成那样。</p>
+</header>
+
+<nav class="toc">
+  <b>台阶</b>
+  <a href="#s1">1 从一个遥控器说起</a><a href="#s2">2 芯片里有什么</a><a href="#s3">3 省电为什么是命门</a><a href="#s4">4 无线到底怎么传</a><a href="#s5">5 协议为什么不止一种</a><a href="#s6">6 Mesh 接力</a><a href="#s7">7 Matter 不是无线协议</a><a href="#s8">8 为什么要"多协议"</a><a href="#s9">9 芯片怎么卖出去</a><a href="#s10">10 认证才是护城河</a><a href="#s11">11 端侧 AI 这层楼</a>
+</nav>
+
+<section class="step" id="s1">
+<h2><span class="num">1</span>从一个你天天摸的东西说起</h2>
+<p class="q">泰凌到底卖什么？</p>
+<p>把家里 Google TV 的遥控器拆开，里面只有四样东西：<b>两节 AAA 电池、一片按键的导电胶、一根天线、一颗指甲盖大的黑色芯片</b>。</p>
+<p>泰凌卖的就是那颗芯片。不是遥控器，不是电视，就是那一颗。它一年卖出去几亿颗，一颗大约<b>两毛五美金</b>。</p>
+<p>这件事有个反直觉的地方：这类芯片单价低到不值一提，但全球一年出货几十亿颗，而且毛利率经常比那些做 AI 大芯片的公司还高——泰凌 2025 年综合毛利率 50.3%。<b>这是一门"薄利但极大量、且门槛不在算力"的生意。</b></p>
+<div class="next"><b>→ 那颗芯片里到底装了什么，凭什么一颗就够？</b></div>
+</section>
+
+<section class="step" id="s2">
+<h2><span class="num">2</span>芯片里有什么</h2>
+<p class="q">SoC 这个词是什么意思？</p>
+<p><b>SoC = System on Chip，系统级芯片。</b>意思是本来需要好几颗芯片才能干的事，现在集成进一颗。遥控器这颗里装了四块东西：</p>
+
+<figure>
+<svg viewBox="0 0 720 250" role="img" aria-label="无线 SoC 内部结构：一颗芯片里集成了 MCU 运算、存储、射频收发、外设接口四块，射频块是模拟电路，其余是数字电路，芯片对外连接天线和电池">
+  <defs><marker id="ar1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+  <rect x="150" y="34" width="420" height="182" rx="14" fill="none" stroke="currentColor" stroke-width="2"/>
+  <text x="360" y="24" text-anchor="middle" font-size="13" font-weight="700" fill="currentColor">一颗 SoC</text>
+
+  <rect x="172" y="58" width="180" height="64" rx="8" fill="none" stroke="currentColor" stroke-width="1.3"/>
+  <text x="262" y="82" text-anchor="middle" font-size="13" font-weight="700" fill="currentColor">MCU 运算核心</text>
+  <text x="262" y="102" text-anchor="middle" font-size="11">跑协议栈与你的程序</text>
+
+  <rect x="368" y="58" width="180" height="64" rx="8" fill="none" stroke="currentColor" stroke-width="1.3"/>
+  <text x="458" y="82" text-anchor="middle" font-size="13" font-weight="700" fill="currentColor">存储</text>
+  <text x="458" y="102" text-anchor="middle" font-size="11">Flash 存固件 · SRAM 跑数据</text>
+
+  <rect x="172" y="134" width="180" height="64" rx="8" fill="none" stroke="#eb6834" stroke-width="2"/>
+  <text x="262" y="158" text-anchor="middle" font-size="13" font-weight="700" fill="#eb6834">射频收发 RF</text>
+  <text x="262" y="178" text-anchor="middle" font-size="11" fill="#eb6834">这块是模拟电路</text>
+
+  <rect x="368" y="134" width="180" height="64" rx="8" fill="none" stroke="currentColor" stroke-width="1.3"/>
+  <text x="458" y="158" text-anchor="middle" font-size="13" font-weight="700" fill="currentColor">外设接口</text>
+  <text x="458" y="178" text-anchor="middle" font-size="11">扫按键 · 驱红外 · 收麦克风</text>
+
+  <line x1="150" y1="166" x2="92" y2="166" stroke="currentColor" stroke-width="1.5" marker-end="url(#ar1)"/>
+  <line x1="66" y1="120" x2="66" y2="200" stroke="currentColor" stroke-width="2"/>
+  <line x1="66" y1="120" x2="46" y2="100" stroke="currentColor" stroke-width="2"/>
+  <line x1="66" y1="120" x2="86" y2="100" stroke="currentColor" stroke-width="2"/>
+  <text x="66" y="222" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">天线</text>
+
+  <rect x="616" y="128" width="44" height="62" rx="5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+  <rect x="630" y="120" width="16" height="8" rx="2" fill="currentColor"/>
+  <line x1="570" y1="159" x2="612" y2="159" stroke="currentColor" stroke-width="1.5" marker-end="url(#ar1)"/>
+  <text x="638" y="210" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">电池</text>
+</svg>
+<figcaption>一颗无线 SoC 的四块功能。橙色的射频块是模拟电路，其余三块是数字电路——所以每颗无线芯片都是"混合信号"芯片。</figcaption>
+</figure>
+
+<p>为什么非要集成成一颗？<b>省钱、省电、省地方。</b>分成四颗，就要四份封装、四份测试、板子上还要走线连起来——信号在芯片之间跑一趟既费电又容易受干扰。遥控器这种一颗两毛五的东西，多一颗料就活不下去了。</p>
+<p>顺带解答一个你可能会遇到的说法：<b>"自研 RF"为什么是壁垒。</b>因为上图里数字的三块，买 IP 拼一拼谁都能做；<b>橙色那块模拟射频没法自动化设计，靠的是老师傅手艺</b>。灵敏度能做到 −105dBm 还是 −96dBm，差的就是这块功力，跟工艺先进不先进关系不大。</p>
+<div class="next"><b>→ 这颗芯片要靠两节 AAA 撑一年。这怎么可能？</b></div>
+</section>
+
+<section class="step" id="s3">
+<h2><span class="num">3</span>省电为什么是这门生意的命门</h2>
+<p class="q">规格表上为什么同时写着 0.7µA 和 4.8mA？</p>
+<p>先算笔账。两节 AAA 电池大约 <b>2000 毫安时</b>。要用满一年，平均电流不能超过：</p>
+<p style="text-align:center;font-size:15px"><code>2000 mAh ÷ (365×24 h) ≈ 0.23 mA</code></p>
+<p>但芯片一发射信号，瞬间就要 <b>5 到 10 毫安</b>——是这个平均值的几十倍。矛盾怎么解决？</p>
+<p><b>让它绝大部分时间在睡觉。</b>你按一下遥控器，芯片醒过来几毫秒，发完就立刻睡回去。一天按 50 次，加起来清醒时间可能不到一秒。</p>
+
+<figure>
+<svg viewBox="0 0 720 210" role="img" aria-label="芯片工作的占空比示意：时间轴上绝大部分是极低的睡眠电流，只有偶尔的窄尖峰是发射，平均电流因此远低于峰值">
+  <line x1="60" y1="160" x2="690" y2="160" stroke="currentColor" stroke-width="1.5"/>
+  <line x1="60" y1="30" x2="60" y2="160" stroke="currentColor" stroke-width="1.5"/>
+  <text x="52" y="36" text-anchor="end" font-size="11" fill="currentColor">电流</text>
+  <text x="690" y="180" text-anchor="end" font-size="11" fill="currentColor">时间 →</text>
+
+  <polyline points="60,156 190,156 190,48 202,48 202,156 350,156 350,48 362,48 362,156 520,156 520,48 532,48 532,156 690,156"
+            fill="none" stroke="#eb6834" stroke-width="2"/>
+  <line x1="60" y1="156" x2="690" y2="156" stroke="currentColor" stroke-width="1" stroke-dasharray="3 3" opacity=".5"/>
+  <line x1="60" y1="140" x2="690" y2="140" stroke="#0f8f63" stroke-width="1.5" stroke-dasharray="6 4"/>
+
+  <text x="212" y="46" font-size="11.5" font-weight="700" fill="#eb6834">按一下：发射 ~5 mA，持续几毫秒</text>
+  <text x="200" y="152" font-size="11.5" fill="currentColor">睡眠 0.7 µA（约为发射的七千分之一）</text>
+  <text x="404" y="134" font-size="11.5" font-weight="700" fill="#0f8f63">平均必须 &lt; 0.23 mA 才能撑一年</text>
+</svg>
+<figcaption>芯片靠"绝大部分时间睡觉"把平均电流压到微安级。所以规格表上睡眠电流和发射电流都要看——单看一个没有意义。</figcaption>
+</figure>
+
+<p>这解释了很多你在产品资料里看到的东西：</p>
+<ul>
+<li><b>"深睡 0.7µA"</b>——睡得有多死，决定了电池寿命的底线</li>
+<li><b>"工作电流 1mA 量级"</b>——醒着时有多省，泰凌 TL721x 拿这个当卖点</li>
+<li><b>"收发切换 15 微秒"</b>——醒来干活的动作有多快，越快越省，因为醒着的时间更短</li>
+<li><b>"能量采集、无电池遥控器"</b>——干脆用按键的动能或光能供电，连电池都不要</li>
+</ul>
+<div class="next"><b>→ "发射"到底是发什么？无线是怎么传过去的？</b></div>
+</section>
+
+<section class="step" id="s4">
+<h2><span class="num">4</span>无线到底怎么传</h2>
+<p class="q">2.4GHz 是什么意思，为什么大家都在这个频段？</p>
+<p>天线的作用是<b>把电流的变化变成电磁波发出去</b>，另一端的天线再把电磁波变回电流。中间传的就是一串 0 和 1。</p>
+<p><b>2.4GHz 指电磁波每秒振荡 24 亿次。</b>为什么整个行业挤在这里？因为它是<b>全球免许可频段</b>——不用向任何国家申请牌照就能用。同一个频段全世界通用，芯片才能一款卖遍全球。（代价是很挤：Wi-Fi、蓝牙、微波炉都在这儿。微波炉加热食物用的正是 2.4GHz。）</p>
+<p>频率还决定了物理特性，这是硬约束：</p>
+<table>
+<tr><th>频段</th><th>特点</th><th>用在哪</th></tr>
+<tr><td><b>2.4GHz</b></td><td>传得近、穿墙一般、数据率够用、天线可以做小</td><td>蓝牙、Zigbee、Wi-Fi、遥控器</td></tr>
+<tr><td><b>Sub-1GHz</b></td><td>传得远、穿墙好，但数据率低、天线要大</td><td>水电表、广域追踪</td></tr>
+<tr><td><b>5GHz / 6GHz</b></td><td>快，但穿墙差、费电</td><td>Wi-Fi 高速档</td></tr>
+</table>
+<p>记住一条：<b>频率越低传得越远，频率越高传得越快</b>——这是电磁波的物理性质，谁也绕不过去。</p>
+<div class="next"><b>→ 既然都在同一个频段，为什么还要分成蓝牙、Zigbee、Wi-Fi 这么多种？</b></div>
+</section>
+
+<section class="step" id="s5">
+<h2><span class="num">5</span>协议为什么不止一种</h2>
+<p class="q">BLE、Zigbee、Thread、Wi-Fi、2.4G 私有，到底差在哪？</p>
+<p><b>协议就是两台设备约好的说话规矩</b>：谁先开口、一次说多少、说错了怎么重发、怎么确认对方是自己人。同一个频段上可以跑完全不同的规矩，就像同一条马路上可以开车也可以骑车。</p>
+<p>为什么不能统一成一种？因为<b>省电、传得远、传得快这三件事互相打架</b>，只能挑重点。</p>
+
+<figure>
+<svg viewBox="0 0 720 400" role="img" aria-label="无线协议的取舍空间：横轴是数据率从低到高，纵轴是功耗从低到高，各协议分布在不同位置，越快越费电">
+  <line x1="70" y1="340" x2="670" y2="340" stroke="currentColor" stroke-width="1.5"/>
+  <line x1="70" y1="40" x2="70" y2="340" stroke="currentColor" stroke-width="1.5"/>
+  <text x="370" y="368" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">数据率（一秒能传多少）→</text>
+  <text x="24" y="190" font-size="12" font-weight="700" fill="currentColor" transform="rotate(-90 24 190)" text-anchor="middle">功耗 →</text>
+
+  <circle cx="150" cy="292" r="7" fill="#0f8f63"/>
+  <text x="166" y="288" font-size="12.5" font-weight="700" fill="currentColor">Sub-1G / LPWAN</text>
+  <text x="166" y="305" font-size="11">传几公里，一天几条数据。水表电表</text>
+
+  <circle cx="238" cy="258" r="7" fill="#0f8f63"/>
+  <text x="254" y="254" font-size="12.5" font-weight="700" fill="currentColor">Zigbee / Thread（802.15.4）</text>
+  <text x="254" y="271" font-size="11">省电 + 能接力组网。灯泡、门锁、传感器</text>
+
+  <circle cx="286" cy="216" r="7" fill="#2a78d6"/>
+  <text x="302" y="212" font-size="12.5" font-weight="700" fill="currentColor">BLE 低功耗蓝牙</text>
+  <text x="302" y="229" font-size="11">省电 + 手机能直连。遥控器、手环、耳机</text>
+
+  <circle cx="330" cy="176" r="7" fill="#eb6834"/>
+  <text x="346" y="172" font-size="12.5" font-weight="700" fill="currentColor">2.4G 私有协议</text>
+  <text x="346" y="189" font-size="11">规矩自己定，延迟压到最低。游戏鼠标、键鼠</text>
+
+  <circle cx="252" cy="238" r="7" fill="#0f8f63"/>
+  <text x="268" y="234" font-size="0" fill="currentColor">RF4CE</text>
+
+  <circle cx="560" cy="86" r="7" fill="#8d6c23"/>
+  <text x="576" y="82" font-size="12.5" font-weight="700" fill="currentColor">Wi-Fi</text>
+  <text x="576" y="99" font-size="11">快得多，但费电，通常要插电</text>
+
+  <text x="86" y="60" font-size="11.5" font-style="italic" fill="currentColor" opacity=".75">越往右上：越快也越费电</text>
+  <text x="86" y="78" font-size="11.5" font-style="italic" fill="currentColor" opacity=".75">电池供电的设备只能待在左下角</text>
+</svg>
+<figcaption>各协议在"快"和"省电"之间的取舍位置。电池供电的产品被物理规律锁在左下角——这就是为什么遥控器不用 Wi-Fi。</figcaption>
+</figure>
+
+<p>还有一个特殊的：<b>RF4CE</b>。它是专门为遥控器做的老协议（Zigbee 家族），北美运营商的机顶盒遥控用了十几年，存量巨大。新的零售电视遥控器都转向 BLE 了，但那些老机顶盒还在服役——<b>这个"新旧并存"的局面，后面第 8 步会变成泰凌的一个卖点。</b></p>
+<div class="next"><b>→ 灯泡为什么需要"接力"，遥控器却不需要？</b></div>
+</section>
+
+<section class="step" id="s6">
+<h2><span class="num">6</span>Mesh：让设备互相接力</h2>
+<p class="q">为什么智能家居要 mesh，遥控器不要？</p>
+<p>遥控器只跟电视说话，一对一，距离三米，直连就够了。</p>
+<p>但你家可能有二十个灯泡、五个门窗传感器，分布在三个房间。让每一个都直连中央网关，最远那个大概率连不上。<b>Mesh 的办法是让设备互相转发</b>：客厅的灯帮卧室的传感器把消息接力出去。好处是覆盖大、而且某个节点坏了还能绕路走。</p>
+<p>代价是：负责转发的节点必须一直醒着（否则没法帮别人转发），所以<b>接电的设备（灯泡、插座）当路由，电池设备（传感器、门锁）只当末端</b>。这是 mesh 网络的基本分工。</p>
+<p>Zigbee 和 Thread 都是 mesh，蓝牙也有 Bluetooth Mesh。它们共用同一个底层无线标准 <b>802.15.4</b>——所以一颗支持 802.15.4 的芯片，理论上 Zigbee 和 Thread 都能跑。</p>
+<div class="next"><b>→ 那 Matter 又是什么？它和 Thread 是什么关系？</b></div>
+</section>
+
+<section class="step" id="s7">
+<h2><span class="num">7</span>Matter 不是无线协议</h2>
+<p class="q">为什么会有"Matter over Thread"和"Matter over Wi-Fi"两种说法？</p>
+<p>这是最容易搞混的一点。<b>Matter 不管信号怎么传，它管的是设备之间说什么话。</b></p>
+<p>打个比方：Thread 和 Wi-Fi 是<b>路</b>，Matter 是<b>语言</b>。以前的问题是，飞利浦的灯和小米的音箱各说各的方言，互相听不懂。Matter 规定了统一说法——"我是一个灯泡，我有开关和亮度两个属性"——这样苹果、Google、亚马逊的音箱都能听懂。</p>
+
+<figure>
+<svg viewBox="0 0 720 250" role="img" aria-label="Matter 的分层关系：Matter 是应用层的统一语言，下面可以跑在 Thread 或 Wi-Fi 两条不同的网络路径上，Thread 再往下是 802.15.4 无线标准">
+  <rect x="150" y="26" width="420" height="46" rx="9" fill="none" stroke="#0f8f63" stroke-width="2.2"/>
+  <text x="360" y="47" text-anchor="middle" font-size="14" font-weight="800" fill="#0f8f63">Matter — 说什么话（应用层）</text>
+  <text x="360" y="64" text-anchor="middle" font-size="11" fill="#0f8f63">"我是灯泡，我有开关和亮度"</text>
+
+  <line x1="270" y1="72" x2="270" y2="106" stroke="currentColor" stroke-width="1.5"/>
+  <line x1="450" y1="72" x2="450" y2="106" stroke="currentColor" stroke-width="1.5"/>
+
+  <rect x="150" y="106" width="240" height="46" rx="9" fill="none" stroke="currentColor" stroke-width="1.6"/>
+  <text x="270" y="127" text-anchor="middle" font-size="13.5" font-weight="700" fill="currentColor">Thread</text>
+  <text x="270" y="144" text-anchor="middle" font-size="11">省电、能 mesh、要网关</text>
+
+  <rect x="410" y="106" width="160" height="46" rx="9" fill="none" stroke="currentColor" stroke-width="1.6"/>
+  <text x="490" y="127" text-anchor="middle" font-size="13.5" font-weight="700" fill="currentColor">Wi-Fi</text>
+  <text x="490" y="144" text-anchor="middle" font-size="11">快、费电、要插电</text>
+
+  <line x1="270" y1="152" x2="270" y2="186" stroke="currentColor" stroke-width="1.5"/>
+  <rect x="150" y="186" width="240" height="40" rx="9" fill="none" stroke="currentColor" stroke-width="1.3" stroke-dasharray="5 4"/>
+  <text x="270" y="211" text-anchor="middle" font-size="12.5" fill="currentColor">802.15.4 无线底层</text>
+
+  <text x="600" y="132" font-size="11.5" font-style="italic" fill="currentColor" opacity=".8">同一句话，</text>
+  <text x="600" y="149" font-size="11.5" font-style="italic" fill="currentColor" opacity=".8">两条路都能送</text>
+</svg>
+<figcaption>Matter 是语言，Thread 和 Wi-Fi 是两条不同的路。所以做 Matter 产品要先选走哪条路——这就是"Matter over Thread / over Wi-Fi"的含义。</figcaption>
+</figure>
+
+<p>这一层直接解释了产品线上一件事：泰凌<b>只有 TLSR9118 一款 Wi-Fi 芯片</b>，它单独存在的理由就是承接"Matter over Wi-Fi"这条路。其余多协议芯片走的都是 Thread 那条。</p>
+<div class="next"><b>→ 好，现在可以回答最关键的问题了：为什么泰凌要把这么多协议塞进一颗芯片？</b></div>
+</section>
+
+<section class="step" id="s8">
+<h2><span class="num">8</span>为什么要"多协议"</h2>
+<p class="q">这是看懂整条产品线的钥匙。</p>
+<p>站在客户角度想。一家电视品牌要做新一代遥控器，它面对的是这样一张清单：</p>
+<ul>
+<li>要贴 Google TV 品牌 → 遥控器得走 <b>BLE</b>，还得过 Google 那套认证</li>
+<li>同一款遥控器还要卖给运营商配老机顶盒 → 得兼容 <b>RF4CE</b></li>
+<li>电视本身要进智能家居生态 → 可能还要 <b>Thread / Matter</b></li>
+<li>要控老电视的电源音量 → 还得有 <b>红外</b></li>
+</ul>
+<p>如果这些各要一颗芯片，成本、板子面积、功耗、认证工作量全部乘以四。<b>一颗芯片全包，客户省的是四份料钱、四份认证费、四套开发和四套库存。</b></p>
+<div class="box">
+<h3>所以产品线的行标签才那样分</h3>
+<p style="margin:6px 0">回头看族谱图，五行分别是<b>多协议 IoT / BLE 与 2.4G 私有 / 无线音频 / Wi-Fi / 纯 2.4G 私有</b>——分行的依据就是"这颗芯片能同时说几种话"。最上面那行协议最全，最下面那行只会一种。这不是按好坏排，是按能力范围排。</p>
+</div>
+<div class="next"><b>→ 芯片做出来了，怎么才能进到电视品牌的遥控器里？</b></div>
+</section>
+
+<section class="step" id="s9">
+<h2><span class="num">9</span>芯片怎么卖出去，谁说了算</h2>
+<p class="q">这条链条决定了你该去敲谁的门。</p>
+<p>芯片厂不直接卖给消费者，中间隔着好几层：</p>
+
+<figure>
+<svg viewBox="0 0 720 220" role="img" aria-label="遥控器产业链：芯片原厂到模组方案商到 ODM 代工厂到品牌与运营商，真正决定选型的是最后一环">
+  <defs><marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+
+  <rect x="20" y="52" width="140" height="60" rx="9" fill="none" stroke="currentColor" stroke-width="1.6"/>
+  <text x="90" y="78" text-anchor="middle" font-size="13" font-weight="700" fill="currentColor">芯片原厂</text>
+  <text x="90" y="96" text-anchor="middle" font-size="11">泰凌 · Nordic</text>
+
+  <rect x="196" y="52" width="140" height="60" rx="9" fill="none" stroke="currentColor" stroke-width="1.6"/>
+  <text x="266" y="78" text-anchor="middle" font-size="13" font-weight="700" fill="currentColor">模组 / 方案商</text>
+  <text x="266" y="96" text-anchor="middle" font-size="11">有时被下一环内化</text>
+
+  <rect x="372" y="52" width="140" height="60" rx="9" fill="none" stroke="currentColor" stroke-width="1.6"/>
+  <text x="442" y="78" text-anchor="middle" font-size="13" font-weight="700" fill="currentColor">ODM 代工厂</text>
+  <text x="442" y="96" text-anchor="middle" font-size="11">造出整只遥控器</text>
+
+  <rect x="548" y="46" width="152" height="72" rx="9" fill="none" stroke="#eb6834" stroke-width="2.4"/>
+  <text x="624" y="72" text-anchor="middle" font-size="13" font-weight="800" fill="#eb6834">品牌 / 平台 / 运营商</text>
+  <text x="624" y="90" text-anchor="middle" font-size="11" fill="#eb6834">Google · Amazon</text>
+  <text x="624" y="106" text-anchor="middle" font-size="11" fill="#eb6834">TCL · Comcast</text>
+
+  <line x1="164" y1="82" x2="192" y2="82" stroke="currentColor" stroke-width="1.5" marker-end="url(#ar2)"/>
+  <line x1="340" y1="82" x2="368" y2="82" stroke="currentColor" stroke-width="1.5" marker-end="url(#ar2)"/>
+  <line x1="516" y1="82" x2="544" y2="82" stroke="currentColor" stroke-width="1.5" marker-end="url(#ar2)"/>
+
+  <path d="M624 126 L624 156 L90 156 L90 118" fill="none" stroke="#eb6834" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#ar2)"/>
+  <text x="357" y="176" text-anchor="middle" font-size="12.5" font-weight="700" fill="#eb6834">真正决定用谁的芯片的是这一端——它先认证芯片、列进合格名单，ODM 只能在名单里挑</text>
+</svg>
+<figcaption>货是从左往右流的，但选型的决定权在最右端。这就是为什么美国市场要去敲平台方和运营商的门，而不是遥控器工厂。</figcaption>
+</figure>
+
+<p>行业里衡量成败的核心指标叫 <b>Design Win（设计中标）</b>——你的芯片被设计进某一款要量产的产品。拿下一个 design win，接下来几年这款产品卖多少，你就跟着出多少货。</p>
+<div class="next"><b>→ 既然大家的芯片功能差不多，凭什么是你被选中？</b></div>
+</section>
+
+<section class="step" id="s10">
+<h2><span class="num">10</span>认证才是真正的护城河</h2>
+<p class="q">为什么"预认证"值那么多钱？</p>
+<p>一个无线产品上市前要过三类关卡，每一类都要钱要时间：</p>
+<table>
+<tr><th>关卡</th><th>谁管</th><th>量级</th></tr>
+<tr><td><b>标准组织</b>：蓝牙认证</td><td>Bluetooth SIG</td><td>一次 <b>$6,000–12,000</b>，看会员等级</td></tr>
+<tr><td><b>生态准入</b>：Google 认证、Matter 认证</td><td>Google / CSA</td><td>流程长，要注册、自测、送第三方实验室</td></tr>
+<tr><td><b>法规</b>：FCC（美）、CE（欧）等</td><td>各国监管</td><td>欧洲常规 <b>8–12 周</b>；每多卖一个国家多一套</td></tr>
+</table>
+<p>关键在于：<b>这些认证很多可以由芯片原厂预先做掉，客户直接复用。</b>蓝牙认证有个编号叫 <b>QDID</b>，客户基于原厂已认证的设计做产品，可以走"部件复用"，每次省下五位数美金和好几周。</p>
+<p>所以芯片厂真正卖的不只是那颗硅片，而是<b>「一套已经被验证过、能少踩坑少花钱的完整方案」</b>：参考设计的电路板、跑通的软件、已经过认证的射频、以及在多少个国家已经落过地的证明。泰凌能拿下 Google 参考遥控器这个位置，价值也在这里——客户拿到的是一条已经有人走通的路。</p>
+<div class="next"><b>→ 最后一层：为什么这两年所有人都在讲"端侧 AI"？</b></div>
+</section>
+
+<section class="step" id="s11">
+<h2><span class="num">11</span>端侧 AI：加盖的一层楼</h2>
+<p class="q">在这么小一颗芯片上跑 AI，是什么意思？</p>
+<p>前面十步讲的都是<b>连接</b>——把数据从 A 送到 B。端侧 AI 是在这之上加一层：<b>让芯片自己先处理一下，而不是把原始数据全传出去。</b></p>
+<p>最典型的例子是耳机降噪。你在马路上打电话，麦克风收到的是人声加车流声。以前的做法是把这一坨全传给手机去处理；现在的做法是芯片上跑一个小神经网络，先把车流声去掉再传。好处是延迟低、省流量、隐私不出设备。</p>
+<p>它跟前面十步的关系是这样的：</p>
+<ul>
+<li><b>省电那一关还在。</b>芯片依然只有毫安级的预算，跑 AI 也不能破这个约束——这就是为什么端侧 AI 芯片拼的是"每次推理花多少微焦耳"，不是拼算力峰值</li>
+<li><b>内存是硬天花板。</b>片上 SRAM 只有几百 KB，装得下唤醒词识别和降噪，装不下图像识别。<b>能跑什么，卡在内存不在算力</b></li>
+<li><b>数据搬运才是耗电大头。</b>数据中心的 GPU，算术本身只占能耗的极小部分，绝大部分花在从内存搬数据上。而边缘芯片的模型就躺在片上——<b>它天生没有这个开销，这是它真正的结构性优势</b></li>
+</ul>
+<p>行业目前的分界线是有没有 <b>NPU</b>（神经网络专用加速单元）。有 NPU 的能效更高，没有的靠 DSP 或指令集扩展硬跑。这条线上各家怎么站位，是另一个话题了——但前十步的约束一条都没消失，这是判断任何"端侧 AI"宣传时最好用的尺子。</p>
+</section>
+
+<div class="coda">
+<h2 style="font-size:19px;margin:0 0 12px">走完这十一级，回头看产品线</h2>
+<p>现在族谱图上那些行标签应该都有了着落：</p>
+<table>
+<tr><th>行</th><th>它存在的理由</th></tr>
+<tr><td><b>多协议 IoT</b></td><td>客户要一颗料同时进多个生态、兼容存量协议（第 8 步）</td></tr>
+<tr><td><b>BLE 与 2.4G 私有</b></td><td>不需要组网的场景，砍掉 802.15.4 换更低成本（第 5、6 步）</td></tr>
+<tr><td><b>无线音频</b></td><td>音频要连续传、要低延迟、要编解码，跟按键类完全不同的负载</td></tr>
+<tr><td><b>Wi-Fi</b></td><td>专为承接 "Matter over Wi-Fi" 那条路（第 7 步）</td></tr>
+<tr><td><b>纯 2.4G 私有</b></td><td>键鼠这类只求低延迟低成本、不需要标准协议的设备（第 5 步）</td></tr>
+</table>
+<p>而那些数字——0.7µA、1mA、−105dBm、$6,000 的认证费、$0.25 的单价——现在也各自有了位置：<b>它们分别对应电池寿命、连接距离、客户的省钱账，以及这门生意为什么薄利却还能有 50% 毛利。</b></p>
+</div>
+
+<footer>
+本页由个人整理，内容为无线连接芯片行业通识，公开资料来源包括厂商官网产品页与文档站、公司公开披露与行业媒体报道。<br>
+非公司发布材料，不代表任何公司口径。2026 年 9 月整理。
+</footer>
+</div>
+</body>
+</html>
