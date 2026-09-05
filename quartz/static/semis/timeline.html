@@ -508,8 +508,16 @@ h1.article-title{font-size:30px}
 /* phone: vertical list */
 .vlist{display:none}
 @media (max-width:740px){
-  .wrap,.zsw,.zbtn,.zlvl,.inhint,.ctrl-group:has(.zsw),.hint:not(.foot){display:none}
+  .zsw,.zbtn,.zlvl,.inhint,.ctrl-group:has(.zsw),.hint:not(.foot){display:none}
   .vlist{display:block}
+  /* The strip keeps its desktop density and scrolls sideways. Rendered at
+     phone width instead, the decade labels overprint each other and every
+     flag past 1990 is cut off by the right edge. */
+  .tlcol{min-width:0;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .tl{min-width:760px}
+  .gutter{position:sticky;left:0;z-index:5;background:var(--paper)}
+  /* the browser scrolls the strip here, so the drag-to-pan handler stands down */
+  .canvas{touch-action:auto}
   .vseg{display:inline-flex;border:1px solid var(--color-border);border-radius:4px;overflow:hidden;margin:0 0 .8rem}
   .vseg button{font:inherit;font-family:var(--font-mono);font-size:13px;padding:.4rem .9rem;background:none;border:0;color:var(--color-text-dim)}
   .vseg button.on{background:var(--color-surface);color:var(--color-text-bright)}
@@ -731,15 +739,19 @@ function preset(z) {
 }
 document.querySelectorAll('[data-z]').forEach(b => b.addEventListener('click', () => preset(b.dataset.z)));
 canvas.addEventListener('wheel', e => {
+  if (!wide()) return;
   e.preventDefault(); const r = canvas.getBoundingClientRect();
   if (e.shiftKey) { t0 += e.deltaY / ppy; render(); return; }
   zoomAt(Math.exp(-e.deltaY * 0.0022), e.clientX - r.left);
 }, {passive: false});
 const pts = new Map(); let lastX = 0, lastD = 0, moved = false;
-canvas.addEventListener('pointerdown', e => { pts.set(e.pointerId, e); canvas.setPointerCapture(e.pointerId); lastX = e.clientX; moved = false;
+// below 741px the strip is a horizontal scroller, so dragging it must scroll it,
+// not pan the years underneath
+const wide = () => matchMedia('(min-width:741px)').matches;
+canvas.addEventListener('pointerdown', e => { if (!wide()) return; pts.set(e.pointerId, e); canvas.setPointerCapture(e.pointerId); lastX = e.clientX; moved = false;
   if (pts.size === 2) { const [a, b] = [...pts.values()]; lastD = Math.abs(a.clientX - b.clientX); } });
 canvas.addEventListener('pointermove', e => {
-  if (!pts.has(e.pointerId)) return; pts.set(e.pointerId, e);
+  if (!wide() || !pts.has(e.pointerId)) return; pts.set(e.pointerId, e);
   if (pts.size === 1) { const dx = e.clientX - lastX; if (Math.abs(dx) > 2) moved = true; t0 -= dx / ppy; lastX = e.clientX; render(); }
   else if (pts.size === 2) { const [a, b] = [...pts.values()]; const d = Math.abs(a.clientX - b.clientX); const r = canvas.getBoundingClientRect();
     if (lastD > 0) zoomAt(d / lastD, (a.clientX + b.clientX) / 2 - r.left); lastD = d; moved = true; }
@@ -785,4 +797,8 @@ function renderV() {
 document.querySelectorAll('.vseg button').forEach(b => b.addEventListener('click', () => { vt = +b.dataset.t; document.querySelectorAll('.vseg button').forEach(x => x.classList.toggle('on', x === b)); renderV(); }));
 renderV();
 W = tl.clientWidth; ppy = fitPpy(); t0 = Y0; render();
+// the strip lays itself out from a measured width, so a width change has to
+// reach it — rotating a phone, or crossing the 740px breakpoint
+addEventListener('resize', () => { const w = tl.clientWidth; if (!w || w === W) return;
+  const stale = !W; W = w; if (stale) { ppy = fitPpy(); t0 = Y0; } clamp(); render(); });
 </script></body></html>
