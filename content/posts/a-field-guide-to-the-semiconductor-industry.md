@@ -12,9 +12,14 @@ description: "I mapped every layer of the chip value chain to see where the pric
 
 Recently work pulled me toward the semiconductor industry, and I found my picture of it was a pile of headlines — EUV, CoWoS, export controls, one indispensable company in Taiwan. I wanted the structure underneath: how the industry got its shape, where the money and pricing power sit, and how deeply the players depend on one another. So I have been writing it down as an interactive map, because what I needed turned out to be a map rather than an essay.
 
+The map shows the shape. The timeline shows how it got that way.
+
 <div class="x-cards">
   <a href="/static/semis/value-chain-map.html" data-router-ignore class="x-card xc-blue">
     <strong>The Full Map</strong><br><span class="x-desc">Every layer of the value chain and who plays where — filter by region, hover any player.</span>
+  </a>
+  <a href="/static/semis/timeline.html" data-router-ignore class="x-card xc-amber">
+    <strong>The Timeline</strong><br><span class="x-desc">Forty-eight turning points, 1947 to now — each marked supply, demand or state, and most linked back to its layer on the map.</span>
   </a>
 </div>
 
