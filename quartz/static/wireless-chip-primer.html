@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>无线芯片零基础入门 · 十一级台阶</title>
+<title>无线芯片零基础入门 · 十二级台阶</title>
 <style>
 :root{
   color-scheme: light;
@@ -31,6 +31,15 @@ h1{margin:0;font-size:25px;font-weight:800;letter-spacing:-.01em}
 .step ul{margin:11px 0;padding-left:22px;font-size:15px}
 .step li{margin:6px 0}
 b,strong{color:var(--ink);font-weight:700}
+/* 术语 tooltip */
+.tt{position:relative;border-bottom:1.5px dotted var(--accent);cursor:help;color:var(--accent);font-weight:700;white-space:nowrap}
+.tt .tip{visibility:hidden;opacity:0;transition:opacity .15s;position:absolute;left:50%;transform:translateX(-50%);bottom:calc(100% + 9px);z-index:99;width:330px;background:#1a2230;color:#f2f0ea;font-size:12.5px;font-weight:400;line-height:1.62;padding:12px 15px;border-radius:9px;box-shadow:0 8px 26px rgba(0,0,0,.34);white-space:normal;pointer-events:none;text-align:left}
+.tt .tip b{color:#e0a96d}
+.tt .tip::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top-color:#1a2230}
+.tt:hover .tip,.tt:focus .tip{visibility:visible;opacity:1}
+figcaption .tt .tip{width:300px}
+@media(max-width:700px){.tt .tip{width:230px}}
+@media print{.tt .tip{display:none}.tt{border-bottom:none;color:inherit;font-weight:inherit}}
 figure{margin:22px 0;padding:16px 14px 10px;background:var(--soft);border:1px solid var(--line);border-radius:11px}
 figure svg{width:100%;height:auto;display:block;color:var(--ink2)}
 figcaption{font-size:12.5px;color:var(--ink3);text-align:center;margin-top:10px;line-height:1.6}
@@ -54,27 +63,27 @@ footer{margin-top:30px;padding-top:12px;border-top:1px solid var(--line);font-si
 
 <header>
   <h1>无线芯片零基础入门</h1>
-  <p class="lede">十一级台阶，每级两分钟。每一级只回答一个问题，答案会自然引出下一个问题——走完就能看懂产品线为什么长成那样。</p>
+  <p class="lede">十二级台阶，每级两分钟。每一级只回答一个问题，答案会自然引出下一个问题——走完就能看懂产品线为什么是现在的样子。</p>
 </header>
 
 <nav class="toc">
   <b>台阶</b>
-  <a href="#s1">1 从一个遥控器说起</a><a href="#s2">2 芯片里有什么</a><a href="#s3">3 省电为什么是命门</a><a href="#s4">4 无线到底怎么传</a><a href="#s5">5 协议为什么不止一种</a><a href="#s6">6 Mesh 接力</a><a href="#s7">7 Matter 不是无线协议</a><a href="#s8">8 为什么要"多协议"</a><a href="#s9">9 芯片怎么卖出去</a><a href="#s10">10 认证才是护城河</a><a href="#s11">11 端侧 AI 这层楼</a>
+  <a href="#s1">1 从一个遥控器说起</a><a href="#s2">2 芯片里有什么</a><a href="#s3">3 省电为什么是命门</a><a href="#s4">4 无线到底怎么传</a><a href="#s5">5 协议为什么不止一种</a><a href="#s6">6 Mesh 接力</a><a href="#s7">7 Matter 不是无线协议</a><a href="#s8">8 为什么要"多协议"</a><a href="#s9">9 芯片怎么卖出去</a><a href="#s10">10 客户在比什么</a><a href="#s11">11 认证才是护城河</a><a href="#s12">12 端侧 AI 这层楼</a>
 </nav>
 
 <section class="step" id="s1">
-<h2><span class="num">1</span>从一个你天天摸的东西说起</h2>
+<h2><span class="num">1</span>从一个每天都会用到的物件说起</h2>
 <p class="q">泰凌到底卖什么？</p>
-<p>把家里 Google TV 的遥控器拆开，里面只有四样东西：<b>两节 AAA 电池、一片按键的导电胶、一根天线、一颗指甲盖大的黑色芯片</b>。</p>
+<p>把家里 Google TV 的遥控器拆开，里面只有四样部件：<b>两节 AAA 电池、一片按键的导电胶、一根天线、一颗指甲盖大的黑色芯片</b>。</p>
 <p>泰凌卖的就是那颗芯片。不是遥控器，不是电视，就是那一颗。它一年卖出去几亿颗，一颗大约<b>两毛五美金</b>。</p>
 <p>这件事有个反直觉的地方：这类芯片单价低到不值一提，但全球一年出货几十亿颗，而且毛利率经常比那些做 AI 大芯片的公司还高——泰凌 2025 年综合毛利率 50.3%。<b>这是一门"薄利但极大量、且门槛不在算力"的生意。</b></p>
-<div class="next"><b>→ 那颗芯片里到底装了什么，凭什么一颗就够？</b></div>
+<div class="next"><b>→ 那颗芯片里到底装了什么，为什么一颗就够？</b></div>
 </section>
 
 <section class="step" id="s2">
 <h2><span class="num">2</span>芯片里有什么</h2>
 <p class="q">SoC 这个词是什么意思？</p>
-<p><b>SoC = System on Chip，系统级芯片。</b>意思是本来需要好几颗芯片才能干的事，现在集成进一颗。遥控器这颗里装了四块东西：</p>
+<p><b>SoC = System on Chip，系统级芯片。</b>指本来需要多颗芯片才能完成的功能，现在集成到一颗上。遥控器这颗里集成了四个功能块：</p>
 
 <figure>
 <svg viewBox="0 0 720 250" role="img" aria-label="无线 SoC 内部结构：一颗芯片里集成了 MCU 运算、存储、射频收发、外设接口四块，射频块是模拟电路，其余是数字电路，芯片对外连接天线和电池">
@@ -92,7 +101,7 @@ footer{margin-top:30px;padding-top:12px;border-top:1px solid var(--line);font-si
 
   <rect x="172" y="134" width="180" height="64" rx="8" fill="none" stroke="#eb6834" stroke-width="2"/>
   <text x="262" y="158" text-anchor="middle" font-size="13" font-weight="700" fill="#eb6834">射频收发 RF</text>
-  <text x="262" y="178" text-anchor="middle" font-size="11" fill="#eb6834">这块是模拟电路</text>
+  <text x="262" y="178" text-anchor="middle" font-size="11" fill="#eb6834">这块是模拟电路<title>模拟指以连续的物理量（电压、电流）直接表示数值；数字指仅以高低两档编码。射频只能是模拟的。</title></text>
 
   <rect x="368" y="134" width="180" height="64" rx="8" fill="none" stroke="currentColor" stroke-width="1.3"/>
   <text x="458" y="158" text-anchor="middle" font-size="13" font-weight="700" fill="currentColor">外设接口</text>
@@ -109,11 +118,11 @@ footer{margin-top:30px;padding-top:12px;border-top:1px solid var(--line);font-si
   <line x1="570" y1="159" x2="612" y2="159" stroke="currentColor" stroke-width="1.5" marker-end="url(#ar1)"/>
   <text x="638" y="210" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">电池</text>
 </svg>
-<figcaption>一颗无线 SoC 的四块功能。橙色的射频块是模拟电路，其余三块是数字电路——所以每颗无线芯片都是"混合信号"芯片。</figcaption>
+<figcaption>一颗无线 SoC 的四块功能。橙色的射频块是<span class="tt" tabindex="0">模拟电路<span class="tip"><b>模拟</b>：用一个连续变化的物理量直接代表数值——电压 0.734 伏就代表 0.734。水银温度计、黑胶唱片都是这样。<br><br><b>数字</b>：仅使用高低两档（1 和 0），任何数值都以一串 0 和 1 编码逼近。<br><br>数字的优势有三点：噪声不累积（只要还能分辨高低就能完整复原）、能容忍制造差异、可以抽象并自动化设计。代价是多绕一层——晶体管本身就是模拟器件，数字电路是人为只取它的两个极端。<br><br>射频没有选择余地，只能是模拟的：天线收到的电磁波本身就是连续波形。</span></span>，其余三块是数字电路——所以每颗无线芯片都是"混合信号"芯片。</figcaption>
 </figure>
 
-<p>为什么非要集成成一颗？<b>省钱、省电、省地方。</b>分成四颗，就要四份封装、四份测试、板子上还要走线连起来——信号在芯片之间跑一趟既费电又容易受干扰。遥控器这种一颗两毛五的东西，多一颗料就活不下去了。</p>
-<p>顺带解答一个你可能会遇到的说法：<b>"自研 RF"为什么是壁垒。</b>因为上图里数字的三块，买 IP 拼一拼谁都能做；<b>橙色那块模拟射频没法自动化设计，靠的是老师傅手艺</b>。灵敏度能做到 −105dBm 还是 −96dBm，差的就是这块功力，跟工艺先进不先进关系不大。</p>
+<p>为什么非要集成成一颗？<b>省成本、省功耗、省面积。</b>分成四颗，就要四份封装、四份测试、板子上还要走线连起来——信号在芯片之间跑一趟既费电又容易受干扰。遥控器这类单价两毛五的产品，多一颗料就没有利润空间了。</p>
+<p>顺带解答一个你可能会遇到的说法：<b>"自研 RF"为什么是壁垒。</b>因为上图里数字的三块，购买 IP 组合即可实现；<b>橙色那块模拟射频无法自动化设计，依赖长期积累的工程经验</b>。灵敏度做到 −105dBm 还是 −96dBm，差距就在这里，与工艺是否先进关系不大。</p>
 <div class="next"><b>→ 这颗芯片要靠两节 AAA 撑一年。这怎么可能？</b></div>
 </section>
 
@@ -144,12 +153,12 @@ footer{margin-top:30px;padding-top:12px;border-top:1px solid var(--line);font-si
 <figcaption>芯片靠"绝大部分时间睡觉"把平均电流压到微安级。所以规格表上睡眠电流和发射电流都要看——单看一个没有意义。</figcaption>
 </figure>
 
-<p>这解释了很多你在产品资料里看到的东西：</p>
+<p>这解释了产品资料里的许多表述：</p>
 <ul>
-<li><b>"深睡 0.7µA"</b>——睡得有多死，决定了电池寿命的底线</li>
-<li><b>"工作电流 1mA 量级"</b>——醒着时有多省，泰凌 TL721x 拿这个当卖点</li>
-<li><b>"收发切换 15 微秒"</b>——醒来干活的动作有多快，越快越省，因为醒着的时间更短</li>
-<li><b>"能量采集、无电池遥控器"</b>——干脆用按键的动能或光能供电，连电池都不要</li>
+<li><b>"深睡 0.7µA"</b>——睡眠功耗有多低，决定了电池寿命的底线</li>
+<li><b>"工作电流 1mA 量级"</b>——醒着时的功耗，是泰凌 TL721x 的主打指标</li>
+<li><b>"收发切换 15 微秒"</b>——醒来后进入收发的速度，越快越省电，因为清醒时间更短</li>
+<li><b>"能量采集、无电池遥控器"</b>——直接用按键的动能或光能供电，不再需要电池</li>
 </ul>
 <div class="next"><b>→ "发射"到底是发什么？无线是怎么传过去的？</b></div>
 </section>
@@ -166,7 +175,7 @@ footer{margin-top:30px;padding-top:12px;border-top:1px solid var(--line);font-si
 <tr><td><b>Sub-1GHz</b></td><td>传得远、穿墙好，但数据率低、天线要大</td><td>水电表、广域追踪</td></tr>
 <tr><td><b>5GHz / 6GHz</b></td><td>快，但穿墙差、费电</td><td>Wi-Fi 高速档</td></tr>
 </table>
-<p>记住一条：<b>频率越低传得越远，频率越高传得越快</b>——这是电磁波的物理性质，谁也绕不过去。</p>
+<p>记住一条：<b>频率越低传得越远，频率越高传得越快</b>——这是电磁波的物理性质，无法回避。</p>
 <div class="next"><b>→ 既然都在同一个频段，为什么还要分成蓝牙、Zigbee、Wi-Fi 这么多种？</b></div>
 </section>
 
@@ -259,8 +268,8 @@ footer{margin-top:30px;padding-top:12px;border-top:1px solid var(--line);font-si
 <figcaption>Matter 是语言，Thread 和 Wi-Fi 是两条不同的路。所以做 Matter 产品要先选走哪条路——这就是"Matter over Thread / over Wi-Fi"的含义。</figcaption>
 </figure>
 
-<p>这一层直接解释了产品线上一件事：泰凌<b>只有 TLSR9118 一款 Wi-Fi 芯片</b>，它单独存在的理由就是承接"Matter over Wi-Fi"这条路。其余多协议芯片走的都是 Thread 那条。</p>
-<div class="next"><b>→ 好，现在可以回答最关键的问题了：为什么泰凌要把这么多协议塞进一颗芯片？</b></div>
+<p>这一层直接解释了产品线上一件事：泰凌的 Wi-Fi 产品是 <b>TLSR9118</b>，它承接的正是"Matter over Wi-Fi"这条路。其余多协议芯片走的都是 Thread 那条。</p>
+<div class="next"><b>→ 现在可以回答最关键的问题：为什么泰凌要把这么多协议集成进一颗芯片？</b></div>
 </section>
 
 <section class="step" id="s8">
@@ -276,7 +285,7 @@ footer{margin-top:30px;padding-top:12px;border-top:1px solid var(--line);font-si
 <p>如果这些各要一颗芯片，成本、板子面积、功耗、认证工作量全部乘以四。<b>一颗芯片全包，客户省的是四份料钱、四份认证费、四套开发和四套库存。</b></p>
 <div class="box">
 <h3>所以产品线的行标签才那样分</h3>
-<p style="margin:6px 0">回头看族谱图，五行分别是<b>多协议 IoT / BLE 与 2.4G 私有 / 无线音频 / Wi-Fi / 纯 2.4G 私有</b>——分行的依据就是"这颗芯片能同时说几种话"。最上面那行协议最全，最下面那行只会一种。这不是按好坏排，是按能力范围排。</p>
+<p style="margin:6px 0">产品线分五行：<b>多协议 IoT / BLE 与 2.4G 私有 / 无线音频 / Wi-Fi / 纯 2.4G 私有</b>——分行的依据就是"这颗芯片能同时说几种话"。多协议 IoT 覆盖的协议最多，纯 2.4G 私有专注单一协议。</p>
 </div>
 <div class="next"><b>→ 芯片做出来了，怎么才能进到电视品牌的遥控器里？</b></div>
 </section>
@@ -318,11 +327,114 @@ footer{margin-top:30px;padding-top:12px;border-top:1px solid var(--line);font-si
 </figure>
 
 <p>行业里衡量成败的核心指标叫 <b>Design Win（设计中标）</b>——你的芯片被设计进某一款要量产的产品。拿下一个 design win，接下来几年这款产品卖多少，你就跟着出多少货。</p>
-<div class="next"><b>→ 既然大家的芯片功能差不多，凭什么是你被选中？</b></div>
+<div class="next"><b>→ 那么在这一端的眼里，一颗芯片靠什么被选中？</b></div>
 </section>
 
 <section class="step" id="s10">
-<h2><span class="num">10</span>认证才是真正的护城河</h2>
+<h2><span class="num">10</span>客户选芯片时到底在比什么</h2>
+<p class="q">功能相近，客户为什么选你？</p>
+<p>这是这门生意里最关键的一个问题。答案不是"参数更好"——<b>客户衡量的维度是分层的，不同层的淘汰机制完全不同。</b></p>
+
+<figure>
+<svg viewBox="0 0 720 300" role="img" aria-label="芯片选型的三层筛选：候选芯片先过门票层（不满足直接出局），再进入算账层比较总成本，最后由隐性成本层决定，最终产生一个设计中标">
+  <defs><marker id="ar3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+
+  <text x="66" y="40" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">候选芯片</text>
+  <rect x="30" y="52" width="30" height="22" rx="4" fill="none" stroke="currentColor" stroke-width="1.2"/>
+  <rect x="72" y="52" width="30" height="22" rx="4" fill="none" stroke="currentColor" stroke-width="1.2"/>
+  <rect x="30" y="82" width="30" height="22" rx="4" fill="none" stroke="currentColor" stroke-width="1.2"/>
+  <rect x="72" y="82" width="30" height="22" rx="4" fill="none" stroke="currentColor" stroke-width="1.2"/>
+  <rect x="30" y="112" width="30" height="22" rx="4" fill="none" stroke="currentColor" stroke-width="1.2"/>
+  <rect x="72" y="112" width="30" height="22" rx="4" fill="none" stroke="currentColor" stroke-width="1.2"/>
+
+  <line x1="112" y1="93" x2="152" y2="93" stroke="currentColor" stroke-width="1.5" marker-end="url(#ar3)"/>
+
+  <rect x="160" y="34" width="112" height="118" rx="9" fill="none" stroke="#eb6834" stroke-width="2.4"/>
+  <text x="216" y="58" text-anchor="middle" font-size="13.5" font-weight="800" fill="#eb6834">① 门票</text>
+  <text x="216" y="78" text-anchor="middle" font-size="11" fill="#eb6834">生态认证</text>
+  <text x="216" y="95" text-anchor="middle" font-size="11" fill="#eb6834">协议覆盖</text>
+  <text x="216" y="112" text-anchor="middle" font-size="11" fill="#eb6834">供货年限</text>
+  <text x="216" y="136" text-anchor="middle" font-size="11" font-style="italic" fill="#eb6834">不满足直接出局</text>
+
+  <line x1="280" y1="93" x2="316" y2="93" stroke="currentColor" stroke-width="1.5" marker-end="url(#ar3)"/>
+
+  <rect x="324" y="34" width="112" height="118" rx="9" fill="none" stroke="currentColor" stroke-width="1.8"/>
+  <text x="380" y="58" text-anchor="middle" font-size="13.5" font-weight="800" fill="currentColor">② 算账</text>
+  <text x="380" y="78" text-anchor="middle" font-size="11">整机 BOM</text>
+  <text x="380" y="95" text-anchor="middle" font-size="11">电池寿命</text>
+  <text x="380" y="112" text-anchor="middle" font-size="11">射频性能</text>
+  <text x="380" y="136" text-anchor="middle" font-size="11" font-style="italic">放在一张表上比</text>
+
+  <line x1="444" y1="93" x2="480" y2="93" stroke="currentColor" stroke-width="1.5" marker-end="url(#ar3)"/>
+
+  <rect x="488" y="34" width="112" height="118" rx="9" fill="none" stroke="#0f8f63" stroke-width="2.4"/>
+  <text x="544" y="58" text-anchor="middle" font-size="13.5" font-weight="800" fill="#0f8f63">③ 隐性成本</text>
+  <text x="544" y="78" text-anchor="middle" font-size="11" fill="#0f8f63">SDK 与文档</text>
+  <text x="544" y="95" text-anchor="middle" font-size="11" fill="#0f8f63">技术支持</text>
+  <text x="544" y="112" text-anchor="middle" font-size="11" fill="#0f8f63">参考设计</text>
+  <text x="544" y="136" text-anchor="middle" font-size="11" font-style="italic" fill="#0f8f63">决定复购</text>
+
+  <line x1="608" y1="93" x2="644" y2="93" stroke="currentColor" stroke-width="1.5" marker-end="url(#ar3)"/>
+  <rect x="650" y="72" width="46" height="42" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
+  <text x="673" y="98" text-anchor="middle" font-size="12" font-weight="800" fill="currentColor">✓</text>
+  <text x="673" y="132" text-anchor="middle" font-size="11.5" font-weight="700" fill="currentColor">Design</text>
+  <text x="673" y="147" text-anchor="middle" font-size="11.5" font-weight="700" fill="currentColor">Win</text>
+
+  <line x1="60" y1="196" x2="690" y2="196" stroke="currentColor" stroke-width="1" opacity=".3"/>
+  <text x="216" y="222" text-anchor="middle" font-size="11.5" fill="currentColor">是非题。过不了没有下文</text>
+  <text x="216" y="240" text-anchor="middle" font-size="11.5" fill="currentColor">价格再低也无用</text>
+  <text x="380" y="222" text-anchor="middle" font-size="11.5" fill="currentColor">这一层最像"比参数"</text>
+  <text x="380" y="240" text-anchor="middle" font-size="11.5" fill="currentColor">但比的是整机不是芯片</text>
+  <text x="544" y="222" text-anchor="middle" font-size="11.5" fill="currentColor">销售材料上通常没有</text>
+  <text x="544" y="240" text-anchor="middle" font-size="11.5" fill="currentColor">却常常是真正的胜负手</text>
+</svg>
+<figcaption>选型是三层筛选，不是一张打分表。第一层是是非题，第二层才是比较，第三层几乎不写进任何 datasheet。</figcaption>
+</figure>
+
+<h3 style="font-size:15.5px;font-weight:800;margin:26px 0 6px">第一层 · 门票：过不了就没有下文</h3>
+<p>这一层是<b>是非题</b>，不参与打分。芯片再便宜再省电，缺一张票就直接出局：</p>
+<ul>
+<li><b>生态认证</b>——要贴 Google TV，遥控器就得走对方的认证流程；要进苹果家居，需要 MFi。这不是加分项，是准入证（第 11 步细讲）</li>
+<li><b>协议覆盖</b>——客户要一颗料同时覆盖 BLE 和存量 RF4CE，只支持 BLE 就会出局，无论 BLE 做得多好</li>
+<li><b>供货年限承诺</b>——运营商项目通常要 <b>5 到 7 年</b>的持续供货。装进千家万户的机顶盒遥控器，中途断供意味着整条产线停摆，所以这一条常常写进合同</li>
+</ul>
+
+<h3 style="font-size:15.5px;font-weight:800;margin:26px 0 6px">第二层 · 算账：比的是整机，不是芯片</h3>
+<p>进了门才开始比较。这一层最接近"比参数"，但有三个常见的错位值得记住：</p>
+<table>
+<tr><th>维度</th><th>客户真正在算什么</th><th>常见错位</th></tr>
+<tr><td><b>整机 BOM</b></td><td>这颗芯片进来之后，<b>整块板子</b>一共多少钱</td><td>芯片厂习惯比较单颗价格。但一颗贵五分、却内置了射频电感、省掉外部晶振和 Flash 的芯片，<b>整机可能反而更便宜</b>——所以"集成度"是成本议题，不是技术指标的堆砌</td></tr>
+<tr><td><b>电池寿命</b></td><td>包装盒上能否写"两节 AAA 用两年"</td><td>datasheet 上的睡眠电流只是其中一项。客户算的是<b>真实使用场景下的平均功耗</b>——包括你醒来要多久、协议栈多久广播一次、按键扫描多频繁</td></tr>
+<tr><td><b>射频性能</b></td><td>沙发角落按遥控器是否响应，隔墙的传感器是否掉线</td><td>这直接对应<b>退货率与客服成本</b>。灵敏度差 9dB，理论通信距离差近三倍。连接不稳的产品，芯片上省下的成本抵不过客服工单的开支</td></tr>
+<tr><td><b>芯片单价</b></td><td>乘以年出货量之后的总账</td><td>放在这里不是因为不重要——遥控器这种一颗两毛五的品类里它权重很高。只是<b>它通常在前面几项都过关之后才开始谈</b></td></tr>
+</table>
+
+<h3 style="font-size:15.5px;font-weight:800;margin:26px 0 6px">第三层 · 隐性成本：最被低估，也最决定复购</h3>
+<p>这一层几乎不出现在任何产品彩页上，却经常是真正的分水岭。核心逻辑一句话：<b>工程师的时间比芯片贵得多。</b></p>
+<ul>
+<li><b>SDK 与文档</b>——一颗 BOM 便宜五分、但让客户的工程师多调两个月的芯片，客户核算总成本并不划算。十万台的项目，五分钱合计省五千元，两个月的工程师薪资远不止此数</li>
+<li><b>参考设计</b>——现成的电路板、跑通的软件、验证过的天线布局。客户拿到的是"一条已经有人走通的路"，省去的试错就是省下的时间</li>
+<li><b>技术支持响应</b>——出现问题后多久能得到答复。对没有专职射频工程师的中小客户，这一条的权重可能超过价格</li>
+<li><b>认证复用</b>——原厂已完成的认证客户能否直接继承，这是能换算成钱和周期的（第 11 步细讲）</li>
+</ul>
+
+<div class="box">
+<h3>同样一颗芯片，不同客户的权重完全不同</h3>
+<table style="margin:8px 0 0">
+<tr><th>客户类型</th><th>最先看什么</th><th>为什么</th></tr>
+<tr><td><b>电视品牌</b>（零售机型）</td><td>生态认证 → 整机 BOM</td><td>要贴平台的标，同时年出货几百万台，每一分成本都要乘以很大的数量</td></tr>
+<tr><td><b>运营商 / Pay-TV</b></td><td>供货年限 → 可靠性</td><td>装到千家万户，上门换一次的人工费远超硬件本身</td></tr>
+<tr><td><b>中小 IoT 厂商</b></td><td>SDK 与技术支持</td><td>没有专职射频工程师，进度停滞一周的代价极高</td></tr>
+<tr><td><b>医疗 / 车规</b></td><td>认证 → 长期供货 → 一致性</td><td>单价不是问题，出问题才是问题</td></tr>
+</table>
+</div>
+
+<p style="margin-top:18px">这一步也解释了一件反直觉的事：<b>为什么这个行业里"技术最好"的芯片经常不是卖得最好的。</b>因为三层里只有中间一层是纯技术比较，另外两层比的是生态位和长期投入。</p>
+<div class="next"><b>→ 三层里最容易被外行低估的是"门票"那一层。它到底有多贵、有多花时间？</b></div>
+</section>
+
+<section class="step" id="s11">
+<h2><span class="num">11</span>认证才是真正的护城河</h2>
 <p class="q">为什么"预认证"值那么多钱？</p>
 <p>一个无线产品上市前要过三类关卡，每一类都要钱要时间：</p>
 <table>
@@ -332,27 +444,27 @@ footer{margin-top:30px;padding-top:12px;border-top:1px solid var(--line);font-si
 <tr><td><b>法规</b>：FCC（美）、CE（欧）等</td><td>各国监管</td><td>欧洲常规 <b>8–12 周</b>；每多卖一个国家多一套</td></tr>
 </table>
 <p>关键在于：<b>这些认证很多可以由芯片原厂预先做掉，客户直接复用。</b>蓝牙认证有个编号叫 <b>QDID</b>，客户基于原厂已认证的设计做产品，可以走"部件复用"，每次省下五位数美金和好几周。</p>
-<p>所以芯片厂真正卖的不只是那颗硅片，而是<b>「一套已经被验证过、能少踩坑少花钱的完整方案」</b>：参考设计的电路板、跑通的软件、已经过认证的射频、以及在多少个国家已经落过地的证明。泰凌能拿下 Google 参考遥控器这个位置，价值也在这里——客户拿到的是一条已经有人走通的路。</p>
+<p>所以芯片厂真正卖的不只是那颗硅片，而是<b>「一套已经被验证过、能减少试错、降低成本的完整方案」</b>：参考设计的电路板、跑通的软件、已经过认证的射频、以及已经在多少个国家完成落地。泰凌能拿下 Google 参考遥控器这个位置，价值也在这里——客户拿到的是一条已经有人走通的路。</p>
 <div class="next"><b>→ 最后一层：为什么这两年所有人都在讲"端侧 AI"？</b></div>
 </section>
 
-<section class="step" id="s11">
-<h2><span class="num">11</span>端侧 AI：加盖的一层楼</h2>
+<section class="step" id="s12">
+<h2><span class="num">12</span>端侧 AI：加盖的一层楼</h2>
 <p class="q">在这么小一颗芯片上跑 AI，是什么意思？</p>
 <p>前面十步讲的都是<b>连接</b>——把数据从 A 送到 B。端侧 AI 是在这之上加一层：<b>让芯片自己先处理一下，而不是把原始数据全传出去。</b></p>
-<p>最典型的例子是耳机降噪。你在马路上打电话，麦克风收到的是人声加车流声。以前的做法是把这一坨全传给手机去处理；现在的做法是芯片上跑一个小神经网络，先把车流声去掉再传。好处是延迟低、省流量、隐私不出设备。</p>
+<p>最典型的例子是耳机降噪。你在马路上打电话，麦克风收到的是人声加车流声。以前的做法是把这段音频整体传给手机处理；现在的做法是芯片上跑一个小神经网络，先把车流声去掉再传。好处是延迟低、省流量、隐私不出设备。</p>
 <p>它跟前面十步的关系是这样的：</p>
 <ul>
 <li><b>省电那一关还在。</b>芯片依然只有毫安级的预算，跑 AI 也不能破这个约束——这就是为什么端侧 AI 芯片拼的是"每次推理花多少微焦耳"，不是拼算力峰值</li>
 <li><b>内存是硬天花板。</b>片上 SRAM 只有几百 KB，装得下唤醒词识别和降噪，装不下图像识别。<b>能跑什么，卡在内存不在算力</b></li>
 <li><b>数据搬运才是耗电大头。</b>数据中心的 GPU，算术本身只占能耗的极小部分，绝大部分花在从内存搬数据上。而边缘芯片的模型就躺在片上——<b>它天生没有这个开销，这是它真正的结构性优势</b></li>
 </ul>
-<p>行业目前的分界线是有没有 <b>NPU</b>（神经网络专用加速单元）。有 NPU 的能效更高，没有的靠 DSP 或指令集扩展硬跑。这条线上各家怎么站位，是另一个话题了——但前十步的约束一条都没消失，这是判断任何"端侧 AI"宣传时最好用的尺子。</p>
+<p>行业目前的分界线是有没有 <b>NPU</b>（神经网络专用加速单元）。有 NPU 的能效更高，没有的依靠 DSP 或指令集扩展完成运算。各家在这条线上的站位是另一个话题——但前十步的约束一条都没消失，这是判断任何"端侧 AI"宣传时最好用的尺子。</p>
 </section>
 
 <div class="coda">
-<h2 style="font-size:19px;margin:0 0 12px">走完这十一级，回头看产品线</h2>
-<p>现在族谱图上那些行标签应该都有了着落：</p>
+<h2 style="font-size:19px;margin:0 0 12px">走完这十二级，回头看产品线</h2>
+<p>现在这五行的名称都有了着落：</p>
 <table>
 <tr><th>行</th><th>它存在的理由</th></tr>
 <tr><td><b>多协议 IoT</b></td><td>客户要一颗料同时进多个生态、兼容存量协议（第 8 步）</td></tr>
