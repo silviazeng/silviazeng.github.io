@@ -614,6 +614,14 @@ const H_UP = UP_ROWS * ROW + 10, H_LO = LO_ROWS * ROW + 10, H_PER = 3 * PER_ROW 
 upEl.style.height = H_UP + 'px'; loEl.style.height = H_LO + 'px'; perEl.style.height = H_PER + 'px';
 gutter.querySelector('.g-up').style.height = H_UP + 'px'; gutter.querySelector('.g-lo').style.height = H_LO + 'px'; gutter.querySelector('.g-per').style.height = H_PER + 'px';
 
+// era highlight: a transient hover effect for a mouse only (touch has no hover, so a tap would
+// leave it stuck); cleared on leave, on any re-render, on a blank click and on Escape
+function setHl(era) { if (era) tl.dataset.hl = era; else delete tl.dataset.hl; }
+function hoverEra(el, era) {
+  el.addEventListener('pointerenter', ev => { if (ev.pointerType === 'mouse') setHl(era); });
+  el.addEventListener('pointerleave', () => setHl(null));
+}
+tl.addEventListener('pointerleave', () => setHl(null));
 // ── build DOM once ──
 const flag = new Map(), lead = new Map(), dot = new Map(), widthCache = {zh: {}, en: {}};
 for (const n of NODES) {
@@ -623,12 +631,12 @@ for (const n of NODES) {
   f.innerHTML = (n.born ? '<i class="star">★</i>' : '') + (GLYPH[n.lane] ? '<i class="lg">' + GLYPH[n.lane] + '</i>' : '') + (n.tier < 3 ? '<b>' + n.y + '</b> ' : '')
     + '<span class="tg-lang zh">' + n.zh + '</span><span class="tg-lang en">' + n.en + '</span>';
   f.title = n.y; f.addEventListener('click', e => { e.stopPropagation(); select(n.id); });
-  for (const el of [f]) { el.addEventListener('pointerenter', () => { tl.dataset.hl = n.era; }); el.addEventListener('pointerleave', () => { delete tl.dataset.hl; }); }
+  hoverEra(f, n.era);
   side.appendChild(f); flag.set(n.id, f);
   const l = document.createElement('div'); l.className = 'lead t' + n.tier + ' e' + n.era; side.appendChild(l); lead.set(n.id, l);
   const d = document.createElement('div'); d.className = 'dot t' + n.tier + ' l' + n.lane + ' e' + n.era; d.title = n.y + ' ' + n.zh;
   d.addEventListener('click', e => { e.stopPropagation(); if (flag.get(n.id).classList.contains('off')) zoomTo(n.y - 6, n.y + 6); select(n.id); });
-  d.addEventListener('pointerenter', () => { tl.dataset.hl = n.era; }); d.addEventListener('pointerleave', () => { delete tl.dataset.hl; });
+  hoverEra(d, n.era);
   lineEl.appendChild(d); dot.set(n.id, d);
   if (n.tier === 1) { const m = document.createElement('i'); m.style.left = ((n.y - Y0) / (Y1 - Y0) * 100) + '%'; mini.insertBefore(m, mwin); }
 }
@@ -647,11 +655,11 @@ for (const e of ERAS) {
   p.innerHTML = '<span class="tg-lang zh">' + e.zh + '</span><span class="tg-lang en">' + e.en + '</span>';
   p.title = e.s + '–' + (e.e >= Y1 ? '' : e.e);
   p.addEventListener('click', ev => { ev.stopPropagation(); zoomTo(e.s, Math.min(e.e, 2027)); }); perEl.appendChild(p); e.el = p;
-  p.addEventListener('pointerenter', () => { tl.dataset.hl = e.era; }); p.addEventListener('pointerleave', () => { delete tl.dataset.hl; });
+  hoverEra(p, e.era);
 }
 function select(id) {
-  sel = id;
-  for (const d of detail.querySelectorAll('.d')) d.classList.toggle('on', d.dataset.id == id);
+  sel = id; if (!id) setHl(null);
+  for (const d of detail.querySelectorAll('.d')) d.classList.toggle('on', (d.dataset.id || 0) == id);
   for (const [k, f] of flag) f.classList.toggle('sel', k === id);
   for (const [k, d] of dot) d.classList.toggle('sel', k === id);
   if (window.innerWidth < 1100) detail.scrollIntoView({behavior: 'smooth', block: 'nearest'});
@@ -684,7 +692,7 @@ function packSide(list, maxRows, L) {
   return placed;
 }
 function render() {
-  W = tl.clientWidth; clamp();
+  W = tl.clientWidth; clamp(); setHl(null);
   const L = lang(), tier = tierNow(), Wd = W - G();
   zlvl.textContent = Math.round(t0) + '–' + Math.min(Y1, Math.round(t0 + Wd / ppy));
   document.querySelectorAll('.zsw button').forEach(b => b.classList.toggle('on', ({fit: 1, '30': 2, '70': 3})[b.dataset.z] === tier));
@@ -748,17 +756,20 @@ const pts = new Map(); let lastX = 0, lastD = 0, moved = false;
 // below 741px the strip is a horizontal scroller, so dragging it must scroll it,
 // not pan the years underneath
 const wide = () => matchMedia('(min-width:741px)').matches;
-canvas.addEventListener('pointerdown', e => { if (!wide()) return; pts.set(e.pointerId, e); canvas.setPointerCapture(e.pointerId); lastX = e.clientX; moved = false;
-  if (pts.size === 2) { const [a, b] = [...pts.values()]; lastD = Math.abs(a.clientX - b.clientX); } });
+// pointer capture only once a drag has begun: capturing on pointerdown would retarget the
+// click to the canvas and no flag or dot could ever be selected with a real mouse
+canvas.addEventListener('pointerdown', e => { if (!wide()) return; pts.set(e.pointerId, e); lastX = e.clientX; moved = false;
+  if (pts.size === 2) { for (const id of pts.keys()) canvas.setPointerCapture(id); const [a, b] = [...pts.values()]; lastD = Math.abs(a.clientX - b.clientX); } });
 canvas.addEventListener('pointermove', e => {
   if (!wide() || !pts.has(e.pointerId)) return; pts.set(e.pointerId, e);
-  if (pts.size === 1) { const dx = e.clientX - lastX; if (Math.abs(dx) > 2) moved = true; t0 -= dx / ppy; lastX = e.clientX; render(); }
+  if (pts.size === 1) { const dx = e.clientX - lastX; if (!moved && Math.abs(dx) > 2) { moved = true; canvas.setPointerCapture(e.pointerId); } if (!moved) return; t0 -= dx / ppy; lastX = e.clientX; render(); }
   else if (pts.size === 2) { const [a, b] = [...pts.values()]; const d = Math.abs(a.clientX - b.clientX); const r = canvas.getBoundingClientRect();
     if (lastD > 0) zoomAt(d / lastD, (a.clientX + b.clientX) / 2 - r.left); lastD = d; moved = true; }
 });
 const up = e => { pts.delete(e.pointerId); if (pts.size < 2) lastD = 0; };
 canvas.addEventListener('pointerup', up); canvas.addEventListener('pointercancel', up);
-canvas.addEventListener('click', e => { if (moved) { e.stopPropagation(); e.preventDefault(); } }, true);
+canvas.addEventListener('click', e => { if (moved) { e.stopPropagation(); e.preventDefault(); return; } if (!e.target.closest('.flag,.dot,.per,.mini')) select(0); }, true);
+document.addEventListener('keydown', e => { if (e.key === 'Escape') select(0); });
 tl.addEventListener('keydown', e => {
   if (e.key === '+' || e.key === '=') preset('in'); else if (e.key === '-') preset('out');
   else if (e.key === 'ArrowLeft') { t0 -= 40 / ppy; render(); } else if (e.key === 'ArrowRight') { t0 += 40 / ppy; render(); }

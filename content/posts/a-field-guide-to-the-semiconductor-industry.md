@@ -10,7 +10,7 @@ tags:
 description: "I mapped every layer of the chip value chain, then the eighty years that put it in that shape."
 ---
 
-Recently work pulled me toward the semiconductor industry, and I found my picture of it was a pile of headlines — EUV, CoWoS, export controls, one indispensable company in Taiwan. I wanted the structure underneath: how the industry got its shape, where the money and pricing power sit, and how deeply the players depend on one another. So I have been writing it down as interactive pages — one map of the structure, one timeline of how it got there — because what I needed turned out to be a map rather than an essay.
+Recently work pulled me toward the semiconductor industry, and I found my picture of it was a pile of headlines — EUV, CoWoS, export controls, one indispensable company in Taiwan. I wanted the structure underneath: how the industry got its shape, where the money and pricing power sit, and how deeply the players depend on one another. So I have been writing it down as interactive pages — one map of the structure, one timeline of how it got there — because what I needed turned out to be a map rather than an essay. The third is a ground-up primer on the wireless-chip corner of it, written in Chinese.
 
 <div class="x-cards">
   <a href="/static/semis/value-chain-map.html" data-router-ignore class="x-card xc-blue">
@@ -18,6 +18,9 @@ Recently work pulled me toward the semiconductor industry, and I found my pictur
   </a>
   <a href="/static/semis/timeline.html" data-router-ignore class="x-card xc-amber">
     <strong>The Timeline</strong><br><span class="x-desc">Forty-eight turning points, 1947 to now — each marked supply, demand or state, and most linked back to its layer on the map.</span>
+  </a>
+  <a href="/static/wireless-chip-primer.html" data-router-ignore class="x-card xc-green">
+    <strong>无线芯片入门</strong><br><span class="x-desc">十二级台阶，从一个遥控器走到端侧 AI：一颗两毛五的芯片为什么能有 50% 毛利。中文。</span>
   </a>
 </div>
 
