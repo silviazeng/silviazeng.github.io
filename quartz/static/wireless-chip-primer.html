@@ -18,7 +18,6 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:-apple-system
 .sheet{max-width:820px;margin:20px auto;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:34px 40px 44px;box-shadow:0 2px 14px rgba(20,30,50,.06)}
 header{border-bottom:2px solid var(--ink);padding-bottom:16px;margin-bottom:6px}
 h1{margin:0;font-size:25px;font-weight:800;letter-spacing:-.01em}
-.lede{margin:10px 0 0;font-size:14px;color:var(--ink2)}
 .toc{background:var(--soft);border:1px solid var(--line);border-radius:11px;padding:14px 20px;margin:22px 0 8px;font-size:13.5px}
 .toc b{display:block;font-size:12px;letter-spacing:.08em;color:var(--gold);margin-bottom:7px}
 .toc a{color:var(--accent);text-decoration:none;display:inline-block;margin:2px 16px 2px 0;white-space:nowrap}
@@ -63,7 +62,6 @@ footer{margin-top:30px;padding-top:12px;border-top:1px solid var(--line);font-si
 
 <header>
   <h1>无线芯片零基础入门</h1>
-  <p class="lede">十二级台阶，每级两分钟。每一级只回答一个问题，答案会自然引出下一个问题——走完就能看懂产品线为什么是现在的样子。</p>
 </header>
 
 <nav class="toc">
@@ -118,11 +116,13 @@ footer{margin-top:30px;padding-top:12px;border-top:1px solid var(--line);font-si
   <line x1="570" y1="159" x2="612" y2="159" stroke="currentColor" stroke-width="1.5" marker-end="url(#ar1)"/>
   <text x="638" y="210" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">电池</text>
 </svg>
-<figcaption>一颗无线 SoC 的四块功能。橙色的射频块是<span class="tt" tabindex="0">模拟电路<span class="tip"><b>模拟</b>：用一个连续变化的物理量直接代表数值——电压 0.734 伏就代表 0.734。水银温度计、黑胶唱片都是这样。<br><br><b>数字</b>：仅使用高低两档（1 和 0），任何数值都以一串 0 和 1 编码逼近。<br><br>数字的优势有三点：噪声不累积（只要还能分辨高低就能完整复原）、能容忍制造差异、可以抽象并自动化设计。代价是多绕一层——晶体管本身就是模拟器件，数字电路是人为只取它的两个极端。<br><br>射频没有选择余地，只能是模拟的：天线收到的电磁波本身就是连续波形。</span></span>，其余三块是数字电路——所以每颗无线芯片都是"混合信号"芯片。</figcaption>
+<figcaption>橙色那块是<span class="tt" tabindex="0">模拟电路<span class="tip"><b>模拟</b>：用一个连续变化的物理量直接代表数值——电压 0.734 伏就代表 0.734。水银温度计、黑胶唱片都是这样。<br><br><b>数字</b>：仅使用高低两档（1 和 0），任何数值都以一串 0 和 1 编码逼近。<br><br>数字的优势有三点：噪声不累积（只要还能分辨高低就能完整复原）、能容忍制造差异、可以抽象并自动化设计。代价是多绕一层——晶体管本身就是模拟器件，数字电路是人为只取它的两个极端。<br><br>射频没有选择余地，只能是模拟的：天线收到的电磁波本身就是连续波形。</span></span>，其余三块是数字——所以每颗无线芯片都是"混合信号"芯片。</figcaption>
 </figure>
 
 <p>为什么非要集成成一颗？<b>省成本、省功耗、省面积。</b>分成四颗，就要四份封装、四份测试、板子上还要走线连起来——信号在芯片之间跑一趟既费电又容易受干扰。遥控器这类单价两毛五的产品，多一颗料就没有利润空间了。</p>
-<p>顺带解答一个你可能会遇到的说法：<b>"自研 RF"为什么是壁垒。</b>因为上图里数字的三块，购买 IP 组合即可实现；<b>橙色那块模拟射频无法自动化设计，依赖长期积累的工程经验</b>。灵敏度做到 −105dBm 还是 −96dBm，差距就在这里，与工艺是否先进关系不大。看这个数要认准调制模式：同一颗 TLSR8258，BLE 1Mbps 下是 −96dBm，切到 125kbps 编码模式是 −101dBm——这 5dB 是模式换来的，跨模式比较没有意义。</p>
+<p>顺带解答一个你可能会遇到的说法：<b>"自研 RF"为什么是壁垒。</b>因为上图里数字的三块，购买 IP 组合即可实现；<b>橙色那块模拟射频无法自动化设计，依赖长期积累的工程经验</b>。灵敏度做到 −105dBm 还是 −96dBm，差距就在这里，与工艺是否先进关系不大。</p>
+<p>那与什么有关？灵敏度的下限由物理定死：1MHz 带宽下的热噪声约 −114dBm，实际值等于它加上接收机的噪声系数，再加上解调所需的信噪比。工程上能动的就是后两项——低噪声放大器之前的每一分损耗（巴伦、收发开关、静电保护、封装寄生）都直接计入噪声系数；本振的相位噪声会把邻道信号混进带内；而 SoC 把 MCU、Flash、DC-DC 与射频集成在同一块硅片上，数字开关噪声耦合进接收前端，是这类芯片最难处理的一项。工艺节点在这里作用有限：射频所需的电感与电容不随特征尺寸缩小，电压降低反而压缩了模拟电路的余量。</p>
+<p>看这个数还要认准调制模式：同一颗 TLSR8258，BLE 1Mbps 下是 −96dBm，切到 125kbps 编码模式是 −101dBm——这 5dB 来自前向纠错，不是射频前端的差别，跨模式比较没有意义。</p>
 <div class="next"><b>→ 这颗芯片要靠两节 AAA 撑一年。这怎么可能？</b></div>
 </section>
 
@@ -150,7 +150,7 @@ footer{margin-top:30px;padding-top:12px;border-top:1px solid var(--line);font-si
   <text x="200" y="152" font-size="11.5" fill="currentColor">睡眠 0.7 µA（约为发射的七千分之一）</text>
   <text x="404" y="134" font-size="11.5" font-weight="700" fill="#0f8f63">平均必须 &lt; 0.23 mA 才能撑一年</text>
 </svg>
-<figcaption>芯片靠"绝大部分时间睡觉"把平均电流压到微安级。所以规格表上睡眠电流和发射电流都要看——单看一个没有意义。</figcaption>
+<figcaption>规格表上睡眠电流和发射电流要一起看，单看一个没有意义。</figcaption>
 </figure>
 
 <p>这解释了产品资料里的许多表述：</p>
@@ -218,7 +218,7 @@ footer{margin-top:30px;padding-top:12px;border-top:1px solid var(--line);font-si
   <text x="86" y="60" font-size="11.5" font-style="italic" fill="currentColor" opacity=".75">越往右上：越快也越费电</text>
   <text x="86" y="78" font-size="11.5" font-style="italic" fill="currentColor" opacity=".75">电池供电的设备只能待在左下角</text>
 </svg>
-<figcaption>各协议在"快"和"省电"之间的取舍位置。电池供电的产品被物理规律锁在左下角——这就是为什么遥控器不用 Wi-Fi。</figcaption>
+<figcaption>电池供电的产品被物理规律锁在左下角——这就是为什么遥控器不用 Wi-Fi。</figcaption>
 </figure>
 
 <p>还有一个特殊的：<b>RF4CE</b>。它是专门为遥控器做的老协议（Zigbee 家族），北美运营商的机顶盒遥控用了十几年，存量巨大。新的零售电视遥控器都转向 BLE 了，但那些老机顶盒还在服役——<b>这个"新旧并存"的局面，后面第 8 步会变成泰凌的一个卖点。</b></p>
@@ -265,7 +265,7 @@ footer{margin-top:30px;padding-top:12px;border-top:1px solid var(--line);font-si
   <text x="600" y="132" font-size="11.5" font-style="italic" fill="currentColor" opacity=".8">同一句话，</text>
   <text x="600" y="149" font-size="11.5" font-style="italic" fill="currentColor" opacity=".8">两条路都能送</text>
 </svg>
-<figcaption>Matter 是语言，Thread 和 Wi-Fi 是两条不同的路。所以做 Matter 产品要先选走哪条路——这就是"Matter over Thread / over Wi-Fi"的含义。</figcaption>
+<figcaption>所以做 Matter 产品要先选走哪条路——这就是"Matter over Thread / over Wi-Fi"的含义。</figcaption>
 </figure>
 
 <p>这一层直接解释了产品线上一件事：泰凌的 Wi-Fi 产品是 <b>TLSR9118</b>，它承接的正是"Matter over Wi-Fi"这条路。其余多协议芯片走的都是 Thread 那条。</p>
@@ -323,7 +323,7 @@ footer{margin-top:30px;padding-top:12px;border-top:1px solid var(--line);font-si
   <path d="M624 126 L624 156 L90 156 L90 118" fill="none" stroke="#eb6834" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#ar2)"/>
   <text x="357" y="176" text-anchor="middle" font-size="12.5" font-weight="700" fill="#eb6834">真正决定用谁的芯片的是这一端——它先认证芯片、列进合格名单，ODM 只能在名单里挑</text>
 </svg>
-<figcaption>货是从左往右流的，但选型的决定权在最右端。这就是为什么美国市场要去敲平台方和运营商的门，而不是遥控器工厂。</figcaption>
+<figcaption>选型的决定权在最右端——所以美国市场要敲的是平台方和运营商的门，不是遥控器工厂。</figcaption>
 </figure>
 
 <p>行业里衡量成败的核心指标叫 <b>Design Win（设计中标）</b>——你的芯片被设计进某一款要量产的产品。拿下一个 design win，接下来几年这款产品卖多少，你就跟着出多少货。</p>
@@ -388,7 +388,7 @@ footer{margin-top:30px;padding-top:12px;border-top:1px solid var(--line);font-si
   <text x="544" y="222" text-anchor="middle" font-size="11.5" fill="currentColor">销售材料上通常没有</text>
   <text x="544" y="240" text-anchor="middle" font-size="11.5" fill="currentColor">却常常是真正的胜负手</text>
 </svg>
-<figcaption>选型是三层筛选，不是一张打分表。第一层是是非题，第二层才是比较，第三层几乎不写进任何 datasheet。</figcaption>
+<figcaption>只有第二层是纯技术比较。</figcaption>
 </figure>
 
 <h3 style="font-size:15.5px;font-weight:800;margin:26px 0 6px">第一层 · 门票：过不了就没有下文</h3>
