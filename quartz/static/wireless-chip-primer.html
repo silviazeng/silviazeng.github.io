@@ -18,6 +18,7 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:-apple-system
 .sheet{max-width:820px;margin:20px auto;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:34px 40px 44px;box-shadow:0 2px 14px rgba(20,30,50,.06)}
 header{border-bottom:2px solid var(--ink);padding-bottom:16px;margin-bottom:6px}
 h1{margin:0;font-size:25px;font-weight:800;letter-spacing:-.01em}
+.lede{margin:10px 0 0;font-size:14px;color:var(--ink2)}
 .toc{background:var(--soft);border:1px solid var(--line);border-radius:11px;padding:14px 20px;margin:22px 0 8px;font-size:13.5px}
 .toc b{display:block;font-size:12px;letter-spacing:.08em;color:var(--gold);margin-bottom:7px}
 .toc a{color:var(--accent);text-decoration:none;display:inline-block;margin:2px 16px 2px 0;white-space:nowrap}
@@ -37,6 +38,8 @@ b,strong{color:var(--ink);font-weight:700}
 .tt .tip::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top-color:#1a2230}
 .tt:hover .tip,.tt:focus .tip{visibility:visible;opacity:1}
 figcaption .tt .tip{width:300px}
+td:first-child .tt .tip,li>.tt:first-child .tip{left:0;transform:none}
+td:first-child .tt .tip::after,li>.tt:first-child .tip::after{left:26px;transform:none}
 @media(max-width:700px){.tt .tip{width:230px}}
 @media print{.tt .tip{display:none}.tt{border-bottom:none;color:inherit;font-weight:inherit}}
 figure{margin:22px 0;padding:16px 14px 10px;background:var(--soft);border:1px solid var(--line);border-radius:11px}
@@ -62,6 +65,7 @@ footer{margin-top:30px;padding-top:12px;border-top:1px solid var(--line);font-si
 
 <header>
   <h1>无线芯片零基础入门</h1>
+  <p class="lede">十二级台阶，每级两分钟。每一级只回答一个问题，答案会自然引出下一个问题——走完就能看懂产品线为什么长成那样。</p>
 </header>
 
 <nav class="toc">
@@ -71,10 +75,10 @@ footer{margin-top:30px;padding-top:12px;border-top:1px solid var(--line);font-si
 
 <section class="step" id="s1">
 <h2><span class="num">1</span>从一个每天都会用到的物件说起</h2>
-<p class="q">泰凌到底卖什么？</p>
+<p class="q">这门生意到底在卖什么？</p>
 <p>把家里 Google TV 的遥控器拆开，里面只有四样部件：<b>两节 AAA 电池、一片按键的导电胶、一根天线、一颗指甲盖大的黑色芯片</b>。</p>
-<p>泰凌卖的就是那颗芯片。不是遥控器，不是电视，就是那一颗。它一年卖出去几亿颗，一颗大约<b>两毛五美金</b>。</p>
-<p>这件事有个反直觉的地方：这类芯片单价低到不值一提，但全球一年出货几十亿颗，而且毛利率经常比那些做 AI 大芯片的公司还高——泰凌 2025 年综合毛利率 50.3%。<b>这是一门"薄利但极大量、且门槛不在算力"的生意。</b></p>
+<p>无线连接芯片厂商卖的就是那颗芯片。不是遥控器，不是电视，就是那一颗。这类芯片一颗通常只卖<b>几毛钱到一美元</b>。</p>
+<p>这件事有个反直觉的地方：这类芯片单价低到不值一提，但全球一年出货几十亿颗，而且这个细分里的头部厂商毛利率经常做到 <b>50% 上下</b>，不比那些做 AI 大芯片的公司低。<b>这是一门"薄利但极大量、且门槛不在算力"的生意。</b></p>
 <div class="next"><b>→ 那颗芯片里到底装了什么，为什么一颗就够？</b></div>
 </section>
 
@@ -99,7 +103,7 @@ footer{margin-top:30px;padding-top:12px;border-top:1px solid var(--line);font-si
 
   <rect x="172" y="134" width="180" height="64" rx="8" fill="none" stroke="#eb6834" stroke-width="2"/>
   <text x="262" y="158" text-anchor="middle" font-size="13" font-weight="700" fill="#eb6834">射频收发 RF</text>
-  <text x="262" y="178" text-anchor="middle" font-size="11" fill="#eb6834">这块是模拟电路<title>模拟指以连续的物理量（电压、电流）直接表示数值；数字指仅以高低两档编码。射频只能是模拟的。</title></text>
+  <text x="262" y="178" text-anchor="middle" font-size="11" fill="#eb6834">这块是模拟电路<title>模拟＝用连续的物理量（电压/电流）直接代表数值；数字＝只用高低两档编码。射频只能是模拟的。</title></text>
 
   <rect x="368" y="134" width="180" height="64" rx="8" fill="none" stroke="currentColor" stroke-width="1.3"/>
   <text x="458" y="158" text-anchor="middle" font-size="13" font-weight="700" fill="currentColor">外设接口</text>
@@ -116,22 +120,23 @@ footer{margin-top:30px;padding-top:12px;border-top:1px solid var(--line);font-si
   <line x1="570" y1="159" x2="612" y2="159" stroke="currentColor" stroke-width="1.5" marker-end="url(#ar1)"/>
   <text x="638" y="210" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">电池</text>
 </svg>
-<figcaption>橙色那块是<span class="tt" tabindex="0">模拟电路<span class="tip"><b>模拟</b>：用一个连续变化的物理量直接代表数值——电压 0.734 伏就代表 0.734。水银温度计、黑胶唱片都是这样。<br><br><b>数字</b>：仅使用高低两档（1 和 0），任何数值都以一串 0 和 1 编码逼近。<br><br>数字的优势有三点：噪声不累积（只要还能分辨高低就能完整复原）、能容忍制造差异、可以抽象并自动化设计。代价是多绕一层——晶体管本身就是模拟器件，数字电路是人为只取它的两个极端。<br><br>射频没有选择余地，只能是模拟的：天线收到的电磁波本身就是连续波形。</span></span>，其余三块是数字——所以每颗无线芯片都是"混合信号"芯片。</figcaption>
+<figcaption>一颗无线 SoC 的四块功能。橙色的射频块是<span class="tt" tabindex="0">模拟电路<span class="tip"><b>模拟</b>：用一个连续变化的物理量直接代表数值——电压 0.734 伏就代表 0.734。水银温度计、黑胶唱片都是这样。<br><br><b>数字</b>：只认高低两档（1 和 0），任何数值都用一串 0 和 1 编码逼近。<br><br>数字赢在三点：噪声不累积（还能分辨高低就能完美复原）、能容忍制造差异、可以抽象和自动化设计。代价是绕远路——晶体管本身其实是模拟器件，数字电路是人为只用它的两个极端。<br><br>射频没得选，只能是模拟的：天线收到的电磁波本来就是连续波形。</span></span>，其余三块是数字电路——所以每颗无线芯片都是"混合信号"芯片。</figcaption>
 </figure>
 
-<p>为什么非要集成成一颗？<b>省成本、省功耗、省面积。</b>分成四颗，就要四份封装、四份测试、板子上还要走线连起来——信号在芯片之间跑一趟既费电又容易受干扰。遥控器这类单价两毛五的产品，多一颗料就没有利润空间了。</p>
+<p>为什么非要集成成一颗？<b>省成本、省功耗、省面积。</b>分成四颗，就要四份封装、四份测试、板子上还要走线连起来——信号在芯片之间跑一趟既费电又容易受干扰。遥控器这类整机成本被压到极限的产品，多一颗料就没有利润空间了。</p>
 <p>顺带解答一个你可能会遇到的说法：<b>"自研 RF"为什么是壁垒。</b>因为上图里数字的三块，购买 IP 组合即可实现；<b>橙色那块模拟射频无法自动化设计，依赖长期积累的工程经验</b>。灵敏度做到 −105dBm 还是 −96dBm，差距就在这里，与工艺是否先进关系不大。</p>
 <p>那与什么有关？先说一个物理事实：<b>任何电路自己都会发出噪声</b>（<span class="tt" tabindex="0">热噪声<span class="tip"><b>热噪声</b>：导体里的电子在室温下自发热运动，本身就会产生噪声，任何电路都躲不掉。功率 = kTB（k 为玻尔兹曼常数，T 为绝对温度，B 为带宽），室温下折合每赫兹 −174dBm。它只跟温度和带宽有关，跟电路设计得多好无关——所以它是地板。</span></span>），就像再安静的房间也有底噪。信号一旦弱到被这层底噪盖住，就再也无法还原。BLE 一个信道的底噪约 −114dBm——这是所有芯片共用的地板。</p>
 <p>一颗芯片实际能听到多弱，取决于它在地板上又垫高了多少：它自己额外掺进去的噪声（<span class="tt" tabindex="0">噪声系数<span class="tip"><b>噪声系数</b>（NF）：一级电路自己往信号里掺了多少噪声，用「信噪比被它恶化了几 dB」来衡量：<br><br>NF = 输入信噪比 − 输出信噪比（均取 dB）<br><br>理想器件是 0dB，实际接收前端通常 3–10dB。第一级的噪声系数几乎决定全链路，所以天线后第一个放大器最讲究。</span></span>），加上解调时「信号至少要比噪声强多少」才能把 0 和 1 分对（<span class="tt" tabindex="0">信噪比<span class="tip"><b>信噪比</b>（SNR）：信号功率与噪声功率之比，取 dB 表示：<br><br>SNR = 10 × log₁₀(信号功率 ÷ 噪声功率)<br><br>信号是噪声的 10 倍就是 10dB，100 倍是 20dB。解调器要把 0 和 1 判对，需要的最低信噪比是一道固定门槛。</span></span>）。−96dBm 就意味着一共垫高了 18dB。<b>芯片之间的差距，就是这 18dB 的差距。</b></p>
 <p>而垫高的部分几乎全发生在天线到第一级放大器那一小段：信号要依次穿过<span class="tt" tabindex="0">巴伦<span class="tip"><b>巴伦</b>（balun，balanced-unbalanced）：天线那头的信号是单端的（一根线对地），芯片内部通常是差分的（两根线互为反相），巴伦负责两者之间转换。它自身的插入损耗直接计入噪声系数。</span></span>、<span class="tt" tabindex="0">收发开关<span class="tip"><b>收发开关</b>（T/R switch）：一根天线要轮流用于发射和接收，靠开关来回切。接收时信号必须穿过它，它的插入损耗同样计入噪声系数。</span></span>、<span class="tt" tabindex="0">静电保护<span class="tip"><b>静电保护</b>（ESD）：引脚上防静电击穿的结构。人手一碰可能带上几千伏，没有它芯片会被直接打坏。代价是给射频节点并上一份寄生电容，带来损耗。</span></span>，还拖着<span class="tt" tabindex="0">封装寄生<span class="tip"><b>封装寄生</b>：裸片到电路板之间的键合线、引脚、焊球都不是理想导线，各自带着电感和电容。在 2.4GHz 上这些量已经大到会改变阻抗匹配、造成损耗——而原理图上看不到它们。</span></span>，每损耗 1dB 就多垫 1dB；SoC 还要多担一份——MCU、Flash 和电源就做在同一块硅片上，它们开关时产生的噪声会串进射频前端。<b>这些都是版图、封装和阻抗匹配的功夫，跟晶体管做得多小无关</b>：射频要用的电感和电容根本不随工艺缩小。</p>
-<p>看这个数还要认准<span class="tt" tabindex="0">调制模式<span class="tip">BLE 在同一个频段上提供几种不同的收发方式（规范里叫 <b>PHY</b>）：1Mbps 是基本模式；125kbps 叫<b>编码模式</b>，用前向纠错换取更远的距离。同一颗芯片在不同模式下灵敏度不同，所以两个灵敏度数字只有在同一模式下才能比较。调制本身在第 4 步细讲。</span></span>：同一颗 TLSR8258，BLE 1Mbps 下是 −96dBm，切到 125kbps 编码模式是 −101dBm——这 5dB 来自前向纠错，不是射频前端的差别，跨模式比较没有意义。</p>
+<p>还有一点：比较两颗芯片的灵敏度前，先确认是不是同一个<span class="tt" tabindex="0">调制模式<span class="tip">BLE 在同一个频段上提供几种不同的收发方式（规范里叫 <b>PHY</b>）：1Mbps 是基本模式；125kbps 叫<b>编码模式</b>，用前向纠错换取更远的距离。同一颗芯片在不同模式下灵敏度不同，所以两个灵敏度数字只有在同一模式下才能比较。调制本身在第 4 步细讲。</span></span>。同一颗芯片在基本模式和编码模式下能差 5dB，那 5dB 来自前向纠错，不是射频前端的差别——跨模式比较没有意义。</p>
+
 <div class="next"><b>→ 这颗芯片要靠两节 AAA 撑一年。这怎么可能？</b></div>
 </section>
 
 <section class="step" id="s3">
 <h2><span class="num">3</span>省电为什么是这门生意的命门</h2>
 <p class="q">规格表上为什么同时写着 0.7µA 和 4.8mA？</p>
-<p>先算笔账。两节 AAA 电池大约 <b>2000 毫安时</b>。要用满一年，平均电流不能超过：</p>
+<p>先算笔账。两节 AAA 电池大约 <b>2000 毫安时</b>。要用满一年，<span class="tt" tabindex="0">平均电流<span class="tip"><b>严格讲电流不是功耗单位</b>——功耗的单位是瓦特，电流是安培，两者靠 功率 = 电压 × 电流 联系。但这行的规格表通篇讲 µA 和 mA，有两个原因。<br><br><b>一</b>、同一颗芯片供电电压固定，公式里电压是常数，电流就和功率成正比，比电流等于比功率。<br><br><b>二</b>、电池容量本来就以毫安时（mAh）标注，"电流 × 时间"直接算出耗掉多少电池——留意下面那个算式里从头到尾没有出现电压。<b>决定电池寿命的是电荷量，不是能量。</b><br><br>⚠️ 但两个方案<b>供电电压不同</b>时（如 1.8V 对 3.3V），只比电流会得出错误结论，这时要用 µA/MHz 这类归一化指标，或直接比每次动作耗多少能量。</span></span>不能超过：</p>
 <p style="text-align:center;font-size:15px"><code>2000 mAh ÷ (365×24 h) ≈ 0.23 mA</code></p>
 <p>但芯片一发射信号，瞬间就要 <b>5 到 10 毫安</b>——是这个平均值的几十倍。矛盾怎么解决？</p>
 <p><b>让它绝大部分时间在睡觉。</b>你按一下遥控器，芯片醒过来几毫秒，发完就立刻睡回去。一天按 50 次，加起来清醒时间可能不到一秒。</p>
@@ -158,7 +163,7 @@ footer{margin-top:30px;padding-top:12px;border-top:1px solid var(--line);font-si
 <p>这解释了产品资料里的许多表述：</p>
 <ul>
 <li><b>"深睡 0.7µA"</b>——睡眠功耗有多低，决定了电池寿命的底线</li>
-<li><b>"工作电流 1mA 量级"</b>——醒着时的功耗，是泰凌 TL721x 的主打指标</li>
+<li><b>"工作电流 1mA 量级"</b>——醒着时有多省，是各家都会拿出来比的数字</li>
 <li><b>"收发切换 15 微秒"</b>——醒来后进入收发的速度，越快越省电，因为清醒时间更短</li>
 <li><b>"能量采集、无电池遥控器"</b>——直接用按键的动能或光能供电，不再需要电池</li>
 </ul>
@@ -168,8 +173,8 @@ footer{margin-top:30px;padding-top:12px;border-top:1px solid var(--line);font-si
 <section class="step" id="s4">
 <h2><span class="num">4</span>无线到底怎么传</h2>
 <p class="q">2.4GHz 是什么意思，为什么大家都在这个频段？</p>
-<p>天线的作用是<b>把电流的变化变成电磁波发出去</b>，另一端的天线再把电磁波变回电流。中间传的就是一串 0 和 1。</p>
-<p>这里有一处容易混淆的地方值得先讲清楚：<b>电磁波本身是连续的、模拟的</b>——那"数字信号"是怎么传过去的？</p>
+<p>天线的作用是<b>把电流的变化变成电磁波发出去</b>，另一端的天线再把电磁波变回电流。</p>
+<p>这里有个特别容易绕晕的地方值得先讲清楚：<b>电磁波本身是连续的、模拟的</b>——那"数字信号"是怎么传过去的？</p>
 <p>答案是<b>调制</b>：波形是模拟的，我们让它携带的信息是数字的。想想摩尔斯电码——手电筒的光是彻头彻尾的连续物理现象，亮度可以是任意值，但发报的人只用"亮"和"灭"两种状态编码字母。<b>光是模拟的，信息是数字的。</b></p>
 <figure>
 <svg viewBox="0 0 720 250" role="img" aria-label="GFSK 调制示意：空中传播的始终是一段连续的正弦电磁波，发送端通过微调频率来编码比特，频率偏高代表 1、偏低代表 0，接收端只需判断偏向哪边">
@@ -199,16 +204,17 @@ footer{margin-top:30px;padding-top:12px;border-top:1px solid var(--line);font-si
 <figcaption>BLE 用的是 GFSK，频偏约 ±250kHz。接收端不还原波形，只判断频率偏向哪边。</figcaption>
 </figure>
 
-<p>所以"数字"从来不是指物理波形本身是方波，而是指<b>我们只从这段连续波形里读取有限个离散状态</b>。接收端做的最后一步叫<b>判决</b>——把测到的连续数值归到 0 或 1 上。</p>
-<p>这一步也正是前面说的"数字为什么抗噪"的来源：波形被干扰得走样并不要紧，<b>只要还能判断出它更像高频还是低频，还原出来的就是一个完美的 0 或 1</b>，误差不会累积到下一级。而模拟传输里，波形被扭曲多少，信息就失真多少，且无法恢复。</p>
+<p>所以"数字"从来不是说物理波形长成方波，而是说<b>我们只从这段连续波形里读取有限个离散状态</b>。接收端做的最后一步叫<b>判决</b>——把测到的连续数值归到 0 或 1 上。</p>
+<p>这一步也正是前面说的"数字为什么抗噪"的来源：波形被干扰得歪歪扭扭没关系，<b>只要还能判断出它更像高频还是低频，还原出来的就是一个完美的 0 或 1</b>，误差不会累积到下一级。而模拟传输里，波形被扭曲多少，信息就失真多少，且永远补不回来。</p>
 <p><b>2.4GHz 指电磁波每秒振荡 24 亿次。</b>为什么整个行业挤在这里？因为它是<b>全球免许可频段</b>——不用向任何国家申请牌照就能用。</p>
 <p>它的来历是反过来的。国际电信联盟当年划出一批<span class="tt" tabindex="0">ISM 频段<span class="tip"><b>ISM</b> = Industrial, Scientific, Medical。国际电信联盟在《无线电规则》里划定的一批频段（2.4GHz 这一段是 2400–2500MHz），原本留给工业、科学、医疗设备释放射频能量，而不是给通信用。美国 1985 年放开其中的免许可通信使用，Wi-Fi 就是从那一纸规定里长出来的。</span></span>，本意不是给通信，而是留给工作时会往外漏射频能量的设备——工业加热、医疗透热，还有<span class="tt" tabindex="0">微波炉<span class="tip">顺带纠正一个流传很广的说法：<b>2.45GHz 并不是水分子的共振频率</b>。水的第一个共振峰在 1THz 以上。选这个频率是几方面折中的结果——穿透深度约 1 厘米，对一般食物的尺寸正合适；再加上它本来就落在合法可用的 ISM 频段里。</span></span>。这些频段注定嘈杂，在里面工作本来就得忍受干扰，于是监管方索性开放：低功率设备免牌照使用，代价是<b>不受保护，也不能抱怨被干扰</b>。</p>
 <p>所以是先有微波炉，后有蓝牙和 Wi-Fi。而 ISM 由 ITU 统一划定，各国的划分基本一致——<b>这才是「一款芯片卖遍全球」的前提</b>。代价就是这一段很挤：Wi-Fi、蓝牙、微波炉全在这里。</p>
+
 <p>频率还决定了物理特性，这是硬约束：</p>
 <table>
 <tr><th>频段</th><th>特点</th><th>用在哪</th></tr>
 <tr><td><b>2.4GHz</b></td><td>传得近、穿墙一般、数据率够用、天线可以做小</td><td>蓝牙、Zigbee、Wi-Fi、遥控器</td></tr>
-<tr><td><b>Sub-1GHz</b></td><td>传得远、穿墙好，但数据率低、天线要大</td><td>水电表、广域追踪</td></tr>
+<tr><td><b><span class="tt" tabindex="0">Sub-1GHz<span class="tip"><b>sub- 就是"低于"</b>，跟 subway（地下）、submarine（水下）、subzero（零下）同一个前缀。Sub-1GHz = <b>低于 1GHz 的频段</b>，不是某一个具体频率，而是一整片区域的统称。<br><br>常用的有 <b>433MHz</b>（中欧）、<b>470–510MHz</b>（中国电表）、<b>868MHz</b>（欧洲）、<b>915MHz</b>（美澳）。各国划分不同，所以 Sub-1GHz 产品要按地区做版本——不像 2.4GHz 全球统一、一款卖遍世界。<br><br>1GHz 是条有意义的分界：低于它，绕射和穿墙明显变好、传得远；代价是天线要做大（天线尺寸随波长走，433MHz 波长约 69cm，2.4GHz 只有 12.5cm），数据率也上不去。</span></span></b></td><td>传得远、穿墙好，但数据率低、天线要大</td><td>水电表、广域追踪</td></tr>
 <tr><td><b>5GHz / 6GHz</b></td><td>快，但穿墙差、费电</td><td>Wi-Fi 高速档</td></tr>
 </table>
 <p>记住一条：<b>频率越低传得越远，频率越高传得越快</b>——这是电磁波的物理性质，无法回避。</p>
@@ -254,17 +260,20 @@ footer{margin-top:30px;padding-top:12px;border-top:1px solid var(--line);font-si
   <text x="86" y="60" font-size="11.5" font-style="italic" fill="currentColor" opacity=".75">越往右上：越快也越费电</text>
   <text x="86" y="78" font-size="11.5" font-style="italic" fill="currentColor" opacity=".75">电池供电的设备只能待在左下角</text>
 </svg>
-<figcaption>电池供电的产品被物理规律锁在左下角——这就是为什么遥控器不用 Wi-Fi。</figcaption>
+<figcaption>各协议在"快"和"省电"之间的取舍位置。电池供电的产品被物理规律锁在左下角——这就是为什么遥控器不用 Wi-Fi。</figcaption>
 </figure>
 
-<p>还有一个特殊的：<b>RF4CE</b>。它是专门为遥控器做的老协议（Zigbee 家族），北美运营商的机顶盒遥控用了十几年，存量巨大。新的零售电视遥控器都转向 BLE 了，但那些老机顶盒还在服役——<b>这个"新旧并存"的局面，后面第 8 步会变成泰凌的一个卖点。</b></p>
-<div class="next"><b>→ 灯泡为什么需要"接力"，遥控器却不需要？</b></div>
+<p>还有一个特殊的：<b>RF4CE</b>。它是专门为遥控器做的老协议（Zigbee 家族），北美运营商的机顶盒遥控用了十几年，存量巨大。新的零售电视遥控器都转向 BLE 了，但那些老机顶盒还在服役——<b>这种"新旧并存"的局面，会直接影响客户怎么挑芯片——第 8 步再说。</b></p>
+<p>不过这张图漏掉了一个维度。它画的是<b>单条链路</b>的取舍——一发一收之间能跑多快、多远、多省。但它没画<b>设备之间怎么组织起来</b>：是只能一对一直连，还是可以互相转发。</p>
+<p>留意图上 <b>BLE</b> 和 <b>Zigbee / Thread</b> 那两个点挨得很近——省电程度和数据率其实差不多。可它们实际用起来完全是两种东西，差别恰恰就在这张图画不出来的地方。</p>
+<div class="next"><b>→ 同样是省电的协议，为什么灯泡用 Zigbee / Thread，遥控器用 BLE 就够了？</b></div>
 </section>
 
 <section class="step" id="s6">
 <h2><span class="num">6</span>Mesh：让设备互相接力</h2>
-<p class="q">为什么智能家居要 mesh，遥控器不要？</p>
-<p>遥控器只跟电视说话，一对一，距离三米，直连就够了。</p>
+<p class="q">上一张图画不出来的那个维度是什么？</p>
+<p>是<b>组网方式</b>——设备之间只能一对一说话，还是能互相当中转站。</p>
+<p>先看遥控器：它只跟电视说话，一对一，距离三米，直连就够了。所以 BLE 不需要转发能力。</p>
 <p>但你家可能有二十个灯泡、五个门窗传感器，分布在三个房间。让每一个都直连中央网关，最远那个大概率连不上。<b>Mesh 的办法是让设备互相转发</b>：客厅的灯帮卧室的传感器把消息接力出去。好处是覆盖大、而且某个节点坏了还能绕路走。</p>
 <p>代价是：负责转发的节点必须一直醒着（否则没法帮别人转发），所以<b>接电的设备（灯泡、插座）当路由，电池设备（传感器、门锁）只当末端</b>。这是 mesh 网络的基本分工。</p>
 <p>Zigbee 和 Thread 都是 mesh，蓝牙也有 Bluetooth Mesh。它们共用同一个底层无线标准 <b>802.15.4</b>——所以一颗支持 802.15.4 的芯片，理论上 Zigbee 和 Thread 都能跑。</p>
@@ -301,11 +310,11 @@ footer{margin-top:30px;padding-top:12px;border-top:1px solid var(--line);font-si
   <text x="600" y="132" font-size="11.5" font-style="italic" fill="currentColor" opacity=".8">同一句话，</text>
   <text x="600" y="149" font-size="11.5" font-style="italic" fill="currentColor" opacity=".8">两条路都能送</text>
 </svg>
-<figcaption>所以做 Matter 产品要先选走哪条路——这就是"Matter over Thread / over Wi-Fi"的含义。</figcaption>
+<figcaption>Matter 是语言，Thread 和 Wi-Fi 是两条不同的路。所以做 Matter 产品要先选走哪条路——这就是"Matter over Thread / over Wi-Fi"的含义。</figcaption>
 </figure>
 
-<p>这一层直接解释了产品线上一件事：泰凌的 Wi-Fi 产品是 <b>TLSR9118</b>，它承接的正是"Matter over Wi-Fi"这条路。其余多协议芯片走的都是 Thread 那条。</p>
-<div class="next"><b>→ 现在可以回答最关键的问题：为什么泰凌要把这么多协议集成进一颗芯片？</b></div>
+<p>这一层也解释了产品线上常见的一个安排：多协议 IoT 芯片一般走 Thread 那条路，而厂商往往会单独放一款集成 Wi-Fi 的型号，专门承接 "Matter over Wi-Fi"——两条路要的射频完全不同，做不进同一颗。</p>
+<div class="next"><b>→ 好，现在可以回答最关键的问题了：为什么要把这么多协议塞进一颗芯片？</b></div>
 </section>
 
 <section class="step" id="s8">
@@ -320,8 +329,8 @@ footer{margin-top:30px;padding-top:12px;border-top:1px solid var(--line);font-si
 </ul>
 <p>如果这些各要一颗芯片，成本、板子面积、功耗、认证工作量全部乘以四。<b>一颗芯片全包，客户省的是四份料钱、四份认证费、四套开发和四套库存。</b></p>
 <div class="box">
-<h3>所以产品线的行标签才那样分</h3>
-<p style="margin:6px 0">产品线分五行：<b>多协议 IoT / BLE 与 2.4G 私有 / 无线音频 / Wi-Fi / 纯 2.4G 私有</b>——分行的依据就是"这颗芯片能同时说几种话"。多协议 IoT 覆盖的协议最多，纯 2.4G 私有专注单一协议。</p>
+<h3>所以产品线通常按"协议覆盖"分档</h3>
+<p style="margin:6px 0">看任何一家的产品目录，分类多半是<b>多协议 IoT / BLE 与 2.4G 私有 / 无线音频 / Wi-Fi / 纯 2.4G 私有</b>这一类——依据是"这颗芯片能同时说几种话"，不是按好坏排，是按能力范围排。想清楚自己的产品要说几种话，选型范围立刻就收窄了。</p>
 </div>
 <div class="next"><b>→ 芯片做出来了，怎么才能进到电视品牌的遥控器里？</b></div>
 </section>
@@ -337,7 +346,7 @@ footer{margin-top:30px;padding-top:12px;border-top:1px solid var(--line);font-si
 
   <rect x="20" y="52" width="140" height="60" rx="9" fill="none" stroke="currentColor" stroke-width="1.6"/>
   <text x="90" y="78" text-anchor="middle" font-size="13" font-weight="700" fill="currentColor">芯片原厂</text>
-  <text x="90" y="96" text-anchor="middle" font-size="11">泰凌 · Nordic</text>
+  <text x="90" y="96" text-anchor="middle" font-size="11">设计芯片、不建厂</text>
 
   <rect x="196" y="52" width="140" height="60" rx="9" fill="none" stroke="currentColor" stroke-width="1.6"/>
   <text x="266" y="78" text-anchor="middle" font-size="13" font-weight="700" fill="currentColor">模组 / 方案商</text>
@@ -441,8 +450,8 @@ footer{margin-top:30px;padding-top:12px;border-top:1px solid var(--line);font-si
 <tr><th>维度</th><th>客户真正在算什么</th><th>常见错位</th></tr>
 <tr><td><b>整机 BOM</b></td><td>这颗芯片进来之后，<b>整块板子</b>一共多少钱</td><td>芯片厂习惯比较单颗价格。但一颗贵五分、却内置了射频电感、省掉外部晶振和 Flash 的芯片，<b>整机可能反而更便宜</b>——所以"集成度"是成本议题，不是技术指标的堆砌</td></tr>
 <tr><td><b>电池寿命</b></td><td>包装盒上能否写"两节 AAA 用两年"</td><td>datasheet 上的睡眠电流只是其中一项。客户算的是<b>真实使用场景下的平均功耗</b>——包括你醒来要多久、协议栈多久广播一次、按键扫描多频繁</td></tr>
-<tr><td><b>射频性能</b></td><td>沙发角落按遥控器是否响应，隔墙的传感器是否掉线</td><td>这直接对应<b>退货率与客服成本</b>。灵敏度差 9dB，理论通信距离差近三倍。连接不稳的产品，芯片上省下的成本抵不过客服工单的开支</td></tr>
-<tr><td><b>芯片单价</b></td><td>乘以年出货量之后的总账</td><td>放在这里不是因为不重要——遥控器这种一颗两毛五的品类里它权重很高。只是<b>它通常在前面几项都过关之后才开始谈</b></td></tr>
+<tr><td><b>射频性能</b></td><td>沙发角落按遥控器是否响应，隔墙的传感器是否掉线</td><td>这直接对应<b>退货率与客服成本</b>。灵敏度差 9dB，理论通信距离差近三倍。一款连接不稳的产品，省下来的芯片钱不够赔客服工单</td></tr>
+<tr><td><b>芯片单价</b></td><td>乘以年出货量之后的总账</td><td>放在这里不是因为不重要——遥控器这种一颗几毛钱的品类里它权重很高。只是<b>它通常在前面几项都过关之后才开始谈</b></td></tr>
 </table>
 
 <h3 style="font-size:15.5px;font-weight:800;margin:26px 0 6px">第三层 · 隐性成本：最被低估，也最决定复购</h3>
@@ -475,12 +484,12 @@ footer{margin-top:30px;padding-top:12px;border-top:1px solid var(--line);font-si
 <p>一个无线产品上市前要过三类关卡，每一类都要钱要时间：</p>
 <table>
 <tr><th>关卡</th><th>谁管</th><th>量级</th></tr>
-<tr><td><b>标准组织</b>：蓝牙认证</td><td>Bluetooth SIG</td><td>一次 <b>$6,000</b>（Associate）至 <b>$12,000</b>（Adopter），2026 年 3 月起</td></tr>
+<tr><td><b>标准组织</b>：蓝牙认证</td><td>Bluetooth SIG</td><td>一次 <b>$6,000–12,000</b>，看会员等级</td></tr>
 <tr><td><b>生态准入</b>：Google 认证、Matter 认证</td><td>Google / CSA</td><td>流程长，要注册、自测、送第三方实验室</td></tr>
-<tr><td><b>法规</b>：FCC（美）、CE（欧）等</td><td>各国监管</td><td>周期以<b>周</b>计，视产品复杂度与是否需公告机构而定；每多卖一个国家多一套</td></tr>
+<tr><td><b>法规</b>：FCC（美）、CE（欧）等</td><td>各国监管</td><td>欧洲常规 <b>8–12 周</b>；每多卖一个国家多一套</td></tr>
 </table>
 <p>关键在于：<b>这些认证很多可以由芯片原厂预先做掉，客户直接复用。</b>蓝牙认证有个编号叫 <b>QDID</b>，客户基于原厂已认证的设计做产品，可以走"部件复用"，每次省下五位数美金和好几周。</p>
-<p>所以芯片厂真正卖的不只是那颗硅片，而是<b>「一套已经被验证过、能减少试错、降低成本的完整方案」</b>：参考设计的电路板、跑通的软件、已经过认证的射频、以及已经在多少个国家完成落地。泰凌能拿下 Google 参考遥控器这个位置，价值也在这里——客户拿到的是一条已经有人走通的路。</p>
+<p>所以芯片厂真正卖的不只是那颗硅片，而是<b>「一套已经被验证过、能减少试错、降低成本的完整方案」</b>：参考设计的电路板、跑通的软件、已经过认证的射频、以及在多少个国家已经落过地的证明。一家芯片厂如果能进到某个平台的官方参考设计里，价值也在这里——客户拿到的是一条已经有人走通的路，而不只是一颗料。</p>
 <div class="next"><b>→ 最后一层：为什么这两年所有人都在讲"端侧 AI"？</b></div>
 </section>
 
@@ -493,38 +502,41 @@ footer{margin-top:30px;padding-top:12px;border-top:1px solid var(--line);font-si
 <ul>
 <li><b>省电那一关还在。</b>芯片依然只有毫安级的预算，跑 AI 也不能破这个约束——这就是为什么端侧 AI 芯片拼的是"每次推理花多少微焦耳"，不是拼算力峰值</li>
 <li><b>内存是硬天花板。</b>片上 SRAM 只有几百 KB，装得下唤醒词识别和降噪，装不下图像识别。<b>能跑什么，卡在内存不在算力</b></li>
-<li><b>数据搬运才是耗电大头。</b>45nm 工艺下一次 32 位整数加法约 0.1pJ，一次 DRAM 访问是 1.3–2.6nJ，差四个数量级；一颗八核服务器芯片一半以上的能耗花在缓存与寄存器堆上。而边缘芯片的模型就躺在片上 SRAM 里——<b>天生没有这笔开销，这是它真正的结构性优势</b></li>
+<li><b>数据搬运才是耗电大头。</b>45nm 工艺下一次 32 位整数加法约 0.1pJ，一次 DRAM 访问是 1.3–2.6nJ，差四个数量级；一颗八核服务器芯片一半以上的能耗花在缓存与寄存器堆上。而边缘芯片的模型就躺在片上——<b>它天生没有这个开销，这是它真正的结构性优势</b></li>
 </ul>
 <p>行业目前的分界线是有没有 <b>NPU</b>（神经网络专用加速单元）。有 NPU 的能效更高，没有的依靠 DSP 或指令集扩展完成运算。各家在这条线上的站位是另一个话题——但前十步的约束一条都没消失，这是判断任何"端侧 AI"宣传时最好用的尺子。</p>
 </section>
 
 <div class="coda">
-<h2 style="font-size:19px;margin:0 0 12px">走完这十二级，回头看产品线</h2>
-<p>现在这五行的名称都有了着落：</p>
+<h2 style="font-size:19px;margin:0 0 12px">走完这十二级</h2>
+<p>随便打开一家厂商的产品目录，那些分类现在应该都有了着落：</p>
 <table>
-<tr><th>行</th><th>它存在的理由</th></tr>
-<tr><td><b>多协议 IoT</b></td><td>客户要一颗料同时进多个生态、兼容存量协议（第 8 步）</td></tr>
+<tr><th>常见分类</th><th>它存在的理由</th></tr>
+<tr><td><b>多协议 IoT</b></td><td>客户要一颗料同时进多个生态、还要兼容存量协议（第 8 步）</td></tr>
 <tr><td><b>BLE 与 2.4G 私有</b></td><td>不需要组网的场景，砍掉 802.15.4 换更低成本（第 5、6 步）</td></tr>
-<tr><td><b>无线音频</b></td><td>音频要连续传、要低延迟、要编解码，跟按键类完全不同的负载</td></tr>
-<tr><td><b>Wi-Fi</b></td><td>专为承接 "Matter over Wi-Fi" 那条路（第 7 步）</td></tr>
+<tr><td><b>无线音频</b></td><td>音频要连续传、要低延迟、要编解码，跟传按键完全不同的负载</td></tr>
+<tr><td><b>Wi-Fi</b></td><td>承接 "Matter over Wi-Fi" 那条路，射频跟 Thread 那条不通用（第 7 步）</td></tr>
 <tr><td><b>纯 2.4G 私有</b></td><td>键鼠这类只求低延迟低成本、不需要标准协议的设备（第 5 步）</td></tr>
 </table>
-<p>而那些数字——0.7µA、1mA、−105dBm、$6,000 的认证费、$0.25 的单价——现在也各自有了位置：<b>它们分别对应电池寿命、连接距离、客户的省钱账，以及这门生意为什么薄利却还能有 50% 毛利。</b></p>
+<p>规格表上那些数字也各自有了位置：<b>睡眠电流和工作电流对应电池寿命，灵敏度对应连接距离和退货率，集成度对应的是整机 BOM 而不是芯片单价。</b></p>
+<p>最后留一条判断的尺子。这行的竞争看着像在拼参数，但真正决定成败的三件事——<b>能不能拿到生态的门票、客户的工程师用得顺不顺手、以及五年后还供不供货</b>——一个都不在 datasheet 上。看懂这一点，再看任何一家的宣传材料，你就知道该往哪儿追问了。</p>
 </div>
 
 <div class="coda" style="margin-top:26px">
 <h2 style="font-size:19px;margin:0 0 12px">数字的来源</h2>
+<p style="margin:0 0 12px">正文按行业通识来写，不针对任何一家公司。但文中的具体数字总要有个出处，列在这里，其中厂商数据取自一家 A 股上市的无线连接芯片公司，作为这个细分的公开样本。</p>
 <table>
 <tr><th>数字</th><th>出处</th></tr>
-<tr><td>综合毛利率 50.3%<br>营收 10.15 亿元</td><td>泰凌微 <a href="http://file.finance.sina.com.cn/211.154.219.97:9494/MRGG/CNSESH_STOCK/2026/2026-4/2026-04-10/12073254.PDF" target="_blank" rel="noopener">2025 年年度报告</a>（688591.SH）：营业收入 1,015,027,035.49 元，营业成本 504,429,086.96 元</td></tr>
-<tr><td>一颗约两毛五美金</td><td>同上年报产销量表：IOT 芯片 2025 年销售量 51,499.27 万颗，收入 8.98 亿元 → 1.74 元/颗，按 7.1 折算约 $0.25。这是 IOT 产品线的混合均价，不是某一颗料的报价</td></tr>
-<tr><td>一年几亿颗</td><td>同上：IOT 芯片 5.15 亿颗，音频芯片 0.17 亿颗</td></tr>
-<tr><td>工作电流 1mA 量级<br>收发切换 15 微秒<br>512KB SRAM</td><td>泰凌微 <a href="https://www.telink-semi.com/products/matter/tl721x" target="_blank" rel="noopener">TL721x 产品页</a>（原名 TLSR925x）与 <a href="https://www.eetimes.com/telink-semiconductor-tl721x-breakthrough-and-applications-of-low-power-multi-protocol-iot-wireless-soc/" target="_blank" rel="noopener">EE Times 报道</a>；同源另有 3V 下 BLE 发射 2.5mA、接收 1.8mA</td></tr>
-<tr><td>灵敏度 −96 / −101dBm</td><td>Telink <a href="https://www.mouser.com/datasheet/2/1039/DS_TLSR8258_E_Datasheet_for_Telink_BLE_2bIEEE802_1-2301271.pdf" target="_blank" rel="noopener">TLSR8258 数据手册</a>：BLE 1Mbps −96dBm，BLE 125kbps −101dBm，802.15.4 250kbps −99.5dBm</td></tr>
+<tr><td>毛利率 50% 上下</td><td>泰凌微（688591.SH）<a href="http://file.finance.sina.com.cn/211.154.219.97:9494/MRGG/CNSESH_STOCK/2026/2026-4/2026-04-10/12073254.PDF" target="_blank" rel="noopener">2025 年年度报告</a>：营业收入 1,015,027,035.49 元，营业成本 504,429,086.96 元，毛利率 50.30%</td></tr>
+<tr><td>一颗几毛钱到一美元</td><td>同上年报产销量表：IOT 芯片 2025 年销售量 51,499.27 万颗、收入 8.98 亿元 → 1.74 元/颗，按 7.1 折算约 $0.25。这是一条产品线的混合均价，不是某一颗料的报价</td></tr>
+<tr><td>一年出货几十亿颗</td><td>同上：该公司一家 2025 年出货 5.3 亿颗；全行业量级由此外推</td></tr>
+<tr><td>深睡 0.7µA<br>工作电流 1mA 量级<br>收发切换 15 微秒</td><td>泰凌微 2024 年 3 月 TLSR925x（即 TL721x）发布稿（<a href="https://www.eefocus.com/article/1672726.html" target="_blank" rel="noopener">与非网转载</a>）：「在深睡眠模式下，仅耗电不到 0.7uA」，BLE 接收 1.45mA @4.2V；15µs 收发切换与 512KB SRAM 见 <a href="https://www.eetimes.com/telink-semiconductor-tl721x-breakthrough-and-applications-of-low-power-multi-protocol-iot-wireless-soc/" target="_blank" rel="noopener">EE Times</a></td></tr>
+<tr><td>灵敏度 −96dBm<br>编码模式差 5dB</td><td><a href="https://www.mouser.com/datasheet/2/1039/DS_TLSR8258_E_Datasheet_for_Telink_BLE_2bIEEE802_1-2301271.pdf" target="_blank" rel="noopener">TLSR8258 数据手册</a>：BLE 1Mbps −96dBm、125kbps −101dBm、802.15.4 250kbps −99.5dBm</td></tr>
 <tr><td>蓝牙认证 $6,000–12,000</td><td>Bluetooth SIG <a href="https://www.bluetooth.com/fee-schedule/" target="_blank" rel="noopener">费用表</a>（2026 年 3 月 1 日起）：Adopter $12,000，Contributing Adopter 每年首次 $8,000，Associate $6,000</td></tr>
-<tr><td>CE / RED 周期</td><td>没有可靠的公开定值：各测试机构的报价口径差异很大，从预认证模块的数周到需公告机构介入的数月不等，因此正文不给具体周数</td></tr>
-<tr><td>加法 0.1pJ / DRAM 1.3–2.6nJ</td><td>Mark Horowitz，<a href="https://gwern.net/doc/cs/hardware/2014-horowitz-2.pdf" target="_blank" rel="noopener">Computing's Energy Problem</a>，ISSCC 2014，图 1.1.9（45nm / 0.9V）；同文图 1.1.7 给出八核服务器芯片过半能耗落在缓存与寄存器堆</td></tr>
-<tr><td>深睡 0.7µA</td><td>泰凌微 2024 年 3 月 12 日发布稿（<a href="https://www.eefocus.com/article/1672726.html" target="_blank" rel="noopener">与非网转载</a>）：TLSR925x「在深睡眠模式下，仅耗电不到 0.7uA」，BLE 接收 1.45mA @4.2V、1.8mA @3.3V DCDC，实测工作电流较上一代降低近 70%；TLSR925x 即 TL721x。前一代 <a href="https://www.eefocus.com/article/1598645.html" target="_blank" rel="noopener">TLSR922x</a>（2023 年 8 月）同为深睡 0.7µA、接收 5mA、−96dBm @ BLE 1Mbps</td></tr>
+<tr><td>ISM 频段的来历</td><td>ITU《无线电规则》第 5 条划定 2400–2500MHz 等 ISM 频段，原为工业、科学、医疗设备释放射频能量之用；美国 1985 年 FCC 放开其中免许可通信使用</td></tr>
+<tr><td>2.45GHz 不是水的共振</td><td>水的第一个共振峰在 1THz 以上；微波炉选 2.45GHz 是穿透深度（约 1cm）与频段合法性的折中，非共振</td></tr>
+<tr><td>加法 0.1pJ / DRAM 1.3–2.6nJ</td><td>Mark Horowitz，<a href="https://gwern.net/doc/cs/hardware/2014-horowitz-2.pdf" target="_blank" rel="noopener">Computing&#39;s Energy Problem</a>，ISSCC 2014，图 1.1.9（45nm / 0.9V）；同文图 1.1.7 给出八核服务器芯片过半能耗落在缓存与寄存器堆</td></tr>
+<tr><td>CE / RED 周期</td><td>没有可靠的公开定值：各测试机构报价口径差异很大，从预认证模块的数周到需公告机构介入的数月不等，因此正文不给具体周数</td></tr>
 </table>
 </div>
 
