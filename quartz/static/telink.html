@@ -68,6 +68,16 @@
   .cover-players .cpl{color:#8189ad;font-weight:700;margin-right:12px;letter-spacing:.2em;font-size:.78em}
   .hp{font-size:12px;color:var(--muted);margin-top:14px;font-style:italic}
   .nav{position:fixed;right:18px;bottom:16px;z-index:20;display:flex;gap:6px}
+  /* 中英切换:放在每页画布右上角(右边距内),随画布缩放;打印时隐藏 */
+  .lang{position:absolute;top:33px;right:22px;z-index:5;display:flex;border:1px solid #d9d3c6;border-radius:999px;overflow:hidden;font-size:11.5px;font-weight:700;letter-spacing:.04em;line-height:1.4;background:#fff}
+  .lang>*{padding:3px 9px}
+  .lang .on{background:var(--accent);color:#fff}
+  .lang a{color:var(--muted)}
+  .lang a:hover{color:var(--accent);background:var(--soft)}
+  .cover .lang{background:transparent;border-color:rgba(255,255,255,.3)}
+  .cover .lang a{color:#c7cee6}
+  .cover .lang a:hover{color:#fff;background:rgba(255,255,255,.08)}
+  .cover .lang .on{background:#c9a961;color:#0a1130}
 
   /* ---- 桌面端:每页固定 1280×720 画布,整体等比缩放到窗口 ----
      此前页高跟着窗口(min-height:100vh)、正文按像素排,窗口一高于 720px 多出来的高度就全落到底部,
@@ -163,6 +173,8 @@
     .prow{grid-template-columns:1fr;gap:8px}
     .pmg{max-width:280px}
     .canvas{transform:none}
+    .lang{top:1.6vh;right:4vw}
+    .slide::before{right:calc(4vw + 84px)}
   }
   .pt-main{background:#e7ebf6;font-weight:400}
   .pt-main b{font-weight:800}
@@ -177,7 +189,7 @@
   .card .src{font-size:11.5px;color:#9ca3af;font-weight:400}
   .ixwrap{margin-top:6px}
   /* 图表标题画在 SVG 内部(顶部 y=0-60 原为空白),故此处无 HTML 标题元素 */
-  @media print{body,.deck{height:auto;overflow:visible}.slide{min-height:0;height:100vh;page-break-after:always;border:none}.nav{display:none}@page{size:1280px 720px;margin:0}}
+  @media print{body,.deck{height:auto;overflow:visible}.slide{min-height:0;height:100vh;page-break-after:always;border:none}.nav,.lang{display:none}@page{size:1280px 720px;margin:0}}
   .vbub{cursor:pointer;transition:opacity .12s}
   .s06wrap:hover .vbub{opacity:.72}
   .s06wrap .vbub:hover,.s06wrap .vbub:focus{opacity:1;outline:none}
@@ -226,6 +238,7 @@
   <!-- COVER -->
   <section class="slide cover" data-n="" id="cover">
   <div class="canvas" data-n="">
+    <nav class="lang" aria-label="语言"><span class="on">中</span><a href="telink-en.html#cover" lang="en" hreflang="en">EN</a></nav>
     <h1><span class="seg">无线连接芯片：</span><span class="seg">欧美市场扫描</span></h1>
     <p class="sub"><span class="sdot"></span><a href="#market">市场规模及趋势</a> → <a href="#players">主要玩家及竞争策略</a> → <a href="#segments">客群分布</a> → <a href="#path">泰凌潜在扩张路径</a></p>
     <a class="pcard" href="#intro" aria-label="个人简介：查看自我介绍">
@@ -242,6 +255,7 @@
   <!-- 1 MARKET -->
   <section class="slide" data-n="01" id="market">
   <div class="canvas" data-n="01">
+    <nav class="lang" aria-label="语言"><span class="on">中</span><a href="telink-en.html#market" lang="en" hreflang="en">EN</a></nav>
   <div class="kicker">① 市场规模及趋势</div>
   <h2>主要增速引擎是周边设备和单模 BLE；EdgeAI 或能打开新空间</h2>
   <div class="rule"></div>
@@ -316,6 +330,7 @@
   <!-- 2b PLAYERS: TECH LAYERS x COVERAGE (static) -->
   <section class="slide" data-n="02" id="players">
   <div class="canvas" data-n="02">
+    <nav class="lang" aria-label="语言"><span class="on">中</span><a href="telink-en.html#players" lang="en" hreflang="en">EN</a></nav>
     <div class="kicker">② 主要玩家 · 技术产品覆盖</div>
     <h2>覆盖广度趋同，但主力产品线各有侧重</h2>
     <div class="rule" style="margin:14px 0"></div>
@@ -593,8 +608,9 @@
   </section>
 
   <!-- 2b PLAYERS + FINANCIAL CHARACTERISTICS -->
-  <section class="slide" data-n="03">
+  <section class="slide" data-n="03" id="financials">
   <div class="canvas" data-n="03">
+    <nav class="lang" aria-label="语言"><span class="on">中</span><a href="telink-en.html#financials" lang="en" hreflang="en">EN</a></nav>
     <div class="kicker">② 主要玩家 · 财务特征</div>
     <h2>规模与利润率不明显相关，各家费用投入策略各不相同</h2>
     <div class="rule" style="margin:16px 0"></div>
@@ -611,9 +627,9 @@
         <div class="ptrack"><div class="pfill" style="width:84%;background:#6e737a"></div><span class="pout nordic-lab" style="left:calc(84% + 8px)">$6.68 亿，+31% YoY</span></div>
         <div class="pmg" style="justify-content:flex-end"><div style="text-align:right"><b style="font-size:14px">毛利 52%</b><br><small style="font-size:11px;color:#3a4350;font-weight:700">净利 2%</small></div></div>
       </div>
-      <div class="prow" title="Espressif 乐鑫：FY2025 营收 ¥25.6 亿 ≈ $3.60 亿（+28%）；毛利率约 47%；净利 ¥4.98 亿（~19%）">
+      <div class="prow" title="Espressif 乐鑫：FY2025 营收 ¥25.65 亿 ≈ $3.56 亿（+28%）；毛利率约 47%；净利 ¥4.98 亿（~19%）">
         <div class="pname"><i class="pdot" style="background:#6e737a"></i><div><b>Espressif 乐鑫</b></div></div>
-        <div class="ptrack"><div class="pfill" style="width:45%;background:#6e737a"></div><span class="pout" style="left:calc(45% + 8px)">$3.60 亿，+28% YoY</span></div>
+        <div class="ptrack"><div class="pfill" style="width:45%;background:#6e737a"></div><span class="pout" style="left:calc(45% + 8px)">$3.56 亿，+28% YoY</span></div>
         <div class="pmg" style="justify-content:flex-end"><div style="text-align:right"><b style="font-size:14px">毛利 47%</b><br><small style="font-size:11px;color:#3a4350;font-weight:700">净利 19%</small></div></div>
       </div>
       <div class="prow" title="Telink 泰凌：FY2025 营收 ¥10.15 亿 ≈ $1.41 亿（+20%）；毛利率约 50%；归母净利 ¥1.27 亿（~13%）">
@@ -631,29 +647,31 @@
 
 
   <!-- 3 STRATEGIES -->
-  <section class="slide" data-n="04">
+  <section class="slide" data-n="04" id="strategy">
   <div class="canvas" data-n="04">
+    <nav class="lang" aria-label="语言"><span class="on">中</span><a href="telink-en.html#strategy" lang="en" hreflang="en">EN</a></nav>
     <div class="kicker">② 主要玩家 · 竞争策略</div>
     <h2>各家的费用投向，对应各自的竞争路径</h2>
     <div class="rule"></div>
     <table>
       <thead><tr><th>公司</th><th>竞争策略</th></tr></thead>
       <tbody>
-        <tr><td>Silicon Labs</td><td><b>多协议全栈</b>：自有协议栈与开发工具，芯片与预认证模组并行；营业费用率 67.2%（其中研发 45.0%）</td></tr>
-        <tr><td>Nordic</td><td><b>BLE 为收入主体 + 开发者入口</b>：nRF Connect SDK 与 DevZone 承接开发者，模组交由第三方；经营费用率约 42%（不含折旧摊销）</td></tr>
+        <tr><td>Silicon Labs</td><td><b>多协议全栈</b>：自有协议栈与开发工具，芯片与预认证模组并行；费用率 67%（研发 45.0%、销售与管理 22.2%）</td></tr>
+        <tr><td>Nordic</td><td><b>BLE 为收入主体 + 开发者入口</b>：nRF Connect SDK 与 DevZone 承接开发者，模组交由第三方；费用率约 48%（按费用性质列报）</td></tr>
         <tr><td>Qorvo</td><td><b>射频前端外延</b>：主业为手机射频前端，连接 SoC 与 UWB 来自收购 GreenPeak 与 Decawave；与 Skyworks 的合并交易进行中，待中国与韩国监管批准</td></tr>
-        <tr><td>乐鑫</td><td><b>开源生态 + 模组交付</b>：ESP-IDF 与开源社区为获客入口，模组及开发套件占营收 61.2%；销售费用率 3.2%</td></tr>
-        <tr><td><span class="tl">泰凌</span></td><td><b>多协议单芯片 + 芯片交付</b>：BLE、Zigbee、Thread、私有 2.4G 同芯片覆盖，并支持 Matter（应用层，承载于 Thread）；研发占营收 27.2%、销售费用率 7.7%</td></tr>
+        <tr><td>乐鑫</td><td><b>开源生态 + 模组交付</b>：ESP-IDF 与开源社区为获客入口，模组及开发套件占营收 61.2%；费用率 30%（研发 23.5%、销售管理等 6.9%）</td></tr>
+        <tr><td><span class="tl">泰凌</span></td><td><b>多协议单芯片 + 芯片交付</b>：BLE、Zigbee、Thread、私有 2.4G 同芯片覆盖，并支持 Matter（应用层，承载于 Thread）；费用率 42%（研发 27.2%、销售管理等 15.1%）</td></tr>
       </tbody>
     </table>
-    <div class="takeaway">费用投向对应各家的获客方式：以开源社区获客的，销售投入低；以自有协议栈与模组做全栈的，费用投入高。<b>泰凌研发占营收 27.2%、销售费用率 7.7%</b>，对应需要项目跟进的品牌与 ODM 客户。</div>
-    <div class="foot"><span>来源：各家 FY2025 年报与季报、<a href="https://www.cls.cn/detail/2413821" target="_blank" rel="noopener">泰凌 CEO 专访</a></span></div>
+    <div class="takeaway">费用率由低到高依次为乐鑫、泰凌、Nordic、Silicon Labs，<b>与净利率排序正好相反</b>；泰凌研发占营收 27.2%，高于乐鑫，<b>费用率仍低于 Nordic 与 Silicon Labs</b>。</div>
+    <div class="foot"><span>费用率 = 研发、销售、管理费用 ÷ 营收（FY2025，含股份支付），A 股另含税金及附加。Nordic 取毛利减 EBIT，含部分生产测试成本且研发部分资本化，与另三家不完全可比。来源：各家年报与季报、<a href="https://www.cls.cn/detail/2413821" target="_blank" rel="noopener">泰凌 CEO 专访</a></span></div>
   </div>
   </section>
 
   <!-- 4 TARGET APPS + CUSTOMERS -->
   <section class="slide" data-n="05" id="segments">
   <div class="canvas" data-n="05">
+    <nav class="lang" aria-label="语言"><span class="on">中</span><a href="telink-en.html#segments" lang="en" hreflang="en">EN</a></nav>
     <div class="kicker">③ 客群分布 · 目标应用</div>
     <h2>目标应用扫描：价格敏感度 × 泰凌产品匹配度 × 客户集中度</h2>
     <div class="rule" style="margin:12px 0"></div>
@@ -684,7 +702,7 @@
       <text x="620" y="231" text-anchor="middle" font-size="12.5" font-weight="700" fill="#33404e">PC 与游戏外设</text>
       <circle class="vbub" tabindex="0" cx="600" cy="300" r="19" fill="#46568f" data-name="可穿戴" data-sens="中–高（ODM 与方案商比价）" data-match="中–高（TLSR9518 典型应用含智能手表、手环与增强现实眼镜）" data-conc="中–高（Apple、Samsung、Garmin 等）" aria-label="可穿戴：价格敏感中高、匹配中高、集中中高"></circle>
       <text x="600" y="331" text-anchor="middle" font-size="12.5" font-weight="700" fill="#33404e">可穿戴</text>
-      <circle class="vbub" tabindex="0" cx="825" cy="300" r="19" fill="#7581b0" data-name="消费级追踪器" data-sens="高（零售价 20–30 美元，BOM 空间有限）" data-match="高（官网设苹果查找设备专页，FindMy 网络 SDK 基于 Apple ADK 开发并通过其自认证测试，TLSR92x、95x、827x 系列均支持）" data-conc="中（Tile、Chipolo、Pebblebee 等；AirTag 用苹果自研芯片）" aria-label="消费级追踪器：价格敏感高、产品匹配高、客户集中中"></circle>
+      <circle class="vbub" tabindex="0" cx="825" cy="300" r="19" fill="#7581b0" data-name="消费级追踪器" data-sens="高（零售价 20–30 美元，BOM 空间有限）" data-match="高（官网设苹果查找设备专页，FindMy 网络 SDK 基于 Apple ADK 开发并通过其自认证测试，TLSR92x、95x、827x 系列均支持）" data-conc="中（Tile、Chipolo、Pebblebee 等；AirTag 采用 Nordic 蓝牙芯片）" aria-label="消费级追踪器：价格敏感高、产品匹配高、客户集中中"></circle>
       <text x="825" y="331" text-anchor="middle" font-size="12.5" font-weight="700" fill="#33404e">消费级追踪器</text>
       <circle class="vbub" tabindex="0" cx="420" cy="280" r="19" fill="#7581b0" data-name="物流与资产追踪" data-sens="中–低（系统商卖部署与服务，按 TCO 采购而非单价）" data-match="中–高（TLSR8359 典型应用含 Retail/logistics 与 Beacon；Amazon Sidewalk 为北美独有的广域回传）" data-conc="中（Zebra、AirFinder 等系统商）" aria-label="物流与资产追踪：价格敏感中低、产品匹配中高、客户集中中"></circle>
       <text x="420" y="311" text-anchor="middle" font-size="12.5" font-weight="700" fill="#33404e">物流与资产追踪</text>
@@ -705,6 +723,7 @@
   <!-- 5b REGIONS: NA / EUROPE -->
   <section class="slide" data-n="06" id="regions">
   <div class="canvas" data-n="06">
+    <nav class="lang" aria-label="语言"><span class="on">中</span><a href="telink-en.html#regions" lang="en" hreflang="en">EN</a></nav>
     <div class="kicker">③ 客群分布 · 北美与欧洲</div>
     <h2>理想区五类在北美与欧洲的主要客户</h2>
     <div class="rule"></div>
@@ -719,13 +738,14 @@
       </tbody>
     </table>
     <div style="font-size:11px;color:#8a919b;margin-top:8px"><span style="color:#2a4db0;font-weight:700">蓝色加粗</span>＝该品类中泰凌已公开具名的客户（招股书、年报、CEO 专访）。智能家居终端：泰凌在该品类的公开具名客户集中在中国（小米、绿米、欧瑞博、海尔）。</div>
-  <div class="takeaway">北美已进入 <b>Google、Amazon</b>（遥控、机顶盒）与 <b>Sony、JBL</b>（无线音频）；欧洲已进入 <b><a href="https://www.cls.cn/detail/2413821" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-underline-offset:2px;text-decoration-color:rgba(122,94,18,.5)">罗技</a></b>（PC 与游戏外设），价签客户<b>汉朔</b>的方案已随其 <a href="https://retail-optimiser.de/en/tesco-selects-hanshow-as-its-sole-esl-supplier/" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-underline-offset:2px;text-decoration-color:rgba(122,94,18,.5)">Tesco 独家供应</a>部署到欧洲门店。</div>
+  <div class="takeaway">北美已进入 <b>Google、Amazon</b>（遥控、机顶盒）与 <b>Sony、JBL</b>（无线音频）；欧洲已进入 <b><a href="https://www.cls.cn/detail/2413821" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-underline-offset:2px;text-decoration-color:rgba(122,94,18,.5)">罗技</a></b>（PC 与游戏外设）与 <b>汉朔</b>（电子价签，<a href="https://retail-optimiser.de/en/tesco-selects-hanshow-as-its-sole-esl-supplier/" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-underline-offset:2px;text-decoration-color:rgba(122,94,18,.5)">Tesco 独家 ESL 供应商</a>）。</div>
   </div>
   </section>
 
   <!-- 7 HOW TELINK GROWS IN US & EU -->
   <section class="slide" data-n="07" id="path">
   <div class="canvas" data-n="07">
+    <nav class="lang" aria-label="语言"><span class="on">中</span><a href="telink-en.html#path" lang="en" hreflang="en">EN</a></nav>
     <div class="kicker">④ 泰凌欧美扩张路径</div>
     <h2>一条可行的增长路径</h2>
     <div class="rule"></div>
@@ -746,6 +766,7 @@
   <!-- 8 SELF-INTRO -->
   <section class="slide" data-n="08" id="intro">
   <div class="canvas" data-n="08">
+    <nav class="lang" aria-label="语言"><span class="on">中</span><a href="telink-en.html#intro" lang="en" hreflang="en">EN</a></nav>
     <div class="p7top"><div class="kicker">曾馨弘 Silvia Zeng</div><a class="backlink" href="#cover">← 返回封面</a></div>
     <div style="font-size:12.5px;letter-spacing:.12em;color:var(--gold);font-weight:700;margin-top:22px">我是谁 · WHO I AM</div>
     <p class="sub" style="margin-top:5px;font-size:15px;line-height:1.7;color:#2a3442">MIT Sloan MBA | 复旦大学财务管理<br>13 年中美两地从业经验，贯穿项目管理、运营分析、战略、金融等领域。</p>
