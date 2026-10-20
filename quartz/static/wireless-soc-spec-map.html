@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="robots" content="noindex, nofollow, noarchive"><meta name="referrer" content="no-referrer"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Wireless SoC Spec Map V1.0</title><style>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="robots" content="noindex, nofollow, noarchive"><meta name="referrer" content="no-referrer"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>无线 SoC 参数星图 V1.0</title><style>
 html, body { margin: 0; height: 100%; background: #0b0e13; color: #e8ebf0; font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
 #star { position: fixed; inset: 0; width: 100%; height: 100%; border: 0; display: block; background: #0b0e13; }
 #ov { position: fixed; inset: 0; z-index: 5; display: flex; flex-direction: column; background: #f6f6f3; }
@@ -49,7 +49,7 @@ const TXT = {
 const star = document.getElementById('star'), ana = document.getElementById('ana'), ov = document.getElementById('ov'), wait = document.getElementById('wait');
 let lang = null, anaLang = null;
 try { lang = localStorage.getItem('specmap-lang'); } catch (e) {}
-if (lang !== 'zh' && lang !== 'en') lang = /^zh/i.test(navigator.language || '') ? 'zh' : 'en';
+if (lang !== 'zh' && lang !== 'en') lang = 'zh';
 async function show(frame, name) { await loadInto(frame, name); }
 async function setLang(l) {
   lang = l; try { localStorage.setItem('specmap-lang', l); } catch (e) {}
