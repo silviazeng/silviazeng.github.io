@@ -22,9 +22,6 @@ Recently work pulled me toward the semiconductor industry, and I found my pictur
   <a href="/static/wireless-chip-primer.html" data-router-ignore class="x-card xc-green">
     <strong>无线芯片入门</strong><br><span class="x-desc">十二级台阶，从一个遥控器走到端侧 AI：一颗两毛五的芯片为什么能有 50% 毛利。中文。</span>
   </a>
-  <a href="/static/bluetooth-le.html" data-router-ignore class="x-card xc-amber">
-    <strong>How Bluetooth LE Works</strong><br><span class="x-desc">Take apart a pair of earbuds or a TV remote in 3D, then watch one chip advertise, connect, trade data and speed up with HDT.</span>
-  </a>
 </div>
 
 <figure style="max-width:880px;margin:1.75rem 0;background:var(--color-surface);border:1px solid var(--color-border);border-radius:12px;padding:12px;">

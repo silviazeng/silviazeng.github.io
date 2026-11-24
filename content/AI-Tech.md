@@ -34,3 +34,4 @@ I'm more interested in why it works than whether it works.*
 ## Semiconductors
 
 - [A Field Guide to the Semiconductor Industry](/posts/a-field-guide-to-the-semiconductor-industry) an interactive map of the value chain, and where the pricing power sits
+- [How Bluetooth LE Works](/posts/how-bluetooth-le-works) take apart a pair of earbuds in 3D and watch the chip advertise, connect and trade data
