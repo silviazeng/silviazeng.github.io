@@ -8,9 +8,7 @@ tags:
 description: "Take apart a pair of earbuds or a TV remote, then watch one chip advertise, connect and trade data."
 ---
 
-I read [a Chinese article](https://mp.weixin.qq.com/s/nm93sc7RoyBgJKuI9VXraw) that walks through the Bluetooth LE software stack layer by layer: advertising channels, link layer states, HCI, GATT, and the new HDT mode in Core 7.0. Each layer made sense on its own. What I could not picture was where any of it lives inside a real device.
-
-So I turned it into a 3D page. You take apart a pair of earbuds or a TV remote and find the chip and the antenna, then follow that chip as it advertises, connects, exchanges data and speeds up. One timeline runs under every step, with packets in the air on top and the chip's current below, so you can watch the radio wake for a fraction of a millisecond and go back to sleep.
+I read [a Chinese article](https://mp.weixin.qq.com/s/nm93sc7RoyBgJKuI9VXraw) on the Bluetooth LE stack but could not picture where each layer lives in a real device, so I made it a 3D page.
 
 <div class="x-cards">
   <a href="/static/bluetooth-le.html" data-router-ignore class="x-card xc-amber">
