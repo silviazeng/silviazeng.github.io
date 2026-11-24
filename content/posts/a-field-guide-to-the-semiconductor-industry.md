@@ -25,6 +25,9 @@ Recently work pulled me toward the semiconductor industry, and I found my pictur
   <a href="/static/radio-3d.html" data-router-ignore class="x-card xc-blue">
     <strong>Radio in 3D</strong><br><span class="x-desc">Eight hands-on 3D scenes, from what a radio wave is to why squeezing more signals into the same spectrum had to wait for chips.</span>
   </a>
+  <a href="/static/bluetooth-le.html" data-router-ignore class="x-card xc-amber">
+    <strong>How Bluetooth LE Works</strong><br><span class="x-desc">Take apart a pair of earbuds or a TV remote in 3D, then watch one chip advertise, connect, trade data and speed up with HDT.</span>
+  </a>
 </div>
 
 <figure style="max-width:880px;margin:1.75rem 0;background:var(--color-surface);border:1px solid var(--color-border);border-radius:12px;padding:12px;">
