@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Radio Spectrum in 3D</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Semi+Condensed:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bitcount+Single:wght@500&display=swap" rel="stylesheet">
+<style>
+/* 设计方案：实验室仪器（Lab instrument）
+   1. 整页是一台台式频谱仪。上半是嵌在遮光框里的深色屏幕，下半是橄榄灰烤漆面板，面板文字是米白丝印。
+   2. 两路信号固定为冷青蓝（--sig-a）和暖琥珀（--sig-b），错误用正红，正确用偏白的薄荷绿。屏幕里的线条带柔光，标注文字保持锐利。
+   3. 唯一的冒险是点阵数字读数窗（Bitcount Single，只用于数字）配橄榄色烤漆，其余保持安静：按键是键帽，亮起即选中；滑块是推子，刻度对应真实档位。
+   4. 只做一套深色主题，所有颜色显式给出。正文用 Barlow 和系统中文黑体，标题用 Barlow Semi Condensed 和加粗的中文黑体。 */
+:root{
+  --bg:#22251e; --surface:#3e4237; --ink:#f3eedf; --muted:#c6c1b0; --line:#6c705f;
+  --sig-a:#4cc0ff; --sig-b:#ffab2e; --bad:#ff5247; --good:#86f7b4;
+  /* 屏幕与读数窗 */
+  --screen:#081214; --deep:#10272b; --grat:#35534f; --well:#0b1315;
+  /* 键帽与推子 */
+  --edge:#12140e; --cap-top:#353a2e; --cap-bot:#262920; --lit-top:#fffaf0; --lit-bot:#dcd6c4; --lit-ink:#1a1c16;
+  --font-display:"Barlow Semi Condensed","PingFang SC","Hiragino Sans GB","Noto Sans SC","Noto Sans CJK SC","Microsoft YaHei",system-ui,sans-serif;
+  --font-body:"Barlow","PingFang SC","Hiragino Sans GB","Noto Sans SC","Noto Sans CJK SC","Microsoft YaHei",system-ui,sans-serif;
+  --font-num:"Bitcount Single","Barlow","PingFang SC","Hiragino Sans GB","Noto Sans SC","Noto Sans CJK SC","Microsoft YaHei",system-ui,sans-serif;
+  --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.07'/%3E%3C/svg%3E");
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:16px;line-height:1.6;-webkit-text-size-adjust:100%}
+.wrap{max-width:1120px;margin:0 auto;padding:18px 12px 40px;display:flex;flex-direction:column;gap:14px}
+header{padding:0 4px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.eyebrow{margin:0;font-size:13px;color:var(--muted);letter-spacing:.08em}
+h1{margin:12px 0 6px;font-family:var(--font-display);font-weight:700;font-size:clamp(24px,6.1vw,38px);line-height:1.25;letter-spacing:.01em;text-wrap:balance}
+.lede{margin:0;color:var(--muted);font-size:15px;max-width:38em}
+
+/* 键帽：所有按钮共用。未亮是深色键帽，亮起表示选中 */
+.langsw button,.tab,.vbtn,.btn{appearance:none;-webkit-appearance:none;font-family:var(--font-body);color:var(--ink);cursor:pointer;
+  border:1px solid var(--edge);border-radius:5px;background:linear-gradient(180deg,var(--cap-top),var(--cap-bot));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 2px 0 var(--edge),0 4px 6px rgba(0,0,0,.28);
+  transition:transform .08s,box-shadow .08s}
+.langsw button:active,.tab:active,.vbtn:active,.btn:active{transform:translateY(2px);box-shadow:inset 0 1px 0 rgba(255,255,255,.1),0 0 0 var(--edge)}
+.langsw button[aria-pressed="true"],.tab[aria-current="step"],.vbtn[aria-pressed="true"],.btn.primary,.btn[aria-pressed="true"]{
+  color:var(--lit-ink);background:linear-gradient(180deg,var(--lit-top),var(--lit-bot));font-weight:600;
+  box-shadow:inset 0 1px 0 #fff,0 1px 0 var(--edge),0 0 16px rgba(243,238,223,.2);transform:translateY(1px)}
+.tab:focus-visible,.btn:focus-visible,.vbtn:focus-visible,.bit:focus-visible,input:focus-visible,.langsw button:focus-visible{outline:2px solid var(--sig-a);outline-offset:3px}
+
+.langsw{display:flex;gap:6px;flex:none}
+.langsw button{font-size:14px;min-height:44px;padding:0 13px}
+
+/* 面板材质：橄榄灰烤漆 */
+.tabs,.stage,.panel{background-color:var(--surface);background-image:var(--grain),linear-gradient(180deg,rgba(255,255,255,.05),rgba(0,0,0,.07));
+  border:1px solid var(--edge);border-radius:10px;box-shadow:inset 0 1px 0 rgba(255,255,255,.11),0 8px 20px rgba(0,0,0,.3)}
+
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px 6px;padding:10px 10px 13px}
+.grouplab{grid-column:1/-1;margin:0;font-size:13px;color:var(--muted);display:flex;align-items:center;gap:8px}
+.grouplab::after{content:"";flex:1;height:1px;background:var(--line)}
+.tab ~ .grouplab{margin-top:4px}
+.tab{padding:5px 2px 6px;min-height:52px;font-size:15px;display:flex;flex-direction:column;align-items:center;gap:0;line-height:1.25}
+.tab .n{font-family:var(--font-num);font-weight:500;font-size:14px;line-height:1.3;color:var(--muted)}
+.tab[aria-current="step"] .n{color:var(--lit-ink)}
+
+.grid{display:grid;grid-template-columns:1fr;gap:14px;align-items:start}
+.stage{position:relative;overflow:hidden}
+/* 屏幕：深色玻璃嵌在遮光框里，前面是 10 × 8 格的刻度线 */
+.screen{position:relative;padding:8px 8px 0;background:linear-gradient(180deg,#14160f,#20231a);box-shadow:inset 0 2px 5px rgba(0,0,0,.75);border-bottom:1px solid var(--edge)}
+#gl{position:relative;display:block;width:100%;aspect-ratio:5/4;max-height:56vh;touch-action:pan-y;border-radius:5px;background:var(--screen)}
+#gl.free{cursor:grab}
+#gl.free:active{cursor:grabbing}
+.screen::after{content:"";position:absolute;inset:8px 8px 30px;border-radius:5px;pointer-events:none;
+  background-image:
+    linear-gradient(90deg,transparent calc(50% - .5px),rgba(170,225,215,.16) calc(50% - .5px),rgba(170,225,215,.16) calc(50% + .5px),transparent calc(50% + .5px)),
+    linear-gradient(180deg,transparent calc(50% - .5px),rgba(170,225,215,.16) calc(50% - .5px),rgba(170,225,215,.16) calc(50% + .5px),transparent calc(50% + .5px)),
+    linear-gradient(90deg,rgba(170,225,215,.075) 1px,transparent 1px),
+    linear-gradient(180deg,rgba(170,225,215,.075) 1px,transparent 1px);
+  background-size:100% 100%,100% 100%,10% 100%,100% 12.5%;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.06),inset 0 0 46px rgba(0,0,0,.6)}
+/* 操作提示印在屏幕下方的边框上，不挡住画面里的标注 */
+.hint{margin:0;height:30px;padding:0 6px;font-size:13px;line-height:30px;text-align:right;color:var(--muted);pointer-events:none}
+.hint[hidden]{display:block;visibility:hidden}
+.scopebox{position:relative;border-top:1px solid rgba(0,0,0,.4);box-shadow:inset 0 1px 0 rgba(255,255,255,.07);padding:9px 12px 12px}
+.scopebox[hidden]{display:none}
+.scopecap{margin:0 0 6px;font-size:13px;color:var(--muted)}
+#scope{display:block;width:100%;height:90px;border-radius:4px;background-color:var(--well);
+  background-image:linear-gradient(90deg,rgba(170,225,215,.07) 1px,transparent 1px);background-size:12.5% 100%;
+  box-shadow:inset 0 2px 6px rgba(0,0,0,.85),0 1px 0 rgba(255,255,255,.1)}
+.viewbar{position:relative;padding:10px 12px 12px;display:flex;flex-direction:column;gap:8px}
+.viewbar[hidden]{display:none}
+.viewbar .row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.viewbar .lab{font-size:13px;color:var(--muted)}
+.vbtn{min-height:44px;padding:0 13px;font-size:14px}
+@media (max-width:879px){#t-viewlab{flex-basis:100%}}
+.viewcap{margin:0;font-size:15px;line-height:1.5}
+
+/* 下方面板 */
+.panel{position:relative;padding:24px 16px 18px;display:flex;flex-direction:column;gap:15px}
+@media (max-width:879px){#task{order:1}#controls{order:2}#readout{order:3}#viewcap-m{order:4}#ch-text{order:5}#ch-terms{order:6}#ch-src{order:7}.pager{order:8}}
+/* 手机上：仪器屏幕固定在顶部，拖动下方控件时画面一直看得见 */
+@media (max-width:879px){
+  .stagecol{position:sticky;top:0;z-index:5;align-self:start;box-shadow:0 6px 14px rgba(0,0,0,.45)}
+  #gl{aspect-ratio:16/10;max-height:36vh}
+  body.has-scope #gl{max-height:30vh}
+  .screen{padding-bottom:8px}
+  .screen::after{inset:8px}
+  .hint{display:none}
+  .hint[hidden]{display:none}
+  .viewbar{padding:6px 12px 8px}
+  #t-viewlab,#viewcap{display:none}
+  .scopebox{padding:6px 12px 8px}
+}
+.viewcap-m{margin:0;font-size:15px;line-height:1.5;color:var(--muted)}
+.viewcap-m[hidden]{display:none}
+@media (min-width:880px){.viewcap-m{display:none}}
+/* 四角的固定螺丝 */
+.panel::before{content:"";position:absolute;inset:7px;pointer-events:none;
+  --screw:radial-gradient(circle,#191b15 0 1.3px,#a9a493 1.5px 3.4px,#12140e 3.7px 4.4px,transparent 4.7px);
+  background:var(--screw) 0 0/9px 9px no-repeat,var(--screw) 100% 0/9px 9px no-repeat,var(--screw) 0 100%/9px 9px no-repeat,var(--screw) 100% 100%/9px 9px no-repeat}
+.panel h2{margin:0;font-family:var(--font-display);font-weight:700;font-size:24px;line-height:1.25;letter-spacing:.015em;text-wrap:balance}
+/* 出处：贴在面板上的黑色标签条 */
+.src{margin:0;align-self:flex-start;font-size:13px;line-height:1.5;color:var(--ink);background:#15170f;border-radius:2px;padding:5px 10px;
+  box-shadow:0 1px 2px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.07)}
+.body{margin:0;max-width:34em}
+.terms{display:flex;flex-wrap:wrap;gap:6px;margin:0;padding:0;list-style:none}
+.terms li{font-size:14px;border:1px solid rgba(0,0,0,.45);border-radius:3px;padding:2px 9px;background:rgba(0,0,0,.2);box-shadow:0 1px 0 rgba(255,255,255,.08)}
+.terms li span{color:var(--muted);margin-left:6px}
+
+/* 试一试：面板上的丝印功能框，标题压在框线上，左侧一颗指示灯 */
+.task{position:relative;margin-top:6px;border:1.5px dashed var(--sig-a);border-radius:6px;padding:17px 12px 12px;display:flex;flex-direction:column;gap:6px}
+.task p{margin:0;font-size:16px}
+.task .t-h{position:absolute;top:-12px;left:10px;display:flex;align-items:center;gap:7px;padding:0 8px;background:var(--surface);
+  font-size:14px;font-weight:600;line-height:22px;color:var(--sig-a);letter-spacing:.04em}
+.task .t-h::before{content:"";width:10px;height:10px;border-radius:50%;border:2px solid currentColor;background:var(--well)}
+.task.done{border-style:solid;border-color:var(--good)}
+.task.done .t-h{color:var(--good)}
+.task.done .t-h::before{background:var(--good);box-shadow:0 0 9px var(--good)}
+.task .rev{font-weight:500;color:var(--good)}
+.task .rev[hidden],.task p[hidden]{display:none}
+
+/* 推子 */
+#controls{display:flex;flex-direction:column;gap:14px}
+.ctl{display:flex;flex-direction:column;gap:3px}
+.ctl label{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:4px 12px;font-size:14px;color:var(--muted)}
+.ctl output{font-family:var(--font-num);font-weight:500;font-size:16px;line-height:1.5;word-spacing:-.28em;color:var(--ink);font-variant-numeric:tabular-nums;text-align:right;
+  margin-left:auto;background:var(--well);border-radius:3px;padding:1px 9px;box-shadow:inset 0 1px 3px rgba(0,0,0,.85),0 1px 0 rgba(255,255,255,.1)}
+input[type=range]{-webkit-appearance:none;appearance:none;display:block;width:100%;height:46px;margin:0;padding:0;border:0;cursor:pointer;background-color:transparent;
+  /* 刻度线：每一格对应滑块的一个真实档位 */
+  background-image:repeating-linear-gradient(90deg,var(--muted) 0 2px,transparent 2px calc((100% - 15px) / var(--n,4)));
+  background-size:calc(100% - 13px) 6px;background-position:13px 100%;background-repeat:no-repeat}
+input[type=range]::-webkit-slider-runnable-track{height:8px;border-radius:4px;background:var(--well);box-shadow:inset 0 1px 3px rgba(0,0,0,.9),0 1px 0 rgba(255,255,255,.12)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:28px;height:30px;margin-top:-11px;border-radius:4px;border:1px solid var(--edge);
+  background:linear-gradient(90deg,transparent 12px,var(--lit-ink) 12px 14px,transparent 14px),linear-gradient(180deg,var(--lit-top),#cfc9b7 60%,#b4ae9c);
+  box-shadow:inset 0 1px 0 #fff,0 2px 4px rgba(0,0,0,.55)}
+input[type=range]::-moz-range-track{height:8px;border-radius:4px;background:var(--well);box-shadow:inset 0 1px 3px rgba(0,0,0,.9),0 1px 0 rgba(255,255,255,.12)}
+input[type=range]::-moz-range-thumb{width:28px;height:30px;border-radius:4px;border:1px solid var(--edge);box-sizing:border-box;
+  background:linear-gradient(90deg,transparent 12px,var(--lit-ink) 12px 14px,transparent 14px),linear-gradient(180deg,var(--lit-top),#cfc9b7 60%,#b4ae9c);
+  box-shadow:inset 0 1px 0 #fff,0 2px 4px rgba(0,0,0,.55)}
+
+/* 读数窗：嵌进面板的深色显示屏，数字用点阵字 */
+.readout{background:var(--well);border:1px solid #06080a;border-radius:6px;padding:12px 14px 13px;display:flex;flex-direction:column;gap:8px;font-size:16px;
+  box-shadow:inset 0 2px 7px rgba(0,0,0,.9),0 1px 0 rgba(255,255,255,.11)}
+.readout p{margin:0}
+.readout .note{font-size:13px;color:var(--muted)}
+.readout b{font-family:var(--font-num);font-weight:500;font-size:1.06em;word-spacing:-.28em;font-variant-numeric:tabular-nums;color:#fff8e6;text-shadow:0 0 9px rgba(255,238,196,.3)}
+.pill{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;padding:3px 12px 3px 10px;border-radius:4px;font-size:14px;font-weight:600;border:1.5px solid currentColor}
+.pill::before{content:"";flex:none;width:9px;height:9px;border-radius:50%;background:currentColor;box-shadow:0 0 8px currentColor}
+.pill.good{color:var(--good)} .pill.warn{color:var(--sig-b)} .pill.bad{color:var(--bad)}
+.pill.warn::before{border-radius:1px;transform:rotate(45deg)}
+.pill.bad::before{border-radius:1px}
+
+.rowlab{margin:0 0 5px;font-size:14px;color:var(--muted)}
+.bits{display:flex;flex-wrap:wrap;gap:8px 8px}
+.pair{display:flex;gap:3px}
+#c3-rx{display:grid;grid-template-columns:repeat(5,max-content);gap:8px 8px}
+.pair.dim{opacity:.35}
+.bit{appearance:none;-webkit-appearance:none;width:28px;height:44px;border-radius:4px;border:1px solid #06080a;background:var(--well);color:var(--ink);
+  font-family:var(--font-num);font-weight:500;font-size:19px;padding:0;display:grid;place-items:center;box-shadow:inset 0 1px 3px rgba(0,0,0,.85),0 1px 0 rgba(255,255,255,.09)}
+button.bit{cursor:pointer;border-color:var(--edge);background:linear-gradient(180deg,#2b2f25,#1c1f18);box-shadow:inset 0 1px 0 rgba(255,255,255,.13),0 2px 0 var(--edge)}
+.bit.flip{border:2px solid var(--bad);color:var(--bad);background:#1a110e;box-shadow:0 0 8px rgba(255,82,71,.35)}
+.bit.ok{border-color:var(--good);color:var(--good)}
+.bit.wrong{border:2px solid var(--bad);color:var(--bad)}
+.key{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:13px;color:var(--muted);margin:0;padding:0;list-style:none}
+.key i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:baseline;box-shadow:0 0 0 1px rgba(0,0,0,.5)}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+.btn{min-height:44px;padding:0 16px;font-size:16px}
+.btn[disabled]{opacity:.35;cursor:default}
+.pager{display:flex;justify-content:space-between;gap:8px;margin-top:2px}
+@media (min-width:880px){
+  .grid{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr)}
+  .stagecol{position:sticky;top:16px}
+  #gl{max-height:none}
+  .screen{max-width:calc((100vh - 360px) * 1.25 + 16px);margin-inline:auto}
+  .tabs{grid-template-columns:repeat(8,1fr)}
+  .grouplab{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .langsw button,.tab,.vbtn,.btn{transition:none}
+}
+.langsw{display:none}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header>
+    <div class="top">
+      <p class="eyebrow" id="t-eyebrow"></p>
+      <div class="langsw" role="group" aria-label="Language">
+        <button type="button" id="lang-zh" aria-pressed="false">中文</button>
+        <button type="button" id="lang-en" aria-pressed="false">EN</button>
+      </div>
+    </div>
+    <h1 id="t-h1"></h1>
+    <p class="lede" id="t-lede"></p>
+  </header>
+
+  <nav class="tabs" id="tabs"></nav>
+
+  <div class="grid">
+    <div class="stagecol">
+      <section class="stage" id="stage">
+        <div class="screen">
+          <canvas id="gl"></canvas>
+          <p class="hint" id="t-hint"></p>
+        </div>
+        <div class="viewbar" id="viewbar">
+          <div class="row"><span class="lab" id="t-viewlab"></span><span class="row" id="viewbtns"></span></div>
+          <p class="viewcap" id="viewcap"></p>
+        </div>
+        <div class="scopebox" id="scopebox">
+          <p class="scopecap" id="scopecap"></p>
+          <canvas id="scope"></canvas>
+        </div>
+      </section>
+    </div>
+
+    <section class="panel">
+      <h2 id="ch-title"></h2>
+      <p class="src" id="ch-src"></p>
+      <p class="body" id="ch-text"></p>
+      <ul class="terms" id="ch-terms"></ul>
+      <div class="task" id="task" aria-live="polite">
+        <p class="t-h" id="task-h"></p>
+        <p id="task-text"></p>
+        <p class="rev" id="task-rev" hidden></p>
+      </div>
+      <div id="controls"></div>
+      <p class="viewcap-m" id="viewcap-m" hidden></p>
+      <div class="readout" id="readout"></div>
+      <div class="pager">
+        <button class="btn" id="prev" type="button"></button>
+        <button class="btn primary" id="next" type="button"></button>
+      </div>
+    </section>
+  </div>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+"use strict";
+const $ = s => document.querySelector(s);
+const clamp = (v,a,b) => Math.max(a, Math.min(b, v));
+const reduced = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+const FONT = '"Barlow","PingFang SC","Hiragino Sans GB","Noto Sans SC","Noto Sans CJK SC","Microsoft YaHei",system-ui,sans-serif';
+const TAU = Math.PI * 2;
+
+/* ---------- 语言 ---------- */
+/* 博客上的英文版：固定英文，不显示语言切换 */
+let lang = 'en';
+const T = (zh, en) => lang === 'zh' ? zh : en;
+const tx = p => Array.isArray(p) ? (lang === 'zh' ? p[0] : p[1]) : p;
+
+/* ---------- 颜色取自页面 token ---------- */
+let C = {}, renderer = null;
+function readTokens(){
+  const cs = getComputedStyle(document.documentElement);
+  const g = n => cs.getPropertyValue(n).trim();
+  C = {bg:g('--bg'), surface:g('--surface'), ink:g('--ink'), muted:g('--muted'), line:g('--line'),
+       a:g('--sig-a'), b:g('--sig-b'), bad:g('--bad'), good:g('--good'),
+       screen:g('--screen'), deep:g('--deep'), grat:g('--grat'), well:g('--well')};
+  if(renderer) renderer.setClearColor(new THREE.Color(C.screen), 1);
+}
+const col = h => new THREE.Color(h);
+
+/* ---------- 渲染器与相机 ---------- */
+const canvas = $('#gl');
+if(!window.THREE){ $('#ch-text').textContent = T('3D 组件没有加载成功，请刷新页面再试。', 'The 3D library did not load. Refresh the page to try again.'); return; }
+renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:false});
+renderer.toneMapping = THREE.NoToneMapping;
+renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+const scene = new THREE.Scene();
+const FOV = 38;
+const camera = new THREE.PerspectiveCamera(FOV, 5/4, 0.1, 400);
+scene.add(new THREE.AmbientLight(0xffffff, .42));
+const sun = new THREE.DirectionalLight(0xffffff, .55); sun.position.set(5, 12, 8); scene.add(sun);
+let root = new THREE.Group(); scene.add(root);
+const orbit = {az:0, el:.5, target:new THREE.Vector3(), fitW:14, fitH:8, goal:null};
+let aspect = 5/4;
+
+function resize(){
+  const w = canvas.clientWidth, h = canvas.clientHeight;
+  if(!w || !h) return;
+  renderer.setSize(w, h, false);
+  aspect = w / h; camera.aspect = aspect; camera.updateProjectionMatrix();
+}
+if(window.ResizeObserver) new ResizeObserver(resize).observe(canvas); else addEventListener('resize', resize);
+
+/* 画面比 5:4 更宽时，竖向多留一点边 */
+let relabel = false;
+function hPad(){ return aspect > 1.3 ? 1 + Math.min(.3, (aspect - 1.25) * .45) : 1; }
+function placeCamera(t){
+  const k = Math.tan(FOV * Math.PI / 360);
+  if(orbit.goal && !drag){
+    const g = orbit.goal, q = reduced ? 1 : .14;
+    orbit.az += (g.az - orbit.az) * q; orbit.el += (g.el - orbit.el) * q;
+    orbit.fitW += (g.fitW - orbit.fitW) * q; orbit.fitH += (g.fitH - orbit.fitH) * q; orbit.target.lerp(g.target, q);
+    if(Math.abs(g.az - orbit.az) < .002 && Math.abs(g.el - orbit.el) < .002){ orbit.az = g.az; orbit.el = g.el; orbit.fitW = g.fitW; orbit.fitH = g.fitH; orbit.target.copy(g.target); orbit.goal = null; relabel = true; }
+  }
+  const d = Math.max(orbit.fitW / (2 * k * aspect), orbit.fitH * hPad() / (2 * k));
+  const az = orbit.az, el = orbit.el;
+  camera.position.set(orbit.target.x + d * Math.sin(az) * Math.cos(el),
+                      orbit.target.y + d * Math.sin(el),
+                      orbit.target.z + d * Math.cos(az) * Math.cos(el));
+  camera.lookAt(orbit.target);
+}
+let drag = null;
+canvas.addEventListener('pointerdown', e => {
+  if(!CH[cur].free) return;
+  drag = {x:e.clientX, y:e.clientY, az:orbit.az, el:orbit.el}; orbit.goal = null;
+  try{canvas.setPointerCapture(e.pointerId);}catch(_){}
+});
+canvas.addEventListener('pointermove', e => {
+  if(!drag) return;
+  if(Math.abs(e.clientX - drag.x) + Math.abs(e.clientY - drag.y) > 4 && CH[cur].state.view !== -1){ CH[cur].state.view = -1; paintViews(CH[cur]); }
+  orbit.az = drag.az - (e.clientX - drag.x) * .008;
+  if(e.pointerType !== 'touch') orbit.el = clamp(drag.el + (e.clientY - drag.y) * .006, .1, 1.38);
+});
+['pointerup','pointercancel','pointerleave'].forEach(n => canvas.addEventListener(n, () => { const was = !!drag; drag = null; if(was && typeof paintTask === 'function') paintTask(CH[cur]); }));
+
+/* ---------- 3D 小工具 ---------- */
+function clearRoot(){
+  root.traverse(o => {
+    if(o.geometry) o.geometry.dispose();
+    if(o.material){ (Array.isArray(o.material) ? o.material : [o.material]).forEach(m => { if(m.map) m.map.dispose(); m.dispose(); }); }
+  });
+  scene.remove(root); root = new THREE.Group(); scene.add(root);
+}
+/* 屏幕上的标注：先描一圈屏幕底色保证清晰，再加一层很轻的同色柔光，最后是锐利的字 */
+function label(text, color, h, weight){
+  const fs = 56, pad = 18, c = document.createElement('canvas'), g = c.getContext('2d');
+  const font = (weight || 600) + ' ' + fs + 'px ' + FONT;
+  g.font = font; const w = Math.ceil(g.measureText(text).width) + 20, H = Math.ceil(fs * 1.35);
+  c.width = w + pad * 2; c.height = H + pad * 2;
+  const x = 10 + pad, y = c.height / 2;
+  g.font = font; g.textBaseline = 'middle'; g.lineJoin = 'round';
+  g.shadowColor = C.screen; g.shadowBlur = 10;
+  g.strokeStyle = C.screen; g.lineWidth = 13; g.strokeText(text, x, y);
+  g.shadowColor = color; g.shadowBlur = 12; g.globalAlpha = .5; g.fillStyle = color; g.fillText(text, x, y);
+  g.shadowColor = 'transparent'; g.shadowBlur = 0; g.globalAlpha = 1; g.fillText(text, x, y);
+  const tex = new THREE.CanvasTexture(c); tex.minFilter = THREE.LinearFilter;
+  const sp = new THREE.Sprite(new THREE.SpriteMaterial({map:tex, transparent:true, depthTest:false}));
+  sp.scale.set(h * c.width / H, h * c.height / H, 1); sp.renderOrder = 10;
+  return sp;
+}
+function addLabel(text, color, h, x, y, z, weight){
+  /* 以当前取景估算每个世界单位在屏幕上占多少像素，保证字不小于 12 px */
+  const k = Math.tan(FOV * Math.PI / 360), d = Math.max(orbit.fitW / (2 * k * aspect), orbit.fitH * hPad() / (2 * k));
+  const cam = V(orbit.target.x + d * Math.sin(orbit.az) * Math.cos(orbit.el), orbit.target.y + d * Math.sin(orbit.el), orbit.target.z + d * Math.cos(orbit.az) * Math.cos(orbit.el));
+  const ppu = (canvas.clientHeight || 280) / Math.max(orbit.fitW / aspect, orbit.fitH * hPad()) * d / Math.max(1, cam.distanceTo(V(x, y, z)));
+  const s = label(text, color, Math.max(h, 12 / ppu) * 1.35, weight); s.position.set(x, y, z); root.add(s); return s;
+}
+const UP = new THREE.Vector3(0, 1, 0);
+/* 柔光贴图：一张横向渐隐（给波形带），一张圆形渐隐（给圆点）。两张都在运行时画出来 */
+let _bandTex = null, _dotTex = null;
+function bandTex(){
+  if(_bandTex) return _bandTex;
+  const c = document.createElement('canvas'); c.width = 4; c.height = 64;
+  const g = c.getContext('2d'), gr = g.createLinearGradient(0, 0, 0, 64);
+  gr.addColorStop(0, 'rgba(255,255,255,0)'); gr.addColorStop(.5, 'rgba(255,255,255,1)'); gr.addColorStop(1, 'rgba(255,255,255,0)');
+  g.fillStyle = gr; g.fillRect(0, 0, 4, 64);
+  return (_bandTex = new THREE.CanvasTexture(c));
+}
+function dotTex(){
+  if(_dotTex) return _dotTex;
+  const c = document.createElement('canvas'); c.width = c.height = 64;
+  const g = c.getContext('2d'), gr = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+  gr.addColorStop(0, 'rgba(255,255,255,1)'); gr.addColorStop(.35, 'rgba(255,255,255,.45)'); gr.addColorStop(1, 'rgba(255,255,255,0)');
+  g.fillStyle = gr; g.fillRect(0, 0, 64, 64);
+  return (_dotTex = new THREE.CanvasTexture(c));
+}
+/* 发光的线：实心的芯，外面套一层只画背面的加色光晕 */
+function tube(a, b, r, color, opacity){
+  const d = new THREE.Vector3().subVectors(b, a), len = d.length(), o = opacity == null ? 1 : opacity;
+  const m = new THREE.Mesh(new THREE.CylinderGeometry(r, r, len, 8),
+    new THREE.MeshBasicMaterial({color:col(color), transparent:o < 1, opacity:o}));
+  const halo = new THREE.Mesh(new THREE.CylinderGeometry(r * 3, r * 3, len, 8),
+    new THREE.MeshBasicMaterial({color:col(color), transparent:true, opacity:.2 * o, blending:THREE.AdditiveBlending, side:THREE.BackSide, depthWrite:false}));
+  m.add(halo);
+  m.position.copy(a).addScaledVector(d, .5);
+  m.quaternion.setFromUnitVectors(UP, d.normalize());
+  return m;
+}
+/* 细线也画成细管，在高分屏上仍有分量 */
+function line(points, color, opacity){
+  const a = points[0], b = points[1], d = new THREE.Vector3().subVectors(b, a), len = d.length(), o = opacity == null ? 1 : opacity;
+  const m = new THREE.Mesh(new THREE.CylinderGeometry(.03, .03, len, 5),
+    new THREE.MeshBasicMaterial({color:col(color), transparent:o < 1, opacity:o}));
+  m.position.copy(a).addScaledVector(d, .5);
+  m.quaternion.setFromUnitVectors(UP, d.normalize());
+  return m;
+}
+/* 实体：压暗的同色填充加一圈亮边，像矢量显示器上的图形。mix 是填充里信号色的比例 */
+function box(w, h, d, color, opacity, mix){
+  const o = opacity == null ? 1 : opacity, geo = new THREE.BoxGeometry(w, h, d);
+  const m = new THREE.Mesh(geo, new THREE.MeshBasicMaterial({color:col(C.screen).lerp(col(color), mix == null ? .42 : mix), transparent:o < 1, opacity:o, depthWrite:o >= 1}));
+  m.add(new THREE.LineSegments(new THREE.EdgesGeometry(geo), new THREE.LineBasicMaterial({color:col(color), transparent:o < 1, opacity:Math.min(1, o * 1.25)})));
+  return m;
+}
+function edges(mesh, color){
+  const e = new THREE.LineSegments(new THREE.EdgesGeometry(mesh.geometry), new THREE.LineBasicMaterial({color:col(color)}));
+  e.position.copy(mesh.position); e.quaternion.copy(mesh.quaternion); return e;
+}
+/* 发光的圆点：实心球加一张加色的圆形光晕 */
+function glowDot(r, color){
+  const m = new THREE.Mesh(new THREE.SphereGeometry(r, 16, 12), new THREE.MeshBasicMaterial({color:col(color)}));
+  const sp = new THREE.Sprite(new THREE.SpriteMaterial({map:dotTex(), color:col(color), transparent:true, opacity:.6, blending:THREE.AdditiveBlending, depthWrite:false}));
+  sp.scale.set(r * 6, r * 6, 1); m.add(sp);
+  return m;
+}
+const V = (x, y, z) => new THREE.Vector3(x, y, z);
+/* 一条有宽度的波形带：n 个采样点，沿 x 铺开，z 方向有宽度。旁边带一条更宽、向两侧渐隐的加色光晕 */
+function ribbon(n, width, color, opacity, glow){
+  const g = new THREE.BufferGeometry(), idx = [], uv = new Float32Array(n * 4);
+  for(let i = 0; i < n - 1; i++){ const a = i * 2; idx.push(a, a + 1, a + 2, a + 1, a + 3, a + 2); }
+  for(let i = 0; i < n; i++){ uv[i * 4] = i / (n - 1); uv[i * 4 + 1] = 0; uv[i * 4 + 2] = i / (n - 1); uv[i * 4 + 3] = 1; }
+  g.setAttribute('position', new THREE.BufferAttribute(new Float32Array(n * 6), 3)); g.setAttribute('uv', new THREE.BufferAttribute(uv, 2)); g.setIndex(idx);
+  const o = opacity == null ? 1 : opacity;
+  const m = new THREE.Mesh(g, new THREE.MeshBasicMaterial({color:col(color), side:THREE.DoubleSide, transparent:o < 1, opacity:o}));
+  const halo = new THREE.Mesh(g, new THREE.MeshBasicMaterial({color:col(color), map:bandTex(), side:THREE.DoubleSide, transparent:true, opacity:.36 * o * (glow == null ? 1 : glow),
+    blending:THREE.AdditiveBlending, depthWrite:false, polygonOffset:true, polygonOffsetFactor:2, polygonOffsetUnits:2}));
+  halo.frustumCulled = false; halo.renderOrder = 2; root.add(halo);
+  m.material.transparent = true;
+  m.userData = {n:n, w:width / 2, halo:halo, op:o, hop:halo.material.opacity}; m.frustumCulled = false; root.add(m);
+  return m;
+}
+/* vert 为真时带子的宽度竖着摆：从正面看也是一条有粗细的线 */
+function setRibbon(m, x0, x1, z, fn, vert){
+  const p = m.geometry.attributes.position, n = m.userData.n, w = m.userData.w, wv = Math.min(w, .1);
+  for(let i = 0; i < n; i++){
+    const u = i / (n - 1), x = x0 + (x1 - x0) * u, y = fn(u);
+    if(vert){ p.setXYZ(i * 2, x, y - wv, z); p.setXYZ(i * 2 + 1, x, y + wv, z); }
+    else{ p.setXYZ(i * 2, x, y, z - w); p.setXYZ(i * 2 + 1, x, y, z + w); }
+  }
+  p.needsUpdate = true;
+  const hl = m.userData.halo; if(hl){ hl.scale.z = vert ? 1 : 3.4; hl.position.z = vert ? 0 : z * (1 - 3.4); }
+}
+function fadeRibbon(m, k){ m.material.opacity = m.userData.op * k; if(m.userData.halo) m.userData.halo.material.opacity = m.userData.hop * k; }
+
+/* ---------- 下方 2D 波形 ---------- */
+function scopeCtx(h){
+  const c = $('#scope'); c.style.height = h + 'px';
+  const w = c.clientWidth, dpr = Math.min(window.devicePixelRatio || 1, 2);
+  if(c.width !== Math.round(w * dpr) || c.height !== Math.round(h * dpr)){ c.width = Math.round(w * dpr); c.height = Math.round(h * dpr); }
+  const g = c.getContext('2d'); g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, w, h);
+  return {g, w, h};
+}
+function slider(id, text, min, max, step, val){
+  return '<div class="ctl" style="--n:' + Math.max(1, Math.round((max - min) / step)) + '"><label for="' + id + '"><span>' + text + '</span><output id="' + id + '-out" for="' + id + '"></output></label>' +
+         '<input type="range" id="' + id + '" min="' + min + '" max="' + max + '" step="' + step + '" value="' + val + '"></div>';
+}
+function rerender(self){ clearRoot(); self.build(); self.readout(); }
+
+/* =====================================================================
+   基础 1：电波。频率与波长
+   ===================================================================== */
+const chWave = (function(){
+  const st = {fi:1, lo:false, hi:false, view:0, done:false};
+  /* m：真实波长（米）；ls：画面里的波长（格）。同一档里物体按 m / ls 的比例画 */
+  const F = [
+    {f:'1 MHz',    hz:['每秒振动 100 万次', '1 million cycles per second'],      lam:['约 300 米', 'about 300 m'],      like:['约三个足球场的长度', 'about three football pitches end to end'], use:['中波调幅广播', 'AM radio'], m:299.8, ls:6, ctx:'city'},
+    {f:'99.5 MHz', hz:['每秒振动 9,950 万次', '99.5 million cycles per second'], lam:['约 3 米', 'about 3 m'],          like:['约一层楼的高度', 'about one storey high'],                       use:['调频广播', 'FM radio'], m:3.013, ls:2.6, ctx:'house'},
+    {f:'915 MHz',  hz:['每秒振动 9.15 亿次', '915 million cycles per second'],   lam:['约 33 厘米', 'about 33 cm'],     like:['约一台笔记本电脑的宽度', 'about the width of a laptop'],          use:['Sub-GHz 物联网设备，例如 LoRa 传感器', 'Sub-GHz IoT devices such as LoRa sensors'], m:.3277, ls:1.9, ctx:'desk'},
+    {f:'2.4 GHz',  hz:['每秒振动 24 亿次', '2.4 billion cycles per second'],     lam:['约 12.5 厘米', 'about 12.5 cm'], like:['比一部手机略短', 'a little shorter than a phone'],               use:['Wi-Fi 和蓝牙', 'Wi-Fi and Bluetooth'], m:.1249, ls:1.15, ctx:'router'}
+  ];
+  const NX = 120, NZ = 84, W = 16, D = 11.2, A = .34, VEL = 2.2;
+  let geo, rs, charge, cA, cBase;
+  /* 参照物：深色实体加浅色轮廓，和仪器屏幕上的矢量图形一致 */
+  function solid(g, x, y, z){
+    const m = new THREE.Mesh(g, new THREE.MeshBasicMaterial({color:col(C.screen).lerp(col(C.ink), .14)}));
+    m.add(new THREE.LineSegments(new THREE.EdgesGeometry(g, 25), new THREE.LineBasicMaterial({color:col(C.ink), transparent:true, opacity:.9})));
+    m.position.set(x, y, z); root.add(m); return m;
+  }
+  const blk = (w, h, d, x, z, y0) => solid(new THREE.BoxGeometry(w, h, d), x, (y0 || 0) + h / 2, z);
+  function loop(pts, color, op){
+    const l = new THREE.LineLoop(new THREE.BufferGeometry().setFromPoints(pts), new THREE.LineBasicMaterial({color:col(color), transparent:true, opacity:op == null ? .7 : op}));
+    root.add(l); return l;
+  }
+  const ring = (x, z, w, d, y, color, op) => loop([V(x - w / 2, y, z - d / 2), V(x + w / 2, y, z - d / 2), V(x + w / 2, y, z + d / 2), V(x - w / 2, y, z + d / 2)], color, op);
+  const face = (x, y, z, w, h) => loop([V(x - w / 2, y, z), V(x + w / 2, y, z), V(x + w / 2, y + h, z), V(x - w / 2, y + h, z)], C.ink, .75);
+  function tower(x, z, w, d, h, step){ blk(w, h, d, x, z); for(let y = step; y < h - step * .4; y += step) ring(x, z, w + .01, d + .01, y, C.ink, .35); }
+  /* 一块贴在物体表面的发光小屏：让笔记本和手机一眼能认出来 */
+  function glass(parent, w, h, z){
+    const g = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({color:col(C.screen).lerp(col(C.a), .35), side:THREE.DoubleSide}));
+    g.position.z = z; parent.add(g);
+    const e = new THREE.LineLoop(new THREE.BufferGeometry().setFromPoints([V(-w / 2, -h / 2, z), V(w / 2, -h / 2, z), V(w / 2, h / 2, z), V(-w / 2, h / 2, z)]), new THREE.LineBasicMaterial({color:col(C.a)}));
+    parent.add(e);
+  }
+  /* 笔记本电脑：底座上画出键盘格和触控板，屏幕是亮的 */
+  function laptop(x, z, u){
+    const w = u(.32), t = u(.018), d = u(.22), sh = u(.21), a = -.3, th = Math.max(.04, u(.007));
+    blk(w, t, d, x, z);
+    const y = t + .006, kz0 = z - d / 2 + d * .1, kz1 = z - d / 2 + d * .55, kx = w * .43, seg = [];
+    for(let i = 0; i <= 5; i++){ const zz = kz0 + (kz1 - kz0) * i / 5; seg.push(V(x - kx, y, zz), V(x + kx, y, zz)); }
+    for(let j = 0; j <= 12; j++){ const xx = x - kx + 2 * kx * j / 12; seg.push(V(xx, y, kz0), V(xx, y, kz1)); }
+    root.add(new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(seg), new THREE.LineBasicMaterial({color:col(C.ink), transparent:true, opacity:.55})));
+    ring(x, z + d * .27, w * .3, d * .26, y, C.ink, .7);
+    const s = solid(new THREE.BoxGeometry(w, sh, th), 0, 0, 0);
+    s.rotation.x = a; s.position.set(x, t + Math.cos(a) * sh / 2, z - d / 2 + Math.sin(a) * sh / 2);
+    glass(s, w * .88, sh * .82, th / 2 + .01);
+  }
+  /* 手机：竖着立放，屏幕朝向镜头 */
+  function phone(x, z, u){
+    const w = u(.072), h = u(.15), th = Math.max(.06, u(.008));
+    const p = blk(w, h, th, x, z); p.rotation.x = -.12;
+    glass(p, w * .86, h * .9, th / 2 + .01);
+  }
+  /* 杯子：带一个把手 */
+  function mug(x, z, u){
+    const r = u(.04), h = u(.095);
+    solid(new THREE.CylinderGeometry(r, r * .9, h, 24, 1, true), x, h / 2, z);
+    const hd = new THREE.Mesh(new THREE.TorusGeometry(h * .28, r * .14, 8, 20, Math.PI), new THREE.MeshBasicMaterial({color:col(C.ink), transparent:true, opacity:.85}));
+    hd.rotation.z = -Math.PI / 2; hd.position.set(x + r, h * .52, z); root.add(hd);
+  }
+  function scenery(f){
+    const u = mm => mm * f.ls / f.m;
+    if(f.ctx === 'city'){
+      blk(u(135), u(20), u(95), 5.2, 3.4);
+      ring(5.2, 3.4, u(105), u(68), u(20) + .02, C.ink, .8);
+      root.add(line([V(5.2, u(20) + .02, 3.4 - u(34)), V(5.2, u(20) + .02, 3.4 + u(34))], C.ink, .8));
+      [[-5.6, -3.2, 40, 40, 150], [-4.2, -4.4, 35, 30, 90], [-6.5, -1.4, 30, 30, 60], [-3.3, -2.3, 30, 25, 45],
+       [-2.9, 3.7, 35, 35, 100], [-5.3, 3.1, 30, 30, 70], [3.6, -3.6, 40, 30, 75], [5.4, -4.4, 30, 30, 50], [6.9, -2.4, 30, 30, 40]]
+        .forEach(b => tower(b[0], b[1], u(b[2]), u(b[3]), u(b[4]), u(30)));
+    }else if(f.ctx === 'house'){
+      const hw = u(6), hh = u(6), hd = u(5), hx = -5.1, hz = -3.4, fz = hz + hd / 2 + .01, fl = u(3);
+      blk(hw, hh, hd, hx, hz);
+      ring(hx, hz, hw + .02, hd + .02, fl, C.ink, .9);
+      face(hx + 1.6, 0, fz, u(1), u(2.1));
+      face(hx - 1.4, fl + u(.9), fz, u(1.2), u(1.2)); face(hx + 1.6, fl + u(.9), fz, u(1.2), u(1.2)); face(hx - 1.4, u(.9), fz, u(1.2), u(1.2));
+    }else if(f.ctx === 'desk'){
+      laptop(-4.2, -2.4, u); phone(3.6, 3, u); mug(-2.6, 2.8, u);
+    }else{
+      blk(u(.24), u(.04), u(.15), 0, 0);
+      laptop(-4.6, -2.7, u); phone(.9, 3.6, u); mug(-2.6, 2.6, u);
+    }
+  }
+  return {
+    id:'waves', tab:['电波', 'Waves'], title:['电波是什么', 'What a radio wave is'],
+    src:['后面会用到：电台的 99.5 MHz 指的是它的载波频率', 'Used later: a station\u2019s 99.5 MHz is its carrier frequency'],
+    text:['天线里的电荷来回振动，带动电波像水面的波纹一样向外传开。每秒振动的次数叫频率，单位是赫兹（Hz）。相邻两个波峰的距离叫波长。',
+          'Charges moving back and forth in an antenna send out waves, like ripples on water. The number of cycles per second is the frequency, measured in hertz (Hz). The distance between two crests is the wavelength.'],
+    terms:[['频率', 'frequency'], ['波长', 'wavelength'], ['赫兹', 'hertz (Hz)']],
+    cam:{az:-.3, el:.62, fitW:17, fitH:12.5, target:V(0, .9, 0)},
+    free:true,
+    views:[
+      {name:['斜看', 'Angled'], az:-.3, el:.62, cap:['电波从天线向四周一圈圈传开，周围的物体和波纹按同一比例画', 'Waves spread out from the antenna in rings. Objects nearby share the same scale']},
+      {name:['从上往下看', 'From above'], az:0, el:1.36, fitW:18.5, target:V(.7, 0, 0), cap:['相邻两圈之间的距离就是波长，和旁边物体的大小对比', 'The gap between two rings is the wavelength. Compare it with the objects nearby']}
+    ],
+    task:{text:['把频率先拉到最低的 1 MHz，再拉到最高的 2.4 GHz，对比波纹和周围物体的大小', 'Drag the frequency down to 1 MHz, then up to 2.4 GHz, and compare the rings with the objects around them'],
+          reveal:['频率越高，波长越短：1 MHz 的波长跨过几个足球场，2.4 GHz 的波长比手机还短。天线的尺寸跟着波长走，高频设备的天线可以做得很小；小天线接住的能量也少，所以同样条件下高频传得近一些', 'Higher frequency means shorter wavelength: at 1 MHz one wave spans several football pitches, at 2.4 GHz it is shorter than a phone. Antenna size follows wavelength, so high-frequency devices can use tiny antennas. A small antenna also catches less energy, so under the same conditions a higher frequency reaches less far']},
+    check(){ if(st.fi === 0) st.lo = true; if(st.fi === F.length - 1) st.hi = true; return st.lo && st.hi; },
+    scopeH:0, state:st,
+    controls(){ return slider('w-f', T('电波的频率', 'Wave frequency'), 0, F.length - 1, 1, st.fi); },
+    bind(){ $('#w-f').addEventListener('input', e => { st.fi = +e.target.value; rerender(this); }); },
+    build(){
+      const f = F[st.fi];
+      cA = col(C.a); cBase = col(C.deep);
+      geo = new THREE.PlaneGeometry(W, D, NX, NZ); geo.rotateX(-Math.PI / 2);
+      const pos = geo.attributes.position;
+      rs = new Float32Array(pos.count);
+      for(let i = 0; i < pos.count; i++) rs[i] = Math.hypot(pos.getX(i), pos.getZ(i));
+      geo.setAttribute('color', new THREE.BufferAttribute(new Float32Array(pos.count * 3), 3));
+      const sheet = new THREE.Mesh(geo, new THREE.MeshBasicMaterial({vertexColors:true, side:THREE.DoubleSide, transparent:true, opacity:.78, depthWrite:false}));
+      sheet.renderOrder = 1; root.add(sheet);
+      root.add(new THREE.Mesh(geo, new THREE.MeshBasicMaterial({wireframe:true, color:col(C.a), transparent:true, opacity:.08, blending:THREE.AdditiveBlending, depthWrite:false})));
+      scenery(f);
+      root.add(tube(V(0, 0, 0), V(0, 2.5, 0), .07, C.ink));
+      charge = glowDot(.2, C.b); root.add(charge);
+      addLabel(f.ctx === 'router' ? T('路由器', 'Router') : T('天线', 'Antenna'), C.ink, .6, -.5, 4.2, 0);
+      const x0 = 2.4, y = 1.3;
+      root.add(tube(V(x0, y, 0), V(x0 + f.ls, y, 0), .06, C.b));
+      root.add(tube(V(x0, y, 0), V(x0, .1, 0), .035, C.b)); root.add(tube(V(x0 + f.ls, y, 0), V(x0 + f.ls, .1, 0), .035, C.b));
+      /* 标签放在标尺后方偏上：斜看时在标尺上面，从上往下看时不压住标尺 */
+      const wl = addLabel(T('波长', 'Wavelength: ') + tx(f.lam), C.b, .62, x0 + Math.max(f.ls / 2, T(1.8, 3)), y + .5, -1.1, 700); wl.renderOrder = 11;
+    },
+    tick(t){
+      const pos = geo.attributes.position, cl = geo.attributes.color, k = TAU / F[st.fi].ls, w = k * VEL;
+      for(let i = 0; i < pos.count; i++){
+        const r = rs[i], env = Math.min(1, r / .7) / (1 + .12 * r), y = A * env * Math.sin(k * r - w * t);
+        pos.setY(i, y);
+        const q = clamp(y / A * 1.5 + .12, 0, 1);
+        cl.setXYZ(i, cBase.r + (cA.r - cBase.r) * q, cBase.g + (cA.g - cBase.g) * q, cBase.b + (cA.b - cBase.b) * q);
+      }
+      pos.needsUpdate = true; cl.needsUpdate = true;
+      charge.position.set(0, 1.75 + .55 * Math.sin(w * t), 0);
+    },
+    readout(){
+      const f = F[st.fi];
+      $('#w-f-out').textContent = f.ctx === 'desk' ? f.f + '（Sub-GHz）' : f.f;
+      $('#readout').innerHTML =
+        '<p><b>' + f.f + '</b>' + T('：', ': ') + tx(f.hz) + T('，用于', ', used for ') + (/^[A-Za-z]/.test(tx(f.use)) && lang === 'zh' ? ' ' : '') + tx(f.use) + '</p>' +
+        '<p>' + T('波长', 'Wavelength: ') + '<b>' + tx(f.lam) + '</b>' + T('，', ', ') + tx(f.like) + '</p>' +
+        (f.ctx === 'desk' ? '<p>' + T('Sub-GHz 字面指 1 GHz 以下的频率；在物联网里通常指 433、868、915 MHz 等免授权频段，美国用的是 902~928 MHz', 'Sub-GHz literally means below 1 GHz. In IoT it usually means unlicensed bands such as 433, 868 and 915 MHz. The US uses 902 to 928 MHz') + '</p>' : '') +
+        '<p>' + T('所有电波的速度相同，每秒约 30 万公里', 'All radio waves travel at the same speed, about 300,000 km per second') + '</p>' +
+        '<p class="note">' + T('每一档的画面比例不同，只画到离天线几个波长，不代表电波能传多远', 'Each setting uses its own scale and shows only a few wavelengths around the antenna, not how far the wave reaches') + '</p>';
+    },
+    drawScope(){}
+  };
+})();
+
+/* =====================================================================
+   基础 2：调制。声音怎么放上电波
+   ===================================================================== */
+const chMod = (function(){
+  const st = {mode:'fm', d:.7, am:false, lined:false, view:0, done:false};
+  const N = 420, X0 = -7, X1 = 7, FC = 16, FM = 1.5, DEV = 9, AMP = .8, ZS = -2.6, ZO = 2.6, NE = 120, YS = 2, YO = -2, HM = 6.6;
+  let rMsg, rCar, rOut, envU, envL, marks, grid, names = [];
+  const msg = (u, s) => Math.sin(TAU * FM * (u + s));
+  /* 调幅时画在成品上的轮廓线：它的形状就是声音 */
+  function envLine(){ return ribbon(NE + 1, .14, C.b, 1, .6); }
+  function showEnv(m, on){ m.visible = on; if(m.userData.halo) m.userData.halo.visible = on; }
+  /* 竖片：穿过三条波，标出声音最高和最低的时刻 */
+  function mark(hi){
+    const c = hi ? C.b : C.muted;
+    const pl = new THREE.Mesh(new THREE.PlaneGeometry(ZO - ZS + 1, HM), new THREE.MeshBasicMaterial({color:col(c), transparent:true, opacity:hi ? .26 : .2, side:THREE.DoubleSide, depthWrite:false}));
+    pl.rotation.y = Math.PI / 2; root.add(pl);
+    /* 竖片前缘的一根竖线：正面看时，竖片变成这条线，正好对齐同一时刻 */
+    const ed = new THREE.Mesh(new THREE.BoxGeometry(.05, HM, .05), new THREE.MeshBasicMaterial({color:col(c), transparent:true, opacity:.85}));
+    root.add(ed);
+    return {pl:pl, ed:ed, hi:hi,
+      am:addLabel(hi ? T('这里最高', 'Tallest') : T('这里最矮', 'Shortest'), c, .72, 0, 3.5, -2.6),
+      fm:addLabel(hi ? T('这里最密', 'Tightest') : T('这里最疏', 'Loosest'), c, .72, 0, 3.5, -2.6)};
+  }
+  return {
+    id:'modulation', tab:['调制', 'Modulation'], title:['声音怎么坐上电波', 'How sound rides on a wave'],
+    src:['后面会用到：调频信号每一刻的频率在载波频率两边摆动，载波频率本身不变', 'Used later: an FM signal\u2019s frequency swings around the carrier frequency, which itself stays fixed'],
+    text:['电台先产生一条频率固定的电波，叫载波，电台的 99.5 MHz 就是载波频率。调制就是用声音去改造载波：调幅让成品的高度跟着声音变，调频让成品的疏密跟着声音变。声音和载波是原料，第三条才是发出去的成品。',
+          'A station starts with a steady wave at a fixed frequency, the carrier. A station\u2019s 99.5 MHz is its carrier frequency. Modulation reshapes the carrier with the sound: AM makes the output\u2019s height follow the sound, FM makes its spacing follow the sound. Sound and carrier are the inputs. The third wave is the output that goes on air.'],
+    terms:[['载波', 'carrier'], ['调制', 'modulation'], ['调幅', 'AM'], ['调频', 'FM']],
+    cam:{az:-.28, el:.5, fitW:23.5, fitH:12, target:V(-3, 0, 0)},
+    free:true,
+    views:[
+      {name:['斜看', 'Angled'], az:-.28, el:.5, cap:['三条波前后排开：① 声音，② 载波，③ 发出去的信号', 'Three waves in a row: 1 sound, 2 carrier, 3 signal sent']},
+      {name:['正面对齐', 'Line up'], az:0, el:.03, fitW:24, fitH:7.8, target:V(-3.4, .4, 0), cap:['从正面看：三条波上下排列，每根竖线是同一时刻。对照 ① 的高低，看 ③ 怎么变', 'From the front: the waves stack up and each vertical line marks one moment. Compare the height of 1 with how 3 changes']}
+    ],
+    task:{text:['在调幅和调频之间切换，再点「正面对齐」。① 和 ② 两条原料不会变，盯住蓝色的成品 ③，看它在竖线处怎么跟着橙色的声音变', 'Switch between AM and FM, then tap Line up. Inputs 1 and 2 stay the same. Watch how the blue output 3 follows the orange sound at each vertical line'],
+          reveal:['调幅改的是波的高度，调频改的是波的疏密。噪声很容易改变高度，调频接收机会削平高度、只读疏密，这是调频声音更干净的主要原因之一', 'AM changes the height of the wave. FM changes its spacing. Noise easily changes height, and an FM receiver flattens the height and reads only the spacing. That is a main reason FM sounds cleaner']},
+    check(){ if(st.view === 1) st.lined = true; return st.am && st.lined; },
+    scopeH:0, state:st,
+    controls(){
+      return '<div class="btns" role="group"><button type="button" class="btn" id="m-am" aria-pressed="' + (st.mode === 'am') + '">' + T('调幅 AM', 'AM') + '</button>' +
+             '<button type="button" class="btn" id="m-fm" aria-pressed="' + (st.mode === 'fm') + '">' + T('调频 FM', 'FM') + '</button></div>' +
+             slider('m-d', T('声音的音量', 'Sound volume'), .2, 1, .1, st.d);
+    },
+    bind(){
+      const set = m => { st.mode = m; if(m === 'am') st.am = true; $('#m-am').setAttribute('aria-pressed', m === 'am'); $('#m-fm').setAttribute('aria-pressed', m === 'fm'); this.readout(); };
+      $('#m-am').addEventListener('click', () => set('am')); $('#m-fm').addEventListener('click', () => set('fm'));
+      $('#m-d').addEventListener('input', e => { st.d = +e.target.value; this.readout(); });
+    },
+    build(){
+      names = []; grid = new THREE.GridHelper(18, 18, col(C.grat), col(C.grat)); grid.position.y = YO - 1.5; root.add(grid);
+      rMsg = ribbon(N, .7, C.b); rCar = ribbon(N, .7, C.muted, .8); rOut = ribbon(N, .7, C.a);
+      envU = envLine(); envL = envLine();
+      marks = [mark(true), mark(true), mark(false), mark(false)];
+      /* 三条波的名字写在各自左端，右边缘对齐波的起点 */
+      [[T('① 声音', '1 Sound'), C.b, YS, ZS], [T('② 载波', '2 Carrier'), C.muted, 0, 0], [T('③ 发出去的信号', '3 Signal sent'), C.a, YO, ZO]]
+        .forEach(r => { const l = addLabel(r[0], r[1], .52, 0, r[2], r[3]); l.position.x = X0 - .35 - l.scale.x / 2; l.userData.y = r[2]; names.push(l); });
+    },
+    tick(t){
+      const s = t * .08, d = st.d, isAm = st.mode === 'am', vt = st.view === 1, ky = vt ? 1.6 : 1, YS = 2 * ky, YO = -2 * ky, AMP = .8 * (vt ? 1.4 : 1);
+      names.forEach(l => { l.position.y = l.userData.y * ky; });
+      grid.visible = !vt;
+      setRibbon(rMsg, X0, X1, ZS, u => YS + AMP * d * msg(u, s), vt);
+      setRibbon(rCar, X0, X1, 0, u => AMP * Math.sin(TAU * FC * (u + s)), vt);
+      if(isAm) setRibbon(rOut, X0, X1, ZO, u => YO + AMP * (1 + d * msg(u, s)) / 2 * 1.25 * Math.sin(TAU * FC * (u + s)), vt);
+      else setRibbon(rOut, X0, X1, ZO, u => YO + AMP * Math.sin(TAU * FC * (u + s) - d * DEV / FM * Math.cos(TAU * FM * (u + s))), vt);
+      showEnv(envU, isAm); showEnv(envL, isAm);
+      if(isAm){
+        const e = u => AMP * (1 + d * msg(u, s)) / 2 * 1.25 + .06;
+        setRibbon(envU, X0, X1, ZO, u => YO + e(u), vt); setRibbon(envL, X0, X1, ZO, u => YO - e(u), vt);
+      }
+      // 声音最高的时刻相位为 k + 0.25，最低为 k + 0.75
+      marks.forEach(m => { m.pl.visible = m.ed.visible = m.am.visible = m.fm.visible = false; });
+      [[.25, 0], [.75, 2]].forEach(pair => {
+        let slot = pair[1];
+        for(let k = Math.ceil(FM * s - pair[0]); k <= Math.floor(FM * (1 + s) - pair[0]) && slot < pair[1] + 2; k++){
+          const u = (k + pair[0]) / FM - s; if(u < .05 || u > .95) continue;
+          const m = marks[slot++], x = X0 + (X1 - X0) * u, lab = isAm ? m.am : m.fm;
+          m.pl.visible = m.ed.visible = true; m.pl.position.set(x, 0, (ZS + ZO) / 2); m.ed.position.set(x, 0, ZO + .5);
+          lab.visible = true; lab.position.set(x, YS + AMP + .65, ZS); m.pl.scale.y = m.ed.scale.y = ky;
+        }
+      });
+    },
+    readout(){
+      $('#m-d-out').textContent = Math.round(st.d * 100) + '%';
+      $('#readout').innerHTML = (st.mode === 'am'
+        ? '<p>' + T('<b>调幅（AM）</b>：声音高的时刻（橙色竖片），信号的波峰最高；声音低的时刻最矮。把波峰连起来的橙色轮廓线，正好是声音的形状。波的疏密和载波一样', '<b>AM</b>: when the sound is high (orange slice), the signal peaks are tallest. When it is low, they are shortest. The orange outline joining the peaks is exactly the shape of the sound. The spacing equals the carrier') + '</p>'
+        : '<p>' + T('<b>调频（FM）</b>：声音高的时刻（橙色竖片），波挤得最密；声音低的时刻最疏。音量越大，疏密差别越大，波峰高度不变', '<b>FM</b>: when the sound is high (orange slice), the wave is packed tightest; when low, loosest. Louder sound, bigger difference. Height stays the same') + '</p>' +
+          '<p>' + T('平均下来，③ 的疏密和载波 ② 一样，所以载波频率不变，变的只是每一刻的频率', 'On average, 3 is as tightly packed as carrier 2, so the carrier frequency is unchanged. Only the frequency at each moment moves') + '</p>' +
+          '<p>' + T('真实电台最多偏离载波频率 <b>75 kHz</b>，不到它的千分之一，画面把摆动放大了。美国给每个调频电台分一个 <b>200 kHz</b> 宽的频道，信号的边缘还会伸出频道之外', 'A real station swings at most <b>75 kHz</b>, under 0.1% of its carrier frequency; the drawing exaggerates it. In the US each FM station gets a <b>200 kHz</b> channel, and the signal\u2019s edges spill past it') + '</p>');
+    },
+    drawScope(){}
+  };
+})();
+
+/* =====================================================================
+   基础 3：带宽。信号变化越快，占的频带越宽
+   ===================================================================== */
+const chBand = (function(){
+  const st = {rate:1, view:0, done:false};
+  const HARM = [1, 3, 5, 7], N = 520, X0 = -7, X1 = 5.4, AMP = .9, ZF = f => 2.5 - f * .33;
+  let rSum, rC = [];
+  return {
+    id:'bandwidth', tab:['带宽', 'Bandwidth'], title:['传得越快，占的频带越宽', 'Faster data needs a wider band'],
+    src:['后面会用到：数据塞得越多，占的频谱越宽', 'Used later: more data takes up more spectrum'],
+    text:['任何信号都可以拆成许多频率不同的纯波。信号变化越快，拆出来的纯波频率越高，在频率轴上铺得越开。铺开的这一段宽度叫带宽。',
+          'Any signal can be split into many pure waves of different frequencies. The faster the signal changes, the higher those frequencies go and the wider they spread. That spread is the bandwidth.'],
+    terms:[['带宽', 'bandwidth'], ['频谱', 'spectrum'], ['数据速率', 'data rate']],
+    cam:{az:-.5, el:.6, fitW:19.5, fitH:12, target:V(1.2, .2, -1.4)},
+    free:true,
+    views:[
+      {name:['斜看', 'Angled'], az:-.5, el:.6, cap:['最前面是数据信号，后面一排是它拆出来的纯波', 'The data signal is in front. Behind it are the pure waves it is made of']},
+      {name:['时间视角', 'Time view'], az:-.06, el:.3, fitW:19.5, fitH:9, target:V(1.9, .5, -1.6), cap:['从正面看：每条波随时间怎么起伏', 'From the front: how each wave rises and falls over time']},
+      {name:['频率视角', 'Frequency view'], az:1.46, el:.3, fitW:20, fitH:9, target:V(1.3, .3, -2.6), cap:['从侧面看：每根柱子是一个纯波，位置是频率，高度是幅度。这张图就是频谱', 'From the side: each bar is one pure wave. Position is its frequency, height is its amplitude. This picture is the spectrum']}
+    ],
+    task:{text:['把数据速率调到 4 倍，再切到「频率视角」，看柱子铺开了多宽', 'Set the data rate to 4×, then switch to Frequency view and see how far the bars spread'],
+          reveal:['数据速率 4 倍，带宽也是 4 倍。想传得更快，就要占用更宽的频带', '4× the data rate takes 4× the bandwidth. Sending faster means occupying a wider band']},
+    check(){ return st.rate === 4 && (st.view === 2 || Math.abs(orbit.az - 1.46) < .3); },
+    scopeH:0, state:st,
+    controls(){
+      return slider('b-r', T('数据速率', 'Data rate'), 1, 4, 1, st.rate) +
+             '<ul class="key"><li><i style="background:var(--sig-a)"></i>' + T('蓝色：数据信号', 'Blue: the data signal') + '</li>' +
+             '<li><i style="background:var(--sig-b)"></i>' + T('橙色：拆出来的纯波，柱子的高度是它的幅度', 'Orange: the pure waves inside it. Bar height is amplitude') + '</li>' +
+             '<li><i style="background:var(--bad)"></i>' + T('红色：带宽', 'Red: bandwidth') + '</li></ul>';
+    },
+    bind(){ $('#b-r').addEventListener('input', e => { st.rate = +e.target.value; rerender(this); }); },
+    build(){
+      rSum = ribbon(N, .8, C.a);
+      rC = HARM.map(() => ribbon(N, .42, C.b, .85));
+      // 频率轴与频谱柱
+      const zA = ZF(0), zB = ZF(30);
+      root.add(line([V(6.4, -.9, zA), V(6.4, -.9, zB)], C.ink));
+      addLabel(T('频率', 'Frequency'), C.muted, .8, 6.4, -.3, zB + .6, 500);
+      HARM.forEach(n => {
+        const h = 4 / (Math.PI * n) * 2.2, z = ZF(n * st.rate);
+        const b = box(.5, h, .42, C.b, 1, .62); b.position.set(6.4, -.9 + h / 2, z); root.add(b);
+      });
+      const z1 = ZF(0), z2 = ZF(HARM[HARM.length - 1] * st.rate);
+      root.add(tube(V(7.4, -.9, z1), V(7.4, -.9, z2), .07, C.bad));
+      root.add(line([V(7.4, -.9, z1), V(6.7, -.9, z1)], C.bad)); root.add(line([V(7.4, -.9, z2), V(6.7, -.9, z2)], C.bad));
+      addLabel(T('带宽', 'Bandwidth'), C.bad, .58, 8.3, -.2, (z1 + z2) / 2);
+    },
+    tick(t){
+      const s = t * .05, r = st.rate * 1.5;
+      const fv = (st.view === 2 || (!orbit.goal && Math.abs(orbit.az - 1.46) < .3)) ? .08 : 1;
+      fadeRibbon(rSum, fv); rC.forEach(m => fadeRibbon(m, fv));
+      setRibbon(rSum, X0, X1, 3.9, u => { let y = 0; for(let i = 0; i < HARM.length; i++) y += 4 / (Math.PI * HARM[i]) * Math.sin(TAU * HARM[i] * r * (u + s)); return AMP * y; });
+      HARM.forEach((n, i) => setRibbon(rC[i], X0, X1, ZF(n * st.rate), u => AMP * 4 / (Math.PI * n) * Math.sin(TAU * n * r * (u + s))));
+    },
+    readout(){
+      const r = st.rate;
+      $('#b-r-out').textContent = T(r + ' 倍', r + '×');
+      $('#readout').innerHTML =
+        '<p>' + (r === 1 ? T('数据速率为 <b>1</b> 倍，以此时的带宽作为基准', 'Data rate is <b>1</b>×. This bandwidth is the baseline')
+                         : T('数据速率升到 <b>' + r + '</b> 倍，最高的频率成分和带宽也都变成 <b>' + r + '</b> 倍', 'At <b>' + r + '</b>× data rate, the highest frequency and the bandwidth are both <b>' + r + '</b>×')) + '</p>' +
+        '<p>' + T('发射时，调制把这一段频率搬到载波频率附近，成为这个信号占用的那一小段频谱', 'When the signal is transmitted, modulation moves this band up to sit around the carrier frequency. That is the slice of spectrum the signal occupies') + '</p>';
+    },
+    drawScope(){}
+  };
+})();
+
+/* =====================================================================
+   基础 4：数字信号与噪声
+   ===================================================================== */
+const chNoise = (function(){
+  const st = {noise:.4, sig:1, errAt:null, done:false};
+  const BITS = [1,0,1,1,0,0,1,0,1,1,1,0,0,1,0,1], NB = BITS.length, P = 16, N = NB * P, X0 = -7, X1 = 7, AMP = .7;
+  const NZ = new Float32Array(N);
+  (function(){ let s = 30; const rnd = () => { s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; };
+    for(let i = 0; i < N; i++) NZ[i] = (rnd() + rnd() + rnd() + rnd() - 2) * 1.732; })();
+  const sv = i => BITS[Math.min(NB - 1, Math.floor(i / P))] ? 1 : -1;
+  const rx = i => st.sig * sv(i) + st.noise * NZ[i];
+  function errs(){ let e = 0; for(let b = 0; b < NB; b++){ const i = b * P + P / 2; if(rx(i) * sv(i) <= 0) e++; } return e; }
+  return {
+    id:'noise', tab:['噪声', 'Noise'], title:['0 和 1 怎么被噪声读错', 'How noise flips 0s and 1s'],
+    src:['后面会用到：读错的位要靠纠错编码找回来', 'Used later: error-correcting codes recover the wrong bits'],
+    text:['数字信号只发两种电平，高代表 1，低代表 0。接收器在每一位的中间量一次，高于判决线读 1，低于读 0。噪声太大或信号太弱，读数会越过判决线，这一位就读错了。',
+          'A digital signal sends two levels: high for 1, low for 0. The receiver measures once in the middle of each bit and compares it with a decision line. With too much noise or too weak a signal, the reading crosses the line and the bit is wrong.'],
+    terms:[['比特', 'bit'], ['噪声', 'noise'], ['信噪比', 'signal-to-noise ratio (SNR)'], ['误码', 'bit error']],
+    cam:{az:-.25, el:.55, fitW:19.5, fitH:10.5, target:V(.6, .3, 0)},
+    task:{text:['先把噪声加大到出现红点（读错），然后只调信号幅度，把红点全部消掉', 'Raise the noise until red dots (errors) appear. Then use only signal amplitude to clear them all'],
+          reveal:['读对还是读错，取决于信号与噪声的比值，也就是信噪比。噪声大时，加大信号一样能读对', 'What matters is the ratio of signal to noise, the SNR. Even with heavy noise, a stronger signal reads correctly']},
+    check(){ const e = errs(); if(e > 0 && st.errAt === null) st.errAt = st.noise; return st.errAt !== null && e === 0 && st.noise >= st.errAt; },
+    scopeH:0, state:st,
+    controls(){ return slider('n-n', T('噪声幅度', 'Noise amplitude'), 0, 1.5, .1, st.noise) + slider('n-s', T('信号幅度', 'Signal amplitude'), .4, 2, .2, st.sig); },
+    bind(){
+      $('#n-n').addEventListener('input', e => { st.noise = +e.target.value; rerender(this); });
+      $('#n-s').addEventListener('input', e => { st.sig = +e.target.value; rerender(this); });
+    },
+    build(){
+      const grid = new THREE.GridHelper(18, 18, col(C.grat), col(C.grat)); grid.position.y = -2.2; root.add(grid);
+      const sent = ribbon(N, .8, C.a), got = ribbon(N, .8, C.ink, .85, .2);
+      setRibbon(sent, X0, X1, -2.4, u => AMP * sv(Math.min(N - 1, Math.floor(u * N))));
+      setRibbon(got, X0, X1, 1.6, u => AMP * clamp(rx(Math.min(N - 1, Math.floor(u * N))), -3.4, 3.4));
+      const plane = new THREE.Mesh(new THREE.PlaneGeometry(14.4, 1.6), new THREE.MeshBasicMaterial({color:col(C.ink), transparent:true, opacity:.22, side:THREE.DoubleSide, depthWrite:false, blending:THREE.AdditiveBlending}));
+      plane.rotation.x = -Math.PI / 2; plane.position.set(0, 0, 1.6); root.add(plane);
+      for(let b = 0; b < NB; b++){
+        const i = b * P + P / 2, v = rx(i), ok = v * sv(i) > 0, x = X0 + (X1 - X0) * (i / (N - 1));
+        const d = glowDot(ok ? .16 : .24, ok ? C.good : C.bad);
+        d.position.set(x, AMP * clamp(v, -3.4, 3.4), 2.15); root.add(d);
+      }
+      addLabel(T('发出的 16 位数据', '16 bits sent'), C.a, .55, -4.2, 1.7, -2.4);
+      addLabel(T('收到的信号', 'Signal received'), C.ink, .55, 3.6, -2.6, 2.6);
+      addLabel(T('判决线', 'Decision line'), C.ink, .5, 8.2, .1, 1.6);
+    },
+    tick(){},
+    readout(){
+      const e = errs();
+      $('#n-n-out').textContent = st.noise.toFixed(1);
+      $('#n-s-out').textContent = st.sig.toFixed(1);
+      let cls = 'good', word = T('全部读对', 'All correct');
+      if(e > 2){ cls = 'bad'; word = T('读错太多', 'Too many errors'); } else if(e > 0){ cls = 'warn'; word = T('开始读错', 'Errors appear'); }
+      $('#readout').innerHTML =
+        '<p>' + T('16 位数据里读错 <b>' + e + '</b> 位', 'Bits misread: <b>' + e + '</b> of 16') + '</p>' +
+        '<p>' + (st.noise === 0 ? T('没有噪声', 'No noise')
+                                : T('信号幅度是噪声的 <b>' + ((st.sig / st.noise)).toFixed((st.sig / st.noise) < 1 ? 2 : 1) + '</b> 倍，功率就是 <b>' + ((st.sig / st.noise) * (st.sig / st.noise)).toFixed((st.sig / st.noise) < 1 ? 2 : 1) + '</b> 倍，信噪比 <b>' + (20 * Math.log10(st.sig / st.noise)).toFixed(1).replace('-', '\u2212') + ' dB</b>', 'Signal amplitude is <b>' + ((st.sig / st.noise)).toFixed((st.sig / st.noise) < 1 ? 2 : 1) + '</b>× the noise, so power is <b>' + ((st.sig / st.noise) * (st.sig / st.noise)).toFixed((st.sig / st.noise) < 1 ? 2 : 1) + '</b>×: SNR <b>' + (20 * Math.log10(st.sig / st.noise)).toFixed(1).replace('-', '\u2212') + ' dB</b>')) + '</p>' +
+        '<p class="note">' + T('信噪比比的是功率，功率与幅度的平方成正比；10 dB 是 10 倍功率，20 dB 是 100 倍', 'SNR compares power, and power goes with amplitude squared. 10 dB is 10× power, 20 dB is 100×') + '</p>' +
+        '<span class="pill ' + cls + '">' + word + '</span>';
+    },
+    drawScope(){}
+  };
+})();
+
+/* =====================================================================
+   故事 1：频谱。两个调频电台靠得太近会互相干扰
+   ===================================================================== */
+const ch1 = (function(){
+  const st = {fb:99.7, pb:1, view:0, done:false};
+  const SIG = .06, DEV = .05, FA = 99.5, NX = 96, NZ = 36, H = 2.6, HALF = .1;
+  const fx = f => (f - 99.8) * 10;
+  let geo, front, bLab, cA, cB, cBad, cBase, leak, J0, J1;
+  function erf(x){ const s = x < 0 ? -1 : 1; x = Math.abs(x); const t = 1 / (1 + .3275911 * x);
+    return s * (1 - (((((1.061405429 * t - 1.453152027) * t) + 1.421413741) * t - .284496736) * t + .254829592) * t * Math.exp(-x * x)); }
+  function inWin(c){ const k = 1 / (SIG * Math.SQRT2); return .5 * (erf((FA + HALF - c) * k) - erf((FA - HALF - c) * k)); }
+  function ratio(){ let a = 0, b = 0; for(let i = 0; i < 64; i++){ const s = Math.sin(i / 64 * TAU); a += inWin(FA + DEV * s); b += st.pb * inWin(st.fb + DEV * s); } return b / a; }
+  function setB(){
+    if(bLab){ root.remove(bLab); bLab.material.map.dispose(); bLab.material.dispose(); }
+    bLab = addLabel(T('B 台 ', 'B ') + st.fb.toFixed(2) + ' MHz', C.b, .62, Math.min(Math.max(fx(st.fb) + 1.6, .4), 4.2), Math.sqrt(st.pb) * H + 1.45, 3);
+  }
+  return {
+    id:'spectrum', tab:['频谱', 'Spectrum'], title:['电台之间必须留空', 'Stations need gaps'],
+    src:['对应原文：想要 99.5 MHz 的电台，就得确保 99.7 MHz 没被占用', 'From the story: a station at 99.5 MHz needs 99.7 MHz to be empty'],
+    text:['一个电台占的是一小段频率，不是一个点。两个电台靠得太近，B 台的信号会漏进收音机收听 A 台的窗口，这就是干扰。所以一段频谱里能并排的电台数量有上限。',
+          'A station fills a band of frequencies, not a single point. Move B too close and it spills into the window your radio uses for A. That caps how many stations fit.'],
+    terms:[['干扰', 'interference'], ['频道', 'channel'], ['邻频干扰', 'adjacent-channel interference']],
+    cam:{az:-.42, el:.5, fitW:17.5, fitH:11.5, target:V(.6, 1.6, 0)},
+    free:true,
+    views:[
+      {name:['斜看', 'Angled'], az:-.42, el:.5, cap:['横向是频率，高度是信号幅度，往后是过去的时间', 'Left to right is frequency, height is signal amplitude, depth is past time']},
+      {name:['正面', 'Front'], az:0, el:.12, fitH:12.6, cap:['此刻每个频率上的信号幅度，也就是频谱。红色是 B 台漏进窗口的部分', 'Signal amplitude at each frequency right now: the spectrum. Red is the part of B inside the window']}
+    ],
+    task:{text:['把 B 台的载波频率往右移，直到 A 台听得清楚', 'Move station B\u2019s carrier frequency to the right until station A is clear'],
+          reveal:['两个电台之间必须空出一段频率。频谱有限，留空越多，能放下的电台越少', 'Stations need an empty gap between them. Spectrum is limited, so more gaps mean fewer stations']},
+    check(){ return ratio() * 100 < 1 && st.fb > FA + .01; },
+    scopeH:84, scopeCap:['收音机里听到的 A 台声音', 'What you hear on station A'],
+    state:st,
+    controls(){ return slider('c1-fb', T('B 台的载波频率', 'Station B carrier frequency'), 99.6, 100.3, .05, st.fb) + slider('c1-pb', T('B 台的信号功率', 'Station B power'), .5, 3, .5, st.pb); },
+    bind(){
+      $('#c1-fb').addEventListener('input', e => { st.fb = +e.target.value; setB(); this.readout(); });
+      $('#c1-pb').addEventListener('input', e => { st.pb = +e.target.value; setB(); this.readout(); });
+    },
+    build(){
+      cA = col(C.a); cB = col(C.b); cBad = col(C.bad); cBase = col(C.deep);
+      geo = new THREE.PlaneGeometry(12, 6, NX, NZ); geo.rotateX(-Math.PI / 2);
+      geo.setAttribute('color', new THREE.BufferAttribute(new Float32Array(geo.attributes.position.count * 3), 3));
+      root.add(new THREE.Mesh(geo, new THREE.MeshBasicMaterial({vertexColors:true, side:THREE.DoubleSide})));
+      root.add(new THREE.Mesh(geo, new THREE.MeshBasicMaterial({wireframe:true, color:col(C.ink), transparent:true, opacity:.1, blending:THREE.AdditiveBlending, depthWrite:false})));
+      const fg = new THREE.BufferGeometry(); fg.setAttribute('position', new THREE.BufferAttribute(new Float32Array((NX + 1) * 3), 3));
+      front = new THREE.Line(fg, new THREE.LineBasicMaterial({color:col(C.ink)})); root.add(front);
+      [.035, -.035].forEach(dy => { const l = new THREE.Line(fg, front.material); l.position.y = dy; root.add(l); });   // 当前这一条频谱线描粗
+      const win = new THREE.Mesh(new THREE.BoxGeometry(HALF * 20, 3.6, 6.3), new THREE.MeshBasicMaterial({color:cA, transparent:true, opacity:.13, depthWrite:false}));
+      win.position.set(fx(FA), 1.8, 0); root.add(win); root.add(edges(win, C.a));
+      addLabel(T('收音机的接收窗口', 'Receiver window'), C.a, .5, fx(FA), 7.3, 3);
+      addLabel(T('A 台 99.50 MHz', 'A 99.50 MHz'), C.a, .62, fx(FA) - 1.6, H + 1.45, 3);
+      root.add(line([V(-6, 0, 3.05), V(6, 0, 3.05)], C.ink));
+      [99.5, 99.9, 100.3].forEach(f => {
+        root.add(line([V(fx(f), 0, 3.05), V(fx(f), 0, 3.35)], C.ink));
+        addLabel(f.toFixed(1) + (f > 100.2 ? ' MHz' : ''), C.ink, .52, fx(f) + (f > 100.2 ? .5 : 0), -.1, 3.95, 500);
+      });
+      /* 正面切片上：B 台落在接收窗口里的那一块，涂成实心红色 */
+      J0 = Math.ceil((FA - HALF - 99.2) / 1.2 * NX); J1 = Math.floor((FA + HALF - 99.2) / 1.2 * NX);
+      const nl = J1 - J0 + 1, lg = new THREE.BufferGeometry(), li = [];
+      for(let k = 0; k < nl - 1; k++){ const q = k * 2; li.push(q, q + 1, q + 2, q + 1, q + 3, q + 2); }
+      lg.setAttribute('position', new THREE.BufferAttribute(new Float32Array(nl * 6), 3)); lg.setIndex(li);
+      leak = new THREE.Mesh(lg, new THREE.MeshBasicMaterial({color:cBad, side:THREE.DoubleSide, transparent:true, opacity:.9, depthTest:false}));
+      leak.frustumCulled = false; leak.renderOrder = 6; root.add(leak);
+      bLab = null; setB();
+    },
+    tick(t){
+      const pos = geo.attributes.position, cl = geo.attributes.color, fp = front.geometry.attributes.position;
+      const sp = Math.sqrt(st.pb), k2 = 1 / (2 * SIG * SIG);
+      let idx = 0;
+      for(let i = 0; i <= NZ; i++){
+        const tt = t - (NZ - i) * .05;
+        const ca = FA + DEV * Math.sin(2.1 * tt), cb = st.fb + DEV * Math.sin(2.7 * tt + 1.3);
+        for(let j = 0; j <= NX; j++, idx++){
+          const f = 99.2 + 1.2 * j / NX;
+          const a = Math.exp(-(f - ca) * (f - ca) * k2), b = sp * Math.exp(-(f - cb) * (f - cb) * k2);
+          const y = H * (a + b);
+          pos.setY(idx, y);
+          const s = a + b + 1e-6, w = Math.min(1, s * 1.5);
+          let r = (a * cA.r + b * cB.r) / s, g = (a * cA.g + b * cB.g) / s, bl = (a * cA.b + b * cB.b) / s;
+          if(Math.abs(f - FA) < HALF){ const q = Math.min(1, b * 3) * Math.min(1, 1.6 * b / s); r += (cBad.r - r) * q; g += (cBad.g - g) * q; bl += (cBad.b - bl) * q; }
+          cl.setXYZ(idx, cBase.r + (r - cBase.r) * w, cBase.g + (g - cBase.g) * w, cBase.b + (bl - cBase.b) * w);
+          if(i === NZ) fp.setXYZ(j, -6 + 12 * j / NX, y + .01, 3.01);
+        }
+      }
+      pos.needsUpdate = true; cl.needsUpdate = true; fp.needsUpdate = true;
+      const lp = leak.geometry.attributes.position, cb0 = st.fb + DEV * Math.sin(2.7 * t + 1.3);
+      for(let j = J0; j <= J1; j++){
+        const f = 99.2 + 1.2 * j / NX, x = -6 + 12 * j / NX, yb = H * sp * Math.exp(-(f - cb0) * (f - cb0) * k2), k = (j - J0) * 2;
+        lp.setXYZ(k, x, .01, 3.03); lp.setXYZ(k + 1, x, Math.max(.01, yb), 3.03);
+      }
+      lp.needsUpdate = true; leak.visible = st.view === 1;
+    },
+    readout(){
+      const r = ratio(), pct = r * 100, p = pct < 1 ? T('不到 1', '<1') : Math.round(pct);
+      $('#c1-fb-out').textContent = st.fb.toFixed(2) + ' MHz';
+      $('#c1-pb-out').textContent = st.pb === 1 ? T('与 A 台相同', 'same as A') : T('是 A 台的 ' + st.pb + ' 倍', st.pb + '× A');
+      const gap = Math.round((st.fb - FA) * 1000);
+      let cls = 'good', word = T('听得清楚', 'Clear');
+      if(pct >= 8){ cls = 'bad'; word = T('互相干扰，听不清', 'Jammed'); } else if(pct >= 1){ cls = 'warn'; word = T('有杂音', 'Some noise'); }
+      $('#readout').innerHTML =
+        '<p>' + T('两台载波频率相隔 <b>' + gap + ' kHz</b>', 'Carrier spacing: <b>' + gap + ' kHz</b>') + '</p>' +
+        '<p>' + T('漏进接收窗口的 B 台信号功率，相当于 A 台的' + (pct < 1 ? '<b>不到 1%</b>' : ' <b>' + p + '%</b>'), 'B power inside the window: <b>' + p + '%</b> of A') + '</p>' +
+        '<span class="pill ' + cls + '">' + word + '</span>';
+      this._noise = Math.min(1.3, 3.2 * Math.pow(r, .7));
+    },
+    drawScope(t){
+      const {g, w, h} = scopeCtx(this.scopeH), n = this._noise || 0, mid = h / 2, amp = h * .3;
+      g.strokeStyle = C.grat; g.lineWidth = 1; g.beginPath(); g.moveTo(0, mid); g.lineTo(w, mid); g.stroke();
+      g.strokeStyle = n > .45 ? C.bad : C.a; g.lineJoin = 'round'; g.beginPath();
+      for(let x = 0; x <= w; x += 2){
+        const u = x / w;
+        const y = Math.sin(u * 19 + t * 2) + n * (.6 * Math.sin(u * 83 + t * 7) + .45 * Math.sin(u * 151 - t * 11 + 1) + .35 * Math.sin(u * 229 + t * 17));
+        const py = mid - clamp(y, -1.6, 1.6) * amp * .62;
+        if(x === 0) g.moveTo(x, py); else g.lineTo(x, py);
+      }
+      g.globalAlpha = .22; g.lineWidth = 7; g.stroke();      // 柔光
+      g.globalAlpha = 1; g.lineWidth = 2.2; g.stroke();      // 锐利的线
+    }
+  };
+})();
+
+/* =====================================================================
+   故事 2：多径。楼房反射的回声，发得越快越容易读错
+   ===================================================================== */
+const ch2 = (function(){
+  const st = {n:3, ri:3, saw:false, view:0, done:false};
+  const RATES = [.05, .2, .5, 1, 2];                 // Mbps
+  const BLD = [ {x:0, z:-4, w:2.2, d:1.6, h:3.2, a:.6}, {x:-2.5, z:5, w:2, d:1.6, h:2.4, a:.5},
+                {x:3.5, z:-6.5, w:2.4, d:1.8, h:4, a:.45}, {x:-4.5, z:-7.5, w:2, d:1.6, h:2.8, a:.4},
+                {x:4, z:7.5, w:2.2, d:1.8, h:3.4, a:.35} ];
+  const TX = V(-7, 3, 0), RX = V(7, .45, 0);
+  const BITS = [1,0,1,1,0,0,1,0,1,1,1,0,0,1,0,1,0,0,0,1,1,0,1,0], N = BITS.length;
+  const L0 = TX.distanceTo(RX);
+  BLD.forEach(b => {
+    b.p = V(b.x, Math.min(b.h * .6, 1.6), b.z + (b.z < 0 ? 1 : -1) * b.d / 2);
+    b.len = TX.distanceTo(b.p) + b.p.distanceTo(RX);
+    b.delay = (b.len - L0) * 100 / 300;              // 1 格 = 100 米；电波每微秒走 300 米
+  });
+  let pulses = [], ring;
+  const s = u => BITS[((Math.floor(u) % N) + N) % N] ? 1 : -1;
+  function rx(u){ const Tb = 1 / RATES[st.ri]; let v = s(u), tot = 1; for(let k = 0; k < st.n; k++){ v += BLD[k].a * s(u - BLD[k].delay / Tb); tot += BLD[k].a; } return v / tot; }
+  function stats(){ let err = 0, m = 1; for(let i = 0; i < N; i++){ const v = rx(i + .5) * s(i + .5); if(v <= 0) err++; m = Math.min(m, v); } return {err, margin:Math.max(0, m)}; }
+  return {
+    id:'echo', tab:['回声', 'Echoes'], title:['发得越快，回声越碍事', 'Faster data, worse echoes'],
+    src:['对应原文：信息塞得越多，建筑物反射的混乱信号留下的容错空间越小', 'From the story: the more data in the spectrum, the less margin for signals bouncing off buildings'],
+    text:['电波除了走直线，还会被楼房反射，多绕一段路，晚一点到。发得慢时，回声还落在同一位数据里，影响较小。发得越快，每一位越短，上一位的回声就压到下一位上，接收器开始读错。',
+          'Signals also bounce off buildings and arrive late. At a low data rate the echo lands inside the same bit and does little harm. At a high data rate each bit is shorter, so the echo hits the next bit and the phone misreads it.'],
+    terms:[['多径', 'multipath'], ['时延', 'delay'], ['码间干扰', 'inter-symbol interference']],
+    cam:{az:.25, el:.72, fitW:19.5, fitH:15, target:V(0, 1.6, -.5)},
+    free:true,
+    views:[
+      {name:['斜看', 'Angled'], az:.25, el:.72, cap:['蓝线是直达的电波，橙线是被楼房反射的回声', 'Blue is the direct signal. Orange lines are echoes off buildings']},
+      {name:['从上往下看', 'From above'], az:0, el:1.36, fitH:18.5, cap:['橙线绕得越远，回声到得越晚', 'The longer the orange detour, the later the echo arrives']}
+    ],
+    task:{text:['把数据速率调到 2 Mbps，看哪些位读错；再一档一档调慢，找到全部读对的最快一档', 'Set the data rate to 2 Mbps and see which bits fail. Then slow it down one step at a time and find the fastest rate with no errors'],
+          reveal:['同样的回声，发得慢没事，发得快就读错。纠错是在回声里又快又准的办法之一，下一幕来看它', 'The same echoes are harmless at a low data rate and fatal at a high one. Error correction, in the next scene, is one way to stay fast and accurate among echoes']},
+    check(){ const q = stats(); if(st.ri === 4 && q.err > 0) st.saw = true; if(!st.saw || q.err > 0 || st.ri === 4) return false; const k = st.ri; st.ri++; const f = stats().err; st.ri = k; return f > 0; },
+    scopeH:128, scopeCap:['上：发出的数据。下：手机收到的信号，圆点是读数', 'Top: bits sent. Bottom: what the phone reads'],
+    state:st,
+    controls(){ return slider('c2-r', T('数据速率', 'Data rate'), 0, RATES.length - 1, 1, st.ri) + slider('c2-n', T('反射电波的楼房数量', 'Reflecting buildings'), 0, 5, 1, st.n); },
+    bind(){
+      $('#c2-n').addEventListener('input', e => { st.n = +e.target.value; rerender(this); });
+      $('#c2-r').addEventListener('input', e => { st.ri = +e.target.value; this.readout(); });
+    },
+    build(){
+      const grid = new THREE.GridHelper(22, 22, col(C.grat), col(C.grat)); grid.position.y = -.01; root.add(grid);
+      root.add(tube(V(-7, 0, 0), TX, .09, C.ink));
+      const top = glowDot(.24, C.a); top.position.copy(TX); root.add(top);
+      addLabel(T('发射塔', 'Tower'), C.ink, .62, -7, 3.9, 0);
+      const ph = box(.34, .7, .12, C.ink); ph.position.set(7, .45, 0); root.add(ph);
+      ring = new THREE.Mesh(new THREE.TorusGeometry(.55, .045, 8, 32), new THREE.MeshBasicMaterial({color:col(C.a), transparent:true, opacity:.9}));
+      ring.position.copy(RX); ring.rotation.y = Math.PI / 2; root.add(ring);
+      addLabel(T('手机', 'Phone'), C.ink, .62, 7, 1.55, 0);
+      root.add(tube(TX, RX, .04, C.a));
+      pulses = [{pts:[TX, RX], len:L0, mesh:null, c:C.a}];
+      for(let k = 0; k < BLD.length; k++){
+        const b = BLD[k], on = k < st.n;
+        const m = box(b.w, b.h, b.d, on ? C.ink : C.muted, on ? 1 : .3, on ? .2 : .1); m.position.set(b.x, b.h / 2, b.z); root.add(m);
+        if(on){
+          root.add(tube(TX, b.p, .03, C.b, .85)); root.add(tube(b.p, RX, .03, C.b, .85));
+          addLabel(T('晚到 ' + b.delay.toFixed(1) + ' 微秒', b.delay.toFixed(1) + ' µs late'), C.b, .5, b.x, b.h + .55, b.z);
+          pulses.push({pts:[TX, b.p, RX], len:b.len, mesh:null, c:C.b, l1:TX.distanceTo(b.p)});
+        }
+      }
+      pulses.forEach(p => { p.mesh = glowDot(.2, p.c); root.add(p.mesh); });
+    },
+    tick(t){
+      const d = (t * 6.5) % 27; let glow = 0;
+      pulses.forEach(p => {
+        if(d > p.len){ p.mesh.visible = false; glow = Math.max(glow, Math.exp(-Math.pow((d - p.len) / .9, 2))); return; }
+        p.mesh.visible = true;
+        if(p.pts.length === 2) p.mesh.position.lerpVectors(p.pts[0], p.pts[1], d / p.len);
+        else if(d < p.l1) p.mesh.position.lerpVectors(p.pts[0], p.pts[1], d / p.l1);
+        else p.mesh.position.lerpVectors(p.pts[1], p.pts[2], (d - p.l1) / (p.len - p.l1));
+      });
+      ring.scale.setScalar(1 + glow * .9);
+    },
+    readout(){
+      const r = RATES[st.ri], Tb = 1 / r, q = stats(), rs = r < 1 ? r * 1000 + ' kbps' : r + ' Mbps';
+      $('#c2-n-out').textContent = T(st.n + ' 栋', String(st.n));
+      $('#c2-r-out').textContent = T(rs + '，每位持续 ' + Tb + ' 微秒', rs + ', ' + Tb + ' µs per bit');
+      let cls = 'good', word = T('全部读对，余量充足', 'All correct, wide margin');
+      if(q.err > 0){ cls = 'bad'; word = T('回声压过了信号，读错了', 'Echoes win, bits lost'); } else if(q.margin < .5){ cls = 'warn'; word = T('还能读对，但余量很薄', 'Correct, thin margin'); }
+      $('#readout').innerHTML =
+        '<p>' + T('24 位数据里读错 <b>' + q.err + '</b> 位', 'Bits misread: <b>' + q.err + '</b> of 24') + '</p>' +
+        '<p>' + T('最弱一位的容错余量 <b>' + Math.round(q.margin * 100) + '%</b>（没有回声时为 100%）', 'Weakest bit margin: <b>' + Math.round(q.margin * 100) + '%</b> (100% with no echo)') + '</p>' +
+        '<span class="pill ' + cls + '">' + word + '</span>';
+    },
+    drawScope(){
+      const {g, w, h} = scopeCtx(this.scopeH), bw = w / N, y1 = 22, a1 = 12, y2 = h - 44, a2 = 30;
+      g.strokeStyle = C.a; g.lineJoin = 'round'; g.beginPath();
+      for(let i = 0; i < N; i++){ const y = y1 - s(i) * a1; if(i === 0) g.moveTo(0, y); else g.lineTo(i * bw, y); g.lineTo((i + 1) * bw, y); }
+      g.globalAlpha = .22; g.lineWidth = 7; g.stroke(); g.globalAlpha = 1; g.lineWidth = 2.2; g.stroke();
+      g.strokeStyle = C.grat; g.lineWidth = 1; g.setLineDash([4, 4]); g.beginPath(); g.moveTo(0, y2); g.lineTo(w, y2); g.stroke(); g.setLineDash([]);
+      g.strokeStyle = C.ink; g.beginPath();
+      const step = 1 / 16;
+      for(let u = 0; u <= N; u += step){ const x = u * bw, y = y2 - rx(Math.min(u, N - 1e-6)) * a2; if(u === 0) g.moveTo(x, y); else g.lineTo(x, y); }
+      g.globalAlpha = .18; g.lineWidth = 6; g.stroke(); g.globalAlpha = 1; g.lineWidth = 1.8; g.stroke();
+      for(let i = 0; i < N; i++){
+        const v = rx(i + .5), ok = v * s(i + .5) > 0;
+        g.fillStyle = ok ? C.good : C.bad; g.beginPath(); g.arc((i + .5) * bw, y2 - v * a2, ok ? 3.2 : 5, 0, TAU); g.fill();
+        if(!ok){ g.strokeStyle = C.bad; g.globalAlpha = .4; g.lineWidth = 3; g.beginPath(); g.arc((i + .5) * bw, y2 - v * a2, 7.5, 0, TAU); g.stroke(); g.globalAlpha = 1; }
+      }
+    }
+  };
+})();
+
+/* =====================================================================
+   故事 3：维特比解码。在所有可能的路里找最像的那一条
+   ===================================================================== */
+const ch3 = (function(){
+  const MSG = [1,0,1,1,0,0,1,0], BITS = MSG.concat([0, 0]), TT = BITS.length, INF = 1e9;
+  const st = {flips:[2, 8], shown:TT, done:false};
+  const step = (sIdx, b) => { const s1 = (sIdx >> 1) & 1, s2 = sIdx & 1; return {ns:b * 2 + s1, o:[b ^ s1 ^ s2, b ^ s2]}; };
+  const CODE = [], TRUE = [0];
+  (function(){ let cur = 0; BITS.forEach(b => { const r = step(cur, b); CODE.push(r.o[0], r.o[1]); cur = r.ns; TRUE.push(cur); }); })();
+  const NAMES = ['00', '01', '10', '11'];
+  let timer = null, res = null;
+  function received(){ const r = CODE.slice(); st.flips.forEach(i => { r[i] ^= 1; }); return r; }
+  function viterbi(r){
+    const pm = [[0, INF, INF, INF]], prev = [null], lose = [null];
+    for(let t = 0; t < TT; t++){
+      const np = [INF, INF, INF, INF], pr = [null, null, null, null], lo = [];
+      for(let sI = 0; sI < 4; sI++){
+        if(pm[t][sI] >= INF) continue;
+        for(let b = 0; b < 2; b++){
+          const q = step(sI, b), m = pm[t][sI] + (q.o[0] ^ r[2 * t]) + (q.o[1] ^ r[2 * t + 1]);
+          if(m < np[q.ns]){ if(pr[q.ns]) lo.push({from:pr[q.ns].s, to:q.ns}); np[q.ns] = m; pr[q.ns] = {s:sI, b:b}; }
+          else lo.push({from:sI, to:q.ns});
+        }
+      }
+      pm.push(np); prev.push(pr); lose.push(lo);
+    }
+    return {pm, prev, lose};
+  }
+  function trace(tEnd){
+    let sI = 0;
+    if(tEnd < TT){ let best = INF; for(let k = 0; k < 4; k++) if(res.pm[tEnd][k] < best){ best = res.pm[tEnd][k]; sI = k; } }
+    const states = [sI], bits = [];
+    for(let t = tEnd; t > 0; t--){ const p = res.prev[t][sI]; bits.unshift(p.b); sI = p.s; states.unshift(sI); }
+    return {states, bits};
+  }
+  const X = t => (t - TT / 2) * 1.35, Z = sI => (sI - 1.5) * 1.5, Hh = m => m * .45 + .1;
+  return {
+    id:'viterbi', tab:['解码', 'Decoding'], title:['在所有路径里，找最像的那一条', 'Find the most likely path'],
+    src:['对应原文：维特比设计的算法，用来解码杂乱电波里的数字信号', 'From the story: the Viterbi algorithm decodes digital signals from noisy airwaves'],
+    text:['发送方每发 1 位数据，按固定规则变成 2 位信号。规则会记住前两位数据，这两位叫状态，共 4 种。8 位数据末尾补 2 个 0，编成 20 位信号。20 位信号约有 100 万种组合，合法的只有 256 种，因为 8 位数据只有 256 种。维特比算法每走一步，每个状态只留下和收到的信号差距最小的那条路径。走到头，剩下的那条就是最可能的原文。',
+          'The sender turns each data bit into 2 signal bits by a rule that remembers the last 2 data bits. Those 2 bits are the state, 4 in all. The 8 data bits plus 2 closing zeros become 20 signal bits. Of about 1 million possible 20-bit signals, only 256 are legal, one per possible 8-bit message. At each step, Viterbi keeps one path per state: the one closest to what was received. The last path standing is the most likely original data.'],
+    terms:[['纠错编码', 'error-correcting code'], ['卷积码', 'convolutional code'], ['维特比算法', 'Viterbi algorithm']],
+    cam:{az:-.38, el:.78, fitW:18.5, fitH:11, target:V(-.7, 1, 0)},
+    task:{text:['现在有 2 位被翻转，解码全部纠正了。在红色位的左边或右边再点一位，看解码会不会出错', 'Two bits are flipped and decoding fixes both. Flip the bit just left or right of a red one and see whether decoding fails'],
+          reveal:['这套编码能纠正任意 2 位翻转。3 位以上挤在一起时，最像的那条路径不再是原文。纠错能力有上限', 'This code corrects any 2 flipped bits. When 3 or more bunch together, the closest path is no longer the original. Error correction has a limit']},
+    check(){ if(st.shown !== TT || !res) return false; const tr = trace(TT); return tr.bits.slice(0, 8).some((b, i) => b !== MSG[i]); },
+    scopeH:0, state:st,
+    controls(){
+      return '<div><p class="rowlab">' + T('发送的数据（8 位）', 'Data sent (8 bits)') + '</p><div class="bits" id="c3-msg"></div></div>' +
+             '<div><p class="rowlab">' + T('收到的信号（20 位）。点任意一位，把它翻转', 'Signal received (20 bits). Tap a bit to flip it') + '</p><div class="bits" id="c3-rx"></div></div>' +
+             '<div><p class="rowlab">' + T('解码结果（8 位）', 'Decoded (8 bits)') + '</p><div class="bits" id="c3-dec"></div></div>' +
+             '<div class="btns"><button class="btn" type="button" id="c3-play">' + T('逐步重放', 'Replay steps') + '</button><button class="btn" type="button" id="c3-clear">' + T('清除翻转', 'Clear flips') + '</button></div>' +
+             '<ul class="key"><li><i style="background:var(--sig-a)"></i>' + T('粗线：最像的一条路径。走完后变绿是解对，变红是解错', 'Thick line: the closest path. Green at the end means decoded right, red means wrong') + '</li>' +
+             '<li><i style="background:var(--sig-b)"></i>' + T('橙色圆盘：发送方真正走的路径', 'Orange discs: the path actually sent') + '</li>' +
+             '<li><i style="background:var(--muted)"></i>' + T('灰线：这一步被淘汰的路径', 'Grey lines: paths dropped this step') + '</li>' +
+             '<li>' + T('柱子越高，和收到的信号不同的位越多', 'Taller column: more bits differ from the received signal') + '</li></ul>';
+    },
+    bind(){
+      const self = this;
+      $('#c3-rx').addEventListener('click', e => {
+        const b = e.target.closest('button[data-i]'); if(!b) return;
+        const i = +b.dataset.i, k = st.flips.indexOf(i);
+        if(k >= 0) st.flips.splice(k, 1); else st.flips.push(i);
+        clearInterval(timer); timer = null; st.shown = TT; rerender(self);
+      });
+      $('#c3-clear').addEventListener('click', () => { st.flips.length = 0; clearInterval(timer); timer = null; st.shown = TT; rerender(self); });
+      $('#c3-play').addEventListener('click', () => {
+        clearInterval(timer); st.shown = 0; rerender(self);
+        timer = setInterval(() => { st.shown++; rerender(self); if(st.shown >= TT){ clearInterval(timer); timer = null; } }, 750);
+      });
+    },
+    leave(){ clearInterval(timer); timer = null; st.shown = TT; },
+    build(){
+      res = viterbi(received());
+      const sh = st.shown, tr = trace(sh), done = sh === TT;
+      const okAll = done && tr.bits.slice(0, 8).every((b, i) => b === MSG[i]);
+      const hi = done ? (okAll ? C.good : C.bad) : C.a;
+      const grid = new THREE.GridHelper(18, 18, col(C.grat), col(C.grat)); grid.position.y = -.02; root.add(grid);
+      for(let k = 0; k < 4; k++) addLabel(NAMES[k], C.ink, .6, X(0) - 1.25, .3, Z(k), 500);
+      addLabel(T('前两位', 'last 2 bits'), C.muted, .48, X(0) - 1.25, .3, Z(0) - 1.2, 500);
+      for(let t = 1; t <= TT; t++) addLabel(String(t), t <= sh ? C.ink : C.muted, .5, X(t), 0, Z(3) + 1.25, 500);
+      addLabel(T('第几步', 'step'), C.muted, .48, X(0) - .1, 0, Z(3) + 1.25, 500);
+      for(let t = 0; t <= TT; t++){
+        const d = new THREE.Mesh(new THREE.CylinderGeometry(.5, .5, .04, 24), new THREE.MeshBasicMaterial({color:col(C.b), transparent:true, opacity:.82}));
+        d.position.set(X(t), .02, Z(TRUE[t])); root.add(d);
+      }
+      const topOf = (t, sI) => V(X(t), Hh(res.pm[t][sI]), Z(sI));
+      for(let t = 0; t <= sh; t++){
+        for(let k = 0; k < 4; k++){
+          const m = res.pm[t][k]; if(m >= INF) continue;
+          const onBest = tr.states[t] === k, h = Hh(m);
+          const p = box(.46, h, .46, onBest ? hi : C.muted, onBest ? 1 : .45, onBest ? .6 : .42); p.position.set(X(t), h / 2, Z(k)); root.add(p);
+          if(t > 0){
+            const pv = res.prev[t][k];
+            if(onBest) root.add(tube(topOf(t - 1, pv.s), topOf(t, k), .075, hi));
+            else root.add(line([topOf(t - 1, pv.s), topOf(t, k)], C.muted, .7));
+          }
+          if(t === sh && onBest) addLabel(T('差 ' + m + ' 位', m + ' bits off'), hi, .56, X(t) + .15, h + .6, Z(k));
+        }
+      }
+      if(sh > 0) res.lose[sh].forEach(l => { root.add(line([topOf(sh - 1, l.from), topOf(sh, l.to)], C.muted, .6)); });
+    },
+    tick(){},
+    readout(){
+      const r = received(), sh = st.shown, done = sh === TT, tr = trace(sh);
+      $('#c3-msg').innerHTML = MSG.map(b => '<span class="bit">' + b + '</span>').join('');
+      let h = '';
+      for(let t = 0; t < TT; t++){
+        h += '<span class="pair' + (t < sh ? '' : ' dim') + '">';
+        for(let j = 0; j < 2; j++){ const i = 2 * t + j, f = st.flips.indexOf(i) >= 0;
+          h += '<button type="button" class="bit' + (f ? ' flip' : '') + '" data-i="' + i + '" aria-pressed="' + f + '" aria-label="' + T('第 ' + (i + 1) + ' 位信号', 'Signal bit ' + (i + 1)) + '">' + r[i] + '</button>'; }
+        h += '</span>';
+      }
+      $('#c3-rx').innerHTML = h;
+      let dErr = 0, d = '';
+      for(let i = 0; i < 8; i++){
+        if(i < tr.bits.length){ const ok = tr.bits[i] === MSG[i]; if(!ok) dErr++; d += '<span class="bit ' + (done ? (ok ? 'ok' : 'wrong') : '') + '">' + tr.bits[i] + '</span>'; }
+        else d += '<span class="bit" style="opacity:.35">?</span>';
+      }
+      $('#c3-dec').innerHTML = d;
+      const n = st.flips.length; let out;
+      if(!done){
+        out = '<p>' + T('第 <b>' + sh + '</b> 步，共 10 步。每个状态只留一条差距最小的路径，其余淘汰', 'Step <b>' + sh + '</b> of 10. Each state keeps its closest path and drops the rest') + '</p>';
+      }else{
+        let cls = 'good', word = T('没有翻转，原样读出', 'No errors');
+        if(dErr > 0){ cls = 'bad'; word = T('翻转太密，超出纠错能力', 'Too many errors to correct'); } else if(n > 0){ word = T('翻转全部被纠正', 'All errors corrected'); }
+        out = '<p>' + T('20 位信号里有 <b>' + n + '</b> 位被翻转', 'Signal bits flipped: <b>' + n + '</b> of 20') + '</p>' +
+              '<p>' + T('解码后 8 位数据错了 <b>' + dErr + '</b> 位', 'Data bits wrong after decoding: <b>' + dErr + '</b> of 8') + '</p><span class="pill ' + cls + '">' + word + '</span>' +
+              '<p class="note">' + T('编码让数据多占一倍带宽，换来在更强的干扰里也能读对；能扛住干扰，同一段频谱就能容纳更多用户', 'Coding doubles the bandwidth for the same data. In return it reads correctly through stronger interference, so the same spectrum can hold more users') + '</p>';
+      }
+      $('#readout').innerHTML = out;
+    },
+    drawScope(){}
+  };
+})();
+
+/* =====================================================================
+   故事 4：芯片。算法早就有，等的是算力
+   ===================================================================== */
+const ch4 = (function(){
+  const st = {yi:0, K:3, done:false};
+  const CHIPS = [
+    {y:1971, name:'Intel 4004', n:['约 2,300', 'about 2,300'], grid:4, note:['这一年，雅各布斯在研讨会上举起一枚芯片，说这是编码的未来', 'This year Jacobs held up a chip at a workshop and called it the future of coding']},
+    {y:1978, name:'Intel 8086', n:['约 2.9 万', 'about 29,000'], grid:8},
+    {y:1985, name:'Intel 386', n:['约 27.5 万', 'about 275,000'], grid:14, note:['Qualcomm 在这一年成立', 'Qualcomm was founded this year']},
+    {y:1993, name:'Intel Pentium', n:['约 310 万', 'about 3.1 million'], grid:22},
+    {y:2000, name:'Intel Pentium 4', n:['约 4,200 万', 'about 42 million'], grid:32},
+    {y:2020, name:'Apple M1', n:['约 160 亿', 'about 16 billion'], grid:46}
+  ];
+  const USE = {3:['上一幕演示用的就是这一档', 'The level shown in the previous scene'], 7:['NASA 旅行者号探测器用的是这一档', 'Used by the NASA Voyager probes'], 9:['Qualcomm 的 CDMA 手机标准 IS-95 用的是这一档', 'Used in the Qualcomm IS-95 CDMA phone standard']};
+  const M4 = new THREE.Matrix4();
+  return {
+    id:'chip', tab:['芯片', 'Chips'], title:['算法早就有，等的是算力', 'The algorithm waited for chips'],
+    src:['对应原文：雅各布斯举起一枚小芯片说，这就是未来', 'From the story: Jacobs held up a small chip and said this is the future'],
+    text:['维特比算法 1967 年就发表了，可早期的解码器要装满一个机柜，放不进手机。约束长度 K 越大越抗干扰，要同时追踪的路径也成倍增加。雅各布斯赌的是芯片上的晶体管会持续成倍增长，这些计算迟早能装进一颗小芯片。算力够了，同一段频谱就能可靠地装下更多数据。',
+          'Viterbi published in 1967, but early decoders filled a whole equipment rack, far too big for a phone. A larger constraint length K resists more noise, yet the paths to track double with each step up. Jacobs bet that transistors per chip would keep doubling, so this work would fit on one small chip. With enough compute, the same spectrum carries more data reliably.'],
+    terms:[['晶体管', 'transistor'], ['摩尔定律', 'Moore’s law'], ['约束长度', 'constraint length (K)']],
+    cam:{az:.0, el:.42, fitW:18, fitH:12, target:V(0, 2.6, 0)},
+    task:{text:['先把约束长度 K 从 3 拉到 9，看路径涨多快；再把年份从 1971 年拉到 2020 年，看晶体管涨多快', 'Drag constraint length K from 3 to 9 and watch the paths grow. Then drag the year from 1971 to 2020 and watch the transistors grow'],
+          reveal:['K 每加 1，路径翻一倍；芯片上的晶体管大约每两年翻一倍。到 1990 年代，CDMA 手机已经能用一颗芯片实时完成 K = 9 的解码', 'Each +1 in K doubles the paths. Transistors per chip doubled about every two years. By the 1990s, CDMA phones ran K = 9 decoding in real time on a single chip']},
+    check(){ if(st.K === 3) st.k3 = true; return !!st.k3 && st.K === 9 && st.yi === 5; },
+    scopeH:0, state:st,
+    controls(){ return slider('c4-y', T('年份', 'Year'), 0, CHIPS.length - 1, 1, st.yi) + slider('c4-k', T('约束长度 K', 'Constraint length K'), 3, 9, 1, st.K); },
+    bind(){
+      $('#c4-y').addEventListener('input', e => { st.yi = +e.target.value; rerender(this); });
+      $('#c4-k').addEventListener('input', e => { st.K = +e.target.value; rerender(this); });
+    },
+    build(){
+      const c = CHIPS[st.yi], n = c.grid, S = 5, cx = -3.9;
+      const die = box(S + .5, .3, S + .5, C.ink, 1, .13); die.position.set(cx, .15, 0); root.add(die);
+      const cell = S / n, bw = cell * .72;
+      const im = new THREE.InstancedMesh(new THREE.BoxGeometry(bw, .16, bw), new THREE.MeshLambertMaterial({color:col(C.a), emissive:col(C.a).multiplyScalar(.1)}), n * n);
+      let k = 0;
+      for(let i = 0; i < n; i++) for(let j = 0; j < n; j++){ M4.makeTranslation(cx - S / 2 + cell * (i + .5), .38, -S / 2 + cell * (j + .5)); im.setMatrixAt(k++, M4); }
+      im.instanceMatrix.needsUpdate = true; root.add(im);
+      addLabel(T(c.y + ' 年  ', c.y + '  ') + c.name, C.ink, .6, cx, 3.5, 0);
+      addLabel(tx(c.n) + T((/\d$/.test(tx(c.n)) ? ' ' : '') + '个晶体管', ' transistors'), C.a, .6, cx, 2.55, 0);
+      const states = Math.pow(2, st.K - 1), cols = Math.pow(2, Math.ceil((st.K - 1) / 2)), rows = states / cols;
+      const wx = 3.9, cw = .4, W = cw * cols, bs = cw * .8;
+      const wall = new THREE.InstancedMesh(new THREE.BoxGeometry(bs, bs, Math.min(bs, .5)), new THREE.MeshLambertMaterial({color:col(C.b), emissive:col(C.b).multiplyScalar(.1)}), states);
+      k = 0;
+      for(let r = 0; r < rows; r++) for(let q = 0; q < cols; q++){ M4.makeTranslation(wx - W / 2 + cw * (q + .5), .3 + cw * (r + .5), 0); wall.setMatrixAt(k++, M4); }
+      wall.instanceMatrix.needsUpdate = true; root.add(wall);
+      addLabel('K = ' + st.K, C.ink, .6, wx, cw * rows + 1.85, 0);
+      addLabel(states + T(' 条路径', ' paths'), C.b, .6, wx, cw * rows + .9, 0);
+      const grid = new THREE.GridHelper(18, 18, col(C.grat), col(C.grat)); grid.position.y = -.01; root.add(grid);
+    },
+    tick(){},
+    readout(){
+      const c = CHIPS[st.yi], states = Math.pow(2, st.K - 1), u = USE[st.K];
+      $('#c4-y-out').textContent = T(c.y + ' 年', String(c.y));
+      $('#c4-k-out').textContent = 'K = ' + st.K;
+      $('#readout').innerHTML =
+        '<p>' + T('<b>' + c.y + '</b> 年，' + c.name + ' 一颗芯片上有<b>' + tx(c.n) + '</b>' + (/\d$/.test(tx(c.n)) ? ' ' : '') + '个晶体管' + (c.note ? '。' + tx(c.note) : ''),
+                  '<b>' + c.y + '</b>: ' + c.name + ' has <b>' + tx(c.n) + '</b> transistors on one chip' + (c.note ? '. ' + tx(c.note) : '')) + '</p>' +
+        '<p>' + T('K = <b>' + st.K + '</b>：编码记住前 ' + (st.K - 1) + ' 位数据，每解 1 位要同时追踪 <b>' + states + '</b> 条路径' + (u ? '。' + tx(u) : ''),
+                  'K = <b>' + st.K + '</b>: the code remembers the last ' + (st.K - 1) + ' bits, so decoding tracks <b>' + states + '</b> paths at once' + (u ? '. ' + tx(u) : '')) + '</p>' +
+        '<p class="note">' + T('左边的格子数没有按比例画：晶体管从 1971 年约 2,300 个增长到 2020 年约 160 亿个。右边每格是一条路径', 'The left grid is not to scale: transistors grew from about 2,300 in 1971 to about 16 billion in 2020. Each cell on the right is one path') + '</p>';
+    },
+    drawScope(){}
+  };
+})();
+
+/* ---------- 场景切换 ---------- */
+const CH = [chWave, chMod, chBand, chNoise, ch1, ch2, ch3, ch4];
+/* 每次读数更新后检查「试一试」是否完成 */
+function paintTask(c){
+  if(!c.state.done && c.check && c.check()) c.state.done = true;
+  const d = !!c.state.done;
+  $('#task').classList.toggle('done', d);
+  $('#task-h').textContent = d ? T('✓ 你发现了', '✓ You found it') : T('试一试', 'Try this');
+  $('#task-text').textContent = tx(c.task.text); $('#task-text').hidden = d;
+  const r = $('#task-rev'); r.hidden = !d; r.textContent = d ? tx(c.task.reveal) : '';
+}
+CH.forEach(c => { const o = c.readout; c.readout = function(){ o.call(this); if(CH[cur] === this){ paintTask(this);
+  document.querySelectorAll('#controls input[type=range]').forEach(i => { const v = document.getElementById(i.id + '-out'); if(v) i.setAttribute('aria-valuetext', v.textContent); }); } }; });
+/* 当前视角的取景：视角可以覆盖场景默认的取景宽度和注视点 */
+function frameOf(c){
+  const v = (c.views && c.state.view >= 0) ? c.views[c.state.view] : c.cam;
+  return {az:v.az, el:v.el, fitW:v.fitW || c.cam.fitW, fitH:v.fitH || c.cam.fitH, target:v.target || c.cam.target};
+}
+function paintViews(c){
+  const bar = $('#viewbar');
+  if(!c.views){ bar.hidden = true; $('#viewcap-m').hidden = true; return; }
+  bar.hidden = false; $('#viewcap-m').hidden = false;
+  $('#t-viewlab').textContent = T('换个角度看', 'Change the view');
+  $('#viewbtns').innerHTML = c.views.map((v, i) => '<button type="button" class="vbtn" data-v="' + i + '" aria-pressed="' + (c.state.view === i) + '">' + tx(v.name) + '</button>').join('');
+  $('#viewcap').textContent = $('#viewcap-m').textContent = c.state.view >= 0 ? tx(c.views[c.state.view].cap) : T('自由视角。点上面的按钮回到固定角度', 'Free view. Tap a button above to return to a fixed angle');
+}
+$('#viewbtns').addEventListener('click', e => {
+  const b = e.target.closest('.vbtn'); if(!b) return;
+  const c = CH[cur], i = +b.dataset.v; c.state.view = i;
+  orbit.goal = frameOf(c);
+  paintViews(c); paintTask(c);
+});
+let cur = 0, T0 = performance.now(), tNow = 0;
+const tabs = $('#tabs');
+tabs.addEventListener('click', e => { const b = e.target.closest('.tab'); if(b) go(+b.dataset.i, true); });
+function toStage(){ try{ $('#stage').scrollIntoView({block:'start', behavior:reduced ? 'auto' : 'smooth'}); }catch(_){} }
+$('#prev').addEventListener('click', () => { go(cur - 1, true); toStage(); });
+$('#next').addEventListener('click', () => { go(cur + 1, true); toStage(); });
+$('#lang-zh').addEventListener('click', () => setLang('zh'));
+$('#lang-en').addEventListener('click', () => setLang('en'));
+
+function applyStatic(){
+  document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+  $('#lang-zh').setAttribute('aria-pressed', lang === 'zh'); $('#lang-en').setAttribute('aria-pressed', lang === 'en');
+  $('#t-eyebrow').textContent = T('读 Qualcomm 创业那段文字', 'THE QUALCOMM ORIGIN STORY');
+  $('#t-h1').textContent = T('同一段频谱，怎么塞进更多信号', 'How to fit more signals into the same spectrum');
+  $('#t-lede').textContent = T('前四幕讲无线电基础，后四幕对应那段话里的四件事。每一幕先看「试一试」，动手完成它。', 'Scenes 1 to 4 cover radio basics. Scenes 5 to 8 follow four ideas from the story of how Qualcomm began. In each scene, start with the Try this task.');
+  $('#t-hint').textContent = T('可拖动旋转', 'Drag to rotate');
+  $('#prev').textContent = T('上一幕', 'Back'); $('#next').textContent = T('下一幕', 'Next');
+  $('#stage').setAttribute('aria-label', T('3D 场景', '3D scene'));
+  tabs.setAttribute('aria-label', T('八个场景', 'Eight scenes'));
+  let h = '';
+  CH.forEach((c, i) => {
+    if(i === 0) h += '<p class="grouplab">' + T('基础：无线电怎么工作', 'Basics: how radio works') + '</p>';
+    if(i === 4) h += '<p class="grouplab">' + T('那段文字讲的四件事', 'The four ideas in the story') + '</p>';
+    h += '<button class="tab" type="button" id="tab-' + c.id + '" data-i="' + i + '"' + (i === cur ? ' aria-current="step"' : '') + '><span class="n">' + (i + 1) + '</span>' + tx(c.tab) + '</button>';
+  });
+  tabs.innerHTML = h;
+}
+function setLang(l){
+  if(l === lang) return;
+  lang = l; try{ localStorage.setItem('radio3d-lang', l); }catch(_){}
+  applyStatic(); show(cur, true);
+}
+function show(i, keepView){
+  if(CH[cur].leave) CH[cur].leave();
+  cur = clamp(i, 0, CH.length - 1);
+  const c = CH[cur];
+  document.querySelectorAll('.tab').forEach(b => { const on = +b.dataset.i === cur; if(on) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current'); });
+  $('#ch-title').textContent = tx(c.title); $('#ch-src').textContent = tx(c.src); $('#ch-text').textContent = tx(c.text);
+  $('#ch-terms').innerHTML = c.terms.map(p => '<li>' + p[0] + '<span>' + p[1] + '</span></li>').join('');
+  $('#controls').innerHTML = c.controls(); c.bind();
+  $('#scopebox').hidden = !c.scopeH; document.body.classList.toggle('has-scope', !!c.scopeH); $('#scopecap').textContent = c.scopeCap ? tx(c.scopeCap) : '';
+  if(!keepView){
+    if(c.views && !(c.state.view >= 0)) c.state.view = 0;
+    const v = frameOf(c);
+    orbit.az = v.az; orbit.el = v.el; orbit.fitW = v.fitW; orbit.fitH = v.fitH; orbit.target.copy(v.target); orbit.goal = null;
+  }
+  canvas.classList.toggle('free', !!c.free); $('#t-hint').hidden = !c.free;
+  paintViews(c);
+  resize();
+  clearRoot(); c.build(); c.readout();
+  $('#prev').disabled = cur === 0; $('#next').disabled = cur === CH.length - 1;
+  resize();
+}
+function go(i, setHash){
+  i = clamp(i, 0, CH.length - 1);
+  if(setHash){ try{ if(location.hash !== '#' + CH[i].id) location.hash = CH[i].id; }catch(_){} }
+  if(i !== cur) show(i);
+}
+addEventListener('hashchange', () => { const k = CH.findIndex(c => '#' + c.id === location.hash); if(k >= 0 && k !== cur) show(k); });
+
+function retheme(){ readTokens(); clearRoot(); CH[cur].build(); CH[cur].readout(); }
+if(window.matchMedia){ const mq = matchMedia('(prefers-color-scheme: dark)'); (mq.addEventListener ? mq.addEventListener('change', retheme) : mq.addListener(retheme)); }
+new MutationObserver(retheme).observe(document.documentElement, {attributes:true, attributeFilter:['data-theme']});
+/* 3D 标注是画在画布上的，字体加载完后重画一次 */
+if(document.fonts && document.fonts.addEventListener){ let ft = 0; document.fonts.addEventListener('loadingdone', () => { clearTimeout(ft); ft = setTimeout(() => { if($('#controls').firstChild) retheme(); }, 60); }); }
+
+function frame(now){
+  requestAnimationFrame(frame);
+  if(document.hidden) return;
+  tNow = reduced ? 3.2 : (now - T0) / 1000;
+  const c = CH[cur];
+  c.tick(tNow);
+  if(c.scopeH) c.drawScope(tNow);
+  placeCamera(tNow);
+  if(relabel){ relabel = false; clearRoot(); c.build(); c.tick(tNow); }
+  renderer.render(scene, camera);
+}
+
+function start(data){
+  readTokens();
+  if(data && data.s){ CH.forEach(c => { if(data.s[c.id]) Object.assign(c.state, data.s[c.id]); }); ch3.state.shown = 10; }
+  let i = CH.findIndex(c => '#' + c.id === location.hash);
+  if(i < 0) i = (data && typeof data.cur === 'number') ? clamp(data.cur, 0, CH.length - 1) : 0;
+  cur = i; applyStatic(); show(i);
+  requestAnimationFrame(frame);
+}
+const hot = window.claude && window.claude.hot;
+if(hot && hot.snapshot) hot.snapshot(() => { const s = {}; CH.forEach(c => { s[c.id] = JSON.parse(JSON.stringify(c.state)); }); return {cur:cur, lang:lang, s:s}; });
+if(hot && hot.ready) hot.ready(start); else start((hot && hot.data) || {});
+})();
+</script>
+</body>
+</html>
