@@ -8,11 +8,7 @@ tags:
 description: "Eight 3D scenes on why fitting more signals into the same spectrum had to wait for chips."
 ---
 
-I was reading how Qualcomm got started and stalled on one paragraph. It says a station at 99.5 MHz needs 99.7 MHz left empty, that echoes off buildings eat the margin for error, and that a decoding algorithm from 1967 had to wait for chips to catch up. I could follow each sentence, but I had no picture of a frequency, an echo or a decoding error.
-
-So I built the picture. The first four scenes cover what I was missing: what a radio wave is, how sound rides on it, why faster data takes more bandwidth, and how noise flips bits. The other four follow the paragraph: two stations jamming each other, echoes in a city, the Viterbi algorithm picking the most likely path, and chips growing until that decoding fit on one of them.
-
-Each scene gives you one thing to try, and tells you what you found once you have done it.
+I was reading how Qualcomm got started and could not picture a frequency, an echo or a decoding error. So I built eight 3D scenes, each with one thing to try.
 
 <div class="x-cards">
   <a href="/static/radio-3d.html" data-router-ignore class="x-card xc-blue">
