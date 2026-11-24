@@ -35,3 +35,4 @@ I'm more interested in why it works than whether it works.*
 
 - [A Field Guide to the Semiconductor Industry](/posts/a-field-guide-to-the-semiconductor-industry) an interactive map of the value chain, and where the pricing power sits
 - [How Bluetooth LE Works](/posts/how-bluetooth-le-works) take apart a pair of earbuds in 3D and watch the chip advertise, connect and trade data
+- [Radio Spectrum in 3D](/posts/radio-spectrum-in-3d) eight hands-on scenes on why fitting more signals into the same spectrum had to wait for chips

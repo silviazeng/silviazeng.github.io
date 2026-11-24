@@ -1342,7 +1342,7 @@ function show(i, keepView){
   const c = CH[cur];
   document.querySelectorAll('.tab').forEach(b => { const on = +b.dataset.i === cur; if(on) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current'); });
   $('#ch-title').textContent = tx(c.title); $('#ch-src').textContent = tx(c.src); $('#ch-text').textContent = tx(c.text);
-  $('#ch-terms').innerHTML = c.terms.map(p => '<li>' + p[0] + '<span>' + p[1] + '</span></li>').join('');
+  $('#ch-terms').innerHTML = c.terms.map(p => '<li>' + p[1] + '</li>').join('');
   $('#controls').innerHTML = c.controls(); c.bind();
   $('#scopebox').hidden = !c.scopeH; document.body.classList.toggle('has-scope', !!c.scopeH); $('#scopecap').textContent = c.scopeCap ? tx(c.scopeCap) : '';
   if(!keepView){
