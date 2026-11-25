@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How Bluetooth LE works</title>
+<meta name="description" content="An interactive 3D explainer of Bluetooth Low Energy: what is inside a pair of earbuds and a TV remote, how devices advertise, connect and exchange data, and why HDT matters.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600&family=JetBrains+Mono:wght@500&family=Noto+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>:root{
+  /* Layout: one story, five acts. Top bar with device switch, act tabs, 3D stage (devices and radio waves), below it the shared timeline (air + chip current) and the chip block diagram, right column for narration, the hands-on control and terms. */
+  --bg:#0a1019; --panel:#101926; --raise:#182436; --line:#293a54;
+  --ink:#edf2f9; --ink2:#c1ccdc; --ink3:#94a3ba;
+  --accent:#4aa8ff; --amber:#ffb84d; --green:#45d6a0; --violet:#b197fc; --red:#ff7a7a;
+  --f-display:"Chakra Petch","Noto Sans",system-ui,sans-serif;
+  --f-body:"Noto Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.6 var(--f-body);overflow:hidden;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+a{color:var(--accent)}
+[hidden]{display:none!important}
+h2,h3,h4,h5,p{margin:0}
+
+#app{height:100%;display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) 408px;grid-template-rows:58px 64px minmax(0,1.06fr) minmax(0,1fr)}
+@media (max-width:1380px){#app{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr) 372px}.stk button{grid-template-columns:112px minmax(0,1fr) max-content}}
+
+#top{grid-column:1/-1;display:flex;align-items:center;gap:22px;padding:0 18px;background:var(--panel);border-bottom:1px solid var(--line);min-width:0}
+.brand{display:flex;align-items:center;gap:12px;flex:0 0 auto}
+.mark{display:flex;align-items:flex-end;gap:3px;height:22px}
+.mark i{display:block;width:4px;background:var(--accent);border-radius:1px}
+.mark i:nth-child(1){height:8px}.mark i:nth-child(2){height:14px}.mark i:nth-child(3){height:22px}
+.brand b{font:600 19px/1 var(--f-display);letter-spacing:.03em;white-space:nowrap}
+.devsw{display:flex;align-items:center;gap:10px;padding-left:22px;border-left:1px solid var(--line)}
+.devsw span{font-size:14.5px;color:var(--ink3);white-space:nowrap}
+#apxBtn{margin-left:auto;height:38px;padding:0 14px;background:transparent;border:1px solid var(--line);border-radius:4px;font-size:15px;color:var(--ink2);white-space:nowrap}
+#apxBtn:hover{border-color:var(--accent);color:var(--ink)}
+.seg{display:flex;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.seg button{flex:1;padding:8px 14px;background:var(--bg);border:0;border-right:1px solid var(--line);font-size:15px;color:var(--ink2);line-height:1.3;white-space:nowrap}
+.seg button:last-child{border-right:0}
+.seg button:hover{color:var(--ink)}
+.seg button.on{background:var(--accent);color:#06111f;font-weight:600}
+.seg.wrap{flex-direction:column}.seg.wrap button{border-right:0;border-bottom:1px solid var(--line);text-align:left;padding:9px 12px}.seg.wrap button:last-child{border-bottom:0}
+
+#acts{grid-column:1/-1;display:flex;gap:0;background:var(--panel);border-bottom:1px solid var(--line)}
+#acts button{flex:1 1 0;min-width:0;display:flex;align-items:center;gap:12px;padding:0 18px;background:transparent;border:0;border-right:1px solid var(--line);border-bottom:3px solid transparent;text-align:left;color:var(--ink2)}
+#acts button:last-child{border-right:0}
+#acts button i{font:500 15px/1 var(--f-mono);font-style:normal;width:30px;height:30px;display:flex;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:50%;color:var(--ink3);flex:0 0 auto}
+#acts button b{display:block;font:600 17px/1.2 var(--f-display);letter-spacing:.03em;white-space:nowrap}
+#acts button span{display:block;font-size:13.5px;color:var(--ink3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#acts button:hover{background:var(--raise)}
+#acts button.on{background:var(--raise);border-bottom-color:var(--accent);color:var(--ink)}
+#acts button.on i{border-color:var(--accent);color:var(--accent)}
+#acts button.done i{border-color:var(--green);color:var(--green)}
+
+#stage{grid-column:1/3;grid-row:3;position:relative;min-height:0;overflow:hidden;user-select:none;-webkit-user-select:none;background:radial-gradient(110% 100% at 50% 30%,#172a43 0%,#0d1622 60%,var(--bg) 100%);border-bottom:1px solid var(--line)}
+#gl{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab}
+#gl.drag{cursor:grabbing}#gl.hit{cursor:pointer}
+#labels{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.lb{position:absolute;left:0;top:0;display:none;white-space:nowrap;font:500 15px/1.25 var(--f-body);color:var(--ink);padding:3px 9px;border-radius:3px;background:rgba(10,16,25,.86);border:1px solid var(--line)}
+button.lb{pointer-events:auto;cursor:pointer}
+button.lb:hover{border-color:var(--ink);background:rgba(28,46,74,.97);z-index:2}
+.lb.sel{border-color:var(--accent);background:rgba(18,40,70,.97);box-shadow:0 0 0 2px rgba(74,168,255,.4);z-index:3}
+.lb.head{font:600 16px/1.25 var(--f-display);letter-spacing:.03em;background:rgba(16,25,38,.94)}
+.lb.dev{border-color:var(--amber);color:var(--amber)}
+.lb.peer{border-color:var(--accent);color:var(--accent)}
+.lb.mark{border-style:dashed;color:var(--ink2);font-size:14px}
+.lb.fly{font-size:14.5px;background:rgba(17,29,47,.97);z-index:4}
+.lb.wifi{border-color:var(--violet);color:var(--violet)}
+#ring{position:absolute;left:0;top:0;width:22px;height:22px;margin:-11px 0 0 -11px;border:2px solid var(--accent);border-radius:50%;pointer-events:none;z-index:4}
+#hud{position:absolute;left:14px;bottom:12px;padding:6px 14px 7px;background:rgba(10,16,25,.84);border:1px solid var(--line);border-left:3px solid var(--green);border-radius:4px;max-width:58%;pointer-events:none}
+#hud small{display:block;font-size:13px;color:var(--ink3);line-height:1.2}
+#hud b{display:block;font:600 17px/1.35 var(--f-display);letter-spacing:.02em}
+#stagectl{position:absolute;right:12px;bottom:12px;display:flex;gap:6px;z-index:5}
+#stagectl button{height:42px;padding:0 13px;background:rgba(24,36,54,.94);border:1px solid var(--line);border-radius:4px;font-size:15px;white-space:nowrap}
+#stagectl button:hover{border-color:var(--accent)}
+#xbox{display:flex;align-items:center;gap:10px;height:42px;padding:0 12px;background:rgba(24,36,54,.96);border:1px solid var(--amber);border-radius:4px;font-size:15px;color:var(--amber);white-space:nowrap}
+#xbox input{width:190px;accent-color:var(--amber)}
+#stage.hasinfo #hud{display:none}
+#info{position:absolute;left:14px;bottom:12px;width:min(430px,calc(100% - 28px));padding:10px 14px 11px;background:rgba(17,29,47,.97);border:1px solid var(--accent);border-left:4px solid var(--accent);border-radius:5px;z-index:5}
+#info b{display:block;font:600 17px/1.35 var(--f-display)}
+#info p{font-size:15.5px;line-height:1.55;color:var(--ink2);margin-top:2px}
+#nogl{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:24px;text-align:center;color:var(--ink2)}
+
+#lanes,#chip{grid-row:4;min-height:0;min-width:0;display:flex;flex-direction:column;background:var(--panel);padding:10px 14px 10px;overflow:hidden}
+#lanes{grid-column:1;border-right:1px solid var(--line)}
+#chip{grid-column:2;overflow:auto}
+#chip.flash{animation:cflash .9s ease-out}
+@keyframes cflash{0%{box-shadow:inset 0 0 0 2px var(--accent)}100%{box-shadow:inset 0 0 0 2px transparent}}
+.lh{display:flex;align-items:center;gap:14px;min-height:26px;margin-bottom:6px;flex-wrap:wrap}
+.lh b{font:600 15.5px/1.2 var(--f-display);letter-spacing:.04em;color:var(--ink2);white-space:nowrap}
+.lh em{margin-left:auto;font-style:normal;font-size:13.5px;color:var(--ink3);white-space:nowrap}
+.lg{display:flex;gap:4px 14px;flex-wrap:wrap;font-size:14px;color:var(--ink2)}
+.lg span{display:flex;align-items:center;gap:6px;white-space:nowrap}
+.lg i{width:12px;height:12px;border-radius:2px;display:block}
+#laneTime{flex:1;min-height:0;display:flex;flex-direction:column}
+#lc{flex:1;min-height:0;width:100%;display:block}
+#laneAlt{flex:1;min-height:0;overflow:auto;display:flex;flex-direction:column;gap:8px}
+.alt-h{font:600 15.5px/1.3 var(--f-display);letter-spacing:.04em;color:var(--ink2)}
+.cap{font-size:14.5px;color:var(--ink3);line-height:1.55}
+
+/* protocol stack to hardware map */
+.stk{display:flex;flex-direction:column;gap:3px}
+.stk button{display:grid;grid-template-columns:150px minmax(0,1.1fr) minmax(0,1fr);gap:10px;align-items:center;padding:3px 10px;background:var(--bg);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:3px;text-align:left;font-size:15px}
+.stk button.ctl{border-left-color:var(--amber)}
+.stk button.itf{border-left-color:var(--ink3)}
+.stk button:hover,.stk button.on{background:var(--raise);border-color:var(--accent)}
+.stk b{font-weight:600;white-space:nowrap}
+.stk span{color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stk em{font-style:normal;color:var(--green);white-space:nowrap}
+
+/* PHY comparison */
+.cmp{display:flex;flex-direction:column;gap:6px}
+.cmp .r{display:grid;grid-template-columns:168px minmax(60px,1fr) 116px 76px;gap:10px;align-items:center;font-size:15px;min-height:26px}
+.cmp .r.h{font-size:13.5px;color:var(--ink3)}
+.cmp .n{white-space:nowrap}
+.cmp .n b{font-weight:600}
+.cmp .n small{color:var(--ink3);font-size:13.5px;margin-left:8px}
+.cmp .bar{height:18px;background:var(--bg);border:1px solid var(--line);border-radius:2px;overflow:hidden}
+.cmp .bar i{display:block;height:100%;min-width:3px;background:var(--accent)}
+.cmp .r.hdt .bar i{background:var(--green)}
+.cmp .r.over .bar i{background:var(--red)}
+.cmp .v{font-family:var(--f-mono);font-size:14px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.cmp .r.over .v{color:var(--red)}
+.cmp .d{color:var(--ink2);font-size:14px;white-space:nowrap}
+#modc{flex:1;min-height:120px;width:100%;display:block;background:#0b121d;border:1px solid var(--line);border-radius:4px}
+.recap{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;flex:1;min-height:0}
+.recap .rc{display:flex;flex-direction:column;gap:6px;padding:12px 14px;background:var(--bg);border:1px solid var(--line);border-top:3px solid var(--green);border-radius:4px}
+.recap i{font:500 14px/1 var(--f-mono);font-style:normal;color:var(--green)}
+.recap h4{font:600 17px/1.3 var(--f-display)}
+.recap p{font-size:15px;color:var(--ink2);line-height:1.55;flex:1}
+.recap button,.btn{align-self:flex-start;height:40px;padding:0 13px;background:var(--raise);border:1px solid var(--line);border-radius:4px;font-size:15px}
+.recap button:hover,.btn:hover{border-color:var(--accent)}
+
+/* chip diagram */
+#chipBody{display:flex;flex-direction:column;gap:8px;min-height:0}
+.chipwrap{display:flex;align-items:stretch;gap:0}
+.blk{position:relative;display:flex;flex-direction:column;justify-content:center;gap:1px;padding:4px 8px;background:var(--bg);border:1px solid var(--line);border-radius:4px;text-align:left;min-width:0;overflow:hidden;--h:0}
+.blk::before{content:"";position:absolute;inset:0;background:var(--accent);opacity:calc(var(--h)*.5);pointer-events:none}
+.blk b,.blk small{position:relative}
+.blk b{font-weight:600;font-size:15px;line-height:1.25;white-space:nowrap}
+.blk small{font-size:13px;color:var(--ink2);line-height:1.3;white-space:nowrap}
+.blk:hover{border-color:var(--ink)}
+.blk.sel{border-color:var(--accent);box-shadow:0 0 0 2px rgba(74,168,255,.4)}
+.antb{flex:0 0 78px;align-self:center;border-style:dashed;border-color:var(--amber);height:64px;align-items:center;text-align:center;padding:4px}
+.feed{flex:0 0 12px;align-self:center;height:2px;background:var(--amber)}
+.die{flex:1;min-width:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;padding:8px;background:#0d1520;border:2px solid #3a4c69;border-radius:6px}
+.die .wide{grid-column:1/-1;flex-direction:row;align-items:baseline;gap:10px;justify-content:flex-start}
+#chipState{font-size:14.5px;color:var(--ink3);padding:1px 10px;border:1px solid var(--line);border-radius:3px}
+#chipState:empty{display:none}
+#chipState.on{color:#06111f;background:var(--accent);border-color:var(--accent);font-weight:600}
+#chipDesc{font-size:15px;color:var(--ink2);line-height:1.55}
+#chipDesc b{color:var(--ink);font-weight:600}
+.two{display:flex;align-items:center;gap:0;padding:4px 0}
+.chipbox{flex:1;min-width:0;display:flex;flex-direction:column;gap:5px;padding:9px;background:#0d1520;border:2px solid #3a4c69;border-radius:6px}
+.chipbox h5{font:600 15.5px/1.3 var(--f-display)}
+.chipbox span{padding:5px 8px;background:var(--bg);border:1px solid var(--line);border-radius:3px;font-size:14.5px;color:var(--ink2);line-height:1.35}
+.wire{flex:0 0 78px;text-align:center;border-top:3px solid var(--green);margin-top:22px;padding-top:4px}
+.wire b{display:block;font:600 15px/1.2 var(--f-display);color:var(--green)}
+.wire small{font-size:13px;color:var(--ink3)}
+.antm{flex:0 0 66px;margin-left:10px;padding:10px 4px;border:1px dashed var(--amber);border-radius:4px;color:var(--amber);font-size:14px;text-align:center}
+
+/* side column */
+#side{grid-column:3;grid-row:3/5;display:flex;flex-direction:column;gap:14px;padding:16px;background:var(--panel);border-left:1px solid var(--line);overflow:auto;min-height:0}
+#nar{padding:14px 16px 16px;background:var(--raise);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:5px}
+.nar-top{display:flex;justify-content:space-between;gap:10px;font-size:14px;color:var(--ink3)}
+#narAct{color:var(--accent);font-family:var(--f-display);font-weight:600;letter-spacing:.04em}
+#narT{margin:6px 0 8px;font:600 22px/1.35 var(--f-display);letter-spacing:.01em;text-wrap:balance}
+#narB{font-size:16.5px;line-height:1.65;color:var(--ink2)}
+.nar-btn{display:flex;gap:8px;margin-top:14px}
+.nar-btn button{flex:1;height:48px;padding:0 10px;background:var(--bg);border:1px solid var(--line);border-radius:4px;font-size:16.5px}
+.nar-btn button:hover{border-color:var(--accent)}
+.nar-btn button:disabled{opacity:.4;cursor:default;border-color:var(--line)}
+.nar-btn .pri{flex:1.6;background:var(--accent);border-color:var(--accent);color:#06111f;font-weight:600}
+.nar-btn .pri:hover{background:#74bcff}
+#try{padding:14px 16px;border:1px solid var(--line);border-left:4px solid var(--amber);border-radius:5px;display:flex;flex-direction:column;gap:10px}
+#try h3,#terms h3{font:600 15px/1 var(--f-display);letter-spacing:.08em;color:var(--ink3)}
+#try h3{color:var(--amber)}
+.ctl{display:flex;align-items:center;gap:10px;font-size:15.5px}
+.ctl label{white-space:nowrap;color:var(--ink2)}
+.ctl input[type=range]{flex:1;min-width:0;accent-color:var(--amber);height:28px}
+.ctl output{font:500 15px var(--f-mono);min-width:86px;text-align:right;font-variant-numeric:tabular-nums}
+.rd{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.rd div{padding:8px 10px;background:var(--bg);border:1px solid var(--line);border-radius:4px}
+.rd small{display:block;font-size:13.5px;color:var(--ink3);line-height:1.3}
+.rd b{display:block;font:600 19px/1.35 var(--f-display);font-variant-numeric:tabular-nums}
+.big{height:50px;padding:0 14px;background:var(--amber);border:1px solid var(--amber);border-radius:4px;font-size:16.5px;font-weight:600;color:#1b1304}
+.big:hover{background:#ffc873}
+.big.on{background:var(--bg);color:var(--amber)}
+.row2{display:flex;gap:8px}.row2 .big{flex:1}
+.status{font-size:15px;color:var(--ink2);line-height:1.5}
+details{font-size:14.5px;color:var(--ink3);line-height:1.6}
+summary{cursor:pointer;color:var(--ink2);padding:4px 0}
+#terms{display:flex;flex-direction:column;gap:10px}
+#terms dl{margin:0;display:flex;flex-direction:column;gap:9px}
+#terms dt{font-weight:600;font-size:15.5px;color:var(--ink)}
+#terms dd{margin:1px 0 0;font-size:15px;color:var(--ink2);line-height:1.55}
+
+/* appendix */
+#apx{position:fixed;inset:0;background:rgba(4,8,14,.72);z-index:50;display:flex;justify-content:flex-end}
+.apx-in{width:min(760px,100%);height:100%;display:flex;flex-direction:column;background:var(--panel);border-left:1px solid var(--line)}
+.apx-h{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid var(--line)}
+.apx-h b{font:600 19px/1 var(--f-display)}
+.apx-h button{height:40px;padding:0 16px;background:var(--raise);border:1px solid var(--line);border-radius:4px}
+.apx-b{flex:1;overflow:auto;padding:18px 20px 30px;display:flex;flex-direction:column;gap:22px}
+.apx-b h4{font:600 17px/1.3 var(--f-display);margin-bottom:8px;color:var(--ink)}
+.apx-b p{font-size:15.5px;color:var(--ink2);line-height:1.65}
+.apx-b ol{margin:0;padding-left:22px;color:var(--ink2);font-size:15.5px;line-height:1.7}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th,td{padding:7px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{color:var(--ink3);font-weight:500;font-size:14px}
+td{color:var(--ink2)}
+td:first-child{color:var(--ink);white-space:nowrap}
+.src{font-size:14px;color:var(--ink3);line-height:1.65}
+
+#player{display:contents}
+#dock{display:none}
+#navPos,.tn{display:none}
+#mnote:empty{display:none}
+@media (min-width:1021px) and (max-height:800px){
+  #chip{padding:8px 14px}
+  #chip .lh{margin-bottom:4px}
+  .die{gap:4px;padding:6px}
+  .blk{padding:2px 8px}
+  .blk b{font-size:14.5px;line-height:1.2}
+  .blk small{line-height:1.2}
+  #chipBody{gap:6px}
+  #chipDesc{font-size:14px;line-height:1.45}
+}
+@media (max-width:1020px){
+  html,body{height:auto}
+  body{overflow:visible}
+  #app{height:auto;display:flex;flex-direction:column}
+  #top{flex-wrap:wrap;padding:10px 14px;gap:8px 12px}
+  .brand{flex:1 1 100%}.mark{display:none}
+  .brand b{font-size:17px}
+  .devsw{padding-left:0;border-left:0;flex:1}
+  .devsw span{display:none}
+  .seg button{padding:7px 12px}
+  #apxBtn{margin-left:0;height:36px}
+  .tw{display:none}.tn{display:inline}
+  #acts{overflow-x:auto}
+  #acts button{flex:0 0 auto;padding:9px 12px;gap:8px}
+  #acts button span{display:none}
+  #acts button i{width:26px;height:26px;font-size:14px}
+  /* pinned player: scene with its controls right underneath */
+  #player{display:block;order:1;position:sticky;top:0;z-index:30;background:var(--bg);box-shadow:0 6px 14px rgba(0,0,0,.45)}
+  #stage{height:min(56vw,44vh);min-height:196px;border-bottom:0}
+  #player.isopen #stage{height:min(74vw,50vh);min-height:240px}
+  #gl{touch-action:pan-y}
+  #hud{left:8px;bottom:8px;max-width:calc(100% - 128px);padding:4px 10px;border-left-width:3px}
+  #hud small{display:none}
+  #hud b{font-size:14.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #stagectl{right:8px;bottom:8px;gap:5px}
+  #stagectl button{height:36px;padding:0 10px;font-size:14px}
+  #dock{display:flex;flex-direction:column;gap:8px;padding:8px 12px 10px;background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  #xbox{height:44px;width:100%}#xbox input{flex:1;width:auto;min-width:0}
+  #info{position:static;width:auto;padding:7px 12px 8px;border-left-width:4px}
+  #info b{font-size:16px}
+  #info p{font-size:14.5px;line-height:1.5}
+  #try{margin:0;padding:0 0 0 10px;border:0;border-left:3px solid var(--amber);border-radius:0;gap:7px}
+  #try h3{display:none}
+  #try .big{height:44px;font-size:16px}
+  #try .ctl{font-size:15px;gap:8px}
+  #try .ctl output{min-width:74px;font-size:14px}
+  #try .rd{gap:6px}
+  #try .rd div{padding:4px 9px 5px}
+  #try .rd small{font-size:13px;line-height:1.3}
+  #try .rd b{font-size:16.5px;line-height:1.3;white-space:nowrap}
+  #try .status{font-size:14px;line-height:1.45}
+  #try .seg button{padding:6px 4px;font-size:14px;line-height:1.3}
+  #try .seg.wrap{flex-direction:row}
+  #try .seg.wrap button{border-bottom:0;border-right:1px solid var(--line);text-align:center;white-space:normal;padding:5px 6px}
+  #try .seg.wrap button:last-child{border-right:0}
+  #navb{margin:0;gap:6px;align-items:center}
+  #navb button{height:44px;font-size:16px}
+  #navPos{display:block;flex:0 0 auto;font-size:13.5px;color:var(--ink3);white-space:nowrap}
+  #side{display:contents}
+  #nar{order:2;border-radius:0;border-left-width:4px;border-right:0;border-top:0;padding:12px 14px 14px}
+  #narT{font-size:20px;margin:4px 0 6px}
+  #narB{font-size:16px}
+  #mnote{order:3;margin:12px 14px 0;padding:10px 14px;border:1px solid var(--line);border-left:4px solid var(--amber);border-radius:5px;display:flex;flex-direction:column;gap:6px}
+  #mnote h3{font:600 14px/1 var(--f-display);letter-spacing:.06em;color:var(--amber)}
+  #lanes{order:4;height:340px;border-right:0;border-top:1px solid var(--line);margin-top:14px;flex:0 0 auto}
+  #lanes.alt{height:auto}
+  #chip{order:5;border-top:1px solid var(--line);overflow:visible;flex:0 0 auto}
+  #terms{order:6;padding:16px 14px 24px;background:var(--panel);border-top:1px solid var(--line)}
+  .recap{grid-template-columns:1fr}
+  .stk button{grid-template-columns:118px minmax(0,1fr)}
+  .stk span{display:none}
+  .cmp .r{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr) 108px}
+  .cmp .n small{display:none}
+  .cmp .d{display:none}
+  .lh em{margin-left:0}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div id="app">
+  <header id="top">
+    <div class="brand"><div class="mark" aria-hidden="true"><i></i><i></i><i></i></div><b>How Bluetooth LE works</b></div>
+    <div class="devsw"><span>Device</span>
+      <div class="seg" id="devSeg" role="radiogroup" aria-label="Device"><button type="button" data-v="buds" class="on">Earbuds</button><button type="button" data-v="rcu">Remote</button></div>
+    </div>
+    <button type="button" id="apxBtn"><span class="tw">Appendix: more from the source article</span><span class="tn">Appendix</span></button>
+  </header>
+  <nav id="acts" aria-label="The five acts"></nav>
+  <div id="player">
+  <main id="stage">
+    <canvas id="gl" aria-label="3D scene"></canvas>
+    <div id="labels"></div>
+    <div id="ring" hidden></div>
+    <div id="hud"><small>What you see</small><b id="hudT"></b></div>
+    <div id="stagectl"><label id="xbox" hidden><span>Take apart</span><input type="range" id="sX" min="0" max="100" step="1" value="0"></label><button type="button" id="bOpen">Look inside</button><button type="button" id="bReset"><span class="tw">Reset view</span><span class="tn">Reset</span></button></div>
+    <div id="info" hidden><b></b><p></p></div>
+    <div id="nogl" hidden>This browser cannot run WebGL, so the 3D scene cannot be shown. Everything else still works.</div>
+  </main>
+  <div id="dock"></div>
+  </div>
+  <section id="lanes" aria-label="Timeline">
+    <div id="laneTime">
+      <div class="lh"><b>One shared timeline</b><span class="lg" id="laneLg"></span></div>
+      <canvas id="lc" role="img" aria-label="Top: packets in the air, with frequency on the vertical axis. Bottom: current drawn by the Bluetooth chip."></canvas>
+    </div>
+    <div id="laneAlt" hidden></div>
+  </section>
+  <section id="chip" aria-label="Chip block diagram">
+    <div class="lh"><b id="chipT"></b><em id="chipState"></em></div>
+    <div id="chipBody"></div>
+  </section>
+  <aside id="side">
+    <div id="nar">
+      <div class="nar-top"><span id="narAct"></span><span id="narStep"></span></div>
+      <h2 id="narT"></h2>
+      <p id="narB"></p>
+      <div class="nar-btn" id="navb"><button type="button" id="bPrev">Previous</button><span id="navPos"></span><button type="button" id="bNext" class="pri">Next</button></div>
+    </div>
+    <div id="try" hidden></div>
+    <div id="mnote"></div>
+    <div id="terms"></div>
+  </aside>
+</div>
+<div id="apx" hidden>
+  <div class="apx-in" role="dialog" aria-label="Appendix">
+    <div class="apx-h"><b>Appendix: more from the source article</b><button type="button" id="apxX">Close</button></div>
+    <div class="apx-b" id="apxB"></div>
+  </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>(function () {
+'use strict';
+const T = window.THREE;
+const $ = (s, r) => (r || document).querySelector(s);
+const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const damp = (a, b, dt, k) => a + (b - a) * (1 - Math.exp(-(k || 6) * dt));
+const reduce = !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+const narrow = () => !!(window.matchMedia && matchMedia('(max-width: 1020px)').matches);
+const C = { dev: '#ffb84d', peer: '#4aa8ff', ok: '#45d6a0', bad: '#ff7a7a', wifi: '#b197fc', ink: '#edf2f9', ink2: '#c1ccdc', ink3: '#94a3ba' };
+
+/* ================= content ================= */
+const CHIP_TX = ['Bluetooth SoC', 'The whole Bluetooth stack lives in this one chip: radio, baseband, processor and memory. The chip diagram below shows how the work is split inside it.'];
+const XTAL_TX = ['Crystal', 'Gives the chip a precise time base. Whether the radio lands on the right frequency, and whether both sides meet on time, depends on it.'];
+const DV = {
+  buds: {
+    n: 'earbud', N: 'Earbud', nm: 'Earbuds', p: 'phone', P: 'Phone', pm: 'Phone', full: 'earbuds', chipL: 'Earbud chip current', cap: 50, capTx: 'One earbud battery is taken as 50 mAh',
+    svc: ['Audio capabilities', 'Audio streams', 'Battery service'],
+    aud: ['Audio', 'Sound I/O', 'Connects the microphones and the speaker, with audio interfaces such as I2S and a codec. Decoded music leaves here for the speaker, and your voice on a call comes in here.'],
+    io: ['Peripherals', 'buttons, touch, charging', 'Connects the buttons, the touch sensor and the charging case contacts, usually over GPIO, I2C or UART. A tap raises an interrupt that wakes the sleeping chip.'],
+    parts: {
+      chip: CHIP_TX,
+      ant: ['Antenna', 'A flexible circuit with a copper trace printed on it. It turns the chip’s signal into 2.4 GHz radio waves and catches the waves coming back. Earbuds usually tuck it inside the stem, away from your head, where reception is better.'],
+      xtal: XTAL_TX,
+      batt: ['Battery', 'A lithium coin cell holding only a few dozen mAh, so every Bluetooth transmission has to be frugal.'],
+      spk: ['Speaker driver', 'The diaphragm in the middle moves back and forth to turn the decoded signal into sound. The Bluetooth chip feeds it the audio.'],
+      mic: ['Microphone', 'Picks up your voice for calls and noise cancelling; the Bluetooth chip sends it on to the phone.']
+    },
+    px: { chip: [-14, -40], xtal: [50, 30], ant: [52, 0], batt: [0, -50], spk: [-30, -50], mic: [62, 6] },
+    pay: [['One LC3 frame', 120, 0, 'One LC3 frame is 10 ms of sound at 96 kb/s mono, 120 bytes.'], ['1 s of CD audio', 176400, 1, 'One second of CD audio is 44.1 kHz × 16 bit × 2 channels, 176,400 bytes, uncompressed.'], ['1 s of 24 bit, 96 kHz audio', 576000, 1, 'One second of 24 bit, 96 kHz audio is 96 kHz × 24 bit × 2 channels, 576,000 bytes, uncompressed.']],
+    hud: { home: 'Ordinary earbuds, Bluetooth inside', scan: 'Phone: searching', found: 'Phone: new device found', conn: 'Phone: earbuds connected', menu: 'Phone: earbuds connected', play: 'Music in both earbuds', pause: 'Music paused, still connected' }
+  },
+  rcu: {
+    n: 'remote', N: 'Remote', nm: 'Remote', p: 'TV', P: 'TV', pm: 'TV', full: 'remote', chipL: 'Remote chip current', cap: 1000, capTx: 'Two AAA batteries are taken as 1000 mAh',
+    svc: ['Human interface (HID)', 'Battery service', 'Voice (vendor defined)'],
+    aud: ['Audio', 'Voice in', 'Connects the microphone next to the voice button and turns your voice into digital samples, which the processor compresses and sends.'],
+    io: ['Peripherals', 'keys, IR LED', 'Connects the key matrix and the infrared LED, usually through GPIO, PWM and ADC. A key press raises an interrupt that wakes the sleeping chip; PWM drives the IR LED to send remote codes.'],
+    parts: {
+      chip: CHIP_TX,
+      ant: ['PCB antenna', 'A meandering trace printed straight onto the board that turns the signal into 2.4 GHz radio waves. It needs no extra part and costs almost nothing, so remotes use it a lot.'],
+      xtal: XTAL_TX,
+      batt: ['Batteries', 'A remote should go a long time between battery changes, so the chip spends nearly all its time in deep sleep and wakes only when you press a key.'],
+      keys: ['Key contacts', 'Pressing a key closes the contact, and the electrical signal wakes the chip, which then sends the key code over Bluetooth.'],
+      mic: ['Microphone', 'Picks up your voice while you hold the voice button; it is compressed and sent to the TV over Bluetooth.'],
+      ir: ['IR LED', 'A backup channel. When the TV is off and Bluetooth is not connected yet, the power on command usually goes out as infrared.']
+    },
+    px: { chip: [-40, -40], xtal: [8, 40], ant: [24, -40], batt: [-16, -34], keys: [-50, 40], mic: [50, 44], ir: [60, 2] },
+    pay: [['One key press', 8, 0, 'A key press is an 8 byte key report.'], ['1 s of voice', 8000, 1, 'One second of voice compressed to 64 kb/s is 8,000 bytes (illustrative).'], ['One firmware update', 500000, 0, 'A firmware update is taken as 500 KB (illustrative).']],
+    hud: { home: 'An ordinary remote, Bluetooth inside', scan: 'TV: searching', found: 'TV: remote found', conn: 'TV: remote connected', menu: 'TV: remote connected', vol: 'TV volume: ', voice: 'TV: listening' }
+  }
+};
+const BLK = {
+  ant: ['Antenna', 'PHY', 'A conductor outside the chip that converts between electrical signals and radio waves.'],
+  rf: ['Radio', 'PHY', 'When sending, it modulates data onto 2.4 GHz and amplifies it out to the antenna; when receiving, it amplifies the faint signal and demodulates it back into data. Many radios also speak 802.15.4 (Zigbee, Thread), so one chip can run several protocols. It is the hungriest block on the chip, so it stays off whenever it can.'],
+  bb: ['Baseband', 'Link layer', 'The modem plus link layer hardware. It handles the microsecond work: sending and listening at exactly the right instant, building packets, checking them, and moving data in and out of memory. The less urgent part of the link layer, such as managing connection parameters and the channel map, is firmware on the processor.'],
+  mcu: ['Processor', 'Firmware', 'Where the software runs: the link layer firmware and radio driver, the host protocols (L2CAP, ATT, GATT, SMP, GAP), the profiles, and the product’s own features.'],
+  mem: ['Memory', 'Code, data', 'Flash holds the stack, the application and the keys from pairing, which is why devices reconnect by themselves after a restart. SRAM is working memory; during sleep only the parts that must be kept stay powered.'],
+  clk: ['Clocks', 'Fast + 32k', 'Two clocks. A fast crystal of a few tens of MHz gives the radio and processor a precise beat; a 32.768 kHz crystal or RC oscillator uses almost no power and keeps running during sleep.'],
+  tmr: ['Timers', 'Wake up', 'A low power timer counting on the 32 kHz clock. It keeps counting while the chip sleeps and wakes it on schedule, which is how both sides meet on time. A watchdog also resets the chip if the software hangs.'],
+  pmu: ['Power', 'Supply', 'Converts the battery voltage into what each block needs (LDO or DC/DC), cuts power to unused circuits during sleep, and resets the chip safely if the voltage drops too low.'],
+  sec: ['Security', 'Encryption', 'AES hardware and a true random number generator. Pairing uses them to create keys; once the link is encrypted, every packet is encrypted and decrypted here without tying up the processor.'],
+  aud: ['Audio', '', ''],
+  io: ['Peripherals', '', '']
+};
+const STACK = [
+  ['Application', 'Product features', ['mcu'], 'Processor', ''],
+  ['GAP, GATT', 'Device roles, data layout', ['mcu', 'mem'], 'Processor', ''],
+  ['ATT, SMP', 'Data access, pairing', ['mcu', 'mem', 'sec'], 'Processor + security', ''],
+  ['L2CAP', 'Segmenting, multiplexing', ['mcu'], 'Processor', ''],
+  ['HCI', 'Host to controller link', ['mcu', 'bb'], 'Software interface', 'itf'],
+  ['Link Layer', 'Timing, hopping, retries', ['bb', 'mcu', 'tmr'], 'Baseband + firmware', 'ctl'],
+  ['PHY', 'Modulation, radio', ['rf', 'ant'], 'Radio + antenna', 'ctl']
+];
+const PHYS = [['LE Coded S=8', 0.125, '125 kb/s', 'Longest', ''], ['LE 1M', 1, '1 Mb/s', 'Baseline', ''], ['LE 2M', 2, '2 Mb/s', 'A bit less', ''], ['HDT 4 Mb/s', 4, '4 Mb/s', 'Less', 'hdt'], ['HDT 7.5 Mb/s', 7.5, '7.5 Mb/s', 'Least', 'hdt']];
+const MODS = [['GFSK', 1], ['QPSK', 2], ['8PSK', 3], ['16QAM', 4]];
+const ACTS = [['0', 'Take it apart', 'Where Bluetooth lives', 'open', 'Inside'], ['1', 'Advertise', 'Saying "I’m here"', 'adv', 'Advertise'], ['2', 'Connect', 'Agreeing when to meet', 'conn', 'Connect'], ['3', 'Exchange data', 'What can you do?', 'data', 'Data'], ['4', 'Faster, farther', 'A new way to talk', 'phy', 'Speed']];
+
+function beats(k) {
+  const d = DV[k], n = d.n, p = d.p, B = [];
+  const add = (a, t, b, terms, o) => B.push(Object.assign({ a, t, b, terms, sim: 'idle', view: 'closed', chipV: 'dev', tryK: null, lane: 'time' }, o));
+  add(0, `Bluetooth in the ${n} is one chip and one antenna`, (k === 'buds' ? 'Watch the earbud come apart: the shell turns clear first, then the parts slide out one by one, each tied by a thin line to where it sat.' : 'Watch the remote come apart: the top cover and the base move away and reveal the circuit board.') + ' You can also drag the "Take apart" slider yourself. Click any part to see what it does for Bluetooth.',
+    [['SoC', 'System on chip. The radio, processor and memory are built into one piece of silicon.'], ['2.4 GHz', 'The radio band Bluetooth uses. Wi-Fi and microwave ovens share it.']], { view: 'open', lane: 'stack' });
+  add(0, 'How the work is split inside the chip', 'The middle panel below is a generic chip diagram. Every layer of the protocol stack lives somewhere in it: the physical layer in the radio and antenna; the link layer in two halves, with the time critical sending and receiving in baseband hardware and the rest as firmware on the processor; the host protocols and the application as software on the processor. Click any layer on the left or any block in the diagram.',
+    [['Protocol stack', 'Communication split into layers. Each layer does one job and hands off to the next by agreed rules.'], ['Controller', 'The radio plus the link layer. Its job is to put data on the air accurately and on time.'], ['Host', 'Software on the processor that handles connections, security and how data is organized.']], { view: 'open', lane: 'stack' });
+  add(0, `On the ${p} side: two chips and a few wires`, `The ${p}’s main processor runs the apps and the host; a separate Bluetooth chip runs the controller. They talk over HCI, physically a UART or USB link. The ${n} fits all of this into one chip, so there HCI is just a software interface inside it.`,
+    [['HCI', 'Host Controller Interface. The standard link between host and controller; it carries only commands, events and data.'], ['UART', 'A simple serial interface, often used to connect a main processor to a Bluetooth chip.']], { chipV: 'peer', lane: 'stack' });
+
+  add(1, k === 'buds' ? 'Open the case, and the earbud calls out: "I’m here"' : 'In pairing mode, the remote calls out: "I’m here"', `At regular intervals the ${n} sends one short packet on each of the three advertising channels, 37, 38 and 39. The ripples in the scene are radio waves; the three dots stacked up in the chart at lower left are those three packets.`,
+    [['Advertising', 'Short messages a device sends on a schedule, saying who it is and what it can do.'], ['Advertising channels', 'Three of the 40 channels set aside for this, at the low, middle and high end of the band, away from the main Wi-Fi channels.']], { sim: 'adv' });
+  add(1, 'Each packet takes under a millisecond, and the chip sleeps the rest of the time', 'Look at the current trace at lower left: it spikes only at the instant a packet goes out and lies flat the rest of the time. Drag the advertising interval below and watch the average current and battery life change. This is where the low energy comes from.',
+    [['Advertising interval', 'Time between two advertisements; the spec allows 20 ms to 10.24 s.'], ['Duty cycle', 'The share of time the chip is awake. BLE saves power by keeping it tiny.']], { sim: 'adv', tryK: 'adv' });
+  add(1, `The ${n} is found only while the ${p} is listening`, `The ${p} takes turns listening on the three advertising channels; the blue bars in the chart are its listening windows. When an advertisement lands inside a window, the ${p} discovers the ${n}. The sparser the advertising, the longer discovery takes.`,
+    [['Scanning', 'The receiver listening on the advertising channels.'], ['Scan window', 'Each stretch of time the receiver is switched on to listen.']], { sim: 'scan', tryK: 'adv' });
+
+  add(2, `The ${p} replies: let’s connect`, `Right after hearing an advertisement, the ${p} answers with a connection request that settles three things: how often to meet, the order in which to change channels, and how long a silence lasts before the link counts as lost. From now on the ${p} is the central and the ${n} is the peripheral.`,
+    [['CONNECT_IND', 'The connection request packet, carrying the connection interval, hopping parameters and timeout.'], ['Central', 'The side that starts the connection and keeps the beat, usually a phone or TV.'], ['Peripheral', 'The side that advertises and gets connected, usually earbuds, remotes or wristbands.'], ['Pairing and encryption', 'After connecting, the two sides exchange keys and encrypt everything that follows. The keys are stored in flash, so next time they reconnect by themselves.']], { sim: 'connect', tryK: 'replay' });
+  add(2, 'Meet on schedule, on a new channel each time', `Once connected, neither side transmits whenever it likes. Both wake together once per connection interval: the ${p} speaks first, the ${n} answers, and both go back to sleep. Each meeting uses a different channel, which is why the dots in the chart jump up and down. Try dragging the connection interval.`,
+    [['Connection interval', 'Time between two meetings; the spec allows 7.5 ms to 4 s.'], ['Frequency hopping', 'Changing channel at every exchange, so the link never sits for long on a frequency that is being jammed.'], ['Sleep clock and timer', 'While the chip sleeps, a timer counts on the 32.768 kHz clock and wakes the chip when time is up.']], { sim: 'conn', tryK: 'conn' });
+  add(2, 'When Wi-Fi gets in the way, cross those channels off', `Turn on the Wi-Fi interference below. Packets that land in the purple band are lost, and the link layer resends them automatically. After a few losses the ${p} sends a new channel map, and hopping skips that stretch from then on.`,
+    [['Adaptive frequency hopping (AFH)', 'Adjusting the set of usable channels as interference comes and goes.'], ['Channel map', 'The list of which of the 37 data channels may be used, kept and sent by the central.'], ['Retransmission', 'If no acknowledgment comes back, the packet goes again at the next meeting. The link layer does this on its own.']], { sim: 'conn', tryK: 'wifi' });
+
+  add(3, `The ${p} asks first: what can you do?`, `The ${n} keeps a list of what it offers. The ${p} asks level by level: which services there are, which characteristics each service has, and then reads or subscribes. These rules are called GATT. Host software on the processor does the work, so the processor and memory light up in the diagram.`,
+    [['GATT', 'Generic Attribute Profile. Organizes a device’s data into services and characteristics and defines how to query them.'], ['Service', 'A group of related functions, such as the battery service.'], ['Characteristic', 'One data item inside a service, such as the battery level.'], ['Notification', 'After you subscribe, the device pushes updates whenever the data changes, so nobody has to keep asking.']], { sim: 'gatt', tryK: 'replay' });
+  if (k === 'buds') {
+    add(3, 'Press play: music cut into slices, delivered on the beat', 'Music is compressed with LC3, typically into one frame every 10 ms, and sent over dedicated isochronous channels to the left and right earbuds, which play each frame at the same agreed instant. Press play below, then watch the current: the earbud now wakes every 10 ms, far busier than an idle connection.',
+      [['LE Audio', 'The new generation of Bluetooth audio, built on BLE.'], ['LC3', 'The standard LE Audio codec. It compresses audio into small frames.'], ['Isochronous channel (CIS)', 'A connection with reserved time slots for data that must arrive on time; one per earbud.'], ['Note', 'Many earbuds on the market still stream music over Classic Bluetooth. This step shows the LE Audio way.']], { sim: 'audio', tryK: 'play' });
+  } else {
+    add(3, 'What happens when you press volume up', 'Press a volume key below. The key press wakes the chip, the chip sends a notification at the next meeting, and the TV volume changes. With no key pressed, the remote may skip several meetings in a row and keep sleeping, which is why the TV calls every time but the remote answers only now and then.',
+      [['HID over GATT', 'The standard way to carry keyboard, mouse and remote control input over GATT.'], ['Peripheral latency', 'Lets the peripheral skip a number of meetings when it has nothing to send, saving more power.'], ['Waking on interrupt', 'A key press creates an electrical signal that wakes the sleeping chip.']], { sim: 'key', tryK: 'key' });
+    add(3, 'Hold the voice button and speak', 'Press the voice button below. Your voice is compressed and sent to the TV as several packets at every meeting. Now the remote works at every meeting and the current rises clearly; let go and it goes back to sleep.',
+      [['Voice remote', 'Your voice is compressed, sent over Bluetooth in packets, and recognized by the TV or the cloud.'], ['Data length extension (DLE)', 'Raises the payload of one packet from 27 bytes to as many as 251, which speeds up voice and firmware updates.']], { sim: 'voice', tryK: 'voice' });
+  }
+  add(4, 'Same data, faster speech, shorter radio time', 'The physical layer offers several data rates. The higher the rate, the less time the same data spends on air, the shorter the radio stays on, and the less power it uses. Pick an amount of data below and compare the PHYs.',
+    [['PHY', 'The operating mode of the physical layer; it sets how many bits go out per second.'], ['LE Coded', 'Uses several symbols for each bit: slower, but it reaches farther.'], ['HDT', 'High Data Throughput, an optional feature of Bluetooth Core 7.0 that raises the top data rate to 7.5 Mb/s.']], { sim: 'conn', tryK: 'phy', lane: 'cmp' });
+  add(4, 'The price of speed: more bits per symbol, more trouble with noise', 'The radio sends data as a series of symbols. In GFSK each symbol carries 1 bit; the higher order modulations HDT uses carry 2 to 4 bits per symbol. The more states there are and the closer they sit, the easier they are to misread when the signal weakens. Try dragging the signal quality.',
+    [['Modulation', 'How 0s and 1s are turned into radio waves.'], ['GFSK', 'Uses a higher and a lower frequency for 1 and 0. Simple and robust; BLE has always used it.'], ['QPSK, 8PSK, 16QAM', 'Combine phase and amplitude to carry several bits at once: faster, but they need a cleaner signal.']], { sim: 'conn', tryK: 'mod', lane: 'mod' });
+  add(4, 'Recap: three things to remember', 'Once through, try the other device: the same protocol is used very differently in earbuds and in a remote. Version history, HCI timing, packet formats and more from the source article are in the appendix at top right.', [], { sim: 'conn', lane: 'recap' });
+  return B;
+}
+
+/* ================= 3D engine ================= */
+const stage = $('#stage'), canvas = $('#gl'), lbRoot = $('#labels');
+let renderer = null;
+try { renderer = new T.WebGLRenderer({ canvas, antialias: true, alpha: true }); renderer.outputEncoding = T.sRGBEncoding; } catch (e) { renderer = null; }
+if (!renderer) $('#nogl').hidden = false;
+const scene = new T.Scene();
+const camera = new T.PerspectiveCamera(32, 2, 0.1, 120);
+scene.add(new T.HemisphereLight(0xe4edff, 0x18202e, 0.75));
+const sun = new T.DirectionalLight(0xffffff, 1.5); sun.position.set(4, 9, 7); scene.add(sun);
+const fill = new T.DirectionalLight(0x9fc4ff, 0.6); fill.position.set(-6, 3, 4); scene.add(fill);
+try {
+  if (renderer) {
+    const ec = document.createElement('canvas'); ec.width = 512; ec.height = 256; const ex = ec.getContext('2d'), eg = ex.createLinearGradient(0, 0, 0, 256);
+    eg.addColorStop(0, '#b9c8e0'); eg.addColorStop(0.42, '#46587a'); eg.addColorStop(0.56, '#161f30'); eg.addColorStop(1, '#0a0f18'); ex.fillStyle = eg; ex.fillRect(0, 0, 512, 256);
+    ex.fillStyle = '#ffffff'; ex.fillRect(50, 26, 100, 54); ex.fillRect(296, 18, 130, 44); ex.fillStyle = '#d8e6ff'; ex.fillRect(196, 70, 46, 30); ex.fillRect(440, 60, 40, 60);
+    const et = new T.CanvasTexture(ec); et.mapping = T.EquirectangularReflectionMapping; et.encoding = T.sRGBEncoding; const pm = new T.PMREMGenerator(renderer); scene.environment = pm.fromEquirectangular(et).texture; pm.dispose(); et.dispose();
+  }
+} catch (e) { scene.environment = null; }
+const grid = new T.GridHelper(70, 70, 0x2b3d5c, 0x17233a); grid.material.transparent = true; grid.material.opacity = 0.6; scene.add(grid);
+
+const M = (color, o) => { const m = new T.MeshStandardMaterial(Object.assign({ color, roughness: 0.5, metalness: 0.1 }, o || {})); m.color.convertSRGBToLinear(); return m; };
+const box = (w, h, d, m) => new T.Mesh(new T.BoxGeometry(w, h, d), m);
+const cyl = (r, h, m, s) => new T.Mesh(new T.CylinderGeometry(r, r, h, s || 28), m);
+const sph = (r, m) => new T.Mesh(new T.SphereGeometry(r, 32, 22), m);
+const GOLD = () => M(0xd9b44a, { metalness: 0.85, roughness: 0.3 });
+const STEEL = () => M(0xcdd5de, { metalness: 0.9, roughness: 0.24 });
+
+const ANISO = renderer ? renderer.capabilities.getMaxAnisotropy() : 1;
+function TEX(w, h, draw) { const c = document.createElement('canvas'); c.width = w; c.height = h; draw(c.getContext('2d'), w, h); const t = new T.CanvasTexture(c); t.encoding = T.sRGBEncoding; t.anisotropy = ANISO; return t; }
+const MT = { gold: GOLD(), steel: STEEL(), tin: M(0xdfe3e7, { metalness: 0.9, roughness: 0.34 }), cer: M(0xb89f7d, { roughness: 0.6 }), blk: M(0x1b1d21, { roughness: 0.45, metalness: 0.2 }), fpc: M(0xb5621c, { roughness: 0.5 }), rub: M(0x17181b, { roughness: 0.85 }) };
+function brushed(c, w, h, base) { c.fillStyle = base; c.fillRect(0, 0, w, h); const r = mulberry(5); for (let i = 0; i < 260; i++) { c.strokeStyle = 'rgba(' + (r() < 0.5 ? '255,255,255' : '0,0,0') + ',' + (0.03 + r() * 0.05) + ')'; c.lineWidth = 1; const y = r() * h; c.beginPath(); c.moveTo(0, y); c.lineTo(w, y); c.stroke(); } }
+function pcbTex(w, d, L) {
+  const CW = 1024, CH = Math.max(64, Math.round(1024 * d / w)), S = CW / w, U = x => (x / w + 0.5) * CW, V = z => (z / d + 0.5) * CH, r = mulberry(11);
+  return TEX(CW, CH, c => {
+    c.fillStyle = '#12553a'; c.fillRect(0, 0, CW, CH); c.fillStyle = '#176646'; c.fillRect(S * 0.015, S * 0.015, CW - S * 0.03, CH - S * 0.03);
+    if (L.keep) { c.fillStyle = '#0e4630'; c.fillRect(U(L.keep[0]), 0, U(L.keep[1]) - U(L.keep[0]), CH); }
+    c.lineCap = 'round'; c.lineJoin = 'round';
+    const tr = (p, wd) => { c.strokeStyle = '#2c9463'; c.lineWidth = S * (wd || 0.011); c.beginPath(); p.forEach((q, i) => i ? c.lineTo(U(q[0]), V(q[1])) : c.moveTo(U(q[0]), V(q[1]))); c.stroke(); };
+    const via = (x, z) => { c.fillStyle = '#cfa94c'; c.beginPath(); c.arc(U(x), V(z), S * 0.011, 0, 6.3); c.fill(); c.fillStyle = '#0c3324'; c.beginPath(); c.arc(U(x), V(z), S * 0.005, 0, 6.3); c.fill(); };
+    const pad = (x, z, pw, ph) => { c.fillStyle = '#cfa94c'; c.fillRect(U(x) - S * pw / 2, V(z) - S * ph / 2, S * pw, S * ph); };
+    const cx = L.chip[0], cz = L.chip[1], hs = 0.135, lim = w * 0.47, lz = d * 0.44;
+    [[1, 0], [-1, 0], [0, 1], [0, -1]].forEach(dir => { for (let i = 0; i < 6; i++) {
+      const o = (i - 2.5) * 0.038, l1 = 0.04 + r() * 0.1, bd = (r() < 0.5 ? -1 : 1) * (0.03 + r() * 0.09), l3 = 0.03 + r() * 0.14; let p;
+      if (dir[0]) p = [[cx + dir[0] * hs, cz + o], [cx + dir[0] * (hs + l1), cz + o], [cx + dir[0] * (hs + l1 + Math.abs(bd)), cz + o + bd], [cx + dir[0] * (hs + l1 + Math.abs(bd) + l3), cz + o + bd]];
+      else p = [[cx + o, cz + dir[1] * hs], [cx + o, cz + dir[1] * (hs + l1)], [cx + o + bd, cz + dir[1] * (hs + l1 + Math.abs(bd))], [cx + o + bd, cz + dir[1] * (hs + l1 + Math.abs(bd) + l3)]];
+      p = p.map(q => [clamp(q[0], -lim, L.keep ? L.keep[0] - 0.02 : lim), clamp(q[1], -lz, lz)]); tr(p); via(p[3][0], p[3][1]);
+      pad(dir[0] ? cx + dir[0] * (hs + 0.012) : cx + o, dir[0] ? cz + o : cz + dir[1] * (hs + 0.012), dir[0] ? 0.03 : 0.018, dir[0] ? 0.018 : 0.03);
+    } });
+    if (L.rf) tr(L.rf, 0.022);
+    (L.runs || []).forEach(p => tr(p));
+    for (let i = 0; i < 14; i++) { const x = (r() - 0.5) * w * 0.9, z = (r() - 0.5) * d * 0.86; if (L.keep && x > L.keep[0] - 0.03) continue; if (Math.abs(x - cx) < 0.2 && Math.abs(z - cz) < 0.2) continue; via(x, z); }
+    (L.keys || []).forEach(k => { const x = U(k[0]), z = V(k[1]), R = S * 0.085; c.fillStyle = '#0c3a29'; c.beginPath(); c.arc(x, z, R, 0, 6.3); c.fill(); c.save(); c.beginPath(); c.arc(x, z, R * 0.92, 0, 6.3); c.clip(); c.strokeStyle = '#cfa94c'; c.lineWidth = R * 0.14; for (let i = -3; i <= 3; i++) { c.beginPath(); const xx = x + i * R * 0.27; if (i % 2) { c.moveTo(xx, z - R); c.lineTo(xx, z + R * 0.55); } else { c.moveTo(xx, z + R); c.lineTo(xx, z - R * 0.55); } c.stroke(); } c.restore(); c.strokeStyle = '#cfa94c'; c.lineWidth = R * 0.1; c.beginPath(); c.arc(x, z, R * 0.95, 0, 6.3); c.stroke(); });
+    (L.tp || []).forEach(k => { c.fillStyle = '#cfa94c'; c.beginPath(); c.arc(U(k[0]), V(k[1]), S * 0.018, 0, 6.3); c.fill(); });
+    c.strokeStyle = '#e9f1ea'; c.lineWidth = Math.max(1.5, S * 0.004); c.strokeRect(U(cx - hs - 0.03), V(cz - hs - 0.03), S * (hs * 2 + 0.06), S * (hs * 2 + 0.06));
+    c.fillStyle = '#e9f1ea'; c.textBaseline = 'middle'; c.textAlign = 'center'; (L.silk || []).forEach(k => { c.font = '600 ' + Math.round(S * (k[3] || 0.042)) + 'px Arial, Helvetica, sans-serif'; c.fillText(k[0], U(k[1]), V(k[2])); });
+  });
+}
+function smd(g, x, z, kind, rot) {
+  const p = new T.Group();
+  if (kind === 'c') { p.add(box(0.03, 0.026, 0.026, MT.cer)); [-1, 1].forEach(q => { const e = box(0.012, 0.028, 0.028, MT.tin); e.position.x = q * 0.02; p.add(e); }); }
+  else if (kind === 'r') { p.add(box(0.034, 0.016, 0.026, MT.blk)); [-1, 1].forEach(q => { const e = box(0.01, 0.018, 0.028, MT.tin); e.position.x = q * 0.021; p.add(e); }); }
+  else { p.add(box(0.06, 0.04, 0.06, M(0x3a3d42, { roughness: 0.7 }))); }
+  p.position.set(x, 0.018 + (kind === 'l' ? 0.02 : kind === 'c' ? 0.013 : 0.008), z); p.rotation.y = rot || 0; g.add(p);
+}
+function mkBoard(w, d, L) {
+  const g = new T.Group(), side = M(0x0f4a31, { roughness: 0.7 }), cx = -w * 0.16; L = Object.assign({ chip: [cx, 0] }, L);
+  g.add(box(w, 0.035, d, [side, side, new T.MeshStandardMaterial({ map: pcbTex(w, d, L), roughness: 0.42, metalness: 0.15 }), side, side, side]));
+  const chip = new T.Group(), ct = TEX(256, 256, c => {
+    c.fillStyle = '#1c1e22'; c.fillRect(0, 0, 256, 256); c.strokeStyle = '#2b2e34'; c.lineWidth = 6; c.strokeRect(8, 8, 240, 240);
+    c.fillStyle = '#8f96a0'; c.beginPath(); c.arc(40, 40, 11, 0, 6.3); c.fill(); c.textAlign = 'center'; c.textBaseline = 'middle';
+    c.font = '700 46px Arial, Helvetica, sans-serif'; c.fillText('BLE SoC', 128, 108); c.font = '600 30px Arial, Helvetica, sans-serif'; c.fillText('2.4 GHz', 128, 156); c.font = '500 26px Arial, Helvetica, sans-serif'; c.fillText('QFN  2646', 128, 200);
+  });
+  chip.add(box(0.27, 0.06, 0.27, [MT.blk, MT.blk, new T.MeshStandardMaterial({ map: ct, roughness: 0.5, metalness: 0.15 }), MT.blk, MT.blk, MT.blk]));
+  for (let k = 0; k < 4; k++) for (let i = 0; i < 7; i++) { const o = (i - 3) * 0.034, pd = box(k < 2 ? 0.014 : 0.02, 0.014, k < 2 ? 0.02 : 0.014, MT.tin); pd.position.set(k === 0 ? 0.138 : k === 1 ? -0.138 : o, -0.024, k === 2 ? 0.138 : k === 3 ? -0.138 : o); chip.add(pd); }
+  chip.position.set(cx, 0.048, 0); g.add(chip);
+  const xt = TEX(192, 128, c => { brushed(c, 192, 128, '#c9d0d8'); c.fillStyle = '#4b5158'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.font = '700 44px Arial, Helvetica, sans-serif'; c.fillText('32.000', 96, 52); c.font = '600 28px Arial, Helvetica, sans-serif'; c.fillText('MHz', 96, 94); });
+  const xtal = box(0.14, 0.05, 0.09, [MT.steel, MT.steel, new T.MeshStandardMaterial({ map: xt, roughness: 0.3, metalness: 0.85 }), MT.steel, MT.steel, MT.steel]); xtal.position.set(cx + 0.33, 0.043, d * 0.2); g.add(xtal);
+  for (let i = 0; i < 5; i++) smd(g, cx - 0.05 + i * 0.07, -d * 0.32, i % 2 ? 'c' : 'r');
+  smd(g, cx + 0.2, -d * 0.08, 'c', 1.57); smd(g, cx + 0.2, d * 0.02, 'c', 1.57); smd(g, cx + 0.27, -d * 0.08, 'l'); smd(g, cx + 0.42, d * 0.36, 'c'); smd(g, cx + 0.25, d * 0.36, 'c');
+  return { g, chip, xtal, cx };
+}
+function capMat(tex, o) { return new T.MeshStandardMaterial(Object.assign({ map: tex, roughness: 0.4, metalness: 0.5 }, o || {})); }
+function mkCoin() {
+  const g = new T.Group(), top = TEX(256, 256, c => {
+    brushed(c, 256, 256, '#c6cdd5'); c.strokeStyle = 'rgba(0,0,0,.18)'; c.lineWidth = 3; c.beginPath(); c.arc(128, 128, 104, 0, 6.3); c.stroke();
+    c.fillStyle = '#4a5058'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.font = '700 70px Arial, Helvetica, sans-serif'; c.fillText('+', 128, 70); c.font = '700 36px Arial, Helvetica, sans-serif'; c.fillText('Li-ion', 128, 128); c.font = '600 30px Arial, Helvetica, sans-serif'; c.fillText('3.7 V', 128, 172);
+  });
+  top.center.set(0.5, 0.5); top.rotation = Math.PI / 2;
+  g.add(new T.Mesh(new T.CylinderGeometry(0.3, 0.3, 0.1, 48), [MT.steel, capMat(top, { metalness: 0.85, roughness: 0.3 }), MT.steel]));
+  const lip = cyl(0.308, 0.03, MT.steel, 48); lip.position.y = -0.05; g.add(lip);
+  const gk = new T.Mesh(new T.TorusGeometry(0.292, 0.012, 8, 48), MT.rub); gk.rotation.x = Math.PI / 2; gk.position.y = 0.05; g.add(gk);
+  const tab = box(0.2, 0.006, 0.07, MT.tin); tab.position.set(0.3, 0.056, 0); g.add(tab);
+  const tape = box(0.09, 0.005, 0.12, M(0xd98a1e, { roughness: 0.35, transparent: true, opacity: 0.85 })); tape.position.set(0.255, 0.06, 0); g.add(tape);
+  return g;
+}
+function mkSpeaker() {
+  const g = new T.Group(); g.add(cyl(0.22, 0.07, M(0x9097a0, { metalness: 0.9, roughness: 0.32 }), 48));
+  const mag = cyl(0.13, 0.06, M(0x5d6269, { metalness: 0.9, roughness: 0.3 }), 40); mag.position.y = -0.06; g.add(mag);
+  const rim = new T.Mesh(new T.TorusGeometry(0.205, 0.018, 10, 48), MT.steel); rim.rotation.x = Math.PI / 2; rim.position.y = 0.035; g.add(rim);
+  const sur = new T.Mesh(new T.TorusGeometry(0.155, 0.03, 10, 48), MT.rub); sur.rotation.x = Math.PI / 2; sur.position.y = 0.038; g.add(sur);
+  const dome = new T.Mesh(new T.SphereGeometry(0.128, 32, 14, 0, Math.PI * 2, 0, Math.PI / 2), M(0xcfd3d8, { metalness: 0.95, roughness: 0.2 })); dome.scale.y = 0.38; dome.position.y = 0.04; g.add(dome);
+  [-1, 1].forEach(q => { const p = box(0.05, 0.012, 0.045, MT.gold); p.position.set(0.215, -0.03, q * 0.05); g.add(p); });
+  for (let i = 0; i < 6; i++) { const h = cyl(0.014, 0.012, MT.rub, 12); const a = i * Math.PI / 3 + 0.5; h.position.set(Math.cos(a) * 0.19, -0.036, Math.sin(a) * 0.19); g.add(h); }
+  return g;
+}
+function mkMems(flex) {
+  const g = new T.Group(); if (flex) { const f = box(0.2, 0.006, 0.1, MT.fpc); f.position.x = 0.04; g.add(f); }
+  const can = box(0.09, 0.036, 0.07, MT.steel); can.position.y = 0.02; g.add(can); const port = cyl(0.011, 0.004, MT.rub, 14); port.position.set(-0.02, 0.039, 0.012); g.add(port);
+  return g;
+}
+function mkFpcAnt() {
+  const t = TEX(128, 736, (c, w, h) => {
+    c.fillStyle = '#b5621c'; c.fillRect(0, 0, w, h); c.strokeStyle = '#e2a45a'; c.lineWidth = 9; c.lineJoin = 'round'; c.beginPath();
+    c.moveTo(30, h - 70); c.lineTo(30, 40); c.lineTo(98, 40); c.lineTo(98, 250); c.lineTo(62, 250); c.lineTo(62, 110); c.stroke();
+    c.beginPath(); c.moveTo(98, 250); c.lineTo(98, 470); c.lineTo(64, 470); c.lineTo(64, 330); c.stroke();
+    c.fillStyle = '#d4af4f'; c.fillRect(14, h - 78, 34, 44); c.fillRect(70, h - 78, 34, 44); c.fillStyle = '#3a2a16'; c.fillRect(0, h - 22, w, 22);
+    c.fillStyle = '#f3e3c8'; c.font = '700 26px Arial, Helvetica, sans-serif'; c.save(); c.translate(100, h - 150); c.rotate(-Math.PI / 2); c.fillText('ANT', 0, 0); c.restore();
+  });
+  const m = new T.MeshStandardMaterial({ map: t, roughness: 0.5, metalness: 0.2 }); return box(0.12, 0.92, 0.008, [MT.fpc, MT.fpc, MT.fpc, MT.fpc, m, m]);
+}
+function buildBuds() {
+  const g = new T.Group(), movers = [], A = {};
+  const shell = M(0xf2f4f7, { roughness: 0.22, transparent: true }), tipM = M(0xb9c1cc, { roughness: 0.85, transparent: true });
+  function bud(shell, tipM) {
+    const b = new T.Group(); const body = sph(0.56, shell); body.scale.set(1, 0.94, 0.86); b.add(body);
+    const stem = new T.Mesh(new T.CylinderGeometry(0.17, 0.14, 1.3, 28), shell); stem.position.set(0.14, -0.88, 0); stem.rotation.z = 0.1; b.add(stem);
+    const cap = sph(0.14, shell); cap.position.set(0.205, -1.527, 0); b.add(cap);
+    const tip = sph(0.27, tipM); tip.scale.set(0.8, 1, 1); tip.position.set(-0.52, 0.06, 0.12); b.add(tip); return b;
+  }
+  const R = bud(shell, tipM); R.position.set(0.75, 0.35, 0.3); g.add(R);
+  const L = bud(M(0xf2f4f7, { roughness: 0.22 }), M(0xb9c1cc, { roughness: 0.85 })); L.scale.x = -1; L.position.set(-1.45, 0.45, -0.6); g.add(L);
+  const bw = 0.66, bdp = 0.42, c0 = -bw * 0.16;
+  const bd = mkBoard(bw, bdp, { rf: [[c0 + 0.135, -0.03], [0.2, -0.03], [0.26, -0.09], [0.31, -0.09]], silk: [['U1', c0 - 0.08, 0.175], ['Y1', c0 + 0.33, 0.02], ['ANT', 0.26, -0.165], ['BT-EAR-R  V1.0', c0 + 0.02, -0.185, 0.03]], tp: [[-0.29, 0.17], [-0.24, 0.17], [-0.19, 0.17]] });
+  const fc = box(0.1, 0.03, 0.045, M(0xe9e2d0, { roughness: 0.6 })); fc.position.set(0.27, 0.032, -0.1); bd.g.add(fc);
+  bd.g.rotation.x = 1.2; R.add(bd.g); movers.push({ o: bd.g, a: [0.02, 0.02, 0], e: [1.65, 0.5, 0.9], sa: 0.72, se: 1.75, w: [0.2, 0.5], ids: ['chip', 'xtal'] }); A.chip = bd.chip; A.xtal = bd.xtal;
+  const ant = mkFpcAnt(); ant.rotation.z = 0.1; R.add(ant); movers.push({ o: ant, a: [0.15, -0.95, 0.09], e: [0.95, -0.8, 0.9], sa: 1, se: 1.3, w: [0.35, 0.65], ids: ['ant'] }); A.ant = ant;
+  const batt = mkCoin(); batt.rotation.x = Math.PI / 2; R.add(batt); movers.push({ o: batt, a: [0.06, 0.1, -0.16], e: [-0.15, 0.78, 0.6], sa: 0.9, se: 1.2, w: [0.5, 0.8], ids: ['batt'] }); A.batt = batt;
+  const spk = mkSpeaker(); spk.rotation.set(Math.PI / 2 - 0.25, 0, 0.45); R.add(spk); movers.push({ o: spk, a: [-0.3, 0.05, 0.08], e: [-1.0, 0.25, 0.9], sa: 0.9, se: 1.4, w: [0.6, 0.9], ids: ['spk'] }); A.spk = spk;
+  const mic = mkMems(true); mic.rotation.x = Math.PI / 2 - 0.3; R.add(mic); movers.push({ o: mic, a: [0.2, -1.45, 0.05], e: [1.45, -1.25, 0.8], sa: 0.8, se: 2, w: [0.7, 1], ids: ['mic'] }); A.mic = mic;
+  movers.forEach(m => {
+    const geo = new T.BufferGeometry().setFromPoints([new T.Vector3(m.a[0], m.a[1], m.a[2]), new T.Vector3(m.a[0], m.a[1], m.a[2])]);
+    m.ln = new T.Line(geo, new T.LineBasicMaterial({ color: 0x8cc8ff, transparent: true, opacity: 0.9, depthTest: false })); m.ln.renderOrder = 3; m.ln.frustumCulled = false; m.ln.visible = false; R.add(m.ln);
+    m.dot = new T.Mesh(new T.SphereGeometry(0.045, 12, 10), new T.MeshBasicMaterial({ color: 0x8cc8ff, depthTest: false })); m.dot.renderOrder = 3; m.dot.position.set(m.a[0], m.a[1], m.a[2]); m.dot.visible = false; R.add(m.dot);
+  });
+  const antO = new T.Object3D(); antO.position.set(0.17, -0.9, 0); R.add(antO);
+  const top = new T.Object3D(); top.position.set(0, 1.3, 0); g.add(top);
+  const lO = new T.Object3D(); L.add(lO); const rO = new T.Object3D(); R.add(rO);
+  return { g, movers, A, fades: [[shell, 0.3], [tipM, 0.3]], f: {}, ant: antO, top, L: lO, R: rO, y: 1.75, ext: 2.1, ox: 0.35, oy: 1.62, cx: 0.85 };
+}
+function icon(kind, bg) {
+  return TEX(96, 96, c => {
+    c.fillStyle = bg; c.fillRect(0, 0, 96, 96); c.strokeStyle = '#f2f5f8'; c.fillStyle = '#f2f5f8'; c.lineWidth = 7; c.lineCap = 'round';
+    if (kind === 'pwr') { c.beginPath(); c.arc(48, 52, 20, -1.0, Math.PI + 1.0); c.stroke(); c.beginPath(); c.moveTo(48, 22); c.lineTo(48, 48); c.stroke(); }
+    else if (kind === 'mic') { c.fillRect(40, 22, 16, 30); c.beginPath(); c.arc(48, 46, 17, 0.1, Math.PI - 0.1); c.stroke(); c.beginPath(); c.moveTo(48, 64); c.lineTo(48, 74); c.stroke(); }
+    else if (kind === 'ok') { c.beginPath(); c.arc(48, 48, 12, 0, 6.3); c.fill(); }
+    else { c.beginPath(); c.moveTo(28, 48); c.lineTo(68, 48); c.stroke(); if (kind === '+') { c.beginPath(); c.moveTo(48, 28); c.lineTo(48, 68); c.stroke(); } }
+  });
+}
+function buildRcu() {
+  const g = new T.Group(), r = new T.Group(), movers = [], A = {}; g.add(r); r.rotation.set(1.0, -0.1, 0.04); g.scale.setScalar(1.2);
+  const botM = M(0x15181d, { roughness: 0.7, envMapIntensity: 0.35 }), topM = M(0x1d2128, { roughness: 0.6, envMapIntensity: 0.4 });
+  const bot = box(3.0, 0.16, 0.92, botM); r.add(bot); movers.push({ o: bot, a: [0, -0.1, 0], e: [0, -0.75, 1.0], w: [0.45, 1] });
+  const top = new T.Group(); top.add(box(3.0, 0.1, 0.92, topM));
+  const btn = (x, z, rad, col, ic) => { const m = M(col, { roughness: 0.6 }), b = new T.Mesh(new T.CylinderGeometry(rad, rad, 0.05, 32), [m, capMat(icon(ic, '#' + col.toString(16).padStart(6, '0')), { roughness: 0.6, metalness: 0.05 }), m]); b.position.set(x, 0.07, z); b.rotation.y = Math.PI / 2; top.add(b); return b; };
+  btn(1.2, 0, 0.09, 0xc7423e, 'pwr'); btn(0.98, 0, 0.085, 0x2f7fd0, 'mic');
+  const ring = new T.Mesh(new T.TorusGeometry(0.2, 0.04, 12, 40), M(0x4a5262, { roughness: 0.5 })); ring.rotation.x = Math.PI / 2; ring.position.set(0.45, 0.06, 0); top.add(ring); btn(0.45, 0, 0.09, 0x4a5262, 'ok');
+  const vp = btn(-0.15, -0.2, 0.09, 0x4a5262, '+'), vm = btn(-0.15, 0.2, 0.09, 0x4a5262, '-');
+  r.add(top); movers.push({ o: top, a: [0, 0.08, 0], e: [0, 0.8, -1.2], w: [0.05, 0.55], ids: ['chip', 'xtal', 'ant', 'batt', 'keys', 'mic', 'ir'] });
+  const bw = 1.95, c0 = -bw * 0.16, KP = [[-0.63, -0.2], [-0.63, 0.2], [-0.03, -0.02], [0.5, 0], [0.72 - 0.0, 0.3]].slice(0, 4);
+  const bd = mkBoard(bw, 0.8, { keep: [0.58, 0.975], keys: KP, rf: [[c0 + 0.135, -0.05], [0.3, -0.05], [0.42, -0.17], [0.6, -0.17]], runs: [[[-0.63, -0.2], [-0.5, -0.2], [-0.46, -0.16]], [[-0.63, 0.2], [-0.5, 0.2], [-0.46, 0.16]], [[0.5, 0], [0.38, 0], [0.33, 0.05]]], silk: [['U1', c0 - 0.22, -0.02, 0.05], ['Y1', c0 + 0.33, 0.27, 0.045], ['ANT', 0.78, -0.33, 0.05], ['IR', 0.9, 0.12, 0.045], ['MIC', 0.35, 0.37, 0.04], ['RCU-MAIN  V1.0', -0.62, -0.345, 0.045]], tp: [[-0.9, -0.3], [-0.84, -0.3], [-0.78, -0.3]] });
+  bd.g.position.set(0.48, -0.005, 0); r.add(bd.g); A.chip = bd.chip; A.xtal = bd.xtal;
+  const antG = new T.Group(), cu = M(0xc9a13c, { metalness: 0.55, roughness: 0.5, envMapIntensity: 0.5 }); for (let i = 0; i < 6; i++) { const q = box(0.03, 0.006, 0.5, cu); q.position.set(0.62 + i * 0.06, 0.021, 0); antG.add(q); if (i < 5) { const c2 = box(0.06, 0.006, 0.03, cu); c2.position.set(0.65 + i * 0.06, 0.021, i % 2 ? -0.235 : 0.235); antG.add(c2); } }
+  bd.g.add(antG); const antA = new T.Object3D(); antA.position.set(0.77, 0.03, 0); bd.g.add(antA); A.ant = antG; A.antA = antA;
+  const kp = cyl(0.085, 0.004, new T.MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false }), 20); kp.position.set(-0.63, 0.022, -0.2); bd.g.add(kp); A.keys = kp;
+  const mic = mkMems(false); mic.position.set(0.35, 0.02, 0.3); bd.g.add(mic); A.mic = mic;
+  const ir = new T.Group(), lens = M(0xe6f0ff, { roughness: 0.05, metalness: 0, transparent: true, opacity: 0.6 }); const lb = cyl(0.05, 0.09, lens, 24); lb.rotation.z = Math.PI / 2; ir.add(lb); const ld = sph(0.05, lens); ld.position.x = 0.045; ir.add(ld); const fl = cyl(0.06, 0.014, lens, 24); fl.rotation.z = Math.PI / 2; fl.position.x = -0.045; ir.add(fl);
+  const die = box(0.02, 0.02, 0.02, MT.blk); ir.add(die); [-1, 1].forEach(q => { const ld2 = cyl(0.006, 0.09, MT.tin, 8); ld2.rotation.z = Math.PI / 2; ld2.position.set(-0.09, -0.02, q * 0.02); ir.add(ld2); });
+  ir.position.set(0.99, 0.055, 0); bd.g.add(ir); A.ir = ir;
+  const wrap = TEX(512, 256, (c, w, h) => {
+    c.fillStyle = '#1d2026'; c.fillRect(0, 0, w, h); c.fillStyle = '#c59a3a'; c.fillRect(0, h - 70, w, 70); c.fillStyle = '#e8ecef'; c.fillRect(0, h - 78, w, 6);
+    c.fillStyle = '#f0f3f6'; c.textAlign = 'center'; c.textBaseline = 'middle';
+    [128, 384].forEach(x => { c.save(); c.translate(x, 96); c.rotate(Math.PI / 2); c.font = '800 64px Arial, Helvetica, sans-serif'; c.fillText('AAA', 0, 0); c.font = '600 28px Arial, Helvetica, sans-serif'; c.fillText('1.5 V', 0, 50); c.restore(); c.font = '800 44px Arial, Helvetica, sans-serif'; c.fillStyle = '#1d2026'; c.fillText('+', x, h - 34); c.fillStyle = '#f0f3f6'; });
+  });
+  [-0.21, 0.21].forEach((z, i) => { const b = new T.Group(); const body = new T.Mesh(new T.CylinderGeometry(0.105, 0.105, 0.93, 32), [new T.MeshStandardMaterial({ map: wrap, roughness: 0.35, metalness: 0.3 }), MT.steel, MT.steel]); body.rotation.z = Math.PI / 2; b.add(body); const cp = cyl(0.036, 0.045, MT.steel, 16); cp.rotation.z = Math.PI / 2; cp.position.x = 0.485; b.add(cp); if (i) b.rotation.y = Math.PI; r.add(b); movers.push({ o: b, a: [-0.95, -0.01, z], e: [-0.95, -0.01, z], w: [0, 1] }); if (!i) A.batt = b; });
+  const antO = new T.Object3D(); antO.position.set(1.25, 0, 0); r.add(antO);
+  const topO = new T.Object3D(); topO.position.set(-0.9, 0.85, 0); g.add(topO);
+  return { g, movers, A, fades: [], f: {}, ant: antO, top: topO, vp, vm, y: 1.6, ext: 2.05, ox: 1.2, oy: 1.75, or: 7.6, cx: 0 };
+}
+function mkScreen(w, h, pw, ph) {
+  const cv = document.createElement('canvas'); cv.width = pw; cv.height = ph; const tex = new T.CanvasTexture(cv); tex.minFilter = T.LinearFilter; tex.encoding = T.sRGBEncoding;
+  const m = new T.Mesh(new T.PlaneGeometry(w, h), new T.MeshBasicMaterial({ map: tex })); return { cv, ctx: cv.getContext('2d'), tex, m };
+}
+function buildPhone() {
+  const g = new T.Group(); g.add(box(1.34, 2.66, 0.12, M(0x1a1f27, { metalness: 0.6, roughness: 0.35 })));
+  const sc = mkScreen(1.2, 2.5, 360, 750); sc.m.position.z = 0.062; g.add(sc.m); g.rotation.y = -0.28; g.scale.setScalar(1.2);
+  const rf = new T.Object3D(); rf.position.set(-0.35, 1.0, 0.1); g.add(rf); const top = new T.Object3D(); top.position.set(-0.85, 1.15, 0); g.add(top);
+  return Object.assign(sc, { g, rf, top, y: 1.75, off: 0, ext: 0.9, sc: 1.2 });
+}
+function buildTv() {
+  const g = new T.Group(); g.add(box(4.5, 2.6, 0.14, M(0x14181f, { metalness: 0.5, roughness: 0.4 })));
+  const sc = mkScreen(4.3, 2.4, 860, 480); sc.m.position.z = 0.072; g.add(sc.m);
+  const neck = box(0.22, 0.5, 0.1, M(0x1c222b)); neck.position.y = -1.5; g.add(neck); const base = box(1.7, 0.06, 0.6, M(0x1c222b)); base.position.y = -1.77; g.add(base);
+  g.rotation.y = -0.34; const rf = new T.Object3D(); rf.position.set(-1.9, -1.0, 0.1); g.add(rf); const top = new T.Object3D(); top.position.set(-2.45, 1.1, 0); g.add(top);
+  return Object.assign(sc, { g, rf, top, y: 1.8, off: 0.9, ext: 3.05, sc: 1 });
+}
+const SC = { buds: { dev: buildBuds(), peer: buildPhone() }, rcu: { dev: buildRcu(), peer: buildTv() } };
+Object.keys(SC).forEach(k => { scene.add(SC[k].dev.g, SC[k].peer.g); });
+const router = new T.Group(); router.add(box(0.9, 0.18, 0.6, M(0xdfe6ee, { roughness: 0.4 }))); [-0.3, 0.3].forEach(x => { const a = cyl(0.025, 0.7, M(0x2a2f38)); a.position.set(x, 0.4, -0.2); router.add(a); });
+router.position.set(0.2, 0.09, -2.2); router.visible = false; scene.add(router); const routerTop = new T.Object3D(); routerTop.position.set(0, 0.9, 0); router.add(routerTop);
+
+/* state */
+const ST = { dev: 'buds', i: 0, open: false, x: 0, xT: 0, auto: false, xl: -1, sel: null, blk: null, pay: 0, mod: 1, q: 0.75, advInt: 100, connInt: 30 };
+let BE = beats('buds');
+
+/* camera */
+const orb = { th: 0, ph: 1.36, r: 10, tg: new T.Vector3(0, 1.5, 0), goal: null, base: null, user: false };
+const DX = () => camera.aspect < 1.5 ? 2.2 : 2.7;
+function layout() {
+  const dx = DX(), ps = camera.aspect < 1.5 ? 0.7 : 1;
+  Object.keys(SC).forEach(k => { const s = SC[k]; s.dev.g.position.set(-dx, s.dev.y, 0); s.peer.g.scale.setScalar(ps * s.peer.sc); s.peer.g.position.set(dx + s.peer.off * ps, 0.05 + (s.peer.y - 0.05) * (k === 'rcu' ? ps : 1), k === 'rcu' ? -0.7 : 0); });
+}
+function viewOf() {
+  const a = camera.aspect, dx = DX(), s = SC[ST.dev], ps = a < 1.5 ? 0.7 : 1, K = 0.2867, wide = a >= 1.5;
+  if (ST.open) return { th: -0.08, ph: 1.32, r: Math.max(s.dev.or || 6.6, 3.3 / (K * a) * 1.05), tg: new T.Vector3(-dx + (wide ? -s.dev.ox : s.dev.cx), s.dev.oy, 0) };
+  const span = dx + Math.max(s.dev.ext, s.peer.off * ps + s.peer.ext * ps) + 0.2;
+  return { th: 0, ph: 1.38, r: Math.max(6.5, span / (K * a) * 1.04), tg: new T.Vector3(a >= 1.5 ? 0.45 : 0.05, 1.72, 0) };
+}
+function camGoal(snap) { const v = viewOf(); orb.base = v; orb.user = false; if (snap) { orb.th = v.th; orb.ph = v.ph; orb.r = v.r; orb.tg.copy(v.tg); orb.goal = null; } else orb.goal = v; }
+function camClamp() { const b = orb.base; if (!b) return; orb.th = clamp(orb.th, b.th - 0.75, b.th + 0.75); orb.ph = clamp(orb.ph, 0.95, 1.5); orb.r = clamp(orb.r, b.r * 0.6, b.r * 1.35); }
+function camApply() { const s = Math.sin(orb.ph); camera.position.set(orb.tg.x + orb.r * s * Math.sin(orb.th), orb.tg.y + orb.r * Math.cos(orb.ph), orb.tg.z + orb.r * s * Math.cos(orb.th)); camera.lookAt(orb.tg); }
+
+/* labels */
+const LBS = [], _v = new T.Vector3();
+function proj(target, W, H) {
+  if (!target) return null; target.getWorldPosition(_v); _v.project(camera); if (_v.z >= 1 || _v.z <= -1) return null;
+  return [(_v.x * 0.5 + 0.5) * W, (-_v.y * 0.5 + 0.5) * H];
+}
+function LB(target, text, o) {
+  o = o || {}; const el = document.createElement(o.pick ? 'button' : 'div'); el.className = 'lb ' + (o.cls || ''); el.textContent = text;
+  if (o.pick) { el.type = 'button'; el.addEventListener('click', e => { e.stopPropagation(); o.pick(); }); }
+  lbRoot.appendChild(el); const l = { el, target, px: o.px || [0, 0], vis: o.vis || (() => true), w: 0, h: 0, on: false }; LBS.push(l); return l;
+}
+function lbText(l, t) { if (l.el.textContent !== t) { l.el.textContent = t; l.w = 0; } }
+function lbUpdate(W, H) {
+  for (const l of LBS) {
+    let on = !!l.vis(), p = null; if (on) { p = proj(l.target, W, H); on = !!p && p[0] > -40 && p[0] < W + 40 && p[1] > -30 && p[1] < H + 30; }
+    if (on !== l.on) { l.el.style.display = on ? 'block' : 'none'; l.on = on; l.w = 0; }
+    if (!on) continue; if (!l.w) { l.w = l.el.offsetWidth; l.h = l.el.offsetHeight; }
+    const x = clamp(p[0] + l.px[0] - l.w / 2, 4, Math.max(4, W - 4 - l.w)), y = clamp(p[1] + l.px[1] - l.h / 2, 4, Math.max(4, H - 4 - l.h));
+    l.el.style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px)';
+  }
+}
+const PICK = { buds: [], rcu: [] }, PLB = { buds: {}, rcu: {} };
+Object.keys(SC).forEach(k => {
+  const s = SC[k], d = DV[k];
+  LB(s.dev.top, d.nm, { cls: 'head dev', vis: () => ST.dev === k && !ST.open });
+  LB(s.peer.top, d.pm, { cls: 'head peer', px: [-26, 0], vis: () => ST.dev === k && s.peer.g.visible });
+  LB(s.dev.ant, 'The chip and antenna are in here', { cls: 'mark', px: k === 'buds' ? [86, 10] : [10, -40], vis: () => ST.dev === k && !ST.open && ST.x < 0.1 && BE[ST.i].a <= 1 });
+  Object.keys(d.parts).forEach(id => {
+    const a = s.dev.A[id]; a.traverse(o => { if (o.isMesh) { o.userData.part = id; PICK[k].push(o); } });
+    PLB[k][id] = LB(id === 'ant' && s.dev.A.antA ? s.dev.A.antA : a, d.parts[id][0], { px: d.px[id], pick: () => selPart(id), vis: () => ST.dev === k && ST.open && (s.dev.f[id] || 0) > 0.5 });
+  });
+});
+LB(routerTop, 'Wi-Fi router', { cls: 'wifi', vis: () => router.visible });
+
+/* fx: waves and flying packets */
+const ringTex = (() => { const c = document.createElement('canvas'); c.width = c.height = 256; const x = c.getContext('2d'); x.strokeStyle = 'rgba(255,255,255,.28)'; x.lineWidth = 10; x.beginPath(); x.arc(128, 128, 112, 0, 6.3); x.stroke(); x.strokeStyle = '#fff'; x.lineWidth = 3; x.beginPath(); x.arc(128, 128, 112, 0, 6.3); x.stroke(); return new T.CanvasTexture(c); })();
+const waves = []; for (let i = 0; i < 22; i++) { const s = new T.Sprite(new T.SpriteMaterial({ map: ringTex, transparent: true, depthWrite: false, depthTest: false, opacity: 0 })); s.renderOrder = 4; s.visible = false; scene.add(s); waves.push({ s, t: 9, life: 1.3, max: 7 }); }
+const flies = []; for (let i = 0; i < 18; i++) { const m = new T.Mesh(new T.SphereGeometry(0.1, 14, 10), new T.MeshBasicMaterial({ color: 0xffffff, transparent: true, depthTest: false })); m.visible = false; m.renderOrder = 5; scene.add(m); flies.push({ m, t: 9, dur: 0.6, a: new T.Vector3(), b: new T.Vector3(), ok: true, cb: null, col: '#fff' }); }
+const flyLbs = []; for (let i = 0; i < 5; i++) { const l = LB(null, '', { cls: 'fly', px: [0, -24], vis: () => !!l.f && l.f.t < l.f.dur }); l.f = null; flyLbs.push(l); }
+const _p = new T.Vector3();
+function P(who) { const s = SC[ST.dev]; const o = who === 'dev' ? s.dev.ant : who === 'peer' ? s.peer.rf : who === 'L' ? s.dev.L : who === 'R' ? s.dev.R : routerTop; o.getWorldPosition(_p); return _p; }
+const fx = {
+  wave(who, col, max, life) { let w = waves[0]; for (const x of waves) { if (x.t >= x.life) { w = x; break; } if (x.t > w.t) w = x; } w.t = 0; w.max = max || 4.6; w.life = life || 1.1; w.s.position.copy(P(who)); w.s.material.color.set(col || (who === 'dev' ? C.dev : C.peer)); w.s.visible = true; },
+  pkt(from, to, label, ok, cb) {
+    let f = flies[0]; for (const x of flies) { if (x.t >= x.dur) { f = x; break; } }
+    flyLbs.forEach(l => { if (l.f === f) l.f = null; });
+    f.t = 0; f.dur = label ? 1.05 : 0.6; f.a.copy(P(from)); f.b.copy(P(to)); f.ok = ok !== false; f.cb = cb || null; f.col = from === 'peer' ? C.peer : C.dev; f.m.material.color.set(f.col); f.m.material.opacity = 1; f.m.visible = true;
+    if (label) { let l = flyLbs[0]; for (const x of flyLbs) { if (!x.f || x.f.t >= x.f.dur) { l = x; break; } } l.f = f; l.target = f.m; lbText(l, label); l.el.style.borderColor = f.col; }
+    else if (cb && reduce) { /* callback still runs on arrival */ }
+  },
+  beat() { setTimeout(() => { if (S.sub === 'audio' && S.playing) { fx.wave('L', C.ok, 1.5, 0.7); fx.wave('R', C.ok, 1.5, 0.7); } }, 260); },
+  update(dt) {
+    for (const w of waves) { if (w.t >= w.life) { if (w.s.visible) w.s.visible = false; continue; } w.t += dt; const u = w.t / w.life, sc = 0.3 + u * w.max; w.s.scale.set(sc, sc, 1); w.s.material.opacity = Math.pow(1 - u, 1.5) * 0.8; }
+    for (const f of flies) {
+      if (f.t >= f.dur) { if (f.m.visible) f.m.visible = false; continue; } f.t += dt; const u = Math.min(1, f.t / f.dur), uu = f.ok ? u : Math.min(u, 0.55);
+      f.m.position.lerpVectors(f.a, f.b, uu); f.m.position.y += Math.sin(uu * Math.PI) * 0.45;
+      if (!f.ok && u > 0.55) { f.m.material.color.set(C.bad); f.m.material.opacity = 1 - (u - 0.55) / 0.45; }
+      if (f.t >= f.dur && f.cb) { const cb = f.cb; f.cb = null; cb(); }
+    }
+  }
+};
+
+/* ================= simulation ================= */
+const SLOW = 8, WIN = 1000, ADVK = [0, 12, 39];
+const DATAK = []; for (let k = 0; k < 40; k++) if (ADVK.indexOf(k) < 0) DATAK.push(k);
+const inWifi = k => k >= 13 && k <= 23, GOODK = DATAK.filter(k => !inWifi(k));
+const S = { t: 0, mode: 'idle', sub: 'idle', ev: [], cur: [], scan: [], marks: [], nAdv: 0, nConn: 0, nScan: 0, sc: 0, advInt: 100, connInt: 30, hop: 0, wifi: false, excl: false, fails: 0, pendMap: false, found: false, toConn: 0, first: false, peer: 'home', menu: [], batt: false, script: null, si: 0, sk: 0, playing: false, voice: false, keys: [], lat: 0, vol: 12, lastWave: -1e9, lastFly: -1e9 };
+const BARS = [60, 110, 80, 150, 100, 170, 90, 130, 70];
+const HEAT = { ant: 0, rf: 0, bb: 0, mcu: 0, mem: 0, clk: 0, tmr: 0, pmu: 0, sec: 0, aud: 0, io: 0 }, RFX = [['rf', 1], ['ant', 1], ['bb', 1], ['mcu', 0.45]], HK = { wake: [['tmr', 1], ['pmu', 1], ['clk', 1]], tx: RFX, rx: RFX, host: [['mcu', 1], ['mem', 1]], io: [['io', 1]], aud: [['aud', 1]], sec: [['sec', 0.9]] };
+let clock = 0, lastKind = 'sleep', lastKindT = -9, HOLD = [];
+function heat(k) { HK[k].forEach(b => { HEAT[b[0]] = Math.max(HEAT[b[0]], b[1]); }); if (k !== 'wake' && k !== 'sec') lastKind = k; lastKindT = clock; }
+function cur(t0, t1, i) { S.cur.push([t0, t1, i]); }
+function setPeer(s, force) { if (s === S.peer && !force) return; S.peer = s; drawPeer(); hud(); }
+function hud() {
+  const d = DV[ST.dev]; let t = d.hud[S.peer] || d.hud.home;
+  if (S.peer === 'play' && !S.playing) t = d.hud.pause; if (S.peer === 'vol') t += S.vol; if (S.peer === 'menu' && S.batt) t += ', battery 80%';
+  $('#hudT').textContent = t;
+}
+function advBurst(t) {
+  cur(t - 2, t, 3); let heard = -1;
+  ADVK.forEach((k, i) => {
+    const tt = t + i * 1.5, e = { t: tt, who: 'dev', k, dur: 0.4, ok: true };
+    if (S.mode !== 'adv') { const w = S.scan.find(w => w.k === k && tt >= w.t && tt <= w.t + w.dur); if (w) { e.heard = true; heard = i; } }
+    S.ev.push(e); cur(tt, tt + 0.6, 6);
+  });
+  fx.wave('dev'); heat('wake'); heat('tx');
+  if (heard < 0) return;
+  if (!S.found) { S.found = true; setPeer('found'); fx.wave('peer', C.ok, 2.2, 0.8); }
+  if (S.mode === 'connect' && --S.toConn <= 0) {
+    const tt = t + heard * 1.5 + 0.55; S.ev.push({ t: tt, who: 'peer', k: ADVK[heard], dur: 0.5, ok: true }); cur(tt, tt + 0.5, 6);
+    fx.pkt('peer', 'dev', 'Connection request CONNECT_IND', true); heat('rx');
+    S.scan = S.scan.filter(w => w.t < tt); S.scan.forEach(w => { if (w.t + w.dur > tt) w.dur = tt - w.t; });
+    S.mode = 'conn'; S.sub = 'idle'; S.nConn = tt + 45; S.first = true;
+  }
+}
+function nextK() { S.hop = (S.hop + 7) % 37; let k = DATAK[S.hop]; if (S.excl && inWifi(k)) k = GOODK[S.hop % GOODK.length]; return k; }
+function connEvent(t) {
+  const k = nextK(), big = t - S.lastWave > 70; let ok = !(S.wifi && !S.excl && inWifi(k) && Math.random() < 0.8);
+  if (S.first) { S.first = false; setPeer('conn'); }
+  if (S.sub === 'audio' && S.playing) {
+    const k2 = nextK();
+    S.ev.push({ t, who: 'peer', k, dur: 0.6, ok: true }, { t: t + 0.75, who: 'dev', k, dur: 0.15, ok: true, small: 1 }, { t: t + 1.4, who: 'peer', k: k2, dur: 0.6, ok: true }, { t: t + 2.15, who: 'dev', k: k2, dur: 0.15, ok: true, small: 1 });
+    cur(t - 1.5, t, 3); cur(t, t + 0.75, 6); heat('wake'); heat('rx'); heat('sec'); heat('aud');
+    if (t - S.lastFly > 38) { S.lastFly = t; fx.pkt('peer', 'L', null, true); fx.pkt('peer', 'R', null, true); fx.beat(); }
+    if (big) { S.lastWave = t; fx.wave('peer'); }
+    return;
+  }
+  if (S.sub === 'key' || S.sub === 'voice') {
+    const voice = S.sub === 'voice' && S.voice, key = S.keys.length > 0;
+    if (!voice && S.peer === 'voice') setPeer('vol');
+    if (!voice && !key && S.lat < 9) { S.lat++; S.ev.push({ t, who: 'peer', k, dur: 0.1, ok: true, faint: 1 }); return; }
+    S.lat = 0; S.ev.push({ t, who: 'peer', k, dur: 0.1, ok: true }); cur(t - 1, t, 3); cur(t, t + 0.3, 6); heat('wake'); heat('rx'); heat('sec');
+    if (voice) {
+      [0.3, 1.4, 2.5].forEach(o => { S.ev.push({ t: t + o, who: 'dev', k, dur: 0.9, ok: true }); cur(t + o, t + o + 0.9, 6); }); heat('tx'); heat('sec'); heat('aud');
+      if (t - S.lastFly > 45) { S.lastFly = t; fx.pkt('dev', 'peer', null, true); } if (big) { S.lastWave = t; fx.wave('dev'); } setPeer('voice'); return;
+    }
+    S.ev.push({ t: t + 0.3, who: 'dev', k, dur: 0.15, ok: true, dx: 6 }); cur(t + 0.3, t + 0.45, 6); heat('tx');
+    if (key) { const kk = S.keys.shift(); fx.wave('dev'); fx.pkt('dev', 'peer', 'HID notification: volume ' + (kk > 0 ? 'up' : 'down'), true, () => { S.vol = clamp(S.vol + kk, 0, 30); setPeer('vol', true); }); }
+    else if (big) { S.lastWave = t; fx.wave('peer'); setTimeout(() => fx.wave('dev'), 150); }
+    return;
+  }
+  S.ev.push({ t, who: 'peer', k, dur: 0.1, ok }); cur(t - 1, t, 3); cur(t, t + 0.3, 6); heat('wake'); heat('rx'); heat('sec');
+  if (ok) { S.ev.push({ t: t + 0.3, who: 'dev', k, dur: 0.15, ok: true, dx: 6 }); cur(t + 0.3, t + 0.45, 6); heat('tx'); }
+  else { S.fails++; fx.pkt('peer', 'dev', null, false); if (S.fails >= 4 && !S.excl) { S.excl = true; S.pendMap = true; } tryStatus(); }
+  if (ok && S.pendMap) { S.pendMap = false; fx.pkt('peer', 'dev', 'New channel map LL_CHANNEL_MAP_IND', true); tryStatus(); }
+  if (S.sub === 'gatt' && S.script && ok) {
+    S.sk++; if (S.sk % 7 === 0 && S.si < S.script.length) { const it = S.script[S.si++]; heat('host'); fx.pkt(it[0], it[0] === 'peer' ? 'dev' : 'peer', it[1], true, it[2]); fx.wave(it[0]); S.lastWave = t; return; }
+  }
+  if (big) { S.lastWave = t; fx.wave('peer'); if (ok) setTimeout(() => fx.wave('dev'), 150); }
+}
+function startGatt() {
+  const d = DV[ST.dev]; S.menu = []; S.batt = false; S.si = 0; S.sk = 0; setPeer('menu', true);
+  S.script = [
+    ['peer', 'What services do you have?'], ['dev', 'Service list', () => { S.menu = d.svc.slice(); setPeer('menu', true); }],
+    ['peer', 'What is in the battery service?'], ['dev', 'Battery Level'],
+    ['peer', 'Read the battery level'], ['dev', '80%', () => { S.batt = true; setPeer('menu', true); }],
+    ['peer', ST.dev === 'buds' ? 'Notify me of audio status' : 'Notify me of key presses'], ['dev', 'OK, I will tell you when it changes']
+  ];
+}
+function enterSim(b) {
+  const m = b.sim; S.script = null; S.keys = []; S.voice = false; S.lat = 0; S.first = false; S.advInt = ST.advInt; S.connInt = ST.connInt;
+  if (b.tryK !== 'wifi') { S.wifi = false; S.excl = false; S.fails = 0; S.pendMap = false; router.visible = false; }
+  if (m === 'idle') { S.mode = 'idle'; setPeer('home', true); }
+  else if (m === 'adv') { S.mode = 'adv'; S.found = false; S.scan = []; S.nAdv = S.t + 30; setPeer('scan', true); }
+  else if (m === 'scan') { S.mode = 'scan'; S.found = false; S.scan = []; S.nScan = S.t; S.nAdv = S.t + 140; setPeer('scan', true); }
+  else if (m === 'connect') { S.mode = 'connect'; S.found = true; S.toConn = 3; S.scan = []; S.nScan = S.t; S.nAdv = S.t + 110; S.advInt = 100; setPeer('found', true); }
+  else {
+    S.mode = 'conn'; S.sub = m === 'conn' ? 'idle' : m; S.nConn = S.t + 20;
+    if (m === 'gatt') { S.connInt = 30; startGatt(); } else if (m === 'audio') setPeer('play', true); else if (m === 'key' || m === 'voice') { S.connInt = 20; setPeer('vol', true); } else setPeer('conn', true);
+  }
+}
+function tick(dt) {
+  S.t += dt * 1000 / SLOW; const now = S.t;
+  if (S.mode === 'adv' || S.mode === 'scan' || S.mode === 'connect') {
+    if (S.mode !== 'adv') while (S.nScan <= now + 300) { S.scan.push({ t: S.nScan, dur: S.mode === 'connect' ? 240 : 120, k: ADVK[S.sc++ % 3] }); S.nScan += 240; }
+    let n = 0; while (S.nAdv <= now && S.mode !== 'conn' && n++ < 20) { advBurst(S.nAdv); S.nAdv += S.advInt + Math.random() * 10; }
+  }
+  if (S.mode === 'conn') { let n = 0; while (S.nConn <= now && n++ < 30) { connEvent(S.nConn); S.nConn += (S.sub === 'audio' && S.playing) ? 10 : S.connInt; } }
+  const lim = now - WIN - 80;
+  if (S.ev.length > 400 || (S.ev.length && S.ev[0].t < lim - 600)) { S.ev = S.ev.filter(e => e.t >= lim); S.cur = S.cur.filter(c => c[1] >= lim); S.scan = S.scan.filter(w => w.t + w.dur >= lim); S.marks = S.marks.filter(m => m.t >= lim); }
+}
+
+/* peer screens */
+function drawPeer() {
+  const k = ST.dev, pr = SC[k].peer, c = pr.ctx, W = pr.cv.width, H = pr.cv.height, s = S.peer, N = DV[k].nm;
+  const F = (px, w) => { c.font = (w || 600) + ' ' + px + 'px "Noto Sans",system-ui,sans-serif'; };
+  const tx = (t, x, y, col) => { c.fillStyle = col || '#edf2f9'; c.fillText(t, x, y); };
+  const rect = (x, y, w, h, f, st) => { c.fillStyle = f; c.fillRect(x, y, w, h); if (st) { c.strokeStyle = st; c.lineWidth = 3; c.strokeRect(x, y, w, h); } };
+  c.textAlign = 'center'; c.textBaseline = 'middle'; rect(0, 0, W, H, '#0c1522');
+  if (k === 'buds') {
+    F(34, 500); tx('Bluetooth', W / 2, 62, '#94a3ba'); rect(30, 100, W - 60, 2, '#22324b');
+    if (s === 'home') { F(42); tx('Not connected', W / 2, H / 2, '#94a3ba'); }
+    else if (s === 'scan') { F(42); tx('Searching', W / 2, H / 2 - 10, '#c1ccdc'); for (let i = 0; i < 3; i++) rect(W / 2 - 34 + i * 28, H / 2 + 40, 12, 12, '#4aa8ff'); }
+    else if (s === 'found') { rect(26, 240, W - 52, 270, '#18263a', '#4aa8ff'); F(28, 500); tx('New device found', W / 2, 292, '#94a3ba'); F(56); tx(N, W / 2, 366); rect(W / 2 - 104, 420, 208, 58, '#4aa8ff'); F(32); tx('Connect', W / 2, 450, '#06111f'); }
+    else if (s === 'conn' || s === 'menu') {
+      F(56); tx(N, W / 2, 186); F(34); tx('Connected', W / 2, 250, '#45d6a0');
+      if (s === 'menu') { S.menu.forEach((m, i) => { rect(34, 306 + i * 76, W - 68, 62, '#18263a'); F(24, 500); tx(m, W / 2, 337 + i * 76, '#c1ccdc'); }); if (S.batt) { F(38); tx('Battery 80%', W / 2, 590, '#ffb84d'); } }
+    } else if (s === 'play') {
+      F(28, 500); tx('Now playing', W / 2, 170, '#94a3ba'); F(46); tx('Sample track', W / 2, 236);
+      BARS.forEach((h, i) => { const hh = S.playing ? h : 14; rect(62 + i * 27, 470 - hh, 17, hh, '#4aa8ff'); });
+      F(34); tx(S.playing ? 'Playing' : 'Paused', W / 2, 546, S.playing ? '#45d6a0' : '#94a3ba');
+    }
+  } else {
+    for (let i = 0; i < 4; i++) rect(40 + i * 198, 290, 180, 150, ['#1d3554', '#20405f', '#1b3048', '#23364d'][i]);
+    const toast = (t, col) => { rect(50, 40, W - 100, 130, '#18263a', col || '#4aa8ff'); F(54); tx(t, W / 2, 106); };
+    if (s === 'home') { F(54, 500); tx('Living room TV', W / 2, 150, '#94a3ba'); }
+    else if (s === 'scan') toast('Searching for remote'); else if (s === 'found') toast('Remote found', '#45d6a0'); else if (s === 'conn') toast('Remote connected', '#45d6a0');
+    else if (s === 'menu') { rect(0, 0, W, H, '#0c1522'); toast('Remote connected', '#45d6a0'); S.menu.forEach((m, i) => { rect(50, 196 + i * 70, 500, 58, '#18263a'); F(32, 500); tx(m, 300, 226 + i * 70, '#c1ccdc'); }); if (S.batt) { F(60); tx('Battery', 700, 250, '#ffb84d'); tx('80%', 700, 330, '#ffb84d'); } }
+    else if (s === 'vol') { rect(60, 60, W - 120, 210, 'rgba(12,21,34,.96)', '#4aa8ff'); F(84); tx('Volume ' + S.vol, W / 2, 132); rect(120, 204, W - 240, 30, '#22324b'); rect(120, 204, (W - 240) * S.vol / 30, 30, '#4aa8ff'); }
+    else if (s === 'voice') { rect(60, 60, W - 120, 210, 'rgba(12,21,34,.96)', '#45d6a0'); c.fillStyle = '#45d6a0'; c.beginPath(); c.arc(200, 165, 50, 0, 6.3); c.fill(); F(76); tx('Listening', W / 2 + 70, 168); }
+  }
+  pr.tex.needsUpdate = true;
+}
+
+/* ================= lanes ================= */
+const lc = $('#lc'), lx = lc.getContext('2d'); let LW = 0, LH = 0;
+function drawLanes() {
+  const w = lc.clientWidth, h = lc.clientHeight; if (!w || !h) return;
+  const dpr = Math.min(window.devicePixelRatio || 1, 2); if (w !== LW || h !== LH) { LW = w; LH = h; lc.width = Math.round(w * dpr); lc.height = Math.round(h * dpr); }
+  const c = lx, W = LW, H = LH, N = DV[ST.dev].n; c.setTransform(dpr, 0, 0, dpr, 0, 0); c.clearRect(0, 0, W, H);
+  const L = 104, R = W - 10, a0 = 4, a1 = Math.round(H * 0.56) - 10, c0 = a1 + 12, c1 = H - 22, now = S.t;
+  const X = t => L + (t - (now - WIN)) / WIN * (R - L), rowH = (a1 - a0) / 40, Y = k => a1 - (k + 0.5) * rowH;
+  c.fillStyle = '#0b121d'; c.fillRect(L, a0, R - L, a1 - a0); c.fillRect(L, c0, R - L, c1 - c0);
+  c.strokeStyle = '#1a2840'; c.lineWidth = 1; c.beginPath(); for (let i = 1; i < 10; i++) { const x = Math.round(L + (R - L) * i / 10) + 0.5; c.moveTo(x, a0); c.lineTo(x, a1); c.moveTo(x, c0); c.lineTo(x, c1); } c.stroke();
+  c.font = '500 13.5px "Noto Sans",system-ui,sans-serif'; c.textBaseline = 'middle';
+  if (S.wifi) { const y0 = Y(23) - rowH / 2, y1 = Y(13) + rowH / 2; c.fillStyle = S.excl ? 'rgba(177,151,252,.12)' : 'rgba(177,151,252,.24)'; c.fillRect(L, y0, R - L, y1 - y0); S.wl = [S.excl ? 'Wi-Fi band, crossed off the channel map' : 'Wi-Fi band', (y0 + y1) / 2]; } else S.wl = null;
+  c.textAlign = 'right'; ADVK.forEach((k, i) => { const y = Math.round(Y(k)) + 0.5; c.strokeStyle = 'rgba(255,184,77,.35)'; c.setLineDash([4, 4]); c.beginPath(); c.moveTo(L, y); c.lineTo(R, y); c.stroke(); c.setLineDash([]); c.fillStyle = C.dev; c.fillText('Adv. ch. ' + (37 + i), L - 8, y); });
+  c.save(); c.beginPath(); c.rect(L, a0, R - L, c1 - a0); c.clip();
+  for (const sw of S.scan) { const x0 = Math.max(L, X(sw.t)), x1 = Math.min(R, X(sw.t + sw.dur)); if (x1 > x0) { c.fillStyle = 'rgba(74,168,255,.38)'; c.fillRect(x0, Y(sw.k) - rowH * 1.5, x1 - x0, rowH * 3); } }
+  const eh = Math.max(5, rowH * 1.8);
+  for (const e of S.ev) {
+    const x = X(e.t) + (e.dx || 0); if (x < L - 8 || x > R) continue; const ww = Math.max(e.small ? 3 : 5, e.dur / WIN * (R - L)), y = Y(e.k);
+    c.globalAlpha = e.faint ? 0.4 : 1; c.fillStyle = !e.ok ? C.bad : e.who === 'dev' ? C.dev : C.peer; c.fillRect(x, y - eh / 2, ww, eh); c.globalAlpha = 1;
+    if (!e.ok) { c.strokeStyle = C.bad; c.lineWidth = 2; c.beginPath(); c.moveTo(x - 4, y - 7); c.lineTo(x + 9, y + 7); c.moveTo(x + 9, y - 7); c.lineTo(x - 4, y + 7); c.stroke(); }
+    if (e.heard) { c.strokeStyle = '#fff'; c.lineWidth = 1.5; c.strokeRect(x - 2.5, y - eh / 2 - 2.5, ww + 5, eh + 5); }
+  }
+  const base = c1 - 5, yI = i => base - i / 6 * (c1 - c0 - 28);
+  c.fillStyle = 'rgba(69,214,160,.3)'; c.strokeStyle = C.ok; c.lineWidth = 1.5;
+  for (const s of S.cur) { const x0 = X(s[0]); if (x0 > R) continue; const x1 = Math.max(X(s[1]), x0 + 2.5); if (x1 < L) continue; const y = yI(s[2]); c.fillRect(x0, y, x1 - x0, base - y); c.beginPath(); c.moveTo(x0, base); c.lineTo(x0, y); c.lineTo(x1, y); c.lineTo(x1, base); c.stroke(); }
+  c.beginPath(); c.moveTo(L, base + 0.5); c.lineTo(R, base + 0.5); c.stroke();
+  for (const m of S.marks) { const x = Math.round(X(m.t)) + 0.5; if (x < L || x > R) continue; c.strokeStyle = '#fff'; c.setLineDash([3, 3]); c.lineWidth = 1; c.beginPath(); c.moveTo(x, c0); c.lineTo(x, c1); c.stroke(); c.setLineDash([]); c.fillStyle = '#fff'; c.textAlign = x > R - 60 ? 'right' : 'left'; c.fillText(m.tx, x + (x > R - 60 ? -5 : 5), c0 + 10); }
+  c.restore();
+  const capt = (t, y, col) => { c.textAlign = 'left'; const tw = c.measureText(t).width; c.fillStyle = 'rgba(11,18,29,.8)'; c.fillRect(L + 4, y - 9, tw + 10, 18); c.fillStyle = col; c.fillText(t, L + 9, y); };
+  if (S.wl) capt(S.wl[0], S.wl[1], C.wifi);
+  capt('In the air: frequency runs vertically, 2402 to 2480 MHz', a0 + 12, C.ink2); capt(DV[ST.dev].chipL, c0 + 11, C.ok);
+  c.textAlign = 'right'; c.fillStyle = C.ink3; c.fillText('Radio ≈ 6 mA', L - 8, yI(6) + 4); if (base - yI(6) > 44) c.fillText('CPU ≈ 3 mA', L - 8, yI(3)); c.fillText('Sleep ≈ 2 µA', L - 8, base - 4);
+  c.textAlign = 'left'; c.fillText('1 s ago', L, H - 9); c.textAlign = 'right'; c.fillStyle = C.ink; c.fillText('Now', R, H - 9); c.textAlign = 'center'; c.fillStyle = C.ink3; c.fillText('1 s of real time, slowed down 8×', (L + R) / 2, H - 9);
+}
+function laneLegend() {
+  const d = DV[ST.dev], b = BE[ST.i], it = [[C.dev, d.N + ' sends'], [C.peer, d.P + ' sends']];
+  if (b.sim === 'scan' || b.sim === 'connect') it.push(['rgba(74,168,255,.4)', d.P + ' listening']); if (b.tryK === 'wifi') it.push([C.bad, 'Lost packet']); it.push([C.ok, d.chipL]);
+  $('#laneLg').innerHTML = it.map(x => '<span><i style="background:' + x[0] + '"></i>' + x[1] + '</span>').join('');
+}
+
+/* alternative lane panels */
+const fmtT = t => t < 0.0001 ? Math.round(t * 1e6) + ' µs' : t < 0.001 ? (t * 1000).toFixed(2) + ' ms' : t < 1 ? (t * 1000).toFixed(t < 0.01 ? 2 : t < 0.1 ? 1 : 0) + ' ms' : t.toFixed(1) + ' s';
+const fmtP = p => (p < 1 ? p.toFixed(2) : p < 10 ? p.toFixed(1) : Math.round(p)) + '%';
+function renderAlt() {
+  const b = BE[ST.i], el = $('#laneAlt'), d = DV[ST.dev], alt = b.lane !== 'time';
+  $('#laneTime').hidden = alt; el.hidden = !alt; $('#lanes').classList.toggle('alt', alt); HOLD = [];
+  if (!alt) { laneLegend(); return; }
+  if (b.lane === 'stack') {
+    el.innerHTML = '<div class="alt-h">Where each layer of the stack lives in hardware</div><div class="stk">' + STACK.map((s, i) => '<button type="button" class="' + s[4] + '" data-i="' + i + '"><b>' + s[0] + '</b><span>' + s[1] + '</span><em>' + s[3] + '</em></button>').join('') + '</div><p class="cap">The four blue layers together are the host; the two orange layers are the controller. Click any layer and its blocks light up in the chip diagram.</p>';
+    $$('.stk button', el).forEach(x => { const on = () => { HOLD = STACK[+x.dataset.i][2]; $$('.stk button', el).forEach(y => y.classList.toggle('on', y === x)); }; x.addEventListener('click', on); x.addEventListener('pointerenter', on); x.addEventListener('focus', on); });
+  } else if (b.lane === 'cmp') {
+    const p = d.pay[ST.pay], rows = PHYS.map(ph => ({ ph, t: p[1] * 8 / (ph[1] * 1e6) })), tmax = rows[0].t;
+    el.innerHTML = '<div class="alt-h">Sending "' + p[0] + '": time on air</div><div class="cmp"><div class="r h"><span>PHY and data rate</span><span>Time on air</span><span></span><span class="d">Range</span></div>' + rows.map(r => {
+      const over = p[2] && r.t > 1, wd = p[2] ? Math.min(100, r.t * 100) : r.t / tmax * 100;
+      return '<div class="r ' + r.ph[4] + (over ? ' over' : '') + '"><span class="n"><b>' + r.ph[0] + '</b>' + (r.ph[4] ? '' : '<small>' + r.ph[2] + '</small>') + '</span><span class="bar"><i style="width:' + wd.toFixed(2) + '%"></i></span><span class="v">' + (p[2] ? (over ? 'Does not fit' : fmtP(r.t * 100) + ' of each s') : fmtT(r.t)) + '</span><span class="d">' + r.ph[3] + '</span></div>';
+    }).join('') + '</div><p class="cap">' + p[3] + ' Time on air = data size × 8 ÷ PHY data rate. This counts the data only, not headers, gaps between packets or retries, so real figures are longer. The range column is relative and illustrative.</p>';
+  } else if (b.lane === 'mod') {
+    el.innerHTML = '<div class="alt-h">What the receiver sees: each cloud of dots is one state</div><canvas id="modc" role="img" aria-label="Constellation diagram (illustrative)"></canvas><p class="cap" id="modCap"></p>'; drawMod();
+  } else if (b.lane === 'recap') {
+    const o = ST.dev === 'buds' ? 'rcu' : 'buds';
+    el.innerHTML = '<div class="recap"><div class="rc"><i>01</i><h4>Sleep saves power</h4><p>The chip sleeps almost all the time and wakes only at agreed moments. Longer gaps save power but respond more slowly.</p><button type="button" data-a="1">Back to Advertise</button></div><div class="rc"><i>02</i><h4>Each layer has a home</h4><p>The PHY is the radio and antenna, the link layer is baseband plus firmware, and the host runs as software on the processor.</p><button type="button" data-a="0">Back to Take it apart</button></div><div class="rc"><i>03</i><h4>Three steps to talk</h4><p>Advertise to be found, connect and agree on a hopping rhythm, then read and write data with GATT.</p><button type="button" data-a="2">Back to Connect</button></div></div>';
+    $$('.recap button', el).forEach(x => x.addEventListener('click', () => goAct(+x.dataset.a))); void o;
+  }
+}
+function mulberry(a) { return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+function modPts(i) {
+  if (i === 0) return [[-1, 0], [1, 0]];
+  if (i === 1) return [[1, 1], [-1, 1], [-1, -1], [1, -1]].map(p => [p[0] * 0.7071, p[1] * 0.7071]);
+  if (i === 2) return Array.from({ length: 8 }, (_, k) => [Math.cos(k * Math.PI / 4), Math.sin(k * Math.PI / 4)]);
+  const l = [-3, -1, 1, 3], o = []; l.forEach(a => l.forEach(b => o.push([a / 3.1623, b / 3.1623]))); return o;
+}
+function drawMod() {
+  const cv = $('#modc'); if (!cv) return; const w = cv.clientWidth, h = cv.clientHeight; if (!w || !h) return;
+  const dpr = Math.min(window.devicePixelRatio || 1, 2); cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); const c = cv.getContext('2d'); c.setTransform(dpr, 0, 0, dpr, 0, 0);
+  const pts = modPts(ST.mod), sg = 0.4 * Math.pow(1 - ST.q, 1.3) + 0.03, sc = Math.min(w / 3.6, h / 3.1), cx = w / 2, cy = h / 2, rnd = mulberry(7);
+  c.strokeStyle = '#22324b'; c.lineWidth = 1; c.beginPath(); c.moveTo(cx - sc * 1.7, cy + 0.5); c.lineTo(cx + sc * 1.7, cy + 0.5); c.moveTo(cx + 0.5, cy - sc * 1.45); c.lineTo(cx + 0.5, cy + sc * 1.45); c.stroke();
+  let bad = 0, tot = 0;
+  pts.forEach((p, pi) => { for (let n = 0; n < 60; n++) { const u = rnd() || 1e-6, v = rnd(), rr = Math.sqrt(-2 * Math.log(u)) * sg, x = p[0] + rr * Math.cos(6.2832 * v), y = p[1] + (ST.mod === 0 ? 0.35 : 1) * rr * Math.sin(6.2832 * v); let bi = 0, bd = 1e9; pts.forEach((q, qi) => { const dd = (q[0] - x) * (q[0] - x) + (q[1] - y) * (q[1] - y); if (dd < bd) { bd = dd; bi = qi; } }); const wrong = bi !== pi; tot++; if (wrong) bad++; c.fillStyle = wrong ? C.bad : 'rgba(69,214,160,.75)'; c.fillRect(cx + x * sc - 2, cy - y * sc - 2, 4, 4); } });
+  c.strokeStyle = '#fff'; c.lineWidth = 2; pts.forEach(p => { c.beginPath(); c.arc(cx + p[0] * sc, cy - p[1] * sc, 5, 0, 6.3); c.stroke(); });
+  c.font = '500 13.5px "Noto Sans",sans-serif'; c.fillStyle = C.ink3; c.textBaseline = 'middle'; c.textAlign = 'left';
+  if (ST.mod === 0) { c.fillText('Lower frequency = 0', cx - sc * 1.6, cy - 22); c.textAlign = 'right'; c.fillText('Higher frequency = 1', cx + sc * 1.6, cy - 22); } else c.fillText('White circles: ideal positions. Green: received correctly. Red: misread.', 10, 14);
+  const m = MODS[ST.mod]; $('#modCap').textContent = m[0] + ' carries ' + m[1] + ' bit' + (m[1] > 1 ? 's' : '') + ' per symbol, with ' + pts.length + ' states. At this signal quality about ' + (bad / tot * 100).toFixed(bad ? 1 : 0) + '% of symbols are misread (random illustration, 60 samples per state).';
+}
+
+/* ================= chip card ================= */
+let blkEls = {};
+const heatLast = {};
+function renderChip() {
+  const el = $('#chipBody'), d = DV[ST.dev], v = BE[ST.i].chipV; BLK.io = d.io; BLK.aud = d.aud; blkEls = {};
+  if (v === 'peer') {
+    $('#chipT').textContent = 'Bluetooth in the ' + d.p + ': two chips';
+    el.innerHTML = '<div class="two"><div class="chipbox"><h5>Main processor</h5><span>Apps</span><span>Host: GAP, GATT, ATT, SMP, L2CAP</span></div><div class="wire"><b>HCI</b><small>UART or USB</small></div><div class="chipbox"><h5>Bluetooth chip</h5><span>Controller: link layer</span><span>Radio</span></div><div class="antm">Antenna</div></div><p id="chipDesc"><b>' + d.P + ':</b> host and controller usually sit on two chips, and HCI is a real set of wires between them. <b>' + d.N + ':</b> both live in one chip, and HCI is just an interface between pieces of software. That is how the same protocol runs on a phone and also fits into a chip a few millimeters across.</p>';
+    return;
+  }
+  $('#chipT').textContent = 'The Bluetooth chip in the ' + d.n + ' (generic)';
+  const b = (id, cls) => '<button type="button" class="blk ' + (cls || '') + '" data-b="' + id + '"><b>' + BLK[id][0] + '</b><small>' + BLK[id][1] + '</small></button>';
+  el.innerHTML = '<div class="chipwrap">' + b('ant', 'antb') + '<i class="feed"></i><div class="die">' + b('rf') + b('bb') + b('mcu') + b('mem') + b('clk') + b('tmr') + b('pmu') + b('sec') + b('aud') + b('io', 'wide') + '</div></div><p id="chipDesc"></p>';
+  $$('.blk', el).forEach(x => { blkEls[x.dataset.b] = x; heatLast[x.dataset.b] = -1; x.addEventListener('click', () => selBlk(ST.blk === x.dataset.b ? null : x.dataset.b)); });
+  selBlk(ST.blk);
+}
+function selBlk(id) {
+  ST.blk = id; Object.keys(blkEls).forEach(k => blkEls[k].classList.toggle('sel', k === id)); const p = $('#chipDesc'); if (!p || !blkEls.rf) return;
+  p.innerHTML = id ? '<b>' + BLK[id][0] + ':</b> ' + BLK[id][2] : 'Lit blocks are active now. Asleep, only the slow clock, timers and power stay on. Click a block for details.';
+}
+function chipTick(dt) {
+  const idle = clock - lastKindT > 0.12, st = $('#chipState'), dev = BE[ST.i].chipV === 'dev';
+  for (const k in HEAT) { HEAT[k] = Math.max(0, HEAT[k] - dt * 10); const el = blkEls[k]; if (!el) continue; let v = HEAT[k]; if (k === 'clk' || k === 'tmr') v = Math.max(v, 0.3); if (k === 'pmu') v = Math.max(v, 0.2); if (HOLD.indexOf(k) >= 0) v = Math.max(v, 0.9); if (Math.abs(v - heatLast[k]) > 0.03) { heatLast[k] = v; el.style.setProperty('--h', v.toFixed(2)); } }
+  const t = !dev ? '' : idle || S.mode === 'idle' ? 'Now: asleep' : lastKind === 'tx' ? 'Now: sending' : lastKind === 'rx' ? 'Now: receiving' : lastKind === 'host' ? 'Now: processing' : lastKind === 'aud' ? 'Now: handling sound' : 'Now: peripherals'; if (st.textContent !== t) { st.textContent = t; st.className = idle || S.mode === 'idle' ? '' : 'on'; }
+}
+
+/* ================= try-it card ================= */
+const logV = (v, a, b) => a * Math.pow(b / a, v / 100), logI = (x, a, b) => Math.log(x / a) / Math.log(b / a) * 100;
+const fmtMs = ms => ms >= 1000 ? (ms / 1000).toFixed(2) + ' s' : (ms < 10 ? ms.toFixed(1) : Math.round(ms)) + ' ms';
+const fmtI = u => u >= 1000 ? (u / 1000).toFixed(2) + ' mA' : (u >= 100 ? Math.round(u) : u.toFixed(1)) + ' µA';
+const pl = (v, u) => v + ' ' + u + (v === 1 ? '' : 's');
+const fmtLife = h => h < 48 ? pl(Math.round(h), 'hour') : h < 24 * 60 ? pl(Math.round(h / 24), 'day') : h < 8760 * 2 ? pl(Math.round(h / 730), 'month') : h > 87600 ? 'over 10 years' : (h / 8760).toFixed(1) + ' years';
+const Q = { adv: 16.8, conn: 5.7, iso: 9, voice: 24 }, avgI = (q, T) => 2 + q / T * 1000;
+function tryStatus() {
+  const s = $('#wifiSt'); if (!s) return;
+  s.textContent = !S.wifi ? 'Wi-Fi off: all 37 data channels are usable.' : S.excl ? 'New channel map sent: 11 jammed channels crossed off, and hopping continues on the other 26.' : 'Interference: ' + pl(S.fails, 'packet') + ' lost so far, and the link layer resends them automatically.';
+}
+function renderTry() {
+  const b = BE[ST.i], el = $('#try'), k = b.tryK, d = DV[ST.dev], mn = $('#mnote'); mn.innerHTML = '';
+  if (!k) { el.hidden = true; el.innerHTML = ''; return; }
+  el.hidden = false; let h = '', nt = '';
+  const how = (t) => '<details><summary>How these numbers are worked out</summary>' + t + ' Currents are generic illustrative values: about 2 µA asleep, 3 mA with the processor running, 6 mA with the radio on. They match the order of magnitude in public BLE chip datasheets; for a specific chip, its datasheet is the authority. ' + d.capTx + ', counting the Bluetooth chip only.</details>';
+  if (k === 'adv' || k === 'conn') {
+    const adv = k === 'adv', lo = adv ? 20 : 7.5, hi = adv ? 2000 : 1000, val = adv ? ST.advInt : ST.connInt;
+    h += '<div class="ctl"><label for="sInt">' + (adv ? 'Advertise every' : 'Meet every') + '</label><input type="range" id="sInt" min="0" max="100" step="1" value="' + Math.round(logI(val, lo, hi)) + '"><output id="oInt"></output></div><div class="rd"><div><small>Average chip current</small><b id="rI"></b></div><div><small>' + (adv ? 'Battery life, always advertising' : 'Battery life, staying connected') + '</small><b id="rL"></b></div></div>';
+    nt += how(adv ? 'Charge per advertising event ≈ 2 ms awake × 3 mA + 3 packets × (0.4 ms sending + 0.2 ms listening) × 6 mA = 16.8 µC. Average current = 2 µA + 16.8 µC ÷ advertising interval. Battery life = battery capacity ÷ average current.' : 'Charge per meeting ≈ 1 ms awake × 3 mA + (0.3 ms receiving + 0.15 ms sending) × 6 mA = 5.7 µC. Average current = 2 µA + 5.7 µC ÷ connection interval. Battery life = battery capacity ÷ average current.');
+  } else if (k === 'wifi') h += '<button type="button" class="big" id="bWifi">Turn on Wi-Fi interference</button><p class="status" id="wifiSt"></p>';
+  else if (k === 'replay') h += '<button type="button" class="big" id="bRe">' + (b.sim === 'gatt' ? 'Ask again' : 'Replay the connection') + '</button>';
+  else if (k === 'play') { h += '<button type="button" class="big" id="bPlay">Play music</button><div class="rd"><div><small>Average current, idle link</small><b>' + fmtI(avgI(Q.conn, 30)) + '</b></div><div><small>Average current, playing</small><b>' + fmtI(avgI(Q.iso, 10)) + '</b></div></div>'; nt += '<p class="status">Playing draws about ' + (avgI(Q.iso, 10) / avgI(Q.conn, 30)).toFixed(1) + ' times as much as an idle link. This counts the Bluetooth radio traffic only; the whole earbud also spends power on decoding, the speaker and noise cancelling.</p>' + how('Idle link: one meeting every 30 ms at 5.7 µC each. Playing: one every 10 ms at ≈ 1.5 ms awake × 3 mA + (0.6 ms receiving + 0.15 ms sending) × 6 mA = 9 µC. Average current = 2 µA + charge per event ÷ interval.'); }
+  else if (k === 'key') { h += '<div class="row2"><button type="button" class="big" id="bVm">Volume down</button><button type="button" class="big" id="bVp">Volume up</button></div><div class="rd"><div><small>Average current, idle</small><b>' + fmtI(avgI(Q.conn, 200)) + '</b></div><div><small>Longest wait, press to send</small><b>20 ms</b></div></div>'; nt += '<p class="status">The connection interval is 20 ms. With no key pressed the remote answers only 1 meeting in 10; with a key pressed it sends at the very next meeting.</p>' + how('Idle: it wakes once every 200 ms at 5.7 µC. Average current = 2 µA + 5.7 µC ÷ 200 ms.'); }
+  else if (k === 'voice') { h += '<button type="button" class="big" id="bVoice">Press the voice button</button><div class="rd"><div><small>Average current, idle</small><b>' + fmtI(avgI(Q.conn, 200)) + '</b></div><div><small>Average current, talking</small><b>' + fmtI(avgI(Q.voice, 20)) + '</b></div></div>'; nt += how('Talking: a meeting every 20 ms at ≈ 2 ms awake × 3 mA + (0.3 ms receiving + 2.7 ms sending 3 packets) × 6 mA = 24 µC. Average current = 2 µA + 24 µC ÷ 20 ms.'); }
+  else if (k === 'phy') { h += '<div class="seg wrap" id="paySeg" role="radiogroup" aria-label="Amount of data">' + d.pay.map((p, i) => '<button type="button" data-v="' + i + '"' + (i === ST.pay ? ' class="on"' : '') + '>' + p[0] + '</button>').join('') + '</div>'; nt += '<p class="status">' + (ST.dev === 'buds' ? 'Try "1 s of CD audio": LE 2M needs about 70% of every second, leaving little room for retries, while HDT has plenty to spare.' : 'Try "One firmware update": the bigger the data, the more time a faster PHY saves.') + '</p>'; }
+  else if (k === 'mod') { h += '<div class="seg" id="modSeg" role="radiogroup" aria-label="Modulation">' + MODS.map((m, i) => '<button type="button" data-v="' + i + '"' + (i === ST.mod ? ' class="on"' : '') + '>' + m[0] + '</button>').join('') + '</div><div class="ctl"><label for="sQ">Signal quality</label><input type="range" id="sQ" min="0" max="100" step="1" value="' + Math.round(ST.q * 100) + '"><output id="oQ"></output></div>'; nt += '<p class="status">Lowering the signal quality is like moving farther away or adding interference. At the same quality, the modulations with more states fail first.</p>'; }
+  el.innerHTML = '<h3>Try it</h3>' + h + (nt ? '<div class="tnote">' + nt + '</div>' : '');
+  if (mob && nt) { mn.innerHTML = '<h3>Notes on Try it</h3>'; mn.appendChild($('.tnote', el)); }
+  if (k === 'adv' || k === 'conn') {
+    const adv = k === 'adv', lo = adv ? 20 : 7.5, hi = adv ? 2000 : 1000, s = $('#sInt');
+    const upd = () => { let v = logV(+s.value, lo, hi); v = v < 10 ? Math.round(v * 2) / 2 : v < 100 ? Math.round(v) : Math.round(v / 10) * 10; if (adv) { ST.advInt = S.advInt = v; S.nAdv = Math.min(S.nAdv, S.t + v); } else { ST.connInt = S.connInt = v; S.nConn = Math.min(S.nConn, S.t + v); } const i = avgI(adv ? Q.adv : Q.conn, v); $('#oInt').textContent = fmtMs(v); $('#rI').textContent = fmtI(i); $('#rL').textContent = fmtLife(d.cap * 1000 / i); };
+    s.addEventListener('input', upd); upd();
+  } else if (k === 'wifi') {
+    const bw = $('#bWifi'), set = () => { bw.textContent = S.wifi ? 'Turn off Wi-Fi interference' : 'Turn on Wi-Fi interference'; bw.classList.toggle('on', S.wifi); router.visible = S.wifi; tryStatus(); };
+    bw.addEventListener('click', () => { S.wifi = !S.wifi; S.excl = false; S.fails = 0; S.pendMap = false; set(); }); set();
+  } else if (k === 'replay') $('#bRe').addEventListener('click', () => enterSim(BE[ST.i]));
+  else if (k === 'play') { const bp = $('#bPlay'), set = () => { bp.textContent = S.playing ? 'Pause music' : 'Play music'; bp.classList.toggle('on', S.playing); setPeer('play', true); }; bp.addEventListener('click', () => { S.playing = !S.playing; S.nConn = S.t + 5; set(); }); set(); }
+  else if (k === 'key') { const press = v => { S.keys.push(v); heat('io'); S.marks.push({ t: S.t, tx: 'Key' }); const btn = SC.rcu.dev[v > 0 ? 'vp' : 'vm']; btn.position.y = 0.035; setTimeout(() => { btn.position.y = 0.07; }, 180); }; $('#bVp').addEventListener('click', () => press(1)); $('#bVm').addEventListener('click', () => press(-1)); }
+  else if (k === 'voice') { const bv = $('#bVoice'), set = () => { bv.textContent = S.voice ? 'Release the voice button' : 'Press the voice button'; bv.classList.toggle('on', S.voice); }; bv.addEventListener('click', () => { S.voice = !S.voice; set(); S.marks.push({ t: S.t, tx: S.voice ? 'Press' : 'Release' }); if (S.voice) heat('aud'); }); set(); }
+  else if (k === 'phy') segBind($('#paySeg'), v => { ST.pay = +v; renderAlt(); });
+  else if (k === 'mod') { segBind($('#modSeg'), v => { ST.mod = +v; drawMod(); }); const s = $('#sQ'), upd = () => { ST.q = +s.value / 100; $('#oQ').textContent = ST.q > 0.8 ? 'Very good' : ST.q > 0.55 ? 'Good' : ST.q > 0.3 ? 'Fair' : 'Poor'; drawMod(); }; s.addEventListener('input', upd); upd(); }
+}
+/* phone layout: controls live in a dock directly under the scene, and the scene plus dock stay pinned while the page scrolls */
+const MQ = window.matchMedia ? matchMedia('(max-width: 1020px)') : null; let mob = null;
+function place() {
+  const m = !!(MQ && MQ.matches); if (m === mob) return; mob = m;
+  if (m) $('#dock').append($('#xbox'), $('#info'), $('#try'), $('#navb'));
+  else { $('#stagectl').prepend($('#xbox')); $('#stage').appendChild($('#info')); $('#side').insertBefore($('#try'), $('#mnote')); $('#nar').appendChild($('#navb')); }
+  if (BE && BE[ST.i] && $('#narT').textContent) renderTry();
+}
+function segBind(box, fn) {
+  const bs = $$('button', box), set = b => bs.forEach(x => { const on = x === b; x.classList.toggle('on', on); x.setAttribute('role', 'radio'); x.setAttribute('aria-checked', on); x.tabIndex = on ? 0 : -1; });
+  set(bs.find(b => b.classList.contains('on')) || bs[0]);
+  box.addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; set(b); fn(b.dataset.v); });
+  box.addEventListener('keydown', e => { if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return; e.preventDefault(); e.stopPropagation(); const i = bs.indexOf(document.activeElement), b = bs[(i + (e.key === 'ArrowRight' ? 1 : bs.length - 1)) % bs.length]; set(b); b.focus(); fn(b.dataset.v); });
+}
+
+/* ================= shell ================= */
+const actsEl = $('#acts');
+ACTS.forEach((a, i) => { const b = document.createElement('button'); b.type = 'button'; b.innerHTML = '<i>' + a[0] + '</i><div><b>' + a[1] + '</b><span>' + a[2] + '</span></div>'; b.addEventListener('click', () => goAct(i)); actsEl.appendChild(b); });
+function goAct(a) { go(BE.findIndex(b => b.a === a)); }
+function selPart(id) {
+  ST.sel = id; const d = DV[ST.dev], info = $('#info'); Object.keys(PLB[ST.dev]).forEach(k => PLB[ST.dev][k].el.classList.toggle('sel', k === id));
+  if (!ST.open) { info.hidden = true; stage.classList.remove('hasinfo'); $('#ring').hidden = true; return; }
+  info.hidden = false; stage.classList.add('hasinfo');
+  $('b', info).textContent = id ? d.parts[id][0] : 'Drag "Take apart" to dismantle it'; $('p', info).textContent = id ? d.parts[id][1] : 'Click any part or its label to see what it does.';
+  if (id === 'chip') { const c = $('#chip'); c.classList.remove('flash'); void c.offsetWidth; c.classList.add('flash'); }
+}
+function applyOpen(o, restart) {
+  ST.open = o; $('#bOpen').innerHTML = '<span class="tw">' + (o ? 'Close it up' : 'Look inside') + '</span><span class="tn">' + (o ? 'Close' : 'Open') + '</span>'; $('#player').classList.toggle('isopen', o); $('#xbox').hidden = !o; SC[ST.dev].peer.g.visible = !o;
+  if (o) { if (restart) { ST.x = 0; ST.xl = -1; } ST.xT = 1; ST.auto = true; } else { ST.xT = 0; ST.auto = true; }
+}
+function setOpen(o) { applyOpen(o, false); if (!o) ST.sel = null; selPart(o ? ST.sel : null); camGoal(); }
+function go(i) {
+  i = clamp(i, 0, BE.length - 1); ST.i = i; const b = BE[i], d = DV[ST.dev], inAct = BE.filter(x => x.a === b.a), n = inAct.indexOf(b) + 1, last = i === BE.length - 1;
+  $$('button', actsEl).forEach((x, k) => { x.classList.toggle('on', k === b.a); x.classList.toggle('done', k < b.a); if (k === b.a) x.setAttribute('aria-current', 'step'); else x.removeAttribute('aria-current'); });
+  $('#narAct').textContent = (b.a ? 'Act ' + b.a + ': ' : 'Prologue: ') + ACTS[b.a][1]; $('#narStep').textContent = 'Step ' + n + ' of ' + inAct.length;
+  $('#narT').textContent = b.t; $('#narB').textContent = b.b; $('#bPrev').disabled = i === 0; $('#bNext').textContent = last ? 'Now try the ' + DV[ST.dev === 'buds' ? 'rcu' : 'buds'].full : 'Next';
+  $('#terms').innerHTML = b.terms.length ? '<h3>Terms in this step</h3><dl>' + b.terms.map(t => '<dt>' + t[0] + '</dt><dd>' + t[1] + '</dd>').join('') + '</dl>' : '';
+  flies.forEach(f => { f.t = 9; f.cb = null; f.m.visible = false; }); flyLbs.forEach(l => { l.f = null; });
+  ST.sel = null; { const o = b.view === 'open'; if (o !== ST.open || !o) applyOpen(o, false); } selPart(null);
+  $('#navPos').textContent = ACTS[b.a][4] + ' ' + n + '/' + inAct.length;
+  enterSim(b); renderChip(); renderAlt(); renderTry(); camGoal(); $('#side').scrollTop = 0;
+  if (mob && ST.ready) { const pb = $('#player').getBoundingClientRect().bottom, nt = $('#nar').getBoundingClientRect().top; if (nt < pb - 2 || nt > innerHeight - 90) window.scrollTo({ top: Math.max(0, scrollY + nt - pb - 6), behavior: reduce ? 'auto' : 'smooth' }); }
+  try { const id = ACTS[b.a][3]; if (location.hash !== '#' + id) history.replaceState(null, '', '#' + id); } catch (e) { }
+}
+function setDev(k) {
+  if (k === ST.dev) return; const b = BE[ST.i], inAct = BE.filter(x => x.a === b.a), n = inAct.indexOf(b);
+  ST.dev = k; ST.pay = 0; ST.blk = null; BE = beats(k); S.ev = []; S.cur = []; S.scan = []; S.marks = []; S.playing = false; S.vol = 12;
+  Object.keys(SC).forEach(x => { SC[x].dev.g.visible = x === k; SC[x].peer.g.visible = x === k && !ST.open; }); ST.xl = -1;
+  $$('#devSeg button').forEach(x => { const on = x.dataset.v === k; x.classList.toggle('on', on); x.setAttribute('aria-checked', on); });
+  const na = BE.filter(x => x.a === b.a); go(BE.indexOf(na[Math.min(n, na.length - 1)]));
+}
+segBind($('#devSeg'), setDev);
+$('#bPrev').addEventListener('click', () => go(ST.i - 1));
+$('#bNext').addEventListener('click', () => { if (ST.i === BE.length - 1) { setDev(ST.dev === 'buds' ? 'rcu' : 'buds'); go(0); } else go(ST.i + 1); });
+$('#bOpen').addEventListener('click', () => setOpen(!ST.open));
+$('#sX').addEventListener('input', e => { ST.auto = false; ST.x = ST.xT = +e.target.value / 100; });
+$('#bReset').addEventListener('click', () => camGoal());
+const apx = $('#apx');
+function apxOpen(o) { apx.hidden = !o; if (o) $('#apxX').focus(); }
+$('#apxBtn').addEventListener('click', () => apxOpen(true)); $('#apxX').addEventListener('click', () => apxOpen(false)); apx.addEventListener('click', e => { if (e.target === apx) apxOpen(false); });
+document.addEventListener('keydown', e => {
+  const tag = e.target.tagName; if (e.key === 'Escape') { if (!apx.hidden) apxOpen(false); else if (ST.sel) selPart(null); else if (ST.blk) selBlk(null); return; }
+  if (!apx.hidden || tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || e.metaKey || e.ctrlKey || e.altKey) return;
+  if (e.key === 'ArrowRight') { e.preventDefault(); if (ST.i < BE.length - 1) go(ST.i + 1); } else if (e.key === 'ArrowLeft') { e.preventDefault(); go(ST.i - 1); }
+  else if (e.key === 'Home') { e.preventDefault(); camGoal(); }
+});
+window.addEventListener('hashchange', () => { const a = ACTS.findIndex(x => x[3] === location.hash.slice(1)); if (a >= 0 && BE[ST.i].a !== a) goAct(a); });
+
+$('#apxB').innerHTML =
+  '<div><h4>A short history of Bluetooth versions</h4><table><tr><th>Year</th><th>Event</th></tr>' + [['1998', 'The Bluetooth SIG is founded'], ['1999', 'Bluetooth 1.0, the first official spec, later known as Classic Bluetooth'], ['2004', 'Bluetooth 2.0 adds EDR (Enhanced Data Rate)'], ['2006', 'Nokia announces Wibree, the forerunner of Bluetooth LE'], ['2010', 'Bluetooth 4.0 adds Bluetooth Low Energy to the core spec, alongside Classic'], ['2014', 'Bluetooth 4.2 brings longer packets and stronger security'], ['2016', 'Bluetooth 5.0 adds the LE 2M and LE Coded PHYs'], ['2019', 'Bluetooth 5.1 adds direction finding'], ['2020', 'Bluetooth 5.2 adds the isochronous channels LE Audio needs'], ['2023', 'Bluetooth 5.4 adds periodic advertising with responses'], ['2024', 'Bluetooth 6.0 adds Channel Sounding'], ['2026', 'Bluetooth 6.3 is released in May; on November 4 the SIG announces the adoption of HDT as an optional feature of Core 7.0']].map(r => '<tr><td>' + r[0] + '</td><td>' + r[1] + '</td></tr>').join('') + '</table></div>' +
+  '<div><h4>Physical layer basics</h4><p>BLE uses the license free 2.4 GHz ISM band, 2400 to 2483.5 MHz, divided into 40 channels 2 MHz wide, 3 of them for advertising. It modulates with GFSK, one bit per symbol; on LE 1M the frequency deviation is at least 185 kHz. Channel Sounding uses 72 channels 1 MHz wide, avoiding the advertising channels and their neighbors.</p></div>' +
+  '<div><h4>The seven link layer states</h4><table><tr><th>State</th><th>What it does</th></tr>' + [['Standby', 'Sends and receives nothing; every state can return to it'], ['Advertising', 'Sends advertising packets on the advertising channels'], ['Scanning', 'Listens for advertising packets'], ['Initiating', 'Listens for one device’s advertisement, then sends a connection request'], ['Connection', 'Both sides exchange data on an agreed schedule and hopping sequence'], ['Synchronization', 'Follows and receives periodic advertising'], ['Isochronous Broadcasting', 'Broadcasts time bound data on isochronous channels, such as LE Audio broadcast audio']].map(r => '<tr><td>' + r[0] + '</td><td>' + r[1] + '</td></tr>').join('') + '</table></div>' +
+  '<div><h4>Packet formats on air</h4><table><tr><th>Packet</th><th>Structure</th></tr><tr><td>Advertising</td><td>16 bit header (4 bit PDU Type; 1 bit each for RFU, ChSel, TxAdd and RxAdd; 8 bit Length) plus a payload of 1 to 255 bytes</td></tr><tr><td>Data and control</td><td>16 or 24 bit header (2 bit LLID; 1 bit each for NESN, SN, MD and CP; 2 bit RFU; 8 bit Length; optional 8 bit CTEInfo), then the payload and an optional 32 bit MIC</td></tr></table><p>Common advertising PDUs: ADV_IND is connectable advertising, ADV_NONCONN_IND is non connectable advertising, SCAN_REQ and SCAN_RSP are the scan request and response, and CONNECT_IND is the connection request. Examples of control PDUs: LL_CONNECTION_UPDATE_IND updates connection parameters, LL_CHANNEL_MAP_IND updates the channel map, LL_TERMINATE_IND ends the connection, LL_ENC_REQ starts encryption, and LL_FEATURE_REQ asks which features the other side supports.</p></div>' +
+  '<div><h4>One active scan over HCI</h4><ol><li>The host sends LE Set Scan Parameters</li><li>The controller replies Command Complete</li><li>The host sends LE Set Scan Enable to start scanning</li><li>The controller replies Command Complete</li><li>The link layer hears an advertisement, sends SCAN_REQ and receives SCAN_RSP</li><li>The controller reports the result to the host in an LE Advertising Report event</li><li>The host sends LE Set Scan Enable to stop, and the controller replies Command Complete</li></ol><p>HCI carries three kinds of packets: commands from host to controller, events from controller to host, and data in both directions. LE controller commands use OGF 0x08.</p></div>' +
+  '<div><h4>L2CAP and GATT discovery</h4><p>L2CAP handles segmentation and reassembly, retransmission and flow control, and encapsulation and scheduling. ATT runs on a fixed channel, CID 0x0004. GATT service discovery takes five operations: READ_BY_GROUP_TYPE finds services, READ_BY_TYPE finds included services, READ_BY_TYPE finds characteristics, FIND_INFO finds descriptors such as the CCCD, and READ_REQ and WRITE_REQ read and write values.</p></div>' +
+  '<div><h4>Three stack implementations</h4><table><tr><th>Stack</th><th>Platform</th><th>Openness</th></tr><tr><td>BlueZ</td><td>Linux</td><td>Open source. bluetoothd in user space offers features over D‑Bus; the kernel holds L2CAP, HCI and SCO</td></tr><tr><td>Bluedroid</td><td>Android, since 4.2</td><td>Open source, originally Broadcom’s closed stack. Three layers: btif, bta and stack</td></tr><tr><td>SoftDevice</td><td>nRF microcontrollers</td><td>Closed source, API only. Setup takes four calls: ble_stack_init, gap_params_init, gatt_init and services_init</td></tr></table></div>' +
+  '<div><h4>How the LE Audio specs are layered</h4><p>The core spec sits at the bottom; the Generic Audio Framework sits in the middle, with BAP, MCP, CCP, CSIP, MICP, VCP and CAP; the use case profiles TMAP, HAP and PBP sit on top. Other extensions include BLE IPv6 and Mesh.</p></div>' +
+  '<p class="src">Based on a Chinese article walking through the Bluetooth LE software stack, <a href="https://mp.weixin.qq.com/s/nm93sc7RoyBgJKuI9VXraw" target="_blank" rel="noopener">《蓝牙 BLE 软件全栈解读》</a> by Zhang Dasheng (WeChat, September 4, 2026). Graphics are redrawn and the text is rewritten. The HDT status is updated from public Bluetooth SIG information (<a href="https://audioxpress.com/news/bluetooth-sig-adopts-high-data-throughput-setting-the-stage-for-standardized-lossless-wireless-audio" target="_blank" rel="noopener">coverage of the HDT adoption</a>). The chip diagram, currents and battery figures are generic illustrations. Updated November 24, 2026.</p>';
+
+/* ================= pointer ================= */
+const ptrs = new Map(); let Pn = null, pinch = 0, lastEmpty = 0, hovPart = null;
+const ray = new T.Raycaster(), v2 = new T.Vector2();
+function hit(e) { if (!ST.open) return null; const r = canvas.getBoundingClientRect(); v2.set((e.clientX - r.left) / r.width * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1); ray.setFromCamera(v2, camera); const h = ray.intersectObjects(PICK[ST.dev], false), id = h.length ? h[0].object.userData.part : null; return id && (SC[ST.dev].dev.f[id] || 0) > 0.5 ? id : null; }
+const pd = () => { const a = Array.from(ptrs.values()); return Math.hypot(a[0].x - a[1].x, a[0].y - a[1].y); };
+canvas.addEventListener('mousedown', e => e.preventDefault());
+canvas.addEventListener('pointerdown', e => { try { canvas.setPointerCapture(e.pointerId); } catch (x) { } ptrs.set(e.pointerId, { x: e.clientX, y: e.clientY }); if (ptrs.size === 1) Pn = { x0: e.clientX, y0: e.clientY, drag: false, touch: e.pointerType === 'touch' }; else { if (Pn) Pn.drag = true; pinch = pd(); } });
+canvas.addEventListener('pointermove', e => {
+  const p = ptrs.get(e.pointerId);
+  if (!p) { if (e.pointerType !== 'touch') { const id = hit(e); if (id !== hovPart) { hovPart = id; canvas.classList.toggle('hit', !!id); } } return; }
+  const dx = e.clientX - p.x, dy = e.clientY - p.y; p.x = e.clientX; p.y = e.clientY;
+  if (ptrs.size === 1 && Pn) {
+    if (!Pn.drag && Math.hypot(e.clientX - Pn.x0, e.clientY - Pn.y0) > (Pn.touch ? 12 : 8)) { Pn.drag = true; canvas.classList.add('drag'); }
+    if (!Pn.drag) return; orb.user = true; orb.goal = null; orb.th -= dx * 0.005; if (!(Pn.touch && narrow())) orb.ph -= dy * 0.005; camClamp();
+  } else if (ptrs.size === 2) { const d = pd(); if (pinch > 0 && d > 0) { orb.user = true; orb.goal = null; orb.r *= pinch / d; camClamp(); } pinch = d; }
+});
+function up(e) {
+  if (!ptrs.has(e.pointerId)) return; const single = ptrs.size === 1; ptrs.delete(e.pointerId); if (!ptrs.size) canvas.classList.remove('drag');
+  if (!single || !Pn) return; const q = Pn; Pn = null; if (q.drag || e.type !== 'pointerup') return;
+  const id = hit(e); if (id) { selPart(id); lastEmpty = 0; return; }
+  const now = performance.now(); if (now - lastEmpty < 380) { camGoal(); lastEmpty = 0; } else { if (ST.sel) selPart(null); lastEmpty = now; }
+}
+canvas.addEventListener('pointerup', up); canvas.addEventListener('pointercancel', up);
+stage.addEventListener('wheel', e => { if (narrow()) return; e.preventDefault(); if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return; orb.user = true; orb.goal = null; orb.r *= Math.exp(clamp(e.deltaY * (e.deltaMode === 1 ? 16 : 1), -120, 120) * 0.0012); camClamp(); }, { passive: false });
+
+/* ================= loop ================= */
+let W0 = 0, H0 = 0, last = performance.now();
+function resize() {
+  const w = canvas.clientWidth, h = canvas.clientHeight; if ((w === W0 && h === H0) || !w || !h) return;
+  W0 = w; H0 = h; camera.aspect = w / h; camera.updateProjectionMatrix(); if (renderer) { renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2)); renderer.setSize(w, h, false); }
+  layout(); if (orb.user) { orb.base = viewOf(); camClamp(); } else camGoal(true); if (BE[ST.i].lane === 'mod') drawMod();
+}
+const sm = u => { u = clamp(u, 0, 1); return u * u * (3 - 2 * u); };
+function explode(dt) {
+  if (ST.auto) { const d = ST.xT - ST.x, stp = dt * (d > 0 ? 0.36 : 1.1); if (reduce || Math.abs(d) <= stp) { ST.x = ST.xT; ST.auto = false; } else ST.x += Math.sign(d) * stp; const sx = $('#sX'); if (sx) sx.value = Math.round(ST.x * 100); }
+  if (ST.x === ST.xl) return; ST.xl = ST.x; const x = ST.x, dv = SC[ST.dev].dev, gh = sm(x / 0.2);
+  dv.movers.forEach(m => {
+    const f = sm((x - m.w[0]) / (m.w[1] - m.w[0])), px = m.a[0] + (m.e[0] - m.a[0]) * f, py = m.a[1] + (m.e[1] - m.a[1]) * f, pz = m.a[2] + (m.e[2] - m.a[2]) * f;
+    m.o.position.set(px, py, pz); if (m.sa) m.o.scale.setScalar(m.sa + (m.se - m.sa) * f); if (m.ids) m.ids.forEach(id => { dv.f[id] = f; });
+    if (m.ln) { const p = m.ln.geometry.attributes.position; p.setXYZ(1, px, py, pz); p.needsUpdate = true; m.ln.visible = m.dot.visible = f > 0.03; }
+  });
+  dv.fades.forEach(q => { q[0].opacity = 1 + (q[1] - 1) * gh; q[0].depthWrite = gh < 0.05; });
+}
+function ringTick() { const r = $('#ring'), id = ST.sel; if (!id || !ST.open) { if (!r.hidden) r.hidden = true; return; } const p = proj(SC[ST.dev].dev.A[id], W0, H0); r.hidden = !p; if (p) r.style.transform = 'translate(' + p[0].toFixed(1) + 'px,' + p[1].toFixed(1) + 'px)'; }
+function frame(now) {
+  requestAnimationFrame(frame); const dt = Math.min(0.05, (now - last) / 1000); last = now; clock += dt; resize();
+  if (orb.goal) { const g = orb.goal, k = reduce ? 1 : 1 - Math.exp(-5 * dt); orb.th += (g.th - orb.th) * k; orb.ph += (g.ph - orb.ph) * k; orb.r += (g.r - orb.r) * k; orb.tg.lerp(g.tg, k); if (Math.abs(orb.th - g.th) + Math.abs(orb.ph - g.ph) + Math.abs(orb.r - g.r) + orb.tg.distanceTo(g.tg) < 0.003) orb.goal = null; }
+  else if (!orb.user && orb.base) orb.tg.copy(orb.base.tg);
+  camApply(); explode(dt); scene.updateMatrixWorld(); camera.updateMatrixWorld();
+  tick(dt); fx.update(dt); chipTick(dt); if (BE[ST.i].lane === 'time') drawLanes();
+  lbUpdate(W0, H0); ringTick(); if (renderer) renderer.render(scene, camera);
+}
+Object.keys(SC).forEach(x => { SC[x].dev.g.visible = SC[x].peer.g.visible = x === ST.dev; SC[x].dev.movers.forEach(m => { m.o.position.set(m.a[0], m.a[1], m.a[2]); if (m.sa) m.o.scale.setScalar(m.sa); }); });
+resize(); layout(); camera.updateMatrixWorld();
+place(); if (MQ) { if (MQ.addEventListener) MQ.addEventListener('change', place); else if (MQ.addListener) MQ.addListener(place); }
+const a0 = ACTS.findIndex(x => x[3] === (location.hash || '').slice(1)); go(a0 > 0 ? BE.findIndex(b => b.a === a0) : 0); camGoal(true); ST.x = 0; ST.xl = -1;
+ST.ready = true;
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { drawPeer(); LBS.forEach(l => { l.w = 0; }); });
+requestAnimationFrame(frame);
+window.__ble = { go, goAct, setDev, S, ST, beats: () => BE, orb };
+})();
+</script>
+</body>
+</html>
